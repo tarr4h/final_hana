@@ -13,6 +13,7 @@
 </head>
 <body>
 	<button id="test">안녕하세요</button>
+<<<<<<< HEAD
 	<button type="button" class="btn btn-primary">Primary</button>
 	
 	<button type="button" class="btn btn-outline-primary">Primary</button>
@@ -30,7 +31,6 @@
     <button class="btn btn-outline-success my-2 my-sm-0 mt-2 mb-2" type="submit">Search</button>
   </form>
 </nav>
-	
 	<script>
 		$("#test").click((e) => {
 			location.href="${pageContext.request.contextPath}/common/main.do";
