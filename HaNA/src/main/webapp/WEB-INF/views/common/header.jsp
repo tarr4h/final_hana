@@ -19,16 +19,18 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <style>
-	.navbar { height : 10em;}
-	.navbar-brand { height : 10em;}
+	.navbar-expand-lg { height : 10em;}
+	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
 </style>
 
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-		  <a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail"></a>
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark pr-3">
+			<div class="title-image-box">
+			  <a class="navbar-brand head" href="#"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail"></a>
+			</div>			  
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
@@ -51,14 +53,16 @@
 		          마이페이지
 		        </a>
 		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		          <a class="dropdown-item" href="#">Action</a>
-		          <a class="dropdown-item" href="#">Another action</a>
-		          <a class="dropdown-item" href="#">Something else here</a>
+		          <a class="dropdown-item" href="#">게시글 작성</a>
+		          <a class="dropdown-item" href="#">예약 목록</a>
+		          <a class="dropdown-item" href="#">계정 설정</a>
 		        </div>
 		      </li>
 		    </ul>
 		  </div>
 		</nav>
 	</header>
-</body>
-</html>
+	
+	<section>
+		<h1>몸통입니다.</h1>
+	

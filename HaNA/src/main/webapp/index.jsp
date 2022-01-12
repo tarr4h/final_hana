@@ -9,3 +9,4 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="main"/>
 </jsp:include>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
