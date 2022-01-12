@@ -9,6 +9,7 @@
 </head>
 <body>
 	<button id="test">안녕하세요</button>
+	<h1>안 녕 하 세 요 - 김형진</h1>
 	<script>
 		$("#test").click((e) => {
 			location.href="${pageContext.request.contextPath}/common/main.do";
