@@ -9,6 +9,6 @@ public class TestController {
 	
 	@GetMapping("/common/main.do")
 	public void test() {
-		
+		System.out.println("Dd");
 	}
 }
