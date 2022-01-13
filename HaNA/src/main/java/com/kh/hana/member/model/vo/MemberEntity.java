@@ -1,4 +1,4 @@
-package com.kh.hana.account.model.vo;
+package com.kh.hana.member.model.vo;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountEntity implements Serializable{
+public class MemberEntity implements Serializable{
 	
 	/**
 	 * 
