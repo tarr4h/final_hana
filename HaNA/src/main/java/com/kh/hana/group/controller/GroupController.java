@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.hana.account.model.vo.Account;
@@ -27,11 +28,17 @@ public class GroupController {
 		log.debug("groupId = {}", groupId);
 		Group group = groupService.selectOneGroup(groupId);
 	}
-//	
-//	@GetMapping("/groupList")
-//	public void groupList(@AuthenticationPrincipal Account account) {
-//		log.debug("loginMember = {}",account);
-//		
-//	}
+	
+	@GetMapping("/groupList")
+	public void groupList(@AuthenticationPrincipal Account account) {
+		log.debug("loginMember = {}",account);
+		
+	}
 
+	@PostMapping("/createGroup")
+	public void insertGroup(Group group) {
+		log.debug("group = {}",group);
+		
+	}
+		
 }
