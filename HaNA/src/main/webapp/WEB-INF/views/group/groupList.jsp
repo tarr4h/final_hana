@@ -11,7 +11,6 @@
 </jsp:include>
 
 <div class="group-list">
-그룹리스트
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
