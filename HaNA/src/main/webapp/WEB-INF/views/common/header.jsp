@@ -54,8 +54,8 @@
 		        <a class="nav-link text-light" href="#">DM</a>
 		      </li>
 		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		          마이페이지
+		        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/account/accountView" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          내 계정
 		        </a>
 		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 		          <a class="dropdown-item" href="#">게시글 작성</a>
