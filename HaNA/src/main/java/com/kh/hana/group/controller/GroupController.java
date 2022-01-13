@@ -27,11 +27,11 @@ public class GroupController {
 		log.debug("groupId = {}", groupId);
 		Group group = groupService.selectOneGroup(groupId);
 	}
-	
-	@GetMapping("/groupList")
-	public void groupList(@AuthenticationPrincipal Account account) {
-		log.debug("loginMember = {}",account);
-		
-	}
+//	
+//	@GetMapping("/groupList")
+//	public void groupList(@AuthenticationPrincipal Account account) {
+//		log.debug("loginMember = {}",account);
+//		
+//	}
 
 }
