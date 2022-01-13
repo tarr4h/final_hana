@@ -169,7 +169,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # datasource.properties
-datasource.properties
+src/main/resources/datasource.properties
 
 # sql
 *.sql
