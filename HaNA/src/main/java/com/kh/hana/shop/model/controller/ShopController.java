@@ -18,6 +18,6 @@ public class ShopController {
 	@GetMapping("/shop/test")
 	public void test() {
 		String name = shopService.test();
-		log.info("name = {}", name);
+		log.info("name ! = {}", name);
 	}
 }
