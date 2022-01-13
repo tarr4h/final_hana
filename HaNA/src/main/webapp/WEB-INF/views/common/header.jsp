@@ -51,7 +51,7 @@
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link text-light" href="#">DM</a>
+		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM</a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/loginMain">로그인(임시)</a>
