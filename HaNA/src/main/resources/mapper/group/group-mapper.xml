@@ -8,7 +8,7 @@
 		select
 			*
 		from
-			group
+			group_
 		 where
 		 	groupId = #{groupId}
 	</select>
