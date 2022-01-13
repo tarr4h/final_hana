@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/member")
 @Slf4j
-
 public class MemberController {
 	
 	
