@@ -1,4 +1,4 @@
-package com.kh.hana.account.model.vo;
+package com.kh.hana.member.model.vo;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -17,7 +17,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Account extends AccountEntity implements Serializable, UserDetails{
+public class Member extends MemberEntity implements Serializable, UserDetails{
 
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class Account extends AccountEntity implements Serializable, UserDetails{
 	private List<SimpleGrantedAuthority> authorities;
 	
 	@Builder
-	public Account(String id, String name, String password, String picture, String personalId, int div, String address,
+	public Member(String id, String name, String password, String picture, String personalId, int div, String address,
 			String introduce, boolean enabled, List<SimpleGrantedAuthority> authorities) {
 		super(id, name, password, picture, personalId, div, address, introduce, enabled);
 		this.authorities = authorities;
