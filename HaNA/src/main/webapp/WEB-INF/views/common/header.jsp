@@ -65,4 +65,5 @@
 	
 	<section>
 		<h1>몸통입니다.</h1>
+		<button onclick="location.href='${pageContext.request.contextPath}/shop/test.do'">DB테스트</button>
 	
