@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.hana.account.model.vo.Account;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,3 +42,4 @@ public class GroupController {
 	}
 		
 }
+

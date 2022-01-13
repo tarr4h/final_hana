@@ -53,6 +53,9 @@
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="#">DM</a>
 		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/loginMain">로그인(임시)</a>
+		      </li>
 		      <li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/account/accountView" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		          내 계정
@@ -70,5 +73,5 @@
 	
 	<section class="body-section">
 		
-		<h1>몸통입니다.</h1>
+		<h1>몸통입니다..</h1>
 		<button onclick="location.href='${pageContext.request.contextPath}/shop/test.do'">DB테스트</button>
