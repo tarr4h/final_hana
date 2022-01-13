@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+.group-list {
+	margin:auto;
+	width:500px;
+	min-height:1000px;
+	border:solid black 1px;
+}
