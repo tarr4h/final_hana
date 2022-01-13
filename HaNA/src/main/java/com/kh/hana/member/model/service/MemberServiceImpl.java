@@ -7,7 +7,7 @@ import com.kh.hana.member.model.dao.MemberDao;
 import com.kh.hana.shop.model.service.ShopService;
 
 @Service
-public class MemberServiceImpl implements ShopService {
+public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao memberDao;

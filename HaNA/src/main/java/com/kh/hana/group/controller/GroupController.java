@@ -23,15 +23,18 @@ public class GroupController {
 	@Autowired
 	private GroupService groupService;
 	
-	@GetMapping("/groupPage/{id}")
+	@GetMapping("/groupPage/{groupId}")
 	public void groupDetail(@PathVariable String groupId) {
 		log.debug("groupId = {}", groupId);
 		Group group = groupService.selectOneGroup(groupId);
+		log.debug("group = {}", group);
+		System.out.println(groupId);
+		System.out.println(group);
 	}
 	
 	@GetMapping("/groupList")
-	public void groupList(@AuthenticationPrincipal Account account) {
-		log.debug("loginMember = {}",account);
+	public void groupList(@AuthenticationPrincipal Member member) {
+		log.debug("loginMember = {}",member);
 		
 	}
 
