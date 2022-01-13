@@ -19,6 +19,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <style>
+	.body-section {min-height : 1000px;}
 	.navbar-expand-lg { height : 10em;}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
@@ -46,6 +47,9 @@
 		        <a class="nav-link text-light" href="#">나침반</a>
 		      </li>
 		      <li class="nav-item">
+		        <a class="nav-link text-light" href="#">소모임</a>
+		      </li>
+		      <li class="nav-item">
 		        <a class="nav-link text-light" href="#">DM</a>
 		      </li>
 		      <li class="nav-item dropdown">
@@ -63,6 +67,5 @@
 		</nav>
 	</header>
 	
-	<section>
+	<section class="body-section">
 		<h1>몸통입니다.</h1>
-	
