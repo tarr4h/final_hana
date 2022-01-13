@@ -47,7 +47,7 @@
 		        <a class="nav-link text-light" href="#">나침반</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link text-light" href="#">소모임</a>
+		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="#">DM</a>
