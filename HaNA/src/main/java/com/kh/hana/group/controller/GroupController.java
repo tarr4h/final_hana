@@ -44,17 +44,16 @@ public class GroupController {
 		model.addAttribute(group);
 		return "group/groupPage";
 	}
-	
+
 	@GetMapping("/groupList")
 	public void groupList(@AuthenticationPrincipal Member member) {
 		log.debug("loginMember = {}",member);
-
+		
 	}
-	
 	@GetMapping("/createGroupForm")
 	public void createGroupForm() {}
 	
-	
+
 	@PostMapping("/createGroup")
 	public String insertGroup(Group group,
 		@RequestParam(name="profileImage",required=false)MultipartFile[] profileImage,
