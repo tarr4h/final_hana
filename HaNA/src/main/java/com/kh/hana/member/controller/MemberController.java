@@ -35,13 +35,5 @@ public class MemberController {
 		log.info("member = {}", member);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
