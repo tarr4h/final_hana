@@ -56,25 +56,26 @@
 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
 			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">로그인(임시)</a>		      	
-		      	</sec:authorize>
-		        
-		        <sec:authorize access="isAuthenticated()">
-					<a class="nav-link text-light"><span><sec:authentication property="principal.username"/></span></a>
-					<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
+		      	</sec:authorize>					
+		      </li>
+		      <sec:authorize access="isAuthenticated()">
+			    <li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
+			          <span><sec:authentication property="principal.username"/></span>
+			        </a>
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			          <a class="dropdown-item" href="#">게시글 작성</a>
+			          <a class="dropdown-item" href="#">예약 목록</a>
+			          <a class="dropdown-item" href="#">계정 설정</a>
+			        </div>
+			    </li>
+			    <li class="nav-item">
+		      		<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
 						<input type="submit" value="로그아웃" />
 					</form:form>
-				</sec:authorize>
-		      </li>
-		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
-		          내 계정
-		        </a>
-		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		          <a class="dropdown-item" href="#">게시글 작성</a>
-		          <a class="dropdown-item" href="#">예약 목록</a>
-		          <a class="dropdown-item" href="#">계정 설정</a>
-		        </div>
-		      </li>
+				</li>
+		      </sec:authorize>
+		   			
 		    </ul>
 		  </div>
 		</nav>
@@ -83,7 +84,4 @@
 	<section class="body-section">
 		
 		<h1>몸통입니다..</h1>
-		<sec:authorize access="isAuthenticated()">
-			<span><sec:authentication property="principal.username"/></span>
-		</sec:authorize>
 		<button onclick="location.href='${pageContext.request.contextPath}/shop/test.do'">DB테스트</button>
