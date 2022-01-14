@@ -5,13 +5,10 @@ import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
 
-
 @Service
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
-	
-
 
 }

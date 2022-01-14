@@ -7,6 +7,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="메인화면" name="title"/>
+	<jsp:param value="로그인화면" name="title"/>
 </jsp:include>
+
+<h1>로그인화면</h1>
+<label for="idInput">ID</label><input type="text" id="idInput" />
+<br />
+<label for="pwInput">PW</label><input type="text" id="pwInput"/>
+<br />
+<br />
+<input type="button" value="회원가입" onclick="location.href='${pageContext.request.contextPath}/member/memberEnrollMain'"/>
+
+
+
+
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
