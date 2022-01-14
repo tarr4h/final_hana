@@ -22,6 +22,9 @@ public class MemberController {
 		
 	}
 	
+	@GetMapping("/memberView")
+	public void memberView() {}
+	
 	
 	
 	
