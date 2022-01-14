@@ -10,7 +10,9 @@
 	<jsp:param value="메인화면" name="main"/>
 </jsp:include>
 
-<div class="group-list">
+<div class="group-page">
+	<p><%=request.getAttribute("groupId") %></p>
+	<p><%=request.getAttribute("groupId") %></p>
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -10,7 +10,7 @@
 		from
 			group_
 		 where
-		 	groupId = #{groupId}
+		 	group_id = #{groupId}
 	</select>
 </mapper>
 
