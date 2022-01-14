@@ -34,13 +34,13 @@ public class GroupController {
 		return "group/groupPage";
 
 	}
-	
+
 	@GetMapping("/groupList")
 	public void groupList(@AuthenticationPrincipal Member member) {
 		log.debug("loginMember = {}",member);
-
+		
 	}
-	
+
 
 	@PostMapping("/createGroup")
 	public void insertGroup(Group group) {
