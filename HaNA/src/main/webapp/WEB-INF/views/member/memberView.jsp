@@ -42,7 +42,6 @@
   </tbody>
 </table>
 
-
 </div>
-
+<button type="button" class="btn btn-outline-dark">설정</button>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
