@@ -17,4 +17,5 @@ public class Group {
 	private int memberCount;
 	private int boardCount;
 	private String[] hashtag;
+	private String image;
 }

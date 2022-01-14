@@ -1,6 +1,7 @@
 package com.kh.hana.group.model.dao;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ public class GroupDaoImpl implements GroupDao {
 	
 	@Override
 	public Group selectOneGroup(String groupId) {
-		return null;
+		return session.selectOne("group.selectOneGroup",groupId);
 	}
 
 }
