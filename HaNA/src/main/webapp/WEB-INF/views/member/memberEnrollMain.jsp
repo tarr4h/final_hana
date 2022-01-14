@@ -18,8 +18,14 @@
 				<tr>
 					<td>계정 구분</td>
 					<td>
-						<label for="user">일반사용자</label><input type="radio" name="accountType" id="user" />
-						<label for="shop">업체</label><input type="radio" name="accountType" id="shop" />
+						<label for="user">일반사용자</label><input type="radio" name="accountType" value="1" />
+						<label for="shop">업체</label><input type="radio" name="accountType" value="2" />
+					</td>
+				</tr>
+				<tr>
+					<td>아이디</td>
+					<td>
+						<input type="text" name="id" id="memberId" />
 					</td>
 				</tr>
 				<tr>
@@ -51,7 +57,7 @@
 				<tr>
 					<td>프로필사진</td>
 					<td>
-						<input type="file" name="profilePic" id="" />
+						<input type="file" name="picture" id="" />
 					</td>
 				</tr>
 				<tr>
@@ -63,12 +69,14 @@
 						<input type="text" id="jibunAddress" placeholder="지번주소">
 						<span id="guide" style="color:#999;display:none"></span>
 						<input type="text" id="detailAddress" placeholder="상세주소">
+						
+						in
 					</td>
 				</tr>
 				<tr>
 					<td>소개글</td>
 					<td>
-						<input type="text" name="introduce" id="" />
+						<input type="text" name="introduce" id="introduce" />
 					</td>
 				</tr>
 			</tbody>
