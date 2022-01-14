@@ -66,7 +66,7 @@
 				</sec:authorize>
 		      </li>
 		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/account/accountView" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
 		          내 계정
 		        </a>
 		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

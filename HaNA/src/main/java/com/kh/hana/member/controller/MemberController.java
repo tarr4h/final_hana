@@ -2,6 +2,7 @@ package com.kh.hana.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +49,12 @@ public class MemberController {
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원가입에 성공했습니다." : "회원가입에 실패했습니다.");
 		
 		return "redirect:/member/loginMain";		
+	}
+	
+	@GetMapping("/memberView")
+	public void memberView(@AuthenticationPrincipal Member member) {
+		log.debug("member={}", member);
+		
 	}
 
 	
