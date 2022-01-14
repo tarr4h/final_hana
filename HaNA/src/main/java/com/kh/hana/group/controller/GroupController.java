@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,21 +25,28 @@ public class GroupController {
 	@Autowired
 	private GroupService groupService;
 	
-	
-	@GetMapping("/groupDetail/{groupId}")
-	public String groupDetail(@PathVariable String groupId, Model model) {
+
+	@GetMapping("/groupPage/{groupId}")
+	public String groupPage(@PathVariable String groupId, Model model) {
 		Group group = groupService.selectOneGroup(groupId);
 		log.debug("group = {}", group);
-		model.addAttribute("group", group);
+		model.addAttribute(group);
 		return "group/groupPage";
+
 	}
-	
 	
 	@GetMapping("/groupList")
 	public void groupList(@AuthenticationPrincipal Member member) {
-		log.debug("loginMember = {}", member);
-		
+		log.debug("loginMember = {}",member);
+
 	}
+	
 
+	@PostMapping("/createGroup")
+	public void insertGroup(Group group) {
+		log.debug("group = {}",group);
+
+		group.getHashtag();
+	}
+		
 }
-

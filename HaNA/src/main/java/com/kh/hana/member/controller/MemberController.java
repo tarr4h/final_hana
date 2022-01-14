@@ -23,10 +23,7 @@ public class MemberController {
 	public void loginMain() {
 		
 	}
-
-	@GetMapping("/memberView")
-	public void memberView() {}
-
+	
 	@GetMapping("/memberEnrollMain")
 	public void memberEnrollMain() {
 		
@@ -38,14 +35,5 @@ public class MemberController {
 		log.info("member = {}", member);
 		
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

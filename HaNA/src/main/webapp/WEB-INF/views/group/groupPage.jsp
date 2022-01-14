@@ -12,7 +12,11 @@
 
 <div class="group-page">
 	<p><%=request.getAttribute("groupId") %></p>
-	<p><%=request.getAttribute("groupId") %></p>
+	${group.groupId}
+	${group.groupName}
+	${group.leaderId}
+	${group.memberCount}
+
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
