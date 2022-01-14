@@ -18,4 +18,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectOneGroup(groupId);
 	}
 
+	@Override
+	public int insertOneGroup(Group group) {
+		return groupDao.insertOneGroup(group);
+	}
+
 }

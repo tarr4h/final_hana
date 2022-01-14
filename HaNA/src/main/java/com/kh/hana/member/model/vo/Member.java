@@ -27,11 +27,11 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 	private List<SimpleGrantedAuthority> authorities;
 	
 	@Builder
-	public Member(String id, String name, String password, String picture, String personalId, int account_type,
-			String address_one, String address_secound, String address_third, String introduce, boolean enabled,
-			List<SimpleGrantedAuthority> authorities) {
-		super(id, name, password, picture, personalId, account_type, address_one, address_secound, address_third,
-				introduce, enabled);
+	public Member(String id, String name, String password, String picture, String personalId, int accountType,
+			String addressFirst, String addressSecound, String addressThird, String addressFull, String introduce,
+			boolean enabled, List<SimpleGrantedAuthority> authorities) {
+		super(id, name, password, picture, personalId, accountType, addressFirst, addressSecound, addressThird,
+				addressFull, introduce, enabled);
 		this.authorities = authorities;
 	}
 
@@ -47,6 +47,8 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 		// TODO Auto-generated method stub
 		return getId();
 	}
+	
+	
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -65,6 +67,10 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+
+
+
 
 
 

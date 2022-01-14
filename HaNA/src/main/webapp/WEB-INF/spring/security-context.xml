@@ -10,12 +10,43 @@
 		
 	<beans:bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="bcryptPasswordEncoder"></beans:bean>
 	
-		<!-- 정적 파일은 security 체크하지 않음 -->
-		<!-- 정적 파일은 security 체크하지 않음 -->
-	<http pattern="/resources/**" security="none"/>
-	<!-- <http auto-config="true">
+	<beans:bean id="customSuccessHandler" class="com.kh.hana.member.controller.CustomSuccessHandler"/>
 	
-	</http> -->
+	<http pattern="/resources/**" security="none"/>
+	<http auto-config="true">
+		<intercept-url pattern="/" access="permitAll"/>
+		<intercept-url pattern="/index.jsp" access="permitAll"/>
+		<intercept-url pattern="/member/login" access="permitAll"/>
+		<intercept-url pattern="/member/memberView" access="isAuthenticated()"/>
+		<intercept-url pattern="/**" access="permitAll"/>
+		
+		<form-login
+			login-page="/member/login"
+			login-processing-url="/member/login"
+			username-parameter="userId"
+			password-parameter="password"
+			default-target-url="/"
+			always-use-default-target="false"
+			authentication-success-handler-ref="customSuccessHandler"	
+		/>
+		
+		<logout
+			logout-url="/member/logout"
+			logout-success-url="/"
+			invalidate-session="true"
+		/>
+		
+		<csrf disabled="false"/>
+		
+	</http>
+	
+	<authentication-manager>
+		<authentication-provider user-service-ref="securityService">
+			<password-encoder ref="bcryptPasswordEncoder"/>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<context:component-scan base-package="com.kh.hana.security"/>
 	
 	
 </beans:beans>
