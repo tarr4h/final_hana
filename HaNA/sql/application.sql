@@ -48,14 +48,15 @@ commit;
     
 -- 소모임 생성 
 
---drop table group_;
+
+drop table group_;
 -- 소모임 계정
 create table group_(
     group_id varchar2(20) not null,
     group_name varchar2(30) not null,
     leader_id varchar2(20) not null,
     member_count number default 1,
-    board_count number default 1, 
+    board_count number default 0, 
     hashtag varchar2(4000),
     image varchar2(500),
     constraint pk_group_id primary key(group_id),
@@ -88,3 +89,4 @@ commit;
 
 
 select * from group_;
+delete from group_;
