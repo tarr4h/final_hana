@@ -75,6 +75,10 @@ create table group_board(
     constraint fk_group_id foreign key(leader_id) references member(id) on delete cascade
 );
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 select * from member;
 select * from group_;
 insert into member values(
@@ -85,3 +89,8 @@ insert into group_ values(
     'ss','축구','hyungzin0309',default,default,null,null
 );
 commit;
+<<<<<<< HEAD
+=======
+
+select * from group_;
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git

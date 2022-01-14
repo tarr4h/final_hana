@@ -171,7 +171,8 @@ $RECYCLE.BIN/
 # datasource.properties
 src/main/resources/datasource.properties
 
-# sql
-*.sql
+<!-- # sql
+*.sql -->
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,windows,macos,maven
+/sql/
