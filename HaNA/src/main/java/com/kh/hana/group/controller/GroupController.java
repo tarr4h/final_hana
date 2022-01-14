@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.hana.account.model.vo.Account;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,9 +35,10 @@ public class GroupController {
 	
 	
 	@GetMapping("/groupList")
-	public void groupList(@AuthenticationPrincipal Account account) {
-		log.debug("loginMember = {}",account);
+	public void groupList(@AuthenticationPrincipal Member member) {
+		log.debug("loginMember = {}",member);
 		
 	}
 
 }
+
