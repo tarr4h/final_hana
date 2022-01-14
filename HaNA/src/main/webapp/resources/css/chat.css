@@ -222,3 +222,5 @@
 		margin-bottom: 15px !important;
 	}
 	}
+	.card-body contacts_body{pointer-events:none}
+	div#chatroom{pointer-events:all}

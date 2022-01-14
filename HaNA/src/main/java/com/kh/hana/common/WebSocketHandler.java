@@ -12,11 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class WebSocketHandler extends TextWebSocketHandler{
 
+	
+	
 	//연결
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		log.info("afterConnectionEstablished 연결 성공 = {}", session);
-		System.out.println("asdfffffffff");
+		log.info("afterConnectionEstablished 연결 성공 = {}", session.getId());
 	}
 	
 	//메세지

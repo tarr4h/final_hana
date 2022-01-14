@@ -15,7 +15,96 @@
 
 <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/chat.css" />
+<script>
+$().ready(function(){ 
 
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/roomList.do`,
+		data:{
+			id : 'jeonyeseong',
+		},
+		method: "GET",
+		success(resp){
+			console.log(resp);
+			displayRoom("#chatList", resp);
+		},
+		error:console.log
+	});
+});
+const displayRoom = (selector, data) => {
+	const $target = $(selector);
+	let chatroom = ``
+		
+		if(data.length){
+			$(data).each((i, menu) => {
+				console.log(i, menu);
+				const {roomNo, memberId} = menu;
+				chatroom += `<div class="card-body contacts_body">
+					<ui class="contacts">
+					<li class="active">
+						<div class="d-flex bd-highlight" id="chatroom">
+							<div class="img_cont">
+								<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+								<span class="online_icon"></span>
+							</div>
+							<div class="user_info">
+								<span>\${roomNo} \${memberId}</span>
+								<button onclick="roomchat(this.value)" value="\${roomNo}">버튼</button>
+							</div>
+						</div>
+					</li>
+
+					</ui>
+				</div>`;
+				
+			});
+		}
+		else{
+			table += `<span>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</span>`;
+		}
+		
+		$target.html(chatroom);
+};
+
+const displaychat = (selector, data) =>{
+	const $target = $(selector);
+	let chat = ``
+		
+		if(data.length){
+			$(data).each((i, menu) => {
+				console.log(i, menu);
+				const {memberId, message, messageRegDate, unReadCount} = menu;
+				chat += `<div class="msg_cotainer">
+					\${memberId} \${message} \${messageRegDate} \${unReadCount}
+					<span class="msg_time"></span>
+				</div>`;
+				
+			});
+		}
+		else{
+			table += `<span>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</span>`;
+		}
+		
+		$target.html(chat);
+};
+
+function roomchat(no){
+	console.log(no);
+	
+	$.ajax({
+		url : `${pageContext.request.contextPath}/chat/roomchat.do`,
+		data : {
+			no : no,
+		},
+		method: "GET",
+		success(resp){
+			console.log(resp);
+			displaychat("#roomchat1", resp);
+		},
+		error:console.log
+	});
+};
+</script>
 	<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
@@ -27,56 +116,27 @@
 							</div>
 						</div>
 					</div>
-					<div class="card-body contacts_body">
-						<ui class="contacts">
-						<li class="active">
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-									<span class="online_icon"></span>
-								</div>
-								<div class="user_info">
-									<span>Khalid</span>
-									<p>Kalid is online</p>
-								</div>
-							</div>
-						</li>
-			
-						</ui>
+					<div id="chatList">
+
 					</div>
-					<div class="card-footer"></div>
 				</div></div>
 				<div class="col-md-8 col-xl-6 chat">
 					<div class="card">
 						<div class="card-header msg_head">
-							<div class="d-flex bd-highlight">
+<!-- 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
 									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
 									<span>Chat with Khalid</span>
-									<p>1767 Messages</p>
 								</div>
-								<div class="video_cam">
-									<span><i class="fas fa-video"></i></span>
-									<span><i class="fas fa-phone"></i></span>
-								</div>
-							</div>
-							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-							<div class="action_menu">
-								<ul>
-									<li><i class="fas fa-user-circle"></i> View profile</li>
-									<li><i class="fas fa-users"></i> Add to close friends</li>
-									<li><i class="fas fa-plus"></i> Add to group</li>
-									<li><i class="fas fa-ban"></i> Block</li>
-								</ul>
-							</div>
+							</div> -->
 						</div>
 						
 						<!-- 채팅내용 -->
-						<div class="card-body msg_card_body">
-							<div class="d-flex justify-content-start mb-4">
+						<div class="card-body msg_card_body" id="roomchat1">
+<!-- 							<div class="d-flex justify-content-start mb-4">
 								<div class="img_cont_msg">
 									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
 								</div>
@@ -138,13 +198,10 @@
 									Bye, see you
 									<span class="msg_time">9:12 AM, Today</span>
 								</div>
-							</div>
+							</div> -->
 						</div>
-						<div class="card-footer">
+ 						<div class="card-footer">
 							<div class="input-group">
-								<div class="input-group-append">
-									<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-								</div>
 								<textarea id="msg" class="form-control type_msg" placeholder="Type your message..."></textarea>
 								
 								<div class="input-group-append">
@@ -154,9 +211,14 @@
 						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
+		<div id="ggg">
+			<span>gdgd</span>
+		</div>
 			<button onclick="connect();">연결테스트</button>
+			<button onclick="location.href='${pageContext.request.contextPath}/chat/test.do'">DB테스트</button>
 <script>
 $("#btnSend").on("click", function(e){
 	e.preventDefault();
@@ -166,7 +228,7 @@ $("#btnSend").on("click", function(e){
 		return;
 	}
 		
-	console.log("버큰 클릭");
+	console.log("버튼 클릭");
 	let msg = $("textarea#msg").val();
 	websocket.send(msg);
 });
@@ -203,8 +265,12 @@ function onError(){
 
 </script>
 <script>
-$(".d-flex bd-highlight").on("click", function(e){
-	alert("gd");
+$("div#ggg").click(function(){
+	alert("테스트");ㅣ
 });
+$("#chatroom").click(function(){
+	alert("테스트");
+});
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
