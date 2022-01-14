@@ -18,14 +18,14 @@
 				<tr>
 					<td>계정 구분</td>
 					<td>
-						<label for="user">일반사용자</label><input type="radio" name="accType" id="user" />
-						<label for="shop">업체</label><input type="radio" name="accType" id="shop" />
+						<label for="user">일반사용자</label><input type="radio" name="accountType" id="user" />
+						<label for="shop">업체</label><input type="radio" name="accountType" id="shop" />
 					</td>
 				</tr>
 				<tr>
 					<td>이름</td>
 					<td>
-						<input type="text" name="memberId" />
+						<input type="text" name="name" />
 					</td>
 				</tr>
 				<tr>
@@ -43,7 +43,7 @@
 				<tr>
 					<td>주민번호</td>
 					<td>
-						<input type="text" name="ssn1" id="" />
+						<input type="text" name="personalId" id="" />
 						-
 						<input type="text" name="ssn2" id="" />
 					</td>
