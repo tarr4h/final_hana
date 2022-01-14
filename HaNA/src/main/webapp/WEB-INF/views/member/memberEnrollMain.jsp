@@ -12,14 +12,14 @@
 
 <h1>회원가입</h1>
 	
-	<form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST">
+	<form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST" name="enrollFrm">
 		<table>
 			<tbody>
 				<tr>
 					<td>계정 구분</td>
 					<td>
 						<label for="user">일반사용자</label><input type="radio" name="accountType" value="1" />
-						<label for="shop">업체</label><input type="radio" name="accountType" value="2" />
+						<label for="shop">업체</label><input type="radio" name="accountType" value="0" />
 					</td>
 				</tr>
 				<tr>
@@ -49,9 +49,10 @@
 				<tr>
 					<td>주민번호</td>
 					<td>
-						<input type="text" name="personalId" id="" />
+						<input type="text" name="ssn1" id="" />
 						-
 						<input type="text" name="ssn2" id="" />
+						<input type="hidden" name="personalId" />
 					</td>
 				</tr>
 				<tr>
@@ -68,9 +69,11 @@
 						<input type="text" id="roadAddress" placeholder="도로명주소">
 						<input type="text" id="jibunAddress" placeholder="지번주소">
 						<span id="guide" style="color:#999;display:none"></span>
-						<input type="text" id="detailAddress" placeholder="상세주소">
 						
-						in
+						<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소">
+						<input type="hidden" name="addressFirst" />
+						<input type="hidden" name="addressSecound" />
+						<input type="hidden" name="addressThird" />
 					</td>
 				</tr>
 				<tr>
@@ -86,6 +89,15 @@
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	$("[name=ssn2]").blur((e) => {
+		const ssn1 = $("[name=ssn1]").val();
+		const ssn2 = $("[name=ssn2]").val();
+		
+		const pId = ssn1 + '-' + ssn2;
+		$("[name=personalId]").val(pId);
+		console.log(pId);
+	});
+
 function execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -111,10 +123,9 @@ function execDaumPostcode() {
             document.getElementById("roadAddress").value = roadAddr;
             document.getElementById("jibunAddress").value = data.jibunAddress;
      
-            console.log(data.sido);
-            console.log(data.sigungu);
-            console.log(data.roadname);
-            console.log(data.bname);
+            $("[name=addressFirst]").val(data.sido);
+            $("[name=addressSecound]").val(data.sigungu);
+            $("[name=addressThird]").val(data.roadname);
             
             close();
         }

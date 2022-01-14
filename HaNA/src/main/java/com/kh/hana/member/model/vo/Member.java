@@ -47,6 +47,8 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 		// TODO Auto-generated method stub
 		return getId();
 	}
+	
+	
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -65,6 +67,8 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+
 
 
 
