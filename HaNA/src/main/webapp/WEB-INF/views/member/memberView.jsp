@@ -10,42 +10,49 @@
 	<jsp:param value="계정화면" name="member"/>
 </jsp:include>
 
-<img src="..." class="img-thumbnail" alt="...">
-<div id="introduce">소개글부분~~~~~~~~~~~~~~~~~</div>
-<div class="member-view">
- <table>
-  <thead>
-    <tr>
-      <td>아이디</td>
-      <td>${member.name}</td>
-  
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th >나의 관심사</th>
-      <td>${member.interest}</td>
-   
-    </tr>
-    <tr>
-      <th >나의 성격</th>
-      <td>${member.personality}</td>
+<sec:authentication property="principal" var="loginMember"/>
+
+  <div>
      
-    </tr>
-    <tr>
-      <th>나의 동네친구 목록</th>
-      <td>Larry the Bird</td>
-    </tr>
-    <tr>
-      <th>친구추가</th>
-      <td>Larry the Bird</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+
+        <section style="position: relative; border: 1px black solid; width: 100%; height: 300px;">
+            <div style="border-radius: 50%; background-color: gray; width: 100px; height: 100px; position: relative; top: 30%; left: 15%; display: inline-block;">
+                <img src="/final/user.png" alt="" style="width: 80px; height: 80px;"></div>
+            <div style="position: relative; top: 30%; left: 25%; display: inline-block;">
+                <table>
+                    <tr>
+                        <td>아이디</td>
+                        <td colspan="3"><sec:authenticaion property='principal.username'/></td>
+                    </tr>
+                    <tr>
+                        <td>나의 관심사</td>
+                        <td>..</td>
+                    </tr>
+                    <tr>
+                     	<td>나의 성격</td>
+                        <td>..</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">나의 동네친구 목록</td>
+                        <td colspan="2">..</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">친구 추가</td>
+                        <td colspan="2">..</td>
+                    </tr>
+                     <tr>
+                        <td colspan="2">소개글</td>
+                        <td colspan="2">..</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+			<button type="button" class="btn btn-outline-dark">설정</button>
+    </div>
+
  
  
  
-<button type="button" class="btn btn-outline-dark">설정</button>
+
 <a href="/" class="badge badge-dark">Dark</a>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
