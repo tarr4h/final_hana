@@ -21,7 +21,7 @@ public class MemberEntity implements Serializable{
 	private String password;
 	private String picture;
 	private String personalId;
-	private int div;
+	private int accountType;
 	private String address;
 	private String introduce;
 	private boolean enabled;
