@@ -12,5 +12,28 @@
 		 where
 		 	group_id = #{groupId}
 	</select>
+	<insert id="insertOneGroup">
+		insert into
+			group_
+		values(
+    		#{groupId},
+    		#{groupName},
+    		#{leaderId},
+    		default,
+    		default,
+			#{hashtag},
+    		null
+		<!-- <choose>
+			<when test="hashtag != null">
+				#{hashtag}
+			</when>
+			<when test="image != null">
+				#{image}
+			</when>
+		</choose> -->
+		)
+		
+	</insert>
+	
 </mapper>
 
