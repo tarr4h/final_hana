@@ -21,16 +21,8 @@
     		#{leaderId},
     		default,
     		default,
-			#{hashtag},
-    		null
-		<!-- <choose>
-			<when test="hashtag != null">
-				#{hashtag}
-			</when>
-			<when test="image != null">
-				#{image}
-			</when>
-		</choose> -->
+    		#{hashtag},
+    		#{image}
 		)
 		
 	</insert>

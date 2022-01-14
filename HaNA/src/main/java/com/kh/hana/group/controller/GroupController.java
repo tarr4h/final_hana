@@ -2,11 +2,12 @@ package com.kh.hana.group.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,21 +57,24 @@ public class GroupController {
 	
 	@PostMapping("/createGroup")
 	public String insertGroup(Group group,
-		@RequestParam(name="profileImage",required=false)MultipartFile profileImage,
+		@RequestParam(name="profileImage",required=false)MultipartFile[] profileImage,
 		RedirectAttributes redirectAttr) throws IllegalStateException, IOException {
 		try{
-			log.info("group = {}",group);
-			log.info("profileImage = {}",profileImage);
-			// 파일저장경로
-			// 가장 생명주기가 긴 ServletContext객체로부터 디렉토리 정보 얻어옴
+			log.info("multipartFile.isEmpty() = {}",profileImage[0].isEmpty());
+			log.info("group.getHashtag = {}",group.getHashtag());
+			log.info("group.getHashtag().isEmpty() = {}",group.getHashtag() == null);
+			log.info("multipartFile.isEmpty() = {}",profileImage[0].isEmpty());
 			String saveDirectory = application.getRealPath("/resources/upload/group/profile");
-			
-			if(profileImage != null) {
-				String originalFilename = profileImage.getOriginalFilename();
+			MultipartFile image = profileImage[0];
+			if(!image.isEmpty()) {
+				String originalFilename = image.getOriginalFilename();
 				String renamedFilename = HanaUtils.rename(originalFilename);
 				
 				File dest = new File(saveDirectory, renamedFilename);
-				profileImage.transferTo(dest);
+				log.info("dest = {}", dest);
+				Path path = Paths.get(dest.toString()).toAbsolutePath();
+				log.info("path = {}", path);
+				image.transferTo(path.toFile());
 				
 				group.setImage(renamedFilename);
 			}

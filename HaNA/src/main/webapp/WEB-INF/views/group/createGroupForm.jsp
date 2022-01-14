@@ -12,7 +12,10 @@
 </jsp:include>
 
 <div class="create-group-form-container">
-	<form action="${pageContext.request.contextPath}/group/createGroup" method="post">
+	<form
+		action="${pageContext.request.contextPath}/group/createGroup"
+		method="post"
+		enctype="multipart/form-data">
 		<table>
 			<tr><td>
 				<input type="text" name="groupId" id="groupId"/>
