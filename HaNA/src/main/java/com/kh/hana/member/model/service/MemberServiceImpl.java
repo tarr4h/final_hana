@@ -11,4 +11,9 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDao memberDao;
 
+	@Override
+	public String test() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
