@@ -6,4 +6,6 @@ public interface GroupDao {
 	
 	public Group selectOneGroup(String groupId);
 
+	public int insertOneGroup(Group group);
+
 }
