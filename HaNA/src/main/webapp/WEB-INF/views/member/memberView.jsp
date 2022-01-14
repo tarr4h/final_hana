@@ -10,38 +10,42 @@
 	<jsp:param value="계정화면" name="member"/>
 </jsp:include>
 
-<div class="member-view">
 <img src="..." class="img-thumbnail" alt="...">
+<div id="introduce">소개글부분~~~~~~~~~~~~~~~~~</div>
+<div class="member-view">
  <table>
   <thead>
     <tr>
-      <th >아이디</th>
-      <th>ㅇㅇㅇ</th>
+      <td>아이디</td>
+      <td>${member.name}</td>
   
     </tr>
   </thead>
   <tbody>
     <tr>
       <th >나의 관심사</th>
-      <td>Mark</td>
+      <td>${member.interest}</td>
    
     </tr>
     <tr>
       <th >나의 성격</th>
-      <td>Jacob</td>
+      <td>${member.personality}</td>
      
     </tr>
     <tr>
-      <th >나의 동네친구 목록</th>
-      <td >Larry the Bird</td>
+      <th>나의 동네친구 목록</th>
+      <td>Larry the Bird</td>
     </tr>
     <tr>
-      <th >친구추가</th>
+      <th>친구추가</th>
       <td>Larry the Bird</td>
     </tr>
   </tbody>
 </table>
-
 </div>
+ 
+ 
+ 
 <button type="button" class="btn btn-outline-dark">설정</button>
+<a href="/" class="badge badge-dark">Dark</a>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
