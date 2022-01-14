@@ -7,6 +7,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="메인화면" name="title"/>
+	<jsp:param value="메인화면" name="main"/>
 </jsp:include>
+
+<div class="group-page">
+	<p><%=request.getAttribute("groupId") %></p>
+	<p><%=request.getAttribute("groupId") %></p>
+</div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
