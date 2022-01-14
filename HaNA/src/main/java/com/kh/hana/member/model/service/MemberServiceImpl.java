@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
+import com.kh.hana.member.model.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -16,4 +17,11 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int memberEnroll(Member member) {
+		return memberDao.memberEnroll(member);
+	}
+	
+	
 }

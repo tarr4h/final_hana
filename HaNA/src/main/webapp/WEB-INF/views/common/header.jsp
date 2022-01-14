@@ -54,18 +54,28 @@
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/loginMain">로그인(임시)</a>
+		      	<sec:authorize access="isAnonymous()">
+			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">로그인(임시)</a>		      	
+		      	</sec:authorize>					
 		      </li>
-		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
-		          내 계정
-		        </a>
-		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		          <a class="dropdown-item" href="#">게시글 작성</a>
-		          <a class="dropdown-item" href="#">예약 목록</a>
-		          <a class="dropdown-item" href="#">계정 설정</a>
-		        </div>
-		      </li>
+		      <sec:authorize access="isAuthenticated()">
+			    <li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
+			          <span><sec:authentication property="principal.username"/></span>
+			        </a>
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			          <a class="dropdown-item" href="#">게시글 작성</a>
+			          <a class="dropdown-item" href="#">예약 목록</a>
+			          <a class="dropdown-item" href="#">계정 설정</a>
+			        </div>
+			    </li>
+			    <li class="nav-item">
+		      		<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
+						<input type="submit" value="로그아웃" />
+					</form:form>
+				</li>
+		      </sec:authorize>
+		   			
 		    </ul>
 		  </div>
 		</nav>

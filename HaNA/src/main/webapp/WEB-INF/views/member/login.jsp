@@ -10,16 +10,24 @@
 	<jsp:param value="로그인화면" name="title"/>
 </jsp:include>
 
+<c:if test="${not empty msg }">
+	<script>
+		alert("${msg}");
+	</script>
+</c:if>
+
 <h1>로그인화면</h1>
-<label for="idInput">ID</label><input type="text" id="idInput" />
+<form:form action="${pageContext.request.contextPath }/member/login" method="POST">
+	<label for="idInput">ID</label>
+	<input type="text" id="idInput" name="userId"/>
 <br />
-<label for="pwInput">PW</label><input type="text" id="pwInput"/>
+	<label for="pwInput">PW</label>
+	<input type="password" id="pwInput" name="password"/>
+<br />
+	<input type="submit" value="로그인" id="loginBtn"/>
 <br />
 <br />
-<input type="button" value="회원가입" onclick="location.href='${pageContext.request.contextPath}/member/memberEnrollMain'"/>
-
-
-
-
+	<input type="button" value="회원가입" onclick="location.href='${pageContext.request.contextPath}/member/memberEnrollMain'"/>
+</form:form>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
