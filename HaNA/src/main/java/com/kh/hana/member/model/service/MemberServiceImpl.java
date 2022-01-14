@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
 
-
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -17,7 +16,4 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-
-
 }

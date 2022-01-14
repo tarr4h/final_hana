@@ -31,7 +31,20 @@ commit;
 
 select * from test;
 
+drop table test;
+
 insert into test values(3, '홍길동');
+
+delete from test where no = 3;
+
+select * from member;
+
+drop table member;
+
+commit;
+
+commit;
+
     
 -- 소모임 생성 
 
@@ -62,6 +75,7 @@ create table group_board(
     constraint fk_group_id foreign key(leader_id) references member(id) on delete cascade
 );
 
+<<<<<<< HEAD
 select * from member;
 insert into member values(
     'hyungzin0309','1234','김형진',null,'960309-1000000',default,'경기도','성남시','판교대장로','안녕하세요',default
@@ -72,3 +86,6 @@ insert into group_ values(
 );
 
 commit;
+=======
+select * from group_;
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git

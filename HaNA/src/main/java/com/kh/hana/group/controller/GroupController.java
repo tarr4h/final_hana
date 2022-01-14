@@ -28,9 +28,9 @@ public class GroupController {
 
 	@GetMapping("/groupPage/{groupId}")
 	public String groupPage(@PathVariable String groupId, Model model) {
-		Group group1 = groupService.selectOneGroup(groupId);
-		log.debug("group = {}", group1);
-		model.addAttribute(group1);
+		Group group = groupService.selectOneGroup(groupId);
+		log.debug("group = {}", group);
+		model.addAttribute(group);
 		return "group/groupPage";
 
 	}
@@ -47,7 +47,6 @@ public class GroupController {
 		log.debug("group = {}",group);
 
 		group.getHashtag();
-		
 	}
 		
 }
