@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
@@ -24,21 +25,22 @@ public class GroupController {
 	@Autowired
 	private GroupService groupService;
 	
+
 	@GetMapping("/groupPage/{groupId}")
-	public void groupDetail(
-			@PathVariable String groupId,
-			Model model) {
-		log.debug("groupId = {}", groupId);
-		Group group = groupService.selectOneGroup(groupId);
-		log.debug("group = {}", group);
-		model.addAttribute("group",group);
+	public String groupPage(@PathVariable String groupId, Model model) {
+		Group group1 = groupService.selectOneGroup(groupId);
+		log.debug("group = {}", group1);
+		model.addAttribute(group1);
+		return "group/groupPage";
+
 	}
 	
 	@GetMapping("/groupList")
 	public void groupList(@AuthenticationPrincipal Member member) {
 		log.debug("loginMember = {}",member);
-		
+
 	}
+	
 
 	@PostMapping("/createGroup")
 	public void insertGroup(Group group) {
