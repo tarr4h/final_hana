@@ -6,4 +6,6 @@ public interface GroupService {
 
 	Group selectOneGroup(String groupId);
 
+	int insertOneGroup(Group group);
+
 }

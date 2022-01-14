@@ -18,4 +18,9 @@ public class GroupDaoImpl implements GroupDao {
 		return session.selectOne("group.selectOneGroup",groupId);
 	}
 
+	@Override
+	public int insertOneGroup(Group group) {
+		return session.insert("group.insertOneGroup",group);
+	}
+
 }
