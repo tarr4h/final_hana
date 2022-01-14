@@ -18,7 +18,7 @@
 			style="position: relative; border: 1px black solid; width: 100%; height: 300px;">
 			<div
 				style="border-radius: 50%; background-color: gray; width: 100px; height: 100px; position: relative; top: 30%; left: 35%; display: inline-block;">
-				<!-- <img src="/final/user.png" alt="" style="width: 80px; height: 80px;"> -->
+				<img style="position: absolute; top:0; left: 0; width: 100%; height: 100%;" src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}" alt="" />
 			</div>
 			<div
 				style="position: relative; top: 25%; left: 40%; display: inline-block;">
