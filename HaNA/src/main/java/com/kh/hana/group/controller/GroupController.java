@@ -35,8 +35,8 @@ public class GroupController {
 	
 	
 	@GetMapping("/groupList")
-	public void groupList(@AuthenticationPrincipal Account account) {
-		log.debug("loginMember = {}",account);
+	public void groupList(@AuthenticationPrincipal Member member) {
+		log.debug("loginMember = {}", member);
 		
 	}
 
