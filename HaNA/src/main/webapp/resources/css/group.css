@@ -6,6 +6,10 @@
 	min-height:1000px;
 	border:solid red 1px;
 }
+
+/* 페이지 상세 보기 */
+
+/* 전체 페이지 */
 .group-page-section {
 	position: relative; 
 	width: 100%; 
@@ -13,6 +17,7 @@
 	margin-bottom : 50px;
 }
 
+/* 프로필 사진 미지정시 배경 */
 .group-page-image{
 	border-radius: 50%; 
 	background-color: gainsboro; 
@@ -24,6 +29,7 @@
 	display: inline-block;
 }
 
+/* 프로필 사진 지정시 & 미지정시 user 이미지 */
 .group-page-image img{
 	position: absolute; 
 	top: 0; 
@@ -33,10 +39,52 @@
 	border-radius: 50%;
 }
 
+/* 소모임 정보 테이블 */
+.group-page-table{
+	position: relative; 
+	top: 25%; 
+	left: 35%; 
+	display: inline-block;
+}
+
+/* 가입 버튼 틀 */
+.group-page-enroll-button {
+	display:inline-block; 
+	position: relative; 
+	top : 5%; 
+	left: 45%;
+}
+
+/* 가입버튼 css */
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+/* 글쓰기, 일정, 채팅 아이콘 */
 .icon{
 	text-align: center;	
 }
-
 
 .icon i {
 	font-size: 50px;

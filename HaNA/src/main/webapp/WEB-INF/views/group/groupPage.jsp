@@ -23,15 +23,11 @@
 					<img src="${pageContext.request.contextPath}/resources/images/user.png" alt="" />
 				</c:if>
 				<c:if test="${not empty group.image}">
-					<img
-						style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
-						src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-						alt="" />
+					<img src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}" alt="" />
 				</c:if>
 				<!-- <img style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border-radius: 50%;" src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}" alt="" /> -->
 			</div>
-			<div class="group-page-table"
-				style="position: relative; top: 25%; left: 35%; display: inline-block;">
+			<div class="group-page-table">
 				<table>
 					<tr>
 						<td>아이디&nbsp</td>
@@ -49,17 +45,17 @@
 					</tr>
 				</table>
 			</div>
-			<div style="display:inline-block; position: relative; top : 12%; left: 45%;">
+			<div class="group-page-enroll-button">
 				<br>
 				<c:if test="${empty groupMember || empty loginMember}">
-					<button class="group-page-enroll-button">가입신청</button>
+					<a href="#" class="myButton">가입신청</a>
 				</c:if>
 			</div>
 		</section>
 		<div class="icon">
-			<i class="fas fa-pencil-alt"></i>
-			<i class="fas fa-calendar-alt"></i>
-			<i class="far fa-comments"></i>
+			<a href="#"><i class="fas fa-pencil-alt"></i></a>
+			<a href=""><i class="fas fa-calendar-alt"></i></a>
+			<a href=""><i class="far fa-comments"></i></a>
 		</div>
 	</div>
 </div>
