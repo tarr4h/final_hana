@@ -15,18 +15,27 @@
 	<li>
 		<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
 			<span>비동의</span>
-			<span class="mbtiListPage-shapes"><i class="far fa-circle fa-3x"></i></span>
-			<span class="mbtiListPage-shapes"><i class="far fa-circle fa-2x"></i></span>
-			<span class="mbtiListPage-shapes"><i class="far fa-circle fa-lg"></i></span>
-			<span class="mbtiListPage-shapes"><i class="far fa-circle"></i></span>
-			<span class="mbtiListPage-shapes"><i class="far fa-circle fa-lg"></i></span>
-			<span class="mbtiListPage-shapes"><i class="far fa-circle fa-2x"></i></span>
-			<span class="mbtiListPage-shapes"><i class="far fa-circle fa-3x"></i></span>
+				<button id="shapes_1"></button>
+				<button id="shapes_2"></button>
+				<button id="shapes_3"></button>
+				<button id="shapes_4"></button>
+				<button id="shapes_5"></button>
+				<button id="shapes_6"></button>
+				<button id="shapes_7"></button>
 			<span>동의</span>
 	</li>
  </c:forEach>
+ 
 
 </ul>
+
+			
+
+			
+		
+
+
+
 <button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
 <button id="mbtiListPage-buttonNext" >next <i class="fas fa-angle-double-right"></i></button>
 </div>
