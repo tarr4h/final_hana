@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+#mbtiMain-Background{
+	width: 50%;
+	height: 100%;
+	background-color:#212529!important;
+	text-align:center;
+	margin:auto;
+	border-radius:40px 0;
+}
+
+#mainPage-h1{
+	color:#ffffff;
+	padding:2%;
+}
+#mainPage-button{
+	margin:2%;
+	background-color:#ffe15a;
+	
+}
+#mbtiList-Background{
+	width: 50%;
+	height: 100%;
+	background-color:#212529!important;
+	text-align:center;
+	margin:auto;
+	border-radius:40px 0;
+}
+#mbtiListPage-ul{
+	color:#ffffff;
+	list-style:none;
+}
+
+.mbtiListPage-p{
+	display: block;
+	color:#ffffff;
+}
+#mbtiListPage-buttonPrev{
+	margin:2%;
+	background-color:#ffe15a;
+	text-align:left;	
+}
+#mbtiListPage-buttonNext{
+	margin:2%;
+	background-color:#ffe15a;
+	text-align:right;
+}
+.mbtiListPage-shapes{
+	margin-right: 10px;
+	margin-left: 10px;
+}
+#mbtiListPage-buttonPrev{
+	border-radius: 20px 40px 60px 80px;
+}
+#mbtiListPage-buttonNext{
+	border-radius: 40px 20px 80px 60px;
+}

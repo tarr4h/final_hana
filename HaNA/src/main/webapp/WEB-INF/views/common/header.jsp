@@ -19,6 +19,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/29546d6ff0.js" crossorigin="anonymous"></script>
 <style>
 	.body-section {min-height : 1000px;}
 	.navbar-expand-lg { height : 10em;}
@@ -45,7 +46,7 @@
 		        <a class="nav-link text-light" href="#">친구추가</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link text-light" href="#">나침반</a>
+		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/mbti/mbti.do">나침반</a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>
