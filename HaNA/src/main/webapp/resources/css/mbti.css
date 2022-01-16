@@ -66,7 +66,6 @@
 #shapes_1, #shapes_7 {
 	width: 40px;
 	height: 40px;
-	border-radius: 25px;
 	margin-right: 10px;
 	margin-left: 10px;
 }
@@ -74,7 +73,6 @@
 #shapes_2, #shapes_6 {
 	width: 30px;
 	height: 30px;
-	border-radius: 25px;
 	margin-right: 10px;
 	margin-left: 10px;
 }
@@ -82,15 +80,14 @@
 #shapes_3, #shapes_5 {
 	width: 20px;
 	height: 20px;
-	border-radius: 25px;
 	margin-right: 10px;
 	margin-left: 10px;
 }
 
+
 #shapes_4 {
 	width: 10px;
 	height: 10px;
-	border-radius: 25px;
 	margin-right: 10px;
 	margin-left: 10px;
 }
