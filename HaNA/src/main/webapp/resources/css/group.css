@@ -98,3 +98,7 @@
 	color: gray;
 	letter-spacing: 70px;
 }
+
+table, td, tr {
+	color : solid black 1px;
+}
