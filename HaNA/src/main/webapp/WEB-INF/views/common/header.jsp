@@ -31,7 +31,7 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark pr-3">
 			<div class="title-image-box">
-			  <a class="navbar-brand head" href="#"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail"></a>
+			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail"></a>
 			</div>			  
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
 		  <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
 		    <ul class="navbar-nav">
 		      <li class="nav-item active">
-		        <a class="nav-link text-light" href="#">Home <span class="sr-only">(current)</span></a>
+		        <a class="nav-link text-light" href="${pageContext.request.contextPath}">Home <span class="sr-only">(current)</span></a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="#">친구추가</a>
