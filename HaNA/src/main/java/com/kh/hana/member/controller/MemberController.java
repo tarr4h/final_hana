@@ -46,14 +46,20 @@ public class MemberController {
 		
 		int result = memberService.memberEnroll(member);
 		
+		log.debug("result");
+		
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원가입에 성공했습니다." : "회원가입에 실패했습니다.");
 		
-		return "redirect:/member/loginMain";		
+		return "redirect:/member/login";		
 	}
 	
 	@GetMapping("/memberView")
 	public void memberView(@AuthenticationPrincipal Member member) {
+ 
 		log.debug("member={}", member);	
+ 
+	 
+ 
 	}
 	
 	
