@@ -30,4 +30,9 @@ public class ChatServiceImpl implements ChatService {
 		return chatDao.roomchat(no);
 	}
 
+	@Override
+	public ChatRoom selectChatRoom(int roomNo) {
+		return chatDao.selectChatRoom(roomNo);
+	}
+
 }

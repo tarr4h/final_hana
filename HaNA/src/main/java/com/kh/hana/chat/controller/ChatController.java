@@ -53,7 +53,7 @@ public class ChatController {
     	log.info("no = {}",no);
     	
     	List<Chat> chat = chatService.roomchat(no);
-    	log.info("chat = {}", chat); 	  	
+    	//log.info("chat = {}", chat); 	  	
     	
     	return ResponseEntity.ok(chat);
     }
