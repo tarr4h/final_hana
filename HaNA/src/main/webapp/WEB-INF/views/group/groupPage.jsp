@@ -12,8 +12,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="main" />
 </jsp:include>
-<script src="https://kit.fontawesome.com/0748f32490.js"
-	crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 
 <div class="group-page">
 	<section class="group-page-section">
@@ -44,7 +43,7 @@
 				</tr>
 				<tr>
 					<td class="td">소모임이름</td>
-					<td style="padding-right:100px;" colspan="3">${group.groupName}</td>
+					<td style="padding-right: 100px;" colspan="3">${group.groupName}</td>
 				</tr>
 			</table>
 		</div>
@@ -59,8 +58,6 @@
 		<a href="#"><i class="fas fa-pencil-alt"></i></a> 
 		<a href="#"><i class="fas fa-calendar-alt"></i></a> 
 		<a href="#"><i class="far fa-comments"></i></a>
-	</div>
-	<div>
 	</div>
 </div>
 
