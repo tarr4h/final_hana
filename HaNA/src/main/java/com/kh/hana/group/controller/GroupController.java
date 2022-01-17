@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/group")
 @Slf4j
 public class GroupController {
+
 	
 	@Autowired
 	private GroupService groupService;
@@ -55,7 +56,6 @@ public class GroupController {
 	@GetMapping("/createGroupForm")
 	public void createGroupForm() {}
 	
-
 	@PostMapping("/createGroup")
 	public String insertGroup(Group group,
 		@RequestParam(name="profileImage",required=false)MultipartFile[] profileImage,
@@ -96,3 +96,4 @@ public class GroupController {
 	public void groupBoardForm(){}
 		
 }
+
