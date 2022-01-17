@@ -58,7 +58,6 @@ public class MemberController {
 		log.debug("member={}", member);
 	}
 
-	
 
 
 }
