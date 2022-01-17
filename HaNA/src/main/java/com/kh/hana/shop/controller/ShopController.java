@@ -1,4 +1,4 @@
-package com.kh.hana.shop.model.controller;
+package com.kh.hana.shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
