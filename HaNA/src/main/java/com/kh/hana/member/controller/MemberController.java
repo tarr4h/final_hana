@@ -57,7 +57,8 @@ public class MemberController {
 	}
 	
 	
-	@GetMapping("/")
+	@GetMapping("/memberSetting")
+	public void memberSetting() {}
 	
 	
 	

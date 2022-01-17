@@ -13,7 +13,7 @@
 <sec:authentication property="principal" var="loginMember"/>
 <script>
 function goSetting(){
-	location.href = "${pageContext.request.contextPath}/member/memberSetting.do";
+	location.href = "${pageContext.request.contextPath}/member/memberSetting";
 }
 </script>
 
@@ -21,9 +21,19 @@ function goSetting(){
 
   <div>
         <section style="position: relative; border: 1px black solid; width: 100%; height: 300px;">
-            <div style="border-radius: 50%; background-color: gray; width: 100px; height: 100px; position: relative; top: 30%; left: 15%; display: inline-block;">
-                <img src="/final/user.png" alt="" style="width: 80px; height: 80px;"></div>
-            <div style="position: relative; top: 30%; left: 25%; display: inline-block;">
+          	<div class="group-page-image">
+			<c:if test="${empty group.image}">
+				<img
+					src="${pageContext.request.contextPath}/resources/images/user.png"
+					alt="" />
+			</c:if>
+			<c:if test="${not empty group.image}">
+				<img
+					src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
+					alt="" />
+			</c:if>
+			<!-- <img style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border-radius: 50%;" src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}" alt="" /> -->
+		</div>
                 <table>
                     <tr>
                         <td>아이디</td>
@@ -53,7 +63,7 @@ function goSetting(){
             </div>
         </section>
 			<button type="button" class="btn btn-outline-dark" onclick="goSetting();">설정</button>
-    </div>
+    
 
  
  
