@@ -17,8 +17,8 @@
 		enctype="multipart/form-data">
 		<table>
 			<tr>
-<%-- 			<td><input type="hidden" value="<sec:authentication property='principal.name'/>" name="memberId"/></td>
- --%>		</tr>
+			<td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="memberId"/></td>
+			</tr>
 			<tr>
 			<td>
 				<label for="file1">첨부파일 1</label>
