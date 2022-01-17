@@ -30,4 +30,9 @@ public class ChatDaoImpl implements ChatDao {
 		return session.selectList("chat.roomchat",no);
 	}
 
+	@Override
+	public ChatRoom selectChatRoom(int roomNo) {
+		return session.selectOne("chat.selectChatRoom", roomNo);
+	}
+
 }
