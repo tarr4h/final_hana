@@ -7,14 +7,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="계정화면" name="member"/>
+	<jsp:param value="계정화면" name="member/"/>
 </jsp:include>
 
 <sec:authentication property="principal" var="loginMember"/>
+<script>
+function goSetting(){
+	location.href = "${pageContext.request.contextPath}/member/memberSetting.do";
+}
+</script>
+
+
 
   <div>
-     
-
         <section style="position: relative; border: 1px black solid; width: 100%; height: 300px;">
             <div style="border-radius: 50%; background-color: gray; width: 100px; height: 100px; position: relative; top: 30%; left: 15%; display: inline-block;">
                 <img src="/final/user.png" alt="" style="width: 80px; height: 80px;"></div>
@@ -22,7 +27,7 @@
                 <table>
                     <tr>
                         <td>아이디</td>
-                        <td colspan="3"><sec:authenticaion property='principal.username'/></td>
+                        <td colspan="3">${loginMember.id}</td>
                     </tr>
                     <tr>
                         <td>나의 관심사</td>
@@ -47,7 +52,7 @@
                 </table>
             </div>
         </section>
-			<button type="button" class="btn btn-outline-dark">설정</button>
+			<button type="button" class="btn btn-outline-dark" onclick="goSetting();">설정</button>
     </div>
 
  

@@ -53,9 +53,22 @@ public class MemberController {
 	
 	@GetMapping("/memberView")
 	public void memberView(@AuthenticationPrincipal Member member) {
-		log.debug("member={}", member);
-		
+		log.debug("member={}", member);	
 	}
+	
+	
+	@GetMapping("/")
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 
