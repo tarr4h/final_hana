@@ -12,7 +12,7 @@
 </jsp:include>
 
 <div class="create-group-form-container">
-	<form
+	<form:form
 		action="${pageContext.request.contextPath}/group/createGroup"
 		method="post"
 		enctype="multipart/form-data">
@@ -25,9 +25,9 @@
 				<input type="text" name="groupName" id="groupName"/>
 				<label for="groupName">이름</label>
 			</td></tr>
-			<tr><td>
-				<input type="hidden" name="leaderId" id="leaderId" value="hyungzin0309"/>
-			</td></tr>
+			<tr>
+			<td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="leaderId"/></td>
+			</tr>
 			<tr>
 			<td>
 				<input type="checkbox" name="hashtag" value="운동" id="hashtag-ex"/>
@@ -47,7 +47,7 @@
 			</tr>
 		</table>
 
-	</form>
+	</form:form>
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
