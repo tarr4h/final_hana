@@ -10,9 +10,5 @@ public class ShopDaoImpl implements ShopDao {
 	@Autowired
 	public SqlSession session;
 	
-	@Override
-	public String test() {
-		return session.selectOne("shop.selectTest");
-	}
 	
 }
