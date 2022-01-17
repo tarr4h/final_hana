@@ -11,7 +11,7 @@
 </jsp:include>
 
 <div class="create-group-form-container">
-	<form
+	<form:form
 		action="${pageContext.request.contextPath}/group/enrollGroupBoard"
 		method="post"
 		enctype="multipart/form-data">
@@ -36,7 +36,7 @@
 			</tr>
 		</table>
 
-	</form>
+	</form:form>
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
