@@ -12,8 +12,8 @@
 </jsp:include>
 
 <div class="create-group-form-container">
-	<form:form
-		action="${pageContext.request.contextPath}/group/createGroup"
+	<form
+		action="${pageContext.request.contextPath}/group/createGroup?${_csrf.parameterName}=${_csrf.token}"
 		method="post"
 		enctype="multipart/form-data">
 		<table>
@@ -46,8 +46,7 @@
 			<td><input type="submit" /></td>
 			</tr>
 		</table>
-
-	</form:form>
+	</form>
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
