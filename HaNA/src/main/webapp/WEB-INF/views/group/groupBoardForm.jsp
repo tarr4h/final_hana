@@ -17,7 +17,22 @@
 		enctype="multipart/form-data">
 		<table>
 			<tr>
-			<td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="memberId"/></td>
+<%-- 			<td><input type="hidden" value="<sec:authentication property='principal.name'/>" name="memberId"/></td>
+ --%>		</tr>
+			<tr>
+			<td>
+				<label for="file1">첨부파일 1</label>
+				<input type="file" name="file" id="file1"/>
+			</td>
+			</tr>
+			<tr>
+			<td>
+				<label for="file1">첨부파일 2</label>
+				<input type="file" name="file" id="file1"/>
+			</td>
+			</tr>
+			<tr>
+			<td> <input type="text" /></td>
 			</tr>
 		</table>
 
