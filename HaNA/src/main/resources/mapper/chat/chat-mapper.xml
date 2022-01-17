@@ -19,5 +19,13 @@
 		chat
 	where room_no = #{no}
 	</select>
+	<select id="selectChatRoom" resultType="chatroom">
+	select 
+		* 
+	from
+		chatroom
+	where
+		room_no = #{roomNo}
+	</select>
 
 </mapper>
