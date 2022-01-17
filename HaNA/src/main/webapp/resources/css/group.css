@@ -99,6 +99,9 @@
 	letter-spacing: 70px;
 }
 
-table, td, tr {
-	color : solid black 1px;
+/* table {
+	border : solid black 1px;
 }
+table td, table th {
+	border : solid black 1px;
+} */

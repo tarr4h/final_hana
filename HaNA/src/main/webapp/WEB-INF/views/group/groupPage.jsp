@@ -38,15 +38,16 @@
 				</tr>
 				<tr>
 					<td class="td">게시물&nbsp</td>
-					<td>${group.boardCount}&nbsp&nbsp&nbsp&nbsp</td>
-					<td class="td">회원수&nbsp</td>
+					<td style="padding-right:30px;">${group.boardCount}&nbsp&nbsp&nbsp&nbsp</td>
+					<td class="td" style="padding-right:10px;">회원수&nbsp</td>
 					<td>${group.memberCount}</td>
 				</tr>
 				<tr>
 					<td style="padding-right:10px;" class="td">소모임이름</td>
-					<td style="padding-right:100px;" colspan="3">${group.groupName}</td>
+					<td colspan="3">${group.groupName}</td>
 				</tr>
 			</table>
+
 		</div>
 		<div class="group-page-enroll-button">
 			<br>
@@ -63,5 +64,6 @@
 	<div>
 	</div>
 </div>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
