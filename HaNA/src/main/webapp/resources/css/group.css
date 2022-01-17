@@ -9,7 +9,7 @@
 
 /* 페이지 상세 보기 groupPage.jsp /
 
-/ 전체 section /
+/* 전체 section */
 .group-page-section {
     position: relative; 
     width: 100%; 
@@ -17,7 +17,7 @@
     margin-bottom : 50px;
 }
 
-/ 프로필 사진 미지정시 배경 /
+/* 프로필 사진 미지정시 배경 */
 .group-page-image{
     border-radius: 50%; 
     background-color: gainsboro; 
@@ -29,7 +29,7 @@
     display: inline-block;
 }
 
-/ 프로필 사진 지정시 & 미지정시 user 이미지 /
+/* 프로필 사진 지정시 & 미지정시 user 이미지 */
 .group-page-image img{
     position: absolute; 
     top: 0; 
@@ -39,7 +39,7 @@
     border-radius: 50%;
 }
 
-/ 소모임 정보 테이블 /
+/* 소모임 정보 테이블 */
 .group-page-table{
     position: relative; 
     top: 25%; 
@@ -51,7 +51,7 @@
     font-weight: bold; 
 }
 
-/ 가입 버튼 틀 /
+/* 가입 버튼 틀 */
 .group-page-enroll-button {
     display:inline-block; 
     position: relative; 
@@ -59,7 +59,7 @@
     left: 45%;
 }
 
-/ 가입버튼 css /
+/* 가입버튼 css */
 .enroll-button {
     box-shadow:inset 0px 1px 0px 0px #ffffff;
     background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
@@ -87,7 +87,7 @@
     top:1px;
 }
 
-/ 글쓰기, 일정, 채팅 아이콘 */
+/* 글쓰기, 일정, 채팅 아이콘 */
 .icon{
     text-align: center;
     padding: 60px 0px; 
@@ -99,10 +99,5 @@
     letter-spacing: 70px;
 }
 
-/* table {
-	border : solid black 1px;
-}
-table td, table th {
-	border : solid black 1px;
-} */
 /* 그룹 페이지 글 리스트 썸네일 */
+
