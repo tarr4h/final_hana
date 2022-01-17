@@ -17,8 +17,10 @@
 		<intercept-url pattern="/" access="permitAll"/>
 		<intercept-url pattern="/index.jsp" access="permitAll"/>
 		<intercept-url pattern="/member/login" access="permitAll"/>
+		<intercept-url pattern="/member/memberEnroll" access="permitAll"/>
 		<intercept-url pattern="/member/memberView" access="isAuthenticated()"/>
 		<intercept-url pattern="/**" access="permitAll"/>
+		<intercept-url pattern="/**/**" access="permitAll"/>
 		
 		<form-login
 			login-page="/member/login"

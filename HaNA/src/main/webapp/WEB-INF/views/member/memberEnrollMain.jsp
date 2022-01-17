@@ -12,7 +12,7 @@
 
 <h1>회원가입</h1>
 	
-	<form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST" name="enrollFrm">
+	<form:form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST" name="enrollFrm">
 		<table>
 			<tbody>
 				<tr>
@@ -85,7 +85,7 @@
 			</tbody>
 		</table>
 		<button>가입하기</button>
-	</form>
+	</form:form>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
