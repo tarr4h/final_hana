@@ -9,8 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="계정화면" name="member"/>
 </jsp:include>
-
-<sec:authentication property="principal" var="loginMember"/>
+ 
 
   <div>
      
@@ -22,7 +21,7 @@
                 <table>
                     <tr>
                         <td>아이디</td>
-                        <td colspan="3"><sec:authenticaion property='principal.username'/></td>
+                        <td colspan="3"></td>
                     </tr>
                     <tr>
                         <td>나의 관심사</td>
