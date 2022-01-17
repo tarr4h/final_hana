@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="계정화면" name="member/"/>
 </jsp:include>
-<<<<<<< HEAD
+ 
 
 <sec:authentication property="principal" var="loginMember"/>
 <script>
@@ -18,10 +18,7 @@ function goSetting(){
 }
 </script>
 
-
-=======
  
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 
   <div>
         <section style="position: relative; border: 1px black solid; width: 100%; height: 300px;">
@@ -41,11 +38,11 @@ function goSetting(){
                 <table>
                     <tr>
                         <td>아이디</td>
-<<<<<<< HEAD
+ 
                         <td colspan="3">${loginMember.id}</td>
-=======
-                        <td colspan="3"></td>
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
+ 
+                       
+ 
                     </tr>
                     <tr>
                         <td>나의 관심사</td>
