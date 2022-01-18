@@ -8,4 +8,6 @@ public interface MbtiDao {
 
 	List<Mbti> selectMbtiList();
 
+	Object insertList(String[] checkList);
+
 }

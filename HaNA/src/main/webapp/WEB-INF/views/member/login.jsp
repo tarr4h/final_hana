@@ -16,18 +16,30 @@
 	</script>
 </c:if>
 
-<h1>로그인화면</h1>
-<form:form action="${pageContext.request.contextPath }/member/login" method="POST">
-	<label for="idInput">ID</label>
-	<input type="text" id="idInput" name="userId"/>
-<br />
-	<label for="pwInput">PW</label>
-	<input type="password" id="pwInput" name="password"/>
-<br />
-	<input type="submit" value="로그인" id="loginBtn"/>
-<br />
-<br />
-	<input type="button" value="회원가입" onclick="location.href='${pageContext.request.contextPath}/member/memberEnrollMain'"/>
-</form:form>
-
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-sm"></div>
+		<div class="col-sm">			
+			<form:form action="${pageContext.request.contextPath }/member/login" method="POST">
+			  <div class="form-group mb-3">
+			    <label for="exampleInputEmail1">ID</label>
+			    <input type="text" name="userId" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="아이디를 입력하세요">
+			    <small id="emailHelp" class="form-text text-muted">아이디 잘못되었을 경우 안내문구 노출자리</small>
+			  </div>
+			  <div class="form-group mb-3">
+			    <label for="exampleInputPassword1">Password</label>
+			    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="비밀번호를 입력하세요">
+			  </div>
+			  <div class="form-check">
+			    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+			    <label class="form-check-label" for="exampleCheck1">Remember Me(미개발)</label>
+			  </div>
+			  <button type="submit" class="btn btn-primary">로그인</button>
+			  <br />
+			  <input type="button" class="btn btn-info mt-3" value="회원가입" onclick="location.href='${pageContext.request.contextPath}/member/memberEnrollMain'"/>
+			</form:form>
+		</div>
+		<div class="col-sm"></div>
+	</div>
+</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

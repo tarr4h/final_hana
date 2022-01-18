@@ -1,13 +1,19 @@
 package com.kh.hana.mbti.controller;
 
+
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import com.kh.hana.mbti.model.service.MbtiService;
 import com.kh.hana.mbti.model.vo.Mbti;
@@ -33,6 +39,16 @@ public class MbtiController {
 		
 		model.addAttribute("mbtiList",mbtiList);
 		log.info("mbtiList = {}", mbtiList);
+		return "/mbti/mbtiList";
+	}
+	
+	
+	@PostMapping("/mbtiinsert.do")
+	public String memberCheck(HttpServletRequest request, HttpServletResponse response) {
+		String[] checkList = request.getParameterValues("check");
+		log.info("checkList = {}", checkList);
+		mbtiService.insertList(checkList);
+		
 		return "/mbti/mbtiList";
 	}
 

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
-	<form action="" id="mbtiForm">
+	<form action="/mbti/mbtiinsert.do" id="mbtiForm">
 		<ul id="mbtiListPage-ul">
 		 <c:forEach items="${mbtiList}" var="list">
 			<li>

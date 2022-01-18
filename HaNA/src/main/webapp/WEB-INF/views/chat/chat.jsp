@@ -88,9 +88,8 @@ const displaychat = (selector, data) =>{
 		$target.html(chat);
 };
 
-function roomchat(no){
-	console.log(no);
-	
+/*  function roomchat(no){
+	console.log("No = ", no);
 	$.ajax({
 		url : `${pageContext.request.contextPath}/chat/roomchat.do`,
 		data : {
@@ -103,7 +102,9 @@ function roomchat(no){
 		},
 		error:console.log
 	});
-};
+	connect();
+}; */
+
 </script>
 	<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
@@ -214,27 +215,54 @@ function roomchat(no){
 				
 			</div>
 		</div>
-		<div id="ggg">
-			<span>gdgd</span>
-		</div>
 			<button onclick="connect();">연결테스트</button>
-			<button onclick="location.href='${pageContext.request.contextPath}/chat/test.do'">DB테스트</button>
 <script>
+<!-- roomNo 전역변수 -->
+let roomNo;
+
+function roomchat(no){
+	console.log("No = ", no);
+	roomNo = no;
+	$.ajax({
+		url : `${pageContext.request.contextPath}/chat/roomchat.do`,
+		data : {
+			no : no,
+		},
+		method: "GET",
+		success(resp){
+			console.log(resp);
+			displaychat("#roomchat1", resp);
+		},
+		error:console.log
+	});
+	connect();
+};
+
+
 $("#btnSend").on("click", function(e){
 	e.preventDefault();
-
+	console.log("버튼클릭 roomNo = ",roomNo);
 	if(websocket === undefined) {
 		console.log("연결하세요");
 		return;
 	}
-		
-	console.log("버튼 클릭");
 	let msg = $("textarea#msg").val();
-	websocket.send(msg);
+	
+    const data = {
+            "roomNo" : roomNo,
+            "memberId" : "jeonyeseong",
+            "message"   : msg 
+        };
+    let jsonData = JSON.stringify(data);
+    websocket.send(jsonData);
+	
+	//채팅메세지창 비우기
+	$("textarea#msg").val('');
 });
 
 // 웹소켓
 let websocket;
+
 
 //입장 버튼을 눌렀을 때 호출되는 함수
 function connect() {
@@ -251,18 +279,37 @@ function connect() {
 
 //웹 소켓에 연결되었을 때 호출될 함수
 function onOpen() {
-	console.log("연결연결연결");
+	console.log("onOpen roomNo = ", roomNo);
+     const data = {
+            "roomNo" : roomNo,
+            "memberId" : "jeonyeseong",
+         "message" : "ENTER"
+    };
+    let jsonData = JSON.stringify(data);
+    websocket.send(jsonData);
+    console.log("opOpen");
 }
+
 function onMessage(e){
-	console.log("onMessage = ", e.data);
+	let eSplit = e.data.split(",");
+	
+	const data = {
+		"memberId" : eSplit[0],
+		"message" : eSplit[1]
+	};
+	console.log(data);
 }
 function onError(){
 	
 }
  function onClose(){
 	console.log("onClose");
+	<!-- 지울것 -->
+	alert("연결종료!");
 } 
 
+ 
+ 
 </script>
 <script>
 $("div#ggg").click(function(){

@@ -22,4 +22,9 @@ public class MbtiDaolmpl implements MbtiDao {
 		
 		return session.selectList("mbti.selectMbtiList");
 	}
+
+	@Override
+	public Object insertList(String[] checkList) {
+		return session.insert("mbti.insertList", checkList);
+	}
 }

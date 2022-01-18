@@ -22,5 +22,7 @@ public class GroupDaoImpl implements GroupDao {
 	public int insertOneGroup(Group group) {
 		return session.insert("group.insertOneGroup",group);
 	}
+	
+
 
 }

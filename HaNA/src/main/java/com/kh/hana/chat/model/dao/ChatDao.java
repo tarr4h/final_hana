@@ -13,4 +13,6 @@ public interface ChatDao {
 
 	List<Chat> roomchat(int no);
 
+	ChatRoom selectChatRoom(int roomNo);
+
 }

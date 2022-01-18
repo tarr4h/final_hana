@@ -21,4 +21,10 @@ public class MbtiServicelmpl implements MbtiService {
 	public List<Mbti> selectMbtiList() {
 		return mbtiDao.selectMbtiList();
 	}
+
+	@Override
+	public Object insertList(String[] checkList) {
+		return mbtiDao.insertList(checkList);
+		
+	}
 }
