@@ -7,10 +7,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
- 	<jsp:param value="계정화면" name="title"/>
+ 	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
  
-
 <sec:authentication property="principal" var="loginMember"/>
 <script>
 function goSetting(){
