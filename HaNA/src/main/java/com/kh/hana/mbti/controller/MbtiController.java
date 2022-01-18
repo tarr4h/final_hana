@@ -48,7 +48,6 @@ public class MbtiController {
 		return "/mbti/mbtiList";
 	}
 	
-	
 	@PostMapping("/mbtiinsert.do")
 	public String memberCheck(MbtiData data, @RequestParam("cPage") int cPage) {
 		log.info("data = {}", data);
@@ -68,11 +67,8 @@ public class MbtiController {
 		}
 		
 		int result = mbtiService.insertList(resultOfNo, memberId);
-		
-		
-		
-		
-		return "/mbti/mbtiList.do?cPage="+cPage;
+
+		return "forward:/mbti/mbtiList.do?cPage="+cPage;
 	}
 
 }
