@@ -51,8 +51,8 @@
 		</div>
 		<div class="group-page-enroll-button">
 			<br>
-			<c:if test="${empty groupMember || empty loginMember}">
-			<%-- <c:if test="${!enrolled}"> --%>
+			<%-- <c:if test="${empty groupMember || empty loginMember}"> --%>
+			<c:if test="${!enrolled}">
 				<a href="#" class="enroll-button">가입신청</a>
 			</c:if>
 		</div>

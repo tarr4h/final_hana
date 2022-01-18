@@ -49,19 +49,13 @@ public class GroupController {
 		model.addAttribute(group);
 		String memberId = member.getId();
 		
-		int enrolled = 0;
+		
 		Map<String, String> map = new HashMap<>();
 		map.put("memberId", memberId);
 		map.put("groupId", groupId);
-		group = groupService.selectGroupEnrolled(map);
-			
+		int result = groupService.selectGroupEnrolled(map);
+		Boolean enrolled = result == 1? true:false;
 		
-//		List<Group> enrolledGroup = null;
-//		for(Group  : enrolledGroup){
-//			if(groupId.equals(group)) {
-//				enrolled = true;
-//			}
-//		}
 		model.addAttribute(enrolled);
 		
 		return "group/groupPage";

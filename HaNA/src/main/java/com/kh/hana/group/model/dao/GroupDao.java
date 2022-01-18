@@ -10,6 +10,6 @@ public interface GroupDao {
 
 	public int insertOneGroup(Group group);
 
-	public Group selectGroupEnrolled(Map<String, String> map);
+	public int selectGroupEnrolled(Map<String, String> map);
 
 }

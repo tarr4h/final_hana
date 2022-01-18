@@ -11,7 +11,7 @@ public interface GroupService {
 
 	int insertOneGroup(Group group);
 
-	Group selectGroupEnrolled(Map<String, String> map);
+	int selectGroupEnrolled(Map<String, String> map);
 
 
 	
