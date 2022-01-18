@@ -19,8 +19,8 @@ public class MbtiServicelmpl implements MbtiService {
 	private MbtiDao mbtiDao;
 
 	@Override
-	public List<Mbti> selectMbtiList(int cPage) {
-		return mbtiDao.selectMbtiList(cPage);
+	public List<Mbti> selectMbtiList(Map<String, Object> number) {
+		return mbtiDao.selectMbtiList(number);
 	}
 
 	@Override

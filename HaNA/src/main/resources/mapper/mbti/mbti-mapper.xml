@@ -4,13 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="mbti">
   
-  <select id="selectMbtiList" parameterType="string" resultType="mbti">
+  <select id="selectMbtiList" parameterType="map" resultType="mbti">
   	select 
   		no,question
 	from 
 		mbti_question
 	where 
-		no between #{cPage} and #{}
+		no between #{cPage} and #{endPage}
   </select>
   
 	<insert id="insertList" parameterType="map">

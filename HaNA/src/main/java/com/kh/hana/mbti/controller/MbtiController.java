@@ -33,10 +33,16 @@ public class MbtiController {
 	}
 	
 	@GetMapping("/mbtiList.do")
-	public String mbtiList(Model model, @RequestParam int cPage) {
-		List<Mbti> mbtiList = mbtiService.selectMbtiList(cPage);
+	public String mbtiList(Model model, @RequestParam("cPage") int cPage) {
+		int endPage = cPage + 5;
+		Map<String, Object> number = new HashMap<>();
+		number.put("cPage", cPage);
+		number.put("endPage", endPage);
+		List<Mbti> mbtiList = mbtiService.selectMbtiList(number);
+
 		
 		model.addAttribute("mbtiList",mbtiList);
+		model.addAttribute("cPage", cPage);
 		log.info("mbtiList = {}", mbtiList);
 		return "/mbti/mbtiList";
 	}

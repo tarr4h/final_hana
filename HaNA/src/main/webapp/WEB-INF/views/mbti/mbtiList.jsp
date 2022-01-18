@@ -11,7 +11,7 @@
 
 <div id="mbtiList-Background">
 	<form:form action="${pageContext.request.contextPath }/mbti/mbtiinsert.do" id="mbtiForm" method="POST">
-		<input type="hidden" name="cPage" value="1"/>
+		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
 		 <c:forEach items="${mbtiList}" var="list">
 			<li>
@@ -31,18 +31,19 @@
 		</ul>
 		<button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
 		<input type="hidden" name="memberId" value="tarr4h" />
-		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext" onclick= "changeValue();" >next <i class="fas fa-angle-double-right"></i></button>
+		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
 	</form:form>
 </div>
 
 
 <script>
 window.onload = function(){
-	function changeValue(){
-	int num  = $('input[name=cPage]').val()
-	 num +=6;
+	
+	console.log($('input[name=cPage]').val());
 	}
 }
+
+
 </script>
 
 
