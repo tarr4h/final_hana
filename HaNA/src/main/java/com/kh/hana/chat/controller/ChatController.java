@@ -1,6 +1,8 @@
 package com.kh.hana.chat.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
+import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +35,6 @@ public class ChatController {
 	
     @GetMapping("/roomList.do")
     public ResponseEntity<?> roomlist(String id) {
-    	log.info("id = {}", id);
         
     	List<ChatRoom> cList = chatService.roomList(id);
         
@@ -56,5 +58,41 @@ public class ChatController {
     	//log.info("chat = {}", chat); 	  	
     	
     	return ResponseEntity.ok(chat);
+    }
+    
+    //전체목록에서 친구목록으로 나중에 쿼리 변경
+    @GetMapping("/memberList.do")
+    public ResponseEntity<?> memberList(){
+    	List<Member> member = chatService.memberList();
+    	log.info("memberList = {}", member);
+    	return ResponseEntity.ok(member);
+    }
+    
+    @GetMapping("/sendchat.do")
+    public String sendchat(Member member, String loginId, Model model) {
+    	log.info("member = {}", member);
+    	log.info("loginId = {}", loginId);
+    	
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("memberId", member.getId());
+    	param.put("loginId", loginId);
+    	
+    	//단톡생성시 쿼리 바꾸거나 체크 삭제
+    	//selectOne -> selectList 고민
+    	Chat chat = chatService.chatRoomCheck(param);
+    	log.info("채팅방 생성 or 보내기 chat= {}", chat);
+//    	if(chat == null) {
+//    		int result = chatService.createChatRoom(param);
+////    		if(result > 0)
+////    			model.addAttribute("msg", "채팅방 생성!");
+////    		else
+////    			model.addAttribute("msg", "채팅방 생성 실패!");
+//    			
+//    	}
+//    	else {
+//    		model.addAttribute("msg","이미 채팅방이 있습니다.");
+//    	}
+    	
+    	return "redirect:/chat/chat.do";
     }
 }
