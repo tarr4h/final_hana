@@ -75,7 +75,7 @@
 								
 								<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소">
 								<input type="hidden" name="addressFirst" />
-								<input type="hidden" name="addressSecound" />
+								<input type="hidden" name="addressSecond" />
 								<input type="hidden" name="addressThird" />
 							</td>
 						</tr>
@@ -130,7 +130,7 @@ function execDaumPostcode() {
             document.getElementById("jibunAddress").value = data.jibunAddress;
      
             $("[name=addressFirst]").val(data.sido);
-            $("[name=addressSecound]").val(data.sigungu);
+            $("[name=addressSecond]").val(data.sigungu);
             $("[name=addressThird]").val(data.roadname);
             
             close();

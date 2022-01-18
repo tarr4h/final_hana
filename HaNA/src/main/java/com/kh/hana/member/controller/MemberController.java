@@ -61,9 +61,11 @@ public class MemberController {
 	public void memberView(@AuthenticationPrincipal Member member) {
  
 		log.debug("member={}", member);	
- 
-	 
- 
+	}
+	
+	@GetMapping("/shopView")
+	public void shopView(@AuthenticationPrincipal Member member) {
+		log.debug("member={}", member);
 	}
 	
 	
@@ -81,7 +83,6 @@ public class MemberController {
 		
 		redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
 		return "redirect:/member/memberSetting";
-		
 	}
 	
 	
