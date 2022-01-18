@@ -54,7 +54,7 @@
 							<td>
 								<input type="text" name="ssn1" id="" />
 								-
-								<input type="text" name="ssn2" id="" />
+								<input type="password" name="ssn2" id="" />
 								<input type="hidden" name="personalId" />
 							</td>
 						</tr>
