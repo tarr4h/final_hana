@@ -27,5 +27,15 @@
 		
 	</insert>
 	
+	<select id="selectGroupEnrolled" resultType="group">
+	select
+		* 
+	from
+		group_member_list
+	where
+		group_id = #{groupId}
+		and
+		member_id = #{memberId}
+	</select>
 </mapper>
 

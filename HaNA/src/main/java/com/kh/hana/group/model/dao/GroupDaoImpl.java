@@ -1,5 +1,7 @@
 package com.kh.hana.group.model.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,12 @@ public class GroupDaoImpl implements GroupDao {
 	public int insertOneGroup(Group group) {
 		return session.insert("group.insertOneGroup",group);
 	}
+
+	@Override
+	public Group selectGroupEnrolled(Map<String, String> map) {
+		return session.selectOne("group.selectGroupEnrolled",map);
+	}
+
 	
 
 

@@ -52,6 +52,7 @@
 		<div class="group-page-enroll-button">
 			<br>
 			<c:if test="${empty groupMember || empty loginMember}">
+			<%-- <c:if test="${!enrolled}"> --%>
 				<a href="#" class="enroll-button">가입신청</a>
 			</c:if>
 		</div>
@@ -68,23 +69,6 @@
 			alt="" />
 		</li>
 	</ul>
-	<style>
-ul.group-page-thumbnail {
-	padding-left: 0;
-	list-style: none;
-	height: 100vh;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-evenly;
-}
-
-ul.group-page-thumbnail li img {
-	width: 300px;
-	height: 300px;
-	margin: auto;
-}
-</style>
 </div>
 
 

@@ -1,5 +1,7 @@
 package com.kh.hana.group.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,11 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int insertOneGroup(Group group) {
 		return groupDao.insertOneGroup(group);
+	}
+
+	@Override
+	public Group selectGroupEnrolled(Map<String, String> map) {
+		return groupDao.selectGroupEnrolled(map);
 	}
 
 }
