@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+#mbtiMain-Background {
+	width: 50%;
+	height: 100%;
+	background-color: #212529 !important;
+	text-align: center;
+	margin: auto;
+	border-radius: 40px 0;
+}
+
+#mainPage-h1 {
+	color: #ffffff;
+	padding: 2%;
+}
+
+#mainPage-button {
+	margin: 2%;
+	background-color: #ffe15a;
+}
+
+#mbtiList-Background {
+	width: 50%;
+	height: 100%;
+	background-color: #212529 !important;
+	text-align: center;
+	margin: auto;
+	border-radius: 40px 0;
+}
+
+#mbtiListPage-ul {
+	color: #ffffff;
+	list-style: none;
+}
+
+.mbtiListPage-p {
+	display: block;
+	color: #ffffff;
+}
+
+#mbtiListPage-buttonPrev {
+	margin: 2%;
+	background-color: #ffe15a;
+	text-align: left;
+}
+
+#mbtiListPage-buttonNext {
+	margin: 2%;
+	background-color: #ffe15a;
+	text-align: right;
+}
+
+.mbtiListPage-shapes {
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+#mbtiListPage-buttonPrev {
+	border-radius: 20px 40px 60px 80px;
+}
+
+#mbtiListPage-buttonNext {
+	border-radius: 40px 20px 80px 60px;
+}
+
+#shapes_1, #shapes_7 {
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+#shapes_2, #shapes_6 {
+	width: 30px;
+	height: 30px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+#shapes_3, #shapes_5 {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+
+#shapes_4 {
+	width: 10px;
+	height: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
