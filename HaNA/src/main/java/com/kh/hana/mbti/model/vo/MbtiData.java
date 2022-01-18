@@ -17,8 +17,8 @@ public class MbtiData implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-//	private int[] no;
-//	private int[] memberResult;
-	private Map<String, Object> resultByNo;
+	private int[] no;
+	private int[] memberResult;
+
 	private String memberId;
 }

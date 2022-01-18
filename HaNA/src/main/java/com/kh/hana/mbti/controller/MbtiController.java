@@ -34,6 +34,7 @@ public class MbtiController {
 	
 	@GetMapping("/mbtiList.do")
 	public String mbtiList(Model model) {
+		
 		List<Mbti> mbtiList = mbtiService.selectMbtiList();
 		
 		model.addAttribute("mbtiList",mbtiList);
@@ -46,8 +47,7 @@ public class MbtiController {
 	public String memberCheck(MbtiData data, HttpServletRequest request, HttpServletResponse response) {
 //		String[] checkList = request.getParameterValues("check");
 		log.info("data = {}", data);
-//		mbtiService.insertList(checkList);
-		
+//		mbtiService.insertList(checkList);		
 //		return "/mbti/mbtiList";
 		return null;
 	}

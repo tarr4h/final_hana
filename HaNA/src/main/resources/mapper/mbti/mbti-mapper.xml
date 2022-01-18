@@ -14,9 +14,9 @@
   </select>
   
 	<insert id="insertList">
-		<foreach item="item" index="index" collection="checkList" separator="" open="" close="">
 		insert  into
 			mbti_data
+		<foreach item="item" index="index" collection="checkList" separator="" open="" close="">
 		values(#{item.no})
 	 </foreach>
 		
