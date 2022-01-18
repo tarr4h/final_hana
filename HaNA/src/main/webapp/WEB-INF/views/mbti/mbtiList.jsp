@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
-	<form:form action="${pageContext.request.contextPath }/mbti/mbtiinsert.do" id="mbtiForm" method="POST">
+	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm">
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
 		 <c:forEach items="${mbtiList}" var="list">
@@ -32,7 +32,7 @@
 		<button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
 		<input type="hidden" name="memberId" value="tarr4h" />
 		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
-	</form:form>
+	</form>
 </div>
 
 

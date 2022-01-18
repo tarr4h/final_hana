@@ -1,20 +1,17 @@
 package com.kh.hana.member.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Member;
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,15 +54,8 @@ public class MemberController {
 		return "redirect:/member/login";		
 	}
 	
-	@GetMapping("/memberView")
-	public void memberView(@AuthenticationPrincipal Member member) {
- 
-		log.debug("member={}", member);	
-	}
-	
-	@GetMapping("/shopView")
-	public void shopView(@AuthenticationPrincipal Member member) {
-		log.debug("member={}", member);
+	@GetMapping("/{accountType}")
+	public void memberView(@AuthenticationPrincipal Member member, @PathVariable String accountType) {
 	}
 	
 	

@@ -33,7 +33,9 @@ public class MbtiController {
 	}
 	
 	@GetMapping("/mbtiList.do")
-	public String mbtiList(Model model, @RequestParam("cPage") int cPage) {
+	public String mbtiList(Model model, @RequestParam("cPage") int cPage, MbtiData data) {
+		log.info("data = {}", data);
+		log.info("cPage={}", cPage);
 		int endPage = cPage + 5;
 		Map<String, Object> number = new HashMap<>();
 		number.put("cPage", cPage);
@@ -42,11 +44,31 @@ public class MbtiController {
 
 		cPage += 6;
 		
+		if(data.getNo() != null) {
+			int[] no = data.getNo();
+			int[] memberResult = data.getMemberResult();
+			log.info("no = {}", no);
+			log.info("memberResult = {}", memberResult);
+			
+			Map<Integer, Integer> resultOfNo = new HashMap<>(); 
+			
+			String memberId = data.getMemberId();
+			
+			int i = 0;
+			for(int per : no) {
+				resultOfNo.put(per, memberResult[i]);
+				i++;
+			}
+			
+			int result = mbtiService.insertList(resultOfNo, memberId);
+		}
+		
 		model.addAttribute("mbtiList",mbtiList);
 		model.addAttribute("cPage", cPage);
 		log.info("mbtiList = {}", mbtiList);
-		return "/mbti/mbtiList";
+		return "mbti/mbtiList";
 	}
+	
 	
 	@PostMapping("/mbtiinsert.do")
 	public String memberCheck(MbtiData data, @RequestParam("cPage") int cPage) {
@@ -67,7 +89,8 @@ public class MbtiController {
 		}
 		
 		int result = mbtiService.insertList(resultOfNo, memberId);
-
+		
+		
 		return "forward:/mbti/mbtiList.do?cPage="+cPage;
 	}
 

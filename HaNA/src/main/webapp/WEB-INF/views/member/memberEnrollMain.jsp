@@ -73,7 +73,7 @@
 								<input type="text" id="jibunAddress" placeholder="지번주소">
 								<span id="guide" style="color:#999;display:none"></span>
 								
-								<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소">
+								<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소" required>
 								<input type="hidden" name="addressFirst" />
 								<input type="hidden" name="addressSecond" />
 								<input type="hidden" name="addressThird" />
@@ -131,7 +131,7 @@ function execDaumPostcode() {
      
             $("[name=addressFirst]").val(data.sido);
             $("[name=addressSecond]").val(data.sigungu);
-            $("[name=addressThird]").val(data.roadname);
+            $("[name=addressThird]").val(data.bname);
             
             close();
         }
