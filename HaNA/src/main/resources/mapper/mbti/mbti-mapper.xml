@@ -13,12 +13,10 @@
 		no between '1' and '6'
   </select>
   
-	<insert id="insertList">
-		<foreach item="item" index="index" collection="checkList" separator="" open="" close="">
+	<insert id="insertList" parameterType="map">
 		insert  into
 			mbti_data
-		values(#{item.no})
-	 </foreach>
+		values(#{no}, #{memberId}, #{result})
 		
 	</insert>
   

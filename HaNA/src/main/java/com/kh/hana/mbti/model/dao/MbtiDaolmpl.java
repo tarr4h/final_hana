@@ -1,6 +1,8 @@
 package com.kh.hana.mbti.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,24 @@ public class MbtiDaolmpl implements MbtiDao {
 	}
 
 	@Override
-	public Object insertList(String[] checkList) {
-		return session.insert("mbti.insertList", checkList);
+	public int insertList(Map<Integer, Integer> resultOfNo, String memberId) {
+		log.info("map = {}", resultOfNo);
+		
+		for(int m : resultOfNo.keySet()) {			
+			int no = m;
+			int result = resultOfNo.get(m);
+			Map<String, Object> map = new HashMap<>();
+			map.put("no", no);
+			map.put("result", result);
+			map.put("memberId", memberId);
+			
+			int insertResult = session.insert("mbti.insertList", map);
+			log.info("insertResult = {}", insertResult);
+			
+		}
+		
+		return 0;
 	}
+
+
 }
