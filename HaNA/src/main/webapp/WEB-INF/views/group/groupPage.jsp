@@ -44,8 +44,6 @@
 				<tr>
 					<td style="padding-right:10px;" class="td">소모임이름</td>
 					<td colspan="3">${group.groupName}</td>
-					<td class="td">소모임이름</td>
-					<td style="padding-right: 100px;" colspan="3">${group.groupName}</td>
 				</tr>
 			</table>
 
