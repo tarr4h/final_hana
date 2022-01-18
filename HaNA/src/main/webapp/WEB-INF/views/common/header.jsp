@@ -6,6 +6,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +35,9 @@
 
 </head>
 <body>
+
+	<sec:authentication property="principal" var="loginMember"/>	
+	
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark pr-3">
 			<div class="title-image-box" style="margin-left:20px;">
@@ -65,16 +70,21 @@
 		      	</sec:authorize>					
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
-			    <li class="nav-item dropdown">
-			        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
-			          <span><sec:authentication property="principal.username"/></span>
-			        </a>
-			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-			          <a class="dropdown-item" href="#">게시글 작성</a>
-			          <a class="dropdown-item" href="#">예약 목록</a>
-			          <a class="dropdown-item" href="#">계정 설정</a>
-			        </div>
-			    </li>
+				    <li class="nav-item dropdown">
+		      			<c:if test="${loginMember != null && loginMember.accountType eq 1 }">
+				        	<a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
+			    		</c:if>
+			    		<c:if test="${loginMember != null && loginMember.accountType eq 0 }">
+			    			<a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/shopView" >
+			    		</c:if>
+				          <span><sec:authentication property="principal.username"/></span>
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				          <a class="dropdown-item" href="#">게시글 작성</a>
+				          <a class="dropdown-item" href="#">예약 목록</a>
+				          <a class="dropdown-item" href="#">계정 설정</a>
+				        </div>
+				    </li>
 			    <li class="nav-item">
 		      		<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
 						<input type="submit" value="로그아웃" />
