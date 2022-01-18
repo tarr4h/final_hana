@@ -26,7 +26,7 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public int selectGroupEnrolled(Map<String, String> map) {
+	public Map<String, String> selectGroupEnrolled(Map<String, String> map) {
 		return session.selectOne("group.selectGroupEnrolled",map);
 	}
 

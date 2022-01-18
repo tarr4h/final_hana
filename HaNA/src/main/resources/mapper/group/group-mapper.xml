@@ -27,7 +27,7 @@
 		
 	</insert>
 	
-	<select id="selectGroupEnrolled" resultType="group">
+	<select id="selectGroupEnrolled" resultMap="groupMemberListMap">
 	select
 		* 
 	from
@@ -37,5 +37,11 @@
 		and
 		member_id = #{memberId}
 	</select>
+	
+	<resultMap type="map" id="groupMemberListMap">
+		<result column="group_id" property="groupId"/>
+        <result column="member_id" property="memberId"/>
+        <result column="member_level_code" property="memberLevelCode"/>
+	</resultMap>
 </mapper>
 

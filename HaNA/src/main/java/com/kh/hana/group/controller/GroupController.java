@@ -52,10 +52,10 @@ public class GroupController {
 		Map<String, String> map = new HashMap<>();
 		map.put("memberId", memberId);
 		map.put("groupId", groupId);
-		int result = groupService.selectGroupEnrolled(map);
-		Boolean enrolled = result == 1? true:false;
+		Map<String, String> result = groupService.selectGroupEnrolled(map);
+		Boolean enrolled = (result != null? true:false);
 		
-		model.addAttribute(enrolled);
+		model.addAttribute("enrolled",enrolled);
 		
 		return "group/groupPage";
 	}

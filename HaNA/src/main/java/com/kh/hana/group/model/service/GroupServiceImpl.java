@@ -26,7 +26,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public int selectGroupEnrolled(Map<String, String> map) {
+	public Map<String, String> selectGroupEnrolled(Map<String, String> map) {
 		return groupDao.selectGroupEnrolled(map);
 	}
 
