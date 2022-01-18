@@ -24,6 +24,5 @@
 		<result column="address_third" property="addressThird"/>
 		<result column="address_full" property="addressFull"/>
 		<result column="enabled" property="enabled"/>
-	
 	</resultMap>
 </mapper>
