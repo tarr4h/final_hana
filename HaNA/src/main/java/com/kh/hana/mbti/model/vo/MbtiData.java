@@ -19,6 +19,5 @@ public class MbtiData implements Serializable {
 
 	private int[] no;
 	private int[] memberResult;
-
 	private String memberId;
 }
