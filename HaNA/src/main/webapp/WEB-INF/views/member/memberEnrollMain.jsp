@@ -10,82 +10,88 @@
 	<jsp:param value="회원가입" name="title"/>
 </jsp:include>
 
-<h1>회원가입</h1>
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-sm">
+			<h1>회원가입</h1>
 	
-	<form:form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST" name="enrollFrm">
-		<table>
-			<tbody>
-				<tr>
-					<td>계정 구분</td>
-					<td>
-						<label for="user">일반사용자</label><input type="radio" name="accountType" value="1" />
-						<label for="shop">업체</label><input type="radio" name="accountType" value="0" />
-					</td>
-				</tr>
-				<tr>
-					<td>아이디</td>
-					<td>
-						<input type="text" name="id" id="memberId" />
-					</td>
-				</tr>
-				<tr>
-					<td>이름</td>
-					<td>
-						<input type="text" name="name" />
-					</td>
-				</tr>
-				<tr>
-					<td>비밀번호</td>
-					<td>
-						<input type="password" name="password" />
-					</td>
-				</tr>
-				<tr>
-					<td>비밀번호확인</td>
-					<td>
-						<input type="password" name="passwordChk" id="" />
-					</td>
-				</tr>
-				<tr>
-					<td>주민번호</td>
-					<td>
-						<input type="text" name="ssn1" id="" />
-						-
-						<input type="text" name="ssn2" id="" />
-						<input type="hidden" name="personalId" />
-					</td>
-				</tr>
-				<tr>
-					<td>프로필사진</td>
-					<td>
-						<input type="file" name="picture" id="" />
-					</td>
-				</tr>
-				<tr>
-					<td>주소</td>
-					<td>
-						<input type="text" id="postcode" placeholder="우편번호">
-						<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" id="roadAddress" placeholder="도로명주소">
-						<input type="text" id="jibunAddress" placeholder="지번주소">
-						<span id="guide" style="color:#999;display:none"></span>
-						
-						<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소">
-						<input type="hidden" name="addressFirst" />
-						<input type="hidden" name="addressSecound" />
-						<input type="hidden" name="addressThird" />
-					</td>
-				</tr>
-				<tr>
-					<td>소개글</td>
-					<td>
-						<input type="text" name="introduce" id="introduce" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<button>가입하기</button>
-	</form:form>
+			<form:form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST" name="enrollFrm">
+				<table>
+					<tbody>
+						<tr>
+							<td>계정 구분</td>
+							<td>
+								<label for="user">일반사용자</label><input type="radio" name="accountType" value="1" />
+								<label for="shop">업체</label><input type="radio" name="accountType" value="0" />
+							</td>
+						</tr>
+						<tr>
+							<td>아이디</td>
+							<td>
+								<input type="text" name="id" id="memberId" />
+							</td>
+						</tr>
+						<tr>
+							<td>이름</td>
+							<td>
+								<input type="text" name="name" />
+							</td>
+						</tr>
+						<tr>
+							<td>비밀번호</td>
+							<td>
+								<input type="password" name="password" />
+							</td>
+						</tr>
+						<tr>
+							<td>비밀번호확인</td>
+							<td>
+								<input type="password" name="passwordChk" id="" />
+							</td>
+						</tr>
+						<tr>
+							<td>주민번호</td>
+							<td>
+								<input type="text" name="ssn1" id="" />
+								-
+								<input type="password" name="ssn2" id="" />
+								<input type="hidden" name="personalId" />
+							</td>
+						</tr>
+						<tr>
+							<td>프로필사진</td>
+							<td>
+								<input type="file" name="picture" id="" />
+							</td>
+						</tr>
+						<tr>
+							<td>주소</td>
+							<td>
+								<input type="text" id="postcode" placeholder="우편번호">
+								<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+								<input type="text" id="roadAddress" placeholder="도로명주소">
+								<input type="text" id="jibunAddress" placeholder="지번주소">
+								<span id="guide" style="color:#999;display:none"></span>
+								
+								<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소">
+								<input type="hidden" name="addressFirst" />
+								<input type="hidden" name="addressSecound" />
+								<input type="hidden" name="addressThird" />
+							</td>
+						</tr>
+						<tr>
+							<td>소개글</td>
+							<td>
+								<input type="text" name="introduce" id="introduce" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button>가입하기</button>
+			</form:form>
+		</div>
+	</div>
+</div>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -133,7 +139,6 @@ function execDaumPostcode() {
 }
 </script>
 
-</script>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

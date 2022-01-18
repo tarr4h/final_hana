@@ -13,7 +13,7 @@
 
 <div class="create-group-form-container">
 	<form
-		action="${pageContext.request.contextPath}/group/createGroup"
+		action="${pageContext.request.contextPath}/group/createGroup?${_csrf.parameterName}=${_csrf.token}"
 		method="post"
 		enctype="multipart/form-data">
 		<table>
@@ -25,9 +25,9 @@
 				<input type="text" name="groupName" id="groupName"/>
 				<label for="groupName">이름</label>
 			</td></tr>
-			<tr><td>
-				<input type="hidden" name="leaderId" id="leaderId" value="hyungzin0309"/>
-			</td></tr>
+			<tr>
+			<td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="leaderId"/></td>
+			</tr>
 			<tr>
 			<td>
 				<input type="checkbox" name="hashtag" value="운동" id="hashtag-ex"/>
@@ -46,7 +46,6 @@
 			<td><input type="submit" /></td>
 			</tr>
 		</table>
-
 	</form>
 </div>
 

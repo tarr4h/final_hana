@@ -38,15 +38,16 @@
 				</tr>
 				<tr>
 					<td class="td">게시물&nbsp</td>
-					<td>${group.boardCount}&nbsp&nbsp&nbsp&nbsp</td>
-					<td class="td">회원수&nbsp</td>
+					<td style="padding-right: 30px;">${group.boardCount}&nbsp&nbsp&nbsp&nbsp</td>
+					<td class="td" style="padding-right: 10px;">회원수&nbsp</td>
 					<td>${group.memberCount}</td>
 				</tr>
 				<tr>
-					<td class="td">소모임이름</td>
-					<td style="padding-right:100px;" colspan="3">${group.groupName}</td>
+					<td style="padding-right: 10px;" class="td">소모임이름</td>
+					<td colspan="3">${group.groupName}</td>
 				</tr>
 			</table>
+
 		</div>
 		<div class="group-page-enroll-button">
 			<br>
@@ -56,12 +57,35 @@
 		</div>
 	</section>
 	<div class="icon">
-		<a href="#"><i class="fas fa-pencil-alt"></i></a> 
-		<a href="#"><i class="fas fa-calendar-alt"></i></a> 
-		<a href="#"><i class="far fa-comments"></i></a>
+		<a href="#"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i
+			class="fas fa-calendar-alt"></i></a> <a href="#"><i
+			class="far fa-comments"></i></a>
 	</div>
-	<div>
-	</div>
+	<ul class="group-page-thumbnail">
+		<li>
+			<img
+			src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
+			alt="" />
+		</li>
+	</ul>
+	<style>
+ul.group-page-thumbnail {
+	padding-left: 0;
+	list-style: none;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+ul.group-page-thumbnail li img {
+	width: 300px;
+	height: 300px;
+	margin: auto;
+}
+</style>
 </div>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

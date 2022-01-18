@@ -38,6 +38,8 @@ public class GroupController {
 	@Autowired
 	private ServletContext application;
 	
+
+	
 	@GetMapping("/groupPage/{groupId}")
 	public String groupPage(@PathVariable String groupId, Model model) {
 		Group group = groupService.selectOneGroup(groupId);
@@ -89,6 +91,9 @@ public class GroupController {
 			return "redirect:/group/groupList";
 		}
 	}
+	
+	@GetMapping("/groupBoardForm")
+	public void groupBoardForm(){}
 		
 }
 

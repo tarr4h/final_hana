@@ -11,10 +11,7 @@ public class ShopServiceImpl implements ShopService {
 	@Autowired
 	private ShopDao shopDao;
 	
-	@Override
-	public String test() {
-		return shopDao.test();
-	}
+
 
 	
 	
