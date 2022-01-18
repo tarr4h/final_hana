@@ -10,7 +10,7 @@
 	from 
 		mbti_question
 	where 
-		no between '1' and '6'
+		no between #{cPage} and #{}
   </select>
   
 	<insert id="insertList" parameterType="map">

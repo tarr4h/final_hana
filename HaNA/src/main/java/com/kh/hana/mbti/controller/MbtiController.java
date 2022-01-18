@@ -34,7 +34,7 @@ public class MbtiController {
 	
 	@GetMapping("/mbtiList.do")
 	public String mbtiList(Model model, @RequestParam int cPage) {
-		List<Mbti> mbtiList = mbtiService.selectMbtiList();
+		List<Mbti> mbtiList = mbtiService.selectMbtiList(cPage);
 		
 		model.addAttribute("mbtiList",mbtiList);
 		log.info("mbtiList = {}", mbtiList);

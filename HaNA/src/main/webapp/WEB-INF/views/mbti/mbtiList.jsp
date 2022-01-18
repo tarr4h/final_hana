@@ -31,10 +31,19 @@
 		</ul>
 		<button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
 		<input type="hidden" name="memberId" value="tarr4h" />
-		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext" >next <i class="fas fa-angle-double-right"></i></button>
+		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext" onclick= "changeValue();" >next <i class="fas fa-angle-double-right"></i></button>
 	</form:form>
 </div>
 
+
+<script>
+window.onload = function(){
+	function changeValue(){
+	int num  = $('input[name=cPage]').val()
+	 num +=6;
+	}
+}
+</script>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
