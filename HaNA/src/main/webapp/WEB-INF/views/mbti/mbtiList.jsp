@@ -31,18 +31,34 @@
 		</ul>
 		<button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
 		<input type="hidden" name="memberId" value="tarr4h" />
-		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
+		<button type="" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
 	</form>
 </div>
 
 
 <script>
 window.onload = function(){
-	
 	console.log($('input[name=cPage]').val());
-
 }
 
+$("#mbtiListPage-buttonNext").click(function(){
+	
+	$.ajax({	
+	url:"/mbti/mbtiinsert.do",
+	dataType:"JSON",
+	type:"POST",
+	data:{
+		no:$('input[name=no]').val(),
+		memberResult:$('input[name=memberResult]').val()
+	},
+	success:function(data){
+		alert("ㅐ");
+	},
+	error:function(xhr,status,error){
+		console.log(xhr,status,error);
+	}
+});
+});
 
 </script>
 
