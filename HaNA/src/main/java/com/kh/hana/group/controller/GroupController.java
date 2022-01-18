@@ -49,7 +49,6 @@ public class GroupController {
 		model.addAttribute(group);
 		String memberId = member.getId();
 		
-		
 		Map<String, String> map = new HashMap<>();
 		map.put("memberId", memberId);
 		map.put("groupId", groupId);

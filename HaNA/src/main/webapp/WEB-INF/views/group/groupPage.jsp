@@ -52,7 +52,8 @@
 		<div class="group-page-enroll-button">
 			<br>
 			<%-- <c:if test="${empty groupMember || empty loginMember}"> --%>
-			<c:if test="${!enrolled}">
+			<c:remove var="enrolled"/>
+			<c:if test="${enrolled ? false : true}" var="result">
 				<a href="#" class="enroll-button">가입신청</a>
 			</c:if>
 		</div>
@@ -62,13 +63,24 @@
 			class="fas fa-calendar-alt"></i></a> <a href="#"><i
 			class="far fa-comments"></i></a>
 	</div>
-	<ul class="group-page-thumbnail">
+	<div class="container">
+	    <div class="row">
+	        <div class="col-sm-3">
+		        <img
+				src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
+				alt="" />
+	        </div>
+	        <div class="col-sm-3"></div>
+	        <div class="col-sm-3"></div>
+	    </div>
+	</div>
+<%-- 	<ul class="group-page-thumbnail">
 		<li>
 			<img
 			src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
 			alt="" />
 		</li>
-	</ul>
+	</ul> --%>
 </div>
 
 
