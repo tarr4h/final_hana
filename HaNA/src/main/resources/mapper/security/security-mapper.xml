@@ -20,10 +20,9 @@
 		<result column="picture" property="picture"/>
 		<result column="personal_id" property="personalId"/>
 		<result column="address_first" property="addressFirst"/>
-		<result column="address_secound" property="addressSecound"/>
+		<result column="address_second" property="addressSecond"/>
 		<result column="address_third" property="addressThird"/>
 		<result column="address_full" property="addressFull"/>
 		<result column="enabled" property="enabled"/>
-	
 	</resultMap>
 </mapper>

@@ -80,6 +80,7 @@
     <!-- 매장 랭킹 영역 -->
     <div class="row shopRank bg-dark text-white">
         <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
+        	<span class="d-flex align-items-start">★★★</span>
        		<span class="mb-4">조회 수 1위 매장</span>
         	<div class="shopProfile d-flex">
 	        	<!-- 프로필사진 영역 -->
@@ -91,6 +92,7 @@
        		<span>조회 수</span>
         </div>
         <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
+        	<span class="d-flex align-items-start">★★★</span>
        		<span class="mb-4">리뷰 수 1위 매장</span>
         	<div class="shopProfile d-flex">
 	        	<!-- 프로필사진 영역 -->
@@ -99,6 +101,7 @@
        		<span>매장ID</span>
        		<span>리뷰 수</span>
         </div><div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
+        	<span class="d-flex align-items-start">★★★</span>
        		<span class="mb-4">예약 수 1위 매장</span>
         	<div class="shopProfile d-flex">
 	        	<!-- 프로필사진 영역 -->
