@@ -25,15 +25,24 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 	private static final long serialVersionUID = 1L;
 
 	private List<SimpleGrantedAuthority> authorities;
+	private String personality;
+	private String interest;
 	
 	@Builder
+
 	public Member(String id, String name, String password, String picture, String personalId, int accountType,
 			String addressFirst, String addressSecond, String addressThird, String addressFull, String introduce,
 			boolean enabled, List<SimpleGrantedAuthority> authorities) {
 		super(id, name, password, picture, personalId, accountType, addressFirst, addressSecond, addressThird,
 				addressFull, introduce, enabled);
 		this.authorities = authorities;
+		this.personality = personality;
+		this.interest = interest;
 	}
+
+	
+	
+	
 
 	
 	@Override
@@ -67,6 +76,11 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+
+
+
+
 
 
 
