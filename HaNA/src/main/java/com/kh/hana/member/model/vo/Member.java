@@ -28,9 +28,9 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 	
 	@Builder
 	public Member(String id, String name, String password, String picture, String personalId, int accountType,
-			String addressFirst, String addressSecound, String addressThird, String addressFull, String introduce,
+			String addressFirst, String addressSecond, String addressThird, String addressFull, String introduce,
 			boolean enabled, List<SimpleGrantedAuthority> authorities) {
-		super(id, name, password, picture, personalId, accountType, addressFirst, addressSecound, addressThird,
+		super(id, name, password, picture, personalId, accountType, addressFirst, addressSecond, addressThird,
 				addressFull, introduce, enabled);
 		this.authorities = authorities;
 	}
