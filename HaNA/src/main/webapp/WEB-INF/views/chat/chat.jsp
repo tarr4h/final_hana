@@ -1,3 +1,4 @@
+<%@page import="com.kh.hana.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,19 +10,37 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="main"/>
 </jsp:include>
+<!-- 인증객체의 principal속성을 pageContext 속성으로 저장 heaer에 선언되면 삭제하기-->
+<%-- <sec:authentication property="principal" var="loginMember" /> --%>
 <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
 <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/chat.css" />
+<c:if test="${not empty msg}">
+	<script>
+		alert("${msg}");
+	</script>
+</c:if>
+<span>새로고침 오류</span><br />
+<span>메세지 2번 출력 db엔 한번 저장</span><br />
+<span>message 입력안하고 보내는거 막기</span><br />
+<span>message '' or ENTER 시 출력안되게</span>
 <script>
-$().ready(function(){ 
 
+let id;
+
+<sec:authorize access="isAuthenticated()">
+	id = '<sec:authentication property="principal.id"/>';
+</sec:authorize>
+
+$().ready(function(){ 
+	console.log(id);
 	$.ajax({
 		url:`${pageContext.request.contextPath}/chat/roomList.do`,
 		data:{
-			id : 'jeonyeseong',
+			id : id,
 		},
 		method: "GET",
 		success(resp){
@@ -60,50 +79,11 @@ const displayRoom = (selector, data) => {
 			});
 		}
 		else{
-			table += `<span>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</span>`;
+			chatroom += `<span>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</span>`;
 		}
 		
 		$target.html(chatroom);
 };
-
-const displaychat = (selector, data) =>{
-	const $target = $(selector);
-	let chat = ``
-		
-		if(data.length){
-			$(data).each((i, menu) => {
-				console.log(i, menu);
-				const {memberId, message, messageRegDate, unReadCount} = menu;
-				chat += `<div class="msg_cotainer">
-					\${memberId} \${message} \${messageRegDate} \${unReadCount}
-					<span class="msg_time"></span>
-				</div>`;
-				
-			});
-		}
-		else{
-			table += `<span>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</span>`;
-		}
-		
-		$target.html(chat);
-};
-
-/*  function roomchat(no){
-	console.log("No = ", no);
-	$.ajax({
-		url : `${pageContext.request.contextPath}/chat/roomchat.do`,
-		data : {
-			no : no,
-		},
-		method: "GET",
-		success(resp){
-			console.log(resp);
-			displaychat("#roomchat1", resp);
-		},
-		error:console.log
-	});
-	connect();
-}; */
 
 </script>
 	<div class="container-fluid h-100">
@@ -111,14 +91,13 @@ const displaychat = (selector, data) =>{
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
 						<div class="input-group">
-							<input type="text" placeholder="Search..." name="" class="form-control search">
-							<div class="input-group-prepend">
-								<span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
-							</div>
+							<input type="text" placeholder="Search..." id="findMemberInput" class="form-control search">
+							<button id="findMember">검색</button>
+							<button id="allMember">친구목록</button>
 						</div>
 					</div>
 					<div id="chatList">
-
+					
 					</div>
 				</div></div>
 				<div class="col-md-8 col-xl-6 chat">
@@ -139,7 +118,7 @@ const displaychat = (selector, data) =>{
 						<div class="card-body msg_card_body" id="roomchat1">
 <!-- 							<div class="d-flex justify-content-start mb-4">
 								<div class="img_cont_msg">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+									<img src="#" class="rounded-circle user_img_msg">
 								</div>
 								<div class="msg_cotainer">
 									Hi, how are you samim?
@@ -215,14 +194,34 @@ const displaychat = (selector, data) =>{
 				
 			</div>
 		</div>
-			<button onclick="connect();">연결테스트</button>
+	<!-- Modal시작 -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+		aria-labelledby="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="loginModalLabel">회원목록</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div id="modaldiv"></div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal 끝-->
 <script>
 <!-- roomNo 전역변수 -->
 let roomNo;
 
 function roomchat(no){
 	console.log("No = ", no);
+	$("#roomchat1").html("");
 	roomNo = no;
+if(websocket !== undefined){
+		console.log("기존 연결 제거")
+		websocket.close();
+	}
 	$.ajax({
 		url : `${pageContext.request.contextPath}/chat/roomchat.do`,
 		data : {
@@ -231,14 +230,16 @@ function roomchat(no){
 		method: "GET",
 		success(resp){
 			console.log(resp);
-			displaychat("#roomchat1", resp);
+			for(var i = 0; i < resp.length; i++){
+				msgCheck(resp[i]);
+			}
 		},
 		error:console.log
 	});
 	connect();
 };
 
-
+<!-- 메세지 전송 -->
 $("#btnSend").on("click", function(e){
 	e.preventDefault();
 	console.log("버튼클릭 roomNo = ",roomNo);
@@ -250,9 +251,10 @@ $("#btnSend").on("click", function(e){
 	
     const data = {
             "roomNo" : roomNo,
-            "memberId" : "jeonyeseong",
+            "memberId" : id,
             "message"   : msg 
         };
+    msgCheck(data);
     let jsonData = JSON.stringify(data);
     websocket.send(jsonData);
 	
@@ -282,7 +284,7 @@ function onOpen() {
 	console.log("onOpen roomNo = ", roomNo);
      const data = {
             "roomNo" : roomNo,
-            "memberId" : "jeonyeseong",
+            "memberId" : id,
          "message" : "ENTER"
     };
     let jsonData = JSON.stringify(data);
@@ -290,6 +292,7 @@ function onOpen() {
     console.log("opOpen");
 }
 
+<!-- 메세지 수신 -->
 function onMessage(e){
 	let eSplit = e.data.split(",");
 	
@@ -298,7 +301,11 @@ function onMessage(e){
 		"message" : eSplit[1]
 	};
 	console.log(data);
+	if(data.memberId != id){
+		msgCheck(data);
+	}
 }
+		
 function onError(){
 	
 }
@@ -307,9 +314,99 @@ function onError(){
 	<!-- 지울것 -->
 	alert("연결종료!");
 } 
+function msgCheck(e){
+	//console.log("e.memberId = ", e.memberId);
+	const check = (e.memberId != id) ? "left" : "right";
+	//console.log("check = ", check);
+	displaychat(check, e.memberId, e.message);
+}
+ 
 
- 
- 
+const displaychat = (check, memberId, message) =>{
+	let chat = ``
+		if(check === 'right'){
+				chat += `<div class="d-flex justify-content-end mb-4">
+<div class="msg_cotainer_send">
+\${check} \${memberId}, \${message}
+<span class="msg_time_send">8:55 AM, Today</span>
+</div>
+<div class="img_cont_msg">
+<img src="#" class="rounded-circle user_img_msg">
+</div>
+</div>`;
+		}
+		else{
+			chat += `<div class="d-flex justify-content-start mb-4">
+				<div class="img_cont_msg">
+				<img src="#" class="rounded-circle user_img_msg">
+			</div>
+			<div class="msg_cotainer">
+			\${check} \${memberId}, \${message}
+				<span class="msg_time">8:40 AM, Today</span>
+			</div>
+		</div>`;
+		}
+		
+		$("#roomchat1").append(chat);
+};
+
+
+$("#findMember").on("click", function(e){
+
+ 	let msg = $("#findMemberInput").val();
+	
+	console.log("친구찾기 msg = ", msg);
+
+	$("#findMemberInput").val('');
+	
+	$(loginModal)
+	.modal()
+	.on("hide.bs.modal", (e) => {
+		
+	});
+});
+$("#allMember").on("click", function(e){
+	
+	console.log("회원목록");
+	console.log("내 아이디 = " , id);
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/memberList.do`,
+		method: "GET",
+		async:false,
+		data: {loginId : id},
+		success(resp){
+			console.log(resp);
+			let modal =``;
+				$(resp).each((i, member) => {
+					const {id, name, picture} = member;
+					modal += `<span>picture: \${picture} 아이디 : \${id} 이름: \${name}</span><button onclick="chatsend()">채팅</button><br />
+						<form 
+						action="${pageContext.request.contextPath}/chat/sendchat.do"
+						name="sendchat"
+						method="GET">
+						<input type="hidden" name="id" value="\${id}" />
+						<input type="hidden" name="loginId" value="" />
+						</form>`;
+					
+				});
+				$("#modaldiv").html(modal);
+		},
+		error:console.log
+	});
+	
+	$(loginModal)
+	.modal()
+	.on("hide.bs.modal", (e) => {
+		
+	});
+});
+
+const chatsend = ()=> {
+	console.log("loginId = ", id);
+	$("input[name=loginId]").val(id);
+	$(document.sendchat).submit();
+
+};
 </script>
 <script>
 $("div#ggg").click(function(){
