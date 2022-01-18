@@ -1,6 +1,7 @@
 package com.kh.hana.mbti.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,9 @@ public class MbtiServicelmpl implements MbtiService {
 	}
 
 	@Override
-	public Object insertList(String[] checkList) {
-		return mbtiDao.insertList(checkList);
-		
+	public int insertList(Map<Integer, Integer> resultOfNo, String memberId) {
+		return mbtiDao.insertList(resultOfNo, memberId);
 	}
+
+
 }
