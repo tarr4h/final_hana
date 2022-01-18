@@ -11,7 +11,7 @@
 
 <div id="mbtiMain-Background">
 <h1 id="mainPage-h1">나의 mbti 는 ?</h1>
-<button id="mainPage-button" onclick="location.href='${pageContext.request.contextPath}/mbti/mbtiList.do'">검사하기</button>
+<button id="mainPage-button" onclick="location.href='${pageContext.request.contextPath}/mbti/mbtiList.do?cPage=1'">검사하기</button>
 
 </div>
 

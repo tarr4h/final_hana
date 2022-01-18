@@ -7,7 +7,7 @@ import com.kh.hana.mbti.model.vo.Mbti;
 
 public interface MbtiService {
 
-	List<Mbti> selectMbtiList();
+	List<Mbti> selectMbtiList(Map<String, Object> number);
 
 	int insertList(Map<Integer, Integer> resultOfNo, String memberId);
 

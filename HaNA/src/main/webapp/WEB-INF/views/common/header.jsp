@@ -32,9 +32,16 @@
 	.img-thumbnail { height : 8em;}
 </style>
 
+<c:if test="${param.error != null }">
+	<script>
+		alert("아이디 또는 비밀번호가 잘못 입력되었습니다.");
+		location.href = '${pageContext.request.contextPath}/member/login';
+	</script>
+</c:if>
 
 </head>
 <body>
+
 
 	<sec:authentication property="principal" var="loginMember"/>	
 	
@@ -71,12 +78,7 @@
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
 				    <li class="nav-item dropdown">
-		      			<c:if test="${loginMember != null && loginMember.accountType eq 1 }">
-				        	<a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
-			    		</c:if>
-			    		<c:if test="${loginMember != null && loginMember.accountType eq 0 }">
-			    			<a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/shopView" >
-			    		</c:if>
+			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="" >
 				          <span><sec:authentication property="principal.username"/></span>
 				        </a>
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -97,4 +99,15 @@
 		</nav>
 	</header>
 	
+	<sec:authorize access="isAuthenticated()">
+		<script>
+			$(()=>{
+				if(${loginMember.accountType} == 1){
+					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/memberView');
+				} else{
+					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/shopView');
+				}
+			});
+		</script>
+	</sec:authorize>
 	<section class="body-section">
