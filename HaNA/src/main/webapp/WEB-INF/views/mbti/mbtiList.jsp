@@ -40,7 +40,7 @@
 window.onload = function(){
 	
 	console.log($('input[name=cPage]').val());
-	}
+
 }
 
 
