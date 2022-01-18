@@ -17,32 +17,33 @@
         enctype="multipart/form-data">
         <table>
             <tr>
-            <td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="memberId"/></td>
+            <td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/></td>
+            <td><input type="hidden" value="ss" name="groupId"/></td>
             </tr>
             <tr>
             <td>
                 <label for="file1">첨부파일 1</label>
-                <input type="file" name="file" id="file1"/>
+                <input type="file" name="file" id="file1" onchange="setThumbnail(event);"/>
+                <div id="image_container"></div>
             </td>
             </tr>
-            <tr>
+<!--             <tr>
             <td>
                 <label for="file1">첨부파일 2</label>
                 <input type="file" name="file" id="file1"/>
             </td>
-            </tr>
+            </tr> -->
             <tr>
             <td><input id="placeName" name="placeName" type="text" value="" readonly/></td>
             <td><input id="placeAddress" name="placeAddress" type="text" value="" readonly/></td>
             </tr>
             <tr>
-            <td><input type="text" /></td>
+            <td><input type="text" name="content"/></td>
             </tr>
             <tr>
-            <td> <input type="text" name="tagMembers" value="honggd"/></td>
-            <td> <input type="text" name="tagMembers" value="shop1"/></td>
-            <td> <input type="text" name="tagMembers" value="ian01"/></td>
+            <td> <input type="text" name="tagMembers" value=""/></td>
             </tr>
+            <tr><td><input type="submit" /></td></tr>
         </table>
     </form>
 </div>
@@ -66,6 +67,8 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4df2cda826ac2a53225fb7dea2a307&libraries=services"></script>
 <script>
+// 카카오 지도 API
+
 // 마커를 담을 배열입니다
 var markers = [];
 var placeList = [];
@@ -162,8 +165,8 @@ function displayPlaces(places) {
                 infowindow.close();
             });
             kakao.maps.event.addListener(marker, 'click', function() {
-				$("#place-tag-name").val(placeList[i][0]);
-				$("#place-tag-address").val(placeList[i][1]);
+				$("#placeName").val(placeList[i][0]);
+				$("#placeAddress").val(placeList[i][1]);
             });
 
             itemEl.onmouseover =  function () {
@@ -171,8 +174,8 @@ function displayPlaces(places) {
             };
 
             itemEl.onclick =  function () {
-				$("#place-tag-name").val(placeList[i][0]);
-				$("#place-tag-address").val(placeList[i][1]);
+				$("#placeName").val(placeList[i][0]);
+				$("#placeAddress").val(placeList[i][1]);
 			};
             
             itemEl.onmouseout =  function () {
@@ -303,5 +306,19 @@ function removeAllChildNods(el) {
     }
 
 } 
+</script>
+<script>
+//이미지 미리보기
+function setThumbnail(event){
+	var reader = new FileReader();
+	reader.onload = function(event) {
+		var img = document.createElement("img");
+		img.setAttribute("src", event.target.result);
+		img.setAttribute("style", "width:200px;");
+		document.querySelector("div#image_container").appendChild(img);
+		};
+	reader.readAsDataURL(event.target.files[0]);
+}
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 

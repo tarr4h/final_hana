@@ -22,5 +22,6 @@ public class GroupBoard {
 	private String placeName;
 	private String placeAddress;
 	private String[] image;
+	private String[] tagMembers;
 	
 }
