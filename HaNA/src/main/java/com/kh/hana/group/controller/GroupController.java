@@ -94,6 +94,10 @@ public class GroupController {
 	
 	@GetMapping("/groupBoardForm")
 	public void groupBoardForm(){}
+	
+	@PostMapping("")
+	public String groupBoardEnroll() {
 		
+	}
 }
 

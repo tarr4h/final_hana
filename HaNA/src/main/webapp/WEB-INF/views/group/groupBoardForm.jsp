@@ -32,15 +32,16 @@
             </td>
             </tr>
             <tr>
-            <td><input id="place-tag-name" type="text" value="" readonly/></td>
-            <td><input id="place-tag-address"type="text" value="" readonly/></td>
+            <td><input id="placeName" name="placeName" type="text" value="" readonly/></td>
+            <td><input id="placeAddress" name="placeAddress" type="text" value="" readonly/></td>
             </tr>
             <tr>
-            <td> <input type="text" /></td>
+            <td><input type="text" /></td>
             </tr>
             <tr>
-            <td>
-            </td>
+            <td> <input type="text" name="tagMembers" value="honggd"/></td>
+            <td> <input type="text" name="tagMembers" value="shop1"/></td>
+            <td> <input type="text" name="tagMembers" value="ian01"/></td>
             </tr>
         </table>
     </form>
