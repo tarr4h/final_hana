@@ -6,6 +6,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +24,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/29546d6ff0.js" crossorigin="anonymous"></script>
 <style>
 	.body-section {min-height : 1000px;}
 	.navbar-expand-lg { height : 10em;}
@@ -32,6 +35,9 @@
 
 </head>
 <body>
+
+	<sec:authentication property="principal" var="loginMember"/>	
+	
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark pr-3">
 			<div class="title-image-box" style="margin-left:20px;">
@@ -50,7 +56,7 @@
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath }/shop/shopMain">AroundMe</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link text-light" href="#">나침반</a>
+		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/mbti/mbti.do">나침반</a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>
@@ -64,16 +70,21 @@
 		      	</sec:authorize>					
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
-			    <li class="nav-item dropdown">
-			        <a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
-			          <span><sec:authentication property="principal.username"/></span>
-			        </a>
-			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-			          <a class="dropdown-item" href="#">게시글 작성</a>
-			          <a class="dropdown-item" href="#">예약 목록</a>
-			          <a class="dropdown-item" href="#">계정 설정</a>
-			        </div>
-			    </li>
+				    <li class="nav-item dropdown">
+		      			<c:if test="${loginMember != null && loginMember.accountType eq 1 }">
+				        	<a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView" >
+			    		</c:if>
+			    		<c:if test="${loginMember != null && loginMember.accountType eq 0 }">
+			    			<a class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/shopView" >
+			    		</c:if>
+				          <span><sec:authentication property="principal.username"/></span>
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				          <a class="dropdown-item" href="#">게시글 작성</a>
+				          <a class="dropdown-item" href="#">예약 목록</a>
+				          <a class="dropdown-item" href="#">계정 설정</a>
+				        </div>
+				    </li>
 			    <li class="nav-item">
 		      		<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
 						<input type="submit" value="로그아웃" />

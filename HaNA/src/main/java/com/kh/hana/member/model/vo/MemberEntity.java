@@ -23,7 +23,7 @@ public class MemberEntity implements Serializable{
 	private String personalId;
 	private int accountType;
 	private String addressFirst;
-	private String addressSecound;
+	private String addressSecond;
 	private String addressThird;
 	private String addressFull;
 	private String introduce;

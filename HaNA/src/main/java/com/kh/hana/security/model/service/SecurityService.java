@@ -21,6 +21,7 @@ public class SecurityService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails member = securityDao.loadUserByUsername(username);
 		log.info("member = {}", member);
+		
 
 		return member;
 	}

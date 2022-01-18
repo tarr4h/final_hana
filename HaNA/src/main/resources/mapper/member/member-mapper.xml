@@ -6,7 +6,36 @@
 
 	<insert id="memberEnroll">
 		insert into member values
-		(#{id}, #{password}, #{name}, #{picture}, #{personalId}, #{accountType}, #{addressFirst}, #{addressSecound}, #{addressThird}, #{addressFull}, #{introduce}, default)
+		(#{id}, #{password}, #{name}, #{picture}, #{personalId}, #{accountType}, #{addressFirst}, #{addressSecond}, #{addressThird}, #{addressFull}, #{introduce}, default)
 	</insert>
+
+
+	<update id="updateMember">
+	 update member set
+	 name = #{name},
+	 address_first =  #{addressFirst},
+	 <!-- addressSecound = #{addressSecound},
+	 addressThrid =  #{addressThird},
+	 addressFull =  #{addressFull}, -->
+	 introduce = #{introduce} 
+	 where 
+	 	id = #{id}	
+	</update>
+
+     <update id= "updatePersonality">
+     update personality
+     set
+     member_id = #{id},
+     personality = #{personality}
+     </update>
+	
+	<update id="updateInterest">
+		update interest
+     set
+     member_id = #{id},
+     interest = #{interest}
+	</update>
+
+
 
 </mapper>
