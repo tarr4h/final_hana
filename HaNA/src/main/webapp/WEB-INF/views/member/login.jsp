@@ -30,10 +30,10 @@
 			    <label for="exampleInputPassword1">Password</label>
 			    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="비밀번호를 입력하세요">
 			  </div>
-			  <div class="form-check">
-			    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-			    <label class="form-check-label" for="exampleCheck1">Remember Me(미개발)</label>
-			  </div>
+			  <div>
+					<input type="checkbox" class="form-check-input" name="remember-me" id="rememer-me" />
+					<label for="remember-me">Remember me</label>
+			</div>
 			  <button type="submit" class="btn btn-primary">로그인</button>
 			  <br />
 			  <input type="button" class="btn btn-info mt-3" value="회원가입" onclick="location.href='${pageContext.request.contextPath}/member/memberEnrollMain'"/>
