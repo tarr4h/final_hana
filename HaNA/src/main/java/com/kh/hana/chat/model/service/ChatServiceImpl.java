@@ -49,17 +49,27 @@ public class ChatServiceImpl implements ChatService {
 
 
 	@Override
-	public Chat chatRoomCheck(Map<String, Object> param) {
+	public List<Chat> chatRoomCheck(Map<String, Object> param) {
 		return chatDao.chatRoomCheck(param);
 	}
 
 	@Override
-	public int createChatRoom(Map<String, Object> param) {
-//		int result = chatDao.createChatRoom(param);
-//		//로그인맴버가 chatroom생성
-//		if(result > 0)
-			
+	public int createChatRoom(Map<String, Object> param) {	
 		return chatDao.createChatRoom(param);
+	}
+
+	@Override
+	public int insertEnterMessage(Map<String, Object> param) {
+		int result2 = 0;
+		int result = chatDao.insertEnterMessage(param);
+		if(result > 0)
+			result2 = chatDao.insertEnterMessage2(param);
+		return result2;
+	}
+
+	@Override
+	public int findRoomNo(Map<String, Object> param) {
+		return chatDao.findRoomNo(param);
 	}
 
 }
