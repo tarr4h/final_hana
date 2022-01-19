@@ -10,8 +10,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="그룹메인" name="title" />
 </jsp:include>
+
 <section
 	style="position: relative; width: 30%; height: 120px; margin: auto;">
+		<c:forEach var="groupList" items="${groupList}" varStatus="status">
 	<div
 		style="border-radius: 50%; background-color: gainsboro; width: 100px; height: 100px; position: relative; top: 10%; left: 10%; display: inline-block;">
 		<c:if test="${empty group.image}">
@@ -37,6 +39,7 @@
 				<td>${group.memberCount}</td> </tr>
 		</table>
 	</div>
+	</c:forEach>
 </section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

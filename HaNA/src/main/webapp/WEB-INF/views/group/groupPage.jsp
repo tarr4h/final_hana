@@ -72,23 +72,29 @@ $(() => {
 			class="far fa-comments"></i></a>
 	</div>
 	<div class="container">
+	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
+		<c:if test="vs%3 == 0">
+			<div class="row">
+		</c:if>
+	        <div class="col-sm-4">
+		
+				<img  style="width:100%; height:100%; margin-bottom: 10%"
+				src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image}"
+				alt="" />
+	        </div>
+				
+		<c:if test="vs%3 == 0">
+			<div/>
+		</c:if>
+	</c:forEach>
 	    <div class="row">
-	        <div class="col-sm-3">
-		        <img
+	        <div class="col-sm-4">
+		        <img  style="width:100%; height:100%; margin-bottom: 10%"
 				src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
 				alt="" />
 	        </div>
-	        <div class="col-sm-3"></div>
-	        <div class="col-sm-3"></div>
 	    </div>
 	</div>
-<%-- 	<ul class="group-page-thumbnail">
-		<li>
-			<img
-			src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-			alt="" />
-		</li>
-	</ul> --%>
 </div>
 
 
