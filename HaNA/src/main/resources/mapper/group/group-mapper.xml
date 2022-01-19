@@ -107,5 +107,13 @@
 			gml.group_id = #{groupId}
 	</select>
 	
+	<select id="selectGroupBoardList" resultType="groupBoard">
+	select
+		*
+	from
+		group_board
+	where
+		group_id = #{groupId}
+	</select>
 </mapper>
 

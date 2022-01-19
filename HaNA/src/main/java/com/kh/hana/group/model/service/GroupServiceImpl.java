@@ -60,4 +60,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectGroupMemberList(groupId);
 	}
 
+	@Override
+	public List<GroupBoard> selectGroupBoardList(String groupId) {
+		return groupDao.selectGroupBoardList(groupId);
+	}
+
 }
