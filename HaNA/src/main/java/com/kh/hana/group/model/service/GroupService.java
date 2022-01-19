@@ -8,6 +8,7 @@ import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.member.model.vo.Member;
 
 
 public interface GroupService {
@@ -21,5 +22,11 @@ public interface GroupService {
 	List<Group> selectGroupList(Member member);
 
 	int insertGroupBoard(GroupBoard groupBoard);
+
+	GroupBoard selectOneBoard(int no);
+
+	List<Member> selectMemberList(GroupBoard groupBoard);
+
+	List<Member> selectGroupMemberList(String groupId);
 
 }
