@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.hana.group.model.vo.Group;
+
 import com.kh.hana.member.model.vo.Member;
+
+import com.kh.hana.group.model.vo.GroupBoard;
+
 
 public interface GroupService {
 
@@ -16,7 +20,6 @@ public interface GroupService {
 
 	List<Group> selectGroupList(Member member);
 
-
-	
+	int insertGroupBoard(GroupBoard groupBoard);
 
 }

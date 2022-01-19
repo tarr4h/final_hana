@@ -28,13 +28,13 @@
 	</insert>
 	
 	<select id="selectGroupEnrolled" resultMap="groupMemberListMap">
-	select
-		* 
-	from
-		group_member_list
-	where
-		group_id = #{groupId}
-		and
+		select
+			* 
+		from
+			group_member_list
+		where
+			group_id = #{groupId}
+			and
 		member_id = #{memberId}
 	</select>
 	
@@ -46,12 +46,30 @@
 	
 	<select id="selectGroupList" resultType="group">
 	select
-    	*
+    	g.*
 	from
     	group_ g join group_member_list gml
         	on g.group_id = gml.group_id
 	where
     	gml.member_id = #{id}
 	</select>
+
+	<insert id="insertGroupBoard">
+		insert into
+			group_board
+		values(
+			seq_group_board.nextVal,
+			#{groupId},
+			#{writer},
+			#{content},
+			default,
+			default,
+			#{placeName},
+			#{placeAddress},
+			#{image},
+			#{tagMembers}			
+		)
+	</insert>
+	
 </mapper>
 

@@ -5,13 +5,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.hana.group.model.dao.GroupDao;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 
+import com.kh.hana.group.model.vo.GroupBoard;
 
 @Service
+@Transactional(rollbackFor=Exception.class) // 익셉션 발생시 롤백
 public class GroupServiceImpl implements GroupService{
 
 	@Autowired
@@ -35,6 +38,10 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public List<Group> selectGroupList(Member member) {
 		return groupDao.selectGroupList(member);
+	}
+		
+	public int insertGroupBoard(GroupBoard groupBoard) {
+		return groupDao.insertGroupBoard(groupBoard);
 	}
 
 }
