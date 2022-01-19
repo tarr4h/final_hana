@@ -73,59 +73,6 @@ public class MbtiController {
 		return "mbti/mbtiList";
 	}
 	
-	// @ResponseBody
-	@GetMapping("/mbtiinsert.do")
-	public String memberCheck(MbtiData data, @RequestParam("cPage") int cPage) {
-		log.info("data = {}", data);
-		int[] no = data.getNo();
-		int[] memberResult = data.getMemberResult();
-		log.info("no = {}", no);
-		log.info("memberResult = {}", memberResult);
-		
-		Map<Integer, Integer> resultOfNo = new HashMap<>(); 
-		
-		String memberId = data.getMemberId();
-		
-		int i = 0;
-		for(int per : no) {
-			resultOfNo.put(per, memberResult[i]);
-			i++;
-		}
-		
-		int result = mbtiService.insertList(resultOfNo, memberId);
-		
-		
-		return "forward:/mbti/mbtiList.do?cPage="+cPage;
-	}
-	
-//	@ResponseBody
-//	@PostMapping("/mbtiinsert.do")
-//	public String memberCheck(MbtiData data, @RequestParam("cPage") int cPage, HttpServletRequest request) {
-//		log.info("data = {}", data);
-////		int[] no = data.getNo();
-////		int[] memberResult = data.getMemberResult();
-//		
-//		int no =  Integer.parseInt(request.getParameter("no"));
-//		int memberResult = Integer.parseInt(request.getParameter("memberResult"));
-//
-//
-//		log.info("no  = {}", no);
-//		log.info("memberResult = {}", memberResult);
-//		
-//		Map<Integer, Integer> resultOfNo = new HashMap<>(); 
-//		
-//		String memberId = data.getMemberId();
-//		
-////		int i = 0;
-////		for(int per : no) {
-////			resultOfNo.put(per, memberResult[i]);
-////			i++;
-////		}
-//		
-//		int result = mbtiService.insertList(resultOfNo, memberId);
-//		
-//		
-//		return "forward:/mbti/mbtiList.do?cPage="+cPage;
-//	}
+
 
 }
