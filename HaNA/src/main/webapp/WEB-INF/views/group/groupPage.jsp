@@ -73,13 +73,17 @@ $(() => {
 	</div>
 	<div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
-		<c:if test="vs%3==0">
+		<c:if test="vs%3 == 0">
 			<div class="row">
 		</c:if>
+	        <div class="col-sm-4">
+		
 				<img  style="width:100%; height:100%; margin-bottom: 10%"
 				src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image}"
 				alt="" />
-		<c:if test="vs%3==0">
+	        </div>
+				
+		<c:if test="vs%3 == 0">
 			<div/>
 		</c:if>
 	</c:forEach>
