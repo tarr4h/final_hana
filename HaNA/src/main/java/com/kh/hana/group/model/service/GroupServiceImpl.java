@@ -1,6 +1,7 @@
 package com.kh.hana.group.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.hana.group.model.dao.GroupDao;
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.member.model.vo.Member;
+
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.member.model.vo.Member;
 
@@ -29,6 +32,15 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
+	public Map<String, String> selectGroupEnrolled(Map<String, String> map) {
+		return groupDao.selectGroupEnrolled(map);
+	}
+
+	@Override
+	public List<Group> selectGroupList(Member member) {
+		return groupDao.selectGroupList(member);
+	}
+		
 	public int insertGroupBoard(GroupBoard groupBoard) {
 		return groupDao.insertGroupBoard(groupBoard);
 	}

@@ -27,6 +27,33 @@
 		
 	</insert>
 	
+	<select id="selectGroupEnrolled" resultMap="groupMemberListMap">
+		select
+			* 
+		from
+			group_member_list
+		where
+			group_id = #{groupId}
+			and
+		member_id = #{memberId}
+	</select>
+	
+	<resultMap type="map" id="groupMemberListMap">
+		<result column="group_id" property="groupId"/>
+        <result column="member_id" property="memberId"/>
+        <result column="member_level_code" property="memberLevelCode"/>
+	</resultMap>
+	
+	<select id="selectGroupList" resultType="group">
+	select
+    	g.*
+	from
+    	group_ g join group_member_list gml
+        	on g.group_id = gml.group_id
+	where
+    	gml.member_id = #{id}
+	</select>
+
 	<insert id="insertGroupBoard">
 		insert into
 			group_board
