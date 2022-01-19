@@ -3,9 +3,9 @@ package com.kh.hana.member.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.hana.member.controller.Personality;
 import com.kh.hana.member.model.dao.MemberDao;
 import com.kh.hana.member.model.vo.Member;
-import com.kh.hana.member.model.vo.Personality;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -41,6 +41,14 @@ public class MemberServiceImpl implements MemberService {
 			return 0;
 		}
 	}
+
+	@Override
+	public Member selectPersonality(String id) {
+		Member member = memberDao.selectPersonality(id);
+		return member;
+	}
+
+ 
 	
 	 
 	
