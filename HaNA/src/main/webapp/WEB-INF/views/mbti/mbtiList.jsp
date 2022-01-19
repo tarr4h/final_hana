@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
-	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm">
+	<form action="${pageContext.request.contextPath }/mbti/mbtiinsert.do" id="mbtiForm">
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
 		 <c:forEach items="${mbtiList}" var="list">
@@ -31,7 +31,7 @@
 		</ul>
 		<button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
 		<input type="hidden" name="memberId" value="tarr4h" />
-		<button type="" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
+		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
 	</form>
 </div>
 
@@ -40,8 +40,23 @@
 window.onload = function(){
 	console.log($('input[name=cPage]').val());
 }
-
-$("#mbtiListPage-buttonNext").click(function(){
+/*
+ $("#mbtiListPage-buttonNext").click(function(){
+	
+	   var noArray = [];
+	   var listArray = [];
+	  
+	   
+	   noArray = $('input[name=cPage]').val()
+       
+       $('input[name="memberResult"]:checked').each(function(i){
+           listArray.push($(this).val());
+       });
+       
+       var objParams = {
+    		   "no" : noArray
+               "List" : fruitArray       
+           };
 	
 	$.ajax({	
 	url:"/mbti/mbtiinsert.do",
@@ -58,6 +73,7 @@ $("#mbtiListPage-buttonNext").click(function(){
 		console.log(xhr,status,error);
 	}
 });
+*/
 });
 
 </script>
