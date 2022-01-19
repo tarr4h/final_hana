@@ -73,27 +73,14 @@ $(() => {
 	</div>
 	<div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
-		<c:if test="vs%3 == 0">
-			<div class="row">
-		</c:if>
+		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
 	        <div class="col-sm-4">
-		
 				<img  style="width:100%; height:100%; margin-bottom: 10%"
-				src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image}"
+				src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image[0]}"
 				alt="" />
 	        </div>
-				
-		<c:if test="vs%3 == 0">
-			<div/>
-		</c:if>
+		${vs.index%3 == 2? "</div>" : ""}
 	</c:forEach>
-	    <div class="row">
-	        <div class="col-sm-4">
-		        <img  style="width:100%; height:100%; margin-bottom: 10%"
-				src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-				alt="" />
-	        </div>
-	    </div>
 	</div>
 </div>
 
