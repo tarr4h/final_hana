@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
-	<form action="${pageContext.request.contextPath }/mbti/mbtiinsert.do" id="mbtiForm">
+	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm">
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
 		 <c:forEach items="${mbtiList}" var="list">
@@ -29,9 +29,14 @@
 			</li>
 		 </c:forEach>
 		</ul>
+		<div  id="btn1" style="display:block;">
 		<button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
+		</div>
 		<input type="hidden" name="memberId" value="tarr4h" />
 		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
+		<div id="btn" style="display: none; ">
+		<button id="mbtiListPage-buttonResult" onclick ="btn();">결과보기 <i class="fas fa-angle-double-right"></i></button>
+		</div>
 	</form>
 </div>
 
@@ -39,42 +44,22 @@
 <script>
 window.onload = function(){
 	console.log($('input[name=cPage]').val());
-}
-/*
- $("#mbtiListPage-buttonNext").click(function(){
 	
-	   var noArray = [];
-	   var listArray = [];
-	  
-	   
-	   noArray = $('input[name=cPage]').val()
-       
-       $('input[name="memberResult"]:checked').each(function(i){
-           listArray.push($(this).val());
-       });
-       
-       var objParams = {
-    		   "no" : noArray
-               "List" : fruitArray       
-           };
-	
-	$.ajax({	
-	url:"/mbti/mbtiinsert.do",
-	dataType:"JSON",
-	type:"POST",
-	data:{
-		no:$('input[name=no]').val(),
-		memberResult:$('input[name=memberResult]').val()
-	},
-	success:function(data){
-		alert("ㅐ");
-	},
-	error:function(xhr,status,error){
-		console.log(xhr,status,error);
+	if($('input[name=cPage]').val() == 7){
+		document.getElementById("btn1").style.display = 'none';
 	}
-});
-*/
-});
+	
+	if($('input[name=cPage]').val() == 37){
+		$("#mbtiListPage-buttonNext").hide();
+		document.getElementById("btn").style.display = 'block';
+	}
+		
+}
+
+		
+	
+
+
 
 </script>
 

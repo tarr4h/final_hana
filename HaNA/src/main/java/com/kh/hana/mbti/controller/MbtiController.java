@@ -65,8 +65,7 @@ public class MbtiController {
 
 			}
 			int result = mbtiService.insertList(resultOfNo, memberId);
-		}
-		
+		}	
 		model.addAttribute("mbtiList",mbtiList);
 		model.addAttribute("cPage", cPage);
 		log.info("mbtiList = {}", mbtiList);
