@@ -72,6 +72,35 @@ public class MbtiController {
 		return "mbti/mbtiList";
 	}
 	
+	@GetMapping("/mbtiResult.do")
+		public String mbtiResult(Model model , MbtiData data) {
+		log.info("data = {}", data);
+		
+		// List<MbtiData> mbtiResult = mbtiService.selectMbtiResult(data);
+		
+		
+		if(data.getNo() != null) {
+			int[] no = data.getNo(); 
+			int[] memberResult =  data.getMemberResult();
+			log.info("no = {}", no);
+			log.info("memberResult = {}", memberResult);
+			
+			Map<Integer, Integer> resultOfNo = new HashMap<>(); 
+			
+			String memberId = data.getMemberId();
+			
+			int i = 0;
+			for(int per : no) {
+				resultOfNo.put(per, memberResult[i]);
+				i++;
+				log.info("per={}",per);
+
+			}
+			int result = mbtiService.insertList(resultOfNo, memberId);
+		}	
+		return "mbti/mbtiResult";
+	}
+	
 
 
 }
