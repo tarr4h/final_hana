@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,18 +49,35 @@ public class GroupController {
 
 	
 	@GetMapping("/groupPage/{groupId}")
-	public String groupPage(@PathVariable String groupId, Model model) {
+	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
 		Group group = groupService.selectOneGroup(groupId);
 		log.debug("group = {}", group);
 		model.addAttribute(group);
+		String memberId = member.getId();
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("groupId", groupId);
+		Map<String, String> result = groupService.selectGroupEnrolled(map);
+		Boolean enrolled = (result != null? true:false);
+		
+		log.info("enrolled = {}", enrolled);
+		
+		model.addAttribute("enrolled",enrolled);
+		
 		return "group/groupPage";
 	}
 
 	@GetMapping("/groupList")
-	public void groupList(@AuthenticationPrincipal Member member) {
-		log.debug("loginMember = {}",member);
+	public void groupList(@AuthenticationPrincipal Member member, Model model) {
+		List<Group> groupList = groupService.selectGroupList(member);
+		model.addAttribute("groupList",groupList);
+		log.info("loginMember = {}",member);
+		log.info("groupList = {}", groupList);
 		
+	
 	}
+	
 	@GetMapping("/createGroupForm")
 	public void createGroupForm() {}
 	
