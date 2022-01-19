@@ -18,6 +18,7 @@
 	from
 		chat
 	where room_no = #{no}
+	order by message_reg_date
 	</select>
 	<select id="selectChatRoom" resultType="chatroom">
 	select 
@@ -27,5 +28,36 @@
 	where
 		room_no = #{roomNo}
 	</select>
+	<insert id="insertMessage">
+	INSERT 
+		INTO 
+	CHAT 
+		VALUES(#{roomNo}, #{memberId}, #{message}, default, default)
+	</insert>
+	<select id="memberList" resultType="member">
+	select
+		*
+	from
+		member
+	</select>
+	<select id="chatRoomCheck" resultType="chat">
+	select 
+		* 
+	from 
+		chat 
+	where 
+		room_no in (select distinct room_no from chat where member_id = #{loginId}) 
+	and 
+		member_id = #{memberId}
+	</select>
+	<insert id="createChatRoom">
+	insert 
+		into 
+	chatroom 
+		values(
+		SEQ_CHAT_NO.nextval,
+		#{loginId}
+		)
+	</insert>
 
 </mapper>

@@ -80,7 +80,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
         if(RoomList.get(chatRoom.getRoomNo()) != null && chat.getMessage().equals("ENTER") && chatRoom != null) {
         	RoomList.get(chatRoom.getRoomNo()).add(session);
         	sessionList.put(session, chatRoom.getRoomNo());
-        	log.info("{}RoomList에 session 저장 or 저장",chatRoom.getRoomNo());
+        	log.info("{}RoomList에 session 저장",chatRoom.getRoomNo());
         }
         
         if(RoomList.get(chatRoom.getRoomNo()) != null && !chat.getMessage().equals("ENTER") && chatRoom != null) {
@@ -101,14 +101,14 @@ public class WebSocketHandler extends TextWebSocketHandler{
             // sessionCount == 1 일 때는 unReadCount = 1
             //chat.setSessionCount(sessionCount);
             
-            // DB에 저장한다.
-//            int a = chatService.insertMessage(chat);
-//            
-//            if(a == 1) {
-//                System.out.println("메세지 전송 및 DB 저장 성공");
-//            }else {
-//                System.out.println("메세지 전송 실패!!! & DB 저장 실패!!");
-//            }
+            //DB에 저장한다.
+            int a = chatService.insertMessage(chat);
+            
+            if(a == 1) {
+               System.out.println("메세지 전송 및 DB 저장 성공");
+            }else {
+                System.out.println("메세지 전송 실패!!! & DB 저장 실패!!");
+            }
             
         }
 		

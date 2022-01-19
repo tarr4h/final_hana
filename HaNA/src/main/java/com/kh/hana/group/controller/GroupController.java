@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -94,6 +97,43 @@ public class GroupController {
 	
 	@GetMapping("/groupBoardForm")
 	public void groupBoardForm(){}
-		
+	
+	@PostMapping("/enrollGroupBoard")
+	public String enrollGroupBoard(GroupBoard groupBoard,
+			@RequestParam(name="file", required=false) MultipartFile[] files){
+		try {
+			log.info("groupBoard = {}",groupBoard);
+
+			List<String> fileList = new ArrayList<>();
+			
+			for(MultipartFile file : files) {
+				if(!file.isEmpty()) {
+					String originalFilename = file.getOriginalFilename();
+					String renamedFilename = HanaUtils.rename(originalFilename);
+					String saveDirectory = application.getRealPath("/resources/upload/group/board");
+					
+					File dest = new File(saveDirectory,renamedFilename);
+					file.transferTo(dest);
+					
+					fileList.add(renamedFilename);
+				}
+			}
+			
+			log.info("fileList = {}",fileList);
+			if(!fileList.isEmpty()) {
+				String[] fileArray = fileList.toArray(new String[0]);
+				groupBoard.setImage(fileArray);
+			}
+			
+			log.info("groupBoard = {}",groupBoard);
+			
+			int result = groupService.insertGroupBoard(groupBoard);
+			
+			return null;
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return null;
+		}
+	}
 }
 

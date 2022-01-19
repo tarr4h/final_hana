@@ -15,7 +15,7 @@
 		<div class="col-sm">
 			<h1>회원가입</h1>
 	
-			<form:form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST" name="enrollFrm">
+			<form:form action="${pageContext.request.contextPath }/member/memberEnroll?${_csrf.parameterName}=${_csrf.token}" method="POST" name="enrollFrm" enctype="multipart/form-data">
 				<table>
 					<tbody>
 						<tr>
@@ -61,7 +61,8 @@
 						<tr>
 							<td>프로필사진</td>
 							<td>
-								<input type="file" name="picture" id="" />
+								<input type="hidden" name="picture" value="notYet" />
+								<input type="file" name="pictureFile" id="" />
 							</td>
 						</tr>
 						<tr>
@@ -73,9 +74,9 @@
 								<input type="text" id="jibunAddress" placeholder="지번주소">
 								<span id="guide" style="color:#999;display:none"></span>
 								
-								<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소">
+								<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소" required>
 								<input type="hidden" name="addressFirst" />
-								<input type="hidden" name="addressSecound" />
+								<input type="hidden" name="addressSecond" />
 								<input type="hidden" name="addressThird" />
 							</td>
 						</tr>
@@ -130,8 +131,8 @@ function execDaumPostcode() {
             document.getElementById("jibunAddress").value = data.jibunAddress;
      
             $("[name=addressFirst]").val(data.sido);
-            $("[name=addressSecound]").val(data.sigungu);
-            $("[name=addressThird]").val(data.roadname);
+            $("[name=addressSecond]").val(data.sigungu);
+            $("[name=addressThird]").val(data.bname);
             
             close();
         }

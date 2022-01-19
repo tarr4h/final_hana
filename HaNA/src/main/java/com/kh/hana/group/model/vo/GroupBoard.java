@@ -19,6 +19,9 @@ public class GroupBoard {
 	private String content;
 	private Date regDate;
 	private int likeCount;
+	private String placeName;
+	private String placeAddress;
 	private String[] image;
+	private String[] tagMembers;
 	
 }

@@ -15,6 +15,9 @@
 <h1>shop계정페이지</h1>
 
 
+<div class="container">
+	<input type="button" value="설정하기" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/profile'" />
+</div>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

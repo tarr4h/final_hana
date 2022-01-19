@@ -20,9 +20,8 @@ public class MbtiDaolmpl implements MbtiDao {
 	private SqlSessionTemplate session;
 
 	@Override
-	public List<Mbti> selectMbtiList() {
-		
-		return session.selectList("mbti.selectMbtiList");
+	public List<Mbti> selectMbtiList(Map<String, Object> number) {
+		return session.selectList("mbti.selectMbtiList", number);
 	}
 
 	@Override

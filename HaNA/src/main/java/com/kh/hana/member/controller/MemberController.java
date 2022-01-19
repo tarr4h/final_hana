@@ -1,15 +1,26 @@
 package com.kh.hana.member.controller;
 
+ 
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletContext;
+
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Member;
 
@@ -26,6 +37,9 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	@Autowired
+	private ServletContext application;
+	
 	@GetMapping("/login")
 	public void loginMain() {
 		
@@ -37,13 +51,31 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberEnroll")
-	public String memberEnroll(Member member, RedirectAttributes redirectAttr) {
+	public String memberEnroll(Member member, @RequestParam(name="pictureFile") MultipartFile upFile, RedirectAttributes redirectAttr) {
 		
 		log.info("member = {}", member);
 		
 		String password = member.getPassword();
 		String encodedPassword = bcryptPasswordEncoder.encode(password);
 		member.setPassword(encodedPassword);
+		
+		String originalFilename = upFile.getOriginalFilename();
+		String renamedFilename = HanaUtils.rename(originalFilename);
+		
+		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
+		
+		log.info("originalFilename = {}", originalFilename);
+		log.info("renamedFilename = {}", renamedFilename);
+		log.info("saveDirectory = {}", saveDirectory);
+		
+		File saveImg = new File(saveDirectory, renamedFilename);
+		try {
+			upFile.transferTo(saveImg);
+		} catch (IllegalStateException | IOException e) {
+			log.error(e.getMessage(), e);
+		}
+		
+		member.setPicture(renamedFilename);		
 		
 		int result = memberService.memberEnroll(member);
 		
@@ -54,15 +86,8 @@ public class MemberController {
 		return "redirect:/member/login";		
 	}
 	
-	@GetMapping("/memberView")
-	public void memberView(@AuthenticationPrincipal Member member) {
- 
-		log.debug("member={}", member);	
-	}
-	
-	@GetMapping("/shopView")
-	public void shopView(@AuthenticationPrincipal Member member) {
-		log.debug("member={}", member);
+	@GetMapping("/{accountType}")
+	public void memberView(@AuthenticationPrincipal Member member, @PathVariable String accountType) {
 	}
 	
 	
@@ -71,6 +96,11 @@ public class MemberController {
 	//	Member member = memberService.selectPersonality(id);
 	//	log.debug("memberSetting = {}", member);
 //		model.addAttribute("member", member);
+		
+	}
+	
+	@GetMapping("/shopSetting/{param}")
+	public void shopSetting(@PathVariable String param) {
 		
 	}
 	
