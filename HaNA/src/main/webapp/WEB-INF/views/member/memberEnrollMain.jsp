@@ -15,7 +15,7 @@
 		<div class="col-sm">
 			<h1>회원가입</h1>
 	
-			<form:form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST" name="enrollFrm">
+			<form:form action="${pageContext.request.contextPath }/member/memberEnroll?${_csrf.parameterName}=${_csrf.token}" method="POST" name="enrollFrm" enctype="multipart/form-data">
 				<table>
 					<tbody>
 						<tr>
@@ -61,7 +61,8 @@
 						<tr>
 							<td>프로필사진</td>
 							<td>
-								<input type="file" name="picture" id="" />
+								<input type="hidden" name="picture" value="notYet" />
+								<input type="file" name="pictureFile" id="" />
 							</td>
 						</tr>
 						<tr>
