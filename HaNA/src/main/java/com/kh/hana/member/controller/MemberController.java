@@ -114,6 +114,7 @@ public class MemberController {
         oldMember.setAddressSecond(member.getAddressSecond());
         oldMember.setAddressThird(member.getAddressThird());
         oldMember.setAddressFull(member.getAddressFull());
+        oldMember.setAddressAll(member.getAddressAll());
         oldMember.setPersonality(member.getPersonality());
         oldMember.setInterest(member.getInterest());
 
