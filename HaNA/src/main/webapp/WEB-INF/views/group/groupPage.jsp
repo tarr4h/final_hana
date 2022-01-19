@@ -13,7 +13,15 @@
 	<jsp:param value="메인화면" name="main" />
 </jsp:include>
 <script src="https://kit.fontawesome.com/0748f32490.js"
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous">
+</script>
+
+<script>
+$(() => {
+	console.log('${enrolled}');
+});
+
+</script>
 
 <div class="group-page">
 	<section class="group-page-section">
@@ -51,7 +59,9 @@
 		</div>
 		<div class="group-page-enroll-button">
 			<br>
-			<c:if test="${empty groupMember || empty loginMember}">
+			<%-- <c:if test="${empty groupMember || empty loginMember}"> --%>
+			<%-- <c:remove var="enrolled"/> --%>
+			<c:if test="${!enrolled}">
 				<a href="#" class="enroll-button">가입신청</a>
 			</c:if>
 		</div>
@@ -61,30 +71,17 @@
 			class="fas fa-calendar-alt"></i></a> <a href="#"><i
 			class="far fa-comments"></i></a>
 	</div>
-	<ul class="group-page-thumbnail">
-		<li>
-			<img
-			src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-			alt="" />
-		</li>
-	</ul>
-	<style>
-ul.group-page-thumbnail {
-	padding-left: 0;
-	list-style: none;
-	height: 100vh;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-evenly;
-}
-
-ul.group-page-thumbnail li img {
-	width: 300px;
-	height: 300px;
-	margin: auto;
-}
-</style>
+	<div class="container">
+	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
+		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
+	        <div class="col-sm-4">
+				<img  style="width:100%; height:100%; margin-bottom: 10%"
+				src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image[0]}"
+				alt="" />
+	        </div>
+		${vs.index%3 == 2? "</div>" : ""}
+	</c:forEach>
+	</div>
 </div>
 
 

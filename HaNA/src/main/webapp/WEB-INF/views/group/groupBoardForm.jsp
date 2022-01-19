@@ -18,7 +18,7 @@
         <table>
             <tr>
             <td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/></td>
-            <td><input type="hidden" value="ss" name="groupId"/></td>
+            <td><input type="hidden" value="${groupId}" name="groupId"/></td>
             </tr>
             <tr>
             <td>
@@ -27,22 +27,35 @@
                 <div id="image_container"></div>
             </td>
             </tr>
-<!--             <tr>
+            <tr>
             <td>
                 <label for="file1">첨부파일 2</label>
-                <input type="file" name="file" id="file1"/>
+                <input type="file" name="file" id="file2"/>
             </td>
-            </tr> -->
+            </tr> 
+            <tr>
+            <td>
+                <label for="file1">첨부파일 3</label>
+                <input type="file" name="file" id="file3"/>
+            </td>
+            </tr> 
             <tr>
             <td><input id="placeName" name="placeName" type="text" value="" readonly/></td>
             <td><input id="placeAddress" name="placeAddress" type="text" value="" readonly/></td>
+            <td><input id="locationY" name="locationY" type="text" value="" readonly/></td>
+            <td><input id="locationX" name="locationX" type="text" value="" readonly/></td>
             </tr>
             <tr>
             <td><input type="text" name="content"/></td>
             </tr>
             <tr>
-            <td> <input type="text" name="tagMembers" value=""/></td>
+            <td>회원목록</td>
             </tr>
+            <c:forEach items="${members}" var="member">
+	            <tr>
+	            <td><input type="text" value="${member.id}" name="tagMembers" readonly/></td>
+	            </tr>
+            </c:forEach>
             <tr><td><input type="submit" /></td></tr>
         </table>
     </form>
@@ -71,6 +84,7 @@
 
 // 마커를 담을 배열입니다
 var markers = [];
+var place = [];
 var placeList = [];
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -130,7 +144,7 @@ function placesSearchCB(data, status, pagination) {
 }
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
-
+	placeList = [];
     var listEl = document.getElementById('placesList'), 
     menuEl = document.getElementById('menu_wrap'),
     fragment = document.createDocumentFragment(), 
@@ -149,7 +163,11 @@ function displayPlaces(places) {
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i), 
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
+        console.log(places[i].y);
+        console.log(places[i].x);
+		place.push(places[i].y);
+		place.push(places[i].x);
+		placeList.push(place);
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
@@ -167,6 +185,8 @@ function displayPlaces(places) {
             kakao.maps.event.addListener(marker, 'click', function() {
 				$("#placeName").val(placeList[i][0]);
 				$("#placeAddress").val(placeList[i][1]);
+				$("#locationY").val(placeList[i][2]);
+				$("#locationX").val(placeList[i][3]);
             });
 
             itemEl.onmouseover =  function () {
@@ -176,6 +196,8 @@ function displayPlaces(places) {
             itemEl.onclick =  function () {
 				$("#placeName").val(placeList[i][0]);
 				$("#placeAddress").val(placeList[i][1]);
+				$("#locationY").val(placeList[i][2]);
+				$("#locationX").val(placeList[i][3]);
 			};
             
             itemEl.onmouseout =  function () {
@@ -197,17 +219,10 @@ function displayPlaces(places) {
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
 	
-	console.log(places.place_name);
-	console.log(places.road_address_name);
-	console.log(places.address_name);
-	
-	var place = [];
-	place.push();
+	place = [];
 	place.push(places.place_name);
-	place.push(places.road_address_name);
 	place.push(places.address_name);
-	placeList.push(place);
-	
+
     var el = document.createElement('li'),
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
