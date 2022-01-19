@@ -25,4 +25,6 @@ public interface GroupDao {
 
 	public List<Member> selectGroupMemberList(String groupId);
 
+	public List<GroupBoard> selectGroupBoardList(String groupId);
+
 }

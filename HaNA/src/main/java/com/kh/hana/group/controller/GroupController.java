@@ -62,9 +62,11 @@ public class GroupController {
 		Boolean enrolled = (result != null? true:false);
 		
 		log.info("enrolled = {}", enrolled);
-		
 		model.addAttribute("enrolled",enrolled);
 		
+		List<GroupBoard> groupBoardList = groupService.selectGroupBoardList(groupId);
+		log.info("groupBoardList = {}", groupBoardList);
+		model.addAttribute("groupBoardList", groupBoardList);
 		return "group/groupPage";
 	}
 

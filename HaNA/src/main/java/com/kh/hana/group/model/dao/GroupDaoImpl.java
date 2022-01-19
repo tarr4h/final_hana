@@ -55,6 +55,11 @@ public class GroupDaoImpl implements GroupDao {
 	public List<Member> selectGroupMemberList(String groupId) {
 		return session.selectList("selectGroupMemberList",groupId);
 	}
+
+	@Override
+	public List<GroupBoard> selectGroupBoardList(String groupId) {
+		return session.selectList("selectGroupBoardList",groupId);
+	}
 	
 
 

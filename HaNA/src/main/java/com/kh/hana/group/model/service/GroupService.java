@@ -29,4 +29,6 @@ public interface GroupService {
 
 	List<Member> selectGroupMemberList(String groupId);
 
+	List<GroupBoard> selectGroupBoardList(String groupId);
+
 }
