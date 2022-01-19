@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import javax.servlet.ServletContext;
 
- 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -82,14 +82,16 @@ public class MemberController {
 		return "redirect:/member/login";		
 	}
 	
+	/*
+	 * @GetMapping("/{accountType}") public void memberView(@AuthenticationPrincipal
+	 * Member member, @PathVariable String accountType, Model model) {
+	 * if(accountType.equals("memberView")) { String id = member.getId(); Member
+	 * user = memberService.selectPersonality(id); log.info("member = {}", user);
+	 * model.addAttribute("member", user); } }
+	 */
 	@GetMapping("/{accountType}")
-	public void memberView(@AuthenticationPrincipal Member member, @PathVariable String accountType, Model model) {
-		if(accountType.equals("memberView")) {
-			String id = member.getId();
-			Member user = memberService.selectPersonality(id);
-			log.info("member = {}", user);
-			model.addAttribute("member", user);
-		}
+	public void memberView(Authentication authentication, @PathVariable String accountType, Model model) {
+		log.info("authentication = {}", authentication);
 	}
 	
 	
