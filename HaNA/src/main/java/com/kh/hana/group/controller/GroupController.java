@@ -175,5 +175,6 @@ public class GroupController {
 		model.addAttribute("tagMembers",tagMembers);
 		return "/group/groupBoardDetail";
 	}
+	
 }
 
