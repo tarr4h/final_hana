@@ -50,19 +50,19 @@
 			<tr>
 				<th></th>
 				<td>	
-					<input type="text" class="form-control" id="" value="${loginMember.addressSecound}" required>
+					<input type="text" class="form-control" id="" name="addressSecond" value="${loginMember.addressSecond}" required>
 				</td>
 			</tr>  
 			<tr>
 				<th></th>
 				<td>	
-					<input type="text" class="form-control" id="" value="${loginMember.addressThird}" required>
+					<input type="text" class="form-control" id="" name="addressThird" value="${loginMember.addressThird}" required>
 				</td>
 			</tr>  
 			<tr>
 			<th></th>
 				<td>	
-					<input type="text" class="form-control" id="" value="${loginMember.addressFull}" required>
+					<input type="text" class="form-control" id="" name="addressFull" value="${loginMember.addressFull}" required>
 				</td>
 			</tr>
 			<tr>

@@ -21,8 +21,14 @@ public interface ChatDao {
 
 	List<Member> memberList();
 
-	Chat chatRoomCheck(Map<String, Object> param);
+	List<Chat> chatRoomCheck(Map<String, Object> param);
 
 	int createChatRoom(Map<String, Object> param);
+
+	int insertEnterMessage(Map<String, Object> param);
+
+	int findRoomNo(Map<String, Object> param);
+
+	int insertEnterMessage2(Map<String, Object> param);
 
 }

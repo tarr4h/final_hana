@@ -1,9 +1,17 @@
 package com.kh.hana.member.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,10 +74,24 @@ public class MemberController {
 	@PostMapping("/memberUpdate")
 	public String memberUpdate(Member member,
 								String id,
+								@AuthenticationPrincipal Member oldMember,
 								RedirectAttributes redirectAttr) {
 		log.info("member={}", member);
+		log.info("oldMember={}", oldMember);
 		int result = memberService.updateMember(member, id);
-	log.info("memberPersonality={}" , member.getPersonality()); 
+		
+		//spring-security memberController memberUpdate쪽
+		oldMember.setName(member.getName());
+		oldMember.setIntroduce(member.getIntroduce());
+		oldMember.setAddressFirst(member.getAddressFirst());
+		oldMember.setAddressSecond(member.getAddressSecond());
+		oldMember.setAddressThird(member.getAddressThird());
+		oldMember.setAddressFull(member.getAddressFull());
+		oldMember.setPersonality(member.getPersonality());
+		oldMember.setInterest(member.getInterest());
+		
+		log.info("memberSetting result = {}" , result); 
+		log.info("memberPersonality={}" , member.getPersonality()); 
 		
 		redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
 		return "redirect:/member/memberSetting";
