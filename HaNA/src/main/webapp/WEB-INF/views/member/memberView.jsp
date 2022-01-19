@@ -49,7 +49,7 @@ function goSetting(){
                     </tr>
                     <tr>
                      	<td>나의 성격</td>
-                        <td>${loginMember.personality}</td>
+                        <td>${member.personality }</td>
                     </tr>
                     <tr>
                         <td colspan="2">나의 동네친구 목록</td>
