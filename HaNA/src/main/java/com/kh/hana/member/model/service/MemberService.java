@@ -1,5 +1,5 @@
 package com.kh.hana.member.model.service;
-
+ 
 import com.kh.hana.member.model.vo.Member;
 
 public interface MemberService {
@@ -9,5 +9,7 @@ public interface MemberService {
 	int memberEnroll(Member member);
 
 	int updateMember(Member member, String id);
+
+	Member selectPersonality(String id);
 
 }

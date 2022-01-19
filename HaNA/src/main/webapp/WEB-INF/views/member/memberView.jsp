@@ -13,7 +13,7 @@
 <sec:authentication property="principal" var="loginMember"/>
 <script>
 function goSetting(){
-	location.href = "${pageContext.request.contextPath}/member/memberSetting";
+	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
 </script>
 
@@ -45,11 +45,11 @@ function goSetting(){
                     </tr>
                     <tr>
                         <td>나의 관심사</td>
-                        <td>..</td>
+                        <td>${loginMember.interest}</td>
                     </tr>
                     <tr>
                      	<td>나의 성격</td>
-                        <td>..</td>
+                        <td>${member.personality }</td>
                     </tr>
                     <tr>
                         <td colspan="2">나의 동네친구 목록</td>
@@ -61,7 +61,7 @@ function goSetting(){
                     </tr>
                      <tr>
                         <td colspan="2">소개글</td>
-                        <td colspan="2">..</td>
+                        <td colspan="2"></td>
                     </tr>
                 </table>
             </div>

@@ -34,8 +34,16 @@
      set
      member_id = #{id},
      interest = #{interest}
+     
 	</update>
 
+	<select id="selectPersonality" parameterType="string" resultType="member">
+		select *
+		from
+			personality
+		where
+			member_id = #{id}
+	</select>
 
 
 </mapper>

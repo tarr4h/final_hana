@@ -1,5 +1,6 @@
 package com.kh.hana.member.model.dao;
 
+import com.kh.hana.member.controller.Personality;
 import com.kh.hana.member.model.vo.Member;
 
 public interface MemberDao {
@@ -11,5 +12,7 @@ public interface MemberDao {
 	int updatePersonality(Member member, String id);
 
 	int updateInterest(Member member, String id);
+
+	Member selectPersonality(String id);
 
 }
