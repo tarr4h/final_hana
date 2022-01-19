@@ -76,9 +76,6 @@ public class MbtiController {
 		public String mbtiResult(Model model , MbtiData data) {
 		log.info("data = {}", data);
 		
-		// List<MbtiData> mbtiResult = mbtiService.selectMbtiResult(data);
-		
-		
 		if(data.getNo() != null) {
 			int[] no = data.getNo(); 
 			int[] memberResult =  data.getMemberResult();
@@ -94,10 +91,20 @@ public class MbtiController {
 				resultOfNo.put(per, memberResult[i]);
 				i++;
 				log.info("per={}",per);
-
 			}
 			int result = mbtiService.insertList(resultOfNo, memberId);
 		}	
+		
+		String id = data.getMemberId();
+		List<Map<String, Object>> mbtiResult = mbtiService.selectMbtiResult(id);
+		log.info("mbtiResult = {}", mbtiResult);
+		
+		for(Map<String, Object> map : mbtiResult) {
+			String no = (String) map.get("question_no");
+			String result = (String) map.get("result");
+			log.info("map ={}", map);
+			log.info("no={}", map.get("QUESTION_NO"));
+		}
 		return "mbti/mbtiResult";
 	}
 	

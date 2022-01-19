@@ -18,13 +18,8 @@
 				<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
 					<input type="hidden" name="no" value="${list.no }" />
 					<span>비동의</span>
-						<input type="checkbox" id="shapes_1" name="memberResult" value="-2" checked/>
+						<input type="checkbox" id="shapes_2" name="memberResult" value="-2" checked/>
 						<input type="checkbox" id="shapes_2" name="memberResult" value="-1"/>
-						<input type="checkbox" id="shapes_3" name="memberResult" value="-1"/>
-						<input type="checkbox" id="shapes_4" name="memberResult" value="1"/>
-						<input type="checkbox" id="shapes_5" name="memberResult" value="1"/>
-						<input type="checkbox" id="shapes_6" name="memberResult" value="1"/>
-						<input type="checkbox" id="shapes_7" name="memberResult" value="1"/>
 					<span>동의</span>
 			</li>
 		 </c:forEach>
