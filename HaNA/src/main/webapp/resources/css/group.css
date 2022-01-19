@@ -138,4 +138,19 @@
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
 /* 그룹 페이지 글 리스트 썸네일 */
+ul.group-page-thumbnail {
+	list-style: none;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	margin-left: 0;
+	padding-left: 0;
+}
 
+ul.group-page-thumbnail li img {
+	width: 300px;
+	height: 300px;
+	margin: auto;
+}
