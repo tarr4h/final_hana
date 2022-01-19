@@ -22,7 +22,7 @@
   </div>
 </div>
 <div id="enroll-container" class="mx-auto text-center">
-	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath }/member/memberUpdate" method="POST">
+	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate" method="POST">
 		<table class="mx-auto">
 		 <input type="hidden" name="id" value="${loginMember.id}" />
 			<tr>

@@ -13,7 +13,7 @@
 <sec:authentication property="principal" var="loginMember"/>
 <script>
 function goSetting(){
-	location.href = "${pageContext.request.contextPath}/member/memberSetting";
+	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
 </script>
 

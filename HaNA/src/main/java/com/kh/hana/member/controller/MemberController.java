@@ -91,11 +91,19 @@ public class MemberController {
 	}
 	
 	
-	@GetMapping("/memberSetting")
-	public void memberSetting(String id,Model model) {
-	//	Member member = memberService.selectPersonality(id);
-	//	log.debug("memberSetting = {}", member);
-//		model.addAttribute("member", member);
+	@GetMapping("/memberView")
+	public void memberView(String id,Model model) {
+		Member member = memberService.selectPersonality(id);
+		log.debug("memberView = {}", member);
+		model.addAttribute("member", member);
+		
+	}
+	
+//	@GetMapping("/memberView")
+//	public void memberView() {}
+	
+	@GetMapping("/memberSetting/{param}")
+	public void memberSetting(@PathVariable String param) {
 		
 	}
 	
@@ -128,7 +136,7 @@ public class MemberController {
         log.info("memberPersonality={}" , member.getPersonality()); 
 
         redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
-        return "redirect:/member/memberSetting";
+        return "redirect:/member/memberSetting/memberSetting";
     }
 	
 	
