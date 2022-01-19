@@ -1,5 +1,6 @@
 package com.kh.hana.group.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.member.model.vo.Member;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
@@ -28,6 +30,11 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public Map<String, String> selectGroupEnrolled(Map<String, String> map) {
 		return session.selectOne("group.selectGroupEnrolled",map);
+	}
+
+	@Override
+	public List<Group> selectGroupList(Member member) {
+		return session.selectList("group.selectGroupList",member);
 	}
 
 	

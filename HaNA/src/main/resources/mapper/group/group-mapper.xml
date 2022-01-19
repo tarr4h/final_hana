@@ -43,5 +43,15 @@
         <result column="member_id" property="memberId"/>
         <result column="member_level_code" property="memberLevelCode"/>
 	</resultMap>
+	
+	<select id="selectGroupList" resultType="group">
+	select
+    	*
+	from
+    	group_ g join group_member_list gml
+        	on g.group_id = gml.group_id
+	where
+    	gml.member_id = #{id}
+	</select>
 </mapper>
 

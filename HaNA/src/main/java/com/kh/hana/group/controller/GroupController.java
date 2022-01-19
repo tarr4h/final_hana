@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -55,6 +56,8 @@ public class GroupController {
 		Map<String, String> result = groupService.selectGroupEnrolled(map);
 		Boolean enrolled = (result != null? true:false);
 		
+		log.info("enrolled = {}", enrolled);
+		
 		model.addAttribute("enrolled",enrolled);
 		
 		return "group/groupPage";
@@ -62,9 +65,12 @@ public class GroupController {
 
 	@GetMapping("/groupList")
 	public void groupList(@AuthenticationPrincipal Member member) {
-		log.debug("loginMember = {}",member);
+		List<Group> groupList = groupService.selectGroupList(member);
+		log.info("loginMember = {}",member);
+		log.info("groupList = {}", groupList);
 		
 	}
+	
 	@GetMapping("/createGroupForm")
 	public void createGroupForm() {}
 	

@@ -13,7 +13,15 @@
 	<jsp:param value="메인화면" name="main" />
 </jsp:include>
 <script src="https://kit.fontawesome.com/0748f32490.js"
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous">
+</script>
+
+<script>
+$(() => {
+	console.log('${enrolled}');
+});
+
+</script>
 
 <div class="group-page">
 	<section class="group-page-section">
@@ -52,8 +60,8 @@
 		<div class="group-page-enroll-button">
 			<br>
 			<%-- <c:if test="${empty groupMember || empty loginMember}"> --%>
-			<c:remove var="enrolled"/>
-			<c:if test="${enrolled ? false : true}" var="result">
+			<%-- <c:remove var="enrolled"/> --%>
+			<c:if test="${!enrolled}">
 				<a href="#" class="enroll-button">가입신청</a>
 			</c:if>
 		</div>
