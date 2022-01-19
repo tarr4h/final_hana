@@ -61,10 +61,6 @@ public class MemberController {
 		
 		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
 		
-		log.info("originalFilename = {}", originalFilename);
-		log.info("renamedFilename = {}", renamedFilename);
-		log.info("saveDirectory = {}", saveDirectory);
-		
 		File saveImg = new File(saveDirectory, renamedFilename);
 		try {
 			upFile.transferTo(saveImg);
