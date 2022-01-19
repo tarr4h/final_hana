@@ -6,9 +6,12 @@
 
 	<select id="loadUserByUsername" resultMap="memberMap">
 		select
-			*
+		    *
 		from
-			member
+		    member m left join personality p
+		    on m.id = p.member_id
+		    left join interest i
+		    on p.member_id = i.member_id
 		where
 			id = #{username}
 	</select>
@@ -24,5 +27,7 @@
 		<result column="address_third" property="addressThird"/>
 		<result column="address_full" property="addressFull"/>
 		<result column="enabled" property="enabled"/>
+		<result column="personality" property="personality"/>
+		<result column="interest" property="interest"/>
 	</resultMap>
 </mapper>
