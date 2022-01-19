@@ -78,6 +78,7 @@
 								<input type="hidden" name="addressFirst" />
 								<input type="hidden" name="addressSecond" />
 								<input type="hidden" name="addressThird" />
+								<input type="hidden" name="addressAll" />
 							</td>
 						</tr>
 						<tr>
@@ -129,10 +130,15 @@ function execDaumPostcode() {
             document.getElementById('postcode').value = data.zonecode;
             document.getElementById("roadAddress").value = roadAddr;
             document.getElementById("jibunAddress").value = data.jibunAddress;
-     
+
+            console.log(data.buildingName);
+            console.log(data.roadAddress);
+            console.log(data.jibunAddress);
+            
             $("[name=addressFirst]").val(data.sido);
             $("[name=addressSecond]").val(data.sigungu);
             $("[name=addressThird]").val(data.bname);
+            $("[name=addressAll]").val(data.roadAddress);
             
             close();
         }
