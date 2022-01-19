@@ -11,5 +11,6 @@ public interface MemberService {
 	int updateMember(Member member, String id);
 
 	Member selectPersonality(String id);
+	
 
 }
