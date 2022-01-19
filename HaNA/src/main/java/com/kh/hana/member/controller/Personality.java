@@ -1,4 +1,4 @@
-package com.kh.hana.member.model.vo;
+package com.kh.hana.member.controller;
 
 import java.io.Serializable;
 
@@ -13,10 +13,8 @@ public class Personality implements Serializable {
 
 	/**
 	 * 
-	 */ 
+	 */
 	private static final long serialVersionUID = 1L;
-	
-	private String id;
+	private String memberId;
 	private String personality;
-
 }

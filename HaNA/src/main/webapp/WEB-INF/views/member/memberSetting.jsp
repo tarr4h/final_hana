@@ -29,7 +29,7 @@
 				<th>이름</th>
 				<td>
 					<div id="memberId-container">
-						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required>
+						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >
 					 				
 					</div>
 				</td>
@@ -50,49 +50,47 @@
 			<tr>
 				<th></th>
 				<td>	
-					<input type="text" class="form-control" id="" value="${loginMember.addressSecound}" required>
+					<input type="text" class="form-control" id="" name="addressSecond" value="${loginMember.addressSecond}" required>
 				</td>
 			</tr>  
 			<tr>
 				<th></th>
 				<td>	
-					<input type="text" class="form-control" id="" value="${loginMember.addressThird}" required>
+					<input type="text" class="form-control" id="" name="addressThird" value="${loginMember.addressThird}" required>
 				</td>
 			</tr>  
 			<tr>
 			<th></th>
 				<td>	
-					<input type="text" class="form-control" id="" value="${loginMember.addressFull}" required>
+					<input type="text" class="form-control" id="" name="addressFull" value="${loginMember.addressFull}" required>
 				</td>
 			</tr>
 			<tr>
 				<th>내 성격</th>
 				<td>	
-					<select name="personality" class="custom-select">
+					<select name="personality" id="personality" class="custom-select" required>
 					  <option selected>선택&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-					  <option value="personality2" >차분한</option>
-					  <option value="personality3" >활발한</option>
-					  <option value="personality4" >내향적인</option>
-					  <option value="personality5" >외향적인</option>
-					  <option value="personality6" >열정적인</option>
-					  <option value="personality7" >느긋한</option>
+					  <option value="차분한" ${loginMember.personality  eq '차분한'? 'selected' : ''}>차분한</option>
+					  <option value="활발한" ${loginMember.personality  eq '활발한'? 'selected' : ''}>활발한</option>
+					  <option value="내향적인" ${loginMember.personality  eq '내향적인'? 'selected' : ''}>내향적인</option>
+					  <option value="외향적인" ${loginMember.personality  eq '외향적인'? 'selected' : ''}>외향적인</option>
+					  <option value="열정적인" ${loginMember.personality  eq '열정적인'? 'selected' : ''}>열정적인</option>
+					  <option value="느긋한" ${loginMember.personality  eq '느긋한'? 'selected' : ''}>느긋한</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<th>내 관심사</th>
 				<td>	
-				<select name="interest" class="custom-select">
-				  <option selected>Open this select menu</option>
-				  <option value="interest1"  >One</option>
-				  <option value="interest2"  >Two</option>
-				  <option value="interest3"  >Three</option>
+				<select name="interest" class="custom-select" required>
+				  <option selected>선택</option>
+				  <option value="스포츠" ${loginMember.interest  eq '스포츠'? 'selected' : ''}>스포츠</option>
+				  <option value="영화" ${loginMember.interest  eq '영화'? 'selected' : ''}>영화</option>
+				  <option value="술" ${loginMember.interest  eq '술'? 'selected' : ''}>술</option>
+				  <option value="책" ${loginMember.interest  eq '책'? 'selected' : ''}>책</option>
 				</select>
 				</td>
 			</tr> 
-			 
-			
-			 
 		 
 		</table>
 		<input type="submit" value="완료" >
