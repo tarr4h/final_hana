@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
-	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm">
+	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm" name="mbtiFrm">
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
 		 <c:forEach items="${mbtiList}" var="list">
@@ -36,7 +36,7 @@
 		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
 		<div id="btn" style="display: none; ">
 		<br /><br />
-		<button id="mbtiListPage-buttonResult" onclick="location.href='${pageContext.request.contextPath}/mbti/mbtiResult.do'">결과보기 <i class="fas fa-angle-double-right"></i></button>
+		<button id="mbtiListPage-buttonResult">결과보기 <i class="fas fa-angle-double-right"></i></button>
 		</div>
 	</form>
 </div>
@@ -44,6 +44,8 @@
 
 <script>
 window.onload = function(){
+	
+	console.log($('form[name=mbtiFrm]').attr('action'));
 	console.log($('input[name=cPage]').val());
 	
 	if($('input[name=cPage]').val() == 7){
@@ -53,6 +55,9 @@ window.onload = function(){
 	if($('input[name=cPage]').val() == 37){
 		$("#mbtiListPage-buttonNext").hide();
 		document.getElementById("btn").style.display = 'block';
+		const path = '${pageContext.request.contextPath}/mbti/mbtiResult.do';
+		console.log(path);
+		$('form[name=mbtiFrm]').attr('action', path);
 	}
 	
 }

@@ -82,29 +82,10 @@ public class MemberController {
 		return "redirect:/member/login";		
 	}
 	
-	/*
-	 * @GetMapping("/{accountType}") public void memberView(@AuthenticationPrincipal
-	 * Member member, @PathVariable String accountType, Model model) {
-	 * if(accountType.equals("memberView")) { String id = member.getId(); Member
-	 * user = memberService.selectPersonality(id); log.info("member = {}", user);
-	 * model.addAttribute("member", user); } }
-	 */
 	@GetMapping("/{accountType}")
 	public void memberView(Authentication authentication, @PathVariable String accountType, Model model) {
 		log.info("authentication = {}", authentication);
 	}
-	
-	
-	/*
-	 * @GetMapping("/memberView") public void memberView(String id, Model model) {
-	 * Member member = memberService.selectPersonality(id);
-	 * log.debug("memberView = {}", member); model.addAttribute("member", member);
-	 * 
-	 * }
-	 */
-	
-//	@GetMapping("/memberView")
-//	public void memberView() {}
 	
 	@GetMapping("/memberSetting/{param}")
 	public void memberSetting(@PathVariable String param) {
