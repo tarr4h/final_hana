@@ -21,6 +21,8 @@ public class GroupBoard {
 	private int likeCount;
 	private String placeName;
 	private String placeAddress;
+	private double locationY;
+	private double locationX;
 	private String[] image;
 	private String[] tagMembers;
 	

@@ -95,8 +95,14 @@ public class GroupController {
 		}
 	}
 	
-	@GetMapping("/groupBoardForm")
-	public void groupBoardForm(){}
+	@GetMapping("/groupBoardForm/{groupId}")
+	public String groupBoardForm(@PathVariable String groupId, Model model){
+		List<Member> members = groupService.selectGroupMemberList(groupId);
+		log.info("members = {}",members);
+		model.addAttribute("groupId",groupId);
+		model.addAttribute("members",members);
+		return "/group/groupBoardForm";
+	}
 	
 	@PostMapping("/enrollGroupBoard")
 	public String enrollGroupBoard(GroupBoard groupBoard,
@@ -129,11 +135,21 @@ public class GroupController {
 			
 			int result = groupService.insertGroupBoard(groupBoard);
 			
-			return null;
+			return "redirect:/group/groupBoardDetail/"+groupBoard.getNo();
 		}catch(Exception e) {
 			log.error(e.getMessage(),e);
-			return null;
+			return "redirect/group/enrollGroupBoard";
 		}
+	}
+	@GetMapping("/groupBoardDetail/{no}")
+	public String groupBoardDetail(@PathVariable int no, Model model) {
+		GroupBoard groupBoard = groupService.selectOneBoard(no);
+		log.info("groupBoard = {}",groupBoard);
+		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
+		log.info("tagMembers = {}",tagMembers);
+		model.addAttribute(groupBoard);
+		model.addAttribute("tagMembers",tagMembers);
+		return "/group/groupBoardDetail";
 	}
 }
 

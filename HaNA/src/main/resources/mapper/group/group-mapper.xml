@@ -39,10 +39,46 @@
 			default,
 			#{placeName},
 			#{placeAddress},
+			#{locationY},
+			#{locationX},
 			#{image},
 			#{tagMembers}			
 		)
+		<selectKey order="AFTER" resultType="_int" keyProperty="no">  <!-- insert문 이후에 실행할게요, GroupBoard객체의 no필드에 세팅할게요 -->
+			select
+				seq_group_board.currval
+			from
+				dual
+		</selectKey>
 	</insert>
+	<select id="selectOneBoard" resultType="groupBoard">
+		select
+			*
+		from
+			group_board
+		where
+			no = #{no}
+	</select>
+	<select id="selectMemberList" resultType="member">
+		select
+			*
+		from
+			member
+		where
+			id in 
+			<foreach collection="tagMembers" item="id" open="(" separator="," close=")">
+				#{id}
+			</foreach>	
+	</select>
+	<select id="selectGroupMemberList" resultType="member">
+		select
+			id, name, picture
+		from
+			member m join group_member_list gml
+			on m.id = gml.member_id
+		where
+			gml.group_id = #{groupId}
+	</select>
 	
 </mapper>
 

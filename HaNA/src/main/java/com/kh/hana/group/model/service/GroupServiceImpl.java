@@ -1,5 +1,7 @@
 package com.kh.hana.group.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.hana.group.model.dao.GroupDao;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.member.model.vo.Member;
 
 @Service
 @Transactional(rollbackFor=Exception.class) // 익셉션 발생시 롤백
@@ -28,6 +31,21 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int insertGroupBoard(GroupBoard groupBoard) {
 		return groupDao.insertGroupBoard(groupBoard);
+	}
+
+	@Override
+	public GroupBoard selectOneBoard(int no) {
+		return groupDao.selectOneBoard(no);
+	}
+
+	@Override
+	public List<Member> selectMemberList(GroupBoard groupBoard) {
+		return groupDao.selectMemberList(groupBoard);
+	}
+
+	@Override
+	public List<Member> selectGroupMemberList(String groupId) {
+		return groupDao.selectGroupMemberList(groupId);
 	}
 
 }
