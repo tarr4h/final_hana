@@ -27,5 +27,22 @@
 		
 	</insert>
 	
+	<insert id="insertGroupBoard">
+		insert into
+			group_board
+		values(
+			seq_group_board.nextVal,
+			#{groupId},
+			#{writer},
+			#{content},
+			default,
+			default,
+			#{placeName},
+			#{placeAddress},
+			#{image},
+			#{tagMembers}			
+		)
+	</insert>
+	
 </mapper>
 

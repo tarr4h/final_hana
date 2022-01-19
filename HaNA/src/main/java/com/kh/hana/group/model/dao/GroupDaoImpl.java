@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.group.model.vo.GroupBoard;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
@@ -21,6 +22,11 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public int insertOneGroup(Group group) {
 		return session.insert("group.insertOneGroup",group);
+	}
+
+	@Override
+	public int insertGroupBoard(GroupBoard groupBoard) {
+		return session.insert("group.insertGroupBoard", groupBoard);
 	}
 	
 
