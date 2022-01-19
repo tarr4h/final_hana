@@ -1,6 +1,8 @@
 package com.kh.hana.mbti.controller;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +32,13 @@ public class MbtiController {
 	@Autowired
 	private MbtiService mbtiService;
 	
+	// 메인 페이지
 	@GetMapping("/mbti.do")
 	public String mbtiMain() {
 		return "/mbti/mbtiMain";
 	}
 	
+	// mbti 문항 불러오기
 	@GetMapping("/mbtiList.do")
 	public String mbtiList(Model model, @RequestParam("cPage") int cPage, MbtiData data) {
 		log.info("data = {}", data);
@@ -72,6 +76,7 @@ public class MbtiController {
 		return "mbti/mbtiList";
 	}
 	
+	// mbti 결과 불러오기
 	@GetMapping("/mbtiResult.do")
 		public String mbtiResult(Model model , MbtiData data) {
 		log.info("data = {}", data);
@@ -99,12 +104,102 @@ public class MbtiController {
 		List<Map<String, Object>> mbtiResult = mbtiService.selectMbtiResult(id);
 		log.info("mbtiResult = {}", mbtiResult);
 		
+		List<String> memberMbti = new ArrayList<>();
+		
+		int num = 0;
+		int mbti = 0;
+		int I = 0;
+		int E = 0;
+		int T = 0;
+		int F = 0;
+		int S = 0;
+		int N = 0;
+		int P = 0;
+		int J = 0;
+		
+		
 		for(Map<String, Object> map : mbtiResult) {
 			String no = (String) map.get("question_no");
-			String result = (String) map.get("result");
+			String result = (String) map.get("result");			
 			log.info("map ={}", map);
 			log.info("no={}", map.get("QUESTION_NO"));
+			
+			 num = Integer.parseInt(String.valueOf(map.get("QUESTION_NO")));
+			log.info("num ={}", num);
+			 mbti = Integer.parseInt(String.valueOf(map.get("RESULT")));
+			log.info("mbti ={}", mbti);
+			
+			if(num < 10) {
+				if(mbti == 1) {
+					I++;
+				}else {
+					E++;
+				}
+			}
+			if(num < 19) {
+				if(mbti == 1) {
+					T += 1;
+				}else {
+					F += 1;
+				}
+			}
+			if(num < 28) {
+				if(mbti == 1) {
+					S += 1;
+				}else {
+					N += 1;
+				}
+			}
+			if(num < 37) {
+				if(mbti == 1) {
+					P += 1;
+				}else {
+					J += 1;
+				}
+			}
 		}
+		
+		log.info("I ={}", I);
+		log.info("E ={}", E);
+		log.info("T ={}", T);
+		log.info("F ={}", F);
+		log.info("S ={}", S);
+		log.info("N ={}", N);
+		log.info("P ={}", P);
+		log.info("J ={}", J);
+		
+		
+		if(I > E) {
+			memberMbti.add("I");
+		}else{
+			memberMbti.add("E");				
+			
+		}
+		
+		if(T > F) {
+			memberMbti.add("T");
+		}else{
+			memberMbti.add("F");			
+			
+		}
+		
+		if(S > N) {
+			memberMbti.add("S");
+		}else{
+			memberMbti.add("N");				
+			
+		}
+		
+		if(P > J) {
+			memberMbti.add("P");
+		}else{
+			memberMbti.add("J");
+		}
+
+		log.info("memberMbti ={}", memberMbti);
+		model.addAttribute("memberMbti", memberMbti);
+		
+			
 		return "mbti/mbtiResult";
 	}
 	

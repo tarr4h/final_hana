@@ -9,10 +9,11 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
+
 <div id="mbtiMain-Background">
 <h1 id="mainPage-h1">결과</h1>
-
-
+<div> 성격 유형 ${memberMbti}  </div>
 </div>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
