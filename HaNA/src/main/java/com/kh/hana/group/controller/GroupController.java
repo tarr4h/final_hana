@@ -15,7 +15,6 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
-import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +46,7 @@ public class GroupController {
 	@Autowired
 	private ServletContext application;
 	
-	@Autowired
-	private ChatService chatService;
+
 	
 	@GetMapping("/groupPage/{groupId}")
 	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
@@ -68,7 +64,7 @@ public class GroupController {
 		log.info("enrolled = {}", enrolled);
 		model.addAttribute("enrolled",enrolled);
 		
-		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
+		List<GroupBoard> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
 		model.addAttribute("groupBoardList", groupBoardList);
 		return "group/groupPage";
@@ -112,11 +108,6 @@ public class GroupController {
 			}
 			
 			int result = groupService.insertOneGroup(group);
-			int chatresult = 0;
-			if(result > 0) {
-				chatresult = chatService.CreateGroupChat(group);
-				log.info("{}", chatresult > 0 ? "그룹채팅생성 성공" : "그룹채팅생성 실패");
-			}
 			redirectAttr.addFlashAttribute("msg", "소모임 등록 성공!");	
 			redirectAttr.addFlashAttribute("result", result);	
 			return "redirect:/group/groupPage/"+group.getGroupId();
@@ -138,7 +129,7 @@ public class GroupController {
 	}
 	
 	@PostMapping("/enrollGroupBoard")
-	public String enrollGroupBoard(GroupBoardEntity groupBoard,
+	public String enrollGroupBoard(GroupBoard groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
 			log.info("groupBoard = {}",groupBoard);
@@ -174,29 +165,15 @@ public class GroupController {
 			return "redirect/group/enrollGroupBoard";
 		}
 	}
-//	@GetMapping("/groupBoardDetail/{no}")
-//	public String groupBoardDetail(@PathVariable int no, Model model) {
-//		GroupBoard groupBoard = groupService.selectOneBoard(no);
-//		log.info("groupBoard = {}",groupBoard);
-//		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
-//		log.info("tagMembers = {}",tagMembers);
-//		model.addAttribute(groupBoard);
-//		model.addAttribute("tagMembers",tagMembers);
-//		return "/group/groupBoardDetail";
-//	}
-	
 	@GetMapping("/groupBoardDetail/{no}")
-	public ResponseEntity<Map<String,Object>> groupBoardDetail(@PathVariable int no, Model model) {
+	public String groupBoardDetail(@PathVariable int no, Model model) {
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
 		log.info("groupBoard = {}",groupBoard);
 		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
 		log.info("tagMembers = {}",tagMembers);
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("groupBoard",groupBoard);
-		map.put("tagMembers",tagMembers);
-		
-		return ResponseEntity.ok(map);
+		model.addAttribute(groupBoard);
+		model.addAttribute("tagMembers",tagMembers);
+		return "/group/groupBoardDetail";
 	}
 	
 }

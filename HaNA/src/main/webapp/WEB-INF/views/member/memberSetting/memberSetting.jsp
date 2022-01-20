@@ -10,14 +10,6 @@
 	<jsp:param value="설정화면" name="memberSetting/"/>
 </jsp:include>
 <sec:authentication property="principal" var="loginMember"/>
-<c:if test=" ${not empty msg}">
-<script>
-$(() => {
-alert("${msg}");
-});
-</script>
-</c:if>
-
 <div class="row">
   <div class="col-2">
     <div class="list-group" id="list-tab" role="tablist">

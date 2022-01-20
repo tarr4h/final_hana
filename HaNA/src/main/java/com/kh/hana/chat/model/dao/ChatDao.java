@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
-import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 
 public interface ChatDao {
@@ -22,7 +21,7 @@ public interface ChatDao {
 
 	List<Member> memberList();
 
-	List<ChatRoom> chatRoomCheck(Map<String, Object> param);
+	List<Chat> chatRoomCheck(Map<String, Object> param);
 
 	int createChatRoom(Map<String, Object> param);
 
@@ -31,9 +30,5 @@ public interface ChatDao {
 	int findRoomNo(Map<String, Object> param);
 
 	int insertEnterMessage2(Map<String, Object> param);
-
-	ChatRoom selectOneChatRoom(int no);
-
-	int CreateGroupChat(Group group);
 
 }

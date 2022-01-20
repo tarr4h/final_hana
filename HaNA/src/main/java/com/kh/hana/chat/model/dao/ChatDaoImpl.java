@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
-import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 
 @Repository
@@ -50,7 +49,7 @@ public class ChatDaoImpl implements ChatDao {
 
 
 	@Override
-	public List<ChatRoom> chatRoomCheck(Map<String, Object> param) {
+	public List<Chat> chatRoomCheck(Map<String, Object> param) {
 		return session.selectList("chat.chatRoomCheck",param);
 	}
 
@@ -72,16 +71,6 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public int findRoomNo(Map<String, Object> param) {
 		return session.selectOne("chat.findRoomNo", param);
-	}
-
-	@Override
-	public ChatRoom selectOneChatRoom(int no) {
-		return session.selectOne("chat.selectOneChatRoom", no);
-	}
-
-	@Override
-	public int CreateGroupChat(Group group) {
-		return session.insert("chat.CreateGroupChat", group);
 	}
 
 

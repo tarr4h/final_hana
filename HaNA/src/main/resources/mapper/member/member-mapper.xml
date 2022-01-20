@@ -25,17 +25,16 @@
      <update id= "updatePersonality">
      update personality
      set
-     	personality = #{personality}
-     where
-     	member_id = #{id}
+     member_id = #{id},
+     personality = #{personality}
      </update>
 	
 	<update id="updateInterest">
-	update interest
+		update interest
      set
-     	interest = #{interest}
-     where
-     	member_id = #{id}
+     member_id = #{id},
+     interest = #{interest}
+     
 	</update>
 
 	<select id="selectPersonality" parameterType="string" resultType="member">
@@ -45,26 +44,6 @@
 		where
 			member_id = #{id}
 	</select>
-
-	<insert id="insertPersonality">
-		insert into
-			personality
-		(member_id, personality)
-		values (#{id}, #{personality}) 
-	</insert>
-
-	<insert id="insertInterest">
-		insert into
-			interest 
-			(member_id, interest)
-		values (#{id}, #{interest})
-	</insert>
-
-
-
-
-
-
 
 
 </mapper>

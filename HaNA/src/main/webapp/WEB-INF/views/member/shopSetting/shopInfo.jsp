@@ -35,7 +35,7 @@
         </div>
         <!-- 설정 영역 -->
         <div class="col-sm-8">
-        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo" method="post" name="updateFrm">
+        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo?${_csrf.parameterName}=${_csrf.token}" method="post" name="updateFrm" enctype="multipart/form-data">
 	        	<label for="username">이름</label><input type="text" name="username" id="username" />
 	        	<br />
 	        	<label for="profile">프로필사진</label><input type="file" name="profile" id="profile" />
@@ -44,7 +44,7 @@
 	        	
 	        	<label for="bussiness-hour-start">영업시간</label>
 	        	<br />
-	        	<input type="time" name="bussiness-hour-start"/>~<input type="time" name="bussiness-hour-end"/>        	
+	        	<input type="time" name="bussiness-hour-start" value="09:00"/>~<input type="time" name="bussiness-hour-end" value="18:00"/>        	
 	        	<br />
 	        	<br />
 	        	<label for="introduce">소개</label>
@@ -168,11 +168,6 @@ function execDaumPostcode() {
             if(data.buildingName !== '' && data.apartment === 'Y'){
                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
             }
-
-            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('postcode').value = data.zonecode;
-            document.getElementById("roadAddress").value = roadAddr;
-            document.getElementById("jibunAddress").value = data.jibunAddress;
 
             console.log(data.buildingName);
             console.log(data.roadAddress);

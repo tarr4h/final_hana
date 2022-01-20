@@ -85,7 +85,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
         
         else if(RoomList.get(chatRoom.getRoomNo()) != null && !chat.getMessage().equals("ENTER") && chatRoom != null) {
         	// 메세지에 이름, 이메일, 내용을 담는다.
-        	TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage());
+            TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage());
             log.info("메세지 보내기 testMessage = {}", textMessage);
             
             //읽음 표시 나중에 현재 session 수

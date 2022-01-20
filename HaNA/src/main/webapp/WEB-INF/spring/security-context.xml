@@ -19,7 +19,6 @@
 		<intercept-url pattern="/member/login" access="permitAll"/>
 		<intercept-url pattern="/member/memberEnroll" access="permitAll"/>
 		<intercept-url pattern="/member/memberView" access="isAuthenticated()"/>
-		<intercept-url pattern="/chat/**" access="isAuthenticated()"/>
 		<intercept-url pattern="/**" access="permitAll"/>
 		
 		<form-login
