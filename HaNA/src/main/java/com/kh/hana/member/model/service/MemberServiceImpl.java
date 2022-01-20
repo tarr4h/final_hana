@@ -23,10 +23,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int memberEnroll(Member member) {
-		
-		
-		
-		
 		return memberDao.memberEnroll(member);
 	}
 

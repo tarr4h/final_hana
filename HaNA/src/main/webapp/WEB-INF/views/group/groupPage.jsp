@@ -12,25 +12,20 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="main" />
 </jsp:include>
-<script src="https://kit.fontawesome.com/0748f32490.js"
-	crossorigin="anonymous">
-</script>
-
-<script>
-$(() => {
-	console.log('${enrolled}');
-});
-
-</script>
+<script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <!-- 회원가입 확인 Modal-->
-	<div style="margin-top:400px;" class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+	<div class="modal fade" id="testModal" tabindex="-1">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
 				<table>
 					<tr>
-						<td><img id="member-pofile" src="" style="height:50px"/></td>
+						<td rowspan="2" id="member-profile"><img src="" style="height:50px; border-radius:50%"/></td>
 						<th id="member-id"></th>
+					</tr>
+					<tr>
+						<td id="tag-place"></td>
 					</tr>
 				</table>
 					<!-- <h5 class="modal-title" id="exampleModalLabel"></h5>
@@ -38,7 +33,24 @@ $(() => {
 						<span aria-hidden="true">X</span>
 					</button> -->
 				</div>
-				<div class="modal-body">내용 입력 !!</div>
+				<div class="modal-body">
+					<div class="container">
+					    <div class="row">
+					        <div id="group-board-img-container" class="col-sm-7" style="position:relative; background-color:black;">
+					 			
+					        </div>
+					        <div class="col-sm-5" style="">
+					        	<div class="container">
+								    <div class="row">
+								        <div class="col-sm-12" style="border:solid black 1px; height:200px;"></div>
+								        <div class="col-sm-12" style="border:solid black 1px; height:500px;"></div>
+								        <div class="col-sm-12" style="border:solid black 1px; height:200px;"></div>
+								    </div>
+								</div>
+					        </div>
+					    </div>
+					</div>
+				</div>
 				<div class="modal-footer">
 					<a class="btn" id="modalY" href="#">예</a>
 					<button class="btn" type="button" data-dismiss="modal">아니요</button>
@@ -48,6 +60,7 @@ $(() => {
 	</div>
 	
 	
+
 <div class="group-page">
 	<section class="group-page-section">
 		<div class="group-page-image">
@@ -122,15 +135,31 @@ $('.board-main-image').click((e)=>{
 /* 		url:`<c:out value='${pageContext.request.contextPath}'></c:out>/group/groupBoardDetail/\${boardNo}`
  */		url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
 		success(data){
-	 		const contextPath = "<%=request.getContextPath()%>";
+	 
 	 		const {groupBoard, tagMembers} = data;
-			console.log(groupBoard.image);
-			console.log(groupBoard.writerProfile);
-/* 	 		$("#member-profile").children("img").attr("src",groupBoard.image);
- */	 		$("#member-profile").attr("src",`<%=request.getContextPath()%>/resources/upload/member/profile/\${groupBoard.writerProfile}`);
-	 		$("#member-id").html(groupBoard.writer);
-	 		
-		},
+ 			console.log(groupBoard.regDate);
+ 			const date = moment(groupBoard.regDate).format("YYYY년 MM월 DD일");
+			let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${groupBoard.writerProfile}`;
+	 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
+ 	 		$("#member-id").html(`&nbsp;&nbsp;\${groupBoard.writer}`); // 글쓴이 아이디
+	 		$("#tag-place").html(`&nbsp;&nbsp;\${date}&nbsp;&nbsp;\${groupBoard.placeName}`) // 태그 장소
+		
+	 		$("#group-board-img-container").empty();
+ 			$.each(groupBoard.image, (i,e)=>{
+ 				console.log(i);
+ 				console.log(e);
+ 				
+ 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
+ 				$("#group-board-img-container").append(img); // 이미지 추가
+ 				
+ 			})
+ 			$(".group-board-img").css("width","100%");
+ 			$(".group-board-img").css("position","absolute");
+ 			$(".group-board-img").css("left","0");
+ 			$(".group-board-img").css("margin-top","70px");
+ 
+
+ 		},
  		error:console.log
 	})
 	

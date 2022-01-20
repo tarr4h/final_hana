@@ -6,7 +6,7 @@
 
 	<insert id="memberEnroll">
 		insert into member values
-		(#{id}, #{password}, #{name}, #{picture}, #{personalId}, #{accountType}, #{addressFirst}, #{addressSecond}, #{addressThird}, #{addressFull}, #{introduce}, default)
+		(#{id}, #{password}, #{name}, #{picture}, #{personalId}, #{accountType}, #{addressFirst}, #{addressSecond}, #{addressThird}, #{addressFull}, #{addressAll}, #{introduce}, default)
 	</insert>
 
 
