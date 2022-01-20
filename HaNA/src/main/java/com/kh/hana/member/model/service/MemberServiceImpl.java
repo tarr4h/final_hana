@@ -1,5 +1,7 @@
 package com.kh.hana.member.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +51,15 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 
- 
+	@Override
+	public int updateShopInfo(Map<String, Object> param) {
+		
+		
+		
+		return 0;
+	}
+
+
 	
 	 
 	
