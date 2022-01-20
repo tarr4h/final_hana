@@ -77,32 +77,46 @@ public class ChatController {
     	Map<String, Object> param = new HashMap<>();
     	param.put("memberId", memberId);
     	param.put("loginId", loginId);
-    	param.put("login_Member", loginId+memberId);
+    	param.put("members", loginId+","+memberId);
     	
     	//단톡생성 하게되면 쿼리 바꾸거나 체크 삭제
     	//너무 복잡한데;
-    	List<Chat> chatlist = chatService.chatRoomCheck(param);
+    	//나중에 room
+    	List<ChatRoom> chatlist = chatService.chatRoomCheck(param);
     	log.info("채팅방 생성 or 보내기 chatlist= {}, size = {}", chatlist, chatlist);
     	if(chatlist.size() == 0) {
     		int result = chatService.createChatRoom(param);
     		log.info("createChatRoom result = {}", result);
     		if(result > 0) {
-    			int roomNo = chatService.findRoomNo(param);
-    			param.put("roomNo", roomNo);
-    			int result2 = chatService.insertEnterMessage(param);
-    			log.info("insertEnterMessage result2 = {}, result3 = {}", result2);
-    			if(result2 > 0)
-    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
-    			else
-    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 실패");
-    			
-    			
+    			redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
+    			//불필요한 부분
+//    			int roomNo = chatService.findRoomNo(param);
+//    			param.put("roomNo", roomNo);
+//    			int result2 = chatService.insertEnterMessage(param);
+//    			log.info("insertEnterMessage result2 = {}, result3 = {}", result2);
+//    			if(result2 > 0)
+//    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
+//    			else
+//    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 실패");
     		}
     		else
     			redirectAttr.addFlashAttribute("msg", "채팅방이 있습니다");
-    		
-    		
+    			
     	}
     	return "redirect:/chat/chat.do";
     }
+    			
+    @GetMapping("/roomheader.do")
+    public ResponseEntity<?> RoomHeader(String id, int no){
+    	log.info("roomheader id = {}, no = {}", id ,no);
+    	
+    	ChatRoom chatroom = chatService.selectOneChatRoom(no);
+    	log.info("roomheader chatroom = {}", chatroom);
+    	
+    	String members = chatroom.getMembers().replace(id, "");
+    	chatroom.setMembers(members.replace(",", " "));
+    	
+    	return ResponseEntity.ok(chatroom);
+    }
+    		
 }
