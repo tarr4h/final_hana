@@ -25,15 +25,17 @@
      <update id= "updatePersonality">
      update personality
      set
-     member_id = #{id},
-     personality = #{personality}
+     	personality = #{personality}
+     where
+     	member_id = #{id}
      </update>
 	
 	<update id="updateInterest">
-		update interest
+	update interest
      set
-     member_id = #{id},
-     interest = #{interest}
+     	interest = #{interest}
+     where
+     	member_id = #{id}
 	</update>
 
 	<select id="selectPersonality" parameterType="string" resultType="member">

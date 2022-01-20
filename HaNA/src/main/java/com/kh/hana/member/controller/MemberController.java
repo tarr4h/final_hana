@@ -142,7 +142,7 @@ public class MemberController {
         }
 
         log.info("memberSetting result = {}" , result); 
-        log.info("memberPersonality={}" , oldMember.getPersonality()); 
+        log.info("memberPersonality={}" , member.getPersonality()); 
 
         redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
         return "redirect:/member/memberSetting/memberSetting";
