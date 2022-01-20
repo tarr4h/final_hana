@@ -13,10 +13,10 @@
 <div id="mbtiMain-Background">
 <h1 id="mainPage-h1">결과</h1>
 <div>
-	<h4>${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
+	<h4 style="color:#ffffff">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
 </div>
-<button>홈으로</button>
-<button>프로필 반영</button>
+<button onclick="location.href='http://localhost:9090/hana'">홈으로</button>
+<button >프로필 반영</button>
 </div>
 
 
