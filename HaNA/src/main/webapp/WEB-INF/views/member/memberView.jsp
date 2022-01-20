@@ -13,6 +13,13 @@
 	crossorigin="anonymous">
 </script>
 <sec:authentication property="principal" var="loginMember"/>
+
+<c:if test="${not empty msg}">
+	<script>
+	alert("${msg}");
+	</script>
+</c:if>
+
 <script>
 function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
@@ -149,9 +156,9 @@ function addFollowing(){
 
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">설정</button>
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing();">친구추가</button>
-        	<form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/" method = "POST">
+        	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
         		<input type="hidden" name ="id" value="${loginMember.id}" />
-        	</form>
+        	</form:form>
 
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
@@ -168,15 +175,15 @@ function addFollowing(){
 					<tbody>
 						<tr>
 							<td class="tableKey">아이디</td>
-							<td class="tableValue">${loginMember.id }</td>
+							<td class="tableValue">${loginMember.id}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">성격</span></td>
-							<td>${loginMember.personality }</td>
+							<td>${loginMember.personality}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">관심</span></td>
-							<td>${loginMember.interest }</td>
+							<td>${loginMember.interest}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>

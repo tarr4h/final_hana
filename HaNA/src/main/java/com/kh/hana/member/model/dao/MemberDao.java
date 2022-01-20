@@ -14,4 +14,6 @@ public interface MemberDao {
 
 	Member selectPersonality(String id);
 
+	int addFollowing(String id);
+
 }

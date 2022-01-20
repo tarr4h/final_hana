@@ -12,10 +12,9 @@
 <sec:authentication property="principal" var="loginMember"/>
 
 <c:if test=" ${not empty msg}">
-<script>
-$(() => {
-alert("${msg}");
-</script>
+	<script>
+	alert("${msg}");
+	</script>
 </c:if>
 
 

@@ -37,5 +37,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectPersonality", id);
 	}
 
+	@Override
+	public int addFollowing(String id) {
+		return session.insert("member.addFollowing", id);
+				
+	}
+
 	
 }

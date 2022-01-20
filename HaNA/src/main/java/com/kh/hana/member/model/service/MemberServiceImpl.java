@@ -77,6 +77,11 @@ public class MemberServiceImpl implements MemberService {
 		return 0;
 	}
 
+	@Override
+	public int addFollowing(String id) {
+		return memberDao.addFollowing(id);
+	}
+
 
 	
 	 

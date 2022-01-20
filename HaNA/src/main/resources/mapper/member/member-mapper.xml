@@ -46,4 +46,23 @@
 	</select>
 
 
+	<insert id="addFollowing">
+		insert into
+		follower (member_id)
+		values
+		(#{id})
+	
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>

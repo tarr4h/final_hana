@@ -1,4 +1,4 @@
-package com.kh.hana.member.controller;
+ package com.kh.hana.member.controller;
 
  
 import java.io.File;
@@ -118,9 +118,18 @@ public class MemberController {
         log.info("memberSetting result = {}" , result); 
         log.info("memberPersonality={}" , member.getPersonality()); 
 
-        redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
+        redirectAttr.addFlashAttribute("msg", result >= 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
         return "redirect:/member/memberSetting/memberSetting";
     }
+	
+	@PostMapping("/addFollowing")
+	public String addFollowing(@RequestParam String id, RedirectAttributes redirectAttr) {
+		int result = memberService.addFollowing(id);
+		redirectAttr.addFlashAttribute("msg", result > 0? "친구 추가에 성공했습니다." : "친구 추가에 실패했습니다.");
+		log.info("result ={}", result);
+		return "redirect:/member/memberView";
+	}
+	
 	
 	@PostMapping("/shopSetting/shopInfo")
 	public String updateShopInfo(@RequestParam Map<String, Object> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
