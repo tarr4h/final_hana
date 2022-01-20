@@ -1,6 +1,7 @@
 package com.kh.hana.mbti.controller;
 
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,15 +27,17 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/mbti")
 @Slf4j
 public class MbtiController {
-	
+
 	@Autowired
 	private MbtiService mbtiService;
-	
+
+	// 메인 페이지
 	@GetMapping("/mbti.do")
 	public String mbtiMain() {
 		return "/mbti/mbtiMain";
 	}
-	
+
+	// mbti 문항 불러오기
 	@GetMapping("/mbtiList.do")
 	public String mbtiList(Model model, @RequestParam("cPage") int cPage, MbtiData data) {
 		log.info("data = {}", data);
@@ -46,61 +49,179 @@ public class MbtiController {
 		List<Mbti> mbtiList = mbtiService.selectMbtiList(number);
 
 		cPage += 6;
-		
-		if(data.getNo() != null) {
+
+		if (data.getNo() != null) {
 			int[] no = data.getNo();
 			int[] memberResult = data.getMemberResult();
 			log.info("no = {}", no);
 			log.info("memberResult = {}", memberResult);
-			
-			Map<Integer, Integer> resultOfNo = new HashMap<>(); 
-			
+
+			Map<Integer, Integer> resultOfNo = new HashMap<>();
+
 			String memberId = data.getMemberId();
-			
+
 			int i = 0;
-			for(int per : no) {
+			for (int per : no) {
 				resultOfNo.put(per, memberResult[i]);
 				i++;
-				log.info("per={}",per);
+				log.info("per={}", per);
 
 			}
 			int result = mbtiService.insertList(resultOfNo, memberId);
-		}	
-		model.addAttribute("mbtiList",mbtiList);
+		}
+		model.addAttribute("mbtiList", mbtiList);
 		model.addAttribute("cPage", cPage);
 		log.info("mbtiList = {}", mbtiList);
 		return "mbti/mbtiList";
 	}
-	
+
+	// mbti 결과 불러오기
 	@GetMapping("/mbtiResult.do")
-		public String mbtiResult(Model model , MbtiData data) {
+	public String mbtiResult(Model model, MbtiData data) {
 		log.info("data = {}", data);
-		
-		// List<MbtiData> mbtiResult = mbtiService.selectMbtiResult(data);
-		
-		
-		if(data.getNo() != null) {
-			int[] no = data.getNo(); 
-			int[] memberResult =  data.getMemberResult();
+
+		if (data.getNo() != null) {
+			int[] no = data.getNo();
+			int[] memberResult = data.getMemberResult();
 			log.info("no = {}", no);
 			log.info("memberResult = {}", memberResult);
-			
-			Map<Integer, Integer> resultOfNo = new HashMap<>(); 
-			
+
+			Map<Integer, Integer> resultOfNo = new HashMap<>();
+
 			String memberId = data.getMemberId();
-			
+
 			int i = 0;
-			for(int per : no) {
+			for (int per : no) {
 				resultOfNo.put(per, memberResult[i]);
 				i++;
-				log.info("per={}",per);
-
+				log.info("per={}", per);
 			}
 			int result = mbtiService.insertList(resultOfNo, memberId);
-		}	
+		}
+
+		String id = data.getMemberId();
+		List<Map<String, Object>> mbtiResult = mbtiService.selectMbtiResult(id);
+		log.info("mbtiResult = {}", mbtiResult);
+
+		List<String> memberMbti = new ArrayList<>();
+
+		int num = 0;
+		int mbti = 0;
+		int I = 0;
+		int E = 0;
+		int T = 0;
+		int F = 0;
+		int S = 0;
+		int N = 0;
+		int P = 0;
+		int J = 0;
+
+		for (Map<String, Object> map : mbtiResult) {
+			String no = (String) map.get("question_no");
+			String result = (String) map.get("result");
+			log.info("map ={}", map);
+			log.info("no={}", map.get("QUESTION_NO"));
+
+			num = Integer.parseInt(String.valueOf(map.get("QUESTION_NO")));
+			log.info("num ={}", num);
+			mbti = Integer.parseInt(String.valueOf(map.get("RESULT")));
+			log.info("mbti ={}", mbti);
+
+			if (num >= 1 && num < 6 && mbti == 1) {
+				E += 1;
+			}
+			if (num >= 1 && num < 6 && mbti == 2) {
+				I += 1;
+			}
+			if (num >= 6 && num < 10 && mbti == 1) {
+				I += 1;
+			}
+			if (num >= 6 && num < 10 && mbti == 2) {
+				E += 1;
+			}
+
+			if (num >= 10 && num < 15 && mbti == 1) {
+				F += 1;
+			}
+			if (num >= 10 && num < 15 && mbti == 2) {
+				T += 1;
+			}
+
+			if (num >= 15 && num < 19 && mbti == 1) {
+				T += 1;
+			}
+			if (num >= 15 && num < 19 && mbti == 2) {
+				F += 1;
+			}
+
+			if (num >= 19 && num < 24 && mbti == 1) {
+				N += 1;
+			}
+			if (num >= 19 && num < 24 && mbti == 2) {
+				S += 1;
+			}
+			if (num >= 24 && num < 28 && mbti == 1) {
+				S += 1;
+			}
+			if (num >= 24 && num < 28 && mbti == 2) {
+				N += 1;
+			}
+
+			if (num >= 28 && num < 33 && mbti == 1) {
+				J += 1;
+			}
+			if (num >= 28 && num < 33 && mbti == 2) {
+				P += 1;
+			}
+			if (num >= 33 && num < 37 && mbti == 1) {
+				P += 1;
+			}
+			if (num >= 33 && num < 37 && mbti == 2) {
+				J += 1;
+			}
+
+		}
+
+		log.info("I ={}", I);
+		log.info("E ={}", E);
+		log.info("T ={}", T);
+		log.info("F ={}", F);
+		log.info("S ={}", S);
+		log.info("N ={}", N);
+		log.info("P ={}", P);
+		log.info("J ={}", J);
+
+		if (I > E) {
+			memberMbti.add("I");
+		} else {
+			memberMbti.add("E");
+
+		}
+
+		if (S > N) {
+			memberMbti.add("S");
+		} else {
+			memberMbti.add("N");
+
+		}
+
+		if (T > F) {
+			memberMbti.add("T");
+		} else {
+			memberMbti.add("F");
+
+		}
+
+		if (P > J) {
+			memberMbti.add("P");
+		} else {
+			memberMbti.add("J");
+		}
+
+		model.addAttribute("memberMbti", memberMbti);
+		log.info("memberMbti ={}", memberMbti);
+
 		return "mbti/mbtiResult";
 	}
-	
-
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.hana.mbti.model.dao.MbtiDao;
 import com.kh.hana.mbti.model.vo.Mbti;
+import com.kh.hana.mbti.model.vo.MbtiData;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,11 @@ public class MbtiServicelmpl implements MbtiService {
 	@Override
 	public int insertList(Map<Integer, Integer> resultOfNo, String memberId) {
 		return mbtiDao.insertList(resultOfNo, memberId);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectMbtiResult(String id) {
+		return mbtiDao.selectMbtiResult(id);
 	}
 
 
