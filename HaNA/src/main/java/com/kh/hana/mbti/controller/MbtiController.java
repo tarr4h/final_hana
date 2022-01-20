@@ -129,11 +129,11 @@ public class MbtiController {
 			 mbti = Integer.parseInt(String.valueOf(map.get("RESULT")));
 			log.info("mbti ={}", mbti);
 			
-			if(num < 10) {
+			if(num < 10 ) {
 				if(mbti == 1) {
-					I++;
+					I += 1;
 				}else {
-					E++;
+					E += 1;
 				}
 			}
 			if(num < 19) {
@@ -196,8 +196,8 @@ public class MbtiController {
 			memberMbti.add("J");
 		}
 
-		log.info("memberMbti ={}", memberMbti);
 		model.addAttribute("memberMbti", memberMbti);
+		log.info("memberMbti ={}", memberMbti);
 		
 			
 		return "mbti/mbtiResult";

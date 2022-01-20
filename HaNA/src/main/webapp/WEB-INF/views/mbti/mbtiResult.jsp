@@ -13,6 +13,7 @@
 <div id="mbtiMain-Background">
 <h1 id="mainPage-h1">결과</h1>
 <div> 성격 유형 ${memberMbti}  </div>
+
 </div>
 
 
