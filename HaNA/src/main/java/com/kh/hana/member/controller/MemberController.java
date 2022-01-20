@@ -133,11 +133,16 @@ public class MemberController {
         oldMember.setAddressSecond(member.getAddressSecond());
         oldMember.setAddressThird(member.getAddressThird());
         oldMember.setAddressFull(member.getAddressFull());
+        
+        if(oldMember.getPersonality() != null) {
         oldMember.setPersonality(member.getPersonality());
+        }
+        if(oldMember.getInterest() != null) {
         oldMember.setInterest(member.getInterest());
+        }
 
         log.info("memberSetting result = {}" , result); 
-        log.info("memberPersonality={}" , member.getPersonality()); 
+        log.info("memberPersonality={}" , oldMember.getPersonality()); 
 
         redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
         return "redirect:/member/memberSetting/memberSetting";

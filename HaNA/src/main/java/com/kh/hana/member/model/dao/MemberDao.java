@@ -15,4 +15,8 @@ public interface MemberDao {
 
 	Member selectPersonality(String id);
 
+	int insertPersonality(String id);
+
+	int insertInterest(String id);
+
 }
