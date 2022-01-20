@@ -129,31 +129,27 @@ public class MbtiController {
 			 mbti = Integer.parseInt(String.valueOf(map.get("RESULT")));
 			log.info("mbti ={}", mbti);
 			
-			if(num < 10 ) {
-				if(mbti == 1) {
+			if(num < 10 && mbti == 1) {
 					I += 1;
-				}else {
+				if(num < 10 && mbti == 2) {
 					E += 1;
 				}
 			}
-			if(num < 19) {
-				if(mbti == 1) {
+			if(num >= 10 && num < 19 && mbti == 1) {
 					T += 1;
-				}else {
+				if( num >= 10 && num < 19 && mbti == 2) {
 					F += 1;
 				}
 			}
-			if(num < 28) {
-				if(mbti == 1) {
+			if(num >= 19 && num < 28 && mbti == 1) {
 					S += 1;
-				}else {
+				if(num >= 19 && num < 28 && mbti == 2) {
 					N += 1;
 				}
 			}
-			if(num < 37) {
-				if(mbti == 1) {
-					P += 1;
-				}else {
+			if(num >= 28 && num < 37 && mbti == 1) {
+				P += 1;
+				if(num >= 28 && num < 37 && mbti == 2) {
 					J += 1;
 				}
 			}

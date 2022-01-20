@@ -12,8 +12,11 @@
 
 <div id="mbtiMain-Background">
 <h1 id="mainPage-h1">결과</h1>
-<div> 성격 유형 ${memberMbti}  </div>
-
+<div>
+	<h4>${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
+</div>
+<button>홈으로</button>
+<button>프로필 반영</button>
 </div>
 
 
