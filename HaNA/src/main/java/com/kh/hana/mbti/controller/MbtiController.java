@@ -129,30 +129,59 @@ public class MbtiController {
 			 mbti = Integer.parseInt(String.valueOf(map.get("RESULT")));
 			log.info("mbti ={}", mbti);
 			
-			if(num < 10 && mbti == 1) {
-					I += 1;
-				if(num < 10 && mbti == 2) {
+			if(num >= 1 && num < 6  && mbti == 1) {
 					E += 1;
-				}
 			}
-			if(num >= 10 && num < 19 && mbti == 1) {
-					T += 1;
-				if( num >= 10 && num < 19 && mbti == 2) {
+			if(num >= 1 && num < 6 && mbti == 2) {
+				I += 1;
+			}
+			if(num >= 6 && num < 10  && mbti == 1) {
+					I += 1;
+			}
+			if(num >= 6 && num < 10 && mbti == 2) {
+				E += 1;
+			}
+			
+			if(num >= 10  &&  num < 15 && mbti == 1) {
 					F += 1;
-				}
 			}
-			if(num >= 19 && num < 28 && mbti == 1) {
-					S += 1;
-				if(num >= 19 && num < 28 && mbti == 2) {
-					N += 1;
-				}
+			if(num >= 10  &&  num < 15 && mbti == 2) {
+				T += 1;
 			}
-			if(num >= 28 && num < 37 && mbti == 1) {
+			
+			if(num >= 15 && num < 19  && mbti == 1) {
+				T += 1;
+			}
+			if(num >= 15 && num < 19  && mbti == 2) {
+				F += 1;
+			}
+			
+			if(num >= 19  &&  num < 24 && mbti == 1) {
+				N += 1;
+			}
+			if(num >= 19  &&  num < 24 && mbti == 2) {
+				S += 1;
+			}
+			if(num >= 24 && num < 28  && mbti == 1) {
+				S += 1;
+			}
+			if(num >= 24 && num < 28  && mbti == 2) {
+				N += 1;
+			}
+			
+			if(num >= 28  &&  num < 33 && mbti == 1) {
+				J += 1;
+			}
+			if(num >= 28  &&  num < 33 && mbti == 2) {
 				P += 1;
-				if(num >= 28 && num < 37 && mbti == 2) {
-					J += 1;
-				}
 			}
+			if(num >= 33 && num < 37  && mbti == 1) {
+				P += 1;
+			}
+			if(num >= 33 && num < 37  && mbti == 2) {
+				J += 1;
+			}
+			
 		}
 		
 		log.info("I ={}", I);
@@ -172,17 +201,18 @@ public class MbtiController {
 			
 		}
 		
-		if(T > F) {
-			memberMbti.add("T");
-		}else{
-			memberMbti.add("F");			
-			
-		}
 		
 		if(S > N) {
 			memberMbti.add("S");
 		}else{
 			memberMbti.add("N");				
+			
+		}
+		
+		if(T > F) {
+			memberMbti.add("T");
+		}else{
+			memberMbti.add("F");			
 			
 		}
 		

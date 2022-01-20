@@ -18,7 +18,7 @@
 				<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
 					<input type="hidden" name="no" value="${list.no }" />
 					<span>비동의</span>
-						<input type="checkbox" id="shapes_2" name="memberResult" value="1" checked/>
+						<input type="checkbox" id="shapes_2" name="memberResult" value="1"/>
 						<input type="checkbox" id="shapes_2" name="memberResult" value="2"/>
 					<span>동의</span>
 			</li>
