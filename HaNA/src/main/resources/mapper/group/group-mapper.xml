@@ -116,5 +116,19 @@
 		group_id = #{groupId}
 	order by no desc
 	</select>
+	
+	<insert id="insertEnrollGroupForm" parameterType="map">
+	insert into
+		group_apply_list
+	values(
+		seq_group_apply_list.nextVal,
+		#{groupId},
+		#{memberId},
+		#{content},
+		default,
+		default,
+		default
+		)
+	</insert>
 </mapper>
 

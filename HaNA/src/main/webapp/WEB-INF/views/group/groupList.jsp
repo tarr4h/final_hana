@@ -13,22 +13,22 @@
 
 <section
 	style="position: relative; width: 30%; height: 120px; margin: auto;">
-		<c:forEach var="groupList" items="${groupList}" varStatus="status">
-	<div
-		style="border-radius: 50%; background-color: gainsboro; width: 100px; height: 100px; position: relative; top: 10%; left: 10%; display: inline-block;">
-		<c:if test="${empty group.image}">
-			<img
-				style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
-				src="${pageContext.request.contextPath}/resources/images/user.png"
-				alt="" />
-		</c:if>
-		<c:if test="${not empty group.image}">
-			<img
-				style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
-				src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-				alt="" />
-		</c:if>
-	</div>
+	<c:forEach items="${groupList}" var="group" varStatus="vs">
+		<div
+			style="border-radius: 50%; background-color: gainsboro; width: 100px; height: 100px; position: relative; top: 10%; left: 10%; display: inline-block;">
+			<c:if test="${empty group.image}">
+				<img
+					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
+					src="${pageContext.request.contextPath}/resources/images/user.png"
+					alt="" />
+			</c:if>
+			<c:if test="${not empty group.image}">
+				<img
+					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
+					src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
+					alt="" />
+			</c:if>
+		</div>
 	<div
 		style="position: relative; top: -10%; left: 20%; display: inline-block;">
 		<table>
@@ -36,7 +36,8 @@
 				<td>${group.groupName}</td>
 			</tr>
 			<tr>
-				<td>${group.memberCount}</td> </tr>
+				<td>${group.memberCount}</td>
+			</tr>
 		</table>
 	</div>
 	</c:forEach>

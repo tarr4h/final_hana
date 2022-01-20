@@ -60,6 +60,11 @@ public class GroupDaoImpl implements GroupDao {
 	public List<GroupBoard> selectGroupBoardList(String groupId) {
 		return session.selectList("selectGroupBoardList",groupId);
 	}
+
+	@Override
+	public int insertEnrollGroupForm(Map<String, Object> map) {
+		return session.insert("insertEnrollGroupForm", map);
+	}
 	
 
 

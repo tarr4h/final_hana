@@ -31,4 +31,6 @@ public interface GroupService {
 
 	List<GroupBoard> selectGroupBoardList(String groupId);
 
+	int insertEnrollGroupForm(Map<String, Object> map);
+
 }

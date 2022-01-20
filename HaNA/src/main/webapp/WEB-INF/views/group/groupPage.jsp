@@ -62,7 +62,7 @@ $(() => {
 			<%-- <c:if test="${empty groupMember || empty loginMember}"> --%>
 			<%-- <c:remove var="enrolled"/> --%>
 			<c:if test="${!enrolled}">
-				<a href="#" class="enroll-button">가입신청</a>
+				<a href="${pageContext.request.contextPath}/group/enrollGroupForm?groupId=${group.groupId}" class="enroll-button">가입신청</a>
 			</c:if>
 		</div>
 	</section>
