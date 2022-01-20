@@ -28,18 +28,32 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updateMember(Member member, String id) {
-		int result1 = memberDao.updateMember(member, id);
-		int result2 = memberDao.updatePersonality(member, id);
-		int result3 = memberDao.updateInterest(member, id);
+		int result1 = memberDao.updateMember(member);
+		int result2 = 0;
+		int result3 = 0;
+		
+		if(member.getId() != null && member.getPersonality() != null) {
+			result2 = memberDao.updatePersonality(member);
+		}else {
+			result2 = memberDao.insertPersonality(id);
+		}
+		
+		if(member.getId() != null && member.getInterest() != null) {
+			result3 = memberDao.updateInterest(member);
+		}else {
+			result3 = memberDao.insertInterest(id);
+		}
 		
 		log.info("id={}", id);
+		log.info("member={}", member);
 		
-		if(result1 == 1 && result2 == 1 && result3 ==1) {
+		if(result1 == 1 || result2 == 1 || result3 ==1) {
 			return 1;
 		}
 		else {
-			return 0;
+		return 0;
 		}
+		
 	}
 
 	@Override

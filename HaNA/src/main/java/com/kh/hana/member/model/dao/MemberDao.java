@@ -7,12 +7,16 @@ public interface MemberDao {
 
 	int memberEnroll(Member member);
 
-	int updateMember(Member member, String id);
+	int updateMember(Member member);
 
-	int updatePersonality(Member member, String id);
+	int updatePersonality(Member member);
 
-	int updateInterest(Member member, String id);
+	int updateInterest(Member member);
 
 	Member selectPersonality(String id);
+
+	int insertPersonality(String id);
+
+	int insertInterest(String id);
 
 }

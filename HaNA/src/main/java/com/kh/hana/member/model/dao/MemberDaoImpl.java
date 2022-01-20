@@ -19,23 +19,33 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int updateMember(Member member, String id) {
+	public int updateMember(Member member) {
 		return session.update("member.updateMember", member);
 	}
 
 	@Override
-	public int updatePersonality(Member member , String id) {
+	public int updatePersonality(Member member) {
 		return session.update("member.updatePersonality", member);
 	}
 
 	@Override
-	public int updateInterest(Member member , String id) {
+	public int updateInterest(Member member) {
 		return session.update("member.updateInterest", member);
 	}
 
 	@Override
 	public Member selectPersonality(String id) {
 		return session.selectOne("member.selectPersonality", id);
+	}
+
+	@Override
+	public int insertPersonality(String id) {
+		return session.insert("member.insertPersonality", id);
+	}
+
+	@Override
+	public int insertInterest(String id) {
+		return session.insert("member.insertInterest", id);
 	}
 
 	
