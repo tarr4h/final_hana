@@ -102,7 +102,7 @@ public class MemberController {
                                 RedirectAttributes redirectAttr) {
         log.info("member={}", member);
         log.info("oldMember={}", oldMember);
-        int result = memberService.updateMember(member, id);
+        int result = memberService.updateMember(member, oldMember, id);
 
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
@@ -114,11 +114,11 @@ public class MemberController {
         oldMember.setAddressAll(member.getAddressAll());
         oldMember.setPersonality(member.getPersonality());
         oldMember.setInterest(member.getInterest());
-
+     
         log.info("memberSetting result = {}" , result); 
         log.info("memberPersonality={}" , member.getPersonality()); 
 
-        redirectAttr.addFlashAttribute("msg", result >= 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
+        redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
         return "redirect:/member/memberSetting/memberSetting";
     }
 	
