@@ -26,6 +26,7 @@ public class MemberEntity implements Serializable{
 	private String addressSecond;
 	private String addressThird;
 	private String addressFull;
+	private String addressAll;
 	private String introduce;
 	private boolean enabled;
 	

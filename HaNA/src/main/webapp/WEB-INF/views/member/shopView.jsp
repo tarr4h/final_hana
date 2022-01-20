@@ -16,7 +16,7 @@
 
 
 <div class="container">
-	<input type="button" value="설정하기" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/profile'" />
+	<input type="button" value="설정하기" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/shopInfo'" />
 </div>
 
 

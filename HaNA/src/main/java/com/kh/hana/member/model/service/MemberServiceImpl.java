@@ -1,5 +1,7 @@
 package com.kh.hana.member.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,27 +25,38 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int memberEnroll(Member member) {
-		
-		
-		
-		
 		return memberDao.memberEnroll(member);
 	}
 
 	@Override
-	public int updateMember(Member member, String id) {
-		int result1 = memberDao.updateMember(member, id);
-		int result2 = memberDao.updatePersonality(member, id);
-		int result3 = memberDao.updateInterest(member, id);
+	public int updateMember(Member member, Member oldMember, String id) {
+		int result1 = memberDao.updateMember(member);
+		log.info("result1 ={}", result1);
+		int result2 = 0;
+		int result3 = 0;
+		log.info("memberPersonality ={}", member.getPersonality());
+		if(oldMember.getPersonality() != null) {
+			result2 = memberDao.updatePersonality(member);
+		}else {
+			result2 = memberDao.insertPersonality(member);
+		}
+		
+		if(oldMember.getInterest() != null) {
+			result3 = memberDao.updateInterest(member);
+		}else {
+			result3 = memberDao.insertInterest(member);
+		}
 		
 		log.info("id={}", id);
+		log.info("member={}", member);
 		
-		if(result1 == 1 && result2 == 1 && result3 ==1) {
+		if(result1 == 1 || result2 == 1 || result3 ==1) {
 			return 1;
 		}
 		else {
-			return 0;
+		return 0;
 		}
+		
 	}
 
 	@Override
@@ -53,7 +66,15 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 
- 
+	@Override
+	public int updateShopInfo(Map<String, Object> param) {
+		
+		
+		
+		return 0;
+	}
+
+
 	
 	 
 	

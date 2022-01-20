@@ -63,7 +63,7 @@
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath }/shop/shopMain">AroundMe</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/mbti/mbti.do">나침반</a>
+		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/mbti/mbti.do">MBTI</a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>

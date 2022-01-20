@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.hana.mbti.model.vo.Mbti;
+import com.kh.hana.mbti.model.vo.MbtiData;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +43,12 @@ public class MbtiDaolmpl implements MbtiDao {
 		}
 		
 		return 0;
+	}
+
+	@Override
+	public List<Map<String, Object>> selectMbtiResult(String id) {
+		log.info("selectMbtiResult = {}", id);
+		return  session.selectList("mbti.selectMbtiResult", id);
 	}
 
 

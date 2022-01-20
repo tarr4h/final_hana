@@ -3,6 +3,7 @@ package com.kh.hana.member.controller;
  
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -75,11 +76,8 @@ public class MemberController {
 		
 		int result = memberService.memberEnroll(member);
 		
-		log.debug("result");
-		
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원가입에 성공했습니다." : "회원가입에 실패했습니다.");
-		
-		return "redirect:/member/login";		
+		return "redirect:/member/login";					
 	}
 	
 	@GetMapping("/{accountType}")
@@ -97,7 +95,6 @@ public class MemberController {
 		
 	}
 	
-	
 	@PostMapping("/memberUpdate")
     public String memberUpdate(Member member,
                                 String id,
@@ -105,7 +102,7 @@ public class MemberController {
                                 RedirectAttributes redirectAttr) {
         log.info("member={}", member);
         log.info("oldMember={}", oldMember);
-        int result = memberService.updateMember(member, id);
+        int result = memberService.updateMember(member, oldMember, id);
 
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
@@ -114,9 +111,10 @@ public class MemberController {
         oldMember.setAddressSecond(member.getAddressSecond());
         oldMember.setAddressThird(member.getAddressThird());
         oldMember.setAddressFull(member.getAddressFull());
+        oldMember.setAddressAll(member.getAddressAll());
         oldMember.setPersonality(member.getPersonality());
         oldMember.setInterest(member.getInterest());
-
+     
         log.info("memberSetting result = {}" , result); 
         log.info("memberPersonality={}" , member.getPersonality()); 
 
@@ -124,7 +122,16 @@ public class MemberController {
         return "redirect:/member/memberSetting/memberSetting";
     }
 	
-	
+	@PostMapping("/shopSetting/shopInfo")
+	public String updateShopInfo(@RequestParam Map<String, Object> param, RedirectAttributes redirectAttr) {
+		log.info("param = {}", param);
+		
+		int result = memberService.updateShopInfo(param);
+		
+		
+		redirectAttr.addFlashAttribute("msg", "redi수정완료");
+		return "redirect:/member/shopSetting/shopInfo";
+	}
 	
 	
 	

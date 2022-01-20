@@ -19,5 +19,15 @@
 		values(#{no}, #{memberId}, #{result})
 		
 	</insert>
+	
+	
+	
+	<select id="selectMbtiResult" resultType="map" parameterType="string">
+		select *
+			from mbti_data
+		 where 
+		 	 member_id = #{id}		
+	</select>
+	
   
  </mapper>

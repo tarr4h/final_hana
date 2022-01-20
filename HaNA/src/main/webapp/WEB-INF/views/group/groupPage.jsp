@@ -16,13 +16,6 @@
 	crossorigin="anonymous">
 </script>
 
-<script>
-$(() => {
-	console.log('${enrolled}');
-});
-
-</script>
-
 <div class="group-page">
 	<section class="group-page-section">
 		<div class="group-page-image">

@@ -26,6 +26,7 @@
 		<result column="address_second" property="addressSecond"/>
 		<result column="address_third" property="addressThird"/>
 		<result column="address_full" property="addressFull"/>
+		<result column="address_all" property="addressAll"/>
 		<result column="enabled" property="enabled"/>
 		<result column="personality" property="personality"/>
 		<result column="interest" property="interest"/>
