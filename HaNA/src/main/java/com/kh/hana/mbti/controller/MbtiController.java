@@ -65,12 +65,12 @@ public class MbtiController {
 				resultOfNo.put(per, memberResult[i]);
 				i++;
 				log.info("per={}", per);
-
 			}
 			int result = mbtiService.insertList(resultOfNo, memberId);
 		}
 		model.addAttribute("mbtiList", mbtiList);
 		model.addAttribute("cPage", cPage);
+		
 		log.info("mbtiList = {}", mbtiList);
 		return "mbti/mbtiList";
 	}
@@ -78,6 +78,9 @@ public class MbtiController {
 	// mbti 결과 불러오기
 	@GetMapping("/mbtiResult.do")
 	public String mbtiResult(Model model, MbtiData data) {
+		
+		
+		
 		log.info("data = {}", data);
 
 		if (data.getNo() != null) {
@@ -223,5 +226,8 @@ public class MbtiController {
 
 		return "mbti/mbtiResult";
 	}
+	
+	
+	
 
 }

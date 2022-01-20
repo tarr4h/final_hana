@@ -29,5 +29,13 @@
 		 	 member_id = #{id}		
 	</select>
 	
+	<delete id = "deleteData" parameterType="string" >
+		delete 
+		from 
+			mbti_data 
+		where 
+			member_id = #{memberId}
+	</delete>
+	
   
  </mapper>
