@@ -9,14 +9,14 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
- <script src="https://kit.fontawesome.com/0748f32490.js"
-	crossorigin="anonymous">
-</script>
+ 
 <sec:authentication property="principal" var="loginMember"/>
 <script>
 function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
+
+ 
 </script>
 			
 
@@ -30,16 +30,11 @@ function goSetting(){
 	#profileStatus{
 		height: 400px;
 	}
-	/* 세팅 버튼 */
 	#settingBtn {
 		float: right;
 		height:50px;
 		width: 50px;
 		border-radius: 100%;
-		border: none;
-	}
-	#settingBtn img {
-		width: 130%;
 	}
 	
 	/* 프로필이미지 */
@@ -61,11 +56,7 @@ function goSetting(){
 		border-radius:100%;
 		transform: translateX(80px) translateY(-50px);
 		z-index: 1;
-		background-color: white;
-	}
-	.profileBtn img {
-		width: 100%;
-		border-radius: 100%;
+		background-color: yellow;
 	}
 
 	/* 프로필정보 */
@@ -122,11 +113,12 @@ function goSetting(){
         <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
         	<div class="profileImg d-flex">
         		<!-- 이미지를 넣으세요 -->
-        		<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
+        	<!-- <img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/> -->
+        	<img src="${pageContext.request.contextPath}/resources/upload/member/profile/${loginMember.picture}" alt="" />
         	</div>
         	<div class="profileBtn">
         		<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png" alt="" />
+        		<img src="" alt="" />
         	</div>
         </div>
 
@@ -137,12 +129,8 @@ function goSetting(){
         	<div class="follow">팔로워 :</div>
         	<div class="followCount">389명</div>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
-        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
-        	</button>
-        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
-        	</button>
+        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">설정</button>
+        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing();">친구추가</button>
         	
             <br />
             
@@ -182,9 +170,7 @@ function goSetting(){
 					</tbody>
 				</table>
 			</div>
-
-        	<button style="float:right;"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
-	</div>
+        	<button style="float:right;">글쓰기버튼</button>
         </div>
 	</div> 
        
