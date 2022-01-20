@@ -1,5 +1,7 @@
 package com.kh.hana.member.model.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,5 +39,26 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectPersonality", id);
 	}
 
+	@Override
+	public int updateShopMember(Member member) {
+		return session.update("member.updateShopMember", member);
+	}
+
+	@Override
+	public int updateShopInfo(Map<String, String> param) {
+		return session.update("member.updateShopInfo", param);
+	}
+
+	@Override
+	public Map<String, Object> selectShopInfo(String id) {
+		return session.selectOne("member.selectShopInfo", id);
+	}
+
+	@Override
+	public int insertShopInfo(Map<String, String> param) {
+		return session.insert("member.insertShopInfo", param);
+	}
+
+	
 	
 }

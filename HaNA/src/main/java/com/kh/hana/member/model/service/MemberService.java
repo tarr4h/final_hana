@@ -14,6 +14,6 @@ public interface MemberService {
 
 	Member selectPersonality(String id);
 
-	int updateShopInfo(Map<String, Object> param);
+	int updateShopInfo(Map<String, String> param, Member member);
 
 }

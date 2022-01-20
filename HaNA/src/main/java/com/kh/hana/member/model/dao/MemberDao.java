@@ -1,5 +1,7 @@
 package com.kh.hana.member.model.dao;
 
+import java.util.Map;
+
 import com.kh.hana.member.model.vo.Member;
 
 public interface MemberDao {
@@ -13,5 +15,13 @@ public interface MemberDao {
 	int updateInterest(Member member, String id);
 
 	Member selectPersonality(String id);
+
+	int updateShopMember(Member member);
+
+	int updateShopInfo(Map<String, String> param);
+
+	Map<String, Object> selectShopInfo(String id);
+
+	int insertShopInfo(Map<String, String> param);
 
 }
