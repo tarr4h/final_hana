@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.hana.group.model.vo.Group;
-import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.group.model.vo.GroupBoardEntity;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
@@ -37,7 +38,7 @@ public class GroupDaoImpl implements GroupDao {
 		return session.selectList("group.selectGroupList",member);
 	}
 
-	public int insertGroupBoard(GroupBoard groupBoard) {
+	public int insertGroupBoard(GroupBoardEntity groupBoard) {
 		return session.insert("group.insertGroupBoard", groupBoard);
 	}
 
@@ -47,7 +48,7 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<Member> selectMemberList(GroupBoard groupBoard) {
+	public List<Member> selectMemberList(GroupBoardEntity groupBoard) {
 		return session.selectList("selectMemberList", groupBoard);
 	}
 
@@ -57,7 +58,7 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<GroupBoard> selectGroupBoardList(String groupId) {
+	public List<GroupBoardEntity> selectGroupBoardList(String groupId) {
 		return session.selectList("selectGroupBoardList",groupId);
 	}
 	

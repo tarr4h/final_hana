@@ -15,6 +15,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +68,7 @@ public class GroupController {
 		log.info("enrolled = {}", enrolled);
 		model.addAttribute("enrolled",enrolled);
 		
-		List<GroupBoard> groupBoardList = groupService.selectGroupBoardList(groupId);
+		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
 		model.addAttribute("groupBoardList", groupBoardList);
 		return "group/groupPage";
@@ -136,7 +138,7 @@ public class GroupController {
 	}
 	
 	@PostMapping("/enrollGroupBoard")
-	public String enrollGroupBoard(GroupBoard groupBoard,
+	public String enrollGroupBoard(GroupBoardEntity groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
 			log.info("groupBoard = {}",groupBoard);
@@ -172,15 +174,29 @@ public class GroupController {
 			return "redirect/group/enrollGroupBoard";
 		}
 	}
+//	@GetMapping("/groupBoardDetail/{no}")
+//	public String groupBoardDetail(@PathVariable int no, Model model) {
+//		GroupBoard groupBoard = groupService.selectOneBoard(no);
+//		log.info("groupBoard = {}",groupBoard);
+//		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
+//		log.info("tagMembers = {}",tagMembers);
+//		model.addAttribute(groupBoard);
+//		model.addAttribute("tagMembers",tagMembers);
+//		return "/group/groupBoardDetail";
+//	}
+	
 	@GetMapping("/groupBoardDetail/{no}")
-	public String groupBoardDetail(@PathVariable int no, Model model) {
+	public ResponseEntity<Map<String,Object>> groupBoardDetail(@PathVariable int no, Model model) {
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
 		log.info("groupBoard = {}",groupBoard);
 		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
 		log.info("tagMembers = {}",tagMembers);
-		model.addAttribute(groupBoard);
-		model.addAttribute("tagMembers",tagMembers);
-		return "/group/groupBoardDetail";
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("groupBoard",groupBoard);
+		map.put("tagMembers",tagMembers);
+		
+		return ResponseEntity.ok(map);
 	}
 	
 }
