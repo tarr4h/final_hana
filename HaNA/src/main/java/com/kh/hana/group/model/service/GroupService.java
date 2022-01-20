@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.hana.group.model.vo.Group;
-
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.member.model.vo.Member;
 
-import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.member.model.vo.Member;
 
 
@@ -21,14 +21,14 @@ public interface GroupService {
 
 	List<Group> selectGroupList(Member member);
 
-	int insertGroupBoard(GroupBoard groupBoard);
+	int insertGroupBoard(GroupBoardEntity groupBoard);
 
 	GroupBoard selectOneBoard(int no);
 
-	List<Member> selectMemberList(GroupBoard groupBoard);
+	List<Member> selectMemberList(GroupBoardEntity groupBoard);
 
 	List<Member> selectGroupMemberList(String groupId);
 
-	List<GroupBoard> selectGroupBoardList(String groupId);
+	List<GroupBoardEntity> selectGroupBoardList(String groupId);
 
 }

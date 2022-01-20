@@ -80,11 +80,13 @@
 	</insert>
 	<select id="selectOneBoard" resultType="groupBoard">
 		select
-			*
+			g.*,
+			m.picture writer_profile
 		from
-			group_board
+			group_board g join member m
+			on g.writer = m.id
 		where
-			no = #{no}
+			g.no = #{no}
 	</select>
 	<select id="selectMemberList" resultType="member">
 		select

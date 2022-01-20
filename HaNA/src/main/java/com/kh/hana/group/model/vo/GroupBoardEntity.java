@@ -1,5 +1,6 @@
 package com.kh.hana.group.model.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -11,8 +12,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class GroupBoard {
+public class GroupBoardEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int no;
 	private String groupId;
 	private String writer;
