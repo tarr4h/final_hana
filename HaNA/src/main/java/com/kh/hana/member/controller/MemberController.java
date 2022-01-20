@@ -105,7 +105,7 @@ public class MemberController {
                                 RedirectAttributes redirectAttr) {
         log.info("member={}", member);
         log.info("oldMember={}", oldMember);
-        int result = memberService.updateMember(member, id);
+        int result = memberService.updateMember(member, oldMember, id);
 
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
@@ -114,18 +114,10 @@ public class MemberController {
         oldMember.setAddressSecond(member.getAddressSecond());
         oldMember.setAddressThird(member.getAddressThird());
         oldMember.setAddressFull(member.getAddressFull());
- 
         oldMember.setAddressAll(member.getAddressAll());
- 
-        
-        if(oldMember.getPersonality() != null) {
- 
         oldMember.setPersonality(member.getPersonality());
-        }
-        if(oldMember.getInterest() != null) {
         oldMember.setInterest(member.getInterest());
-        }
-
+     
         log.info("memberSetting result = {}" , result); 
         log.info("memberPersonality={}" , member.getPersonality()); 
 

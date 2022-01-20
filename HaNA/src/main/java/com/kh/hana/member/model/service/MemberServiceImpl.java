@@ -27,21 +27,22 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int updateMember(Member member, String id) {
+	public int updateMember(Member member, Member oldMember, String id) {
 		int result1 = memberDao.updateMember(member);
+		log.info("result1 ={}", result1);
 		int result2 = 0;
 		int result3 = 0;
-		
-		if(member.getId() != null && member.getPersonality() != null) {
+		log.info("memberPersonality ={}", member.getPersonality());
+		if(oldMember.getPersonality() != null) {
 			result2 = memberDao.updatePersonality(member);
 		}else {
-			result2 = memberDao.insertPersonality(id);
+			result2 = memberDao.insertPersonality(member);
 		}
 		
-		if(member.getId() != null && member.getInterest() != null) {
+		if(oldMember.getInterest() != null) {
 			result3 = memberDao.updateInterest(member);
 		}else {
-			result3 = memberDao.insertInterest(id);
+			result3 = memberDao.insertInterest(member);
 		}
 		
 		log.info("id={}", id);

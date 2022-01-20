@@ -3,8 +3,7 @@ package com.kh.hana.member.model.dao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.kh.hana.member.controller.Personality;
+ 
 import com.kh.hana.member.model.vo.Member;
 
 @Repository
@@ -39,13 +38,13 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int insertPersonality(String id) {
-		return session.insert("member.insertPersonality", id);
+	public int insertPersonality(Member member) {
+		return session.insert("member.insertPersonality", member);
 	}
 
 	@Override
-	public int insertInterest(String id) {
-		return session.insert("member.insertInterest", id);
+	public int insertInterest(Member member) {
+		return session.insert("member.insertInterest", member);
 	}
 
 	
