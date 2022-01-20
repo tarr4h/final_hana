@@ -46,9 +46,9 @@ public class MbtiDaolmpl implements MbtiDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectMbtiResult(String id) {
-		log.info("selectMbtiResult = {}", id);
-		return  session.selectList("mbti.selectMbtiResult", id);
+	public List<Map<String, Object>> selectMbtiResult(String memberId) {
+		log.info("selectMbtiResult = {}", memberId);
+		return  session.selectList("mbti.selectMbtiResult", memberId);
 	}
 
 

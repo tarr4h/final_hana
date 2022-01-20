@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository
+// 로그인 후 mbti 검사 클릭시 해당 Id Mbtidata 삭제 
 public class MemberMbtiInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired

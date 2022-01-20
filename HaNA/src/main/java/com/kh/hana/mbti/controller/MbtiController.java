@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.hana.mbti.model.service.MbtiService;
 import com.kh.hana.mbti.model.vo.Mbti;
 import com.kh.hana.mbti.model.vo.MbtiData;
+import com.kh.hana.member.model.vo.MemberEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +43,13 @@ public class MbtiController {
 	// mbti 문항 불러오기
 	@GetMapping("/mbtiList.do")
 	public String mbtiList(Model model, @RequestParam("cPage") int cPage, MbtiData data) {
+		// memberId 가져와서 MbtiData에 넣어주기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MemberEntity id = (MemberEntity) authentication.getPrincipal();
+		data.setMemberId(id.getId());
+
+		log.info("data = {}", data);
+		log.info("data.getMemberId = {}", data.getMemberId());
 		log.info("data = {}", data);
 		log.info("cPage={}", cPage);
 		int endPage = cPage + 5;
@@ -70,7 +80,7 @@ public class MbtiController {
 		}
 		model.addAttribute("mbtiList", mbtiList);
 		model.addAttribute("cPage", cPage);
-		
+
 		log.info("mbtiList = {}", mbtiList);
 		return "mbti/mbtiList";
 	}
@@ -78,9 +88,11 @@ public class MbtiController {
 	// mbti 결과 불러오기
 	@GetMapping("/mbtiResult.do")
 	public String mbtiResult(Model model, MbtiData data) {
-		
-		
-		
+		// memberId 가져와서 MbtiData에 넣어주기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MemberEntity id = (MemberEntity) authentication.getPrincipal();
+		data.setMemberId(id.getId());
+
 		log.info("data = {}", data);
 
 		if (data.getNo() != null) {
@@ -102,8 +114,8 @@ public class MbtiController {
 			int result = mbtiService.insertList(resultOfNo, memberId);
 		}
 
-		String id = data.getMemberId();
-		List<Map<String, Object>> mbtiResult = mbtiService.selectMbtiResult(id);
+		String memberId = data.getMemberId();
+		List<Map<String, Object>> mbtiResult = mbtiService.selectMbtiResult(memberId);
 		log.info("mbtiResult = {}", mbtiResult);
 
 		List<String> memberMbti = new ArrayList<>();
@@ -226,8 +238,5 @@ public class MbtiController {
 
 		return "mbti/mbtiResult";
 	}
-	
-	
-	
 
 }

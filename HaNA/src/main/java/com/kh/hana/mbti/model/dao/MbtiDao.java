@@ -12,6 +12,6 @@ public interface MbtiDao {
 
 	int insertList(Map<Integer, Integer> resultOfNo, String memberId);
 
-	List<Map<String, Object>> selectMbtiResult(String id);
+	List<Map<String, Object>> selectMbtiResult(String memberId);
 
 }
