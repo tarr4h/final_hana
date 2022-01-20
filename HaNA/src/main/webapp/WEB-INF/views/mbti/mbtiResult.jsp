@@ -16,8 +16,34 @@
 	<h4 style="color:#ffffff">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
 </div>
 <button onclick="location.href='http://localhost:9090/hana'">홈으로</button>
-<button >프로필 반영</button>
+<button id = "mbtiInsert" >프로필 반영</button>
 </div>
+
+<script>
+
+
+$('#mbtiInsert').on('click', function(){
+	
+var mbti_IE = ${memberMbti[0] }
+var mbti_SN = ${memberMbti[1] }
+var mbti_FT = ${memberMbti[2] }
+var mbti_JP = ${memberMbti[3] }
+
+var memberMbti = {"mbti_IE" : mbti_IE , "mbti_SN" : mbti_SN ,"mbti_FT" : mbti_FT ,"mbti_JP" : mbti_JP }
+   
+ $.ajax({
+        url: "mbtiInsert.do",
+        type: "GET",
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: memberMbti ,
+        success: function(data){
+            alert("성공");
+        },
+        error: function(){  alert("error");  }
+    });
+});
+</script>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

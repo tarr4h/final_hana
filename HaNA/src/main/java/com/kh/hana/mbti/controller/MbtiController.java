@@ -9,12 +9,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.hana.mbti.model.service.MbtiService;
 import com.kh.hana.mbti.model.vo.Mbti;
 import com.kh.hana.mbti.model.vo.MbtiData;
+import com.kh.hana.mbti.model.vo.MemberMbti;
 import com.kh.hana.member.model.vo.MemberEntity;
 
 import lombok.extern.slf4j.Slf4j;
@@ -239,4 +242,14 @@ public class MbtiController {
 		return "mbti/mbtiResult";
 	}
 
+	// mbti 프로필 반영
+	@GetMapping("/mbtiInsert.do")
+	public String mbtiInsert() {
+		
+		return "redirect:/mbti/mbtiResult";
+		
+	}
+
+
+	
 }
