@@ -56,8 +56,30 @@
 	chatroom 
 		values(
 		SEQ_CHAT_NO.nextval,
-		#{loginId}
+		#{login_Member}
 		)
 	</insert>
+	<insert id="insertEnterMessage">
+	insert
+		into
+	chat
+		values(#{roomNo},#{loginId},'ROOMENTER',default,default)
+	</insert>
+	
+	<insert id="insertEnterMessage2">
+	insert
+		into
+	chat
+		values(#{roomNo},#{memberId},'ROOMENTER',default,default)
+	</insert>
+	
+	<select id="findRoomNo" resultType="_int">
+	select
+		room_no
+	from
+		chatroom
+	where member_id = #{login_Member}
+	</select>
+	
 
 </mapper>

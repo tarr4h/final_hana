@@ -53,7 +53,7 @@
             </tr>
             <c:forEach items="${members}" var="member">
 	            <tr>
-	            <td><input type="text" value="${member.id}"readonly/></td>
+	            <td><input type="text" value="${member.id}" name="tagMembers" readonly/></td>
 	            </tr>
             </c:forEach>
             <tr><td><input type="submit" /></td></tr>

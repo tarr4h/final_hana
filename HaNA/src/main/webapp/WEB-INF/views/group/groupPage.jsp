@@ -16,13 +16,6 @@
 	crossorigin="anonymous">
 </script>
 
-<script>
-$(() => {
-	console.log('${enrolled}');
-});
-
-</script>
-
 <div class="group-page">
 	<section class="group-page-section">
 		<div class="group-page-image">
@@ -72,23 +65,16 @@ $(() => {
 			class="far fa-comments"></i></a>
 	</div>
 	<div class="container">
-	    <div class="row">
-	        <div class="col-sm-3">
-		        <img
-				src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
+	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
+		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
+	        <div class="col-sm-4">
+				<img  style="width:100%; height:100%; margin-bottom: 10%"
+				src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image[0]}"
 				alt="" />
 	        </div>
-	        <div class="col-sm-3"></div>
-	        <div class="col-sm-3"></div>
-	    </div>
+		${vs.index%3 == 2? "</div>" : ""}
+	</c:forEach>
 	</div>
-<%-- 	<ul class="group-page-thumbnail">
-		<li>
-			<img
-			src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-			alt="" />
-		</li>
-	</ul> --%>
 </div>
 
 
