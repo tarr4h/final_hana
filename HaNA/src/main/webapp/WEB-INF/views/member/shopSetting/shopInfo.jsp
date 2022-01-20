@@ -12,6 +12,15 @@
 
 <sec:authentication property="principal" var="loginMember"/>
 
+<c:if test="${not empty msg}">
+	<script>
+		$(() => {
+				alert('${msg}');
+		});
+	</script>
+</c:if>
+
+
 <h1>shop프로필설정</h1>
 <div class="container">
     <div class="row">
@@ -26,50 +35,64 @@
         </div>
         <!-- 설정 영역 -->
         <div class="col-sm-8">
-        	<label for="username">이름</label><input type="text" name="" id="username" />
-        	<br />
-        	<label for="profile">프로필사진</label><input type="file" name="" id="profile" />
-        	<br />
-        	<br />
-        	
-        	<label for="bussiness-hour-start">영업시간</label>
-        	<br />
-        	<input type="time" name="bussiness-hour-start" />~<input type="time" name="bussiness-hour-end"/>        	
-        	<br />
-        	<br />
-        	<label for="introduce">소개</label>
-        	<br />
-        	<input type="text" name="introduce" />
-        	<br />
-        	<br />
-        	<label for="location">주소</label>
-        	<br />
-        	<input type="text" name="addressAll" style="width:300px;"/>
-        	<input type="button" value="검색" onclick="execDaumPostcode();" />
-        	<br />
-        	<label for="location2">상세주소</label>
-        	<br />
-        	<input type="text" name="addressFull" />
-        	<input type="hidden" name="addressFirst" />
-        	<input type="hidden" name="addressSecond" />
-        	<input type="hidden" name="addressThird" />
-        	<br />
-        	<br />
-        	<input type="button" value="저장하기" />
-        	
-        	<button class="naverMap">좌표구하기</button>
-<!--       	<div id="map" style="width: 100%; height: 100%;"></div> -->
+        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo" method="post" name="updateFrm">
+	        	<label for="username">이름</label><input type="text" name="username" id="username" />
+	        	<br />
+	        	<label for="profile">프로필사진</label><input type="file" name="profile" id="profile" />
+	        	<br />
+	        	<br />
+	        	
+	        	<label for="bussiness-hour-start">영업시간</label>
+	        	<br />
+	        	<input type="time" name="bussiness-hour-start"/>~<input type="time" name="bussiness-hour-end"/>        	
+	        	<br />
+	        	<br />
+	        	<label for="introduce">소개</label>
+	        	<br />
+	        	<input type="text" name="introduce" />
+	        	<br />
+	        	<br />
+	        	<label for="location">주소</label>
+	        	<br />
+	        	<input type="text" name="addressAll" style="width:300px;"/>
+	        	<input type="button" value="검색" onclick="execDaumPostcode();" />
+	        	<br />
+	        	<label for="location2">상세주소</label>
+	        	<br />
+	        	<input type="text" name="addressFull" />
+	        	<input type="hidden" name="addressFirst" />
+	        	<input type="hidden" name="addressSecond" />
+	        	<input type="hidden" name="addressThird" />
+	        	<input type="hidden" name="locationX" />
+	        	<input type="hidden" name="locationY" />
+	        	<input type="hidden" name="id" />
+	        	<br />
+	        	<br />
+	        	<input type="submit" value="저장하기" id="formBtn"/>
+	        	
+	<!--       	<div id="map" style="width: 100%; height: 100%;"></div> -->
+        	</form:form>
         	
         </div>
     </div>
 </div>
 <script>
 	$(() => {
-		$('[name=introduce]').val(${loginMember.introduce});
+		$('[name=username]').val('${loginMember.name}');
+		$('[name=introduce]').val('${loginMember.introduce}');
 		$('[name=addressAll]').val('${loginMember.addressAll}');
 		$('[name=addressFull]').val('${loginMember.addressFull}');
-		
+		$('[name=addressFirst]').val('${loginMember.addressFirst}');
+		$('[name=addressSecond]').val('${loginMember.addressSecond}');
+		$('[name=addressThird]').val('${loginMember.addressThird}');
+		$('[name=id]').val('${loginMember.id}');
 	});
+	
+	$("#formBtn").click((e) =>{
+		e.preventDefault();
+		$('[name=updateFrm]').submit();
+	})
+	
 </script>
 
 <script type="text/javascript" 
@@ -79,52 +102,48 @@
 <script>
 // 좌표구하기
 $(() => {
-	$(document).on("click", "button[class='naverMap']", function () {
-		var Addr_val = $('[name=addressAll]').val();
+	var Addr_val = $('[name=addressAll]').val();
 
-		// 도로명 주소를 좌표 값으로 변환(API)
-		naver.maps.Service.geocode({
-	        query: Addr_val
-	    }, function(status, response) {
-	        if (status !== naver.maps.Service.Status.OK) {
-	            return alert('잘못된 주소값입니다.');
-	        }
-	
-	        var result = response.v2, // 검색 결과의 컨테이너
-	            items = result.addresses; // 검색 결과의 배열
-	            
-	        // 리턴 받은 좌표 값을 변수에 저장
-	        let x = parseFloat(items[0].x);
-	        let y = parseFloat(items[0].y);
-	        
-	        console.log(x);
-	        console.log(y);
-	        
+	// 도로명 주소를 좌표 값으로 변환(API)
+	naver.maps.Service.geocode({
+        query: Addr_val
+    }, function(status, response) {
+        if (status !== naver.maps.Service.Status.OK) {
+            return alert('잘못된 주소값입니다.');
+        }
+
+        var result = response.v2, // 검색 결과의 컨테이너
+            items = result.addresses; // 검색 결과의 배열
+            
+        // 리턴 받은 좌표 값을 변수에 저장
+        let x = parseFloat(items[0].x);
+        let y = parseFloat(items[0].y);
+        
+        $('[name=locationX]').val(x);
+        $('[name=locationY]').val(y);
+        
 /*  	        // 지도 생성
-	        var map = new naver.maps.Map('map', {
-				center: new naver.maps.LatLng(y, x), // 지도를 열 좌표
-				zoom: 18
-			});
-			
-	        // 지도에 해당 좌표 마커(아이콘 설정)
-	        var markerOptions = {
-	        	    position: new naver.maps.LatLng(y, x), //마커찍을 좌표
-	        	    map: map,
-	        	    icon: {
-	        	        url: 'resources/img/marker.png', //아이콘 경로
-	        	        size: new naver.maps.Size(22, 36), //아이콘 크기
-	        	        origin: new naver.maps.Point(0, 0),
-	        	        anchor: new naver.maps.Point(11, 35)
-	        	    }
-	        	};
-	        
-	        // 마커 생성
-	        var marker = new naver.maps.Marker(markerOptions); */
-	
-	    });
-
-	});
-});
+        var map = new naver.maps.Map('map', {
+			center: new naver.maps.LatLng(y, x), // 지도를 열 좌표
+			zoom: 18
+		});
+		
+        // 지도에 해당 좌표 마커(아이콘 설정)
+        var markerOptions = {
+        	    position: new naver.maps.LatLng(y, x), //마커찍을 좌표
+        	    map: map,
+        	    icon: {
+        	        url: 'resources/img/marker.png', //아이콘 경로
+        	        size: new naver.maps.Size(22, 36), //아이콘 크기
+        	        origin: new naver.maps.Point(0, 0),
+        	        anchor: new naver.maps.Point(11, 35)
+        	    }
+        	};
+        
+        // 마커 생성
+        var marker = new naver.maps.Marker(markerOptions); */
+    });
+})
 
 </script>
 
@@ -170,4 +189,4 @@ function execDaumPostcode() {
 }
 </script>
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
