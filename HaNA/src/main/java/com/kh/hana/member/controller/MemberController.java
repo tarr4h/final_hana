@@ -123,8 +123,31 @@ public class MemberController {
     }
 	
 	@PostMapping("/shopSetting/shopInfo")
-	public String updateShopInfo(@RequestParam Map<String, Object> param, RedirectAttributes redirectAttr) {
+	public String updateShopInfo(@RequestParam Map<String, Object> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
 		log.info("param = {}", param);
+		log.info("time = {}", param.get("bussiness-hour-end"));
+		log.info("upFile = {}", upFile.getOriginalFilename());
+		Member member = (Member)authentication.getPrincipal();
+		String oldProfile = member.getPicture();
+		log.info("pic = {}", member.getPicture());
+		
+		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
+		File file = new File(saveDirectory, oldProfile);
+		boolean bool = file.delete();
+		log.info("bool = {}", bool);
+		
+		String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename()); 
+		
+		File regFile = new File(saveDirectory, renamedFilename);
+		
+		try {
+			upFile.transferTo(regFile);
+		} catch (IllegalStateException | IOException e) {
+			log.error(e.getMessage(), e);
+		}
+		
+		param.put("picture", renamedFilename);
+
 		
 		int result = memberService.updateShopInfo(param);
 		
