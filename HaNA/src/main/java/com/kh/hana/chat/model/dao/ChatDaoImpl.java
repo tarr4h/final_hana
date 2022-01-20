@@ -49,13 +49,29 @@ public class ChatDaoImpl implements ChatDao {
 
 
 	@Override
-	public Chat chatRoomCheck(Map<String, Object> param) {
-		return session.selectOne("chat.chatRoomCheck",param);
+	public List<Chat> chatRoomCheck(Map<String, Object> param) {
+		return session.selectList("chat.chatRoomCheck",param);
 	}
 
 	@Override
 	public int createChatRoom(Map<String, Object> param) {
-		return session.selectOne("chat.createChatRoom",param);
+		return session.insert("chat.createChatRoom",param);
 	}
+
+	@Override
+	public int insertEnterMessage(Map<String, Object> param) {
+		return session.insert("chat.insertEnterMessage",param);
+	}
+	
+	@Override
+	public int insertEnterMessage2(Map<String, Object> param) {
+		return session.insert("chat.insertEnterMessage2", param);
+	}
+
+	@Override
+	public int findRoomNo(Map<String, Object> param) {
+		return session.selectOne("chat.findRoomNo", param);
+	}
+
 
 }

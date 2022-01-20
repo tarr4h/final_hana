@@ -29,8 +29,8 @@ public class WebSocketHandler extends TextWebSocketHandler{
 	
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
-	 // 채팅방 목록 <방 번호, ArrayList<session> >이 들어간다.
-    private Map<Integer, ArrayList<WebSocketSession>> RoomList = new HashMap<>();
+	 // 채팅방 목록 <방 번호, List<session> >이 들어간다.
+    private Map<Integer, List<WebSocketSession>> RoomList = new HashMap<>();
     // session, 방 번호가 들어간다.
     private Map<WebSocketSession, Integer> sessionList = new HashMap<>();
     
@@ -53,7 +53,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
         String msg = message.getPayload();
         
         // Json객체 → Java객체
-        // 출력값 : {"roomNo":21,"name":"jeonyeseong","message":"ENTER-CHAT"}
+        // 출력값 : {"roomNo":21,"name":"jeonyeseong","message":"ENTER"}
         Chat chat = objectMapper.readValue(msg,Chat.class);
         log.info("handleTextMessage - chat = {}", chat);
         
@@ -65,7 +65,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
         if(RoomList.get(chatRoom.getRoomNo()) == null && chat.getMessage().equals("ENTER") && chatRoom != null) {
             
             // 채팅방에 들어갈 session들
-            ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
+            List<WebSocketSession> sessionTwo = new ArrayList<>();
             // session 추가
             sessionTwo.add(session);
             // sessionList에 추가
@@ -77,13 +77,13 @@ public class WebSocketHandler extends TextWebSocketHandler{
             log.info("sessionList에 session, roomNo 저장 {}", sessionList);
         }
         
-        if(RoomList.get(chatRoom.getRoomNo()) != null && chat.getMessage().equals("ENTER") && chatRoom != null) {
+        else if(RoomList.get(chatRoom.getRoomNo()) != null && chat.getMessage().equals("ENTER") && chatRoom != null) {
         	RoomList.get(chatRoom.getRoomNo()).add(session);
         	sessionList.put(session, chatRoom.getRoomNo());
         	log.info("{}RoomList에 session 저장",chatRoom.getRoomNo());
         }
         
-        if(RoomList.get(chatRoom.getRoomNo()) != null && !chat.getMessage().equals("ENTER") && chatRoom != null) {
+        else if(RoomList.get(chatRoom.getRoomNo()) != null && !chat.getMessage().equals("ENTER") && chatRoom != null) {
         	// 메세지에 이름, 이메일, 내용을 담는다.
             TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage());
             log.info("메세지 보내기 testMessage = {}", textMessage);
@@ -105,9 +105,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
             int a = chatService.insertMessage(chat);
             
             if(a == 1) {
-               System.out.println("메세지 전송 및 DB 저장 성공");
+            	log.info("메세지 전송 및 DB 저장 성공");
             }else {
-                System.out.println("메세지 전송 실패!!! & DB 저장 실패!!");
+            	log.info("메세지 전송 실패!!! & DB 저장 실패!!");
             }
             
         }
@@ -120,8 +120,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		i--;
 		log.info("{} 연결 종료 => 접속 인원 : {}명", session.getId(),i);
         // sessionList에 session이 있다면
+		log.info("sessionList.get(session) = {}", sessionList.get(session));
         if(sessionList.get(session) != null) {
-            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
+            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 List<session>에서 해당 session을 지운다.
             RoomList.get(sessionList.get(session)).remove(session);
             sessionList.remove(session);
         }
