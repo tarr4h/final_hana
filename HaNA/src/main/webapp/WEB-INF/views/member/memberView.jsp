@@ -16,6 +16,11 @@ function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
 
+function addFollowing(){
+	if(confirm("친구추가를 하시겠습니까?")){
+		$(document.addFollowingFrm).submit();
+	}
+}
  
 </script>
 			
@@ -131,7 +136,9 @@ function goSetting(){
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">설정</button>
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing();">친구추가</button>
-        	
+        	<form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/" method = "POST">
+        		<input type="hidden" name ="id" value="${loginMember.id}" />
+        	</form>
             <br />
             
             <div class="profileTableArea">

@@ -14,7 +14,6 @@
 <script>
 $(() => {
 alert("${msg}");
-});
 </script>
 </c:if>
 
