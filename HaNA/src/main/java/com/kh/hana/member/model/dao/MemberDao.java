@@ -16,6 +16,14 @@ public interface MemberDao {
 
 	Member selectPersonality(String id);
 
+	int updateShopMember(Member member);
+
+	int updateShopInfo(Map<String, String> param);
+
+	Map<String, Object> selectShopInfo(String id);
+
+	int insertShopInfo(Map<String, String> param);
+
 	int insertPersonality(Member member);
 
 	int insertInterest(Member member);

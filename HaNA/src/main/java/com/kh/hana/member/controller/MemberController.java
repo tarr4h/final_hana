@@ -24,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.member.model.service.MemberService;
-import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -82,9 +81,10 @@ public class MemberController {
 		return "redirect:/member/login";					
 	}
 	
-	@GetMapping("/memberView/{accountType}/{id}")
-	public void memberView(Authentication authentication,  @PathVariable String accountType, Model model) {
-		log.info("authentication = {}", authentication);
+
+	@GetMapping("/{accountType}")
+	public void memberView(@PathVariable String accountType, @RequestParam String id, Model model) {
+		log.info("id= {}", id);
 	}
 	
 	@GetMapping("/memberSetting/{param}")
@@ -141,13 +141,9 @@ public class MemberController {
 	
 	
 	@PostMapping("/shopSetting/shopInfo")
-	public String updateShopInfo(@RequestParam Map<String, Object> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
-		log.info("param = {}", param);
-		log.info("time = {}", param.get("bussiness-hour-end"));
-		log.info("upFile = {}", upFile.getOriginalFilename());
+	public String updateShopInfo(@RequestParam Map<String, String> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
 		Member member = (Member)authentication.getPrincipal();
 		String oldProfile = member.getPicture();
-		log.info("pic = {}", member.getPicture());
 		
 		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
 		File file = new File(saveDirectory, oldProfile);
@@ -165,11 +161,21 @@ public class MemberController {
 		}
 		
 		param.put("picture", renamedFilename);
+		
+		member.setName(param.get("username"));
+		member.setPicture(renamedFilename);
+		member.setIntroduce(param.get("introduce"));
+		member.setAddressFirst(param.get("addressFirst"));
+		member.setAddressSecond(param.get("addressSecond"));
+		member.setAddressThird(param.get("addressThird"));
+		member.setAddressFull(param.get("addressFull"));
+		member.setAddressAll(param.get("addressAll"));
 
+		param.put("id", member.getId());
 		
-		int result = memberService.updateShopInfo(param);
+		int result = memberService.updateShopInfo(param, member);
 		
-		
+		log.info("contResult = {}", result);
 		redirectAttr.addFlashAttribute("msg", "redi수정완료");
 		return "redirect:/member/shopSetting/shopInfo";
 	}

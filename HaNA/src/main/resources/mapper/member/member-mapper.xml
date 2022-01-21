@@ -45,6 +45,49 @@
 		where
 			member_id = #{id}
 	</select>
+	
+	<update id="updateShopMember" parameterType="member">
+		update
+			member
+		set
+			name = #{name},
+			picture = #{picture},
+			introduce = #{introduce},
+			address_first = #{addressFirst},
+			address_second = #{addressSecond},
+			address_third = #{addressThird},
+			address_full = #{addressFull},
+			address_all = #{addressAll}
+		where
+			id = #{id}
+	</update>
+	
+	<update id="updateShopInfo" parameterType="map">
+		update
+			shop_info
+		set
+			bussiness_hour_start = #{bussiness-hour-start},
+			bussiness_hour_end = #{bussiness-hour-end},
+			location_x = #{locationX},
+			location_y = #{locationY}
+		where
+			id = #{id}
+	</update>
+	
+	<select id="selectShopInfo" parameterType="string" resultType="map">
+		select
+			*
+		from
+			shop_info
+		where
+			id = #{id}
+	</select>
+	
+	<insert id="insertShopInfo" parameterType="map">
+		insert into
+			shop_info
+		values(#{id}, #{bussiness-hour-start}, #{bussiness-hour-end}, #{locationX}, #{locationY})
+	</insert>
 
 	<insert id="insertPersonality">
 		insert into
