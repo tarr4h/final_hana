@@ -15,6 +15,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -192,5 +193,17 @@ public class GroupController {
 		
 		return "redirect:/group/groupPage/"+map.get("groupId");
 	}
+
+	@GetMapping("/getGroupApplyRequest")
+	public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
+		log.info("groupId ={}", groupId);
+		
+		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
+		log.info("groupApplyList ={}", groupApplyList);
+		
+		return ResponseEntity.ok(groupApplyList);
+		
+	}
+	
 }
 

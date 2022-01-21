@@ -130,5 +130,18 @@
 		default
 		)
 	</insert>
+	
+	<select id="getGroupApplyRequest" resultType="map">
+	select
+		*
+	from
+		group_apply_list
+	where
+		group_id = #{groupId}
+		and 
+		approval_yn = 'N'
+	order by
+		no 
+	</select>
 </mapper>
 

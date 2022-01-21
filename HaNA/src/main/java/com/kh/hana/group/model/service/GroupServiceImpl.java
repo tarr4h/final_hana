@@ -70,4 +70,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.insertEnrollGroupForm(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
+		return groupDao.getGroupApplyRequest(groupId);
+	}
+
 }

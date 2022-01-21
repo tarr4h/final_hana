@@ -65,6 +65,11 @@ public class GroupDaoImpl implements GroupDao {
 	public int insertEnrollGroupForm(Map<String, Object> map) {
 		return session.insert("insertEnrollGroupForm", map);
 	}
+
+	@Override
+	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
+		return session.selectList("getGroupApplyRequest", groupId);
+	}
 	
 
 

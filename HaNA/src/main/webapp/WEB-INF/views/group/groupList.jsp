@@ -20,13 +20,15 @@
 				<img
 					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
 					src="${pageContext.request.contextPath}/resources/images/user.png"
-					alt="" />
+					alt=""
+					onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'" />
 			</c:if>
 			<c:if test="${not empty group.image}">
 				<img
 					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
 					src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-					alt="" />
+					alt="" 
+					onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'" />
 			</c:if>
 		</div>
 	<div
@@ -40,6 +42,7 @@
 			</tr>
 		</table>
 	</div>
+	<br />
 	</c:forEach>
 </section>
 

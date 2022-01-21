@@ -29,4 +29,6 @@ public interface GroupDao {
 
 	public int insertEnrollGroupForm(Map<String, Object> map);
 
+	public List<Map<String, Object>> getGroupApplyRequest(String groupId);
+
 }

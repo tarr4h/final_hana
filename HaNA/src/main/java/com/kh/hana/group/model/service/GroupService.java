@@ -33,4 +33,6 @@ public interface GroupService {
 
 	int insertEnrollGroupForm(Map<String, Object> map);
 
+	List<Map<String, Object>> getGroupApplyRequest(String groupId);
+
 }
