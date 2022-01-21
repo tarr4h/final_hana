@@ -78,7 +78,7 @@
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
 				    <li class="nav-item dropdown">
-			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="" >
+			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView/" >
 				          <span><sec:authentication property="principal.username"/></span>
 				        </a>
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -101,13 +101,7 @@
 	
 	<sec:authorize access="isAuthenticated()">
 		<script>
-			$(()=>{
-				if(${loginMember.accountType} == 1){
-					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/memberView');
-				} else{
-					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/shopView');
-				}
-			});
+		
 		</script>
 	</sec:authorize>
 	<section class="body-section">

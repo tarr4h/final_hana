@@ -25,16 +25,17 @@
      <update id= "updatePersonality">
      update personality
      set
-     member_id = #{id},
-     personality = #{personality}
+     	personality = #{personality}
+     where
+     	member_id = #{id}
      </update>
 	
 	<update id="updateInterest">
-		update interest
+	update interest
      set
-     member_id = #{id},
-     interest = #{interest}
-     
+     	interest = #{interest}
+     where
+     	member_id = #{id}
 	</update>
 
 	<select id="selectPersonality" parameterType="string" resultType="member">
@@ -44,6 +45,38 @@
 		where
 			member_id = #{id}
 	</select>
+
+	<insert id="insertPersonality">
+		insert into
+			personality
+		(member_id, personality)
+		values (#{id}, #{personality}) 
+	</insert>
+
+	<insert id="insertInterest">
+		insert into
+			interest 
+			(member_id, interest)
+		values (#{id}, #{interest})
+	</insert>
+
+	<insert id="addFollowing" parameterType ="map">
+		insert into
+		follower 
+		values
+		(#{myId}, #{friendId})
+	
+	</insert>
+
+
+
+
+
+
+
+
+
+
 
 
 </mapper>
