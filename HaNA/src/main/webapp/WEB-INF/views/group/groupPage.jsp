@@ -179,6 +179,9 @@ pre {
 						<tr>
 							<th><span class="tableKey">그룹 아이디</span></th>
 							<td>${group.groupId}</td>
+							<td rowspan="2">						<a
+							href="${pageContext.request.contextPath}/group/enrollGroupForm?groupId=${group.groupId}"
+							class="enroll-button">가입신청</a></td>
 						</tr>
 						<tr>
 							<th><span class="tableKey">리더</span></th>
@@ -251,7 +254,7 @@ $("#myBtn").on( "click", function() {
 							<th>승인여부</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="modalTbody">
 						<%-- <tr>
 							<td>${no}</td>
 							<td>member_id</td>
@@ -282,16 +285,33 @@ function test() {
 		},
 		success(res){
 			console.log(res);
-		
-			/* const tr = `
-				<tr>
-					<td>
-						
-					</td>
-				</tr>
-			`
-			
-			$("[name=modalTable]").append(); */
+			$.each(res, function(i, e) {
+				console.log(e.NO);
+				let tr = `
+					<tr>
+						<td>
+							\${e.NO}
+						</td>
+						<td>
+							\${e.MEMBER_ID}
+						</td>
+						<td>
+							\${e.CONTENT}
+						</td>
+						<td>
+							\${e.REGDATE}						
+						</td>
+						<td>
+							<button type="button"
+								class="btn btn-default btn-sm btn-success"
+								style="margin-right: 1%;">승인</button>
+							<button type="button" class="btn btn-default btn-sm btn-danger">거절</button>
+						</td>
+					</tr>
+				`;
+				
+				$("#modalTbody").append(tr);
+			})
 		},
 		error: console.log
 	})
