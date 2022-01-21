@@ -20,17 +20,17 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int updateMember(Member member, String id) {
+	public int updateMember(Member member) {
 		return session.update("member.updateMember", member);
 	}
 
 	@Override
-	public int updatePersonality(Member member , String id) {
+	public int updatePersonality(Member member) {
 		return session.update("member.updatePersonality", member);
 	}
 
 	@Override
-	public int updateInterest(Member member , String id) {
+	public int updateInterest(Member member) {
 		return session.update("member.updateInterest", member);
 	}
 
@@ -59,6 +59,19 @@ public class MemberDaoImpl implements MemberDao {
 		return session.insert("member.insertShopInfo", param);
 	}
 
+	public int insertPersonality(Member member) {
+		return session.insert("member.insertPersonality", member);
+	}
+
+	@Override
+	public int insertInterest(Member member) {
+		return session.insert("member.insertInterest", member);
+	}
+
+	@Override
+	public int addFollowing(Map<String, Object> map) {
+		return session.insert("member.addFollowing", map);
+	}
 	
 	
 }
