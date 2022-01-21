@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -98,8 +99,12 @@ public class MemberServiceImpl implements MemberService {
 	public int addFollowing(Map<String, Object> map) {
 		return memberDao.addFollowing(map);
 	}
+ 
 
-	 
+	@Override
+	public Follower countFollower() {
+		return memberDao.countFollower();
+	}
 
 	
 	 
@@ -107,17 +112,4 @@ public class MemberServiceImpl implements MemberService {
 	
 }
               
-
-
-
-
-
-
-
-
-
-
-
-
-
 

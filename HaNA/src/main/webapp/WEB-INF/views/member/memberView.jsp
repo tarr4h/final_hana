@@ -36,7 +36,7 @@ function addFollowing(){
 	$.ajax({
 		url : "${pageContext.request.contextPath}/member/memberView",
 		data : {
-			id : ${loginMember.id}
+			id : ${member.id}
 		},
 		success(resp){
 			console.log(resp);

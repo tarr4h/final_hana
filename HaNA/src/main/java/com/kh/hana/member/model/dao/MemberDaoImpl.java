@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 
 @Repository
@@ -71,6 +72,12 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int addFollowing(Map<String, Object> map) {
 		return session.insert("member.addFollowing", map);
+	}
+
+	@Override
+	public Follower countFollower() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
