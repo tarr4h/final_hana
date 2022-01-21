@@ -157,7 +157,7 @@ function addFollowing(){
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">설정</button>
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing();">친구추가</button>
         	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
-        		<input type="hidden" name ="id" value="${loginMember.id}" />
+        		<input type="hidden" name ="id" value="qwerty" />
         	</form:form>
 
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
@@ -179,25 +179,32 @@ function addFollowing(){
 						</tr>
 						<tr>
 							<td><span class="tableKey">성격</span></td>
+							<c:if test="${empty loginMember.personality}">
+							<td><button type="button" onclick="goSetting();">설정해주세요.</button></td>
+							</c:if>
 							<td>${loginMember.personality}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">관심</span></td>
+							<c:if test="${empty loginMember.interest}">
+							<td><button type="button" onclick="goSetting();">설정해주세요.</button></td>
+							</c:if>
 							<td>${loginMember.interest}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>asdfsdlif</td>
+							<td>${loginMember.addressFirst}</td>
 						</tr>
-						<tr>
+				<!--  		<tr>
 							<td><span class="tableKey">취미</span></td>
 							<td>낚시</td>
-						</tr>
+						</tr>-->
 						<tr>
 							<td rowspan=2><span class="tableKey">소개</span></td>
-							<td class="tableValue" rowspan=2>
-								<pre><textarea id="textArea" readonly disabled>가나다라마바사 asdfsadf\\nabcdefg
-									123456</textarea></pre>
+							<td class="tableValue" rowspan=1>
+								 ${loginMember.introduce} 
+							<!-- <pre><textarea id="textArea" readonly disabled>  
+								</textarea></pre> --> 	
 							</td>
 						</tr>
 						<tr>
@@ -250,7 +257,7 @@ function addFollowing(){
     </div>
 </div>
         
-        
+ 
         
         
         

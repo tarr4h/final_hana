@@ -73,12 +73,18 @@
 					<input type="text" class="form-control" id="" name="addressFull" value="${loginMember.addressFull}" required>
 				</td>
 			</tr>
+				<tr>
+			<th></th>
+				<td>	
+					<input type="text" class="form-control" id="" name="addressAll" value="${loginMember.addressAll}" required>
+				</td>
+			</tr>
 			<tr>
 				<th>내 성격</th>
 				<td>	
 					<select name="personality" id="personality" class="custom-select" required>
-					  <option selected>선택&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-					  <option value="차분한" ${loginMember.personality  eq '차분한'? 'selected' : ''}>차분한</option>
+					 
+					  <option selected value="차분한" ${loginMember.personality  eq '차분한'? 'selected' : ''}>차분한</option>
 					  <option value="활발한" ${loginMember.personality  eq '활발한'? 'selected' : ''}>활발한</option>
 					  <option value="내향적인" ${loginMember.personality  eq '내향적인'? 'selected' : ''}>내향적인</option>
 					  <option value="외향적인" ${loginMember.personality  eq '외향적인'? 'selected' : ''}>외향적인</option>
@@ -91,8 +97,7 @@
 				<th>내 관심사</th>
 				<td>	
 				<select name="interest" class="custom-select" required>
-				  <option selected>선택</option>
-				  <option value="스포츠" ${loginMember.interest  eq '스포츠'? 'selected' : ''}>스포츠</option>
+				  <option selected value="스포츠" ${loginMember.interest  eq '스포츠'? 'selected' : ''}>스포츠</option>
 				  <option value="영화" ${loginMember.interest  eq '영화'? 'selected' : ''}>영화</option>
 				  <option value="술" ${loginMember.interest  eq '술'? 'selected' : ''}>술</option>
 				  <option value="책" ${loginMember.interest  eq '책'? 'selected' : ''}>책</option>

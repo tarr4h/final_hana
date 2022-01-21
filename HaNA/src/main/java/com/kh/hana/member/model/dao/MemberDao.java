@@ -1,5 +1,7 @@
 package com.kh.hana.member.model.dao;
 
+import java.util.Map;
+
 import com.kh.hana.member.model.vo.Member;
 
 public interface MemberDao {
@@ -18,6 +20,6 @@ public interface MemberDao {
 
 	int insertInterest(Member member);
 
-	int addFollowing(String id);
+	int addFollowing(Map<String, Object> map);
 
 }

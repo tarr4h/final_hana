@@ -93,10 +93,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int addFollowing(String id) {
-		return memberDao.addFollowing(id);
+	public int addFollowing(Map<String, Object> map) {
+		return memberDao.addFollowing(map);
 	}
 
+	 
 
 	
 	 

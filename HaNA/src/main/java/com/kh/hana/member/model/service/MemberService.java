@@ -16,6 +16,6 @@ public interface MemberService {
 
 	int updateShopInfo(Map<String, Object> param);
 
-	int addFollowing(String id);
+	int addFollowing(Map<String, Object> map);
 
 }

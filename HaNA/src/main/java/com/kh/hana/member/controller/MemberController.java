@@ -3,6 +3,7 @@
  
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -81,7 +82,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/{accountType}")
-	public void memberView(Authentication authentication, @PathVariable String accountType, Model model) {
+	public void memberView(Authentication authentication,  @PathVariable String accountType, Model model) {
 		log.info("authentication = {}", authentication);
 	}
 	
@@ -123,10 +124,17 @@ public class MemberController {
     }
 	
 	@PostMapping("/addFollowing")
-	public String addFollowing(@RequestParam String id, RedirectAttributes redirectAttr) {
-		int result = memberService.addFollowing(id);
-		redirectAttr.addFlashAttribute("msg", result > 0? "친구 추가에 성공했습니다." : "친구 추가에 실패했습니다.");
+	public String addFollowing(@AuthenticationPrincipal Member member, @RequestParam String id, RedirectAttributes redirectAttr) {
+		log.info("member={}", member.getId());
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("myId", member.getId());
+		map.put("friendId", id);
+		log.info("map ={}", map);
+		
+		int result = memberService.addFollowing(map);
 		log.info("result ={}", result);
+		redirectAttr.addFlashAttribute("msg", result > 0? "친구 추가에 성공했습니다." : "친구 추가에 실패했습니다.");
 		return "redirect:/member/memberView";
 	}
 	

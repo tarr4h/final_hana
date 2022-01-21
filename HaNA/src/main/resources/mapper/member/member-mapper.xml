@@ -60,11 +60,11 @@
 		values (#{id}, #{interest})
 	</insert>
 
-	<insert id="addFollowing">
+	<insert id="addFollowing" parameterType ="map">
 		insert into
-		follower (member_id)
+		follower 
 		values
-		(#{id})
+		(#{myId}, #{friendId})
 	
 	</insert>
 
