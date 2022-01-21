@@ -52,12 +52,12 @@ public class MbtiDaolmpl implements MbtiDao {
 	}
 
 	@Override
-	public int insertMemberMbti(Map<String, Object> map) {
-		log.info("insertMemberMbti = {}", map);
-		return session.insert("mbti.insertMemberMbti", map);
-		
+	public int selectAddMbtiProfilet(String memberId) {
+		return  session.selectOne("mbti.selectAddMbtiProfilet", memberId);
 	}
 
+
+	
 	
 
 

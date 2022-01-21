@@ -37,12 +37,13 @@
 			member_id = #{memberId}
 	</delete>
 	
-	<insert id = "insertMemberMbti" parameterType="map">
-		insert  into
-			member_mbti
-		values(#{memberId}, #{mbti})
-	
-	</insert>
+	<select  id="selectAddMbtiProfilet">
+		select *
+		from member_mbti
+		where member_id = #{memberId}
+	</select>
+
+
 	
   
  </mapper>

@@ -14,7 +14,11 @@ public interface MbtiService {
 
 	List<Map<String, Object>> selectMbtiResult(String memberId);
 
-	int insertMemberMbti(Map<String, Object> map);
+	int addMbtiProfile(String mbti, String memberId);
+
+
+
+
 
 	
 
