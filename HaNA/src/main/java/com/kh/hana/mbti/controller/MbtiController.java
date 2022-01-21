@@ -1,5 +1,7 @@
 package com.kh.hana.mbti.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,7 @@ import com.kh.hana.mbti.model.vo.MemberMbti;
 import com.kh.hana.member.model.vo.MemberEntity;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/mbti")
@@ -244,9 +248,31 @@ public class MbtiController {
 
 	// mbti 프로필 반영
 	@GetMapping("/mbtiInsert.do")
-	public String mbtiInsert() {
-		
-		return "redirect:/mbti/mbtiResult";
+	@ResponseBody
+	public void mbtiInsert(HttpServletResponse rs, String mbti , MbtiData data) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MemberEntity id = (MemberEntity) authentication.getPrincipal();
+		data.setMemberId(id.getId());	
+		String memberId = data.getMemberId();
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId",memberId );
+		map.put("mbti", mbti);
+		 log.info("memberId ={}",  memberId);
+		 log.info("mbti ={}",  mbti);
+		 
+		 int result = mbtiService.insertMemberMbti(map);
+		 log.info("result ={}",  result);
+		 
+		 JSONObject jso = new JSONObject();
+		 jso.put("data", result);
+		 rs.setContentType("text/html; charset=utf-8");
+		 PrintWriter out;
+		try {
+			out = rs.getWriter();
+			out.print(jso.toString());		
+		} catch (IOException e) {			
+			System.out.println("오류");
+		}
 		
 	}
 

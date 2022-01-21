@@ -34,5 +34,11 @@ public class MbtiServicelmpl implements MbtiService {
 		return mbtiDao.selectMbtiResult(memberId);
 	}
 
+	@Override
+	public int insertMemberMbti(Map<String, Object> map) {
+		return mbtiDao.insertMemberMbti(map);
+	}
+
+	
 
 }

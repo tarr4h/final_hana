@@ -14,35 +14,34 @@
 <h1 id="mainPage-h1">결과</h1>
 <div>
 	<h4 style="color:#ffffff">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
+	<input type="hidden" id="mbtiResult" value="${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }" />
 </div>
 <button onclick="location.href='http://localhost:9090/hana'">홈으로</button>
 <button id = "mbtiInsert" >프로필 반영</button>
 </div>
+
 
 <script>
 
 
 $('#mbtiInsert').on('click', function(){
 	
-var mbti_IE = ${memberMbti[0] }
-var mbti_SN = ${memberMbti[1] }
-var mbti_FT = ${memberMbti[2] }
-var mbti_JP = ${memberMbti[3] }
-
-var memberMbti = {"mbti_IE" : mbti_IE , "mbti_SN" : mbti_SN ,"mbti_FT" : mbti_FT ,"mbti_JP" : mbti_JP }
-   
+	var mbti = $("#mbtiResult").val();
+	
  $.ajax({
         url: "mbtiInsert.do",
         type: "GET",
         dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        data: memberMbti ,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {"mbti" : mbti},
         success: function(data){
-            alert("성공");
+            alert("프로필 반영 성공 !");
+            location.href = "http://localhost:9090/hana";
         },
         error: function(){  alert("error");  }
     });
 });
+
 </script>
 
 

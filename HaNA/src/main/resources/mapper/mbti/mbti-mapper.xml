@@ -37,5 +37,12 @@
 			member_id = #{memberId}
 	</delete>
 	
+	<insert id = "insertMemberMbti" parameterType="map">
+		insert  into
+			member_mbti
+		values(#{memberId}, #{mbti})
+	
+	</insert>
+	
   
  </mapper>
