@@ -10,10 +10,12 @@ public interface MemberService {
 
 	int memberEnroll(Member member);
 
-	int updateMember(Member member, String id);
+	int updateMember(Member member, Member oldMember, String id);
 
 	Member selectPersonality(String id);
 
-	int updateShopInfo(Map<String, Object> param);
+	int updateShopInfo(Map<String, String> param, Member member);
+
+	int addFollowing(Map<String, Object> map);
 
 }

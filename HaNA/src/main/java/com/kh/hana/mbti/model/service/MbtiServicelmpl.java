@@ -30,8 +30,8 @@ public class MbtiServicelmpl implements MbtiService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectMbtiResult(String id) {
-		return mbtiDao.selectMbtiResult(id);
+	public List<Map<String, Object>> selectMbtiResult(String memberId) {
+		return mbtiDao.selectMbtiResult(memberId);
 	}
 
 
