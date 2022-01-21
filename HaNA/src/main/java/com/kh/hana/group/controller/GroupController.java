@@ -22,8 +22,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,6 +33,7 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.member.model.vo.Member;
 
@@ -190,6 +193,18 @@ public class GroupController {
 		map.put("tagMembers",tagMembers);
 		
 		return ResponseEntity.ok(map);
+	}
+	
+	@PostMapping("/enrollGroupBoardComment")
+	@ResponseBody
+	public Map<String,Object> enrollGroupBoardComment(@RequestBody GroupBoardComment groupBoardComment){
+		log.info("groupBoardComment = {}",groupBoardComment);
+		int result = groupService.insertGroupBoardComment(groupBoardComment);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("msg", "댓글 등록 성공");
+		map.put("result",result);
+		return map;
 	}
 	
 }

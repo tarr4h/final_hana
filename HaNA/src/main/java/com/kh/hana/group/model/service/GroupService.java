@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupBoardEntity;
@@ -30,5 +31,7 @@ public interface GroupService {
 	List<Member> selectGroupMemberList(String groupId);
 
 	List<GroupBoardEntity> selectGroupBoardList(String groupId);
+
+	int insertGroupBoardComment(GroupBoardComment groupBoardComment);
 
 }

@@ -118,5 +118,26 @@
 		group_id = #{groupId}
 	order by no desc
 	</select>
+	<insert id="insertGroupBoardComment">
+		insert into
+			group_board_comment
+		values(
+			seq_group_board_comment.nextval,
+			#{boardNo},
+			#{commentLevel},
+			#{writer},
+			#{content},
+			<choose>
+				<when test="commentRef eq 0">
+					null,
+				</when>
+				<otherwise>
+					#{commentRef},
+				</otherwise>
+			</choose>
+			default
+		)
+	</insert>
+	
 </mapper>
 

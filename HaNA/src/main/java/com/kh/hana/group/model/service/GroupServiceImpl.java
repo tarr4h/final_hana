@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.hana.group.model.dao.GroupDao;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupBoardEntity;
@@ -64,6 +65,11 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public List<GroupBoardEntity> selectGroupBoardList(String groupId) {
 		return groupDao.selectGroupBoardList(groupId);
+	}
+
+	@Override
+	public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
+		return groupDao.insertGroupBoardComment(groupBoardComment);
 	}
 
 }
