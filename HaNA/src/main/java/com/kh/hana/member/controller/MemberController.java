@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.member.model.service.MemberService;
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -81,7 +82,7 @@ public class MemberController {
 		return "redirect:/member/login";					
 	}
 	
-	@GetMapping("/{accountType}")
+	@GetMapping("/memberView/{accountType}/{id}")
 	public void memberView(Authentication authentication,  @PathVariable String accountType, Model model) {
 		log.info("authentication = {}", authentication);
 	}
@@ -173,8 +174,12 @@ public class MemberController {
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 	
-	
-	
+//	@GetMapping("/memberview/")
+//	public void memberView(String id) {
+//		
+//		Follower follower = memberService.countFollower();
+//	}
+//	
 	
 	
 

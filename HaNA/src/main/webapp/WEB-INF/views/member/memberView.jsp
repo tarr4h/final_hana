@@ -33,6 +33,29 @@ function addFollowing(){
 }
  
 
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/memberView",
+		data : {
+			id : ${loginMember.id}
+		},
+		success(resp){
+			console.log(resp);
+		},
+		error : console.log
+
+	});
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
 </script>
 			
 
