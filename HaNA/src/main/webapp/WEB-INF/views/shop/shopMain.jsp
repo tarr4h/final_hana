@@ -11,15 +11,10 @@
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/shop/shopMain.css" />
 
+<sec:authentication property="principal" var="loginMember"/>
 
 <div class="container mb-4">
-	<!-- <div class="row header mb-0 mt-3">
-		<nav class="navbar navbar-light justify-content-center">
-			<span class="navbar-brand mb-0 h5">업체 추천 메뉴</span>
-		</nav>
-	</div> -->
-
-    <div class="row hashTagRank">
+T    <div class="row hashTagRank">
 		<table class="table table-striped table-dark my-0">
 		  <thead>
 		  	<tr>
@@ -161,6 +156,55 @@
 		pageNation
 	</div>
 </div>
+
+<script type="text/javascript" 
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
+</script>
+<script>
+	$(() => {
+		console.log("${loginMember.addressAll}");
+		
+		var Addr_val = "${loginMember.addressAll}";
+
+		// 도로명 주소를 좌표 값으로 변환(API)
+		naver.maps.Service.geocode({
+	        query: Addr_val
+	    }, function(status, response) {
+	        if (status !== naver.maps.Service.Status.OK) {
+	            return alert('잘못된 주소값입니다.');
+	        }
+
+	        var result = response.v2, // 검색 결과의 컨테이너
+	            items = result.addresses; // 검색 결과의 배열
+	            
+	        // 리턴 받은 좌표 값을 변수에 저장
+	        let x = parseFloat(items[0].x);
+	        let y = parseFloat(items[0].y);
+	       
+	    	$.ajax({
+				url: `${pageContext.request.contextPath}/shop/shopList`,
+				data: {
+						id : "${loginMember.id}",
+						locationX : x,
+						locationY : y
+				},
+				success(res){
+					console.log(res);
+				},
+				error:console.log			
+			});
+	    });
+		
+		
+	});
+	
+
+</script>
+
+
+
+
+
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
