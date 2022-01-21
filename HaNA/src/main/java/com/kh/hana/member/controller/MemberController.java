@@ -81,8 +81,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("/{accountType}")
-	public void memberView(Authentication authentication, @PathVariable String accountType, Model model) {
-		log.info("authentication = {}", authentication);
+	public void memberView(@PathVariable String accountType, @RequestParam String id, Model model) {
+		log.info("id= {}", id);
 	}
 	
 	@GetMapping("/memberSetting/{param}")

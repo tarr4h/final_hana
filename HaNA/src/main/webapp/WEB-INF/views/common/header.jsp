@@ -103,9 +103,9 @@
 		<script>
 			$(()=>{
 				if(${loginMember.accountType} == 1){
-					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/memberView');
+					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/memberView?id=${loginMember.id}');
 				} else{
-					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/shopView');
+					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/shopView?id=${loginMember.id}');
 				}
 			});
 		</script>
