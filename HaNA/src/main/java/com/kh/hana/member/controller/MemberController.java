@@ -82,9 +82,11 @@ public class MemberController {
 		return "redirect:/member/login";		
 	}
 	
-	@GetMapping("/{accountType}")
-	public void memberView(Authentication authentication, @PathVariable String accountType, Model model) {
-		log.info("authentication = {}", authentication);
+	@GetMapping("/memberView/{id}")
+	public String memberView(@PathVariable int accountType, @PathVariable String id, Model model) {
+		
+		
+		return "/member/memberView";
 	}
 	
 	@GetMapping("/memberSetting/{param}")
