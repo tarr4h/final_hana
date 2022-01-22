@@ -18,6 +18,7 @@
 				<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
 					<input type="hidden" name="no" value="${list.no }" />
 					<span>비동의</span>
+					<!-- memberResult-${list.no} no가 매번 바뀌니까 저렇게 넣어줬고 ${list.no} 안넣어주면 라디오 박스 체크가 하나만 체크 가능하게 됌  -->
 					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" checked />
 						<label for="cbtest-${list.no}-no" class="cb1"></label>
 					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2"/>	
