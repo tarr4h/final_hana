@@ -63,7 +63,8 @@ public class MbtiController {
 	
 			int i = 0;
 			for (int per : no) {
-				// input tag의 name 값이 memberResult 매번 달라서 반복문 통해서 넣어주었다
+				// input tag의 name 값이 name="memberResult-${list.no}" 이걸로 문항 번호가 달라져서 들어가니까 그 부분을 반복문 통해서 넣어주었고
+				// 그 값을  최종으로는 int로 받아야하니까 형변환을 해주었다  
 				int value = Integer.parseInt(request.getParameter("memberResult-" + per));
 				resultOfNo.put(per, value);
 			}
