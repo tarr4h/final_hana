@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -39,7 +41,7 @@ public class MbtiController {
 
 	// mbti 문항 불러오기
 	@GetMapping("/mbtiList.do")
-	public String mbtiList(Authentication authentication, Model model, @RequestParam("cPage") int cPage,
+	public String mbtiList(HttpServletRequest request , Authentication authentication, Model model, @RequestParam("cPage") int cPage,
 			MbtiData data) {
 		// memberId 가져와서 MbtiData에 넣어주기
 		MemberEntity id = (MemberEntity) authentication.getPrincipal();
@@ -55,17 +57,17 @@ public class MbtiController {
 
 		if (data.getNo() != null) {
 			int[] no = data.getNo();
-			int[] memberResult = data.getMemberResult();
-
+			
 			Map<Integer, Integer> resultOfNo = new HashMap<>();
-
 			String memberId = data.getMemberId();
-
+	
 			int i = 0;
 			for (int per : no) {
-				resultOfNo.put(per, memberResult[i]);
-				i++;
+				// input tag의 name 값이 memberResult 매번 달라서 반복문 통해서 넣어주었다
+				int value = Integer.parseInt(request.getParameter("memberResult-" + per));
+				resultOfNo.put(per, value);
 			}
+
 			int result = mbtiService.insertList(resultOfNo, memberId);
 		}
 		model.addAttribute("mbtiList", mbtiList);
@@ -76,27 +78,24 @@ public class MbtiController {
 
 	// mbti 결과 불러오기
 	@GetMapping("/mbtiResult.do")
-	public String mbtiResult(Authentication authentication, Model model, MbtiData data) {
+	public String mbtiResult(HttpServletRequest request , Authentication authentication, Model model, MbtiData data) {
 		// memberId 가져와서 MbtiData에 넣어주기
-
 		MemberEntity id = (MemberEntity) authentication.getPrincipal();
 		data.setMemberId(id.getId());
 
 		if (data.getNo() != null) {
 			int[] no = data.getNo();
-			int[] memberResult = data.getMemberResult();
-
 			Map<Integer, Integer> resultOfNo = new HashMap<>();
 
 			String memberId = data.getMemberId();
-
-			int i = 0;
+			
 			for (int per : no) {
-				resultOfNo.put(per, memberResult[i]);
-				log.info("memberResult[i]", memberResult[i]);
-				i++;
+				// input tag의 name 값이 memberResult 매번 달라서 반복문 통해서 넣어주었다
+				int value = Integer.parseInt(request.getParameter("memberResult-" + per));
+				resultOfNo.put(per, value);
 			}
-			int result = mbtiService.insertList(resultOfNo, memberId);
+			
+			mbtiService.insertList(resultOfNo, memberId);
 		}
 
 		String memberId = data.getMemberId();

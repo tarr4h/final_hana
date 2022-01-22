@@ -97,19 +97,19 @@
   left: 1px;
   transform: rotate(-45deg);
 }
-input[id="cbtest1"]:checked + .cb1 {
+input:checked + .cb1 {
   border-color: #f88686c9;
 }
-input[id="cbtest2"]:checked + .cb2 {
+input:checked + .cb2 {
   border-color: #f88686c9;
 }
-input[id="cbtest1"]:checked + .cb1::after,
-input[id="cbtest2"]:checked + .cb2::after {
+input:checked + .cb1::after,
+input:checked + .cb2::after {
   height: 10px;
   animation: bottomcheck 0.2s ease 0s forwards;
 }
-input[id="cbtest1"]:checked + .cb1::before,
-input[id="cbtest2"]:checked + .cb2::before {
+input:checked + .cb1::before,
+input:checked + .cb2::before {
   height: 24px;
   animation: topcheck 0.4s ease 0s forwards;
 }

@@ -18,10 +18,10 @@
 				<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
 					<input type="hidden" name="no" value="${list.no }" />
 					<span>비동의</span>
-						<input type="checkbox" id="cbtest1" name="memberResult" value="1" checked />
-						 <label for="cbtest1" class="cb1"></label>
-					<input type="checkbox" id="cbtest2" name="memberResult" value="2"/>
-					 <label for="cbtest2" class="cb2"></label>
+					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" checked />
+						<label for="cbtest-${list.no}-no" class="cb1"></label>
+					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2"/>	
+					 	<label for="cbtest-${list.no}-yes" class="cb2"></label>
 					<span>동의</span>
 			</li>
 		 </c:forEach>
@@ -33,7 +33,6 @@
 	</form>
 </div>
 
-
 <script>
 window.onload = function(){
 	
@@ -43,7 +42,7 @@ window.onload = function(){
 		const path = '${pageContext.request.contextPath}/mbti/mbtiResult.do';
 		$('form[name=mbtiFrm]').attr('action', path);
 	}
-
+	
 }
 
 </script>
