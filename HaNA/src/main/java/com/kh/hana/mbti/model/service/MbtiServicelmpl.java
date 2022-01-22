@@ -37,7 +37,6 @@ public class MbtiServicelmpl implements MbtiService {
 	@Override
 	public int addMbtiProfile(Map<String, Object> map) {
 		MemberMbti selectResult = mbtiDao.selectProfile(map);
-		log.info("selectReult = {}", selectResult);
 		
 		if(selectResult == null) {
 			int insertResult = mbtiDao.insertProfile(map);

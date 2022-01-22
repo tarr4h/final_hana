@@ -2,9 +2,7 @@ package com.kh.hana.mbti.model.service;
 
 import java.util.List;
 import java.util.Map;
-
 import com.kh.hana.mbti.model.vo.Mbti;
-import com.kh.hana.mbti.model.vo.MbtiData;
 
 public interface MbtiService {
 

@@ -18,18 +18,16 @@
 				<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
 					<input type="hidden" name="no" value="${list.no }" />
 					<span>비동의</span>
-						<input type="checkbox" id="shapes_2" name="memberResult" value="1"/>
-						<input type="checkbox" id="shapes_2" name="memberResult" value="2"/>
+						<input type="checkbox" id="cbtest1" name="memberResult" value="1" checked />
+						 <label for="cbtest1" class="cb1"></label>
+					<input type="checkbox" id="cbtest2" name="memberResult" value="2"/>
+					 <label for="cbtest2" class="cb2"></label>
 					<span>동의</span>
 			</li>
 		 </c:forEach>
 		</ul>
-		<div  id="btn1" style="display:block;">
-		<button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
-		</div>
 		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
 		<div id="btn" style="display: none; ">
-		<br /><br />
 		<button id="mbtiListPage-buttonResult">결과보기 <i class="fas fa-angle-double-right"></i></button>
 		</div>
 	</form>
@@ -39,24 +37,14 @@
 <script>
 window.onload = function(){
 	
-	console.log($('form[name=mbtiFrm]').attr('action'));
-	console.log($('input[name=cPage]').val());
-	
-	if($('input[name=cPage]').val() == 7){
-		document.getElementById("btn1").style.display = 'none';
-	}
-	
 	if($('input[name=cPage]').val() == 37){
 		$("#mbtiListPage-buttonNext").hide();
 		document.getElementById("btn").style.display = 'block';
 		const path = '${pageContext.request.contextPath}/mbti/mbtiResult.do';
-		console.log(path);
 		$('form[name=mbtiFrm]').attr('action', path);
 	}
 
 }
 
 </script>
-
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

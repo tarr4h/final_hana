@@ -5,12 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,16 +39,12 @@ public class MbtiController {
 
 	// mbti 문항 불러오기
 	@GetMapping("/mbtiList.do")
-	public String mbtiList(Model model, @RequestParam("cPage") int cPage, MbtiData data) {
+	public String mbtiList(Authentication authentication, Model model, @RequestParam("cPage") int cPage,
+			MbtiData data) {
 		// memberId 가져와서 MbtiData에 넣어주기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		MemberEntity id = (MemberEntity) authentication.getPrincipal();
 		data.setMemberId(id.getId());
-
-		log.info("data = {}", data);
-		log.info("data.getMemberId = {}", data.getMemberId());
-		log.info("data = {}", data);
-		log.info("cPage={}", cPage);
+		// 페이지 처리
 		int endPage = cPage + 5;
 		Map<String, Object> number = new HashMap<>();
 		number.put("cPage", cPage);
@@ -63,8 +56,6 @@ public class MbtiController {
 		if (data.getNo() != null) {
 			int[] no = data.getNo();
 			int[] memberResult = data.getMemberResult();
-			log.info("no = {}", no);
-			log.info("memberResult = {}", memberResult);
 
 			Map<Integer, Integer> resultOfNo = new HashMap<>();
 
@@ -74,32 +65,26 @@ public class MbtiController {
 			for (int per : no) {
 				resultOfNo.put(per, memberResult[i]);
 				i++;
-				log.info("per={}", per);
 			}
 			int result = mbtiService.insertList(resultOfNo, memberId);
 		}
 		model.addAttribute("mbtiList", mbtiList);
 		model.addAttribute("cPage", cPage);
 
-		log.info("mbtiList = {}", mbtiList);
 		return "mbti/mbtiList";
 	}
 
 	// mbti 결과 불러오기
 	@GetMapping("/mbtiResult.do")
-	public String mbtiResult(Model model, MbtiData data) {
+	public String mbtiResult(Authentication authentication, Model model, MbtiData data) {
 		// memberId 가져와서 MbtiData에 넣어주기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 		MemberEntity id = (MemberEntity) authentication.getPrincipal();
 		data.setMemberId(id.getId());
-
-		log.info("data = {}", data);
 
 		if (data.getNo() != null) {
 			int[] no = data.getNo();
 			int[] memberResult = data.getMemberResult();
-			log.info("no = {}", no);
-			log.info("memberResult = {}", memberResult);
 
 			Map<Integer, Integer> resultOfNo = new HashMap<>();
 
@@ -108,15 +93,14 @@ public class MbtiController {
 			int i = 0;
 			for (int per : no) {
 				resultOfNo.put(per, memberResult[i]);
+				log.info("memberResult[i]", memberResult[i]);
 				i++;
-				log.info("per={}", per);
 			}
 			int result = mbtiService.insertList(resultOfNo, memberId);
 		}
 
 		String memberId = data.getMemberId();
 		List<Map<String, Object>> mbtiResult = mbtiService.selectMbtiResult(memberId);
-		log.info("mbtiResult = {}", mbtiResult);
 
 		List<String> memberMbti = new ArrayList<>();
 
@@ -134,13 +118,9 @@ public class MbtiController {
 		for (Map<String, Object> map : mbtiResult) {
 			String no = (String) map.get("question_no");
 			String result = (String) map.get("result");
-			log.info("map ={}", map);
-			log.info("no={}", map.get("QUESTION_NO"));
 
 			num = Integer.parseInt(String.valueOf(map.get("QUESTION_NO")));
-			log.info("num ={}", num);
 			mbti = Integer.parseInt(String.valueOf(map.get("RESULT")));
-			log.info("mbti ={}", mbti);
 
 			if (num >= 1 && num < 6 && mbti == 1) {
 				E += 1;
@@ -197,15 +177,6 @@ public class MbtiController {
 
 		}
 
-		log.info("I ={}", I);
-		log.info("E ={}", E);
-		log.info("T ={}", T);
-		log.info("F ={}", F);
-		log.info("S ={}", S);
-		log.info("N ={}", N);
-		log.info("P ={}", P);
-		log.info("J ={}", J);
-
 		if (I > E) {
 			memberMbti.add("I");
 		} else {
@@ -235,8 +206,6 @@ public class MbtiController {
 
 		model.addAttribute("memberMbti", memberMbti);
 		model.addAttribute("memberId", memberId);
-		log.info("memberMbti ={}", memberMbti);
-		log.info("memberId ={}", memberId);
 
 		return "mbti/mbtiResult";
 	}
@@ -245,21 +214,16 @@ public class MbtiController {
 	@GetMapping("/addMbtiProfile.do")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> addMbtiProfile(Authentication authentication, String mbti) {
-		log.info("mbti={}", mbti);
 		Member member = (Member) authentication.getPrincipal();
-		log.info("member = {}", member);
 		String memberId = member.getId();
-		
+
 		Map<String, Object> map = new HashMap<>();
-		map.put("memberId",memberId );
+		map.put("memberId", memberId);
 		map.put("mbti", mbti);
 
 		int addProfile = mbtiService.addMbtiProfile(map);
-		
-	
+
 		return ResponseEntity.ok(map);
 	}
 
-
-	
 }
