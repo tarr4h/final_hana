@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.hana.mbti.model.vo.Mbti;
-import com.kh.hana.mbti.model.vo.MbtiData;
+import com.kh.hana.mbti.model.vo.MemberMbti;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,9 +52,28 @@ public class MbtiDaolmpl implements MbtiDao {
 	}
 
 	@Override
-	public int selectAddMbtiProfilet(String memberId) {
-		return  session.selectOne("mbti.selectAddMbtiProfilet", memberId);
+	public MemberMbti selectProfile(Map<String, Object> map) {
+		log.info("selectProfile = {}",map);
+		return session.selectOne("mbti.selectProfile", map);
 	}
+
+	@Override
+	public int insertProfile(Map<String, Object> map) {
+		log.info("insertProfile = {}",map);
+		return  session.insert("mbti.insertProfile", map);
+
+	}
+
+	@Override
+	public int updateProfile(Map<String, Object> map) {
+		log.info("updateProfile = {}",map);
+		return  session.update("mbti.updateProfile", map);
+		
+	}
+
+	
+
+	
 
 
 	

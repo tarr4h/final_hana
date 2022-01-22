@@ -37,15 +37,14 @@
 			data : {
 				"mbti" : mbti
 			},
-			success(data) {
-				console.log(data)
+			success(map) {
+				console.log(map)
+				alert("프로필에 반영 되었습니다.")
+				location.href='http://localhost:9090/hana'
 			},
 			error: console.log
 			
 		}); 
-
-		
-
 	
 	});
 </script>

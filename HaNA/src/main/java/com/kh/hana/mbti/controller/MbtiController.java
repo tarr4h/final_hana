@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -243,13 +244,20 @@ public class MbtiController {
 	// mbti 프로필 반영
 	@GetMapping("/addMbtiProfile.do")
 	@ResponseBody
-	public void addMbtiProfile(Authentication authentication, String mbti) {
+	public ResponseEntity<Map<String, Object>> addMbtiProfile(Authentication authentication, String mbti) {
 		log.info("mbti={}", mbti);
 		Member member = (Member) authentication.getPrincipal();
 		log.info("member = {}", member);
 		String memberId = member.getId();
-		int  mbtiProfile = mbtiService.addMbtiProfile(mbti ,memberId);
 		
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId",memberId );
+		map.put("mbti", mbti);
+
+		int addProfile = mbtiService.addMbtiProfile(map);
+		
+	
+		return ResponseEntity.ok(map);
 	}
 
 
