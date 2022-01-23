@@ -176,7 +176,7 @@ public class MemberController {
 		int result = memberService.updateShopInfo(param, member);
 		
 		log.info("contResult = {}", result);
-		redirectAttr.addFlashAttribute("msg", "redi수정완료");
+		redirectAttr.addFlashAttribute("msg", "수정되었습니다.");
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 	
