@@ -80,11 +80,13 @@
 	</insert>
 	<select id="selectOneBoard" resultType="groupBoard">
 		select
-			*
+			g.*,
+			m.picture writer_profile
 		from
-			group_board
+			group_board g join member m
+			on g.writer = m.id
 		where
-			no = #{no}
+			g.no = #{no}
 	</select>
 	<select id="selectMemberList" resultType="member">
 		select
@@ -143,5 +145,27 @@
 	order by
 		no 
 	</select>
+
+  <insert id="insertGroupBoardComment">
+		insert into
+			group_board_comment
+		values(
+			seq_group_board_comment.nextval,
+			#{boardNo},
+			#{commentLevel},
+			#{writer},
+			#{content},
+			<choose>
+				<when test="commentRef eq 0">
+					null,
+				</when>
+				<otherwise>
+					#{commentRef},
+				</otherwise>
+			</choose>
+			default
+		)
+	</insert>
+	
 </mapper>
 

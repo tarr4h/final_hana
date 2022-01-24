@@ -71,14 +71,12 @@
 								<input type="text" id="postcode" placeholder="우편번호">
 								<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
 								<input type="text" id="roadAddress" placeholder="도로명주소">
-								<input type="text" id="jibunAddress" placeholder="지번주소">
 								<span id="guide" style="color:#999;display:none"></span>
 								
 								<input type="text" id="detailAddress" name="addressFull" placeholder="상세주소" required>
-								<input type="hidden" name="addressFirst" />
-								<input type="hidden" name="addressSecond" />
-								<input type="hidden" name="addressThird" />
 								<input type="hidden" name="addressAll" />
+								<input type="hidden" name="locationX" />
+								<input type="hidden" name="locationY" />
 							</td>
 						</tr>
 						<tr>
@@ -95,6 +93,10 @@
 	</div>
 </div>
 
+
+<script type="text/javascript" 
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
+</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	$("[name=ssn2]").blur((e) => {
@@ -129,18 +131,35 @@ function execDaumPostcode() {
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('postcode').value = data.zonecode;
             document.getElementById("roadAddress").value = roadAddr;
-            document.getElementById("jibunAddress").value = data.jibunAddress;
 
             console.log(data.buildingName);
             console.log(data.roadAddress);
-            console.log(data.jibunAddress);
             
-            $("[name=addressFirst]").val(data.sido);
-            $("[name=addressSecond]").val(data.sigungu);
-            $("[name=addressThird]").val(data.bname);
             $("[name=addressAll]").val(data.roadAddress);
             
-            close();
+        	var Addr_val = $('[name=addressAll]').val();
+
+        	// 도로명 주소를 좌표 값으로 변환(API)
+          	naver.maps.Service.geocode({
+                query: Addr_val
+            }, function(status, response) {
+                if (status !== naver.maps.Service.Status.OK) {
+                    return alert('잘못된 주소값입니다.');
+                }
+
+                var result = response.v2, // 검색 결과의 컨테이너
+                    items = result.addresses; // 검색 결과의 배열
+                    
+                // 리턴 받은 좌표 값을 변수에 저장
+                let x = parseFloat(items[0].x);
+                let y = parseFloat(items[0].y);
+                
+                $('[name=locationX]').val(x);
+                $('[name=locationY]').val(y);
+            	
+                close();
+            });
+        	
         }
     }).open();
 }

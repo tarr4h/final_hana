@@ -101,7 +101,6 @@
 	
 	<sec:authorize access="isAuthenticated()">
 		<script>
-<<<<<<< HEAD
 			$(()=>{
 				if(${loginMember.accountType} == 1){
 					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/memberView?id=${loginMember.id}');
@@ -109,9 +108,6 @@
 					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/shopView?id=${loginMember.id}');
 				}
 			});
-=======
-		
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 		</script>
 	</sec:authorize>
 	<section class="body-section">
