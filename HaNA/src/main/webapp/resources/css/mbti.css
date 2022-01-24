@@ -7,11 +7,15 @@
 	text-align: center;
 	margin: auto;
 	border-radius: 40px 0;
+	position: absolute;
+    top: 40%;
+    left: 20%;
 }
 
 #mainPage-h1 {
 	color: rgb(110, 110, 109);
-	padding: 2%;
+ padding: 2%;
+	
 }
 
 #mainPage-button {
@@ -156,7 +160,9 @@ input {
 	
 }
 #mainPage-span{
-	color : rgb(110, 110, 109);
 	display: block;
+	background: linear-gradient(to right, #A7A3FF,#FFA7A3, #671cc4, #5673bd); 
+	-webkit-background-clip: text; 
+	-webkit-text-fill-color: transparent;
 	
 }

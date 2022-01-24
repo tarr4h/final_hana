@@ -17,15 +17,17 @@
 			<li>
 				<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
 					<input type="hidden" name="no" value="${list.no }" />
-					<span>비동의</span>
 					<!-- memberResult-${list.no} 안넣어주면 리스트로 질문을 받기 때문에 라디오 박스가 딱 하나만 체크 되는데 문제마다 동의 또는 비동의로 
 					     하나만 체크 되게 하고 싶은 거니까 input과 label을 name 값으로 이어주고 ${list.no}를 줘서 문항 마다 체크를(동의 또는 비동의) 
 					     로 하나만 되게 할수 있도록 해주었다  -->
-					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" />
-						<label for="cbtest-${list.no}-no" class="cb1"></label>
+					   <!-- 동의 -->
+					<span><i class="far fa-circle"></i></span>
 					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2"/>	
 					 	<label for="cbtest-${list.no}-yes" class="cb2"></label>
-					<span>동의</span>
+					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" />
+					   <!-- 비동의 -->
+						<label for="cbtest-${list.no}-no" class="cb1"></label>
+					<span><i class="fas fa-times"></i></span>
 			</li>
 		 </c:forEach>
 		</ul>
