@@ -208,7 +208,7 @@ pre {
 			<div class="profileBtn">
 				<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
 				<img
-					src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png"
+					src="${pageContext.request.contextPath}/resources/images/icons/plusIcon.png"
 					alt="" />
 			</div>
 		</div>
@@ -271,19 +271,14 @@ pre {
 </div>
 
 <div class="icon">
-	<a href="#"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i
-		class="fas fa-calendar-alt"></i></a> <a href="#"><i
-		class="far fa-comments"></i></a>
+	<a href="#"><i class="fas fa-pencil-alt"></i></a>
+	<a href="#"><i class="fas fa-calendar-alt"></i></a>
+	<a href="#"><i class="far fa-comments"></i></a>
 </div>
 
 <div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
-	        <div class="col-sm-4">
-			<img style="width: 100%; height: 100%; margin-bottom: 10%"
-				src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image[0]}"
-				alt="" />
-		</div>
 	        <div class="col-sm-4" >
 	        	<input type="hidden" value="${board.no}" id="group-board-no"/>
 				<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
@@ -348,6 +343,7 @@ $("#myBtn").on( "click", function() {
 	 cursor:pointer;
 	}
 </style>
+
 <script>
 //ajax POST 요청 csrf
     var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -416,7 +412,6 @@ $('.board-main-image').click((e)=>{
 	$('#groupPageDetail').modal("show");
 });
 
-<script>
 function test() {
 	$.ajax({
 		url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
@@ -456,7 +451,6 @@ function test() {
 		error: console.log
 	})
 };
-</script>
 
 
 
@@ -495,6 +489,7 @@ $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 })
 
 </script>
+
 <style>
 table {
   border-collapse: separate;
