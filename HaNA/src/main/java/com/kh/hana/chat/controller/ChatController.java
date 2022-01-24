@@ -40,12 +40,18 @@ public class ChatController {
     	List<ChatRoom> cList = chatService.roomList(id);
         
         log.info("cList = {}", cList);
-//        for(int i = 0; i < cList.size(); i++) {
-//            message.setRoomId(cList.get(i).getRoomId());
-//            message.setEmail(userEmail);
-//            int count = cService.selectUnReadCount(message);
-//            cList.get(i).setUnReadCount(count);
-//        }
+        String members= "";
+        String member = "";
+        for(int i = 0; i < cList.size(); i++) {
+            if(cList.get(i).getRoomType() != 1) {
+            	members = cList.get(i).getMembers().replace(id, "");
+            	member = members.replace(",", "");
+            	cList.get(i).setMembers(member);
+            	String roomImg = chatService.searchPicture(member);
+            	cList.get(i).setGroupImg(roomImg);
+            	
+            }
+        }
 
         return ResponseEntity.ok(cList);
 
@@ -77,32 +83,61 @@ public class ChatController {
     	Map<String, Object> param = new HashMap<>();
     	param.put("memberId", memberId);
     	param.put("loginId", loginId);
-    	param.put("login_Member", loginId+memberId);
+    	param.put("members", loginId+","+memberId);
     	
     	//단톡생성 하게되면 쿼리 바꾸거나 체크 삭제
     	//너무 복잡한데;
-    	List<Chat> chatlist = chatService.chatRoomCheck(param);
+    	//나중에 room
+    	List<ChatRoom> chatlist = chatService.chatRoomCheck(param);
     	log.info("채팅방 생성 or 보내기 chatlist= {}, size = {}", chatlist, chatlist);
     	if(chatlist.size() == 0) {
     		int result = chatService.createChatRoom(param);
     		log.info("createChatRoom result = {}", result);
     		if(result > 0) {
-    			int roomNo = chatService.findRoomNo(param);
-    			param.put("roomNo", roomNo);
-    			int result2 = chatService.insertEnterMessage(param);
-    			log.info("insertEnterMessage result2 = {}, result3 = {}", result2);
-    			if(result2 > 0)
-    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
-    			else
-    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 실패");
-    			
-    			
+    			redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
+    			//불필요한 부분
+//    			int roomNo = chatService.findRoomNo(param);
+//    			param.put("roomNo", roomNo);
+//    			int result2 = chatService.insertEnterMessage(param);
+//    			log.info("insertEnterMessage result2 = {}, result3 = {}", result2);
+//    			if(result2 > 0)
+//    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
+//    			else
+//    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 실패");
     		}
     		else
     			redirectAttr.addFlashAttribute("msg", "채팅방이 있습니다");
-    		
-    		
+    			
     	}
     	return "redirect:/chat/chat.do";
     }
+    			
+    @GetMapping("/roomheader.do")
+    public ResponseEntity<?> RoomHeader(String id, int no){
+    	log.info("roomheader id = {}, no = {}", id ,no);
+    	
+    	ChatRoom chatroom = chatService.selectOneChatRoom(no);
+    	log.info("roomheader chatroom = {}", chatroom);
+    	
+    	if(chatroom.getRoomType() != 1) {
+    		String members = chatroom.getMembers().replace(id, "");
+    		String member = members.replace(",", "");
+    		chatroom.setMembers(member);
+    		String roomImg = chatService.searchPicture(member);
+    		chatroom.setGroupImg(roomImg);
+    	}
+    	return ResponseEntity.ok(chatroom);
+    }
+    		
+    	
+    
+    @GetMapping("/searchFriend.do")
+    public ResponseEntity<?> searchFriend(String value){
+    	log.info("searchFriend value = {}", value);
+    	List<Member> member = chatService.memberList(value);
+    	
+    	
+    	return ResponseEntity.ok(member);
+    }
+    		
 }

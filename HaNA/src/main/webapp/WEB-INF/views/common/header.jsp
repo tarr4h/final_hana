@@ -13,7 +13,6 @@
 <head>
 <meta charset="UTF-8">
 <title>${param.title }</title>
-
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
@@ -68,9 +67,11 @@
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>
 		      </li>
+		      <sec:authorize access="isAuthenticated()">
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM</a>
 		      </li>
+		      </sec:authorize>
 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
 			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">로그인(임시)</a>		      	
