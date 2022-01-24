@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
@@ -52,7 +53,8 @@ public class GroupController {
 	@Autowired
 	private ServletContext application;
 	
-
+	@Autowired
+	private ChatService chatService;
 	
 	@GetMapping("/groupPage/{groupId}")
 	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
@@ -114,6 +116,11 @@ public class GroupController {
 			}
 			
 			int result = groupService.insertOneGroup(group);
+			int chatresult = 0;
+			if(result > 0) {
+				chatresult = chatService.CreateGroupChat(group);
+				log.info("{}", chatresult > 0 ? "그룹채팅생성 성공" : "그룹채팅생성 실패");
+			}
 			redirectAttr.addFlashAttribute("msg", "소모임 등록 성공!");	
 			redirectAttr.addFlashAttribute("result", result);	
 			return "redirect:/group/groupPage/"+group.getGroupId();

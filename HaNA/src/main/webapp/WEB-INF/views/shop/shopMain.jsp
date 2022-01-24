@@ -194,11 +194,7 @@ T    <div class="row hashTagRank">
 				error:console.log			
 			});
 	    });
-		
-		
 	});
-	
-
 </script>
 
 
