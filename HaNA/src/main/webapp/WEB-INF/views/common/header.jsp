@@ -5,22 +5,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>${param.title }</title>
-
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
-
-
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -31,18 +23,14 @@
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
 </style>
-
 <c:if test="${param.error != null }">
 	<script>
 		alert("아이디 또는 비밀번호가 잘못 입력되었습니다.");
 		location.href = '${pageContext.request.contextPath}/member/login';
 	</script>
 </c:if>
-
 </head>
 <body>
-
-
 	<sec:authentication property="principal" var="loginMember"/>	
 	
 	<header>
@@ -50,7 +38,7 @@
 			<div class="title-image-box" style="margin-left:20px;">
 			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:130px;height:130px;border-radius:100%;"></a>
 			</div>
-			<span class="navbar-brand text-white" style="font-size:40px;">DNHBQ</span>			  
+			<span class="navbar-brand text-white" style="font-size:40px;">DNHBQ</span>			 
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
@@ -78,9 +66,16 @@
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
 				    <li class="nav-item dropdown">
-			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView/" >
+				    	<c:if test="${loginMember.accountType eq 0}">
+			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView/${loginMember.id}" >
 				          <span><sec:authentication property="principal.username"/></span>
-				        </a>
+				        </a>				    	
+				    	</c:if>
+				    	<c:if test="${loginMember.accountType eq 1}">
+			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/shop/shopView/${loginMember.id}" >
+				          <span><sec:authentication property="principal.username"/></span>
+				        </a>				    	
+				    	</c:if>
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 				          <a class="dropdown-item" href="#">게시글 작성</a>
 				          <a class="dropdown-item" href="#">예약 목록</a>
@@ -101,13 +96,9 @@
 	
 	<sec:authorize access="isAuthenticated()">
 		<script>
-			$(()=>{
-				if(${loginMember.accountType} == 1){
-					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/memberView?id=${loginMember.id}');
-				} else{
-					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/shopView?id=${loginMember.id}');
-				}
-			});
+ 
+		
+  
 		</script>
 	</sec:authorize>
 	<section class="body-section">

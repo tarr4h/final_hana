@@ -108,11 +108,49 @@
 	
 	</insert>
 
+	<select id="countFollowing" parameterType="string" resultType="_int">
+		select 
+			count(*)
+		from
+			follower
+		where
+			member_id = #{id}
+	</select>
+
+	<select id="countFollower" parameterType="string" resultType="_int">
+		select
+			count(*)
+		from
+			follower
+		where
+			following_id = #{id}
+	
+	</select>
 
 
 
 
+	<select id="selectOneMember" parameterType="string" resultType="member">
+		select
+		 *
+		from
+			member m full outer join personality p
+		on m.id = p.member_id
+			full outer join interest i
+		on m.id = i.member_id
+		where
+			id = #{id}
+	</select>
 
+
+	<select id="followerList" resultType="follower">
+		select
+			following_id
+		from
+			follower
+		where
+		member_id = #{id}
+	</select>
 
 
 

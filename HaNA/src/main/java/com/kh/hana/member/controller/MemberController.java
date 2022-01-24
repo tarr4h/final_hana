@@ -4,6 +4,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.member.model.service.MemberService;
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -82,9 +85,28 @@ public class MemberController {
 	}
 	
 
-	@GetMapping("/{accountType}")
-	public void memberView(@PathVariable String accountType, @RequestParam String id, Model model) {
-		log.info("id= {}", id);
+//	@GetMapping("/{accountType}")
+//	public void memberView(@PathVariable String accountType, @RequestParam String id, Model model) {
+//		log.info("id= {}", id);
+//	}
+	
+	@GetMapping("/memberView/{id}")
+	public String memberView(@PathVariable String id, Model model) {
+		//following 수 조회
+		int followingCount = memberService.countFollowing(id);
+		log.info("followingCount = {}", followingCount);
+		model.addAttribute("followingCount", followingCount);
+		
+		//follower 수 조회
+		int followerCount = memberService.countFollower(id);
+		log.info("followerCount = {}", followerCount);
+		model.addAttribute("followerCount", followerCount);
+		
+		//정보 가져오기
+		Member member = memberService.selectOneMember(id);
+		log.info("member={}", member);
+		model.addAttribute("member", member);
+		return "/member/memberView";
 	}
 	
 	@GetMapping("/memberSetting/{param}")
@@ -96,6 +118,7 @@ public class MemberController {
 	public void shopSetting(@PathVariable String param) {
 		
 	}
+	
 	
 	@PostMapping("/memberUpdate")
     public String memberUpdate(Member member,
@@ -124,20 +147,31 @@ public class MemberController {
     }
 	
 	@PostMapping("/addFollowing")
-	public String addFollowing(@AuthenticationPrincipal Member member, @RequestParam String id, RedirectAttributes redirectAttr) {
+	public String addFollowing(@AuthenticationPrincipal Member member, @RequestParam String friendId, RedirectAttributes redirectAttr) {
 		log.info("member={}", member.getId());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("myId", member.getId());
-		map.put("friendId", id);
+		map.put("friendId", friendId);
 		log.info("map ={}", map);
 		
 		int result = memberService.addFollowing(map);
 		log.info("result ={}", result);
 		redirectAttr.addFlashAttribute("msg", result > 0? "친구 추가에 성공했습니다." : "친구 추가에 실패했습니다.");
-		return "redirect:/member/memberView";
+		return "redirect:/member/memberView/"+member.getId();
 	}
 	
+	@GetMapping("/followerList")
+	@ResponseBody
+	public List<Follower> followerList(@RequestParam String id, Model model) {
+		List<Follower> follower = memberService.followerList(id);
+		log.info("follower={}", follower);
+		model.addAttribute("follower", follower);
+		
+		return follower;
+		
+	}
+ 
 	
 	@PostMapping("/shopSetting/shopInfo")
 	public String updateShopInfo(@RequestParam Map<String, String> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
@@ -177,10 +211,13 @@ public class MemberController {
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 	
-//	@GetMapping("/memberview/")
-//	public void memberView(String id) {
+//	@GetMapping("/memberView/{id}")
+//	public int countFollowing(@PathVariable String id, Model model) {
 //		
-//		Follower follower = memberService.countFollower();
+//		int followingCount = memberService.countFollowing(id);
+//		log.info("followingCount = {}", followingCount);
+//		return followingCount;
+//		
 //	}
 //	
 	

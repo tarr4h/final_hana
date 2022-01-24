@@ -1,11 +1,13 @@
 package com.kh.hana.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -99,25 +101,31 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.addFollowing(map);
 	}
 
-	 
+	@Override
+	public int countFollowing(String id) {
+		return memberDao.countFollowing(id);
+	}
 
+	@Override
+	public Member selectOneMember(String id) {
+		return memberDao.selectOneMember(id);
+	}
+
+	@Override
+	public int countFollower(String id) {
+		return memberDao.countFollower(id);
+	}
+
+	@Override
+	public List<Follower> followerList(String id) {
+		return memberDao.followerList(id);
+	}
+ 
+ 
 	
 	 
 	
 	
 }
               
-
-
-
-
-
-
-
-
-
-
-
-
-
 

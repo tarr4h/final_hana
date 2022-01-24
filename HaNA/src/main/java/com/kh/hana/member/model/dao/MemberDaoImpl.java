@@ -1,11 +1,13 @@
 package com.kh.hana.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 
 @Repository
@@ -72,6 +74,29 @@ public class MemberDaoImpl implements MemberDao {
 	public int addFollowing(Map<String, Object> map) {
 		return session.insert("member.addFollowing", map);
 	}
+
+	@Override
+	public int countFollowing(String id) {
+		return session.selectOne("member.countFollowing",id);
+	}
+
+	@Override
+	public int countFollower(String id) {
+		return session.selectOne("member.countFollower", id);
+	}
+	
+	@Override
+	public Member selectOneMember(String id) {
+		return session.selectOne("member.selectOneMember", id);
+	}
+
+	@Override
+	public List<Follower> followerList(String id) {
+		return session.selectList("member.followerList", id);
+	}
+
+
+ 
 	
 	
 }
