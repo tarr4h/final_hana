@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
@@ -85,12 +86,6 @@ public class MemberController {
 		return "redirect:/member/login";					
 	}
 	
-
-//	@GetMapping("/{accountType}")
-//	public void memberView(@PathVariable String accountType, @RequestParam String id, Model model) {
-//		log.info("id= {}", id);
-//	}
-	
 	@GetMapping("/{view}/{id}")
 	public String memberView(@PathVariable String id, @PathVariable String view, Model model) {
 		//following 수 조회
@@ -137,12 +132,11 @@ public class MemberController {
 	
 	@PostMapping("/memberUpdate")
     public String memberUpdate(Member member,
-                                String id,
                                 @AuthenticationPrincipal Member oldMember,
                                 RedirectAttributes redirectAttr) {
         log.info("member={}", member);
         log.info("oldMember={}", oldMember);
-        int result = memberService.updateMember(member, oldMember, id);
+        int result = memberService.updateMember(member, oldMember);
 
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
@@ -153,9 +147,6 @@ public class MemberController {
         oldMember.setInterest(member.getInterest());
         oldMember.setLocationX(member.getLocationX());
         oldMember.setLocationY(member.getLocationY());
-     
-        log.info("memberSetting result = {}" , result); 
-        log.info("memberPersonality={}" , member.getPersonality()); 
 
         redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
         return "redirect:/member/memberSetting/memberSetting";
@@ -206,55 +197,53 @@ public class MemberController {
 	
 	@PostMapping("/shopSetting/shopInfo")
 	public String updateShopInfo(Shop shop, RedirectAttributes redirectAttr) {
-//		log.info("param = {}", param);
-//		
-//		Member member = (Member)authentication.getPrincipal(); String oldProfile =
-//		member.getPicture();
-//		  
-//		String saveDirectory =
-//		application.getRealPath("/resources/upload/member/profile"); File file = new
-//		File(saveDirectory, oldProfile); boolean bool = file.delete();
-//		log.info("bool = {}", bool);
-//		  
-//		String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename());
-//		  
-//		File regFile = new File(saveDirectory, renamedFilename);
-//		  
-//		try { upFile.transferTo(regFile); } catch (IllegalStateException |
-//		IOException e) { log.error(e.getMessage(), e); }
-//		  
-//		param.put("picture", renamedFilename);
-//		  
-//		member.setAddressFull(param.get("addressFull"));
-//		member.setAddressAll(param.get("addressAll"));
-//		member.setLocationX(param.get("locationX"));
-//		member.setLocationX(param.get("locationY"));
-//		  
-//		param.put("id", member.getId());
-//		  
-//		int result = memberService.updateShopInfo(param, member);
-//		  
-//		log.info("contResult = {}", result); redirectAttr.addFlashAttribute("msg",
-//		"수정되었습니다.");
-		
-		log.info("shop = {}", shop);
-		 
 		int result = memberService.updateShopInfo(shop);
 		
+		String msg = "";
+		if(result > 0) {
+			msg = "수정되었습니다.";
+		} else {
+			msg = "수정에 실패했습니다.";
+		}
+		redirectAttr.addFlashAttribute("msg", msg);
 		
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 	
-//	@GetMapping("/memberView/{id}")
-//	public int countFollowing(@PathVariable String id, Model model) {
-//		
-//		int followingCount = memberService.countFollowing(id);
-//		log.info("followingCount = {}", followingCount);
-//		return followingCount;
-//		
-//	}
-//	
+	@PostMapping("/shopSetting/personal")
+	public String updateShopPersonal(Member member, Authentication authentication, @RequestParam(name="upFile") MultipartFile upFile, RedirectAttributes redirectAttr) {
+		log.info("member = {}", member);
+		
+		Member oldMember = (Member)authentication.getPrincipal();
+		String oldProfile =	member.getPicture();
+		  
+		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
+		File file = new	File(saveDirectory, oldProfile);
+		boolean bool = file.delete();
+		log.info("bool = {}", bool);
+		  
+		String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename());
+		  
+		File regFile = new File(saveDirectory, renamedFilename);
+		  
+		try { upFile.transferTo(regFile); } catch (IllegalStateException |
+		IOException e) { log.error(e.getMessage(), e); }
+		  
+		member.setPicture(renamedFilename);
 
+//		int result = memberService.updateMember(member);
+		
+		oldMember.setName(member.getName());
+		oldMember.setPicture(member.getPicture());
+		oldMember.setIntroduce(member.getIntroduce());
+		oldMember.setAddressAll(member.getAddressAll());
+		oldMember.setAddressFull(member.getAddressFull());
+		  
+//		log.info("contResult = {}", result); redirectAttr.addFlashAttribute("msg",
+//		"수정되었습니다.");
+		return "redirect:/member/shopSetting/personal";
+	}
+	
 
 
 }
