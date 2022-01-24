@@ -66,13 +66,13 @@
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
 				    <li class="nav-item dropdown">
-				    	<c:if test="${loginMember.accountType eq 0}">
+				    	<c:if test="${loginMember.accountType eq 1}">
 			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView/${loginMember.id}" >
 				          <span><sec:authentication property="principal.username"/></span>
 				        </a>				    	
 				    	</c:if>
-				    	<c:if test="${loginMember.accountType eq 1}">
-			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/shop/shopView/${loginMember.id}" >
+				    	<c:if test="${loginMember.accountType eq 0}">
+			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" >
 				          <span><sec:authentication property="principal.username"/></span>
 				        </a>				    	
 				    	</c:if>

@@ -45,46 +45,6 @@
 		where
 			member_id = #{id}
 	</select>
-	
-	<update id="updateShopMember" parameterType="member">
-		update
-			member
-		set
-			name = #{name},
-			picture = #{picture},
-			introduce = #{introduce},
-			address_full = #{addressFull},
-			address_all = #{addressAll}
-		where
-			id = #{id}
-	</update>
-	
-	<update id="updateShopInfo" parameterType="map">
-		update
-			shop_info
-		set
-			bussiness_hour_start = #{bussiness-hour-start},
-			bussiness_hour_end = #{bussiness-hour-end},
-			location_x = #{locationX},
-			location_y = #{locationY}
-		where
-			id = #{id}
-	</update>
-	
-	<select id="selectShopInfo" parameterType="string" resultType="map">
-		select
-			*
-		from
-			shop_info
-		where
-			id = #{id}
-	</select>
-	
-	<insert id="insertShopInfo" parameterType="map">
-		insert into
-			shop_info
-		values(#{id}, #{bussiness-hour-start}, #{bussiness-hour-end}, #{locationX}, #{locationY})
-	</insert>
 
 	<insert id="insertPersonality">
 		insert into
@@ -127,9 +87,6 @@
 	
 	</select>
 
-
-
-
 	<select id="selectOneMember" parameterType="string" resultType="member">
 		select
 		 *
@@ -142,7 +99,6 @@
 			id = #{id}
 	</select>
 
-
 	<select id="followerList" resultType="follower">
 		select
 			following_id
@@ -152,6 +108,26 @@
 		member_id = #{id}
 	</select>
 
+	<select id="selectOneShopInfo" parameterType="string" resultType="shop">
+		select
+			*
+		from
+			shop_info
+		where
+			id = #{id}
+	</select>
+	
+	<insert id="insertShopInfo" parameterType="shop">
+		insert into shop_info
+		values(#{id}, #{bussinessHourStart}, #{bussinessHourEnd}, #{locationX}, #{locationY}, #{address}, #{addressDetail}, #{shopIntroduce})
+	</insert>
+	
+	<update id="updateShopInfo" parameterType="shop">
+		update shop_info
+		set bussiness_hour_start = #{bussinessHourStart}, bussiness_hour_end = #{bussinessHourEnd}, location_x = #{locationX}, location_y = #{locationY}, address = #{address}, address_detail = #{addressDetail},
+		shop_introduce = #{shopIntroduce}
+		where id = #{id}
+	</update>
 
 
 

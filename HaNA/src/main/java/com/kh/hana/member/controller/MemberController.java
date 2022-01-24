@@ -28,6 +28,7 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.shop.model.vo.Shop;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -90,8 +91,8 @@ public class MemberController {
 //		log.info("id= {}", id);
 //	}
 	
-	@GetMapping("/memberView/{id}")
-	public String memberView(@PathVariable String id, Model model) {
+	@GetMapping("/{view}/{id}")
+	public String memberView(@PathVariable String id, @PathVariable String view, Model model) {
 		//following 수 조회
 		int followingCount = memberService.countFollowing(id);
 		log.info("followingCount = {}", followingCount);
@@ -106,17 +107,31 @@ public class MemberController {
 		Member member = memberService.selectOneMember(id);
 		log.info("member={}", member);
 		model.addAttribute("member", member);
-		return "/member/memberView";
+		return "/member/"+view;
 	}
 	
 	@GetMapping("/memberSetting/{param}")
 	public void memberSetting(@PathVariable String param) {
-		
+
 	}
 	
 	@GetMapping("/shopSetting/{param}")
-	public void shopSetting(@PathVariable String param) {
-		
+	public void shopSetting(@PathVariable String param, Authentication authentication, Model model) {
+		Member member = (Member) authentication.getPrincipal();
+		String memberId = member.getId();
+		try {
+			if(param.equals("shopInfo")) {
+				Shop shop = memberService.selectOneShopInfo(memberId);
+				log.info("shop={}", shop);
+				if(shop != null) {
+					model.addAttribute(shop);
+				} else {
+					throw new Exception();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	
@@ -174,40 +189,43 @@ public class MemberController {
  
 	
 	@PostMapping("/shopSetting/shopInfo")
-	public String updateShopInfo(@RequestParam Map<String, String> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
-		log.info("param = {}", param);
+	public String updateShopInfo(Shop shop, RedirectAttributes redirectAttr) {
+//		log.info("param = {}", param);
+//		
+//		Member member = (Member)authentication.getPrincipal(); String oldProfile =
+//		member.getPicture();
+//		  
+//		String saveDirectory =
+//		application.getRealPath("/resources/upload/member/profile"); File file = new
+//		File(saveDirectory, oldProfile); boolean bool = file.delete();
+//		log.info("bool = {}", bool);
+//		  
+//		String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename());
+//		  
+//		File regFile = new File(saveDirectory, renamedFilename);
+//		  
+//		try { upFile.transferTo(regFile); } catch (IllegalStateException |
+//		IOException e) { log.error(e.getMessage(), e); }
+//		  
+//		param.put("picture", renamedFilename);
+//		  
+//		member.setAddressFull(param.get("addressFull"));
+//		member.setAddressAll(param.get("addressAll"));
+//		member.setLocationX(param.get("locationX"));
+//		member.setLocationX(param.get("locationY"));
+//		  
+//		param.put("id", member.getId());
+//		  
+//		int result = memberService.updateShopInfo(param, member);
+//		  
+//		log.info("contResult = {}", result); redirectAttr.addFlashAttribute("msg",
+//		"수정되었습니다.");
 		
-		Member member = (Member)authentication.getPrincipal(); String oldProfile =
-		member.getPicture();
-		  
-		String saveDirectory =
-		application.getRealPath("/resources/upload/member/profile"); File file = new
-		File(saveDirectory, oldProfile); boolean bool = file.delete();
-		log.info("bool = {}", bool);
-		  
-		String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename());
-		  
-		File regFile = new File(saveDirectory, renamedFilename);
-		  
-		try { upFile.transferTo(regFile); } catch (IllegalStateException |
-		IOException e) { log.error(e.getMessage(), e); }
-		  
-		param.put("picture", renamedFilename);
-		  
-		member.setName(param.get("username")); member.setPicture(renamedFilename);
-		member.setIntroduce(param.get("introduce"));
-		member.setAddressFull(param.get("addressFull"));
-		member.setAddressAll(param.get("addressAll"));
-		member.setLocationX(param.get("locationX"));
-		member.setLocationX(param.get("locationY"));
-		  
-		param.put("id", member.getId());
-		  
-		int result = memberService.updateShopInfo(param, member);
-		  
-		log.info("contResult = {}", result); redirectAttr.addFlashAttribute("msg",
-		"수정되었습니다.");
+		log.info("shop = {}", shop);
 		 
+		int result = memberService.updateShopInfo(shop);
+		
+		
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 	
@@ -220,8 +238,6 @@ public class MemberController {
 //		
 //	}
 //	
-	
-	
 
 
 
