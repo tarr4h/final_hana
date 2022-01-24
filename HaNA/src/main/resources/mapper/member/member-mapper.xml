@@ -13,11 +13,12 @@
 	<update id="updateMember">
 	 update member set
 	 name = #{name},
-	 address_first =  #{addressFirst},
-	 <!-- addressSecound = #{addressSecound},
-	 addressThrid =  #{addressThird},
-	 addressFull =  #{addressFull}, -->
-	 introduce = #{introduce} 
+	 picture = #{picture},
+	 address_full = #{addressFull},
+	 address_all = #{addressAll},
+	 introduce = #{introduce},
+	 location_x = #{locationX},
+	 location_y = #{locationY}
 	 where 
 	 	id = #{id}	
 	</update>

@@ -29,10 +29,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.member.model.vo.Member;
@@ -51,7 +53,8 @@ public class GroupController {
 	@Autowired
 	private ServletContext application;
 	
-
+	@Autowired
+	private ChatService chatService;
 	
 	@GetMapping("/groupPage/{groupId}")
 	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
@@ -113,6 +116,11 @@ public class GroupController {
 			}
 			
 			int result = groupService.insertOneGroup(group);
+			int chatresult = 0;
+			if(result > 0) {
+				chatresult = chatService.CreateGroupChat(group);
+				log.info("{}", chatresult > 0 ? "그룹채팅생성 성공" : "그룹채팅생성 실패");
+			}
 			redirectAttr.addFlashAttribute("msg", "소모임 등록 성공!");	
 			redirectAttr.addFlashAttribute("result", result);	
 			return "redirect:/group/groupPage/"+group.getGroupId();
@@ -231,9 +239,33 @@ public class GroupController {
 		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
 		log.info("groupApplyList ={}", groupApplyList);
 		
-		return ResponseEntity.ok(groupApplyList);
-		
+		return ResponseEntity.ok(groupApplyList);		
 	}
+	
+    @PostMapping("/groupApplyProccess")
+    @ResponseBody
+    public String groupApplyProcess(
+            @RequestParam(name="no") int no, 
+            @RequestParam(name="groupId") String groupId,
+            @RequestParam(name="memberId") String memberId,
+            @RequestParam(name="approvalYn") String approvalYn
+            ) {
+        log.info("no = {}", no);
+        log.info("groupId = {}", groupId);
+        log.info("memberId = {}", memberId);
+        log.info("approvalYn = {}", approvalYn);
+        
+        //승인(y)
+        if(approvalYn == "y") {
+        	
+        }
+        //거절(n)
+        else {
+        	
+        }
+        
+        return "redirect:/group/groupPage/"+groupId;
+    }
 	
 }
 

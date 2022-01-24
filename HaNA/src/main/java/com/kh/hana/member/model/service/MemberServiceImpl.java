@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int updateMember(Member member, Member oldMember, String id) {
+	public int updateMember(Member member, Member oldMember) {
 		int result1 = memberDao.updateMember(member);
 		log.info("result1 ={}", result1);
 		int result2 = 0;
@@ -43,15 +43,14 @@ public class MemberServiceImpl implements MemberService {
 		}else {
 			result3 = memberDao.insertInterest(member);
 		}
-		
-		log.info("id={}", id);
+
 		log.info("member={}", member);
 		
 		if(result1 == 1 || result2 == 1 || result3 ==1) {
 			return 1;
 		}
 		else {
-		return 0;
+			return 0;
 		}
 		
 	}
