@@ -188,6 +188,22 @@ public class MemberController {
 		
 	}
  
+	@GetMapping("/followingList")
+	@ResponseBody
+	public List<Follower> followingList(@RequestParam String id, Model model){
+		List<Follower> following = memberService.followingList(id);
+		log.info("following={}", following);
+		model.addAttribute("following", following);
+		
+		return following;
+	}
+	
+	
+	@GetMapping("/boardForm")
+	public void boardForm() {
+	}
+	
+	
 	
 	@PostMapping("/shopSetting/shopInfo")
 	public String updateShopInfo(Shop shop, RedirectAttributes redirectAttr) {
