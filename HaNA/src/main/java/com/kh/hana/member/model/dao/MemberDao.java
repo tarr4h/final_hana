@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.shop.model.vo.Shop;
 
 public interface MemberDao {
 
@@ -17,14 +18,6 @@ public interface MemberDao {
 	int updateInterest(Member member);
 
 	Member selectPersonality(String id);
-
-	int updateShopMember(Member member);
-
-	int updateShopInfo(Map<String, String> param);
-
-	Map<String, Object> selectShopInfo(String id);
-
-	int insertShopInfo(Map<String, String> param);
 
 	int insertPersonality(Member member);
 
@@ -40,6 +33,14 @@ public interface MemberDao {
 
 	List<Follower> followerList(String id);
 
+ 
 	List<Follower> followingList(String id);
+ 
+	Shop selectOneShopInfo(String memberId);
+
+	int insertShopInfo(Shop shop);
+
+	int updateShopInfo(Shop shop);
+ 
 
 }

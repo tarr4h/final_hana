@@ -157,6 +157,9 @@ function execDaumPostcode() {
                 $('[name=locationX]').val(x);
                 $('[name=locationY]').val(y);
             	
+                console.log(x);
+                console.log(y);
+                
                 close();
             });
         	

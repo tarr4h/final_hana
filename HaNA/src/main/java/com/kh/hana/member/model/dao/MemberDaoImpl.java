@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.shop.model.vo.Shop;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -39,26 +40,6 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public Member selectPersonality(String id) {
 		return session.selectOne("member.selectPersonality", id);
-	}
-
-	@Override
-	public int updateShopMember(Member member) {
-		return session.update("member.updateShopMember", member);
-	}
-
-	@Override
-	public int updateShopInfo(Map<String, String> param) {
-		return session.update("member.updateShopInfo", param);
-	}
-
-	@Override
-	public Map<String, Object> selectShopInfo(String id) {
-		return session.selectOne("member.selectShopInfo", id);
-	}
-
-	@Override
-	public int insertShopInfo(Map<String, String> param) {
-		return session.insert("member.insertShopInfo", param);
 	}
 
 	public int insertPersonality(Member member) {
@@ -96,9 +77,26 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+ 
 	public List<Follower> followingList(String id) {
 		return session.selectList("member.followingList", id);
 	}
+ 
+	public Shop selectOneShopInfo(String memberId) {
+		return session.selectOne("member.selectOneShopInfo", memberId);
+	}
+
+	@Override
+	public int insertShopInfo(Shop shop) {
+		return session.insert("member.insertShopInfo", shop);
+	}
+
+	@Override
+	public int updateShopInfo(Shop shop) {
+		return session.update("member.updateShopInfo", shop);
+	}
+
+ 
 
 
  
