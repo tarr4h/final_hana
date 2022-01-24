@@ -211,7 +211,13 @@ $("#btn-follower-list").on( "click", function() {
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
+							<th>${member.id}</th>
+						</tr>
+						<tr>
 							<th>제목</th>
+						</tr>
+						<tr>
+							<th>내용</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody">
