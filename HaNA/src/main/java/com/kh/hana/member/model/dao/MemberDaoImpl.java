@@ -1,5 +1,6 @@
 package com.kh.hana.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -75,10 +76,27 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public Follower countFollower() {
-		// TODO Auto-generated method stub
-		return null;
+	public int countFollowing(String id) {
+		return session.selectOne("member.countFollowing",id);
 	}
+
+	@Override
+	public int countFollower(String id) {
+		return session.selectOne("member.countFollower", id);
+	}
+	
+	@Override
+	public Member selectOneMember(String id) {
+		return session.selectOne("member.selectOneMember", id);
+	}
+
+	@Override
+	public List<Follower> followerList(String id) {
+		return session.selectList("member.followerList", id);
+	}
+
+
+ 
 	
 	
 }

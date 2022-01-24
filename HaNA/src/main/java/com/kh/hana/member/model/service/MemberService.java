@@ -1,5 +1,6 @@
 package com.kh.hana.member.model.service;
  
+import java.util.List;
 import java.util.Map;
 
 import com.kh.hana.member.model.vo.Follower;
@@ -19,6 +20,12 @@ public interface MemberService {
 
 	int addFollowing(Map<String, Object> map);
 
-	Follower countFollower();
+	int countFollowing(String id);
+
+	Member selectOneMember(String id);
+
+	int countFollower(String id);
+
+	List<Follower> followerList(String id);
 
 }
