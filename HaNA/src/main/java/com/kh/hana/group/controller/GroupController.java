@@ -34,6 +34,7 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.member.model.vo.Member;
@@ -238,9 +239,22 @@ public class GroupController {
 		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
 		log.info("groupApplyList ={}", groupApplyList);
 		
-		return ResponseEntity.ok(groupApplyList);
-		
+		return ResponseEntity.ok(groupApplyList);		
 	}
+	
+    @PostMapping("/groupApplyProccess")
+    public String groupApplyProcess(
+            @RequestParam(name="no") int no, 
+            @RequestParam(name="groupId") String groupId,
+            @RequestParam(name="memberId") String memberId,
+            @RequestParam(name="approvalYn") String approvalYn) {
+        log.info("no = {}", no);
+        log.info("groupId = {}", groupId);
+        log.info("memberId = {}", memberId);
+        log.info("approvalYn = {}", approvalYn);
+        
+        return null;
+    }
 	
 }
 
