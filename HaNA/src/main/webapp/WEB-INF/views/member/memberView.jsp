@@ -150,6 +150,49 @@
         	<div class="followCount">${followerCount}명</div>
         	<div class="follow"><button id="btn-follower-list">팔로워 :</button></div>
         	
+ 
+ <!-- 친구리스트 모달창 -->
+       <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">가입 승인 리스트</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>번호</th>
+							<th>아이디</th>
+							<th>가입신청내용</th>
+							<th>날짜</th>
+							<th>승인여부</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody">
+						<%-- <tr>
+							<td>${no}</td>
+							<td>member_id</td>
+							<td>content</td>
+							<td>regDate</td>
+							<td><button type="button"
+									class="btn btn-default btn-sm btn-success"
+									style="margin-right: 1%;">승인</button>
+								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
+						</tr> --%>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+        	
+        	
         	<ul>
         		<c:forEach items="${followingId}" var="id" varStatus="vs">
         		<li>${vs.count} ${id}</li>
@@ -197,7 +240,7 @@
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>${member.addressFirst}</td>
+							<td>${member.addressFull}</td>
 						</tr>
 				<!--  		<tr>
 							<td><span class="tableKey">취미</span></td>

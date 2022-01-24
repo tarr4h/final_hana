@@ -98,15 +98,7 @@
 		<script>
  
 		
- 
-			$(()=>{
-				if(${loginMember.accountType} == 1){
-					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/memberView?id=${loginMember.id}');
-				} else{
-					$("#linkd").attr('href', '${pageContext.request.contextPath}/member/shopView?id=${loginMember.id}');
-				}
-			});
- 
+  
 		</script>
 	</sec:authorize>
 	<section class="body-section">

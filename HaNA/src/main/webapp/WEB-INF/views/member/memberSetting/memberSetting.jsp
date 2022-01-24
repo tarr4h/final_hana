@@ -91,34 +91,15 @@
 			<tr>
 				<th>지역</th>
 	  		  	<td>	
-					<input type="text" class="form-control" id="" name="addressFirst" value="${loginMember.addressFirst}" required>
+					<input type="text" class="form-control" id="" name="addressFirst" value="${loginMember.addressFull}" required>
 				</td>
 			</tr>  
 			<tr>
 				<th></th>
 				<td>	
-					<input type="text" class="form-control" id="" name="addressSecond" value="${loginMember.addressSecond}" required>
+					<input type="text" class="form-control" id="" name="addressSecond" value="${loginMember.addressAll}" required>
 				</td>
 			</tr>  
-			<tr>
-				<th></th>
-				<td>	
-					<input type="text" class="form-control" id="" name="addressThird" value="${loginMember.addressThird}" required>
-				</td>
-			</tr>  
-			<tr>
-			<th></th>
-				<td>	
-					<input type="text" class="form-control" id="" name="addressFull" value="${loginMember.addressFull}" required>
-				</td>
-			</tr>
-				<tr>
-			<th></th>
-				<td>	
-					<input type="text" class="form-control" id="" name="addressAll" value="${loginMember.addressAll}" required>
-				</td>
-			</tr>
-			   	 
 			<tr>
 				<th>내 성격</th>
 				<td>	
