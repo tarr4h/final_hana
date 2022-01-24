@@ -238,13 +238,16 @@ $("#btn-follower-list").on( "click", function() {
         
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
         
-
+			<c:if test="${loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
+        	</c:if>
+        	<c:if test="${!loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
+        	</c:if>
         	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
         		<input type="hidden" name ="friendId" value="qwerty" />
         		<input type="hidden" name ="id" value="${member.id}" />
@@ -297,23 +300,18 @@ $("#btn-follower-list").on( "click", function() {
 				</table>
 			</div>
 
- 
         	<button style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
-	</div>
-        </div>
-	</div> 
-       
-    <div class="row" style="height:50px">   
- 
-        	<input type="button" id="btn-add" 
-        			style="float:right;" >
-        	<i style="font-size: 30px;" class="fas fa-pencil-alt"></i>
-        	</input>
-        	
 		</div>
-      </div>
+   </div>
 </div> 
-
+    
+    <c:if test="${loginMember.id.equals(member.id) }">
+    <div class="row" style="height:50px">    
+       	<input type="button" id="btn-add" 
+       			style="float:right;" >
+       	<i style="font-size: 30px;" class="fas fa-pencil-alt"></i>
+	</div> 
+	</c:if>
 <div class="container mt-2">       
     <div class="row">   
  

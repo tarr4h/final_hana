@@ -27,13 +27,14 @@
         </div>
         
         <div class="col-sm-8">
-        	<form:form name="personalUpdateFrm" method="POST" action="${pageContext.request.contextPath }/member/shopSetting/personal">
+        	<form:form name="personalUpdateFrm" method="POST" action="${pageContext.request.contextPath }/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 	        	<label for="username">이름</label>
-	        	<input type="text" name="username" id="username" value="${loginMember.name }"/>
+	        	<input type="text" name="name" id="name" value="${loginMember.name }"/>
 	        	<br />
 	        	<label for="picture">프로필사진</label>
 	        	<img src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}" alt="" style="width:50%;"/>
-	        	<input type="file" name="picture" value="${loginMember.picture }"/>
+	        	<input type="file" name="upFile" value="${loginMember.picture }"/>
+	        	<input type="hidden" name="picture" value="${loginMember.picture }" />
 	        	<br />
 	        	<label for="introduce">소개</label>
 	        	<br />
@@ -50,7 +51,43 @@
 	        	<input type="hidden" name="locationX" value="${loginMember.locationX }"/>
 	        	<input type="hidden" name="locationY" value="${loginMember.locationY }"/>
 	        	<input type="hidden" name="id" value="${loginMember.username }"/>
+	        	<br />
 		        <input type="submit" value="저장하기" id="formBtn"/>
+		        
+				<br />
+				<label for="personality">내 성격</label>	
+					<select name="personality" id="personality" class="custom-select" required>
+					  <option value="" disabled selected>선택해주세요</option>
+					  <option value="차분한" ${loginMember.personality  eq '차분한'? 'selected' : ''}>차분한</option>
+					  <option value="활발한" ${loginMember.personality  eq '활발한'? 'selected' : ''}>활발한</option>
+					  <option value="내향적인" ${loginMember.personality  eq '내향적인'? 'selected' : ''}>내향적인</option>
+					  <option value="외향적인" ${loginMember.personality  eq '외향적인'? 'selected' : ''}>외향적인</option>
+					  <option value="열정적인" ${loginMember.personality  eq '열정적인'? 'selected' : ''}>열정적인</option>
+					  <option value="느긋한" ${loginMember.personality  eq '느긋한'? 'selected' : ''}>느긋한</option>
+					  <option value="다정한" ${loginMember.personality  eq '다정한'? 'selected' : ''}>다정한</option>
+					  <option value="헌신적인" ${loginMember.personality  eq '헌신적인'? 'selected' : ''}>헌신적인</option>
+					  <option value="솔직한" ${loginMember.personality  eq '솔직한'? 'selected' : ''}>솔직한</option>
+					  <option value="낙천적인" ${loginMember.personality  eq '낙천적인'? 'selected' : ''}>낙천적인</option>
+					   <option value="호기심많은" ${loginMember.personality  eq '호기심많은'? 'selected' : ''}>호기심많은</option>
+					</select>
+
+				<br />
+
+				<label for="interest">내 관심사</label>	
+				<select name="interest" class="custom-select" required>
+					<option value="" disabled selected>선택해주세요</option>
+					<option value="책" ${loginMember.interest  eq '책'? 'selected' : ''}>책</option>
+				 	<option value="패션" ${loginMember.interest  eq '패션'? 'selected' : ''}>패션</option>
+				   	<option value="음식" ${loginMember.interest  eq '음식'? 'selected' : ''}>음식</option>
+				    <option value="동물" ${loginMember.interest  eq '동물'? 'selected' : ''}>동물</option>
+				    <option value="여행" ${loginMember.interest  eq '여행'? 'selected' : ''}>여행</option>
+				  	<option value="게임" ${loginMember.interest  eq '게임'? 'selected' : ''}>게임</option>
+				  	<option value="영화" ${loginMember.interest  eq '영화'? 'selected' : ''}>영화</option>
+				    <option value="건강" ${loginMember.interest  eq '건강'? 'selected' : ''}>건강</option>
+				   	<option value="음악" ${loginMember.interest  eq '음악'? 'selected' : ''}>음악</option>
+				    <option value="패션" ${loginMember.interest  eq '패션'? 'selected' : ''}>패션</option>
+				   	<option value="스포츠" ${loginMember.interest  eq '스포츠'? 'selected' : ''}>스포츠</option>
+				</select>
         	</form:form>
         </div>
         

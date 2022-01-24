@@ -69,7 +69,7 @@
 
 
 <div id="enroll-container" class="mx-auto text-center">
-	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate" method="POST">
+	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" method="POST">
 		<table class="mx-auto">
 		 <input type="hidden" name="id" value="${loginMember.id}" />
 			<tr>
@@ -79,6 +79,13 @@
 						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >
 					 				
 					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>프로필사진</th>
+				<td>
+					<input type="file" class="form-control" name="upFile" id="" value="파일 선택" />
+					<input type="hidden" name="picture" value="${loginMember.picture }" />
 				</td>
 			</tr>
 		
