@@ -15,11 +15,10 @@
 <c:if test="${not empty msg}">
 	<script>
 		$(() => {
-				alert('${msg}');
+			alert('${msg}');
 		});
 	</script>
 </c:if>
-
 
 <h1>shop프로필설정</h1>
 <div class="container">
@@ -36,7 +35,7 @@
         </div>
         <!-- 설정 영역 -->
         <div class="col-sm-8">
-        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo?${_csrf.parameterName}=${_csrf.token}" method="post" name="updateFrm">    	
+        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo" method="post" name="updateFrm">    	
 	        	<label for="bussiness-hour-start">영업시간</label>
 	        	<br />
 	        	<input type="time" name="bussinessHourStart" value="${shop.bussinessHourStart }" step="1800"/>~<input type="time" name="bussinessHourEnd" value="${shop.bussinessHourEnd }" step="1800"/>        	
@@ -61,19 +60,12 @@
 	        	<br />
 	        	<br />
 	        	<input type="submit" value="저장하기" id="formBtn"/>
-	<!--       	<div id="map" style="width: 100%; height: 100%;"></div> -->
         	</form:form>
         	
         </div>
     </div>
 </div>
 <script>
-/* 	$(() => {
-		$('[name=addressAll]').val('${loginMember.addressAll}');
-		$('[name=addressFull]').val('${loginMember.addressFull}');
-		$('[name=id]').val('${loginMember.id}');
-	}); */
-	
 	$("#formBtn").click((e) =>{
 		e.preventDefault();
 		$('[name=updateFrm]').submit();
@@ -107,6 +99,10 @@ function execDaumPostcode() {
                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
             }
             
+            if(data.roadAddress == null){
+            	alert("유효하지 않은 도로명 주소입니다. 다시 선택해주세요");
+            }
+            
             $("[name=address]").val(data.roadAddress);     
             
         	var Addr_val = data.roadAddress;
@@ -127,9 +123,6 @@ function execDaumPostcode() {
                 
                 $('[name=locationX]').val(x);
                 $('[name=locationY]').val(y);
-                
-                console.log(x);
-                console.log(y);
                 
             	close();
             });
