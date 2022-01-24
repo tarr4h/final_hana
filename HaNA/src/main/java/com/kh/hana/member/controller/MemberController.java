@@ -86,12 +86,6 @@ public class MemberController {
 		return "redirect:/member/login";					
 	}
 	
-
-//	@GetMapping("/{accountType}")
-//	public void memberView(@PathVariable String accountType, @RequestParam String id, Model model) {
-//		log.info("id= {}", id);
-//	}
-	
 	@GetMapping("/{view}/{id}")
 	public String memberView(@PathVariable String id, @PathVariable String view, Model model) {
 		//following 수 조회
@@ -138,12 +132,11 @@ public class MemberController {
 	
 	@PostMapping("/memberUpdate")
     public String memberUpdate(Member member,
-                                String id,
                                 @AuthenticationPrincipal Member oldMember,
                                 RedirectAttributes redirectAttr) {
         log.info("member={}", member);
         log.info("oldMember={}", oldMember);
-        int result = memberService.updateMember(member, oldMember, id);
+        int result = memberService.updateMember(member, oldMember);
 
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
@@ -154,9 +147,6 @@ public class MemberController {
         oldMember.setInterest(member.getInterest());
         oldMember.setLocationX(member.getLocationX());
         oldMember.setLocationY(member.getLocationY());
-     
-        log.info("memberSetting result = {}" , result); 
-        log.info("memberPersonality={}" , member.getPersonality()); 
 
         redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
         return "redirect:/member/memberSetting/memberSetting";
@@ -207,10 +197,6 @@ public class MemberController {
 	
 	@PostMapping("/shopSetting/shopInfo")
 	public String updateShopInfo(Shop shop, RedirectAttributes redirectAttr) {
-
-		
-		log.info("shop = {}", shop);
-		 
 		int result = memberService.updateShopInfo(shop);
 		
 		String msg = "";
@@ -225,7 +211,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/shopSetting/personal")
-	public String updatePersonal(Member member, Authentication authentication, @RequestParam(name="upFile") MultipartFile upFile, RedirectAttributes redirectAttr) {
+	public String updateShopPersonal(Member member, Authentication authentication, @RequestParam(name="upFile") MultipartFile upFile, RedirectAttributes redirectAttr) {
 		log.info("member = {}", member);
 		
 		Member oldMember = (Member)authentication.getPrincipal();

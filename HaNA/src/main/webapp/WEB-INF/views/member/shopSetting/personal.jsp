@@ -28,25 +28,28 @@
         
         <div class="col-sm-8">
         	<form:form name="personalUpdateFrm" method="POST" action="${pageContext.request.contextPath }/member/shopSetting/personal">
-	        	<label for="username">이름</label><input type="text" name="username" id="username" />
+	        	<label for="username">이름</label>
+	        	<input type="text" name="username" id="username" value="${loginMember.name }"/>
 	        	<br />
-	        	<label for="picture">프로필사진</label><input type="file" name="picture" />
+	        	<label for="picture">프로필사진</label>
+	        	<img src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}" alt="" style="width:50%;"/>
+	        	<input type="file" name="picture" value="${loginMember.picture }"/>
 	        	<br />
 	        	<label for="introduce">소개</label>
 	        	<br />
-	        	<input type="text" name="introduce" />
+	        	<input type="text" name="introduce" value="${loginMember.introduce }"/>
 	        	<br />
 	        	<label for="addressAll">주소</label>
 	        	<br />
-	        	<input type="text" name="addressAll" style="width:300px;"/>
+	        	<input type="text" name="addressAll" style="width:300px;" value="${loginMember.addressAll }"/>
 	        	<input type="button" value="검색" onclick="execDaumPostcode();" />
 	        	<br />
 	        	<label for="addressFull">상세주소</label>
 	        	<br />
-	        	<input type="text" name="addressFull" required/>
-	        	<input type="hidden" name="locationX" />
-	        	<input type="hidden" name="locationY" />
-	        	<input type="hidden" name="id" />
+	        	<input type="text" name="addressFull" value="${loginMember.addressFull }" required/>
+	        	<input type="hidden" name="locationX" value="${loginMember.locationX }"/>
+	        	<input type="hidden" name="locationY" value="${loginMember.locationY }"/>
+	        	<input type="hidden" name="id" value="${loginMember.username }"/>
 		        <input type="submit" value="저장하기" id="formBtn"/>
         	</form:form>
         </div>
