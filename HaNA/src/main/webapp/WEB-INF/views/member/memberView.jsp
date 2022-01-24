@@ -146,36 +146,43 @@
 
         <!-- 프로필 세부정보 영역 -->
         <div class="col-sm-7" id="profileStatus">
-        	<div class="follow">팔로잉 :</div>
-        	<div class="followCount">${followerCount}명</div>
-        	<div class="follow"><button id="btn-follower-list">팔로워 :</button></div>
-        	
- 
+        	<span>팔로잉 : </span>
+        	 <button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
+        	&nbsp;&nbsp;&nbsp;&nbsp; 
+        	<span>팔로워 : </span>
+        	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button> 
+ 			
+ 			
+<script>
+$("#btn-following-list").on( "click", function() {
+    $("#test_modal").modal();
+});
+
+$("#btn-follower-list").on( "click", function() {
+    $("#test_modal").modal();
+});
+
+</script>
+
  <!-- 친구리스트 모달창 -->
        <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">가입 승인 리스트</h4>
+				<h4 class="modal-title" id="myModalLabel"></h4>
 			</div>
 			<div class="modal-body">
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
-							<th>번호</th>
-							<th>아이디</th>
-							<th>가입신청내용</th>
-							<th>날짜</th>
-							<th>승인여부</th>
+							<th>팔로워</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody">
 						<%-- <tr>
-							<td>${no}</td>
-							<td>member_id</td>
-							<td>content</td>
-							<td>regDate</td>
+							<td>프로필</td>
+							<td>아이디</td>
 							<td><button type="button"
 									class="btn btn-default btn-sm btn-success"
 									style="margin-right: 1%;">승인</button>
@@ -185,21 +192,50 @@
 				</table>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary">Save changes</button>
+			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
 </div>
-        	
-        	
-        	<ul>
-        		<c:forEach items="${followingId}" var="id" varStatus="vs">
-        		<li>${vs.count} ${id}</li>
-        		</c:forEach>
-        	</ul>
-        	
-        	<div class="followCount">${followingCount}명 </div>
+
+<!-- 글쓰기모달 -->
+    <div class="modal fade" id="boardFormModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>제목</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody">
+						<%-- <tr>
+							<td>프로필</td>
+							<td>아이디</td>
+							<td><button type="button"
+									class="btn btn-default btn-sm btn-success"
+									style="margin-right: 1%;">승인</button>
+								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
+						</tr> --%>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>      
+        </div>
+</div>
+        
+        
+        
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
         
 
@@ -269,7 +305,11 @@
        
     <div class="row" style="height:50px">   
  
-        	<button style="float:right;"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+        	<input type="button" id="btn-add" 
+        			style="float:right;" >
+        	<i style="font-size: 30px;" class="fas fa-pencil-alt"></i>
+        	</input>
+        	
 		</div>
       </div>
 </div> 
@@ -315,19 +355,59 @@
 </div>
         
 <script>
+//설정페이지로 이동
 function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
 
+//친구추가하기
 function addFollowing(){
 	if(confirm("친구추가를 하시겠습니까?")){
 		$(document.addFollowingFrm).submit();
 	}
 }
+
+//글쓰기
+/* $("#btn-add").click((e) => {
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/boardForm",	
+		success(resp){
+			console.log(resp);
+		},
+		error : console.log
+	});
+});
+  */
+
+//팔로잉 리스트 가져오기
+$("#btn-following-list").click((e) => {
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/followingList",
+		data : $("[name=id]"),
+		success(resp){
+			console.log(resp);
+			
+			const {memberId} = resp;
+			$.each(resp, (i, e) => {
+				console.log(e.memberId);
+				let tr= `
+				<tr>
+				<td>
+					\${e.memberId}
+				</td>
+			</tr>
+			`;
+			$("#modalTbody").append(tr);
+		})
+	},
+	error: console.log
+	})
+});
  
+ 
+
+//팔로워 리스트 가져오기 
 $("#btn-follower-list").click((e) => {
-	 
-	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/member/followerList",
 		data : $("[name=id]"),
@@ -337,14 +417,27 @@ $("#btn-follower-list").click((e) => {
 			const {followingId} = resp;
 			$.each(resp, (i, e) => {
 				console.log(e.followingId);
-			})
-
-		},
-		error : console.log
+				let tr= `
+				<tr>
+				<td>
+					\${e.followingId}
+				</td>
+			</tr>
+			`;
+			$("#modalTbody").append(tr);
+		})
+	},
+	error: console.log
 	})
 });
  
+ 
 
+//글쓰기
+$("#btn-add").click(()=> {
+	console.log("ddd");
+  $("#boardFormModal").modal();
+});
 </script>
         
         
