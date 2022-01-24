@@ -29,8 +29,13 @@
 	
 	<context:component-scan base-package="com.kh.hana" />
 	
-	<!-- interceptor 사용 시 주석해제하고 사용하세요 -->
-	<!-- <interceptors></interceptors> -->
+	<!-- interceptor -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/mbti/mbti.do"/>
+			<beans:bean class="com.kh.hana.common.interceptor.MemberMbtiInterceptor" id="memberMbtiInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 	<!-- jsonView bean -->
 	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">

@@ -1,8 +1,9 @@
-package com.kh.hana.member.controller;
+ package com.kh.hana.member.controller;
 
  
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -80,9 +81,10 @@ public class MemberController {
 		return "redirect:/member/login";					
 	}
 	
+
 	@GetMapping("/{accountType}")
-	public void memberView(Authentication authentication, @PathVariable String accountType, Model model) {
-		log.info("authentication = {}", authentication);
+	public void memberView(@PathVariable String accountType, @RequestParam String id, Model model) {
+		log.info("id= {}", id);
 	}
 	
 	@GetMapping("/memberSetting/{param}")
@@ -102,7 +104,7 @@ public class MemberController {
                                 RedirectAttributes redirectAttr) {
         log.info("member={}", member);
         log.info("oldMember={}", oldMember);
-        int result = memberService.updateMember(member, id);
+        int result = memberService.updateMember(member, oldMember, id);
 
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
@@ -114,7 +116,7 @@ public class MemberController {
         oldMember.setAddressAll(member.getAddressAll());
         oldMember.setPersonality(member.getPersonality());
         oldMember.setInterest(member.getInterest());
-
+     
         log.info("memberSetting result = {}" , result); 
         log.info("memberPersonality={}" , member.getPersonality()); 
 
@@ -122,14 +124,26 @@ public class MemberController {
         return "redirect:/member/memberSetting/memberSetting";
     }
 	
+	@PostMapping("/addFollowing")
+	public String addFollowing(@AuthenticationPrincipal Member member, @RequestParam String id, RedirectAttributes redirectAttr) {
+		log.info("member={}", member.getId());
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("myId", member.getId());
+		map.put("friendId", id);
+		log.info("map ={}", map);
+		
+		int result = memberService.addFollowing(map);
+		log.info("result ={}", result);
+		redirectAttr.addFlashAttribute("msg", result > 0? "친구 추가에 성공했습니다." : "친구 추가에 실패했습니다.");
+		return "redirect:/member/memberView";
+	}
+	
+	
 	@PostMapping("/shopSetting/shopInfo")
-	public String updateShopInfo(@RequestParam Map<String, Object> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
-		log.info("param = {}", param);
-		log.info("time = {}", param.get("bussiness-hour-end"));
-		log.info("upFile = {}", upFile.getOriginalFilename());
+	public String updateShopInfo(@RequestParam Map<String, String> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
 		Member member = (Member)authentication.getPrincipal();
 		String oldProfile = member.getPicture();
-		log.info("pic = {}", member.getPicture());
 		
 		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
 		File file = new File(saveDirectory, oldProfile);
@@ -147,17 +161,31 @@ public class MemberController {
 		}
 		
 		param.put("picture", renamedFilename);
+		
+		member.setName(param.get("username"));
+		member.setPicture(renamedFilename);
+		member.setIntroduce(param.get("introduce"));
+		member.setAddressFirst(param.get("addressFirst"));
+		member.setAddressSecond(param.get("addressSecond"));
+		member.setAddressThird(param.get("addressThird"));
+		member.setAddressFull(param.get("addressFull"));
+		member.setAddressAll(param.get("addressAll"));
 
+		param.put("id", member.getId());
 		
-		int result = memberService.updateShopInfo(param);
+		int result = memberService.updateShopInfo(param, member);
 		
-		
-		redirectAttr.addFlashAttribute("msg", "redi수정완료");
+		log.info("contResult = {}", result);
+		redirectAttr.addFlashAttribute("msg", "수정되었습니다.");
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 	
-	
-	
+//	@GetMapping("/memberview/")
+//	public void memberView(String id) {
+//		
+//		Follower follower = memberService.countFollower();
+//	}
+//	
 	
 	
 

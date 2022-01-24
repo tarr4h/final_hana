@@ -13,10 +13,49 @@
 	crossorigin="anonymous">
 </script>
 <sec:authentication property="principal" var="loginMember"/>
+
+<c:if test="${not empty msg}">
+	<script>
+	alert("${msg}");
+	</script>
+</c:if>
+
 <script>
 function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
+
+
+function addFollowing(){
+	if(confirm("친구추가를 하시겠습니까?")){
+		$(document.addFollowingFrm).submit();
+	}
+}
+ 
+
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/memberView",
+		data : {
+			id : ${loginMember.id}
+		},
+		success(resp){
+			console.log(resp);
+		},
+		error : console.log
+
+	});
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
 </script>
 			
 
@@ -137,6 +176,13 @@ function goSetting(){
         	<div class="follow">팔로워 :</div>
         	<div class="followCount">389명</div>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
+
+        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">설정</button>
+        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing();">친구추가</button>
+        	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
+        		<input type="hidden" name ="id" value="qwerty" />
+        	</form:form>
+
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
@@ -144,6 +190,7 @@ function goSetting(){
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
         	
+
             <br />
             
             <div class="profileTableArea">
@@ -151,29 +198,36 @@ function goSetting(){
 					<tbody>
 						<tr>
 							<td class="tableKey">아이디</td>
-							<td class="tableValue">${loginMember.id }</td>
+							<td class="tableValue">${loginMember.id}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">성격</span></td>
-							<td>${loginMember.personality }</td>
+							<c:if test="${empty loginMember.personality}">
+							<td><button type="button" onclick="goSetting();">설정해주세요.</button></td>
+							</c:if>
+							<td>${loginMember.personality}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">관심</span></td>
-							<td>${loginMember.interest }</td>
+							<c:if test="${empty loginMember.interest}">
+							<td><button type="button" onclick="goSetting();">설정해주세요.</button></td>
+							</c:if>
+							<td>${loginMember.interest}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>asdfsdlif</td>
+							<td>${loginMember.addressFirst}</td>
 						</tr>
-						<tr>
+				<!--  		<tr>
 							<td><span class="tableKey">취미</span></td>
 							<td>낚시</td>
-						</tr>
+						</tr>-->
 						<tr>
 							<td rowspan=2><span class="tableKey">소개</span></td>
-							<td class="tableValue" rowspan=2>
-								<pre><textarea id="textArea" readonly disabled>가나다라마바사 asdfsadf\\nabcdefg
-									123456</textarea></pre>
+							<td class="tableValue" rowspan=1>
+								 ${loginMember.introduce} 
+							<!-- <pre><textarea id="textArea" readonly disabled>  
+								</textarea></pre> --> 	
 							</td>
 						</tr>
 						<tr>
@@ -226,7 +280,7 @@ function goSetting(){
     </div>
 </div>
         
-        
+ 
         
         
         
