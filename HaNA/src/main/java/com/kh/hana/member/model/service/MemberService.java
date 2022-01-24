@@ -11,7 +11,7 @@ public interface MemberService {
 
 	int memberEnroll(Member member);
 
-	int updateMember(Member member, Member oldMember, String id);
+	int updateMember(Member member, Member oldMember);
 
 	Member selectPersonality(String id);
 
@@ -27,6 +27,10 @@ public interface MemberService {
 
 	List<Follower> followerList(String id);
 
+ 
+	List<Follower> followingList(String id);
+ 
 	Shop selectOneShopInfo(String memberId);
+ 
 
 }

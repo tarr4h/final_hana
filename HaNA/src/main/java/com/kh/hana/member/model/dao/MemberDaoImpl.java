@@ -77,6 +77,11 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+ 
+	public List<Follower> followingList(String id) {
+		return session.selectList("member.followingList", id);
+	}
+ 
 	public Shop selectOneShopInfo(String memberId) {
 		return session.selectOne("member.selectOneShopInfo", memberId);
 	}
@@ -91,6 +96,7 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.updateShopInfo", shop);
 	}
 
+ 
 
 
  

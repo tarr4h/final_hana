@@ -57,9 +57,11 @@
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>
 		      </li>
+		      <sec:authorize access="isAuthenticated()">
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM</a>
 		      </li>
+		      </sec:authorize>
 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
 			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">로그인(임시)</a>		      	
