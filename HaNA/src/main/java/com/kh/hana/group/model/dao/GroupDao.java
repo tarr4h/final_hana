@@ -31,4 +31,8 @@ public interface GroupDao {
 
 	public int insertGroupBoardComment(GroupBoardComment groupBoardComment);
 
+	public int insertEnrollGroupForm(Map<String, Object> map);
+
+	public List<Map<String, Object>> getGroupApplyRequest(String groupId);
+
 }

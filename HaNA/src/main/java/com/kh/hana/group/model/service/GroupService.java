@@ -34,4 +34,8 @@ public interface GroupService {
 
 	int insertGroupBoardComment(GroupBoardComment groupBoardComment);
 
+	int insertEnrollGroupForm(Map<String, Object> map);
+
+	List<Map<String, Object>> getGroupApplyRequest(String groupId);
+
 }

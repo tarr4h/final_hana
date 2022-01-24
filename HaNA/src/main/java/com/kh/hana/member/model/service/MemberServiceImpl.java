@@ -1,12 +1,15 @@
 package com.kh.hana.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.shop.model.vo.Shop;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,12 +19,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
-
-	@Override
-	public String test() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public int memberEnroll(Member member) {
@@ -67,27 +64,20 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int updateShopInfo(Map<String, String> param, Member member) {
+	public int updateShopInfo(Shop shop) {
 		try {
-			log.info("serv Member = {}", member);
-			log.info("param = {}", param);
-			int result = memberDao.updateShopMember(member);
-			if(result < 1) {
-				throw new Exception();
-			}
+			Shop searchShop = memberDao.selectOneShopInfo(shop.getId());
+			log.info("searchShop = {}", searchShop);
 			
-			Map<String, Object> map = memberDao.selectShopInfo(member.getId());
-			log.info("map = {}", map);
-			
-			if(map == null) {
-				result = memberDao.insertShopInfo(param);
+			int result = 0;
+			if(searchShop == null) {
+				result = memberDao.insertShopInfo(shop);
+				return result;
 			} else {
-				result = memberDao.updateShopInfo(param);				
+				result = memberDao.updateShopInfo(shop);
+				return result;
 			}
-			if(result < 1) {
-				throw new Exception();
-			}
-			return result;
+			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return 0;
@@ -95,29 +85,40 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Shop selectOneShopInfo(String memberId) {
+		return memberDao.selectOneShopInfo(memberId);
+	}
+
+	@Override
 	public int addFollowing(Map<String, Object> map) {
 		return memberDao.addFollowing(map);
 	}
 
-	 
+	@Override
+	public int countFollowing(String id) {
+		return memberDao.countFollowing(id);
+	}
 
+	@Override
+	public Member selectOneMember(String id) {
+		return memberDao.selectOneMember(id);
+	}
+
+	@Override
+	public int countFollower(String id) {
+		return memberDao.countFollower(id);
+	}
+
+	@Override
+	public List<Follower> followerList(String id) {
+		return memberDao.followerList(id);
+	}
+ 
+ 
 	
 	 
 	
 	
 }
               
-
-
-
-
-
-
-
-
-
-
-
-
-
 

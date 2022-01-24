@@ -1,8 +1,11 @@
 package com.kh.hana.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.shop.model.vo.Shop;
 
 public interface MemberDao {
 
@@ -16,18 +19,24 @@ public interface MemberDao {
 
 	Member selectPersonality(String id);
 
-	int updateShopMember(Member member);
-
-	int updateShopInfo(Map<String, String> param);
-
-	Map<String, Object> selectShopInfo(String id);
-
-	int insertShopInfo(Map<String, String> param);
-
 	int insertPersonality(Member member);
 
 	int insertInterest(Member member);
 
 	int addFollowing(Map<String, Object> map);
+
+	int countFollowing(String id);
+
+	Member selectOneMember(String id);
+
+	int countFollower(String id);
+
+	List<Follower> followerList(String id);
+
+	Shop selectOneShopInfo(String memberId);
+
+	int insertShopInfo(Shop shop);
+
+	int updateShopInfo(Shop shop);
 
 }

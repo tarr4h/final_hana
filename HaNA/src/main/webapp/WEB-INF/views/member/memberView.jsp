@@ -19,44 +19,8 @@
 	alert("${msg}");
 	</script>
 </c:if>
-
-<script>
-function goSetting(){
-	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
-}
-
-
-function addFollowing(){
-	if(confirm("친구추가를 하시겠습니까?")){
-		$(document.addFollowingFrm).submit();
-	}
-}
  
 
-	$.ajax({
-		url : "${pageContext.request.contextPath}/member/memberView",
-		data : {
-			id : ${loginMember.id}
-		},
-		success(resp){
-			console.log(resp);
-		},
-		error : console.log
-
-	});
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-</script>
 			
 
 <style>
@@ -126,10 +90,21 @@ function addFollowing(){
 	}
 	.tableKey{
 		width: 20%;
+		font-size: 16px;
+		padding-bottom : 6px;
 	}
 	.tableValue{
 		width: 80%;
+		font-size: 18px;
+		padding-bottom : 6px;
 	}
+	tbody, td, tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    font-size: 16px;
+    padding-bottom : 6px;
+}
 	pre{
 		margin:0;
 	}
@@ -172,24 +147,72 @@ function addFollowing(){
         <!-- 프로필 세부정보 영역 -->
         <div class="col-sm-7" id="profileStatus">
         	<div class="follow">팔로잉 :</div>
-        	<div class="followCount">1234명</div>
-        	<div class="follow">팔로워 :</div>
-        	<div class="followCount">389명</div>
+        	<div class="followCount">${followerCount}명</div>
+        	<div class="follow"><button id="btn-follower-list">팔로워 :</button></div>
+        	
+ 
+ <!-- 친구리스트 모달창 -->
+       <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">가입 승인 리스트</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>번호</th>
+							<th>아이디</th>
+							<th>가입신청내용</th>
+							<th>날짜</th>
+							<th>승인여부</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody">
+						<%-- <tr>
+							<td>${no}</td>
+							<td>member_id</td>
+							<td>content</td>
+							<td>regDate</td>
+							<td><button type="button"
+									class="btn btn-default btn-sm btn-success"
+									style="margin-right: 1%;">승인</button>
+								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
+						</tr> --%>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+        	
+        	
+        	<ul>
+        		<c:forEach items="${followingId}" var="id" varStatus="vs">
+        		<li>${vs.count} ${id}</li>
+        		</c:forEach>
+        	</ul>
+        	
+        	<div class="followCount">${followingCount}명 </div>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
-
-        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">설정</button>
-        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing();">친구추가</button>
-        	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
-        		<input type="hidden" name ="id" value="qwerty" />
-        	</form:form>
+        
 
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
-        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="">
+        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
-        	
+        	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
+        		<input type="hidden" name ="friendId" value="qwerty" />
+        		<input type="hidden" name ="id" value="${member.id}" />
+        	</form:form>
 
             <br />
             
@@ -198,25 +221,26 @@ function addFollowing(){
 					<tbody>
 						<tr>
 							<td class="tableKey">아이디</td>
-							<td class="tableValue">${loginMember.id}</td>
+							<td class="tableValue">${member.id}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">성격</span></td>
-							<c:if test="${empty loginMember.personality}">
-							<td><button type="button" onclick="goSetting();">설정해주세요.</button></td>
+							<c:if test="${empty member.personality}">
+							<td><button type="button" class="btn btn-dark" onclick="goSetting();">설정하기</button></td>
+						 
 							</c:if>
-							<td>${loginMember.personality}</td>
+							<td>${member.personality}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">관심</span></td>
-							<c:if test="${empty loginMember.interest}">
-							<td><button type="button" onclick="goSetting();">설정해주세요.</button></td>
+							<c:if test="${empty member.interest}">
+							<td><button type="button" class="btn btn-dark" onclick="goSetting();">설정하기</button></td>
 							</c:if>
-							<td>${loginMember.interest}</td>
+							<td>${member.interest}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>${loginMember.addressFirst}</td>
+							<td>${member.addressFull}</td>
 						</tr>
 				<!--  		<tr>
 							<td><span class="tableKey">취미</span></td>
@@ -225,7 +249,7 @@ function addFollowing(){
 						<tr>
 							<td rowspan=2><span class="tableKey">소개</span></td>
 							<td class="tableValue" rowspan=1>
-								 ${loginMember.introduce} 
+								 ${member.introduce} 
 							<!-- <pre><textarea id="textArea" readonly disabled>  
 								</textarea></pre> --> 	
 							</td>
@@ -237,6 +261,14 @@ function addFollowing(){
 				</table>
 			</div>
 
+ 
+        	<button style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+	</div>
+        </div>
+	</div> 
+       
+    <div class="row" style="height:50px">   
+ 
         	<button style="float:right;"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 		</div>
       </div>
@@ -244,12 +276,13 @@ function addFollowing(){
 
 <div class="container mt-2">       
     <div class="row">   
+ 
         <!-- 탭 영역 -->
-        <div class="col-sm-12 d-flex justify-content-center align-items-center" id="tab">
+        <!-- <div class="col-sm-12 d-flex justify-content-center align-items-center" id="tab">
         	<input type="button" class="m-3" value="버튼1" />
         	<input type="button" class="m-3" value="버튼2" />
         	<input type="button" class="m-3" value="버튼3" />
-        </div>
+        </div> -->
     </div>
         
     <div class="row">    
@@ -281,7 +314,38 @@ function addFollowing(){
     </div>
 </div>
         
+<script>
+function goSetting(){
+	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
+}
+
+function addFollowing(){
+	if(confirm("친구추가를 하시겠습니까?")){
+		$(document.addFollowingFrm).submit();
+	}
+}
  
+$("#btn-follower-list").click((e) => {
+	 
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/followerList",
+		data : $("[name=id]"),
+		success(resp){
+			console.log(resp);
+			
+			const {followingId} = resp;
+			$.each(resp, (i, e) => {
+				console.log(e.followingId);
+			})
+
+		},
+		error : console.log
+	})
+});
+ 
+
+</script>
         
         
         

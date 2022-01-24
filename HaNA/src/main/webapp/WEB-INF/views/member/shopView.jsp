@@ -128,10 +128,10 @@
         <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
         	<div class="profileImg d-flex">
         		<!-- 이미지를 넣으세요 -->
-        		<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
+        		<img src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.picture}" alt=""/>
         	</div>
         	<div class="profileBtn">
-        		<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
+        		<!-- (+)버튼을 -->
         		<img src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png" alt="" />
         	</div>
         </div>
@@ -143,13 +143,16 @@
         	<div class="follow">팔로워 :</div>
         	<div class="followCount">389명</div>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
-        	<button type="button" class="btn btn-outline-dark icon" id="settingBtn" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/shopInfo'">
+        	<c:if test="${loginMember.id.equals(member.id) }">
+        	<button type="button" class="btn btn-outline-dark icon" id="settingBtn" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/personal'">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
+        	</c:if>
+        	<c:if test="${!loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark icon" id="addFriendBtn" onclick="">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
-        	
+        	</c:if>
 
             <br />
             
@@ -158,30 +161,30 @@
 					<tbody>
 						<tr>
 							<td class="tableKey">아이디</td>
-							<td class="tableValue">${loginMember.id}</td>
+							<td class="tableValue">${member.id}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">성격</span></td>
-							<c:if test="${empty loginMember.personality}">
+							<c:if test="${empty member.personality}">
 							<td><button type="button" onclick="goSetting();">설정해주세요.</button></td>
 							</c:if>
-							<td>${loginMember.personality}</td>
+							<td>${member.personality}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">관심</span></td>
-							<c:if test="${empty loginMember.interest}">
+							<c:if test="${empty member.interest}">
 							<td><button type="button" onclick="goSetting();">설정해주세요.</button></td>
 							</c:if>
-							<td>${loginMember.interest}</td>
+							<td>${member.interest}</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>${loginMember.addressAll}</td>
+							<td>${member.addressAll}</td>
 						</tr>
 						<tr>
 							<td rowspan=2><span class="tableKey">소개</span></td>
 							<td class="tableValue" rowspan=2>
-								 ${loginMember.introduce} 
+								 ${member.introduce} 
 							</td>
 						</tr>
 						<tr>

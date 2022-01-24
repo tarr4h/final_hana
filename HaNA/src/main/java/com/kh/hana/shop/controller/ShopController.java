@@ -35,6 +35,7 @@ public class ShopController {
 		data.put("locationX", locationX);
 		data.put("locationY", locationY);
 		
+//		8.23km내
 		double maxX = Double.parseDouble(locationX) + 0.0927;
 		double maxY = Double.parseDouble(locationY) + 0.074;
 		

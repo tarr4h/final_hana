@@ -214,12 +214,8 @@
 				error:console.log			
 			});
 	    });
-		
-	
-		
-	});
-	
 
+	});
 </script>
 
 
