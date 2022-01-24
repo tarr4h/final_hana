@@ -60,9 +60,6 @@
 	        	<label for="location2">상세주소</label>
 	        	<br />
 	        	<input type="text" name="addressFull" />
-	        	<input type="hidden" name="addressFirst" />
-	        	<input type="hidden" name="addressSecond" />
-	        	<input type="hidden" name="addressThird" />
 	        	<input type="hidden" name="locationX" />
 	        	<input type="hidden" name="locationY" />
 	        	<input type="hidden" name="id" />
@@ -82,9 +79,6 @@
 		$('[name=introduce]').val('${loginMember.introduce}');
 		$('[name=addressAll]').val('${loginMember.addressAll}');
 		$('[name=addressFull]').val('${loginMember.addressFull}');
-		$('[name=addressFirst]').val('${loginMember.addressFirst}');
-		$('[name=addressSecond]').val('${loginMember.addressSecond}');
-		$('[name=addressThird]').val('${loginMember.addressThird}');
 		$('[name=id]').val('${loginMember.id}');
 	});
 	
@@ -103,6 +97,7 @@
 // 좌표구하기
 $(() => {
 	var Addr_val = $('[name=addressAll]').val();
+	console.log(Addr_val);
 
 	// 도로명 주소를 좌표 값으로 변환(API)
 	naver.maps.Service.geocode({
@@ -122,7 +117,7 @@ $(() => {
         $('[name=locationX]').val(x);
         $('[name=locationY]').val(y);
         
-/*  	        // 지도 생성
+/*   	    // 지도 생성
         var map = new naver.maps.Map('map', {
 			center: new naver.maps.LatLng(y, x), // 지도를 열 좌표
 			zoom: 18
@@ -169,16 +164,34 @@ function execDaumPostcode() {
                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
             }
 
-            console.log(data.buildingName);
             console.log(data.roadAddress);
-            console.log(data.jibunAddress);
             
-            $("[name=addressFirst]").val(data.sido);
-            $("[name=addressSecond]").val(data.sigungu);
-            $("[name=addressThird]").val(data.bname);
-            $("[name=addressAll]").val(data.roadAddress);
+            $("[name=addressAll]").val(data.roadAddress);     
             
-            close();
+        	var Addr_val = $('[name=addressAll]').val();
+        	// 도로명 주소를 좌표 값으로 변환(API)
+          	naver.maps.Service.geocode({
+                query: Addr_val
+            }, function(status, response) {
+                if (status !== naver.maps.Service.Status.OK) {
+                    return alert('잘못된 주소값입니다.');
+                }
+
+                var result = response.v2, // 검색 결과의 컨테이너
+                    items = result.addresses; // 검색 결과의 배열
+                    
+                // 리턴 받은 좌표 값을 변수에 저장
+                let x = parseFloat(items[0].x);
+                let y = parseFloat(items[0].y);
+                
+                $('[name=locationX]').val(x);
+                $('[name=locationY]').val(y);
+                
+                console.log($('[name=locationX]').val());
+                console.log($('[name=locationY]').val());
+                
+            	close();
+            });
         }
     }).open();
 }
