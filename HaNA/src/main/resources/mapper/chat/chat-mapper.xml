@@ -4,30 +4,51 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chat">
 	<select id="roomList" resultType="chatroom">
-		select 
-		distinct room_no, member_id 
-		from chat 
-		where room_no in (select distinct room_no from chat where member_id = #{id}) 
-		and 
-		member_id != #{id}
+	select 
+		* 
+	from 
+		chat_room 
+	where members like '%' ||  #{id} || '%'
+	</select>
+		
+		<select id="roomchat2" resultMap="chatMap">
+	select 
+		c.*, m.picture 
+	from 
+		chat c left join member m 
+		on c.member_id = m.id 
+	where 
+		c.room_no = #{no} 
+		order by c.message_reg_date
 	</select>
 	
-	<select id="roomchat" resultType="chat">
-	select
-		*
-	from
-		chat
-	where room_no = #{no}
-	order by message_reg_date
-	</select>
+	<resultMap type="map" id="chatMap">
+		<id column="room_no" property="roomNo"/>
+		<result column="member_id" property="memberId"/>
+		<result column="message" property="message"/>
+		<result column="message_reg_date" property="messageRegDate"/>
+		<result column="unreadcount" property="unreadcount"/>
+		<result column="picture" property="picture"/>
+	</resultMap>
+	
 	<select id="selectChatRoom" resultType="chatroom">
 	select 
 		* 
 	from
-		chatroom
+		chat_room
 	where
 		room_no = #{roomNo}
 	</select>
+	
+	<select id="searchPicture" resultType="string">
+	select
+		picture
+	from 
+		member
+	where
+		id = #{member}
+	</select>
+	
 	<insert id="insertMessage">
 	INSERT 
 		INTO 
@@ -40,23 +61,35 @@
 	from
 		member
 	</select>
-	<select id="chatRoomCheck" resultType="chat">
+	
+	<select id="memberList2" resultType="member">
+	select
+		*
+	from
+		member
+	where id like '%' ||  #{value} || '%' or name like '%' ||  #{value} || '%'
+	</select>
+	
+	<select id="chatRoomCheck" resultType="chatroom">
 	select 
 		* 
 	from 
-		chat 
+		chat_room 
 	where 
-		room_no in (select distinct room_no from chat where member_id = #{loginId}) 
-	and 
-		member_id = #{memberId}
+		members like '%' ||  #{loginId} || '%' and members like '%' ||  #{memberId} || '%'
+		and room_type = 0
 	</select>
 	<insert id="createChatRoom">
 	insert 
 		into 
-	chatroom 
+	chat_room 
 		values(
-		SEQ_CHAT_NO.nextval,
-		#{login_Member}
+		seq_chatroom_no.nextval,
+		default,
+		default,
+		default,
+		#{members},
+		default
 		)
 	</insert>
 	<insert id="insertEnterMessage">
@@ -77,9 +110,35 @@
 	select
 		room_no
 	from
-		chatroom
-	where member_id = #{login_Member}
+		chat_room
+	members like '%' ||  #{loginId} || '%' and members like '%' ||  #{memberId} || '%'
 	</select>
+	<select id="selectOneChatRoom" resultType="chatroom">
+	select
+		*
+	from
+		chat_room
+	where room_no = #{no}
+	</select>
+	<insert id="CreateGroupChat">
+	insert
+		into
+	chat_room
+		values(
+		seq_chatroom_no.nextval,
+		#{groupName},
+		1,
+		#{groupId},
+		#{leaderId},
+		#{image}
+		)
+	</insert>
+	<delete id="exitRoom">
+	delete
+		from
+	chat_room
+		where room_no = #{roomNo}
+	</delete>
 	
 
 </mapper>
