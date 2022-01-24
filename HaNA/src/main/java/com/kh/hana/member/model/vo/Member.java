@@ -30,19 +30,14 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 	
 	@Builder
 	public Member(String id, String name, String password, String picture, String personalId, int accountType,
-			String addressFirst, String addressSecond, String addressThird, String addressFull, String addressAll,
-			String introduce, boolean enabled, List<SimpleGrantedAuthority> authorities, String personality,
-			String interest) {
-		super(id, name, password, picture, personalId, accountType, addressFirst, addressSecond, addressThird,
-				addressFull, addressAll, introduce, enabled);
+			String addressFull, String addressAll, String introduce, boolean enabled, String locationX,
+			String locationY, List<SimpleGrantedAuthority> authorities, String personality, String interest) {
+		super(id, name, password, picture, personalId, accountType, addressFull, addressAll, introduce, enabled,
+				locationX, locationY);
 		this.authorities = authorities;
 		this.personality = personality;
 		this.interest = interest;
 	}
-
-	
-	
-	
 
 	
 	@Override
@@ -76,6 +71,9 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+
+
 
 
 

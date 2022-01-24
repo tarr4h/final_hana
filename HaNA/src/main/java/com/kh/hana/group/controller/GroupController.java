@@ -15,14 +15,17 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,6 +34,8 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
+import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +71,7 @@ public class GroupController {
 		log.info("enrolled = {}", enrolled);
 		model.addAttribute("enrolled",enrolled);
 		
-		List<GroupBoard> groupBoardList = groupService.selectGroupBoardList(groupId);
+		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
 		model.addAttribute("groupBoardList", groupBoardList);
 		return "group/groupPage";
@@ -136,7 +141,7 @@ public class GroupController {
 	}
 	
 	@PostMapping("/enrollGroupBoard")
-	public String enrollGroupBoard(GroupBoard groupBoard,
+	public String enrollGroupBoard(GroupBoardEntity groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
 			log.info("groupBoard = {}",groupBoard);
@@ -172,16 +177,71 @@ public class GroupController {
 			return "redirect/group/enrollGroupBoard";
 		}
 	}
+//	@GetMapping("/groupBoardDetail/{no}")
+//	public String groupBoardDetail(@PathVariable int no, Model model) {
+//		GroupBoard groupBoard = groupService.selectOneBoard(no);
+//		log.info("groupBoard = {}",groupBoard);
+//		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
+//		log.info("tagMembers = {}",tagMembers);
+//		model.addAttribute(groupBoard);
+//		model.addAttribute("tagMembers",tagMembers);
+//		return "/group/groupBoardDetail";
+//	}
+	
 	@GetMapping("/groupBoardDetail/{no}")
-	public String groupBoardDetail(@PathVariable int no, Model model) {
+	public ResponseEntity<Map<String,Object>> groupBoardDetail(@PathVariable int no, Model model) {
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
 		log.info("groupBoard = {}",groupBoard);
 		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
 		log.info("tagMembers = {}",tagMembers);
-		model.addAttribute(groupBoard);
-		model.addAttribute("tagMembers",tagMembers);
-		return "/group/groupBoardDetail";
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("groupBoard",groupBoard);
+		map.put("tagMembers",tagMembers);
+		
+		return ResponseEntity.ok(map);
+	}
+	
+	@PostMapping("/enrollGroupBoardComment")
+	@ResponseBody
+	public Map<String,Object> enrollGroupBoardComment(@RequestBody GroupBoardComment groupBoardComment){
+		log.info("groupBoardComment = {}",groupBoardComment);
+		int result = groupService.insertGroupBoardComment(groupBoardComment);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("msg", "댓글 등록 성공");
+		map.put("result",result);
+		return map;
+	}
+	
+	@GetMapping("/enrollGroupForm")
+	public void enrollGroupForm(@RequestParam String groupId, Model model) {
+		log.info("groupId = {}", groupId);
+		model.addAttribute("groupId", groupId);
+	}
+	
+	@PostMapping("/enrollGroupForm")
+	public String enrolledGroupForm(@RequestParam Map<String, Object> map, Model model) {
+		log.info("map = {}", map);
+		int result = groupService.insertEnrollGroupForm(map);
+		
+		String msg = result > 0 ? "가입 신청 완료." : "가입 신청 실패.";
+		log.info("msg ={}", msg);
+		
+		return "redirect:/group/groupPage/"+map.get("groupId");
+	}
+
+	@GetMapping("/getGroupApplyRequest")
+	public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
+		log.info("groupId ={}", groupId);
+		
+		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
+		log.info("groupApplyList ={}", groupApplyList);
+		
+		return ResponseEntity.ok(groupApplyList);
+		
 	}
 	
 }
+
 

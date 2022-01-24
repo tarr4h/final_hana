@@ -6,7 +6,7 @@
 
 	<insert id="memberEnroll">
 		insert into member values
-		(#{id}, #{password}, #{name}, #{picture}, #{personalId}, #{accountType}, #{addressFirst}, #{addressSecond}, #{addressThird}, #{addressFull}, #{addressAll}, #{introduce}, default)
+		(#{id}, #{password}, #{name}, #{picture}, #{personalId}, #{accountType}, #{addressFull}, #{addressAll}, #{introduce}, default, #{locationX}, #{locationY})
 	</insert>
 
 
@@ -45,49 +45,6 @@
 		where
 			member_id = #{id}
 	</select>
-	
-	<update id="updateShopMember" parameterType="member">
-		update
-			member
-		set
-			name = #{name},
-			picture = #{picture},
-			introduce = #{introduce},
-			address_first = #{addressFirst},
-			address_second = #{addressSecond},
-			address_third = #{addressThird},
-			address_full = #{addressFull},
-			address_all = #{addressAll}
-		where
-			id = #{id}
-	</update>
-	
-	<update id="updateShopInfo" parameterType="map">
-		update
-			shop_info
-		set
-			bussiness_hour_start = #{bussiness-hour-start},
-			bussiness_hour_end = #{bussiness-hour-end},
-			location_x = #{locationX},
-			location_y = #{locationY}
-		where
-			id = #{id}
-	</update>
-	
-	<select id="selectShopInfo" parameterType="string" resultType="map">
-		select
-			*
-		from
-			shop_info
-		where
-			id = #{id}
-	</select>
-	
-	<insert id="insertShopInfo" parameterType="map">
-		insert into
-			shop_info
-		values(#{id}, #{bussiness-hour-start}, #{bussiness-hour-end}, #{locationX}, #{locationY})
-	</insert>
 
 	<insert id="insertPersonality">
 		insert into
@@ -111,14 +68,77 @@
 	
 	</insert>
 
+	<select id="countFollowing" parameterType="string" resultType="_int">
+		select 
+			count(*)
+		from
+			follower
+		where
+			member_id = #{id}
+	</select>
 
+	<select id="countFollower" parameterType="string" resultType="_int">
+		select
+			count(*)
+		from
+			follower
+		where
+			following_id = #{id}
+	
+	</select>
 
+	<select id="selectOneMember" parameterType="string" resultType="member">
+		select
+		 *
+		from
+			member m full outer join personality p
+		on m.id = p.member_id
+			full outer join interest i
+		on m.id = i.member_id
+		where
+			id = #{id}
+	</select>
 
+	<select id="followerList" resultType="follower">
+		select 
+		    following_id, picture
+		from
+		    follower f full outer join member m
+		on 
+		    f.member_id = m.id
+		where
+			f.member_id = #{id}
+	</select>
 
+	<select id="selectOneShopInfo" parameterType="string" resultType="shop">
+		select
+			*
+		from
+			shop_info
+		where
+			id = #{id}
+	</select>
+	
+	<insert id="insertShopInfo" parameterType="shop">
+		insert into shop_info
+		values(#{id}, #{bussinessHourStart}, #{bussinessHourEnd}, #{locationX}, #{locationY}, #{address}, #{addressDetail}, #{shopIntroduce})
+	</insert>
+	
+	<update id="updateShopInfo" parameterType="shop">
+		update shop_info
+		set bussiness_hour_start = #{bussinessHourStart}, bussiness_hour_end = #{bussinessHourEnd}, location_x = #{locationX}, location_y = #{locationY}, address = #{address}, address_detail = #{addressDetail},
+		shop_introduce = #{shopIntroduce}
+		where id = #{id}
+	</update>
 
-
-
-
+	<select id="followingList" resultType="follower">
+	select
+		member_id
+	from
+		follower
+	where
+	member_id = #{id}
+	</select>
 
 
 
