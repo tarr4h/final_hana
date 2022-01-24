@@ -26,7 +26,6 @@ public interface MemberService {
 	int countFollower(String id);
 
 	List<Follower> followerList(String id);
-
  
 	List<Follower> followingList(String id);
  

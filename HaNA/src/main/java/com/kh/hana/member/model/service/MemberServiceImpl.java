@@ -50,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
 			return 1;
 		}
 		else {
-		return 0;
+			return 0;
 		}
 		
 	}
