@@ -243,17 +243,28 @@ public class GroupController {
 	}
 	
     @PostMapping("/groupApplyProccess")
+    @ResponseBody
     public String groupApplyProcess(
             @RequestParam(name="no") int no, 
             @RequestParam(name="groupId") String groupId,
             @RequestParam(name="memberId") String memberId,
-            @RequestParam(name="approvalYn") String approvalYn) {
+            @RequestParam(name="approvalYn") String approvalYn,
+            RedirectAttributes redirectAttr) {
         log.info("no = {}", no);
         log.info("groupId = {}", groupId);
         log.info("memberId = {}", memberId);
         log.info("approvalYn = {}", approvalYn);
         
-        return null;
+        //승인(y)
+        if(approvalYn == "y") {
+        	redirectAttr.addFlashAttribute("msg", "가입 승인 완료!");
+        }
+        //거절(n)
+        else {
+        	redirectAttr.addFlashAttribute("msg", "가입 거절 완료!");
+        }
+        
+        return "redirect:/group/groupPage/"+groupId;
     }
 	
 }

@@ -594,15 +594,15 @@ function enrollList(){
                         </td>
                         <td>
                             <form:form name="groupApplyHandlingFrm">
-                                <input type="hidden" name="no" value="\${e.NO}"/>
+							   <input type="hidden" name="no" value="\${e.NO}"/>
                                 <input type="hidden" name="groupId" value="${group.groupId}"/>
                                 <input type="hidden" name="memberId" value="\${e.MEMBER_ID}"/>
                                 <input type="hidden" name="approvalYn" value=""/>
                             </form:form>
-                            <button type="button" onclick="groupApplyHandlingFunc(this);"
+                            <button type="button" onclick="groupApplyHandlingFunc(this,this.value);"
                                 class="btn btn-default btn-sm btn-success"
                                 style="margin-right: 1%;" value="y">승인</button>
-                            <button type="button" onclick="groupApplyHandlingFunc(this);" class="btn btn-default btn-sm btn-danger" value="n">거절</button>
+                            <button type="button" onclick="groupApplyHandlingFunc(this,this.value);" class="btn btn-default btn-sm btn-danger" value="n">거절</button>
                         </td>
                     </tr>
                 `;
@@ -615,17 +615,24 @@ function enrollList(){
     })
 };
 
-function groupApplyHandlingFunc(e){
+function groupApplyHandlingFunc(e, YN){
     console.log(e); // button객체    
     const $form = $(e).siblings("[name=groupApplyHandlingFrm]"); // 승인 및 거절 폼
-    $form.children("[name=approvalYn]").val($(e).val()); // 승인/거절 폼 내 input:hidden("[name = approvalYn]")에 value값 넣어주기
-    
+    //$form.children("[name=approvalYn]").val(YN); // 승인/거절 폼 내 input:hidden("[name = approvalYn]")에 value값 넣어주기
+    $("[name=groupApplyHandlingFrm] input[name=approvalYn]").val(YN);
+    console.log("YN = ",YN);
 /*     console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=no]").val());
     console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=approvalYn]").val()); */
+	<!-- 이거없으면 403오류 -->
+    const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+	const headers = {};
+	headers[csrfHeader] = csrfToken;
     
- 	 $.ajax({
-		url:"${pageContext.request.contextPath}/group/groupApplyProccess",
+    $.ajax({
+		url:`${pageContext.request.contextPath}/group/groupApplyProccess`,
 		method:"POST",
+		headers: headers,
 		data: {
 			no:$form.children("[name=no]").val(),
 			groupId:$form.children("[name=groupId]").val(),
@@ -636,7 +643,7 @@ function groupApplyHandlingFunc(e){
 			console.log(data);
 		},
 		error:console.log
-	 })
+	 });
      
 }
 </script>
