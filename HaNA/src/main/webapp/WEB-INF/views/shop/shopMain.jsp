@@ -14,7 +14,7 @@
 <sec:authentication property="principal" var="loginMember"/>
 
 <div class="container mb-4">
-T    <div class="row hashTagRank">
+    <div class="row hashTagRank">
 		<table class="table table-striped table-dark my-0">
 		  <thead>
 		  	<tr>
@@ -112,42 +112,42 @@ T    <div class="row hashTagRank">
 	        	<!-- 프로필사진 영역 -->
 	        	<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png" alt=""/>
        		</div>
-       		<span>매장ID</span>
+       		<span class = "shopScroll">매장ID</span>
         </div>
         <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
         	<div class="shopProfile d-flex">
 	        	<!-- 프로필사진 영역 -->
 	        	<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png" alt=""/>
        		</div>
-       		<span>매장ID</span>
+       		<span class = "shopScroll">매장ID</span>
         </div>
         <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
         	<div class="shopProfile d-flex">
 	        	<!-- 프로필사진 영역 -->
 	        	<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png" alt=""/>
        		</div>
-       		<span>매장ID</span>
+       		<span class = "shopScroll">매장ID</span>
         </div>
         <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
         	<div class="shopProfile d-flex">
 	        	<!-- 프로필사진 영역 -->
 	        	<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png" alt=""/>
        		</div>
-       		<span>매장ID</span>
+       		<span class = "shopScroll">매장ID</span>
         </div>
         <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
         	<div class="shopProfile d-flex">
 	        	<!-- 프로필사진 영역 -->
 	        	<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png" alt=""/>
        		</div>
-       		<span>매장ID</span>
+       		<span class = "shopScroll">매장ID</span>
         </div>
         <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
         	<div class="shopProfile d-flex">
 	        	<!-- 프로필사진 영역 -->
 	        	<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png" alt=""/>
        		</div>
-       		<span>매장ID</span>
+       		<span class = "shopScroll">매장ID</span>
         </div>
 	</div>
 	
@@ -165,6 +165,7 @@ T    <div class="row hashTagRank">
 		console.log("${loginMember.addressAll}");
 		
 		var Addr_val = "${loginMember.addressAll}";
+	
 
 		// 도로명 주소를 좌표 값으로 변환(API)
 		naver.maps.Service.geocode({
@@ -180,7 +181,9 @@ T    <div class="row hashTagRank">
 	        // 리턴 받은 좌표 값을 변수에 저장
 	        let x = parseFloat(items[0].x);
 	        let y = parseFloat(items[0].y);
-	       
+
+	        
+	     
 	    	$.ajax({
 				url: `${pageContext.request.contextPath}/shop/shopList`,
 				data: {
@@ -189,12 +192,30 @@ T    <div class="row hashTagRank">
 						locationY : y
 				},
 				success(res){
-					console.log(res);
+					/* console.log(res);
+					list = res;
+					var shopId = '';
+					for(var i=0; i<list.length;i++){
+						shopId = list[i].ID
+					console.log(shopId); */
+					var htmlOut='';
+					list = res;
+					for(var i=0; i<list.length;i++){
+					    htmlOut += '<div class="shopProfile d-flex">';
+					    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+					    htmlOut += '</div>';
+					    htmlOut += '<span class = "shopScroll">'+	nvl(list[i].ID)	 + '</span>';
+					    htmlOut += '</div>';
+					    
+					}
+					$('.col-md-4 d-flex justify-content-center align-items-center flex-column ').append(htmlOut);
+	
 				},
 				error:console.log			
 			});
 	    });
 		
+	
 		
 	});
 	
