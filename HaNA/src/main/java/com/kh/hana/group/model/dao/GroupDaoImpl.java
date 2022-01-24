@@ -75,16 +75,12 @@ public class GroupDaoImpl implements GroupDao {
 		return session.selectList("getGroupApplyRequest", groupId);
 	}
 
-	@Override
-	public int insertGroupList(GroupMemberList groupMemberList) {
-		return session.insert("insertGroupList", groupMemberList);
-	}
 	
   @Override
   public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
 		return session.insert("insertGroupBoardComment",groupBoardComment);
 	}
-	
+
 
 
 }

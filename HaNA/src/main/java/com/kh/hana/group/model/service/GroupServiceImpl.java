@@ -78,14 +78,12 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.getGroupApplyRequest(groupId);
 	}
 
-	@Override
-	public int insertGroupList(GroupMemberList groupMemberList) {
-		return groupDao.insertGroupList(groupMemberList);
-	}
   
   @Override
   public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
 		return groupDao.insertGroupBoardComment(groupBoardComment);
   }
+
+
 
 }

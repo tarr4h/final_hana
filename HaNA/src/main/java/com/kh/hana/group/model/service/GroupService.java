@@ -38,6 +38,4 @@ public interface GroupService {
 
 	List<Map<String, Object>> getGroupApplyRequest(String groupId);
 
-	int insertGroupList(GroupMemberList groupMemberList);
-
 }

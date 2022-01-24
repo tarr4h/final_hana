@@ -145,15 +145,6 @@
 	order by
 		no 
 	</select>
-	
-	<insert id="insertGroupList">
-	insert into 
-		group_member_list 
-	values(
-    	#{groupId}, 
-    	#{memebrId}, 
-    	default;
-	</insert>
 
   <insert id="insertGroupBoardComment">
 		insert into

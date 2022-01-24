@@ -10,6 +10,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소그룹페이지" name="title" />
 </jsp:include>
+
 <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
 	
@@ -58,16 +59,19 @@
 								        </div>
 								        <div class="col-sm-12" id="group-board-content" style="border-bottom:solid #80808040 1px; height:300px; overflow:auto; padding:20px;"></div>
 								        <div class="col-sm-12" id="group-board-comment-list" style="border-bottom:solid #80808040 1px; height:500px; overflow:auto; padding:20px;">
+										<table>
+										
+										</table>
 										</div>
 								        <div class="col-sm-12" id="group-board-comment-submit"style="height:150px; padding:20px;">
-								        	<form action="" name="groupBoardCommentSubmitFrm">
+								        	<form:form action="" name="groupBoardCommentSubmitFrm">
 								        		<input type="hidden" name="writer" value="<sec:authentication property='principal.username'/>">
 								        		<input type="hidden" name="boardNo" id="boardNo" value=""/>
 								        		<input type="hidden" name="commentLevel" value="1"/>
 								        		<input type="hidden" name="commentRef" value="0"/>
 									        	<textarea name="content" id="" cols="30" rows="10" placeholder="댓글입력..." ></textarea>
 									        	<div><input type="submit" value="게시"/></div>								        	
-								        	</form>
+								        	</form:form>
 								        </div>
 								    </div>
 								</div>
@@ -83,6 +87,7 @@
 	</div>
 	
 	
+
 <style>
 #myInfo {
 	border: 1px solid black;
@@ -265,11 +270,6 @@ pre {
 				</div>
 			</div>
 		</div>
-	</section>
-	<div class="icon">
-		<a href="#"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i
-			class="fas fa-calendar-alt"></i></a> <a href="#"><i
-			class="far fa-comments"></i></a>
 	</div>
 </div>
 
@@ -293,18 +293,12 @@ pre {
 </div>
 
 <c:if test="${loginMember.id eq group.leaderId}">
-	<button id="myBtn" onclick="test();">승인</button>
+	<button id="myBtn" onclick="enrollList();">승인</button>
 </c:if>
-
-<script>
-$("#myBtn").on( "click", function() {
-    $("#test_modal").modal();
-});
-</script>
 
 <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog" style="max-width: 100%; width: auto; display: table;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">가입 승인 리스트</h4>
@@ -355,6 +349,7 @@ $("#myBtn").on( "click", function() {
 	        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 	    }
 	  });
+
 // 모달창
 $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
@@ -365,7 +360,7 @@ $('.board-main-image').click((e)=>{
 		success(data){
 	 
 	 		const {groupBoard, tagMembers} = data;
- 			console.log(groupBoard.content);
+ 			console.log(groupBoard);
  			
  			// modal의 header부분
  			const date = moment(groupBoard.regDate).format("YYYY년 MM월 DD일");
@@ -405,6 +400,9 @@ $('.board-main-image').click((e)=>{
  			console.log($("#group-board-content"));
  			$("#group-board-content").html(`\${groupBoard.content}`);
  			
+ 			//댓글 리스트
+ 			getCommentList(groupBoard.no);
+ 			
  			//댓글 입력창
  			$("#group-board-comment-submit #boardNo").val(groupBoard.no);
  			
@@ -415,178 +413,47 @@ $('.board-main-image').click((e)=>{
 	$('#groupPageDetail').modal("show");
 });
 
-<div class="icon">
-	<a href="#"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i
-		class="fas fa-calendar-alt"></i></a> <a href="#"><i
-		class="far fa-comments"></i></a>
-</div>
-//댓글 입력
-$(document.groupBoardCommentSubmitFrm).submit((e)=>{
-	e.preventDefault();
-	
-	let o = {
-		boardNo:$("[name=boardNo]",e.target).val(),
-		writer:$("[name=writer]",e.target).val(),
-		commentLevel:$("[name=commentLevel]",e.target).val(),			
-		commentRef:$("[name=commentRef]",e.target).val(),			
-		content:$("[name=content]",e.target).val(),	
-	}
-	console.log(o);
-	const jsonStr = JSON.stringify(o);
-	console.log(jsonStr);
-
-	$.ajax({
-		url:"<%=request.getContextPath()%>/group/enrollGroupBoardComment",
-		method:"POST",
-		dataType:"json",
-		data:jsonStr,
-		contentType:"application/json; charset=utf-8",
-		success(data){
-			console.log(data);
-			$("[name=content]",e.target).val("");
-		},
-		error(xhr, statusText, err){
-			switch(xhr.status){
-			default: console.log(xhr, statusText, err);
-			}
-			console.log
-		}
-	})
-})
-
-</script>
-<style>
-table {
-  border-collapse: separate;
-  border-spacing: 0 5px;
-}
-textarea { height:100px;border:none;width:100%;resize:none; }
-textarea:focus { outline:none; }
-input[type="submit"] {
-	font-weight:bold;
-	color:#384fc5c4;
-	background-color:white;
-	border:none;
-	float:right;
-}
-textarea::placeholder {
-color:gray;
-  font-size: 1.1em;
-}
-</style>
-
-<div class="container">
-	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
-		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
-	        <div class="col-sm-4">
-			<img style="width: 100%; height: 100%; margin-bottom: 10%"
-				src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image[0]}"
-				alt="" />
-		</div>
-		${vs.index%3 == 2? "</div>" : ""}
-	</c:forEach>
-</div>
-
-<c:if test="${loginMember.id eq group.leaderId}">
-	<button id="myBtn" onclick="test();">승인</button>
-</c:if>
-
-<script>
-$("#myBtn").on( "click", function() {
-    $("#test_modal").modal();
-});
-</script>
-
-<div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog" style="max-width: 100%; width: auto; display: table;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">가입 승인 리스트</h4>
-			</div>
-			<div class="modal-body">
-				<table class="table" style="text-align: center; white-space: nowrap;" name="modalTable">
-					<thead class="table-light">
-						<tr>
-							<th>번호</th>
-							<th>아이디</th>
-							<th>가입신청내용</th>
-							<th>날짜</th>
-							<th>승인여부</th>
-						</tr>
-					</thead>
-					<tbody id="modalTbody">
-						<%-- <tr>
-							<td>${no}</td>
-							<td>member_id</td>
-							<td>content</td>
-							<td>regDate</td>
-							<td><button type="button"
-									class="btn btn-default btn-sm btn-success"
-									style="margin-right: 1%;">승인</button>
-								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
-						</tr> --%>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary">Save changes</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script>
-function test() {
-	$.ajax({
-		url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
-		data: {
-			groupId : '${groupId}'
-		},
-		success(res){
-			console.log(res);
-			$.each(res, function(i, e) {
-				console.log(e.NO);
-				let tr = `
-					<tr>
-						<td>
-							\${e.NO}
-						</td>
-						<td>
-							\${e.MEMBER_ID}
-						</td>
-						<td>
-							\${e.CONTENT}
-						</td>
-						<td>
-							\${e.REG_DATE}				
-						</td>
-						<td>
-							<button type="button" 
-								id="approve"
-								class="btn btn-default btn-sm btn-success"
-								style="margin-right: 1%;">승인</button>
-							<button type="button" class="btn btn-default btn-sm btn-danger">거절</button>
-						</td>
-					</tr>
-				`;
-				
-				$("#modalTbody").append(tr);
-			})
-		},
-		error: console.log
-	})
+//댓글 리스트 불러오기
+function getCommentList(boardNo){
+  	$.ajax({
+  		url:`${pageContext.request.contextPath}/group/getCommentList/\${boardNo}`,
+  		success(data){
+  			console.log(data);
+  			$("#group-board-comment-list>table").empty();
+  			
+  			$.each(data,(i,e)=>{
+	  			let tr = `
+	  				<tr class="level\${e.commentLevel}">
+					<td>
+						<sub class="comment-writer">\${e.writer}</sub>
+						<sub class="comment-date">\${e.regDate}</sub>
+						<br />
+						<!-- 댓글내용 -->
+						\${e.content}
+					</td>
+					<td>
+						<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
+						<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
+					</td>
+	  			</tr>` 
+	  			console.log(tr);
+	  			$("#group-board-comment-list>table").append(tr);
+  			})
+  		},
+  		error:console.log
+  	})
 };
 
 
 
+
+
 //댓글 입력
 $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 	e.preventDefault();
-	
+	let boardNo = $("[name=boardNo]",e.target).val(); 
 	let o = {
-		boardNo:$("[name=boardNo]",e.target).val(),
+		boardNo:boardNo,
 		writer:$("[name=writer]",e.target).val(),
 		commentLevel:$("[name=commentLevel]",e.target).val(),			
 		commentRef:$("[name=commentRef]",e.target).val(),			
@@ -605,6 +472,7 @@ $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 		success(data){
 			console.log(data);
 			$("[name=content]",e.target).val("");
+			getCommentList(boardNo);
 		},
 		error(xhr, statusText, err){
 			switch(xhr.status){
@@ -615,6 +483,162 @@ $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 	})
 })
 
+// 답글달기
+function showReplyForm(e){
+	console.log('alisjdflkajsd');
+	// 답글 달고자 하는 댓글의 번호
+	const commentRef = $(e).val(); // 댓글번호 가져오기
+	console.log($(e).siblings("#reply-board-no"));
+	const boardNo = $(e).siblings("#reply-board-no").val();
+	console.log(commentResf);
+	console.log(boardNo);
+	
+	/* const tr = `<tr>
+	<td colspan="2" style="text-align:left">
+		<form>
+	    <input type="hidden" name="boardNo" value="" />
+	    <input type="hidden" name="writer" value="" />
+	    <input type="hidden" name="commentLevel" value="2" />
+	    <input type="hidden" name="commentRef" value="\${commentRef}" />    
+		<textarea name="content" cols="60" rows="2"></textarea>
+	    <button type="submit" class="btn-comment-enroll2">등록</button>
+	</form>
+	
+	</td>
+</tr>`;
+	console.log(tr);
+	
+	// e.target인 버튼태그의 부모tr을 찾고, 다음 형제요소로 추가
+	const $baseTr = $(e.target).parent().parent(); // 답글 다려는 댓글의 tr
+	const $tr = $(tr); //HTML담긴 제이쿼리 변수
+	
+	$tr.insertAfter($baseTr)
+		.find("form")
+		.submit((e) => { // submit시 실행될 콜백함수를 지정해줄 수도 있음
+			const $content = $("[name=content]", e.target);
+			if(!/^(.|\n)+$/.test($content.val())){
+				alert("댓글을 작성해주세요.");
+				e.preventDefault();
+			}
+		});
+	// 클릭이벤트핸들러 제거!
+	// 답글 다는 동안 답글버튼 또 눌렀을 때 새로운 html생성되는 것 방지
+	$(e.target).off("click"); */
+}
+$(".btn-reply").click((e) => {
+		console.log('alisjdflkajsd');
+		// 답글 달고자 하는 댓글의 번호
+		const commentRef = $(e.target).val(); // 댓글번호 가져오기
+		console.log($(e.target).siblings("#reply-board-no"));
+		const boardNo = $(e.target).siblings("#reply-board-no").val();
+		console.log(commentRef);
+		console.log(boardNo);
+		
+		/* const tr = `<tr>
+		<td colspan="2" style="text-align:left">
+			<form>
+		    <input type="hidden" name="boardNo" value="" />
+		    <input type="hidden" name="writer" value="" />
+		    <input type="hidden" name="commentLevel" value="2" />
+		    <input type="hidden" name="commentRef" value="\${commentRef}" />    
+			<textarea name="content" cols="60" rows="2"></textarea>
+		    <button type="submit" class="btn-comment-enroll2">등록</button>
+		</form>
+		
+		</td>
+	</tr>`;
+		console.log(tr);
+		
+		// e.target인 버튼태그의 부모tr을 찾고, 다음 형제요소로 추가
+		const $baseTr = $(e.target).parent().parent(); // 답글 다려는 댓글의 tr
+		const $tr = $(tr); //HTML담긴 제이쿼리 변수
+		
+		$tr.insertAfter($baseTr)
+			.find("form")
+			.submit((e) => { // submit시 실행될 콜백함수를 지정해줄 수도 있음
+				const $content = $("[name=content]", e.target);
+				if(!/^(.|\n)+$/.test($content.val())){
+					alert("댓글을 작성해주세요.");
+					e.preventDefault();
+				}
+			});
+		// 클릭이벤트핸들러 제거!
+		// 답글 다는 동안 답글버튼 또 눌렀을 때 새로운 html생성되는 것 방지
+		$(e.target).off("click"); */
+	});
+
+//가입신청리스트
+function enrollList(){
+    $.ajax({
+        url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
+        data: {
+            groupId : '${groupId}'
+        },
+        success(res){
+            console.log(res);
+            $.each(res, function(i, e) {
+                console.log(e.NO);
+                let tr = `
+                    <tr>
+                        <td>
+                            \${e.NO}
+                        </td>
+                        <td>
+                            \${e.MEMBER_ID}
+                        </td>
+                        <td>
+                            \${e.CONTENT}
+                        </td>
+                        <td>
+                            \${e.REG_DATE}              
+                        </td>
+                        <td>
+                            <form:form name="groupApplyHandlingFrm">
+                                <input type="hidden" name="no" value="\${e.NO}"/>
+                                <input type="hidden" name="groupId" value="${group.groupId}"/>
+                                <input type="hidden" name="memberId" value="\${e.MEMBER_ID}"/>
+                                <input type="hidden" name="approvalYn" value=""/>
+                            </form:form>
+                            <button type="button" onclick="groupApplyHandlingFunc(this);"
+                                class="btn btn-default btn-sm btn-success"
+                                style="margin-right: 1%;" value="y">승인</button>
+                            <button type="button" onclick="groupApplyHandlingFunc(this);" class="btn btn-default btn-sm btn-danger" value="n">거절</button>
+                        </td>
+                    </tr>
+                `;
+                $("#modalTbody").append(tr);
+                $("#test_modal").modal();
+
+            })
+        },
+        error: console.log
+    })
+};
+
+function groupApplyHandlingFunc(e){
+    console.log(e); // button객체    
+    const $form = $(e).siblings("[name=groupApplyHandlingFrm]"); // 승인 및 거절 폼
+    $form.children("[name=approvalYn]").val($(e).val()); // 승인/거절 폼 내 input:hidden("[name = approvalYn]")에 value값 넣어주기
+    
+/*     console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=no]").val());
+    console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=approvalYn]").val()); */
+    
+ 	 $.ajax({
+		url:"${pageContext.request.contextPath}/group/groupApplyProccess",
+		method:"POST",
+		data: {
+			no:$form.children("[name=no]").val(),
+			groupId:$form.children("[name=groupId]").val(),
+			memberId:$form.children("[name=memberId]").val(),
+			approvalYn:$form.children("[name=approvalYn]").val()
+		},
+		success(data){
+			console.log(data);
+		},
+		error:console.log
+	 })
+     
+}
 </script>
 
 <style>

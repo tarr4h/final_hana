@@ -232,19 +232,22 @@ public class GroupController {
 		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
 		log.info("groupApplyList ={}", groupApplyList);
 		
-		return ResponseEntity.ok(groupApplyList);
-		
+		return ResponseEntity.ok(groupApplyList);		
 	}
 	
-	@PostMapping("/getGroupApplyRequest")
-	public void getGroupApplyRequest(GroupMemberList groupMemberList, Model model) {
-		log.info("groupMemberList ={}", groupMemberList);
-		
-		int result = groupService.insertGroupList(groupMemberList);
-		String msg = result > 0 ? "그룹 가입 완료." : "그룹 가입 실패";
-		log.info("msg ={}", msg);
-		
-	}
+    @PostMapping("/groupApplyProccess")
+    public String groupApplyProcess(
+            @RequestParam(name="no") int no, 
+            @RequestParam(name="groupId") String groupId,
+            @RequestParam(name="memberId") String memberId,
+            @RequestParam(name="approvalYn") String approvalYn) {
+        log.info("no = {}", no);
+        log.info("groupId = {}", groupId);
+        log.info("memberId = {}", memberId);
+        log.info("approvalYn = {}", approvalYn);
+        
+        return null;
+    }
 	
 }
 
