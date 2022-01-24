@@ -522,24 +522,7 @@ function test() {
 		error: console.log
 	})
 };
-/* 
-$(document)function(){
-	$('#approve').on('click',function(){
-		$.ajax({
-			url:"${pageContext.request.contextPath}/group/getGroupApplyRequest",
-			type: "POST",
-			data: {
-				(groupId: '${groupId}').serialize(),
-			},
-			success: function(data){
-				location.href="getGroupApplyRequest";
-			},
-			error: function(){
-				alert("그룹 가입 error");
-			}
-		});
-	});
-});  */
+
 </script>
 
 

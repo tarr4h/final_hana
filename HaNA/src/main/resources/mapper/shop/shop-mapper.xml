@@ -4,13 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop">
 
-	<select id="selectTest" resultType="string">
+	<select id="selectShopList" parameterType="map" resultType="map">
 		select
-			name
+			*
 		from
-			test
+			shop_info
 		where
-			no = '3'
+			location_x <![CDATA[<]]> ${maxLocationX}
+			and
+			location_y <![CDATA[<]]> ${maxLocationY}
+			and
+			id != #{id}
 	</select>
 
 </mapper>
