@@ -10,10 +10,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소그룹페이지" name="title" />
 </jsp:include>
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
 	
@@ -87,11 +83,6 @@
 	</div>
 	
 	
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
-
 <style>
 #myInfo {
 	border: 1px solid black;
@@ -274,14 +265,11 @@ pre {
 				</div>
 			</div>
 		</div>
-<<<<<<< HEAD
 	</section>
 	<div class="icon">
 		<a href="#"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i
 			class="fas fa-calendar-alt"></i></a> <a href="#"><i
 			class="far fa-comments"></i></a>
-=======
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	</div>
 </div>
 
@@ -302,8 +290,6 @@ pre {
 	        </div>
 		${vs.index%3 == 2? "</div>" : ""}
 	</c:forEach>
-<<<<<<< HEAD
-=======
 </div>
 
 <c:if test="${loginMember.id eq group.leaderId}">
@@ -353,7 +339,6 @@ $("#myBtn").on( "click", function() {
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	</div>
 </div>
 <style>
@@ -430,7 +415,6 @@ $('.board-main-image').click((e)=>{
 	$('#groupPageDetail').modal("show");
 });
 
-<<<<<<< HEAD
 <div class="icon">
 	<a href="#"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i
 		class="fas fa-calendar-alt"></i></a> <a href="#"><i
@@ -554,8 +538,6 @@ $("#myBtn").on( "click", function() {
 </div>
 
 <script>
-=======
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 function test() {
 	$.ajax({
 		url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
@@ -597,8 +579,6 @@ function test() {
 	})
 };
 
-<<<<<<< HEAD
-=======
 
 
 //댓글 입력
@@ -635,7 +615,6 @@ $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 	})
 })
 
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 </script>
 
 <style>

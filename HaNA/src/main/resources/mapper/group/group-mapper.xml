@@ -154,7 +154,6 @@
     	#{memebrId}, 
     	default;
 	</insert>
-	<insert id="insertGroupBoardComment">
 
   <insert id="insertGroupBoardComment">
 		insert into
