@@ -118,7 +118,35 @@
 		group_id = #{groupId}
 	order by no desc
 	</select>
-	<insert id="insertGroupBoardComment">
+	
+	<insert id="insertEnrollGroupForm" parameterType="map">
+	insert into
+		group_apply_list
+	values(
+		seq_group_apply_list.nextVal,
+		#{groupId},
+		#{memberId},
+		#{content},
+		default,
+		default,
+		default
+		)
+	</insert>
+	
+	<select id="getGroupApplyRequest" resultType="map">
+	select
+		*
+	from
+		group_apply_list
+	where
+		group_id = #{groupId}
+		and 
+		approval_yn = 'N'
+	order by
+		no 
+	</select>
+
+  <insert id="insertGroupBoardComment">
 		insert into
 			group_board_comment
 		values(

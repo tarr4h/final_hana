@@ -207,6 +207,34 @@ public class GroupController {
 		return map;
 	}
 	
+	@GetMapping("/enrollGroupForm")
+	public void enrollGroupForm(@RequestParam String groupId, Model model) {
+		log.info("groupId = {}", groupId);
+		model.addAttribute("groupId", groupId);
+	}
+	
+	@PostMapping("/enrollGroupForm")
+	public String enrolledGroupForm(@RequestParam Map<String, Object> map, Model model) {
+		log.info("map = {}", map);
+		int result = groupService.insertEnrollGroupForm(map);
+		
+		String msg = result > 0 ? "가입 신청 완료." : "가입 신청 실패.";
+		log.info("msg ={}", msg);
+		
+		return "redirect:/group/groupPage/"+map.get("groupId");
+	}
+
+	@GetMapping("/getGroupApplyRequest")
+	public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
+		log.info("groupId ={}", groupId);
+		
+		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
+		log.info("groupApplyList ={}", groupApplyList);
+		
+		return ResponseEntity.ok(groupApplyList);
+		
+	}
+	
 }
 
 
