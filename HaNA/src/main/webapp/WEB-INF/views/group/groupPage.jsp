@@ -10,6 +10,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소그룹페이지" name="title" />
 </jsp:include>
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
 	
@@ -83,7 +87,10 @@
 	</div>
 	
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 
 <style>
 #myInfo {
@@ -208,7 +215,7 @@ pre {
 			<div class="profileBtn">
 				<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
 				<img
-					src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png"
+					src="${pageContext.request.contextPath}/resources/images/icons/plusIcon.png"
 					alt="" />
 			</div>
 		</div>
@@ -267,13 +274,24 @@ pre {
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 	</section>
 	<div class="icon">
 		<a href="#"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i
 			class="fas fa-calendar-alt"></i></a> <a href="#"><i
 			class="far fa-comments"></i></a>
+=======
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	</div>
-	<div class="container">
+</div>
+
+<div class="icon">
+	<a href="#"><i class="fas fa-pencil-alt"></i></a>
+	<a href="#"><i class="fas fa-calendar-alt"></i></a>
+	<a href="#"><i class="far fa-comments"></i></a>
+</div>
+
+<div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
 	        <div class="col-sm-4" >
@@ -284,6 +302,58 @@ pre {
 	        </div>
 		${vs.index%3 == 2? "</div>" : ""}
 	</c:forEach>
+<<<<<<< HEAD
+=======
+</div>
+
+<c:if test="${loginMember.id eq group.leaderId}">
+	<button id="myBtn" onclick="test();">승인</button>
+</c:if>
+
+<script>
+$("#myBtn").on( "click", function() {
+    $("#test_modal").modal();
+});
+</script>
+
+<div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">가입 승인 리스트</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>번호</th>
+							<th>아이디</th>
+							<th>가입신청내용</th>
+							<th>날짜</th>
+							<th>승인여부</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody">
+						<%-- <tr>
+							<td>${no}</td>
+							<td>member_id</td>
+							<td>content</td>
+							<td>regDate</td>
+							<td><button type="button"
+									class="btn btn-default btn-sm btn-success"
+									style="margin-right: 1%;">승인</button>
+								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
+						</tr> --%>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	</div>
 </div>
 <style>
@@ -291,6 +361,7 @@ pre {
 	 cursor:pointer;
 	}
 </style>
+
 <script>
 //ajax POST 요청 csrf
     var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -359,6 +430,7 @@ $('.board-main-image').click((e)=>{
 	$('#groupPageDetail').modal("show");
 });
 
+<<<<<<< HEAD
 <div class="icon">
 	<a href="#"><i class="fas fa-pencil-alt"></i></a> <a href="#"><i
 		class="fas fa-calendar-alt"></i></a> <a href="#"><i
@@ -482,6 +554,8 @@ $("#myBtn").on( "click", function() {
 </div>
 
 <script>
+=======
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 function test() {
 	$.ajax({
 		url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
@@ -523,10 +597,66 @@ function test() {
 	})
 };
 
+<<<<<<< HEAD
+=======
+
+
+//댓글 입력
+$(document.groupBoardCommentSubmitFrm).submit((e)=>{
+	e.preventDefault();
+	
+	let o = {
+		boardNo:$("[name=boardNo]",e.target).val(),
+		writer:$("[name=writer]",e.target).val(),
+		commentLevel:$("[name=commentLevel]",e.target).val(),			
+		commentRef:$("[name=commentRef]",e.target).val(),			
+		content:$("[name=content]",e.target).val(),	
+	}
+	console.log(o);
+	const jsonStr = JSON.stringify(o);
+	console.log(jsonStr);
+
+	$.ajax({
+		url:"<%=request.getContextPath()%>/group/enrollGroupBoardComment",
+		method:"POST",
+		dataType:"json",
+		data:jsonStr,
+		contentType:"application/json; charset=utf-8",
+		success(data){
+			console.log(data);
+			$("[name=content]",e.target).val("");
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+})
+
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 </script>
 
-
-
+<style>
+table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+textarea { height:100px;border:none;width:100%;resize:none; }
+textarea:focus { outline:none; }
+input[type="submit"] {
+	font-weight:bold;
+	color:#384fc5c4;
+	background-color:white;
+	border:none;
+	float:right;
+}
+textarea::placeholder {
+color:gray;
+  font-size: 1.1em;
+}
+</style>
 
 <a href="/" class="badge badge-dark">Dark</a>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

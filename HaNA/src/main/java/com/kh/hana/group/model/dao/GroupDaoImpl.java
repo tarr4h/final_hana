@@ -39,7 +39,8 @@ public class GroupDaoImpl implements GroupDao {
 	public List<Group> selectGroupList(Member member) {
 		return session.selectList("group.selectGroupList",member);
 	}
-
+  
+  @Override
 	public int insertGroupBoard(GroupBoardEntity groupBoard) {
 		return session.insert("group.insertGroupBoard", groupBoard);
 	}
@@ -79,7 +80,8 @@ public class GroupDaoImpl implements GroupDao {
 		return session.insert("insertGroupList", groupMemberList);
 	}
 	
-	public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
+  @Override
+  public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
 		return session.insert("insertGroupBoardComment",groupBoardComment);
 	}
 	

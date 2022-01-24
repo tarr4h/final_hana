@@ -42,7 +42,8 @@ public class GroupServiceImpl implements GroupService{
 	public List<Group> selectGroupList(Member member) {
 		return groupDao.selectGroupList(member);
 	}
-		
+	
+  @Override
 	public int insertGroupBoard(GroupBoardEntity groupBoard) {
 		return groupDao.insertGroupBoard(groupBoard);
 	}
@@ -81,9 +82,10 @@ public class GroupServiceImpl implements GroupService{
 	public int insertGroupList(GroupMemberList groupMemberList) {
 		return groupDao.insertGroupList(groupMemberList);
 	}
-	
-	public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
+  
+  @Override
+  public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
 		return groupDao.insertGroupBoardComment(groupBoardComment);
-	}
+  }
 
 }

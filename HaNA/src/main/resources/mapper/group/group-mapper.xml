@@ -155,6 +155,8 @@
     	default;
 	</insert>
 	<insert id="insertGroupBoardComment">
+
+  <insert id="insertGroupBoardComment">
 		insert into
 			group_board_comment
 		values(
