@@ -31,6 +31,7 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -202,6 +203,16 @@ public class GroupController {
 		log.info("groupApplyList ={}", groupApplyList);
 		
 		return ResponseEntity.ok(groupApplyList);
+		
+	}
+	
+	@PostMapping("/getGroupApplyRequest")
+	public void getGroupApplyRequest(GroupMemberList groupMemberList, Model model) {
+		log.info("groupMemberList ={}", groupMemberList);
+		
+		int result = groupService.insertGroupList(groupMemberList);
+		String msg = result > 0 ? "그룹 가입 완료." : "그룹 가입 실패";
+		log.info("msg ={}", msg);
 		
 	}
 	

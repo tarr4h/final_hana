@@ -12,6 +12,7 @@ import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.member.model.vo.Member;
 
 @Service
@@ -73,6 +74,11 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
 		return groupDao.getGroupApplyRequest(groupId);
+	}
+
+	@Override
+	public int insertGroupList(GroupMemberList groupMemberList) {
+		return groupDao.insertGroupList(groupMemberList);
 	}
 
 }

@@ -8,6 +8,7 @@ import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.member.model.vo.Member;
 
 
@@ -34,5 +35,7 @@ public interface GroupService {
 	int insertEnrollGroupForm(Map<String, Object> map);
 
 	List<Map<String, Object>> getGroupApplyRequest(String groupId);
+
+	int insertGroupList(GroupMemberList groupMemberList);
 
 }

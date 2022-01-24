@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 
 public interface GroupDao {
 	
@@ -30,5 +31,7 @@ public interface GroupDao {
 	public int insertEnrollGroupForm(Map<String, Object> map);
 
 	public List<Map<String, Object>> getGroupApplyRequest(String groupId);
+
+	public int insertGroupList(GroupMemberList groupMemberList);
 
 }

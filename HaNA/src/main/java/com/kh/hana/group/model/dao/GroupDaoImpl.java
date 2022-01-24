@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
@@ -69,6 +70,11 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
 		return session.selectList("getGroupApplyRequest", groupId);
+	}
+
+	@Override
+	public int insertGroupList(GroupMemberList groupMemberList) {
+		return session.insert("insertGroupList", groupMemberList);
 	}
 	
 
