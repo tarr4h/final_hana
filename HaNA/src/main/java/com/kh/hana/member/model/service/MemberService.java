@@ -28,4 +28,6 @@ public interface MemberService {
 
 	List<Follower> followerList(String id);
 
+	List<Follower> followingList(String id);
+
 }

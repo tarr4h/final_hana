@@ -95,6 +95,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectList("member.followerList", id);
 	}
 
+	@Override
+	public List<Follower> followingList(String id) {
+		return session.selectList("member.followingList", id);
+	}
+
 
  
 	

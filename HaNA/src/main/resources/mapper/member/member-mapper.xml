@@ -144,16 +144,25 @@
 
 
 	<select id="followerList" resultType="follower">
-		select
-			following_id
+		select 
+		    following_id, picture
 		from
-			follower
+		    follower f full outer join member m
+		on 
+		    f.member_id = m.id
 		where
-		member_id = #{id}
+			f.member_id = #{id}
 	</select>
 
 
-
+	<select id="followingList" resultType="follower">
+	select
+		member_id
+	from
+		follower
+	where
+	member_id = #{id}
+	</select>
 
 
 
