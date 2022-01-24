@@ -94,5 +94,15 @@ public class ChatDaoImpl implements ChatDao {
 		return session.selectOne("chat.searchPicture",member);
 	}
 
+	@Override
+	public List<Map<String, Object>> roomchat2(int no) {
+		return session.selectList("chat.roomchat2", no);
+	}
+
+	@Override
+	public int exitRoom(int roomNo) {
+		return session.delete("chat.exitRoom",roomNo);
+	}
+
 
 }

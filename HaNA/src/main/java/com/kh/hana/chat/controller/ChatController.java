@@ -61,7 +61,7 @@ public class ChatController {
     public ResponseEntity<?> roomchat(int no){
     	log.info("no = {}",no);
     	
-    	List<Chat> chat = chatService.roomchat(no);
+    	List<Map<String, Object>> chat = chatService.roomchat2(no);
     	//log.info("chat = {}", chat); 	  	
     	
     	return ResponseEntity.ok(chat);
@@ -138,6 +138,19 @@ public class ChatController {
     	
     	
     	return ResponseEntity.ok(member);
+    }
+    
+    @GetMapping("/main.do")
+    public void main() {}
+    
+    @GetMapping("/exitRoom.do")
+    public String exitRoom(int roomNo, RedirectAttributes redirectAttr) {
+    	int result = chatService.exitRoom(roomNo);
+    	if(result > 0)
+    		redirectAttr.addFlashAttribute("msg", "채팅방을 나갔습니다.");
+    	else
+    		redirectAttr.addFlashAttribute("msg", "채팅방 나가기 실패");
+    	return "redirect:/chat/chat.do";
     }
     		
 }

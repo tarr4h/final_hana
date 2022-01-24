@@ -93,6 +93,16 @@ public class ChatServiceImpl implements ChatService {
 		return chatDao.searchPicture(member);
 	}
 
+	@Override
+	public List<Map<String, Object>> roomchat2(int no) {
+		return chatDao.roomchat2(no);
+	}
+
+	@Override
+	public int exitRoom(int roomNo) {
+		return chatDao.exitRoom(roomNo);
+	}
+
 
 
 }

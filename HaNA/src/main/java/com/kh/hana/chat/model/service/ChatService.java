@@ -38,4 +38,8 @@ public interface ChatService {
 
 	String searchPicture(String member);
 
+	List<Map<String, Object>> roomchat2(int no);
+
+	int exitRoom(int roomNo);
+
 }

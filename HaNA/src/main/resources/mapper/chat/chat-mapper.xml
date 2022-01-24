@@ -10,15 +10,27 @@
 		chat_room 
 	where members like '%' ||  #{id} || '%'
 	</select>
-	
-	<select id="roomchat" resultType="chat">
-	select
-		*
-	from
-		chat
-	where room_no = #{no}
-	order by message_reg_date
+		
+		<select id="roomchat2" resultMap="chatMap">
+	select 
+		c.*, m.picture 
+	from 
+		chat c left join member m 
+		on c.member_id = m.id 
+	where 
+		c.room_no = #{no} 
+		order by c.message_reg_date
 	</select>
+	
+	<resultMap type="map" id="chatMap">
+		<id column="room_no" property="roomNo"/>
+		<result column="member_id" property="memberId"/>
+		<result column="message" property="message"/>
+		<result column="message_reg_date" property="messageRegDate"/>
+		<result column="unreadcount" property="unreadcount"/>
+		<result column="picture" property="picture"/>
+	</resultMap>
+	
 	<select id="selectChatRoom" resultType="chatroom">
 	select 
 		* 
@@ -121,6 +133,12 @@
 		#{image}
 		)
 	</insert>
+	<delete id="exitRoom">
+	delete
+		from
+	chat_room
+		where room_no = #{roomNo}
+	</delete>
 	
 
 </mapper>

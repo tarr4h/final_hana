@@ -2,6 +2,9 @@ package com.kh.hana.chat.model.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.kh.hana.member.model.vo.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +27,11 @@ public class Chat implements Serializable {
 	private String message;
 	private Date messageRegDate;
 	private int unReadCount;
+	private String picture; // 프로필사진
+	
+	
+	
+	
 	
 	
 	

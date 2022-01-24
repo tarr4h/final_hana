@@ -40,4 +40,8 @@ public interface ChatDao {
 
 	String searchPicture(String member);
 
+	List<Map<String, Object>> roomchat2(int no);
+
+	int exitRoom(int roomNo);
+
 }

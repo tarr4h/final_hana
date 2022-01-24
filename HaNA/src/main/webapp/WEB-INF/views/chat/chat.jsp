@@ -31,17 +31,22 @@
 </c:if>
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
-<span>메세지 다듬기</span><br />
+<span>member picture 못찾는건 404</span><br />
 <span>소모임 회원 가입시 채팅방 추가 / 소모임 탈퇴시 채팅방 나가기</span><br />
 <span>1:1 채팅 소모임 채팅만</span><br />
+<a href="${pageContext.request.contextPath}/chat/main.do">메인화면연습</a>
 <script>
 let id;
+let picture;
+let today = Date.now()-(9 * 60 * 60 * 1000);
 <sec:authorize access="isAuthenticated()">
 	id = '<sec:authentication property="principal.id"/>';
+	picture = '<sec:authentication property="principal.picture"/>';
 </sec:authorize>
-$().ready(function(){ 
+$(()=>{
 	roomList();
 });
+
 const roomList = () => {
 	console.log(id);
 	$.ajax({
@@ -138,12 +143,20 @@ const displayRoom = (selector, data) => {
 	</div>
 	<!-- Modal 끝-->
 	
+<!-- 채팅보내기 form -->
 <form 
 	action="${pageContext.request.contextPath}/chat/sendchat.do"
 	name="sendchatFrm"
 	method="GET">
 	<input type="hidden" name="memberId"/>
 	<input type="hidden" name="loginId"/>
+</form>
+<!-- 채팅 나가기 form -->
+<form 
+	action="${pageContext.request.contextPath}/chat/exitRoom.do"
+	name="exitRoomFrm"
+	method="GET">
+	<input type="hidden" name="roomNo"/>
 </form>
 <script>
 <!-- roomNo 전역변수 -->
@@ -183,8 +196,8 @@ if(websocket !== undefined){
 						<span id="action_menu_btn" onclick="actionMenu();"><i class="fas fa-ellipsis-v"></i></span>
 						<div class="action_menu">
 							<ul>
-								<li><i class="fas fa-user-circle"></i>신고하기</li>
-								<li onclick="closeBtn();"><i class="fas fa-ban"></i>나가기</li>
+								<li onclick="closeChatRoom();"><i class="fas fa-user-circle"></i>채팅방 나가기</li>
+								<li onclick="closeBtn();"><i class="fas fa-ban"></i>대화창 나가기</li>
 							</ul>
 					</div>
 				</div>`;
@@ -214,8 +227,16 @@ if(websocket !== undefined){
 	
 	connect();
 };
+
+<!-- enter키 -->
+const enterkey = () => {
+	if (window.event.keyCode == 13) {
+		$("#btnSend").trigger("click");
+	}
+};
 <!-- 메세지 전송 -->
 const btnSend = () => {
+	
 	console.log("버튼클릭 roomNo = ",roomNo);
 	if(websocket === undefined) {
 		alert("채팅방을 선택하세요");
@@ -231,7 +252,9 @@ const btnSend = () => {
     const data = {
             "roomNo" : roomNo,
             "memberId" : id,
-            "message"   : msg 
+            "message"   : msg,
+            "picture" : picture,
+            "messageRegDate" : today
         };
     msgCheck(data);
     let jsonData = JSON.stringify(data);
@@ -269,10 +292,12 @@ function onOpen() {
 <!-- 메세지 수신 -->
 function onMessage(e){
 	let eSplit = e.data.split(",");
-	
+
 	const data = {
 		"memberId" : eSplit[0],
-		"message" : eSplit[1]
+		"message" : eSplit[1],
+		"picture" : eSplit[2],
+		"messageRegDate" : today
 	};
 	console.log(data);
 	if(data.memberId != id){
@@ -282,42 +307,62 @@ function onMessage(e){
 		
 function msgCheck(e){
 	const check = (e.memberId != id) ? "left" : "right";
-	displaychat(check, e.memberId, e.message);
+	//displaychat(check, e.memberId, e.message);
+	displaychat(check, e);
 }
  
-const displaychat = (check, memberId, message) =>{
+//const displaychat = (check, memberId, message) =>{
+const displaychat = (check, e) =>{
+	<!-- timestamp로 온거 messageRegDate 변환 -->
+	const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+	var date = new Date(e.messageRegDate+(KR_TIME_DIFF));
+	var year = date.getFullYear().toString().slice(-2); //년도 뒤에 두자리
+	var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
+	var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
+	var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+	var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
+
+	var todayDate = new Date(today);
+	var todayyear = todayDate.getFullYear().toString().slice(-2); //년도 뒤에 두자리
+	var todaymonth = ("0" + (todayDate.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
+	var todayday = ("0" + todayDate.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
+
+	var ampm = (hour > 12 ? "pm" : "am");
+	if(hour > 12)
+		hour = hour - 12;
+	var returnDate = (todayyear+todaymonth+todayday === year+month+day ? "Today " : "") + ampm+" " + hour + ":" + minute;
 	let chat = ``
 	
-	if(message === 'ROOMENTER'){
+	if(e.message === 'ROOMENTER'){
 		
 		chat += `<div class="d-flex justify-content-center mb-2">
 			<div class="msg_cotainer_send">
-			\${memberId}가 입장하셨습니다.
+			\${e.memberId}가 입장하셨습니다.
 			</div>
 			</div>`
 	}
 	
 	else{
-		
+
 		if(check === 'right'){
 				chat += `<div class="d-flex justify-content-end mb-4">
 <div class="msg_cotainer_send">
-\${check} \${memberId}, \${message}
-<span class="msg_time_send">8:55 AM, Today</span>
+\${e.message}
+<span class="msg_time_send">\${returnDate}</span>
 </div>
 <div class="img_cont_msg">
-<img src="#" class="rounded-circle user_img_msg">
+<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
 </div>
 </div>`;
 		}
 		else{
 			chat += `<div class="d-flex justify-content-start mb-4">
 				<div class="img_cont_msg">
-				<img src="#" class="rounded-circle user_img_msg">
+				<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
 			</div>
 			<div class="msg_cotainer">
-			\${check} \${memberId}, \${message}
-				<span class="msg_time">8:40 AM, Today</span>
+			\${e.message}
+				<span class="msg_time">\${returnDate}</span>
 			</div>
 		</div>`;
 		}
@@ -335,6 +380,7 @@ $("#findMember").on("click", function(e){
 	$(memberlistModal)
 	.modal();
 });
+//친구목록
 $("#allMember").on("click", function(e){
 	
 	console.log("회원목록");
@@ -382,9 +428,9 @@ const sendBtn = () => {
 <div class="input-group-append">
 <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
 </div>							
-<textarea id="msg" class="form-control type_msg" placeholder="Type your message..."></textarea>
+<textarea onkeyup="enterkey();" id="msg" class="form-control type_msg" placeholder="Type your message..."></textarea>
 <div class="input-group-append">
-<button onclick="btnSend();" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
+<button onclick="btnSend();" id="btnSend" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
 </div>
 </div>`; 
 	$("#sendMsgBtn").html(sendHTML);
@@ -433,8 +479,17 @@ $("#findMemberInput").autocomplete({
     .appendTo( ul );
 }; 
 
+<!-- 메뉴 클릭 -->
 const actionMenu = () => {
 	$('.action_menu').toggle();
+};
+
+<!-- 채팅방 나가기 -->
+const closeChatRoom = ()=>{
+	if(confirm("상대방의 채팅방도 나가집니다. 나가시겠습니까?")){
+		$("[name=exitRoomFrm] input[name=roomNo]").val(roomNo);
+		$(document.exitRoomFrm).submit();
+	}
 };
 	
 </script>
