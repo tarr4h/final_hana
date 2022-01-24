@@ -90,7 +90,7 @@ const displayRoom = (selector, data) => {
 			});
 		}
 		else{
-			chatroom += `<span>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</span>`;
+			chatroom += `<span>회원 검색 or 친구목록 or 소모임 가입을 통해 대화가 가능합니다.</span>`;
 		}
 		
 		$target.html(chatroom);
