@@ -138,9 +138,14 @@
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
 </script>
 <script>
-	$(() => {
+
+var loading = false;
+var page = 1;
+
+function scrollPage(){
+$(() => {
+
 		console.log("${loginMember.addressAll}");
-		
 		var Addr_val = "${loginMember.addressAll}";
 	
 
@@ -159,8 +164,6 @@
 	        let x = parseFloat(items[0].x);
 	        let y = parseFloat(items[0].y);
 
-	        
-	     
 	    	$.ajax({
 				url: `${pageContext.request.contextPath}/shop/shopList`,
 				data: {
@@ -170,10 +173,10 @@
 				},
 				success(res){
 					console.log(res);
-					list = res;
-					console.log(list.length);
-					
-					for(var i=0; i<list.length;i++){
+					 list = res;
+					console.log(list);
+
+					  for(var i=0; i<list.length;i++){
 					    console.log(list[i].ID)
 						var htmlOut='';
 						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
@@ -181,15 +184,25 @@
 					    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 					    htmlOut += '</div>';
 					    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-						$('#shopList').append(htmlOut);
-					}
+						$('#shopList').append(htmlOut); 
+					}  
+				page++;
+				console.log(page);	
 				},
 				error:console.log			
 			});
 	    });
 	});
-	
-
+};
+	// scroll 위치지정 및 ajax실행
+	$(window).scroll(function(){
+		if($(window).scrollTop() + 10 >= $(document).height() - $(window).height()){
+			if(!loading){
+				loading = true;
+				scrollPage();
+			}
+		}
+	});
 
 
 	
