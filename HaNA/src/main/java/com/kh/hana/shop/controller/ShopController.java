@@ -48,6 +48,7 @@ public class ShopController {
 		log.info("data = {}", data);
 		
 		List<Map<String, Object>> shopList = shopService.selectShopList(data);
+		log.info("length = {}", shopList.size());
 		
 		return ResponseEntity.ok(shopList);
 	}
