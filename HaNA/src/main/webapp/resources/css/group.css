@@ -40,11 +40,12 @@
 }
 
 /* 소모임 정보 테이블 */
-.group-page-table{
+.profileTable{
     position: relative; 
     top: 25%; 
     left: 33%; 
     display: inline-block;
+    border: solid 1px black;
 }
 
 .group-page-table .td{
@@ -55,8 +56,7 @@
 .group-page-enroll-button {
     display:inline-block; 
     position: relative; 
-    top : 5%; 
-    left: 45%;
+    top: 40%;
 }
 
 /* 가입버튼 css */

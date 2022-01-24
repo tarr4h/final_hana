@@ -218,12 +218,22 @@
 				</table>
 			</div>
 
+ 
         	<button style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 	</div>
         </div>
 	</div> 
        
     <div class="row" style="height:50px">   
+ 
+        	<button style="float:right;"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+		</div>
+      </div>
+</div> 
+
+<div class="container mt-2">       
+    <div class="row">   
+ 
         <!-- 탭 영역 -->
         <!-- <div class="col-sm-12 d-flex justify-content-center align-items-center" id="tab">
         	<input type="button" class="m-3" value="버튼1" />

@@ -132,13 +132,12 @@ public class MemberController {
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
         oldMember.setIntroduce(member.getIntroduce());
-        oldMember.setAddressFirst(member.getAddressFirst());
-        oldMember.setAddressSecond(member.getAddressSecond());
-        oldMember.setAddressThird(member.getAddressThird());
         oldMember.setAddressFull(member.getAddressFull());
         oldMember.setAddressAll(member.getAddressAll());
         oldMember.setPersonality(member.getPersonality());
         oldMember.setInterest(member.getInterest());
+        oldMember.setLocationX(member.getLocationX());
+        oldMember.setLocationY(member.getLocationY());
      
         log.info("memberSetting result = {}" , result); 
         log.info("memberPersonality={}" , member.getPersonality()); 
@@ -176,41 +175,39 @@ public class MemberController {
 	
 	@PostMapping("/shopSetting/shopInfo")
 	public String updateShopInfo(@RequestParam Map<String, String> param, @RequestParam(name="profile") MultipartFile upFile, Authentication authentication, RedirectAttributes redirectAttr) {
-		Member member = (Member)authentication.getPrincipal();
-		String oldProfile = member.getPicture();
+		log.info("param = {}", param);
 		
-		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
-		File file = new File(saveDirectory, oldProfile);
-		boolean bool = file.delete();
+		Member member = (Member)authentication.getPrincipal(); String oldProfile =
+		member.getPicture();
+		  
+		String saveDirectory =
+		application.getRealPath("/resources/upload/member/profile"); File file = new
+		File(saveDirectory, oldProfile); boolean bool = file.delete();
 		log.info("bool = {}", bool);
-		
-		String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename()); 
-		
+		  
+		String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename());
+		  
 		File regFile = new File(saveDirectory, renamedFilename);
-		
-		try {
-			upFile.transferTo(regFile);
-		} catch (IllegalStateException | IOException e) {
-			log.error(e.getMessage(), e);
-		}
-		
+		  
+		try { upFile.transferTo(regFile); } catch (IllegalStateException |
+		IOException e) { log.error(e.getMessage(), e); }
+		  
 		param.put("picture", renamedFilename);
-		
-		member.setName(param.get("username"));
-		member.setPicture(renamedFilename);
+		  
+		member.setName(param.get("username")); member.setPicture(renamedFilename);
 		member.setIntroduce(param.get("introduce"));
-		member.setAddressFirst(param.get("addressFirst"));
-		member.setAddressSecond(param.get("addressSecond"));
-		member.setAddressThird(param.get("addressThird"));
 		member.setAddressFull(param.get("addressFull"));
 		member.setAddressAll(param.get("addressAll"));
-
+		member.setLocationX(param.get("locationX"));
+		member.setLocationX(param.get("locationY"));
+		  
 		param.put("id", member.getId());
-		
+		  
 		int result = memberService.updateShopInfo(param, member);
-		
-		log.info("contResult = {}", result);
-		redirectAttr.addFlashAttribute("msg", "redi수정완료");
+		  
+		log.info("contResult = {}", result); redirectAttr.addFlashAttribute("msg",
+		"수정되었습니다.");
+		 
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 	
