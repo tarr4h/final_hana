@@ -117,11 +117,11 @@ public class MemberController {
 		try {
 			if(param.equals("shopInfo")) {
 				Shop shop = memberService.selectOneShopInfo(memberId);
-				log.info("shop={}", shop);
+				log.info("shop Setting ={}", shop);
 				if(shop != null) {
 					model.addAttribute(shop);
 				} else {
-					throw new Exception();
+					model.addAttribute("msg", "등록된 정보가 없습니다. 매장정보를 입력해주세요.");
 				}
 			}
 		} catch (Exception e) {
@@ -229,6 +229,7 @@ public class MemberController {
 	
 	@PostMapping("/shopSetting/shopInfo")
 	public String updateShopInfo(Shop shop, RedirectAttributes redirectAttr) {
+		log.info("updateShopInfo shop = {}", shop);
 		int result = memberService.updateShopInfo(shop);
 		
 		String msg = "";

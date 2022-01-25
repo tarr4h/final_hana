@@ -167,5 +167,23 @@
 		)
 	</insert>
 	
+	<insert id="insertGroupMember" parameterType="map">
+		insert into
+			group_member_list
+		values(
+			#{groupId},
+			#{memberId},
+			default
+		)
+	</insert>
+	
+	<delete id="deleteGroupApplyList">
+		delete from 
+			group_apply_list 
+		where 
+			member_id = #{memberId}
+			and
+			group_id = #{groupId}
+	</delete>
 </mapper>
 

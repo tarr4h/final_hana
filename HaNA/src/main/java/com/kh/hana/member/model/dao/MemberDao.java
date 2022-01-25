@@ -41,6 +41,9 @@ public interface MemberDao {
 	int insertShopInfo(Shop shop);
 
 	int updateShopInfo(Shop shop);
+
+	int insertShopInfo(String id);
+
  
 
 }
