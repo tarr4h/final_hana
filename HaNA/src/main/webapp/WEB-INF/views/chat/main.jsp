@@ -10,6 +10,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="main"/>
 </jsp:include>
+
+<sec:authentication property="principal" var="loginMember" />
 <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main.css" />
@@ -21,7 +23,7 @@
           <header>
             <div class="profile-of-article">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="dlwlrma님의 프로필 사진">
-              <span class="userID main-id point-span">\${principal.id}</span>
+              <span class="userID main-id point-span">dlwlrma</span>
             </div>
             <img class="icon-react icon-more" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="more">
           </header>
@@ -73,8 +75,8 @@
         <div class="myProfile">
           <img class="pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="thisisyourhyung님의 프로필 사진">
           <div>
-            <span class="userID point-span">thisisyourhyung</span>
-            <span class="sub-span">JIHYUNG LEE</span>  
+            <span class="userID point-span">${loginMember.id}</span>
+            <span class="sub-span">${loginMember.name}</span>  
           </div>
         </div>
         <!-- story section -->
