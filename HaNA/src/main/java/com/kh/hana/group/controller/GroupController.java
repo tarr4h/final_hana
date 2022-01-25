@@ -248,6 +248,15 @@ public class GroupController {
 			return ResponseEntity.ok(map);
 		}
 	}
+    @GetMapping("/getGroupApplyRequest")
+    public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
+        log.info("groupId ={}", groupId);
+        
+        List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
+        log.info("groupApplyList ={}", groupApplyList);
+        
+        return ResponseEntity.ok(groupApplyList);       
+    }
 	
     @PostMapping("/groupApplyProccess")
     @ResponseBody
@@ -262,23 +271,25 @@ public class GroupController {
         log.info("groupId = {}", groupId);
         log.info("memberId = {}", memberId);
         log.info("approvalYn = {}", approvalYn);
-
         //승인(y)
         if(approvalYn.equals("y")) {
-        	int result = groupService.insertGroupMember(map);
-        	log.info("result ={}", result);
-        	
-        	String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
-        	log.info("msg ={}", msg);
+            int result = groupService.insertGroupMember(map);
+            log.info("result ={}", result);
+            
+            String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
+            log.info("msg ={}", msg);
+            
+            int deleteResult = groupService.deleteGroupApplyList(map);
+            log.info("deleteResult ={}", deleteResult);
         }
         //거절(n)
         else {
-        	int result = groupService.deleteGroupApplyList(map);
-        	log.info("result ={}", result);
-        	
-        	String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
-        	log.info("msg ={}", msg);
-        	
+            int result = groupService.deleteGroupApplyList(map);
+            log.info("result ={}", result);
+            
+            String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
+            log.info("msg ={}", msg);
+            
         }
         
         return "redirect:/group/groupPage/"+groupId;
