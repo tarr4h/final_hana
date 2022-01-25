@@ -21,7 +21,7 @@
           <header>
             <div class="profile-of-article">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="dlwlrma님의 프로필 사진">
-              <span class="userID main-id point-span">dlwlrma</span>
+              <span class="userID main-id point-span">\${principal.id}</span>
             </div>
             <img class="icon-react icon-more" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="more">
           </header>
