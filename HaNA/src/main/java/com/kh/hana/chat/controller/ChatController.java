@@ -1,9 +1,14 @@
 package com.kh.hana.chat.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +16,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
+import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +38,9 @@ public class ChatController {
 	
 	@Autowired
 	private ChatService chatService;
+	
+	@Autowired
+	private ServletContext application;
 	
 	@GetMapping("/chat.do")
 	public void chat() {}
@@ -151,6 +163,29 @@ public class ChatController {
     	else
     		redirectAttr.addFlashAttribute("msg", "채팅방 나가기 실패");
     	return "redirect:/chat/chat.do";
+    }
+    
+    @PostMapping("/sendFile.do")
+    public ResponseEntity<?> sendFile(MultipartHttpServletRequest filerequest){
+    	
+    	MultipartFile upfile = filerequest.getFile("image");
+    	log.info("sendFile upfile = {}", upfile);
+    	String saveDirectory = application.getRealPath("/resources/upload/chat");
+    	log.info("sendFile saveDirectory = {}", saveDirectory);
+		
+    	String originalFilename = upfile.getOriginalFilename();
+		String renamedFilename = HanaUtils.rename(originalFilename);
+		
+		File saveImg = new File(saveDirectory, renamedFilename);
+		try {
+			upfile.transferTo(saveImg);
+		} catch (IllegalStateException | IOException e) {
+			log.error(e.getMessage(), e);
+		}
+		log.info("upfile originalfilename = {}",upfile.getOriginalFilename());
+		log.info("upfile renamedFilename = {}",renamedFilename);
+		
+    	return ResponseEntity.ok(renamedFilename);
     }
     		
 }
