@@ -436,14 +436,19 @@ $("#btn-following-list").click((e) => {
 			
 			const {memberId} = resp;
 			$.each(resp, (i, e) => {
-				console.log(e.memberId);
+				console.log(e.followers[0].memberId);
+				console.log(e.picture);
 				let tr= `
 				<tr>
 				<td>
-					\${e.memberId}
+					\${e.followers[0].memberId}
+					
+					 <img src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
+					 
 				</td>
 			</tr>
 			`;
+			console.log(tr);
 			$("#modalTbody").append(tr);
 		})
 	},
