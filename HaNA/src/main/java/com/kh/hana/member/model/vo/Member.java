@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+ 
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,18 +27,21 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 	private List<SimpleGrantedAuthority> authorities;
 	private String personality;
 	private String interest;
+	private List<Follower> follower;
 	
 	@Builder
 	public Member(String id, String name, String password, String picture, String personalId, int accountType,
 			String addressFull, String addressAll, String introduce, boolean enabled, String locationX,
-			String locationY, List<SimpleGrantedAuthority> authorities, String personality, String interest) {
+			String locationY, List<SimpleGrantedAuthority> authorities, String personality, String interest,
+			List<Follower> follower) {
 		super(id, name, password, picture, personalId, accountType, addressFull, addressAll, introduce, enabled,
 				locationX, locationY);
 		this.authorities = authorities;
 		this.personality = personality;
 		this.interest = interest;
+		this.follower = follower;
 	}
-
+ 
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -74,13 +77,7 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 
 
 
-
-
-
-
-
-
-
+ 
 
 
 

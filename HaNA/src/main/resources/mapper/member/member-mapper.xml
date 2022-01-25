@@ -65,7 +65,7 @@
 		insert into
 		follower 
 		values
-		(#{myId}, #{friendId})
+		(#{friendId}, #{myId})
 	
 	</insert>
 
@@ -75,7 +75,7 @@
 		from
 			follower
 		where
-			member_id = #{id}
+			member_id = #{friendId}
 	</select>
 
 	<select id="countFollower" parameterType="string" resultType="_int">
@@ -84,7 +84,7 @@
 		from
 			follower
 		where
-			following_id = #{id}
+			following_id = #{myId}
 	
 	</select>
 
@@ -101,16 +101,23 @@
 	</select>
 
 	<select id="followerList" resultType="follower">
-		select 
-		    following_id, picture
-		from
-		    follower f full outer join member m
-		on 
-		    f.member_id = m.id
-		where
-			f.member_id = #{id}
+	select
+		*
+	from
+		follower
+	where
+		following_id = #{Id}
 	</select>
 
+	<select id="followingList" resultType="follower">
+	select
+		*
+	from
+		follower
+	where
+	following_id = #{friendId}
+	</select>
+	
 	<select id="selectOneShopInfo" parameterType="string" resultType="shop">
 		select
 			*
@@ -132,14 +139,7 @@
 		where id = #{id}
 	</update>
 
-	<select id="followingList" resultType="follower">
-	select
-		member_id
-	from
-		follower
-	where
-	member_id = #{id}
-	</select>
+
 
 
 

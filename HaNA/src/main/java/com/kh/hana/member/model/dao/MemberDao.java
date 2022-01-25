@@ -31,10 +31,10 @@ public interface MemberDao {
 
 	int countFollower(String id);
 
-	List<Follower> followerList(String id);
+	List<Follower> followerList(String myId);
 
  
-	List<Follower> followingList(String id);
+	List<Follower> followingList(String friendId);
  
 	Shop selectOneShopInfo(String memberId);
 
