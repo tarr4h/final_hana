@@ -25,7 +25,6 @@
 				<li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/reservationSetting'">예약 관리</li>
 			</ul>
         </div>
-        
     </div>
 </div>
 
