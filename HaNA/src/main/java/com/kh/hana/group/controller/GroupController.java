@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -129,7 +130,7 @@ public class GroupController {
 			return "redirect:/group/groupList";
 		}
 	}
-	
+
 	@GetMapping("/groupBoardForm/{groupId}")
 	public String groupBoardForm(@PathVariable String groupId, Model model){
 		List<Member> members = groupService.selectGroupMemberList(groupId);
@@ -138,8 +139,8 @@ public class GroupController {
 		model.addAttribute("members",members);
 		return "/group/groupBoardForm";
 	}
-	
-	@PostMapping("/enrollGroupBoard")
+	//이거
+	@PostMapping(value="/enrollGroupBoard")
 	public String enrollGroupBoard(GroupBoardEntity groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
@@ -170,23 +171,13 @@ public class GroupController {
 			
 			int result = groupService.insertGroupBoard(groupBoard);
 			
-			return "redirect:/group/groupBoardDetail/"+groupBoard.getNo();
+			return "redirect:/group/groupPage/"+groupBoard.getGroupId();
 		}catch(Exception e) {
 			log.error(e.getMessage(),e);
-			return "redirect/group/enrollGroupBoard";
+			return "redirect:/group/enrollGroupBoard";
 		}
 	}
-//	@GetMapping("/groupBoardDetail/{no}")
-//	public String groupBoardDetail(@PathVariable int no, Model model) {
-//		GroupBoard groupBoard = groupService.selectOneBoard(no);
-//		log.info("groupBoard = {}",groupBoard);
-//		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
-//		log.info("tagMembers = {}",tagMembers);
-//		model.addAttribute(groupBoard);
-//		model.addAttribute("tagMembers",tagMembers);
-//		return "/group/groupBoardDetail";
-//	}
-	
+	//이거
 	@GetMapping("/groupBoardDetail/{no}")
 	public ResponseEntity<Map<String,Object>> groupBoardDetail(@PathVariable int no, Model model) {
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
@@ -230,15 +221,42 @@ public class GroupController {
 		return "redirect:/group/groupPage/"+map.get("groupId");
 	}
 
-	@GetMapping("/getGroupApplyRequest")
-	public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
-		log.info("groupId ={}", groupId);
-		
-		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
-		log.info("groupApplyList ={}", groupApplyList);
-		
-		return ResponseEntity.ok(groupApplyList);		
+	
+	@GetMapping("/getCommentList/{boardNo}")
+	public ResponseEntity<List<GroupBoardComment>> getCommentList(@PathVariable int boardNo){
+		log.info("boardNo = {}",boardNo);
+		System.out.println("alkjsdflkajlsk");
+		List<GroupBoardComment> list = groupService.selectGroupBoardCommentList(boardNo);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
 	}
+	
+
+	@DeleteMapping("/groupBoardCommentDelete/{no}")
+	public ResponseEntity<Map<String,Object>> groupBoardCommentDelete(@PathVariable int no) {
+		Map<String, Object> map = new HashMap<>();
+		try{
+			log.info("no = {}",no);
+			int result = groupService.deleteBoardComment(no);
+			log.info("result = {}",result);
+			map.put("msg", "삭제 성공!");
+			map.put("result",result);
+			return ResponseEntity.ok(map);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			map.put("msg", "삭제 실패, 관리자에게 문의");
+			return ResponseEntity.ok(map);
+		}
+	}
+    @GetMapping("/getGroupApplyRequest")
+    public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
+        log.info("groupId ={}", groupId);
+        
+        List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
+        log.info("groupApplyList ={}", groupApplyList);
+        
+        return ResponseEntity.ok(groupApplyList);       
+    }
 	
     @PostMapping("/groupApplyProccess")
     @ResponseBody
@@ -253,26 +271,44 @@ public class GroupController {
         log.info("groupId = {}", groupId);
         log.info("memberId = {}", memberId);
         log.info("approvalYn = {}", approvalYn);
-
         //승인(y)
         if(approvalYn.equals("y")) {
-        	int result = groupService.insertGroupMember(map);
-        	log.info("result ={}", result);
-        	
-        	String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
-        	log.info("msg ={}", msg);
+            int result = groupService.insertGroupMember(map);
+            log.info("result ={}", result);
+            
+            String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
+            log.info("msg ={}", msg);
+            
+            int deleteResult = groupService.deleteGroupApplyList(map);
+            log.info("deleteResult ={}", deleteResult);
         }
         //거절(n)
         else {
-        	int result = groupService.deleteGroupApplyList(map);
-        	log.info("result ={}", result);
-        	
-        	String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
-        	log.info("msg ={}", msg);
-        	
+            int result = groupService.deleteGroupApplyList(map);
+            log.info("result ={}", result);
+            
+            String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
+            log.info("msg ={}", msg);
+            
         }
         
         return "redirect:/group/groupPage/"+groupId;
+    }
+    
+    @PostMapping("/deleteGroupBoard")
+    public String deleteGroupBoard(@RequestParam int no, @RequestParam String groupId){
+    	
+    	try{
+//    		int result = groupService.deleteGroupBoard(no);
+    		log.info("no = {}",no);
+    		log.info("groupId = {}",groupId);
+    		int result = groupService.deleteGroupBoard(no);
+    		
+    	}catch(Exception e) {
+    		log.error(e.getMessage(),e);
+       	}
+    	return "redirect:/group/groupPage/"+groupId;
+    	
     }
 	
 }
