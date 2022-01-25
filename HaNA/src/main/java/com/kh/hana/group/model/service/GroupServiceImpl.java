@@ -79,10 +79,20 @@ public class GroupServiceImpl implements GroupService{
 	}
 
   
-  @Override
-  public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
+	 @Override
+	 public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
 		return groupDao.insertGroupBoardComment(groupBoardComment);
-  }
+	 }
+	
+	@Override
+	public int insertGroupMember(Map<String, Object> map) {
+		return groupDao.insertGroupMember(map);
+	}
+
+	@Override
+	public int deleteGroupApplyList(Map<String, Object> map) {
+		return groupDao.deleteGroupApplyList(map);
+	}	
 
 
 

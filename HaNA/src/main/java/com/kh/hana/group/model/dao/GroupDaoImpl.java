@@ -76,9 +76,19 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	
-  @Override
-  public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
+	 @Override
+	 public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
 		return session.insert("insertGroupBoardComment",groupBoardComment);
+	}
+
+	@Override
+	public int insertGroupMember(Map<String, Object> map) {
+		return session.insert("insertGroupMember", map);
+	}
+
+	@Override
+	public int deleteGroupApplyList(Map<String, Object> map) {
+		return session.delete("deleteGroupApplyList", map);
 	}
 
 
