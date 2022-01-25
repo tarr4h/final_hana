@@ -53,4 +53,5 @@ public class ShopController {
 		return ResponseEntity.ok(shopList);
 	}
 	
+	
 }

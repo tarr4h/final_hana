@@ -16,7 +16,6 @@
 		<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
 </section>
 <section class="body-section">
-
 <sec:authentication property="principal" var="loginMember" />
 
 <div class="container mb-4">
@@ -178,15 +177,14 @@ $(() => {
 						locationY : y
 				},
 				success(res){
-					console.log(res);
 					 list = res;
-					console.log(list);
+					console.log(list.length);
+					const max = list.length;
 
-//				  for(var i=0; i<list.length;i++){
+					
 					if(startNum == 0){
 						  for(var i=0; i<endNum; i++){
-						    console.log(list[i].ID)
-						    console.log(endNum)
+							console.log("if list[i].ID : " + list[i].ID)
 							var htmlOut='';
 							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
 							htmlOut += '<div class="shopProfile d-flex">';
@@ -194,34 +192,33 @@ $(() => {
 						    htmlOut += '</div>';
 						    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
 							$('#shopList').append(htmlOut); 
+							
 						}  
 					}  
 						else{
-						 	for(var i=startNum; i<endNum; i++){
-						 		 console.log(startNum)
-								    console.log(endNum)
+						 	for(var i=startNum; i<endNum; i++){  
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-									$('#shopList').append(htmlOut); 
+								    htmlOut += '<span class = "shopScroll">'+ list[i].ID +'</span>';
+									$('#shopList').append(htmlOut);
+									// list[i].ID가 마지막이라면 return
+									if(i == max -1){
+										return;
+									}
 						 	}
 						  }  
 				page++;
-				console.log(page);
-				startNum = (endNum +1) ;  //7  14 
-				endNum += 7; //13 21
-				console.log("false 전 start :" + startNum) // 7
+				endNum -= 1; //  6-1 = 5 
+				startNum = (endNum +1) ;  // 6 12
+				endNum += 7; //12 18
+				console.log("false 전 start :" + startNum) 
 				console.log("false 전 end :" +endNum)
 				
 				loading = false;
-				if(list.length === 0){
-				console.log(list.length);					
-				console.log(startNum)
-				console.log(endNum)
-				
+				if(list.length === 0){	
 					loading = true;
 				}
 				},
@@ -241,6 +238,43 @@ $(() => {
 	});
 
 	
+	// Autocomplete 부분
+	
+
+/*	
+	data = $("#searchInput").val();
+	console.log(data);
+	$(()=>{
+		$('#searchInput').autocomplete({
+			source : function(reuqest,response){
+				$.ajax({
+					url: `${pageContext.request.contextPath}/shop/shopAutocomplete`,
+					data: data,
+					success: function(data){
+						console.log(data)
+						response(
+							$.map(data, function(item){
+								return{
+									lable : item.data,
+									value : item.data
+								}
+							})
+					  
+						);
+					}
+				});
+			},
+			select: function(event,ui){
+				console.log(ui);
+				console.log(label);
+				console.log(value);
+			}
+			// 조회를 위한 최소 글자 수 
+			//minLength : 1,
+			//autoFocus : true // true로 설정 해놓으면 메뉴 첫번째 항목에 자동으로 포커스 됨
+		});
+	});
+	*/
 </script>
 
 
