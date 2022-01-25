@@ -241,40 +241,7 @@ $(() => {
 	// Autocomplete 부분
 	
 
-/*	
-	data = $("#searchInput").val();
-	console.log(data);
-	$(()=>{
-		$('#searchInput').autocomplete({
-			source : function(reuqest,response){
-				$.ajax({
-					url: `${pageContext.request.contextPath}/shop/shopAutocomplete`,
-					data: data,
-					success: function(data){
-						console.log(data)
-						response(
-							$.map(data, function(item){
-								return{
-									lable : item.data,
-									value : item.data
-								}
-							})
-					  
-						);
-					}
-				});
-			},
-			select: function(event,ui){
-				console.log(ui);
-				console.log(label);
-				console.log(value);
-			}
-			// 조회를 위한 최소 글자 수 
-			//minLength : 1,
-			//autoFocus : true // true로 설정 해놓으면 메뉴 첫번째 항목에 자동으로 포커스 됨
-		});
-	});
-	*/
+
 </script>
 
 
