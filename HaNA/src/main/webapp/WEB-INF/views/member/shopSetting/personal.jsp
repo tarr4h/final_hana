@@ -36,7 +36,7 @@
 	        	<input type="file" name="upFile" value="${loginMember.picture }"/>
 	        	<input type="hidden" name="picture" value="${loginMember.picture }" />
 	        	<br />
-	        	<label for="introduce">매장소개</label>
+	        	<label for="introduce">소개</label>
 	        	<br />
 	        	<input type="text" name="introduce" value="${loginMember.introduce }"/>
 	        	<br />

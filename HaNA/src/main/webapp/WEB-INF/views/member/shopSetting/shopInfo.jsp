@@ -41,7 +41,7 @@
 	        	<input type="time" name="bussinessHourStart" value="${shop.bussinessHourStart }" step="1800"/>~<input type="time" name="bussinessHourEnd" value="${shop.bussinessHourEnd }" step="1800"/>        	
 	        	<br />
 	        	<br />
-	        	<label for="introduce">소개</label>
+	        	<label for="introduce">매장소개</label>
 	        	<br />
 	        	<input type="text" name="shopIntroduce" value="${shop.shopIntroduce }"/>
 	        	<br />
@@ -73,10 +73,7 @@
 	
 </script>
 
-<script type="text/javascript" 
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
-</script>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a77e005ce8027e5f3a8ae1b650cc6e09&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 function execDaumPostcode() {
@@ -103,32 +100,28 @@ function execDaumPostcode() {
             	alert("유효하지 않은 도로명 주소입니다. 다시 선택해주세요");
             }
             
-            $("[name=address]").val(data.roadAddress);     
+            $("[name=address]").val(data.roadAddress);    
             
-        	var Addr_val = data.roadAddress;
-        	// 도로명 주소를 좌표 값으로 변환(API)
-          	naver.maps.Service.geocode({
-                query: Addr_val
-            }, function(status, response) {
-                if (status !== naver.maps.Service.Status.OK) {
-                    return alert('잘못된 주소값입니다.');
-                }
+            /* kakao */
+            var geocoder = new kakao.maps.services.Geocoder();
 
-                var result = response.v2, // 검색 결과의 컨테이너
-                    items = result.addresses; // 검색 결과의 배열
-                    
-                // 리턴 받은 좌표 값을 변수에 저장
-                let x = parseFloat(items[0].x);
-                let y = parseFloat(items[0].y);
-                
-                $('[name=locationX]').val(x);
-                $('[name=locationY]').val(y);
-                
-            	close();
-            });
+            var callback = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    console.log(result[0].x);
+                    console.log(result[0].y);
+                    $('[name=locationX]').val(result[0].x);
+                    $('[name=locationY]').val(result[0].y);
+                }
+            };
+
+            geocoder.addressSearch(data.roadAddress, callback);
+     
+           	close();
         }
     }).open();
 }
 </script>
+
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
