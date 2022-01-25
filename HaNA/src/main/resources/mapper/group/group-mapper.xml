@@ -166,6 +166,26 @@
 			default
 		)
 	</insert>
+	<select id="selectGroupBoardCommentList" resultType="groupBoardComment">
+		select
+			*
+		from
+			group_board_comment
+		where
+				board_no = #{boardNo}
+		start with
+			comment_level = 1
+		connect by prior
+			no = comment_ref -- level=1의 no와 나머지(level=2)의 comment_ref를 기준으로 연결
+		order siblings by
+			no   -- 형제요소끼리의 정렬 기준
+	</select>
+	<delete id="deleteBoardComment">
+		delete from
+			group_board_comment
+		where
+			no=#{no}
+	</delete>
 	
 </mapper>
 

@@ -13,7 +13,7 @@
 <div>
     <form
         action="${pageContext.request.contextPath}/group/enrollGroupBoard?${_csrf.parameterName}=${_csrf.token}"
-        method="post"
+        method="POST"
         enctype="multipart/form-data">
         <table>
             <tr>

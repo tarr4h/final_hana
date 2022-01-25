@@ -3,6 +3,8 @@ package com.kh.hana.group.model.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.kh.hana.member.model.vo.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,13 +21,13 @@ public class GroupBoard extends GroupBoardEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String writerProfile;
-
+	private String[] tagMembers;
 	public GroupBoard(int no, String groupId, String writer, String content, Date regDate, int likeCount,
 			String placeName, String placeAddress, double locationY, double locationX, String[] image,
 			String[] tagMembers, String writerProfile) {
-		super(no, groupId, writer, content, regDate, likeCount, placeName, placeAddress, locationY, locationX, image,
-				tagMembers);
+		super(no, groupId, writer, content, regDate, likeCount, placeName, placeAddress, locationY, locationX, image);
 		this.writerProfile = writerProfile;
+		this.tagMembers = tagMembers;
 	}
 
 

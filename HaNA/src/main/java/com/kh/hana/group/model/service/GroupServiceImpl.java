@@ -84,4 +84,14 @@ public class GroupServiceImpl implements GroupService{
 
   }
 
+@Override
+public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo) {
+	return groupDao.selectGroupBoardCommentList(boardNo);
+}
+
+@Override
+public int deleteBoardComment(int no) {
+	return groupDao.deleteBoardComment(no);
+}
+
 }

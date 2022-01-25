@@ -35,4 +35,8 @@ public interface GroupDao {
 
 	public List<Map<String, Object>> getGroupApplyRequest(String groupId);
 
+	public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo);
+
+	public int deleteBoardComment(int no);
+
 }
