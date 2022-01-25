@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -34,7 +33,6 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
-import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.member.model.vo.Member;
@@ -248,19 +246,29 @@ public class GroupController {
             @RequestParam(name="no") int no, 
             @RequestParam(name="groupId") String groupId,
             @RequestParam(name="memberId") String memberId,
-            @RequestParam(name="approvalYn") String approvalYn
+            @RequestParam(name="approvalYn") String approvalYn,
+            @RequestParam Map<String, Object> map
             ) {
         log.info("no = {}", no);
         log.info("groupId = {}", groupId);
         log.info("memberId = {}", memberId);
         log.info("approvalYn = {}", approvalYn);
-        
+
         //승인(y)
-        if(approvalYn == "y") {
+        if(approvalYn.equals("y")) {
+        	int result = groupService.insertGroupMember(map);
+        	log.info("result ={}", result);
         	
+        	String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
+        	log.info("msg ={}", msg);
         }
         //거절(n)
         else {
+        	int result = groupService.deleteGroupApplyList(map);
+        	log.info("result ={}", result);
+        	
+        	String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
+        	log.info("msg ={}", msg);
         	
         }
         
