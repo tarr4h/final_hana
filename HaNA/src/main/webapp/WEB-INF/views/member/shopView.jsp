@@ -7,35 +7,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 
-
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
-
-<!-- 우측 공간확보 -->
-<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
-		<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
-</section>
-
-
-<section class="body-section">
-
-
-<script src="https://kit.fontawesome.com/0748f32490.js"	crossorigin="anonymous">
-</script>
-<sec:authentication property="principal" var="loginMember"/>
-
-<c:if test="${not empty msg}">
-	<script>
-	alert("${msg}");
-	</script>
-</c:if>
-
-
-<div class="container">
-	
-</div>
-
 
 <style>
 	#myInfo{
@@ -132,6 +106,33 @@
 
 </style>
 
+<!-- 우측 공간확보 -->
+<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
+		<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+</section>
+
+
+<section class="body-section">
+
+
+<script src="https://kit.fontawesome.com/0748f32490.js"	crossorigin="anonymous">
+</script>
+<sec:authentication property="principal" var="loginMember"/>
+
+<c:if test="${not empty msg}">
+	<script>
+	alert("${msg}");
+	</script>
+</c:if>
+
+
+<div class="container">
+	
+</div>
+
+
+
+
 <div class="container profile mt-2">
     <div class="row" id="myInfo">
     	<!-- 프로필이미지 영역 -->
@@ -205,6 +206,11 @@
 							<td><span class="tableKey">평점</span></td>
 							<td><span class="tableValue">4.9</span></td>
 						</tr>
+						<tr>
+							<td>
+								<input type="button" value="예약" />
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -250,9 +256,6 @@
 	});
 
 </script>
-        
-        
-        
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
