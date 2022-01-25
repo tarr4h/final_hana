@@ -31,15 +31,16 @@ public class ShopServiceImpl implements ShopService {
 		for(Map<String, Object> shop : shopList) {
 			String x = (String) shop.get("LOCATION_X");
 			String y = (String) shop.get("LOCATION_Y");
-
+			log.info("serv shop = {}", shop);
 			boolean bool = CalculateArea.calculateArea(locationX, locationY, x, y);
-			log.debug("calTest = {}", bool);
+			log.info("calTest = {}", bool);
 			
 			if(bool == true) {
 				lastShopList.add(shop);
 			}
 		}
 		log.info("shopList LAsts = {}", lastShopList);
+		log.info("listSize = {}", lastShopList.size());
 		return lastShopList;
 	}
 	

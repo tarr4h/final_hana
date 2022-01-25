@@ -46,13 +46,13 @@ public class CalculateArea {
 		double yc = Double.parseDouble(ycCal2);
 		 
 		
-		log.info("xa = {} ", xa);
-		log.info("xb = {} ", xb);
-		log.info("xc = {} ", xc);
-				
-		log.info("ya = {}", ya);
-		log.info("yb = {}", yb);
-		log.info("yc = {}", yc);
+//		log.info("xa = {} ", xa);
+//		log.info("xb = {} ", xb);
+//		log.info("xc = {} ", xc);
+//				
+//		log.info("ya = {}", ya);
+//		log.info("yb = {}", yb);
+//		log.info("yc = {}", yc);
 		
 	
 		double result1 = (xa * 88.9) + (xb * 1.48) + (xc * 0.025);
@@ -62,7 +62,7 @@ public class CalculateArea {
 		double finalResult = Math.sqrt((result1 * result1) + (result2 * result2));
 		
 		log.info("finalResult = {}", finalResult);
-		log.info("8km bool = {}", finalResult < 8);
+//		log.info("8km bool = {}", finalResult < 8);
 
 		
 		boolean bool = finalResult < 8;

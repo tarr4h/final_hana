@@ -52,7 +52,6 @@
 	        	<input type="hidden" name="locationY" value="${loginMember.locationY }"/>
 	        	<input type="hidden" name="id" value="${loginMember.username }"/>
 	        	<br />
-		        <input type="submit" value="저장하기" id="formBtn"/>
 		        
 				<br />
 				<label for="personality">내 성격</label>	
@@ -88,6 +87,8 @@
 				    <option value="패션" ${loginMember.interest  eq '패션'? 'selected' : ''}>패션</option>
 				   	<option value="스포츠" ${loginMember.interest  eq '스포츠'? 'selected' : ''}>스포츠</option>
 				</select>
+				<br />
+	        	<input type="submit" value="저장하기" id="formBtn"/>	
         	</form:form>
         </div>
         
