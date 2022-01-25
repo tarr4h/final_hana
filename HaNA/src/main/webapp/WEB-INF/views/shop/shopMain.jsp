@@ -207,14 +207,17 @@ $(() => {
 						  }  
 				page++;
 				console.log(page);
-				startNum += (endNum + 1);
-				endNum += 6;
-			//	console.log(startNum)
-			//	console.log(endNum)
+				startNum = (endNum + 1);  //7  14 
+				endNum += 8; //13 21
+				console.log("false 전 start :" + startNum) // 7
+				console.log("false 전 end :" +endNum)
 				
 				loading = false;
 				if(list.length === 0){
 				console.log(list.length);					
+				console.log(startNum)
+				console.log(endNum)
+				
 					loading = true;
 				}
 				},
