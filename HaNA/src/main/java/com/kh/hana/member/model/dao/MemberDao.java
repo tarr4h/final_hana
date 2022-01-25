@@ -31,7 +31,7 @@ public interface MemberDao {
 
 	int countFollower(String id);
 
-	List<Follower> followerList(String myId);
+	List<Follower> followerList(String friendId);
 
  
 	List<Follower> followingList(String friendId);

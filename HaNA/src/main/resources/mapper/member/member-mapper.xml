@@ -106,7 +106,7 @@
 	from
 		follower
 	where
-		following_id = #{Id}
+		member_id = #{friendId}
 	</select>
 
 	<select id="followingList" resultType="follower">

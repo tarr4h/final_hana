@@ -9,6 +9,11 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
+<!-- 우측 공간확보 -->
+<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
+<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+</section>
+<section>
  <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
 </script>
@@ -452,7 +457,7 @@ $("#btn-following-list").click((e) => {
 $("#btn-follower-list").click((e) => {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/member/followerList",
-		data : $("[name=myId]"),
+		data : $("[name=friendId]"),
 		success(resp){
 			console.log(resp);
 			
@@ -489,4 +494,5 @@ $("#btn-add").click(()=> {
         
 
 <a href="/" class="badge badge-dark">Dark</a>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

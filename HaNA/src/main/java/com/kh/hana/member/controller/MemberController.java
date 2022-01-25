@@ -185,7 +185,7 @@ public class MemberController {
 	//친구추가
 	@PostMapping("/addFollowing")
 	public String addFollowing(@AuthenticationPrincipal Member member, @RequestParam String friendId, String myId, RedirectAttributes redirectAttr) {
-		log.info("member={}", member.getId());
+		log.info("addFollowing.member={}", member.getId());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("myId", myId);
@@ -202,8 +202,8 @@ public class MemberController {
 	//팔로워리스트 가져오기
 	@GetMapping("/followerList")
 	@ResponseBody
-	public List<Follower> followerList(@RequestParam String myId, Model model) {
-		List<Follower> follower = memberService.followerList(myId);
+	public List<Follower> followerList(@RequestParam String friendId, Model model) {
+		List<Follower> follower = memberService.followerList(friendId);
 		log.info("followerList.follower={}", follower);
 		model.addAttribute("follower", follower);
 		

@@ -103,8 +103,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Follower> followerList(String myId) {
-		return memberDao.followerList(myId);
+	public List<Follower> followerList(String friendId) {
+		return memberDao.followerList(friendId);
 	}
 
 	@Override
