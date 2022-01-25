@@ -21,8 +21,7 @@
 <section class="body-section">
 
 
-<script src="https://kit.fontawesome.com/0748f32490.js"
-	crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/0748f32490.js"	crossorigin="anonymous">
 </script>
 <sec:authentication property="principal" var="loginMember"/>
 
