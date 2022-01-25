@@ -31,16 +31,19 @@ public interface MemberDao {
 
 	int countFollower(String id);
 
-	List<Follower> followerList(String id);
+	List<Follower> followerList(String friendId);
 
  
-	List<Follower> followingList(String id);
+	List<Follower> followingList(String friendId);
  
 	Shop selectOneShopInfo(String memberId);
 
 	int insertShopInfo(Shop shop);
 
 	int updateShopInfo(Shop shop);
+
+	int insertShopInfo(String id);
+
  
 
 }
