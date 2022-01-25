@@ -32,9 +32,10 @@
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
 <span>member picture 못찾는건 404</span><br />
+<span>파이어폭스에선 채팅 사진크기가 이상</span><br />
+<span>사진 클릭시 다운로드가능하게</span><br />
 <span>소모임 회원 가입시 채팅방 추가 / 소모임 탈퇴시 채팅방 나가기</span><br />
 <span>1:1 채팅 소모임 채팅만</span><br />
-<a href="${pageContext.request.contextPath}/chat/main.do">메인화면연습</a>
 <script>
 let id;
 let picture;
@@ -143,6 +144,28 @@ const displayRoom = (selector, data) => {
 	</div>
 	<!-- Modal 끝-->
 	
+	<!-- 파일업로드 modal -->
+	<div class="modal fade" id="fileuploadmodal" tabindex="-1" role="dialog"
+		aria-labelledby="fileuploadmodal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id=""fileupload"">사진 올리기</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div>
+				  <form id="uploadForm" enctype="multipart/form-data">
+				  	<input type="file" id="fileUpload" />
+				  </form>
+					<button type="button" onclick="fileSend()" id="sendFileBtn">사진 올리기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal 끝-->
+	
 <!-- 채팅보내기 form -->
 <form 
 	action="${pageContext.request.contextPath}/chat/sendchat.do"
@@ -152,6 +175,7 @@ const displayRoom = (selector, data) => {
 	<input type="hidden" name="loginId"/>
 </form>
 <!-- 채팅 나가기 form -->
+
 <form 
 	action="${pageContext.request.contextPath}/chat/exitRoom.do"
 	name="exitRoomFrm"
@@ -234,6 +258,56 @@ const enterkey = () => {
 		$("#btnSend").trigger("click");
 	}
 };
+
+<!-- 파일보내기 -->
+function fileSend(){
+	var file = $("#fileUpload")[0];
+	console.log("file = ",file);
+	
+	if(file.files.length === 0){
+		alert("파일을 선택해주세요");
+		return;
+	}
+	
+	const formData = new FormData();
+	formData.append("image", file.files[0]);
+	
+    const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+	const headers = {};
+	headers[csrfHeader] = csrfToken;
+	
+	$.ajax({
+		url : `${pageContext.request.contextPath}/chat/sendFile.do`,
+		method:"POST",
+		enctype: 'multipart/form-data',
+	    processData: false,
+	    contentType: false,
+		headers: headers,
+		data: formData,
+		success(file){
+			console.log(file);
+			
+		    const data = {
+		            "roomNo" : roomNo,
+		            "memberId" : id,
+		            "message"   : null,
+		            "picture" : picture,
+		            "messageRegDate" : today,
+		            "fileImg" : file
+		        };
+		    msgCheck(data);
+		    let jsonData = JSON.stringify(data);
+		    websocket.send(jsonData);
+			
+			$(fileuploadmodal)
+			.modal('hide'); 
+		},
+		error:console.log
+	});
+	
+};
+
 <!-- 메세지 전송 -->
 const btnSend = () => {
 	
@@ -297,7 +371,8 @@ function onMessage(e){
 		"memberId" : eSplit[0],
 		"message" : eSplit[1],
 		"picture" : eSplit[2],
-		"messageRegDate" : today
+		"messageRegDate" : today,
+		"fileImg" : eSplit[4]
 	};
 	console.log(data);
 	if(data.memberId != id){
@@ -311,7 +386,7 @@ function msgCheck(e){
 	displaychat(check, e);
 }
  
-//const displaychat = (check, memberId, message) =>{
+
 const displaychat = (check, e) =>{
 	<!-- timestamp로 온거 messageRegDate 변환 -->
 	const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
@@ -332,6 +407,40 @@ const displaychat = (check, e) =>{
 		hour = hour - 12;
 	var returnDate = (todayyear+todaymonth+todayday === year+month+day ? "Today " : "") + ampm+" " + hour + ":" + minute;
 	let chat = ``
+	
+	console.log("fileImg check =", e.fileImg);
+	
+	<!-- 파일전송시 -->
+	if(e.fileImg !== undefined){
+		console.log("아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ");
+		if(check === 'right'){
+			chat += `<div class="d-flex justify-content-end mb-4">
+<div class="msg_cotainer_send">
+<img src="../resources/upload/chat/\${e.fileImg}" class="fileImgMessage">
+<span class="msg_time_send">\${returnDate}</span>
+</div>
+<div class="img_cont_msg">
+<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
+</div>
+</div>`;
+	}
+	else{
+		chat += `<div class="d-flex justify-content-start mb-4">
+			<div class="img_cont_msg">
+			<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
+		</div>
+		<div class="msg_cotainer">
+		<img src="../resources/upload/chat/\${e.fileImg}" class="fileImgMessage">
+			<span class="msg_time">\${returnDate}</span>
+		</div>
+	</div>`;
+	}
+		$("#roomchat1").append(chat);
+		$("div#roomchat1").scrollTop($("div#roomchat1").prop("scrollHeight"));
+		return
+	}
+	<!-- 여기까지 파일전송 시 뿌려주는 코드 -->
+	
 	
 	if(e.message === 'ROOMENTER'){
 		
@@ -371,6 +480,7 @@ const displaychat = (check, e) =>{
 		$("#roomchat1").append(chat);
 		$("div#roomchat1").scrollTop($("div#roomchat1").prop("scrollHeight"));
 };
+<!-- 친구찾기 -->
 $("#findMember").on("click", function(e){
  	let msg = $("#findMemberInput").val();
 	
@@ -408,7 +518,7 @@ $("#allMember").on("click", function(e){
 	$(memberlistModal)
 	.modal();
 });
-
+<!-- 친구 찾기 or 친구목록에서 채팅버튼 -->
 const chatsend = (e)=> {
 	console.log("memberId = ", e);
 	console.log("loginId = ", id);
@@ -421,12 +531,12 @@ const chatsend = (e)=> {
 	.modal('hide');  
 	
 };
-
+<!-- 채팅방 클릭시 메세지보내기 나오게 -->
 const sendBtn = () => {
  	let sendHTML = ``;
  	sendHTML = `<div class="input-group">
 <div class="input-group-append">
-<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+<span class="input-group-text attach_btn" onclick="filemodal();"><i class="fas fa-paperclip"></i></span>
 </div>							
 <textarea onkeyup="enterkey();" id="msg" class="form-control type_msg" placeholder="Type your message..."></textarea>
 <div class="input-group-append">
@@ -434,6 +544,10 @@ const sendBtn = () => {
 </div>
 </div>`; 
 	$("#sendMsgBtn").html(sendHTML);
+};
+
+const filemodal = ()=>{
+	$(fileuploadmodal).modal();
 };
 
 // X 버튼

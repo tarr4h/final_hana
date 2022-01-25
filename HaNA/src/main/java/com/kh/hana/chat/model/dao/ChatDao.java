@@ -44,4 +44,6 @@ public interface ChatDao {
 
 	int exitRoom(int roomNo);
 
+	int insertFileMessage(Chat chat);
+
 }

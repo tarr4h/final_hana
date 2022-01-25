@@ -224,3 +224,4 @@
 	}
 	.card-body contacts_body{pointer-events:none}
 	div#chatroom{pointer-events:all}
+	img.fileImgMessage{width: 200px; height: 200px;}
