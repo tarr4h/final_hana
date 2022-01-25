@@ -119,11 +119,7 @@
 		where
 			id = #{id}
 	</select>
-	
-	<insert id="insertShopInfo" parameterType="shop">
-		insert into shop_info
-		values(#{id}, #{bussinessHourStart}, #{bussinessHourEnd}, #{locationX}, #{locationY}, #{address}, #{addressDetail}, #{shopIntroduce})
-	</insert>
+
 	
 	<update id="updateShopInfo" parameterType="shop">
 		update shop_info
@@ -141,6 +137,11 @@
 	member_id = #{id}
 	</select>
 
+
+	<insert id="insertShopInfo" parameterType="string">
+		insert into shop_info (id)
+		values(#{id})
+	</insert>
 
 
 </mapper>

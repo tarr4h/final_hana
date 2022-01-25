@@ -22,7 +22,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int memberEnroll(Member member) {
-		return memberDao.memberEnroll(member);
+		int result = memberDao.memberEnroll(member);
+		if(member.getAccountType() == 0) {
+			int sub = memberDao.insertShopInfo(member.getId());
+			log.info("memberEnroll > insertShopInfo = {}", sub);
+		}
+		return result;
 	}
 
 	@Override
@@ -65,18 +70,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateShopInfo(Shop shop) {
 		try {
-			Shop searchShop = memberDao.selectOneShopInfo(shop.getId());
-			log.info("searchShop = {}", searchShop);
-			
-			int result = 0;
-			if(searchShop == null) {
-				result = memberDao.insertShopInfo(shop);
-				return result;
-			} else {
-				result = memberDao.updateShopInfo(shop);
-				return result;
-			}
-			
+			return memberDao.updateShopInfo(shop);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return 0;
