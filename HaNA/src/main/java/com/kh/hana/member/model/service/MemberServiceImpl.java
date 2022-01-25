@@ -22,6 +22,10 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int memberEnroll(Member member) {
+		if(member.getAccountType() == 0) {
+			int sub = memberDao.insertShopInfo(member.getId());
+			log.info("memberEnroll > insertShopInfo = {}", sub);
+		}
 		return memberDao.memberEnroll(member);
 	}
 

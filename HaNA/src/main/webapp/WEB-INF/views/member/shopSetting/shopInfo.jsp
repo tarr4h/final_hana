@@ -56,7 +56,7 @@
 	        	<input type="text" name="addressDetail" value="${shop.addressDetail }" required/>
 	        	<input type="hidden" name="locationX" value="${shop.locationX }"/>
 	        	<input type="hidden" name="locationY" value="${shop.locationY }"/>
-	        	<input type="hidden" name="id" value="${shop.id }"/>
+	        	<input type="hidden" name="id" value="${loginMember.id }"/>
 	        	<br />
 	        	<br />
 	        	<input type="submit" value="저장하기" id="formBtn"/>

@@ -142,5 +142,10 @@
 	</select>
 
 
+	<insert id="insertShopInfo" parameterType="string">
+		insert into shop_info (id)
+		values(#{id})
+	</insert>
+
 
 </mapper>
