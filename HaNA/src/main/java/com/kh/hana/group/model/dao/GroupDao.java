@@ -36,4 +36,8 @@ public interface GroupDao {
 
 	public List<Map<String, Object>> getGroupApplyRequest(String groupId);
 
+	public int insertGroupMember(Map<String, Object> map);
+
+	public int deleteGroupApplyList(Map<String, Object> map);
+
 }
