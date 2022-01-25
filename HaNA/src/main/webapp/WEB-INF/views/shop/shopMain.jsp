@@ -10,8 +10,12 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="AroundME" name="title" />
 </jsp:include>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/resources/css/shop/shopMain.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/shop/shopMain.css" />
+<!-- 우측 공간확보 -->
+<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
+		<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+</section>
+<section class="body-section">
 
 <sec:authentication property="principal" var="loginMember" />
 
@@ -244,5 +248,6 @@ $(() => {
 
 
 
+</section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -6,11 +6,22 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
+
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
-<script src="https://kit.fontawesome.com/0748f32490.js"
-	crossorigin="anonymous">
+
+<!-- 우측 공간확보 -->
+<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
+		<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+</section>
+
+
+<section class="body-section">
+
+
+<script src="https://kit.fontawesome.com/0748f32490.js"	crossorigin="anonymous">
 </script>
 <sec:authentication property="principal" var="loginMember"/>
 
@@ -245,4 +256,5 @@
         
 
 <a href="/" class="badge badge-dark">Dark</a>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

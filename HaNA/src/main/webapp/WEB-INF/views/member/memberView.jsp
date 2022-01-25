@@ -9,6 +9,11 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
+<!-- 우측 공간확보 -->
+<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
+<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+</section>
+<section>
  <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
 </script>
@@ -159,12 +164,11 @@ $("#btn-following-list").on( "click", function() {
 });
 
 $("#btn-follower-list").on( "click", function() {
-    $("#test_modal").modal();
+    $("#test_modal1").modal();
 });
-
 </script>
 
- <!-- 친구리스트 모달창 -->
+ <!-- 팔로잉리스트 모달창 -->
        <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -176,7 +180,7 @@ $("#btn-follower-list").on( "click", function() {
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
-							<th>팔로워</th>
+							<th>팔로잉</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody">
@@ -199,6 +203,42 @@ $("#btn-follower-list").on( "click", function() {
 	</div>
 </div>
 
+<!-- 팔로워리스트 모달창 -->
+       <div class="modal fade" id="test_modal1" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>팔로워</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody1">
+						<%-- <tr>
+							<td>프로필</td>
+							<td>아이디</td>
+							<td><button type="button"
+									class="btn btn-default btn-sm btn-success"
+									style="margin-right: 1%;">승인</button>
+								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
+						</tr> --%>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!-- 글쓰기모달 -->
     <div class="modal fade" id="boardFormModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
@@ -211,7 +251,13 @@ $("#btn-follower-list").on( "click", function() {
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
+							<th>${member.id}</th>
+						</tr>
+						<tr>
 							<th>제목</th>
+						</tr>
+						<tr>
+							<th>내용</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody">
@@ -249,8 +295,8 @@ $("#btn-follower-list").on( "click", function() {
         	</button>
         	</c:if>
         	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
-        		<input type="hidden" name ="friendId" value="qwerty" />
-        		<input type="hidden" name ="id" value="${member.id}" />
+        		<input type="hidden" name ="friendId" value="${member.id}" />
+        		<input type="hidden" name ="myId" value="${loginMember.id}" />
         	</form:form>
 
             <br />
@@ -381,9 +427,12 @@ function addFollowing(){
 $("#btn-following-list").click((e) => {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/member/followingList",
-		data : $("[name=id]"),
+		data : $("[name=friendId]"),
 		success(resp){
 			console.log(resp);
+			
+
+			$("#modalTbody").empty();
 			
 			const {memberId} = resp;
 			$.each(resp, (i, e) => {
@@ -408,9 +457,11 @@ $("#btn-following-list").click((e) => {
 $("#btn-follower-list").click((e) => {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/member/followerList",
-		data : $("[name=id]"),
+		data : $("[name=friendId]"),
 		success(resp){
 			console.log(resp);
+			
+			$("#modalTbody1").empty();
 			
 			const {followingId} = resp;
 			$.each(resp, (i, e) => {
@@ -422,7 +473,8 @@ $("#btn-follower-list").click((e) => {
 				</td>
 			</tr>
 			`;
-			$("#modalTbody").append(tr);
+			$("#modalTbody1").append(tr);
+			
 		})
 	},
 	error: console.log
@@ -442,4 +494,5 @@ $("#btn-add").click(()=> {
         
 
 <a href="/" class="badge badge-dark">Dark</a>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -19,7 +19,7 @@
 <script src="https://kit.fontawesome.com/29546d6ff0.js" crossorigin="anonymous"></script>
 <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
 <style>
-	.body-section {min-height : 1000px;}
+	.section-over-div {min-height : 1000px;}
 	.navbar-expand-lg { height : 10em;}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
@@ -104,4 +104,5 @@
   
 		</script>
 	</sec:authorize>
-	<section class="body-section">
+	
+	<div class="section-over-div">
