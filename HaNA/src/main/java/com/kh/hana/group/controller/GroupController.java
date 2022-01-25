@@ -233,7 +233,7 @@ public class GroupController {
 	
 
 	@DeleteMapping("/groupBoardCommentDelete/{no}")
-	public ResponseEntity groupBoardCommentDelete(@PathVariable int no) {
+	public ResponseEntity<Map<String,Object>> groupBoardCommentDelete(@PathVariable int no) {
 		Map<String, Object> map = new HashMap<>();
 		try{
 			log.info("no = {}",no);
@@ -282,6 +282,22 @@ public class GroupController {
         }
         
         return "redirect:/group/groupPage/"+groupId;
+    }
+    
+    @PostMapping("/deleteGroupBoard")
+    public String deleteGroupBoard(@RequestParam int no, @RequestParam String groupId){
+    	
+    	try{
+//    		int result = groupService.deleteGroupBoard(no);
+    		log.info("no = {}",no);
+    		log.info("groupId = {}",groupId);
+    		int result = groupService.deleteGroupBoard(no);
+    		
+    	}catch(Exception e) {
+    		log.error(e.getMessage(),e);
+       	}
+    	return "redirect:/group/groupPage/"+groupId;
+    	
     }
 	
 }

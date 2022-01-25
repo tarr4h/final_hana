@@ -24,70 +24,7 @@
 </script>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <!-- 회원가입 확인 Modal-->
-	<div class="modal fade" id="groupPageDetail" tabindex="-1">
-		<div class="modal-dialog modal-xl modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-				<table>
-					<tr>
-						<td rowspan="2" id="member-profile"><img src="" style="height:50px; border-radius:50%"/></td>
-						<th><a href="#" id="member-id" style="color:black; text-decoration:none;"></a></th>
-					</tr>
-					<tr>
-						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
-					</tr>
-				</table>
-					<!-- <h5 class="modal-title" id="exampleModalLabel"></h5>
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">X</span>
-					</button> -->
-				</div>
-				<div class="modal-body">
-					<div class="container">
-					    <div class="row">
-					        <div class="col-sm-7" id="group-board-img-container" style="background-color:black; display: flex; align-items: center; position:relative;">
- 					        </div>
-					        <div class="col-sm-5" style="">
-					        	<div class="container">
-								    <div class="row">
-								        <div class="col-sm-12" id="group-board-tag-member-list" style="border-bottom:solid #80808040 1px; height:100px; overflow:auto; padding:0px 20px 20px 20px;">
-								        	<p style="color:gray;">with</p>
-								        	<table>
-								        	
-								        	</table>
-								        </div>
-								        <div class="col-sm-12" id="group-board-content" style="border-bottom:solid #80808040 1px; height:300px; overflow:auto; padding:20px;"></div>
-								        <div class="col-sm-12" id="group-board-comment-list" style="border-bottom:solid #80808040 1px; height:500px; overflow:auto; padding:20px;">
-										<table>
-										
-										</table>
-										</div>
-								        <div class="col-sm-12" id="group-board-comment-submit"style="height:150px; padding:20px;">
-								        	<form:form action="" name="groupBoardCommentSubmitFrm">
-								        		<input type="hidden" name="writer" value="<sec:authentication property='principal.username'/>">
-								        		<input type="hidden" name="boardNo" id="boardNo" value=""/>
-								        		<input type="hidden" name="commentLevel" value="1"/>
-								        		<input type="hidden" name="commentRef" value="0"/>
-									        	<textarea name="content" id="" cols="30" rows="10" placeholder="댓글입력..." ></textarea>
-									        	<div><input type="submit" value="게시"/></div>								        	
-								        	</form:form>
-								        </div>
-								    </div>
-								</div>
-					        </div>
-					    </div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	
-
+ 
 <sec:authentication property="principal" var="loginMember"/>
 
 <!-- 프로필 -->
@@ -181,7 +118,6 @@
 	<a href="#"><i class="far fa-comments"></i></a>
 </div>
 
-<!-- 가입신청 처리 -->
 <div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
@@ -253,7 +189,11 @@
 					</tr>
 				</table>
 					<div>
-						<button type="button" class="btn-deleteBoard">삭제</button>
+						<form:form name="groupBoardDeleteFrm" action="${pageContext.request.contextPath}/group/deleteGroupBoard" method="POST">
+ 							<input type="hidden" name="groupId" value="${group.groupId}"/>
+							<input type="hidden" name="no" value="" />
+						</form:form>
+						<button type="submit" class="btn-deleteBoard" onclick="deleteGroupBoardFunc();">삭제</button>
 					</div>
 				</div>
 				<div class="modal-body">
@@ -335,10 +275,15 @@ $('.board-main-image').click((e)=>{
 	 		$("#tag-place").html(`,&nbsp;&nbsp;\${groupBoard.placeName}`) // 날짜, 태그 장소
 	 		
 	 		//게시물 삭제 버튼
-	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer){
+ 	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer && "<sec:authentication property='principal.username'/>" != "${group.leaderId}"){
 	 			$(".btn-deleteBoard").css("display","none");
+	 		}else{
+	 			$(".btn-deleteBoard").css("display","block");
+	 			$(document.groupBoardDeleteFrm)
+	 				.children("[name=no]").val(boardNo);
 	 		}
-	 		
+
+ 	 		
 	 		// 이미지
 	 		$("#group-board-img-container").empty();
  			$.each(groupBoard.image, (i,e)=>{
@@ -366,8 +311,12 @@ $('.board-main-image').click((e)=>{
  			})
 			
  			//content
- 			console.log($("#group-board-content"));
- 			$("#group-board-content").html(`\${groupBoard.content}`);
+ 			
+ 			let boardContent = `\${groupBoard.content}</br>`
+ 			if(groupBoard.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${group.leaderId}"){
+ 				boardContent += "<button class='btn-boardModify'>수정</button></br>"
+ 			}
+ 			$("#group-board-content").html(boardContent);
  			
  			//댓글 리스트
  			getCommentList(groupBoard.no);
@@ -386,6 +335,15 @@ $('.board-main-image').click((e)=>{
 	
 	$('#groupPageDetail').modal("show");
 });
+//게시물 수정 함수
+
+
+//게시물 삭제 함수
+function deleteGroupBoardFunc(){
+	if(confirm("게시물을 삭제하시겠습니까?")){
+		$(document.groupBoardDeleteFrm).submit();
+	}
+};
 
 //댓글 리스트 불러오기
 function getCommentList(boardNo){
@@ -412,7 +370,7 @@ function getCommentList(boardNo){
 						&nbsp;&nbsp;&nbsp;\${e.content}
 					</td>`;
 				if(e.commentLevel == 1){
-					if(e.writer == "<sec:authentication property='principal.username'/>"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
+					if(e.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${group.leaderId}"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
 						tr+=`<td>
 								<span href='' class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span>
 							</td>
@@ -429,8 +387,8 @@ function getCommentList(boardNo){
 						</td>`;	
 					}
 				}	
-				else{ // 댓글레벨 2 && 내가 작성자일 때 (삭제버튼만)
-					if(e.writer == "<sec:authentication property='principal.username'/>"){
+				else{ // 댓글레벨 2 && 내가 작성자 혹은 그룹 리더일 때 (삭제버튼만)
+					if(e.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${group.leaderId}"){
 						tr+=`<td></td><td style='padding-left:5px;'><span class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span></td>`;	
 					}
 					else{ // 댓글레벨 2 && 내가 작성자가 아닐 때 (아무버튼도 없음)
@@ -720,6 +678,7 @@ function groupApplyHandlingFunc(e, YN){
 	 });
      
 }
+
 </script>
 
 <style>
@@ -748,6 +707,7 @@ pre {margin: 0;}
 table {border-collapse: separate;border-spacing: 0 5px;}
 textarea { height:100px;border:none;width:100%;resize:none; }
 textarea:focus { outline:none; }
+.btn-boardModify{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
 .btn-reply{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
 input[type="submit"] {font-weight:bold;color:#384fc5c4;background-color:white;border:none;float:right;}
 .btn-deleteBoard {font-weight:bold;color:#384fc5c4;background-color:white;border:none;}

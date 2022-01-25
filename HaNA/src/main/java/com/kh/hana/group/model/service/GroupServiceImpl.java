@@ -104,4 +104,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.deleteBoardComment(no);
 	}
 
+	@Override
+	public int deleteGroupBoard(int no) {
+		return groupDao.deleteGroupBoard(no);
+	}
+
 }

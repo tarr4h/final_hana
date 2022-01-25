@@ -45,4 +45,6 @@ public interface GroupService {
 	int insertGroupMember(Map<String, Object> map);
 
 	int deleteGroupApplyList(Map<String, Object> map);
+
+	int deleteGroupBoard(int no);
 }

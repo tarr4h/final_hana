@@ -44,4 +44,6 @@ public interface GroupDao {
 
 	public int deleteGroupApplyList(Map<String, Object> map);
 
+	public int deleteGroupBoard(int no);
+
 }

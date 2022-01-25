@@ -205,5 +205,12 @@
 			and
 			group_id = #{groupId}
 	</delete>
+	
+	<delete id="deleteGroupBoard">
+		delete from
+			group_board
+		where
+			no = #{no}
+	</delete>
 </mapper>
 
