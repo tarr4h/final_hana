@@ -105,6 +105,11 @@ public class GroupDaoImpl implements GroupDao {
 		return session.delete("deleteGroupBoard",no);
 	}
 
+	@Override
+	public int updateBoardContent(Map<String, Object> param) {
+		return session.update("updateBoardContent",param);
+	}
+
 
 
 }
