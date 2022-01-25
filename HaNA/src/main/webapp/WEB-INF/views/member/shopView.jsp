@@ -11,6 +11,7 @@
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
 
+
 <style>
 	#myInfo{
 		border: 1px solid black;
@@ -256,6 +257,9 @@
 	});
 
 </script>
+
+
+
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
