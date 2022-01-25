@@ -141,6 +141,8 @@
 
 var loading = false;
 var page = 1;
+var endNum = 6;
+var startNum = 0;
 
 function scrollPage(){
 $(() => {
@@ -176,18 +178,45 @@ $(() => {
 					 list = res;
 					console.log(list);
 
-					  for(var i=0; i<list.length;i++){
-					    console.log(list[i].ID)
-						var htmlOut='';
-						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
-						htmlOut += '<div class="shopProfile d-flex">';
-					    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-					    htmlOut += '</div>';
-					    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-						$('#shopList').append(htmlOut); 
+//				  for(var i=0; i<list.length;i++){
+					if(startNum == 0){
+						  for(var i=0; i<endNum; i++){
+						    console.log(list[i].ID)
+						    console.log(endNum)
+							var htmlOut='';
+							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+							htmlOut += '<div class="shopProfile d-flex">';
+						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+						    htmlOut += '</div>';
+						    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+							$('#shopList').append(htmlOut); 
+						}  
 					}  
+						else{
+						 	for(var i=startNum; i<endNum; i++){
+						 		 console.log(startNum)
+								    console.log(endNum)
+									var htmlOut='';
+									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+									htmlOut += '<div class="shopProfile d-flex">';
+								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+								    htmlOut += '</div>';
+								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+									$('#shopList').append(htmlOut); 
+						 	}
+						  }  
 				page++;
-				console.log(page);	
+				console.log(page);
+				startNum += (endNum + 1);
+				endNum += 6;
+			//	console.log(startNum)
+			//	console.log(endNum)
+				
+				loading = false;
+				if(list.length === 0){
+				console.log(list.length);					
+					loading = true;
+				}
 				},
 				error:console.log			
 			});
@@ -203,7 +232,6 @@ $(() => {
 			}
 		}
 	});
-
 
 	
 </script>
