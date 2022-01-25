@@ -28,6 +28,7 @@ public class Chat implements Serializable {
 	private Date messageRegDate;
 	private int unReadCount;
 	private String picture; // 프로필사진
+	private String fileImg;
 	
 	
 	
