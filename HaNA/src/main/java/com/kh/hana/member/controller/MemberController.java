@@ -66,19 +66,24 @@ public class MemberController {
 		String encodedPassword = bcryptPasswordEncoder.encode(password);
 		member.setPassword(encodedPassword);
 		
-		String originalFilename = upFile.getOriginalFilename();
-		String renamedFilename = HanaUtils.rename(originalFilename);
+		log.info("upFile = {}", upFile);
+		log.info("upFile.getogName = {}", upFile.getOriginalFilename());
 		
-		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
-		
-		File saveImg = new File(saveDirectory, renamedFilename);
-		try {
-			upFile.transferTo(saveImg);
-		} catch (IllegalStateException | IOException e) {
-			log.error(e.getMessage(), e);
+		if(!upFile.getOriginalFilename().equals("")) {
+			String originalFilename = upFile.getOriginalFilename();
+			String renamedFilename = HanaUtils.rename(originalFilename);
+			
+			String saveDirectory = application.getRealPath("/resources/upload/member/profile");
+			
+			File saveImg = new File(saveDirectory, renamedFilename);
+			try {
+				upFile.transferTo(saveImg);
+			} catch (IllegalStateException | IOException e) {
+				log.error(e.getMessage(), e);
+			}
+			
+			member.setPicture(renamedFilename);					
 		}
-		
-		member.setPicture(renamedFilename);		
 		
 		int result = memberService.memberEnroll(member);
 		

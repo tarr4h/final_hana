@@ -65,7 +65,6 @@
 		height:230px;
 		border:1px solid black;
 		border-radius:100%;
-		background-color: red;
 	}
 	.profileImg img {
 		width: 100%;

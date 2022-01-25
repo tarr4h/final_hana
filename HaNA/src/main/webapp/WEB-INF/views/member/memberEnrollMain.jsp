@@ -61,7 +61,7 @@
 						<tr>
 							<td>프로필사진</td>
 							<td>
-								<input type="hidden" name="picture" value="notYet" />
+								<input type="hidden" name="picture" value="user_pic_default.png" />
 								<input type="file" name="pictureFile" id="" />
 							</td>
 						</tr>
