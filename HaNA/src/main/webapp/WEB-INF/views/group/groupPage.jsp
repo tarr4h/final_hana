@@ -576,6 +576,7 @@ function enrollList(){
         },
         success(res){
             console.log(res);
+            $("#modalTbody").empty();
             $.each(res, function(i, e) {
                 console.log(e.NO);
                 let tr = `
@@ -608,7 +609,6 @@ function enrollList(){
                 `;
                 $("#modalTbody").append(tr);
                 $("#test_modal").modal();
-
             })
         },
         error: console.log
