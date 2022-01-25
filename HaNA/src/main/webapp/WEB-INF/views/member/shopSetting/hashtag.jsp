@@ -25,7 +25,37 @@
 				<li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/reservationSetting'">예약 관리</li>
 			</ul>
         </div>
+        
+        <div class="col-sm-8">
+        	<!-- 등록 해시태그 -->
+			<div class="myHashTag">
+				<span>등록된 해시태그</span>
+				<div class="myTagArea">
+				
+				</div>
+			</div>
+        	<br />
+        	<br />
+        	<!-- 해시태그 조회 -->
+        	<div class="insertHashTag">
+        		<label for="searchHashTag">해시태그 조회하기</label>
+        		<input type="text" name="searchHashTag" id="" />
+        	</div>
+        	<br />
+        	<br />
+        	<br />
+        	<!-- 해시태그 등록 -->
+        	<div class="regHashTag">
+        		<form:form action="${pageContext.request.contextPath }/shop/insertHashTag" method="POST">
+	        		<label for="regHashTag">해시태그 등록하기</label>
+	        		<input type="text" name="tagName" id="" />
+	        		<input type="submit" value="등록" />
+        		</form:form>
+        	</div>
+        
+        </div>
     </div>
+    
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
