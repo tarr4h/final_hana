@@ -36,7 +36,6 @@
 <span>사진 클릭시 다운로드가능하게</span><br />
 <span>소모임 회원 가입시 채팅방 추가 / 소모임 탈퇴시 채팅방 나가기</span><br />
 <span>1:1 채팅 소모임 채팅만</span><br />
-<a href="${pageContext.request.contextPath}/chat/main.do">메인화면연습</a>
 <script>
 let id;
 let picture;
