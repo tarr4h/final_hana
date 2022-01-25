@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -241,12 +242,11 @@ public class GroupController {
 			log.info("result = {}",result);
 			map.put("msg", "삭제 성공!");
 			map.put("result",result);
-			return ResponseEntity.ok(map);
 		}catch(Exception e) {
 			log.error(e.getMessage(),e);
 			map.put("msg", "삭제 실패, 관리자에게 문의");
-			return ResponseEntity.ok(map);
 		}
+		return ResponseEntity.ok(map);
 	}
     @GetMapping("/getGroupApplyRequest")
     public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
@@ -310,6 +310,52 @@ public class GroupController {
     	return "redirect:/group/groupPage/"+groupId;
     	
     }
+    @PostMapping("/groupBoardModifying")
+    public ResponseEntity<Map<String,Object>> groupBoardModifying(@RequestParam int no, @RequestParam String content) {
+
+    	Map<String,Object> param = new HashMap<>();
+    	Map<String,Object> resultMap = new HashMap<>();
+    	
+    	try {
+    		log.info("no = {}",no);
+    		log.info("content = {}",content);
+    		
+    		param.put("no", no);
+    		param.put("content", content);
+    		int result = groupService.updateBoardContent(param);
+    		
+    		resultMap.put("msg","게시물 수정 성공");
+    		resultMap.put("result",result);
+    	}catch(Exception e) {
+    		log.error(e.getMessage(),e);
+    		resultMap.put("msg","게시물 수정 실패");
+    	}
+    	
+    	return ResponseEntity.ok(resultMap);
+    	
+    }
+//    @PutMapping("/groupBoardModifying/{no}")
+//    public ResponseEntity<Map<String,Object>> groupBoardModifying(@PathVariable int no, @RequestBody String content) {
+//    	Map<String,Object> param = new HashMap<>();
+//    	Map<String,Object> resultMap = new HashMap<>();
+//    	
+//    	try {
+//    		log.info("no = {}",no);
+//    		log.info("content = {}",content);
+//    		
+//    		param.put("no", no);
+//    		param.put("content", content);
+//    		int result = groupService.updateBoardContent(param);
+//    		
+//    		resultMap.put("msg","게시물 수정 성공");
+//    		resultMap.put("result",result);
+//    	}catch(Exception e) {
+//    		log.error(e.getMessage(),e);
+//    		resultMap.put("msg","게시물 수정 실패");
+//    	}
+//    	
+//    	return ResponseEntity.ok(resultMap);
+//    }
 	
 }
 
