@@ -11,6 +11,28 @@
     top: 40%;
     left: 20%;
 }
+#mbtiResult-Background {
+	width: 60%;
+	height: 400px;
+	background: rgb(250, 208, 201) !important;
+	text-align: center;
+	margin: auto;
+	border-radius: 40px 0;
+	position: absolute;
+    top: 40%;
+    left: 20%;
+}
+#mbtiList-Background {
+	width: 60%;
+	height: 400px;
+	background: rgb(250, 208, 201) !important;
+	text-align: center;
+	margin: auto;
+	border-radius: 40px 0;
+	position: absolute;
+    top: 40%;
+    left: 20%;
+}
 
 #mainPage-h1 {
 	color: rgb(110, 110, 109);

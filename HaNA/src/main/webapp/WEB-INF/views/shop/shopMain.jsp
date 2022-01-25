@@ -207,8 +207,8 @@ $(() => {
 						  }  
 				page++;
 				console.log(page);
-				startNum = (endNum + 1);  //7  14 
-				endNum += 8; //13 21
+				startNum = (endNum +1) ;  //7  14 
+				endNum += 7; //13 21
 				console.log("false 전 start :" + startNum) // 7
 				console.log("false 전 end :" +endNum)
 				
