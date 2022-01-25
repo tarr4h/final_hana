@@ -21,16 +21,12 @@ public class GroupBoard extends GroupBoardEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String writerProfile;
-	private String[] tagMembers;
 	public GroupBoard(int no, String groupId, String writer, String content, Date regDate, int likeCount,
 			String placeName, String placeAddress, double locationY, double locationX, String[] image,
-			String[] tagMembers, String writerProfile) {
-		super(no, groupId, writer, content, regDate, likeCount, placeName, placeAddress, locationY, locationX, image);
+			String writerProfile, String[] tagMembers) {
+		super(no, groupId, writer, content, regDate, likeCount, placeName, placeAddress, locationY, locationX, image, tagMembers);
 		this.writerProfile = writerProfile;
-		this.tagMembers = tagMembers;
 	}
-
-
 	
 	
 	

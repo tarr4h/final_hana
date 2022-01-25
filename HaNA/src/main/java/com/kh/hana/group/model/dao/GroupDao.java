@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
@@ -38,5 +39,9 @@ public interface GroupDao {
 	public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo);
 
 	public int deleteBoardComment(int no);
+
+	public int insertGroupMember(Map<String, Object> map);
+
+	public int deleteGroupApplyList(Map<String, Object> map);
 
 }

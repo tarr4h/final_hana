@@ -8,8 +8,8 @@ import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
-import com.kh.hana.member.model.vo.Member;
 
 
 public interface GroupService {
@@ -41,5 +41,8 @@ public interface GroupService {
 	List<GroupBoardComment> selectGroupBoardCommentList(int boardNo);
 
 	int deleteBoardComment(int no);
+	
+	int insertGroupMember(Map<String, Object> map);
 
+	int deleteGroupApplyList(Map<String, Object> map);
 }

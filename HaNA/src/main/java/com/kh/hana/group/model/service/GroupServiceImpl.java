@@ -13,8 +13,8 @@ import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
-import com.kh.hana.member.model.vo.Member;
 
 @Service
 @Transactional(rollbackFor=Exception.class) // 익셉션 발생시 롤백
@@ -76,22 +76,32 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
 		return groupDao.getGroupApplyRequest(groupId);
-  }
+	}
+
   
-  @Override
-  public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
+	 @Override
+	 public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
 		return groupDao.insertGroupBoardComment(groupBoardComment);
+	 }
+	
+	@Override
+	public int insertGroupMember(Map<String, Object> map) {
+		return groupDao.insertGroupMember(map);
+	}
 
-  }
+	@Override
+	public int deleteGroupApplyList(Map<String, Object> map) {
+		return groupDao.deleteGroupApplyList(map);
+	}	
 
-@Override
-public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo) {
-	return groupDao.selectGroupBoardCommentList(boardNo);
-}
-
-@Override
-public int deleteBoardComment(int no) {
-	return groupDao.deleteBoardComment(no);
-}
+	@Override
+	public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo) {
+		return groupDao.selectGroupBoardCommentList(boardNo);
+	}
+	
+	@Override
+	public int deleteBoardComment(int no) {
+		return groupDao.deleteBoardComment(no);
+	}
 
 }

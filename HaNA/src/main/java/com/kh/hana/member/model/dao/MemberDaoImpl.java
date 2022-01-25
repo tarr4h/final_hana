@@ -1,12 +1,15 @@
 package com.kh.hana.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.shop.model.vo.Shop;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -39,26 +42,6 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectPersonality", id);
 	}
 
-	@Override
-	public int updateShopMember(Member member) {
-		return session.update("member.updateShopMember", member);
-	}
-
-	@Override
-	public int updateShopInfo(Map<String, String> param) {
-		return session.update("member.updateShopInfo", param);
-	}
-
-	@Override
-	public Map<String, Object> selectShopInfo(String id) {
-		return session.selectOne("member.selectShopInfo", id);
-	}
-
-	@Override
-	public int insertShopInfo(Map<String, String> param) {
-		return session.insert("member.insertShopInfo", param);
-	}
-
 	public int insertPersonality(Member member) {
 		return session.insert("member.insertPersonality", member);
 	}
@@ -72,6 +55,51 @@ public class MemberDaoImpl implements MemberDao {
 	public int addFollowing(Map<String, Object> map) {
 		return session.insert("member.addFollowing", map);
 	}
+
+	@Override
+	public int countFollowing(String id) {
+		return session.selectOne("member.countFollowing",id);
+	}
+
+	@Override
+	public int countFollower(String id) {
+		return session.selectOne("member.countFollower", id);
+	}
+	
+	@Override
+	public Member selectOneMember(String id) {
+		return session.selectOne("member.selectOneMember", id);
+	}
+
+	@Override
+	public List<Follower> followerList(String id) {
+		return session.selectList("member.followerList", id);
+	}
+
+	@Override
+ 
+	public List<Follower> followingList(String id) {
+		return session.selectList("member.followingList", id);
+	}
+ 
+	public Shop selectOneShopInfo(String memberId) {
+		return session.selectOne("member.selectOneShopInfo", memberId);
+	}
+
+	@Override
+	public int insertShopInfo(Shop shop) {
+		return session.insert("member.insertShopInfo", shop);
+	}
+
+	@Override
+	public int updateShopInfo(Shop shop) {
+		return session.update("member.updateShopInfo", shop);
+	}
+
+ 
+
+
+ 
 	
 	
 }

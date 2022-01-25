@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
@@ -88,7 +89,17 @@ public class GroupDaoImpl implements GroupDao {
 	public int deleteBoardComment(int no) {
 		return session.delete("deleteBoardComment",no);
 	}
-	
+
+	@Override
+	public int insertGroupMember(Map<String, Object> map) {
+		return session.insert("insertGroupMember", map);
+	}
+
+	@Override
+	public int deleteGroupApplyList(Map<String, Object> map) {
+		return session.delete("deleteGroupApplyList", map);
+	}
+
 
 
 }

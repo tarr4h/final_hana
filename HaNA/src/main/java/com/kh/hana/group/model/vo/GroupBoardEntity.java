@@ -29,5 +29,5 @@ public class GroupBoardEntity implements Serializable{
 	private double locationY;
 	private double locationX;
 	private String[] image;
-	
+	private String[] tagMembers;
 }

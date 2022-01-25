@@ -24,6 +24,69 @@
 </script>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <!-- 회원가입 확인 Modal-->
+	<div class="modal fade" id="groupPageDetail" tabindex="-1">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+				<table>
+					<tr>
+						<td rowspan="2" id="member-profile"><img src="" style="height:50px; border-radius:50%"/></td>
+						<th><a href="#" id="member-id" style="color:black; text-decoration:none;"></a></th>
+					</tr>
+					<tr>
+						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
+					</tr>
+				</table>
+					<!-- <h5 class="modal-title" id="exampleModalLabel"></h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">X</span>
+					</button> -->
+				</div>
+				<div class="modal-body">
+					<div class="container">
+					    <div class="row">
+					        <div class="col-sm-7" id="group-board-img-container" style="background-color:black; display: flex; align-items: center; position:relative;">
+ 					        </div>
+					        <div class="col-sm-5" style="">
+					        	<div class="container">
+								    <div class="row">
+								        <div class="col-sm-12" id="group-board-tag-member-list" style="border-bottom:solid #80808040 1px; height:100px; overflow:auto; padding:0px 20px 20px 20px;">
+								        	<p style="color:gray;">with</p>
+								        	<table>
+								        	
+								        	</table>
+								        </div>
+								        <div class="col-sm-12" id="group-board-content" style="border-bottom:solid #80808040 1px; height:300px; overflow:auto; padding:20px;"></div>
+								        <div class="col-sm-12" id="group-board-comment-list" style="border-bottom:solid #80808040 1px; height:500px; overflow:auto; padding:20px;">
+										<table>
+										
+										</table>
+										</div>
+								        <div class="col-sm-12" id="group-board-comment-submit"style="height:150px; padding:20px;">
+								        	<form:form action="" name="groupBoardCommentSubmitFrm">
+								        		<input type="hidden" name="writer" value="<sec:authentication property='principal.username'/>">
+								        		<input type="hidden" name="boardNo" id="boardNo" value=""/>
+								        		<input type="hidden" name="commentLevel" value="1"/>
+								        		<input type="hidden" name="commentRef" value="0"/>
+									        	<textarea name="content" id="" cols="30" rows="10" placeholder="댓글입력..." ></textarea>
+									        	<div><input type="submit" value="게시"/></div>								        	
+								        	</form:form>
+								        </div>
+								    </div>
+								</div>
+					        </div>
+					    </div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 
 <sec:authentication property="principal" var="loginMember"/>
 
@@ -133,7 +196,7 @@
 </div>
 
 <c:if test="${loginMember.id eq group.leaderId}">
-	<button id="myBtn" onclick="test();">승인</button>
+	<button id="myBtn" onclick="enrollList();">승인</button>
 </c:if>
 
 <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
@@ -331,8 +394,7 @@ function getCommentList(boardNo){
   		success(data){
   			console.log(data);
   			$("#group-board-comment-list>table").empty();
-  			
-  			
+
   			$.each(data,(i,e)=>{
   				
  				const date = moment(e.regDate).format("YYYY년 MM월 DD일");
@@ -384,7 +446,7 @@ function getCommentList(boardNo){
 			switch(xhr.status){
 			default: console.log(xhr, statusText, err);
 			}
-			console.log
+			
 		}
   	})
 };
@@ -448,6 +510,8 @@ function showReplyForm(e){
 	// 클릭이벤트핸들러 제거!
 	// 답글 다는 동안 답글버튼 또 눌렀을 때 새로운 html생성되는 것 방지
 
+
+
 //댓글 입력
 $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 	e.preventDefault();
@@ -455,6 +519,7 @@ $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 })
 //댓글 제출 함수
 function submitCommentFunc(e){
+
 	let boardNo = $("[name=boardNo]",e.target).val(); 
 	let o = {
 		boardNo:boardNo,
@@ -572,6 +637,89 @@ function groupApplyHandlingFunc(e){
      
 }
 
+
+
+
+
+//가입신청리스트
+function enrollList(){
+    $.ajax({
+        url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
+        data: {
+            groupId : '${groupId}'
+        },
+        success(res){
+            console.log(res);
+            $("#modalTbody").empty();
+            $.each(res, function(i, e) {
+                console.log(e.NO);
+                let tr = `
+                    <tr>
+                        <td>
+                            \${e.NO}
+                        </td>
+                        <td>
+                            \${e.MEMBER_ID}
+                        </td>
+                        <td>
+                            \${e.CONTENT}
+                        </td>
+                        <td>
+                            \${e.REG_DATE}              
+                        </td>
+                        <td>
+                            <form:form name="groupApplyHandlingFrm">
+							   <input type="hidden" name="no" value="\${e.NO}"/>
+                                <input type="hidden" name="groupId" value="${group.groupId}"/>
+                                <input type="hidden" name="memberId" value="\${e.MEMBER_ID}"/>
+                                <input type="hidden" name="approvalYn" value=""/>
+                            </form:form>
+                            <button type="button" onclick="groupApplyHandlingFunc(this,this.value);"
+                                class="btn btn-default btn-sm btn-success"
+                                style="margin-right: 1%;" value="y">승인</button>
+                            <button type="button" onclick="groupApplyHandlingFunc(this,this.value);" class="btn btn-default btn-sm btn-danger" value="n">거절</button>
+                        </td>
+                    </tr>
+                `;
+                $("#modalTbody").append(tr);
+                $("#test_modal").modal();
+            })
+        },
+        error: console.log
+    })
+};
+
+function groupApplyHandlingFunc(e, YN){
+    console.log(e); // button객체    
+    const $form = $(e).siblings("[name=groupApplyHandlingFrm]"); // 승인 및 거절 폼
+    //$form.children("[name=approvalYn]").val(YN); // 승인/거절 폼 내 input:hidden("[name = approvalYn]")에 value값 넣어주기
+    $("[name=groupApplyHandlingFrm] input[name=approvalYn]").val(YN);
+    console.log("YN = ",YN);
+/*     console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=no]").val());
+    console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=approvalYn]").val()); */
+	<!-- 이거없으면 403오류 -->
+    const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+	const headers = {};
+	headers[csrfHeader] = csrfToken;
+    
+    $.ajax({
+		url:`${pageContext.request.contextPath}/group/groupApplyProccess`,
+		method:"POST",
+		headers: headers,
+		data: {
+			no:$form.children("[name=no]").val(),
+			groupId:$form.children("[name=groupId]").val(),
+			memberId:$form.children("[name=memberId]").val(),
+			approvalYn:$form.children("[name=approvalYn]").val()
+		},
+		success(data){
+			console.log(data);
+		},
+		error:console.log
+	 });
+     
+}
 </script>
 
 <style>

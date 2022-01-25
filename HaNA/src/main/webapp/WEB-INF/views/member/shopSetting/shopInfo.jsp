@@ -15,11 +15,10 @@
 <c:if test="${not empty msg}">
 	<script>
 		$(() => {
-				alert('${msg}');
+			alert('${msg}');
 		});
 	</script>
 </c:if>
-
 
 <h1>shop프로필설정</h1>
 <div class="container">
@@ -27,6 +26,7 @@
     	<!-- 메뉴 영역 -->
         <div class="col-sm-4">
         	<ul class="list-group">
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/personal'">개인정보 변경</li>
 			  <li class="list-group-item active" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/shopInfo'">업체정보 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/password'">비밀번호 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/hashtag'">해시태그 설정</li>
@@ -35,53 +35,37 @@
         </div>
         <!-- 설정 영역 -->
         <div class="col-sm-8">
-        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo?${_csrf.parameterName}=${_csrf.token}" method="post" name="updateFrm" enctype="multipart/form-data">
-	        	<label for="username">이름</label><input type="text" name="username" id="username" />
-	        	<br />
-	        	<label for="profile">프로필사진</label><input type="file" name="profile" id="profile" />
-	        	<br />
-	        	<br />
-	        	
+        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo" method="post" name="updateFrm">    	
 	        	<label for="bussiness-hour-start">영업시간</label>
 	        	<br />
-	        	<input type="time" name="bussiness-hour-start" value="09:00"/>~<input type="time" name="bussiness-hour-end" value="18:00"/>        	
+	        	<input type="time" name="bussinessHourStart" value="${shop.bussinessHourStart }" step="1800"/>~<input type="time" name="bussinessHourEnd" value="${shop.bussinessHourEnd }" step="1800"/>        	
 	        	<br />
 	        	<br />
 	        	<label for="introduce">소개</label>
 	        	<br />
-	        	<input type="text" name="introduce" />
+	        	<input type="text" name="shopIntroduce" value="${shop.shopIntroduce }"/>
 	        	<br />
 	        	<br />
-	        	<label for="location">주소</label>
+	        	<label for="address">주소</label>
 	        	<br />
-	        	<input type="text" name="addressAll" style="width:300px;"/>
+	        	<input type="text" name="address" style="width:300px;" value="${shop.address }"/>
 	        	<input type="button" value="검색" onclick="execDaumPostcode();" />
 	        	<br />
-	        	<label for="location2">상세주소</label>
+	        	<label for="addressDetail">상세주소</label>
 	        	<br />
-	        	<input type="text" name="addressFull" />
-	        	<input type="hidden" name="locationX" />
-	        	<input type="hidden" name="locationY" />
-	        	<input type="hidden" name="id" />
+	        	<input type="text" name="addressDetail" value="${shop.addressDetail }" required/>
+	        	<input type="hidden" name="locationX" value="${shop.locationX }"/>
+	        	<input type="hidden" name="locationY" value="${shop.locationY }"/>
+	        	<input type="hidden" name="id" value="${shop.id }"/>
 	        	<br />
 	        	<br />
 	        	<input type="submit" value="저장하기" id="formBtn"/>
-	        	
-	<!--       	<div id="map" style="width: 100%; height: 100%;"></div> -->
         	</form:form>
         	
         </div>
     </div>
 </div>
 <script>
-	$(() => {
-		$('[name=username]').val('${loginMember.name}');
-		$('[name=introduce]').val('${loginMember.introduce}');
-		$('[name=addressAll]').val('${loginMember.addressAll}');
-		$('[name=addressFull]').val('${loginMember.addressFull}');
-		$('[name=id]').val('${loginMember.id}');
-	});
-	
 	$("#formBtn").click((e) =>{
 		e.preventDefault();
 		$('[name=updateFrm]').submit();
@@ -91,55 +75,6 @@
 
 <script type="text/javascript" 
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
-</script>
-
-<script>
-// 좌표구하기
-$(() => {
-	var Addr_val = $('[name=addressAll]').val();
-	console.log(Addr_val);
-
-	// 도로명 주소를 좌표 값으로 변환(API)
-	naver.maps.Service.geocode({
-        query: Addr_val
-    }, function(status, response) {
-        if (status !== naver.maps.Service.Status.OK) {
-            return alert('잘못된 주소값입니다.');
-        }
-
-        var result = response.v2, // 검색 결과의 컨테이너
-            items = result.addresses; // 검색 결과의 배열
-            
-        // 리턴 받은 좌표 값을 변수에 저장
-        let x = parseFloat(items[0].x);
-        let y = parseFloat(items[0].y);
-        
-        $('[name=locationX]').val(x);
-        $('[name=locationY]').val(y);
-        
-/*   	    // 지도 생성
-        var map = new naver.maps.Map('map', {
-			center: new naver.maps.LatLng(y, x), // 지도를 열 좌표
-			zoom: 18
-		});
-		
-        // 지도에 해당 좌표 마커(아이콘 설정)
-        var markerOptions = {
-        	    position: new naver.maps.LatLng(y, x), //마커찍을 좌표
-        	    map: map,
-        	    icon: {
-        	        url: 'resources/img/marker.png', //아이콘 경로
-        	        size: new naver.maps.Size(22, 36), //아이콘 크기
-        	        origin: new naver.maps.Point(0, 0),
-        	        anchor: new naver.maps.Point(11, 35)
-        	    }
-        	};
-        
-        // 마커 생성
-        var marker = new naver.maps.Marker(markerOptions); */
-    });
-})
-
 </script>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -163,12 +98,14 @@ function execDaumPostcode() {
             if(data.buildingName !== '' && data.apartment === 'Y'){
                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
             }
-
-            console.log(data.roadAddress);
             
-            $("[name=addressAll]").val(data.roadAddress);     
+            if(data.roadAddress == null){
+            	alert("유효하지 않은 도로명 주소입니다. 다시 선택해주세요");
+            }
             
-        	var Addr_val = $('[name=addressAll]').val();
+            $("[name=address]").val(data.roadAddress);     
+            
+        	var Addr_val = data.roadAddress;
         	// 도로명 주소를 좌표 값으로 변환(API)
           	naver.maps.Service.geocode({
                 query: Addr_val
@@ -186,9 +123,6 @@ function execDaumPostcode() {
                 
                 $('[name=locationX]').val(x);
                 $('[name=locationY]').val(y);
-                
-                console.log($('[name=locationX]').val());
-                console.log($('[name=locationY]').val());
                 
             	close();
             });

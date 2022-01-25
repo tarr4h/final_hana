@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -30,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
@@ -52,7 +52,8 @@ public class GroupController {
 	@Autowired
 	private ServletContext application;
 	
-
+	@Autowired
+	private ChatService chatService;
 	
 	@GetMapping("/groupPage/{groupId}")
 	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
@@ -114,6 +115,11 @@ public class GroupController {
 			}
 			
 			int result = groupService.insertOneGroup(group);
+			int chatresult = 0;
+			if(result > 0) {
+				chatresult = chatService.CreateGroupChat(group);
+				log.info("{}", chatresult > 0 ? "그룹채팅생성 성공" : "그룹채팅생성 실패");
+			}
 			redirectAttr.addFlashAttribute("msg", "소모임 등록 성공!");	
 			redirectAttr.addFlashAttribute("result", result);	
 			return "redirect:/group/groupPage/"+group.getGroupId();
@@ -215,15 +221,6 @@ public class GroupController {
 		return "redirect:/group/groupPage/"+map.get("groupId");
 	}
 
-	@GetMapping("/getGroupApplyRequest")
-	public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
-		log.info("groupId ={}", groupId);
-		
-		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
-		log.info("groupApplyList ={}", groupApplyList);
-		
-		return ResponseEntity.ok(groupApplyList);
-	}
 	
 	@GetMapping("/getCommentList/{boardNo}")
 	public ResponseEntity<List<GroupBoardComment>> getCommentList(@PathVariable int boardNo){
@@ -234,20 +231,7 @@ public class GroupController {
 		return ResponseEntity.ok(list);
 	}
 	
-	@PostMapping("/groupApplyProccess")
-	public ResponseEntity groupApplyProcess(
-			@RequestParam(name="no") int no, 
-			@RequestParam(name="groupId") String groupId,
-			@RequestParam(name="memberId") String memberId,
-			@RequestParam(name="approvalYn") String approvalYn) {
-		log.info("no = {}", no);
-		log.info("groupId = {}", groupId);
-		log.info("memberId = {}", memberId);
-		log.info("approvalYn = {}", approvalYn);
-		
-		return null;
-	}
-	
+
 	@DeleteMapping("/groupBoardCommentDelete/{no}")
 	public ResponseEntity groupBoardCommentDelete(@PathVariable int no) {
 		Map<String, Object> map = new HashMap<>();
@@ -264,6 +248,41 @@ public class GroupController {
 			return ResponseEntity.ok(map);
 		}
 	}
+	
+    @PostMapping("/groupApplyProccess")
+    @ResponseBody
+    public String groupApplyProcess(
+            @RequestParam(name="no") int no, 
+            @RequestParam(name="groupId") String groupId,
+            @RequestParam(name="memberId") String memberId,
+            @RequestParam(name="approvalYn") String approvalYn,
+            @RequestParam Map<String, Object> map
+            ) {
+        log.info("no = {}", no);
+        log.info("groupId = {}", groupId);
+        log.info("memberId = {}", memberId);
+        log.info("approvalYn = {}", approvalYn);
+
+        //승인(y)
+        if(approvalYn.equals("y")) {
+        	int result = groupService.insertGroupMember(map);
+        	log.info("result ={}", result);
+        	
+        	String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
+        	log.info("msg ={}", msg);
+        }
+        //거절(n)
+        else {
+        	int result = groupService.deleteGroupApplyList(map);
+        	log.info("result ={}", result);
+        	
+        	String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
+        	log.info("msg ={}", msg);
+        	
+        }
+        
+        return "redirect:/group/groupPage/"+groupId;
+    }
 	
 }
 

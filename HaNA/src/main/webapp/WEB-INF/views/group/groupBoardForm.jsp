@@ -11,8 +11,8 @@
     <jsp:param value="메인화면" name="main"/>
 </jsp:include>
 <div>
-    <form
-        action="${pageContext.request.contextPath}/group/enrollGroupBoard?${_csrf.parameterName}=${_csrf.token}"
+    <form:form
+        action="${pageContext.request.contextPath}/group/enrollGroupBoard"
         method="POST"
         enctype="multipart/form-data">
         <table>
@@ -58,7 +58,7 @@
             </c:forEach>
             <tr><td><input type="submit" /></td></tr>
         </table>
-    </form>
+    </form:form>
 </div>
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
