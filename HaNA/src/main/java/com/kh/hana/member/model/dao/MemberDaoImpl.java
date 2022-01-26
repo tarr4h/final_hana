@@ -87,11 +87,6 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int insertShopInfo(Shop shop) {
-		return session.insert("member.insertShopInfo", shop);
-	}
-
-	@Override
 	public int updateShopInfo(Shop shop) {
 		return session.update("member.updateShopInfo", shop);
 	}

@@ -48,10 +48,18 @@ public interface GroupDao {
 
 	public int updateBoardContent(Map<String, Object> param);
 	
-	public List<Map<String, Object>> groupMemberList(String groupId);
+//	public List<Map<String, Object>> groupMemberList(String groupId);
 
 	public Group selectGroupInfo(String groupId);
 
 	public List<Map<String, Object>> groupMemberList2(String groupId);
+
+	public Map<String, Object> selectOneLikeLog(Map<String, Object> param);
+
+	public int deleteLikeLog(Map<String, Object> param);
+
+	public int insertLikeLog(Map<String, Object> param);
+
+	public int selectLikeCount(Map<String, Object> param);
 
 }

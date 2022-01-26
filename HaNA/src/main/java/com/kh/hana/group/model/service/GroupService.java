@@ -49,10 +49,21 @@ public interface GroupService {
 	int deleteGroupBoard(int no);
 
 	int updateBoardContent(Map<String, Object> param);
+<<<<<<< HEAD
 	
 	List<Map<String, Object>> groupMemberList(String groupId);
 
 	Group selectGroupInfo(String groupId);
 
 	List<Map<String, Object>> groupMemberList2(String groupId);
+=======
+
+	Map<String, Object> selectOneLikeLog(Map<String, Object> param);
+
+	int deleteLikeLog(Map<String, Object> param);
+
+	int insertLikeLog(Map<String, Object> param);
+
+	int selectLikeCount(Map<String, Object> param);
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 }
