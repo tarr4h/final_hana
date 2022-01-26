@@ -366,34 +366,15 @@ public class GroupController {
 //    	
 //    	return ResponseEntity.ok(resultMap);
 //    }
-//	@PostMapping("/unlike")
-//	public ResponseEntity<Map<String,Object>> unlike(@RequestParam int no, @AuthenticationPrincipal Member member) {
-//		Map<String,Object> map = new HashMap<>();
-//		
-//		try {
-//			Map<String,Object> param = new HashMap<>();
-//			map.put("memberId",member.getId());
-//			map.put("boardNo",no);
-//			int result = groupService.deleteLikeLog(param);
-//			
-//			map.put("msg", "unlike 성공");
-//			map.put("result", result);
-//		}catch(Exception e) {
-//			log.error(e.getMessage(),e);
-//			map.put("result", "unlike 실패");
-//		}
-//		
-//		
-//		return ResponseEntity.ok(map);
-//	}
+
 	@DeleteMapping("/unlike/{no}")
 	public ResponseEntity<Map<String,Object>> unlike(@PathVariable int no, @AuthenticationPrincipal Member member) {
 		Map<String,Object> map = new HashMap<>();
 		
 		try {
 			Map<String,Object> param = new HashMap<>();
-			map.put("memberId",member.getId());
-			map.put("boardNo",no);
+			param.put("memberId",member.getId());
+			param.put("boardNo",no);
 			int result = groupService.deleteLikeLog(param);
 			
 			map.put("msg", "unlike 성공");
@@ -403,6 +384,41 @@ public class GroupController {
 			map.put("result", "unlike 실패");
 		}
 		
+		
+		return ResponseEntity.ok(map);
+	}
+	
+	@PostMapping("/like")
+	public ResponseEntity<Map<String,Object>> like(@RequestParam int no, @AuthenticationPrincipal Member member){
+		Map<String,Object> map = new HashMap<>();
+		
+		try {
+			log.info("no = {}",no);
+			log.info("member = {}",member);
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",member.getId());
+			param.put("boardNo",no);
+			int result = groupService.insertLikeLog(param);
+			
+			map.put("msg", "like 성공");
+			map.put("result", result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			map.put("result", "like 실패");
+		}
+		
+		
+		return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping("/getLikeCount/{no}")
+	public ResponseEntity<Map<String,Object>> getLikeCount(@PathVariable int no){
+		Map<String,Object> map = new HashMap<>();
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("no",no);
+		int likeCount = groupService.selectLikeCount(param);
+		map.put("likeCount",likeCount);
 		
 		return ResponseEntity.ok(map);
 	}

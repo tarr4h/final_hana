@@ -191,6 +191,9 @@
 				<div style="position:relative;margin-right:70px;">
 				<span class="heart unlike" onclick="like();" style="position:absolute;">빈하트</span>
 				<span class="heart like" onclick="unlike();" style="color:red;position:absolute;">빨간하트</span>
+				<div style="color:gray;transform:translateX(30px);">
+				<span class="like_count"></span>
+				</div>
 				<!-- <i class="bi bi-heart"></i>
 				<i class="bi bi-heart-fill"></i> -->
 				</div>
@@ -298,7 +301,9 @@ function getPageDetail(boardNo){
 			 			$(".like").css("display","none");			 			
 			 			$(".unlike").css("display","inline");			 			
 			 		}
-			 		
+		 	 		
+			 		//좋아요 개수
+			 		getLikeCount();
 			 		
 			 		// modal footer부분 - 게시물 삭제 버튼
 		 	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer && "<sec:authentication property='principal.username'/>" != "${group.leaderId}"){
@@ -352,15 +357,56 @@ function getPageDetail(boardNo){
 				}
 			})
 }
+//좋아요 개수
+function getLikeCount(){
+	$.ajax({
+		url:`${pageContext.request.contextPath}/group/getLikeCount/\${gb.no}`,
+		success(data){
+			console.log(data.likeCount);
+			$(".like_count").html(data.likeCount);
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+}
+
 //좋아요 취소
 function unlike(){
 	$.ajax({
-		url:`${pageConext.request.contextPath}/group/unlike/\${gb.no}`,
+		url:`${pageContext.request.contextPath}/group/unlike/\${gb.no}`,
 		method:"DELETE",
 		success(data){
 			console.log(data);
 			$(".like").css("display","none");			 			
  			$(".unlike").css("display","inline");
+ 			getLikeCount();
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+}
+
+// 좋아요
+function like(){
+	$.ajax({
+		url:`${pageContext.request.contextPath}/group/like`,
+		method:"POST",
+		data:{
+			"no":gb.no
+		},
+		success(data){
+			console.log(data);
+			$(".like").css("display","inline");			 			
+ 			$(".unlike").css("display","none");
+ 			getLikeCount();
 		},
 		error(xhr, statusText, err){
 			switch(xhr.status){
