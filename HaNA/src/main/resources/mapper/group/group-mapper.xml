@@ -26,24 +26,7 @@
 		)
 		
 	</insert>
-	
-	<select id="selectGroupEnrolled" resultMap="groupMemberListMap">
-		select
-			* 
-		from
-			group_member_list
-		where
-			group_id = #{groupId}
-			and
-		member_id = #{memberId}
-	</select>
-	
-	<resultMap type="map" id="groupMemberListMap">
-		<result column="group_id" property="groupId"/>
-        <result column="member_id" property="memberId"/>
-        <result column="member_level_code" property="memberLevelCode"/>
-	</resultMap>
-	
+		
 	<select id="selectGroupList" resultType="group">
 	select
     	g.*
@@ -88,7 +71,7 @@
 		where
 			g.no = #{no}
 	</select>
-	<select id="selectMemberList" resultType="member">
+	<select id="selectTagMemberList" resultType="member">
 		select
 			*
 		from
@@ -102,15 +85,21 @@
 			</if>		
 		</where>
 	</select>
-	<select id="selectGroupMemberList" resultType="member">
+	<select id="selectGroupMemberList" resultMap="groupMemberListMap">
 		select
-			id, name, picture
+			id, member_level_code, picture
 		from
 			member m join group_member_list gml
 			on m.id = gml.member_id
 		where
 			gml.group_id = #{groupId}
 	</select>
+ 	<resultMap type="map" id="groupMemberListMap">
+        <result column="id" property="memberId"/>
+		<result column="picture" property="profile"/>
+        <result column="member_level_code" property="memberLevelCode"/>
+	</resultMap>
+	
 	
 	<select id="selectGroupBoardList" resultType="groupBoard">
 	select

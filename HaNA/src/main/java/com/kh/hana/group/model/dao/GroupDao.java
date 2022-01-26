@@ -16,17 +16,15 @@ public interface GroupDao {
 
 	public int insertOneGroup(Group group);
 
-	public Map<String, String> selectGroupEnrolled(Map<String, String> map);
-
 	public List<Group> selectGroupList(Member member);
 	
 	public int insertGroupBoard(GroupBoardEntity groupBoard);
 
 	public GroupBoard selectOneBoard(int no);
 
-	List<Member> selectMemberList(GroupBoardEntity groupBoard);
+	List<Member> selectTagMemberList(GroupBoardEntity groupBoard);
 
-	public List<Member> selectGroupMemberList(String groupId);
+	public List<Map<String,String>> selectGroupMemberList(String groupId);
 
 	public List<GroupBoardEntity> selectGroupBoardList(String groupId);
 

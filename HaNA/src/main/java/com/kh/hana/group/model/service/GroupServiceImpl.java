@@ -34,11 +34,6 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public Map<String, String> selectGroupEnrolled(Map<String, String> map) {
-		return groupDao.selectGroupEnrolled(map);
-	}
-
-	@Override
 	public List<Group> selectGroupList(Member member) {
 		return groupDao.selectGroupList(member);
 	}
@@ -54,12 +49,12 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<Member> selectMemberList(GroupBoardEntity groupBoard) {
-		return groupDao.selectMemberList(groupBoard);
+	public List<Member> selectTagMemberList(GroupBoardEntity groupBoard) {
+		return groupDao.selectTagMemberList(groupBoard);
 	}
 
 	@Override
-	public List<Member> selectGroupMemberList(String groupId) {
+	public List<Map<String,String>> selectGroupMemberList(String groupId) {
 		return groupDao.selectGroupMemberList(groupId);
 	}
 
