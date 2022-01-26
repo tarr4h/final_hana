@@ -259,10 +259,14 @@ public class MemberController {
 
 	//게시글 작성하기
 	@PostMapping("/memberBoardEnroll")
-	public String insertMemberBoard(Board board, RedirectAttributes redirectAttr) {
+	public String insertMemberBoard(Board board, 
+									RedirectAttributes redirectAttr,
+									 @RequestParam(name="uploadFile") MultipartFile uploadFile
+									) {
+		log.info("uploadFile={}", uploadFile);
 		log.info("insertMemberBoard board = {}", board);
-		int result = memberService.insertMemberBoard(board);
-		log.info("insertMemberBoard result = {}", result);
+		//int result = memberService.insertMemberBoard(board);
+		//log.info("insertMemberBoard result = {}", result);
 		return "redirect:/member/member/memberView"; 
 	}
 
