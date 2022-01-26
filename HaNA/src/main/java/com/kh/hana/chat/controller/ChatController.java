@@ -12,6 +12,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +45,9 @@ public class ChatController {
 	
 	@Autowired
 	private ServletContext application;
+	
+	@Autowired
+	private ResourceLoader resourceLoader;
 	
 	@GetMapping("/chat.do")
 	public void chat() {}
@@ -170,7 +177,7 @@ public class ChatController {
     	
     	MultipartFile upfile = filerequest.getFile("image");
     	log.info("sendFile upfile = {}", upfile);
-    	String saveDirectory = application.getRealPath("/resources/upload/chat");
+    	String saveDirectory = application.getRealPath("/resources/upload/chat/chat");
     	log.info("sendFile saveDirectory = {}", saveDirectory);
 		
     	String originalFilename = upfile.getOriginalFilename();
@@ -186,6 +193,25 @@ public class ChatController {
 		log.info("upfile renamedFilename = {}",renamedFilename);
 		
     	return ResponseEntity.ok(renamedFilename);
+    }
+    
+    @GetMapping(value="/Filedownload.do",
+    		produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public Resource Filedownload(String filename, HttpServletResponse response){
+    	log.info("filename = {}", filename);
+    	
+		// 다운로드받을 파일 경로
+		String saveDirectory = application.getRealPath("/resources/upload/chat/chat");
+		File downFile = new File(saveDirectory, filename);
+		String location = "file:" + downFile; // file객체의 toString은 절대경로로 오버라이드되어 있다.
+		log.info("location = {}",location);
+		Resource resource = resourceLoader.getResource(location);
+		
+		//헤더설정  (이거 안하면 바로보기됨!!)
+		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+    	
+    	return resource;
     }
     		
 }
