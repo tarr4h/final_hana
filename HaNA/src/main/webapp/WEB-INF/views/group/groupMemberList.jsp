@@ -20,29 +20,43 @@
 		
 	</script>
 	<sec:authentication property="principal" var="loginMember" />
-
+	<style>
+table th, td {
+	text-align: center;
+	vertical-align: middle;
+}
+</style>
 	<div class="groupMemberListTableArea">
-		<table id="tbl-board" class="table table-striped table-hover">
-		<tr>
-			<th>프로필</th>
-			<th>그룹 아이디</th>
-			<th>멤버 아이디</th>
-			<th>회원등급</th>
-			<th>강퇴</th>
-		</tr>
-		<c:forEach items="${groupMemberList}" var="list">
+		<table class="table table-bordered">
 			<tr>
-				<td>${list.PICTURE}</td> 
-				<td>${list.GROUP_ID}</td>
-				<td>${list.MEMBER_ID}</td>
-				<td>${list.MEMBER_LEVEL_CODE}</td>
-				<td><button type="button" class="btn btn-danger">강퇴</button></td>
+				<th>그룹 아이디</th>
+				<th>프로필</th>
+				<th>멤버 아이디</th>
+				<th>회원등급</th>
+				<th>조정</th>
 			</tr>
-		</c:forEach>
-	</table>
+			<c:forEach items="${groupMemberList}" var="list">
+				<tr>
+					<td>${list.GROUP_ID}</td>
+					<td> <img style="width: 100px; height: 100px; border-radius: 50%;" src="${pageContext.request.contextPath}/resources/upload/member/profile/${list.PICTURE}" alt="" /> </td>
+					<td>${list.MEMBER_ID}</td>
+					<td><c:if test="${list.MEMBER_LEVEL_CODE eq 'ld'}">리더</c:if> <c:if
+							test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> <c:if
+							test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
+					<td>
+						<button type="button" class="btn btn-info"
+							onclick="gradeGroupMember">등급</button>
+						<button type="button" class="btn btn-danger"
+							onclick="deleteGroupMember">강퇴</button>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
 	</div>
 
-
+	<script>
+		
+	</script>
 
 
 

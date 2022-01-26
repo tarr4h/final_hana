@@ -195,7 +195,6 @@
 						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
 					</tr>
 				</table>
-<<<<<<< HEAD
 					<div>
 						<button type="button" class="btn-deleteBoard">삭제</button>
 					</div>
@@ -241,7 +240,6 @@
 				<div>
 				<i class="bi bi-heart"></i>
 				<i class="bi bi-heart-fill"></i>
-=======
 				<div style="position:relative;margin-right:70px;">
 				<span class="heart unlike" onclick="like();" style="position:absolute;">빈하트</span>
 				<span class="heart like" onclick="unlike();" style="color:red;position:absolute;">빨간하트</span>
@@ -250,7 +248,6 @@
 				</div>
 				<!-- <i class="bi bi-heart"></i>
 				<i class="bi bi-heart-fill"></i> -->
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 				</div>
 				</div>
 				<div class="modal-body">

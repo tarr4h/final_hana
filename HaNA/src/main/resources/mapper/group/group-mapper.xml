@@ -250,6 +250,8 @@
 		        on m.id = gml.member_id
 		where
 		    group_id = #{groupId}
+		order by
+            member_level_code
 	</select>
 
 	<select id="selectOneLikeLog" resultMap="likeLog">
