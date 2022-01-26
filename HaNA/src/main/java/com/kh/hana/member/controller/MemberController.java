@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.member.model.service.MemberService;
+import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
@@ -256,7 +257,14 @@ public class MemberController {
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 
-	
+	//게시글 작성하기
+	@PostMapping("/memberBoardEnroll")
+	public String insertMemberBoard(Board board, RedirectAttributes redirectAttr) {
+		log.info("insertMemberBoard board = {}", board);
+		int result = memberService.insertMemberBoard(board);
+		log.info("insertMemberBoard result = {}", result);
+		return "redirect:/member/member/memberView"; 
+	}
 
 
 }

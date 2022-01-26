@@ -3,6 +3,7 @@ package com.kh.hana.member.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
@@ -41,6 +42,8 @@ public interface MemberDao {
 	int updateShopInfo(Shop shop);
 
 	int insertShopInfo(String id);
+
+	int insertMemberBoard(Board board);
 
  
 

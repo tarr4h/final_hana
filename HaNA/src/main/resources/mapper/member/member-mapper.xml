@@ -158,13 +158,24 @@ where
 		where id = #{id}
 	</update>
 
-
-
-
 	<insert id="insertShopInfo" parameterType="string">
 		insert into shop_info (id)
 		values(#{id})
 	</insert>
+
+	<insert id= "insertMemberBoard" parameterType="board">
+		insert into board (no, writer, content, picture)
+		values (seq_board_no.nextval,#{id}, #{content}, #{picture})
+ 
+	</insert>
+
+
+
+
+
+
+
+
 
 
 </mapper>
