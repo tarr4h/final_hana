@@ -107,9 +107,11 @@
 				</div>
 				<!-- 내용 -->
 				<div class="modal-body">
-					<input type="text" name="" id="" />
-					<input type="text" name="" id="" />
-					<input type="text" name="" id="" />
+					<%-- <form:form name="testFrm" action="${pageContext.request.contextPath }/member/testModal" method="POST" enctype="multipart/form-data">
+						<input type="text" name="username" id="" />
+						<input type="file" name="upFile" id="" />
+						<input type="submit" id="testBtn" value="제출" />
+					</form:form> --%>
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -119,9 +121,31 @@
 			</div>
 		</div>
 	</div>
-	
+	<form:form name="testFrm" action="${pageContext.request.contextPath }/member/testModal" method="POST" enctype="multipart/form-data">
+	<input type="file" name="upFile" id="" />
+	<input type="submit" value="테스트2" id="testBtn2"/>
+	</form:form>
 	<!-- 관련 스크립트 -->
 	<script>
+		$("#testBtn2").click((e) => {
+			console.log($("[name=fileTest]").prop('files'));
+			console.log($("[name=fileTest]").val());
+			console.log($("[name=fileTest]"));
+		})
+	
+		/* $(document.testFrm).submit((e) => {
+			e.preventDefault();
+			console.log($("#modal4").find('input[name=upFile]').val());
+			console.log($("#modal4").find('input[name=username]').val());
+			console.log($("#modal4").find('input[name=upFile]'));
+			console.log($('input[name=upFile]').prop('files'));
+			console.log($("input[name=upFile]").val());
+			
+			
+		}); */
+	
+	
+	
 		/* 예약버튼 클릭 */
 		$('#reservationBtn').click(function(e){
 			e.preventDefault();

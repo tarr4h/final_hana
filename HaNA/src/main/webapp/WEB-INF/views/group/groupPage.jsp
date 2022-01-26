@@ -181,8 +181,8 @@
 				<div class="modal-header">
 				<table>
 					<tr>
-						<td rowspan="2" id="member-profile"><img src="" style="height:50px; border-radius:50%"/></td>
-						<th><a href="#" id="member-id" style="color:black; text-decoration:none;"></a></th>
+						<td rowspan="2" id="member-profile"><img src="" style="height:50px;width:50px; border-radius:50%"/></td>
+						<th id="member-id"></th>
 					</tr>
 					<tr>
 						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
@@ -191,6 +191,9 @@
 				<div style="position:relative;margin-right:70px;">
 				<span class="heart unlike" onclick="like();" style="position:absolute;">빈하트</span>
 				<span class="heart like" onclick="unlike();" style="color:red;position:absolute;">빨간하트</span>
+				<div style="color:gray;transform:translateX(30px);">
+				<span class="like_count"></span>
+				</div>
 				<!-- <i class="bi bi-heart"></i>
 				<i class="bi bi-heart-fill"></i> -->
 				</div>
@@ -286,7 +289,7 @@ function getPageDetail(boardNo){
 		 			const date = moment(groupBoard.regDate).format("YYYY년 MM월 DD일");
 					let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${groupBoard.writerProfile}`;
 			 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
-		 	 		$("#member-id").html(`&nbsp;&nbsp;\${groupBoard.writer}`); // 글쓴이 아이디
+		 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${groupBoard.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${groupBoard.writer}</a>`); // 글쓴이 아이디
 			 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜, 태그 장소
 			 		$("#tag-place").html(`,&nbsp;&nbsp;\${groupBoard.placeName}`) // 날짜, 태그 장소
 			 		
@@ -298,7 +301,9 @@ function getPageDetail(boardNo){
 			 			$(".like").css("display","none");			 			
 			 			$(".unlike").css("display","inline");			 			
 			 		}
-			 		
+		 	 		
+			 		//좋아요 개수
+			 		getLikeCount();
 			 		
 			 		// modal footer부분 - 게시물 삭제 버튼
 		 	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer && "<sec:authentication property='principal.username'/>" != "${group.leaderId}"){
@@ -328,8 +333,8 @@ function getPageDetail(boardNo){
 		  			$("#group-board-tag-member-list table").empty();
 		 			$.each(tagMembers, (i,e)=>{
 		 				let tr = `<tr style="padding-bottom:10px;">
-		 					<td><a href="#" ><img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/\${e.picture}" alt="" /></a></td>
-		 					<th><a href="#" style="color:black; text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;\${e.id}</a></th>
+		 					<td><a href="javascript:void(0);" onclick="goMemberView('\${e.id}');" ><img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/\${e.picture}" alt="" /></a></td>
+		 					<th><a href="javascript:void(0);" onclick="goMemberView('\${e.id}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;\${e.id}</a></th>
 		 				</tr>`;	
 		  				$("#group-board-tag-member-list table").append(tr);
 		 			})
@@ -352,15 +357,61 @@ function getPageDetail(boardNo){
 				}
 			})
 }
+//계정페이지로 이동
+function goMemberView(memberId){
+	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
+}
+
+//좋아요 개수
+function getLikeCount(){
+	$.ajax({
+		url:`${pageContext.request.contextPath}/group/getLikeCount/\${gb.no}`,
+		success(data){
+			console.log(data.likeCount);
+			$(".like_count").html(data.likeCount);
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+}
+
 //좋아요 취소
 function unlike(){
 	$.ajax({
-		url:`${pageConext.request.contextPath}/group/unlike/\${gb.no}`,
+		url:`${pageContext.request.contextPath}/group/unlike/\${gb.no}`,
 		method:"DELETE",
 		success(data){
 			console.log(data);
 			$(".like").css("display","none");			 			
  			$(".unlike").css("display","inline");
+ 			getLikeCount();
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+}
+
+// 좋아요
+function like(){
+	$.ajax({
+		url:`${pageContext.request.contextPath}/group/like`,
+		method:"POST",
+		data:{
+			"no":gb.no
+		},
+		success(data){
+			console.log(data);
+			$(".like").css("display","inline");			 			
+ 			$(".unlike").css("display","none");
+ 			getLikeCount();
 		},
 		error(xhr, statusText, err){
 			switch(xhr.status){
@@ -456,7 +507,7 @@ function getCommentList(boardNo){
 	  					<img style="height:40px; border-radius:50%;" src="/hana/resources/upload/group/board/20220119_031942278_446.png" alt="" />
 	  				</td>
 					<td style="white-space:normal;">
-						<sub class="comment-writer"><a href="#" style="color:black; text-decoration:none; font-weight:bold;">\${e.writer}</a></sub>
+						<sub class="comment-writer"><a href="javascript:void(0);" onclick="goMemberView('\${e.writer}');" style="color:black; text-decoration:none; font-weight:bold;">\${e.writer}</a></sub>
 						<sub class="comment-date">\${date}</sub>
 						<br />
 						<!-- 댓글내용 -->

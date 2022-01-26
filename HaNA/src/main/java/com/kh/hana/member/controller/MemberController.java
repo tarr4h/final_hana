@@ -257,6 +257,7 @@ public class MemberController {
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 
+
 	//게시글 작성하기
 	@PostMapping("/memberBoardEnroll")
 	public String insertMemberBoard(Board board, 
@@ -267,7 +268,14 @@ public class MemberController {
 		log.info("insertMemberBoard board = {}", board);
 		//int result = memberService.insertMemberBoard(board);
 		//log.info("insertMemberBoard result = {}", result);
-		return "redirect:/member/member/memberView"; 
+		return "redirect:/member/member/memberView";
+		
+	}
+
+	@PostMapping("/testModal")
+	public void testModal(@RequestParam MultipartFile upFile) {
+		 log.info("upFile = {}", upFile);
+
 	}
 
 
