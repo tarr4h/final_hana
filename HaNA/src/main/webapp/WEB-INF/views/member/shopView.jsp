@@ -11,7 +11,6 @@
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
 
-
 <style>
 	#myInfo{
 		border: 1px solid black;
@@ -104,6 +103,11 @@
 	.thumbnail img{
 		width: 100%;
 	}
+	
+	/* modal */
+	.modal {
+		margin-top : 150px;
+	}
 
 </style>
 
@@ -127,10 +131,9 @@
 </c:if>
 
 
-<div class="container">
+<!-- <div class="container">
 	
-</div>
-
+</div> -->
 
 
 
@@ -209,7 +212,104 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="button" value="예약" />
+								<input type="button" value="예약" id="reservationBtn"/>
+								
+								<!-- Modal-->
+								<div>
+								<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<!-- header -->
+											<div class="modal-header">
+												<h3 class="modal-title" id="modalHeader">예약하기</h3>
+													<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+														닫기
+													</button>
+											</div>
+											<!-- 내용 -->
+											<div class="modal-body">
+												${shopInfo.shopIntroduce }
+												<br />
+												<span>다음을 클릭해주세요</span>
+												<br />
+												<span>다음을 클릭해주세요</span>
+												<br />
+												<span>다음을 클릭해주세요</span>
+												<br />
+												<span>다음을 클릭해주세요</span>
+												<br />
+												<span>다음을 클릭해주세요</span>
+												<br />
+												<span>다음을 클릭해주세요</span>
+											</div>
+											<!-- footer -->
+											<div class="modal-footer">
+												<a class="btn" id="nextBtn1" href="#">다음</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								</div>
+								
+								<!-- Moda2-->
+								<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<!-- header -->
+											<div class="modal-header">
+												<h3 class="modal-title" id="exampleModalLabel">예약일시 선택</h3>
+													<button class="close" type="button" data-dismiss="modal" aria-label="Close">닫기</button>
+											</div>
+											<!-- 내용 -->
+											<div class="modal-body">
+												<input type="date" name="" id="" />
+												<select name="time-hour" id="time-hour">
+													<option value="" disabled selected>시간 선택</option>
+													
+												</select>
+												<select name="time-minutes" id="time-minutes">
+													<option value="" disabled selected>분 선택</option>
+												</select>
+											</div>
+											<!-- footer -->
+											<div class="modal-footer">
+												<a class="btn" id="prevBtn2" href="#">이전</a>
+												<a class="btn" id="nextBtn2" href="#">다음</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							
+							
+								
+								<script>
+									$('#reservationBtn').click(function(e){
+										e.preventDefault();
+										$('#modal1').modal({backdrop:'static', keyboard:false});
+										
+									});
+									$('#nextBtn1').click((e) => {
+										e.preventDefault();
+										$('#modal1').css('display', 'none');
+										$('#modal2').modal({backdrop:'static', keyboard:false});
+									});
+									$('#prevBtn2').click((e) => {
+										e.preventDefault();
+										$('#modal1').css('display', 'block');
+										$('#modal2').modal('hide');
+									});
+									$('#nextBtn2').click((e) => {
+										e.preventDefault();
+										/* 다음 모달 활성화시키기 */
+									});
+									
+									
+									$(".close").click((e) => {
+										$(".modal.fade").modal("hide");
+									})
+								</script>
+
 							</td>
 						</tr>
 					</tbody>
@@ -258,8 +358,7 @@
 
 </script>
 
-
-
+  
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
