@@ -106,14 +106,14 @@ nav img {
 main {
     width: 960px;
     margin: 0 auto;
-    padding-top: 94px;
+    padding-top: 40px;
     padding-bottom: 40px;
 }
 .main-right {
     width: 310px;
     display: inline-block;
     position: fixed;
-    top: 94px;
+    top: 160px;
 }
 .feeds {
     width: 614px;
@@ -141,7 +141,7 @@ article {
     height: 220px;
 }
 /* article */
-header {
+header#mainheader {
     height: 60px;
     padding: 0 16px;
     display: flex;
