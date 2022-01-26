@@ -242,5 +242,24 @@
 			and
 			member_id = #{memberId}
 	</delete>
+	<insert id="insertLikeLog">
+		insert into
+			group_board_like
+		values(
+			#{boardNo},#{memberId}
+		)
+	</insert>
+	<select id="selectLikeCount" resultType="_int">
+	select
+		count(*)
+	from(
+		select
+			*
+		from
+			group_board_like
+		where
+			board_no = #{no}
+		)	
+	</select>
 </mapper>
 
