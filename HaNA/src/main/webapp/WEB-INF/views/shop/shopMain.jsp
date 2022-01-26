@@ -11,6 +11,13 @@
 	<jsp:param value="AroundME" name="title" />
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/shop/shopMain.css" />
+
+<!-- autocomplete 라이브러리 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 <!-- 우측 공간확보 -->
 <section class="body-section" style="width:200px;height:100%;float:right;display:block;">
 		<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
@@ -245,11 +252,104 @@ $(() => {
 	});
 
 	
-	// Autocomplete 부분
+	 // Autocomplete 부분
+    $("#searchInput").autocomplete({
+        source : function(request, response) {
+            $.ajax({
+                  url : "${pageContext.request.contextPath}/shop/hashTagAutocomplete",
+                 data : {search : $("#searchInput").val()},
+                 success : function(data){ 
+                    		console.log(data)
+                    response(
+                        $.map(data, function(item) {
+                            return {
+                                  label : item.tagName  //목록에 표시되는 값
+                            };
+                        })
+                    );  	
+                },
+                error : function(){ //실패
+						console.log("실패")
+                }
+            });
+        	}
+        , minLength : 1  // 조회를 위한 최소 글자수  
+        , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
+        ,select: function( event, ui ) {
+            //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
+        	console.log("select")
+        	
+        
+        }
+        , focus : function(evt, ui) { //  한글 오류 방지
+            return false;
+        }
+    }).autocomplete('instance')._renderItem = function(ul, item) { 
+		return $('<li>')
+        .append('<div>' + item.label + '</div>') 
+        .appendTo(ul);
+    };
+ 
+	 
+  
+/*   // test 부분 
+    $("#searchInput").autocomplete({
+        source : function(request, response) {
+            $.ajax({
+                  url : "${pageContext.request.contextPath}/shop/hashTagAutocomplete",
+                 data : {search : $("#searchInput").val()},
+                 success : function(data){ 
+                    		console.log(data)
+                    response(
+                        $.map(data, function(item) {
+                            return {
+                                  label : item.tagName  //목록에 표시되는 값
+                            };
+                        })
+                    );  	
+                },
+                error : function(){ //실패
+						console.log("실패")
+                }
+            });
+        	}
+        , minLength : 1  // 조회를 위한 최소 글자수  
+        , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
+  		
+        ,select: function( event, ui) {
+            //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
+        	console.log("검색 데이터 : " + ui.item.value);
+        	console.log("전체 data: " + JSON.stringify(ui));
+        	 // 검색 데이터 변수에 담기  
+        	var selectData = ui.item.value;
+        	console.log(selectData)
+        	
+        	// .appendTo 이부분 해보기 
+        	// $('<li>')
+            // .append('<div>' + item.label + '</div>') 
+            // .appendTo(ul);
+        	// dddd
+        	 
+        
+        	
+        
+        }
+        , focus : function(evt, ui) { //  한글 오류 방지
+            return false;
+        }
+    }).autocomplete('instance')._renderItem = function(ul, item) { 
+		return $('<li>')
+        .append('<div>' + item.label + '</div>') 
+        .appendTo(ul);
+    };
+ 
+ 
+  */
+ 
 	
-
-
 </script>
+
+
 
 
 
