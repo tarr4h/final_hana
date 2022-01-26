@@ -188,9 +188,11 @@
 						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
 					</tr>
 				</table>
-				<div>
-				<i class="bi bi-heart"></i>
-				<i class="bi bi-heart-fill"></i>
+				<div style="position:relative;margin-right:70px;">
+				<span class="heart unlike" onclick="like();" style="position:absolute;">빈하트</span>
+				<span class="heart like" onclick="unlike();" style="color:red;position:absolute;">빨간하트</span>
+				<!-- <i class="bi bi-heart"></i>
+				<i class="bi bi-heart-fill"></i> -->
 				</div>
 				</div>
 				<div class="modal-body">
@@ -277,7 +279,7 @@ function getPageDetail(boardNo){
 		 */		url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
 				success(data){
 			 
-			 		const {groupBoard, tagMembers} = data;
+			 		const {groupBoard, tagMembers, isLiked} = data;
 		 			gb = groupBoard;
 		 			
 		 			// modal의 header부분
@@ -288,7 +290,17 @@ function getPageDetail(boardNo){
 			 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜, 태그 장소
 			 		$("#tag-place").html(`,&nbsp;&nbsp;\${groupBoard.placeName}`) // 날짜, 태그 장소
 			 		
-			 		//게시물 삭제 버튼
+			 		// 좋아요 버튼
+			 		if(isLiked){
+			 			$(".unlike").css("display","none");
+			 			$(".like").css("display","inline");
+			 		}else{
+			 			$(".like").css("display","none");			 			
+			 			$(".unlike").css("display","inline");			 			
+			 		}
+			 		
+			 		
+			 		// modal footer부분 - 게시물 삭제 버튼
 		 	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer && "<sec:authentication property='principal.username'/>" != "${group.leaderId}"){
 			 			$(".btn-deleteBoard").css("display","none");
 			 		}else{
@@ -296,7 +308,7 @@ function getPageDetail(boardNo){
 			 			$(document.groupBoardDeleteFrm)
 			 				.children("[name=no]").val(boardNo);
 			 		}
-
+					
 		 	 		
 			 		// 이미지
 			 		$("#group-board-img-container").empty();
@@ -339,6 +351,24 @@ function getPageDetail(boardNo){
 					console.log
 				}
 			})
+}
+//좋아요 취소
+function unlike(){
+	$.ajax({
+		url:`${pageConext.request.contextPath}/group/unlike/\${gb.no}`,
+		method:"DELETE",
+		success(data){
+			console.log(data);
+			$(".like").css("display","none");			 			
+ 			$(".unlike").css("display","inline");
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
 }
 
 // 게시물 불러오기 함수

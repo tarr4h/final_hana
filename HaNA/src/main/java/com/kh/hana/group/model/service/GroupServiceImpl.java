@@ -114,4 +114,14 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.updateBoardContent(param);
 	}
 
+	@Override
+	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
+		return groupDao.selectOneLikeLog(param);
+	}
+
+	@Override
+	public int deleteLikeLog(Map<String, Object> param) {
+		return groupDao.deleteLikeLog(param);
+	}
+
 }
