@@ -29,6 +29,7 @@
 		<result column="message_reg_date" property="messageRegDate"/>
 		<result column="unreadcount" property="unreadcount"/>
 		<result column="picture" property="picture"/>
+		<result column="attachment" property="fileImg"/>
 	</resultMap>
 	
 	<select id="selectChatRoom" resultType="chatroom">
@@ -53,7 +54,13 @@
 	INSERT 
 		INTO 
 	CHAT 
-		VALUES(#{roomNo}, #{memberId}, #{message}, default, default)
+		VALUES(#{roomNo}, #{memberId}, #{message}, default, default,default)
+	</insert>
+	<insert id="insertFileMessage">
+	INSERT 
+		INTO 
+	CHAT 
+		VALUES(#{roomNo}, #{memberId}, #{message}, default, default, #{fileImg})
 	</insert>
 	<select id="memberList" resultType="member">
 	select

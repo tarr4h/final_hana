@@ -30,5 +30,4 @@ public class GroupBoardEntity implements Serializable{
 	private double locationX;
 	private String[] image;
 	private String[] tagMembers;
-	
 }

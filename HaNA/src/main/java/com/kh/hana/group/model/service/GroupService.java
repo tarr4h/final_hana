@@ -38,8 +38,15 @@ public interface GroupService {
 
 	List<Map<String, Object>> getGroupApplyRequest(String groupId);
 
+	List<GroupBoardComment> selectGroupBoardCommentList(int boardNo);
+
+	int deleteBoardComment(int no);
+	
 	int insertGroupMember(Map<String, Object> map);
 
 	int deleteGroupApplyList(Map<String, Object> map);
 
+	int deleteGroupBoard(int no);
+
+	int updateBoardContent(Map<String, Object> param);
 }

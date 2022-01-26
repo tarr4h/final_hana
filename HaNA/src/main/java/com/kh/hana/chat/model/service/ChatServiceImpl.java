@@ -103,6 +103,11 @@ public class ChatServiceImpl implements ChatService {
 		return chatDao.exitRoom(roomNo);
 	}
 
+	@Override
+	public int insertFileMessage(Chat chat) {
+		return chatDao.insertFileMessage(chat);
+	}
+
 
 
 }

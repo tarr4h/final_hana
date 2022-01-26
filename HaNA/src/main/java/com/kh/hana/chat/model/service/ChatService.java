@@ -42,4 +42,6 @@ public interface ChatService {
 
 	int exitRoom(int roomNo);
 
+	int insertFileMessage(Chat chat);
+
 }

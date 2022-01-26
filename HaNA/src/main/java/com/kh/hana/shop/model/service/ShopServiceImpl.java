@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.hana.common.util.CalculateArea;
 import com.kh.hana.shop.model.dao.ShopDao;
+import com.kh.hana.shop.model.vo.HashTag;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +43,11 @@ public class ShopServiceImpl implements ShopService {
 		log.info("shopList LAsts = {}", lastShopList);
 		log.info("listSize = {}", lastShopList.size());
 		return lastShopList;
+	}
+
+	@Override
+	public int insertHashTag(HashTag hashTag) {
+		return shopDao.insertHashTag(hashTag);
 	}
 	
 

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.hana.mbti.model.vo.Mbti;
-import com.kh.hana.mbti.model.vo.MbtiData;
+import com.kh.hana.mbti.model.vo.MemberMbti;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +27,6 @@ public class MbtiDaolmpl implements MbtiDao {
 
 	@Override
 	public int insertList(Map<Integer, Integer> resultOfNo, String memberId) {
-		log.info("map = {}", resultOfNo);
 		
 		for(int m : resultOfNo.keySet()) {			
 			int no = m;
@@ -37,19 +36,30 @@ public class MbtiDaolmpl implements MbtiDao {
 			map.put("result", result);
 			map.put("memberId", memberId);
 			
-			int insertResult = session.insert("mbti.insertList", map);
-			log.info("insertResult = {}", insertResult);
-			
+			int insertResult = session.insert("mbti.insertList", map);	
 		}
-		
 		return 0;
 	}
 
 	@Override
 	public List<Map<String, Object>> selectMbtiResult(String memberId) {
-		log.info("selectMbtiResult = {}", memberId);
 		return  session.selectList("mbti.selectMbtiResult", memberId);
 	}
 
+	@Override
+	public MemberMbti selectProfile(Map<String, Object> map) {
+		return session.selectOne("mbti.selectProfile", map);
+	}
 
+	@Override
+	public int insertProfile(Map<String, Object> map) {
+		return  session.insert("mbti.insertProfile", map);
+
+	}
+
+	@Override
+	public int updateProfile(Map<String, Object> map) {
+		return  session.update("mbti.updateProfile", map);
+		
+	}
 }
