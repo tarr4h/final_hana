@@ -8,7 +8,9 @@
 		* 
 	from 
 		chat_room 
-	where members like '%' ||  #{id} || '%'
+	where (members like '%' || #{id} || '%' and room_type = 0) 
+		or 
+	group_room_id in ( select group_id from group_member_list where member_id = #{id})
 	</select>
 		
 		<select id="roomchat2" resultMap="chatMap">
@@ -136,7 +138,7 @@
 		#{groupName},
 		1,
 		#{groupId},
-		#{leaderId},
+		null,
 		#{image}
 		)
 	</insert>
