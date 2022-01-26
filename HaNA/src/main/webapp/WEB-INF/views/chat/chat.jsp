@@ -32,8 +32,10 @@
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
 <span>member picture 못찾는건 404</span><br />
-<span>사진 올릴때 어떤 multi-part 설정도 제공되지 않았기 때문에, part들을 처리할 수 없습니다. 오류뜨면 server -> context.xml -> context안에 allowCasualMultipartParsing="true" path="/" 추가 </span><br />
+<span>사진 올릴때 어떤 multi-part 설정도 제공되지 않았기 때문에, part들을 처리할 수 없습니다. 오류뜨면</span><br />
+<span>server -> context.xml -> context안에 allowCasualMultipartParsing="true" path="/" 추가 </span><br />
 <span>소모임 회원 가입시 채팅방 추가 / 소모임 탈퇴시 채팅방 나가기</span><br />
+<span>커밋할때 프로젝트 새로고침해서 저장한 이미지 다 불러오고 하기</span><br />
 <script>
 let id;
 let picture;
@@ -100,7 +102,7 @@ const displayRoom = (selector, data) => {
 				<div class="col-md-4 col-xl-4 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
 						<div class="input-group">
-							<input type="text" placeholder="회원 검색" id="findMemberInput" class="form-control search">
+							<input type="text" placeholder="아이디 or 이름을 입력하세요" id="findMemberInput" class="form-control search">
 							<button id="allMember">친구목록</button>
 						</div>
 					</div>
@@ -218,7 +220,7 @@ if(websocket !== undefined){
 						<span id="action_menu_btn" onclick="actionMenu();"><i class="fas fa-ellipsis-v"></i></span>
 						<div class="action_menu">
 							<ul>
-								<li onclick="closeChatRoom();"><i class="fas fa-user-circle"></i>채팅방 나가기</li>
+								<li onclick="closeChatRoom('\${roomType}');"><i class="fas fa-user-circle"></i>채팅방 나가기</li>
 								<li onclick="closeBtn();"><i class="fas fa-ban"></i>대화창 나가기</li>
 							</ul>
 					</div>
@@ -604,11 +606,19 @@ const actionMenu = () => {
 };
 
 <!-- 채팅방 나가기 -->
-const closeChatRoom = ()=>{
+const closeChatRoom = (roomType)=>{
+	console.log("roomType = ",roomType);
+	if(roomType == 0){
 	if(confirm("상대방의 채팅방도 나가집니다. 나가시겠습니까?")){
 		$("[name=exitRoomFrm] input[name=roomNo]").val(roomNo);
 		$(document.exitRoomFrm).submit();
 	}
+	}
+	else{
+		alert("소모임 삭제 or 탈퇴시 나갈 수 있습니다.");
+		return
+	}
+		
 };
 	
 </script>
