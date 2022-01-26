@@ -29,8 +29,8 @@
 					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2"/>	
 					 	<label for="cbtest-${list.no}-yes" class="cb2"></label>
 					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" />
-					   <!-- 비동의 -->
 						<label for="cbtest-${list.no}-no" class="cb1"></label>
+					   <!-- 비동의 -->
 					<span><i class="fas fa-times"></i></span>
 			</li>
 		 </c:forEach>
