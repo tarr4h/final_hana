@@ -423,6 +423,9 @@ public class GroupController {
 		
 		return ResponseEntity.ok(map);
 	}
+	
+	@GetMapping("/groupCalendar")
+	public void groupCalendar() {}
 }
 
 

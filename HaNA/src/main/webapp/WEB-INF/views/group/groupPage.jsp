@@ -114,10 +114,11 @@
 
 <div class="icon">
 	<a href="#"><i class="fas fa-pencil-alt"></i></a>
-	<a href="#"><i class="fas fa-calendar-alt"></i></a>
+	<a href="${pageContext.request.contextPath}/group/groupCalendar"><i class="fas fa-calendar-alt"></i></a>
 	<a href="#"><i class="far fa-comments"></i></a>
 </div>
 
+<!-- 게시물 목록 -->
 <div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
@@ -266,10 +267,10 @@ let newContent;
 	    }
 	  });
 
-// 모달창
+// 게시물 목록 이미지 클릭
 $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
-	
+	console.log("alksjdflkajsdlf",boardNo);
 	getPageDetail(boardNo);
 	
 	$('#groupPageDetail').modal("show");
@@ -277,12 +278,15 @@ $('.board-main-image').click((e)=>{
 
 // 게시물 상세보기 페이지 불러오기 함수
 function getPageDetail(boardNo){
+	console.log("aaa",boardNo);
 	$.ajax({
-		/* 		url:`<c:out value='${pageContext.request.contextPath}'></c:out>/group/groupBoardDetail/\${boardNo}`
-		 */		url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
+				url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
 				success(data){
 			 
 			 		const {groupBoard, tagMembers, isLiked} = data;
+			 		console.log(groupBoard);
+			 		console.log(tagMembers);
+			 		console.log(isLiked);
 		 			gb = groupBoard;
 		 			
 		 			// modal의 header부분
@@ -367,7 +371,6 @@ function getLikeCount(){
 	$.ajax({
 		url:`${pageContext.request.contextPath}/group/getLikeCount/\${gb.no}`,
 		success(data){
-			console.log(data.likeCount);
 			$(".like_count").html(data.likeCount);
 		},
 		error(xhr, statusText, err){
@@ -494,7 +497,6 @@ function getCommentList(boardNo){
   	$.ajax({
   		url:`${pageContext.request.contextPath}/group/getCommentList/\${boardNo}`,
   		success(data){
-  			console.log(data);
   			$("#group-board-comment-list>table").empty();
 
   			$.each(data,(i,e)=>{
@@ -540,7 +542,6 @@ function getCommentList(boardNo){
 					}
 				}
 	  			tr += "</tr>"
-	  			console.log(tr);
 	  			$("#group-board-comment-list>table").append(tr);
   			})
   		},
@@ -799,7 +800,6 @@ function groupApplyHandlingFunc(e, YN){
     console.log("YN = ",YN);
 /*     console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=no]").val());
     console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=approvalYn]").val()); */
-	<!-- 이거없으면 403오류 -->
     const csrfHeader = "${_csrf.headerName}";
 	const csrfToken = "${_csrf.token}";
 	const headers = {};
