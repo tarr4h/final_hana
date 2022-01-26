@@ -387,6 +387,7 @@ public class GroupController {
 //		return ResponseEntity.ok(map);
 //	}
 	@DeleteMapping("/unlike/{no}")
+	@ResponseBody
 	public ResponseEntity<Map<String,Object>> unlike(@PathVariable int no, @AuthenticationPrincipal Member member) {
 		Map<String,Object> map = new HashMap<>();
 		
@@ -394,6 +395,7 @@ public class GroupController {
 			Map<String,Object> param = new HashMap<>();
 			map.put("memberId",member.getId());
 			map.put("boardNo",no);
+			
 			int result = groupService.deleteLikeLog(param);
 			
 			map.put("msg", "unlike 성공");
