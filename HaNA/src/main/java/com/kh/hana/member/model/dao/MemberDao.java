@@ -38,8 +38,6 @@ public interface MemberDao {
  
 	Shop selectOneShopInfo(String memberId);
 
-	int insertShopInfo(Shop shop);
-
 	int updateShopInfo(Shop shop);
 
 	int insertShopInfo(String id);
