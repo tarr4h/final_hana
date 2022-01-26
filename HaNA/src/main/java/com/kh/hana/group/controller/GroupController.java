@@ -6,10 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 
@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -139,7 +140,8 @@ public class GroupController {
 		return "/group/groupBoardForm";
 	}
 	
-	@PostMapping("/enrollGroupBoard")
+	//이거
+    @PostMapping(value="/enrollGroupBoard")
 	public String enrollGroupBoard(GroupBoardEntity groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
@@ -170,12 +172,13 @@ public class GroupController {
 			
 			int result = groupService.insertGroupBoard(groupBoard);
 			
-			return "redirect:/group/groupBoardDetail/"+groupBoard.getNo();
-		}catch(Exception e) {
-			log.error(e.getMessage(),e);
-			return "redirect/group/enrollGroupBoard";
-		}
-	}
+            return "redirect:/group/groupPage/"+groupBoard.getGroupId();
+        }catch(Exception e) {
+            log.error(e.getMessage(),e);
+            return "redirect:/group/enrollGroupBoard";
+        }
+    }
+    //이거
 //	@GetMapping("/groupBoardDetail/{no}")
 //	public String groupBoardDetail(@PathVariable int no, Model model) {
 //		GroupBoard groupBoard = groupService.selectOneBoard(no);
@@ -218,6 +221,32 @@ public class GroupController {
 		log.info("groupId = {}", groupId);
 		model.addAttribute("groupId", groupId);
 	}
+
+    @GetMapping("/getCommentList/{boardNo}")
+    public ResponseEntity<List<GroupBoardComment>> getCommentList(@PathVariable int boardNo){
+        log.info("boardNo = {}",boardNo);
+        System.out.println("alkjsdflkajlsk");
+        List<GroupBoardComment> list = groupService.selectGroupBoardCommentList(boardNo);
+        log.info("list = {}",list);
+        return ResponseEntity.ok(list);
+    }
+    
+    @DeleteMapping("/groupBoardCommentDelete/{no}")
+    public ResponseEntity groupBoardCommentDelete(@PathVariable int no) {
+        Map<String, Object> map = new HashMap<>();
+        try{
+            log.info("no = {}",no);
+            int result = groupService.deleteBoardComment(no);
+            log.info("result = {}",result);
+            map.put("msg", "삭제 성공!");
+            map.put("result",result);
+            return ResponseEntity.ok(map);
+        }catch(Exception e) {
+            log.error(e.getMessage(),e);
+            map.put("msg", "삭제 실패, 관리자에게 문의");
+            return ResponseEntity.ok(map);
+        }
+    }
 	
 	@PostMapping("/enrollGroupForm")
 	public String enrolledGroupForm(@RequestParam Map<String, Object> map, Model model) {
@@ -261,6 +290,9 @@ public class GroupController {
         	
         	String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
         	log.info("msg ={}", msg);
+        	
+        	int deleteResult = groupService.deleteGroupApplyList(map);
+        	log.info("deleteResult ={}", deleteResult);
         }
         //거절(n)
         else {
@@ -275,6 +307,21 @@ public class GroupController {
         return "redirect:/group/groupPage/"+groupId;
     }
 	
+    @GetMapping("/groupMemberList/{groupId}") 
+    public ResponseEntity<List<Map<String, Object>>> groupMemberList(@PathVariable String groupId, @AuthenticationPrincipal Member member) {
+    		log.info("groupId ={}", groupId);
+    		
+    		List<Map<String, Object>> groupMemberList = groupService.groupMemberList(groupId);
+    		log.info("groupMemberList ={}", groupMemberList);
+    		
+    		return ResponseEntity.ok(groupMemberList);
+    	}
+    	
+    @GetMapping("/groupSetting/{groupId}")
+    public void groupSetting(@PathVariable String groupId, Model model){
+    	Group groupInfo = groupService.selectGroupInfo(groupId);
+    	log.info("groupInfo ={}", groupInfo);
+    }
 }
 
 

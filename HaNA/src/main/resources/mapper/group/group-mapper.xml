@@ -185,5 +185,25 @@
 			and
 			group_id = #{groupId}
 	</delete>
+	
+	<select id="groupMemberList" resultType="map">
+		select 
+		    m.picture,
+		    gml.*
+		from 
+		    member m join group_member_list gml
+		        on m.id = gml.member_id
+		where
+		    group_id = #{groupId}
+	</select>
+	
+	<select id="selectGroupInfo" resultType="group">
+		select
+			*
+		from
+			group_
+		where
+			group_id = #{groupId}
+	</select>
 </mapper>
 

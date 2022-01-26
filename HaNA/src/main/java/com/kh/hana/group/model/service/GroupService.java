@@ -37,9 +37,17 @@ public interface GroupService {
 	int insertEnrollGroupForm(Map<String, Object> map);
 
 	List<Map<String, Object>> getGroupApplyRequest(String groupId);
+	
+	List<GroupBoardComment> selectGroupBoardCommentList(int boardNo);
+	
+    int deleteBoardComment(int no);
 
 	int insertGroupMember(Map<String, Object> map);
 
 	int deleteGroupApplyList(Map<String, Object> map);
+
+	List<Map<String, Object>> groupMemberList(String groupId);
+
+	Group selectGroupInfo(String groupId);
 
 }

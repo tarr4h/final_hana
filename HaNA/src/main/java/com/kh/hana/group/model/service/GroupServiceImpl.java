@@ -94,6 +94,25 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.deleteGroupApplyList(map);
 	}	
 
+	@Override
+    public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo) {
+        return groupDao.selectGroupBoardCommentList(boardNo);
+    }
+    
+    @Override
+    public int deleteBoardComment(int no) {
+        return groupDao.deleteBoardComment(no);
+    }
 
+	@Override
+	public List<Map<String, Object>> groupMemberList(String groupId) {
+		return groupDao.groupMemberList(groupId);
+	}
+
+	@Override
+	public Group selectGroupInfo(String groupId) {
+		return groupDao.selectGroupInfo(groupId);
+	}
+	
 
 }

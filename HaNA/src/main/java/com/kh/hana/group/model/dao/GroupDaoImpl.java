@@ -75,11 +75,20 @@ public class GroupDaoImpl implements GroupDao {
 		return session.selectList("getGroupApplyRequest", groupId);
 	}
 
-	
 	 @Override
 	 public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
-		return session.insert("insertGroupBoardComment",groupBoardComment);
-	}
+	      return session.insert("insertGroupBoardComment",groupBoardComment);
+	  }
+	 
+	 @Override
+	 public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo) {
+	      return session.selectList("selectGroupBoardCommentList",boardNo);
+	  }
+	    
+	 @Override
+	 public int deleteBoardComment(int no) {
+	      return session.delete("deleteBoardComment",no);
+	  }
 
 	@Override
 	public int insertGroupMember(Map<String, Object> map) {
@@ -89,6 +98,16 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public int deleteGroupApplyList(Map<String, Object> map) {
 		return session.delete("deleteGroupApplyList", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> groupMemberList(String groupId) {
+		return session.selectList("groupMemberList", groupId);
+	}
+
+	@Override
+	public Group selectGroupInfo(String groupId) {
+		return session.selectOne("selectGroupInfo", groupId);
 	}
 
 

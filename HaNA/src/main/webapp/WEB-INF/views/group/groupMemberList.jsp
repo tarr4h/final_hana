@@ -20,38 +20,51 @@
 		
 	</script>
 	<sec:authentication property="principal" var="loginMember" />
-	<h1>그룹 정보 수정</h1>
-		<form name="groupUpdateFrm">
-			<table class="tbl-group">
-				<tr>
-					<th>그룹명</th>
-					<td>
-						<input type="text" name="groupName" required/>
-					</td>
-				</tr>
-				<tr>
-					<th>그룹아이디</th>
-					<td>
-						<input type="text" name="groupId" required readonly/>
-					</td>
-				</tr>
-				<tr>
-					<th>리더</th>
-					<td>
-						<input type="text" name="leaderId"  required/>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="button" value="수정" onclick="updateGroup();"/>
-						<input type="button" value="삭제" onclick="deleteGroup();" />
-					</td>
-				</tr>
-			</table>
-		</form>
+
+	<table class="memberListTable">
+		<tbody>
+			<tr>
+				<th>그룹아이디</th>
+				<th>프로필</th>
+				<th>멤버아이디</th>
+				<th>회원등급</th>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<script>
+	$(() => {
+		console.log("hi");
+		/* memberList(); */
+/* 		$.ajax({
+			url: "${pageContext.request.contextPath}/group/groupMemberList/${groupId}",
+			data: groupId = '${groupId}',
+			contentType: "application/json; charset=utf-8",
+			success(json){
+				console.log(json)
+				var listAdd = "<tr>" +
+				"<td>"+json.memberList[i].GroupId+"</td>"+
+				"<td>"+json.memberList[i].Picture+"</td>"+
+				"<td>"+json.memberList[i].MemberId+"</td>"+
+				"<td>"+json.memberList[i].MemberLevelCode+"</td>"+
+				"</tr>";
+				$(".table tbody").append(listAdd);
+			},
+			
+			error: fuction(xhr) {
+				alert("에러 : " + status);
+			}
+		}); */
+	})
+
+	</script>
 
 
 
-<a href="/" class="badge badge-dark">Dark</a>
+
+
+
+	<a href="/" class="badge badge-dark">Dark</a>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
