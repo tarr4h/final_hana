@@ -55,7 +55,7 @@
 		        
 				<br />
 				<label for="personality">내 성격</label>	
-					<select name="personality" id="personality" class="custom-select" required>
+					<select name="personality" id="personality" class="custom-select">
 					  <option value="" disabled selected>선택해주세요</option>
 					  <option value="차분한" ${loginMember.personality  eq '차분한'? 'selected' : ''}>차분한</option>
 					  <option value="활발한" ${loginMember.personality  eq '활발한'? 'selected' : ''}>활발한</option>
@@ -73,7 +73,7 @@
 				<br />
 
 				<label for="interest">내 관심사</label>	
-				<select name="interest" class="custom-select" required>
+				<select name="interest" class="custom-select">
 					<option value="" disabled selected>선택해주세요</option>
 					<option value="책" ${loginMember.interest  eq '책'? 'selected' : ''}>책</option>
 				 	<option value="패션" ${loginMember.interest  eq '패션'? 'selected' : ''}>패션</option>
