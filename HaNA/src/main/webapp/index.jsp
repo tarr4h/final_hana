@@ -10,17 +10,17 @@
 	<jsp:param value="메인화면" name="title"/>
 </jsp:include>
 
-<sec:authorize access="isAuthenticated()">
-<sec:authentication property="principal" var="loginMember" />
 <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main.css" />
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal" var="loginMember" />
    <main>
       <div class="feeds">
 <span>임시 메인 화면</span>
         <!-- article -->
         <article>
-          <header>
+          <header id="mainheader">
             <div class="profile-of-article">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="dlwlrma님의 프로필 사진">
               <span class="userID main-id point-span">dlwlrma</span>
@@ -32,11 +32,11 @@
           </div>
           <div class="icons-react">
             <div class="icons-left">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="하트">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="말풍선">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="DM">  
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart.svg" alt="하트"/>
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
             </div>
-            <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="북마크">
+            <%-- <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="북마크"> --%>
           </div>
           <!-- article text data -->
           <div class="reaction">
@@ -80,7 +80,7 @@
           </div>
         </div>
         <!-- story section -->
-        <div class="section-story">
+<%--         <div class="section-story">
           <div class="menu-title">
             <span class="sub-title">스토리</span>
             <span class="find-more">모두 보기</span>
@@ -123,7 +123,7 @@
               </div>
             </li>
           </ul>
-        </div>
+        </div> --%>
         <!-- recommendation section -->
         <div class="section-recommend">
           <div class="menu-title">
