@@ -32,10 +32,8 @@
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
 <span>member picture 못찾는건 404</span><br />
-<span>파이어폭스에선 채팅 사진크기가 이상</span><br />
-<span>사진 클릭시 다운로드가능하게</span><br />
+<span>사진 올릴때 어떤 multi-part 설정도 제공되지 않았기 때문에, part들을 처리할 수 없습니다. 오류뜨면 server -> context.xml -> context안에 allowCasualMultipartParsing="true" path="/" 추가 </span><br />
 <span>소모임 회원 가입시 채팅방 추가 / 소모임 탈퇴시 채팅방 나가기</span><br />
-<span>1:1 채팅 소모임 채팅만</span><br />
 <script>
 let id;
 let picture;
@@ -262,7 +260,7 @@ const enterkey = () => {
 <!-- 파일보내기 -->
 function fileSend(){
 	var file = $("#fileUpload")[0];
-	console.log("file = ",file);
+	console.log("filelength = ",file.files.length);
 	
 	if(file.files.length === 0){
 		alert("파일을 선택해주세요");
@@ -276,14 +274,15 @@ function fileSend(){
 	const csrfToken = "${_csrf.token}";
 	const headers = {};
 	headers[csrfHeader] = csrfToken;
-	
+
+	<!-- headers: headers, -->
 	$.ajax({
 		url : `${pageContext.request.contextPath}/chat/sendFile.do`,
 		method:"POST",
 		enctype: 'multipart/form-data',
 	    processData: false,
 	    contentType: false,
-		headers: headers,
+	    headers: headers,
 		data: formData,
 		success(file){
 			console.log(file);
@@ -307,7 +306,13 @@ function fileSend(){
 	});
 	
 };
+<!-- 파일 다운로드 -->
+const downloadFile = (filename) => {
+	if(confirm("파일을 다운로드 하시겠습니까?")){
+		location.href = `${pageContext.request.contextPath}/chat/Filedownload.do?filename=\${filename}`;
 
+	}
+};
 <!-- 메세지 전송 -->
 const btnSend = () => {
 	
@@ -416,7 +421,7 @@ const displaychat = (check, e) =>{
 		if(check === 'right'){
 			chat += `<div class="d-flex justify-content-end mb-4">
 <div class="msg_cotainer_send">
-<img src="../resources/upload/chat/\${e.fileImg}" class="fileImgMessage">
+<img src="../resources/upload/chat/chat/\${e.fileImg}" class="fileImgMessage" onclick="downloadFile('\${e.fileImg}')" style="cursor:pointer;">
 <span class="msg_time_send">\${returnDate}</span>
 </div>
 <div class="img_cont_msg">
@@ -430,7 +435,7 @@ const displaychat = (check, e) =>{
 			<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
 		</div>
 		<div class="msg_cotainer">
-		<img src="../resources/upload/chat/\${e.fileImg}" class="fileImgMessage">
+		<img src="../resources/upload/chat/chat/\${e.fileImg}" class="fileImgMessage" onclick="downloadFile('\${e.fileImg}')" style="cursor:pointer;">
 			<span class="msg_time">\${returnDate}</span>
 		</div>
 	</div>`;
@@ -452,7 +457,7 @@ const displaychat = (check, e) =>{
 	}
 	
 	else{
-
+	<!-- 일반 채팅 뿌려주기 -->
 		if(check === 'right'){
 				chat += `<div class="d-flex justify-content-end mb-4">
 <div class="msg_cotainer_send">
