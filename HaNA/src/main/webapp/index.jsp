@@ -10,16 +10,64 @@
 	<jsp:param value="메인화면" name="title"/>
 </jsp:include>
 
-<sec:authorize access="isAuthenticated()">
-<sec:authentication property="principal" var="loginMember" />
 <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main.css" />
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal" var="loginMember" />
    <main>
       <div class="feeds">
 <span>임시 메인 화면</span>
         <!-- article -->
         <article>
+          <header id="mainheader">
+            <div class="profile-of-article">
+              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="dlwlrma님의 프로필 사진">
+              <span class="userID main-id point-span">dlwlrma</span>
+            </div>
+            <img class="icon-react icon-more" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="more">
+          </header>
+          <div class="main-image">
+            <img src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" class="mainPic">
+          </div>
+          <div class="icons-react">
+            <div class="icons-left">
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="하트">
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="말풍선">
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="DM">  
+            </div>
+            <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="북마크">
+          </div>
+          <!-- article text data -->
+          <div class="reaction">
+            <div class="liked-people">
+              <img class="pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="johnnyjsuh님의 프로필 사진">
+              <p><span class="point-span">johnnyjsuh</span>님 <span class="point-span">외 2,412,751명</span>이 좋아합니다</p>
+            </div>
+            <div class="description">
+              <p><span class="point-span userID">dlwlrma</span><span class="at-tag">@wkorea @gucci</span> 🌱</p>
+            </div>
+            <div class="comment-section">
+              <ul class="comments">
+                <li>
+                  <span><span class="point-span userID">postmalone</span>내가 입으면 더 잘어울릴 것 같아</span>
+                  <img class="comment-heart" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="하트">
+                </li>
+                <!-- input 값 여기에 추가 -->
+              </ul>
+              <div class="time-log">
+                <span>32분 전</span>
+              </div>
+            </div>
+          </div>
+          <div class="hl"></div>
+          <div class="comment">
+            <input id="input-comment" class="input-comment" type="text" placeholder="댓글 달기..." >
+            <button type="submit" class="submit-comment" disabled>게시</button>
+          </div>
+        </article>
+        
+                <article>
           <header>
             <div class="profile-of-article">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="dlwlrma님의 프로필 사진">
