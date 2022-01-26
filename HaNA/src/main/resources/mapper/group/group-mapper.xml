@@ -220,5 +220,46 @@
 		where
 			no=#{no}
 	</update>
+	<select id="selectOneLikeLog" resultMap="likeLog">
+	select
+		*
+	from
+		group_board_like
+	where
+		board_no = #{boardNo}
+		and
+		member_id = #{memberId}
+	</select>
+	<resultMap type="map" id="likeLog">
+		<result column="board_no" property="boardNo"/>
+		<result column="member_id" property="memberId"/>
+	</resultMap>
+	<delete id="deleteLikeLog">
+		delete from
+			group_board_like
+		where
+			board_no = #{boardNo}
+			and
+			member_id = #{memberId}
+	</delete>
+	<insert id="insertLikeLog">
+		insert into
+			group_board_like
+		values(
+			#{boardNo},#{memberId}
+		)
+	</insert>
+	<select id="selectLikeCount" resultType="_int">
+	select
+		count(*)
+	from(
+		select
+			*
+		from
+			group_board_like
+		where
+			board_no = #{no}
+		)	
+	</select>
 </mapper>
 

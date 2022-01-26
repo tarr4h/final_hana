@@ -45,3 +45,17 @@
 	height: 300px;
 	border: 1px solid white;
 }
+
+.searchResultArea {
+	height: 150px;
+	border: 1px solid black;
+}
+.hashTagResult {
+	float:left;
+	width: 70%;
+	height: 100%;
+}
+#searchBtn {
+	width:30%;
+	float:right;
+}

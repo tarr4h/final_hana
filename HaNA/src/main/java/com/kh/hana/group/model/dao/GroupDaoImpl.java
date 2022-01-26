@@ -110,6 +110,26 @@ public class GroupDaoImpl implements GroupDao {
 		return session.update("updateBoardContent",param);
 	}
 
+	@Override
+	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
+		return session.selectOne("selectOneLikeLog",param);
+	}
+
+	@Override
+	public int deleteLikeLog(Map<String, Object> param) {
+		return session.delete("deleteLikeLog",param);
+	}
+
+	@Override
+	public int insertLikeLog(Map<String, Object> param) {
+		return session.insert("insertLikeLog",param);
+	}
+
+	@Override
+	public int selectLikeCount(Map<String, Object> param) {
+		return session.selectOne("selectLikeCount",param);
+	}
+
 
 
 }

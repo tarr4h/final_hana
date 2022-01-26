@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -180,15 +179,25 @@ public class GroupController {
 	}
 	//이거
 	@GetMapping("/groupBoardDetail/{no}")
-	public ResponseEntity<Map<String,Object>> groupBoardDetail(@PathVariable int no, Model model) {
+	public ResponseEntity<Map<String,Object>> groupBoardDetail(@AuthenticationPrincipal Member loginMember, @PathVariable int no, Model model) {
+		//게시물 정보
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
 		log.info("groupBoard = {}",groupBoard);
+		//태그멤버
 		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
 		log.info("tagMembers = {}",tagMembers);
+		//좋아요여부
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberId",loginMember.getId());
+		param.put("boardNo", no);
+		Map<String,Object> likeLog = groupService.selectOneLikeLog(param);
+		boolean isLiked = likeLog == null? false : true;
+		log.info("isLiked = {}",isLiked);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("groupBoard",groupBoard);
 		map.put("tagMembers",tagMembers);
+		map.put("isLiked",isLiked);
 		
 		return ResponseEntity.ok(map);
 	}
@@ -226,7 +235,6 @@ public class GroupController {
 	@GetMapping("/getCommentList/{boardNo}")
 	public ResponseEntity<List<GroupBoardComment>> getCommentList(@PathVariable int boardNo){
 		log.info("boardNo = {}",boardNo);
-		System.out.println("alkjsdflkajlsk");
 		List<GroupBoardComment> list = groupService.selectGroupBoardCommentList(boardNo);
 		log.info("list = {}",list);
 		return ResponseEntity.ok(list);
@@ -356,7 +364,65 @@ public class GroupController {
 //    	
 //    	return ResponseEntity.ok(resultMap);
 //    }
+
+	@DeleteMapping("/unlike/{no}")
+	public ResponseEntity<Map<String,Object>> unlike(@PathVariable int no, @AuthenticationPrincipal Member member) {
+		Map<String,Object> map = new HashMap<>();
+		
+		try {
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",member.getId());
+			param.put("boardNo",no);
+			map.put("memberId",member.getId());
+			map.put("boardNo",no);
+			
+			int result = groupService.deleteLikeLog(param);
+			
+			map.put("msg", "unlike 성공");
+			map.put("result", result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			map.put("result", "unlike 실패");
+		}
+		
+		
+		return ResponseEntity.ok(map);
+	}
 	
+	@PostMapping("/like")
+	public ResponseEntity<Map<String,Object>> like(@RequestParam int no, @AuthenticationPrincipal Member member){
+		Map<String,Object> map = new HashMap<>();
+		
+		try {
+			log.info("no = {}",no);
+			log.info("member = {}",member);
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",member.getId());
+			param.put("boardNo",no);
+			int result = groupService.insertLikeLog(param);
+			
+			map.put("msg", "like 성공");
+			map.put("result", result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			map.put("result", "like 실패");
+		}
+		
+		
+		return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping("/getLikeCount/{no}")
+	public ResponseEntity<Map<String,Object>> getLikeCount(@PathVariable int no){
+		Map<String,Object> map = new HashMap<>();
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("no",no);
+		int likeCount = groupService.selectLikeCount(param);
+		map.put("likeCount",likeCount);
+		
+		return ResponseEntity.ok(map);
+	}
 }
 
 
