@@ -212,5 +212,13 @@
 		where
 			no = #{no}
 	</delete>
+	<update id="updateBoardContent">
+		update
+			group_board
+		set
+			content=#{content}
+		where
+			no=#{no}
+	</update>
 </mapper>
 
