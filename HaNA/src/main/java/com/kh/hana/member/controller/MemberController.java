@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
@@ -92,7 +91,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/{view}/{id}")
-	public String memberView(@PathVariable String id, @PathVariable String view, Model model) {
+	public String memberView(@PathVariable String id, @PathVariable String view, Model model, Authentication authentication) {
 		//following 수 조회
 		int followingCount = memberService.countFollowing(id);
 		log.info("followingCount = {}", followingCount);
@@ -107,6 +106,15 @@ public class MemberController {
 		Member member = memberService.selectOneMember(id);
 		log.info("member={}", member);
 		model.addAttribute("member", member);
+		
+		Member checkMember = (Member) authentication.getPrincipal();
+		log.info("checkMember = {}", checkMember);
+		if(checkMember.getAccountType() == 0) {
+			Shop shopInfo = memberService.selectOneShopInfo(id);
+			log.info("shopInfo = {}", shopInfo);
+			model.addAttribute("shopInfo", shopInfo);
+		}
+		
 		return "/member/"+view;
 	}
 	
