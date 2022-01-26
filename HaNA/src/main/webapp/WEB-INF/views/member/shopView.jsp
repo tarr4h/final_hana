@@ -210,6 +210,7 @@
 							<td><span class="tableKey">평점</span></td>
 							<td><span class="tableValue">4.9</span></td>
 						</tr>
+						<c:if test="${!loginMember.id.equals(member.id) }">
 						<tr>
 							<td>
 								<input type="button" value="예약" id="reservationBtn"/>
@@ -218,6 +219,7 @@
 								<jsp:include page="/WEB-INF/views/member/modal/shopReservation.jsp"></jsp:include>
 							</td>
 						</tr>
+						</c:if>
 					</tbody>
 				</table>
 			</div>
