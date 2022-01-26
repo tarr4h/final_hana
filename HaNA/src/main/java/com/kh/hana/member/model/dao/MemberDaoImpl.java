@@ -72,14 +72,14 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Follower> followerList(String id) {
-		return session.selectList("member.followerList", id);
+	public List<Follower> followerList(String friendId) {
+		return session.selectList("member.followerList", friendId);
 	}
 
 	@Override
  
-	public List<Follower> followingList(String id) {
-		return session.selectList("member.followingList", id);
+	public List<Follower> followingList(String friendId) {
+		return session.selectList("member.followingList", friendId);
 	}
  
 	public Shop selectOneShopInfo(String memberId) {
@@ -95,6 +95,13 @@ public class MemberDaoImpl implements MemberDao {
 	public int updateShopInfo(Shop shop) {
 		return session.update("member.updateShopInfo", shop);
 	}
+
+	@Override
+	public int insertShopInfo(String id) {
+		return session.insert("member.insertShopInfo", id);
+	}
+
+	
 
  
 

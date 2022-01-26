@@ -104,5 +104,10 @@ public class ChatDaoImpl implements ChatDao {
 		return session.delete("chat.exitRoom",roomNo);
 	}
 
+	@Override
+	public int insertFileMessage(Chat chat) {
+		return session.insert("chat.insertFileMessage",chat);
+	}
+
 
 }

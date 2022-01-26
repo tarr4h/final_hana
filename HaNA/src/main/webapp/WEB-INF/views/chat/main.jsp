@@ -1,15 +1,7 @@
-<%@page import="com.kh.hana.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<fmt:requestEncoding value="utf-8"/>
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="메인화면" name="main"/>
-</jsp:include>
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal" var="loginMember" />
 <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main.css" />
@@ -73,8 +65,8 @@
         <div class="myProfile">
           <img class="pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="thisisyourhyung님의 프로필 사진">
           <div>
-            <span class="userID point-span">thisisyourhyung</span>
-            <span class="sub-span">JIHYUNG LEE</span>  
+            <span class="userID point-span">${loginMember.id}</span>
+            <span class="sub-span">${loginMember.name}</span>  
           </div>
         </div>
         <!-- story section -->
@@ -164,5 +156,5 @@
 
       </div>
     </main>
-
+</sec:authorize>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

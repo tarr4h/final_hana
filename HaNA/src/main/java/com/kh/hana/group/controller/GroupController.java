@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,7 +128,7 @@ public class GroupController {
 			return "redirect:/group/groupList";
 		}
 	}
-	
+
 	@GetMapping("/groupBoardForm/{groupId}")
 	public String groupBoardForm(@PathVariable String groupId, Model model){
 		List<Member> members = groupService.selectGroupMemberList(groupId);
@@ -139,9 +137,8 @@ public class GroupController {
 		model.addAttribute("members",members);
 		return "/group/groupBoardForm";
 	}
-	
 	//이거
-    @PostMapping(value="/enrollGroupBoard")
+	@PostMapping(value="/enrollGroupBoard")
 	public String enrollGroupBoard(GroupBoardEntity groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
@@ -172,24 +169,13 @@ public class GroupController {
 			
 			int result = groupService.insertGroupBoard(groupBoard);
 			
-            return "redirect:/group/groupPage/"+groupBoard.getGroupId();
-        }catch(Exception e) {
-            log.error(e.getMessage(),e);
-            return "redirect:/group/enrollGroupBoard";
-        }
-    }
-    //이거
-//	@GetMapping("/groupBoardDetail/{no}")
-//	public String groupBoardDetail(@PathVariable int no, Model model) {
-//		GroupBoard groupBoard = groupService.selectOneBoard(no);
-//		log.info("groupBoard = {}",groupBoard);
-//		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
-//		log.info("tagMembers = {}",tagMembers);
-//		model.addAttribute(groupBoard);
-//		model.addAttribute("tagMembers",tagMembers);
-//		return "/group/groupBoardDetail";
-//	}
-	
+			return "redirect:/group/groupPage/"+groupBoard.getGroupId();
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return "redirect:/group/enrollGroupBoard";
+		}
+	}
+	//이거
 	@GetMapping("/groupBoardDetail/{no}")
 	public ResponseEntity<Map<String,Object>> groupBoardDetail(@PathVariable int no, Model model) {
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
@@ -221,32 +207,6 @@ public class GroupController {
 		log.info("groupId = {}", groupId);
 		model.addAttribute("groupId", groupId);
 	}
-
-    @GetMapping("/getCommentList/{boardNo}")
-    public ResponseEntity<List<GroupBoardComment>> getCommentList(@PathVariable int boardNo){
-        log.info("boardNo = {}",boardNo);
-        System.out.println("alkjsdflkajlsk");
-        List<GroupBoardComment> list = groupService.selectGroupBoardCommentList(boardNo);
-        log.info("list = {}",list);
-        return ResponseEntity.ok(list);
-    }
-    
-    @DeleteMapping("/groupBoardCommentDelete/{no}")
-    public ResponseEntity groupBoardCommentDelete(@PathVariable int no) {
-        Map<String, Object> map = new HashMap<>();
-        try{
-            log.info("no = {}",no);
-            int result = groupService.deleteBoardComment(no);
-            log.info("result = {}",result);
-            map.put("msg", "삭제 성공!");
-            map.put("result",result);
-            return ResponseEntity.ok(map);
-        }catch(Exception e) {
-            log.error(e.getMessage(),e);
-            map.put("msg", "삭제 실패, 관리자에게 문의");
-            return ResponseEntity.ok(map);
-        }
-    }
 	
 	@PostMapping("/enrollGroupForm")
 	public String enrolledGroupForm(@RequestParam Map<String, Object> map, Model model) {
@@ -259,15 +219,41 @@ public class GroupController {
 		return "redirect:/group/groupPage/"+map.get("groupId");
 	}
 
-	@GetMapping("/getGroupApplyRequest")
-	public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
-		log.info("groupId ={}", groupId);
-		
-		List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
-		log.info("groupApplyList ={}", groupApplyList);
-		
-		return ResponseEntity.ok(groupApplyList);		
+	
+	@GetMapping("/getCommentList/{boardNo}")
+	public ResponseEntity<List<GroupBoardComment>> getCommentList(@PathVariable int boardNo){
+		log.info("boardNo = {}",boardNo);
+		System.out.println("alkjsdflkajlsk");
+		List<GroupBoardComment> list = groupService.selectGroupBoardCommentList(boardNo);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
 	}
+	
+
+	@DeleteMapping("/groupBoardCommentDelete/{no}")
+	public ResponseEntity<Map<String,Object>> groupBoardCommentDelete(@PathVariable int no) {
+		Map<String, Object> map = new HashMap<>();
+		try{
+			log.info("no = {}",no);
+			int result = groupService.deleteBoardComment(no);
+			log.info("result = {}",result);
+			map.put("msg", "삭제 성공!");
+			map.put("result",result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			map.put("msg", "삭제 실패, 관리자에게 문의");
+		}
+		return ResponseEntity.ok(map);
+	}
+    @GetMapping("/getGroupApplyRequest")
+    public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
+        log.info("groupId ={}", groupId);
+        
+        List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
+        log.info("groupApplyList ={}", groupApplyList);
+        
+        return ResponseEntity.ok(groupApplyList);       
+    }
 	
     @PostMapping("/groupApplyProccess")
     @ResponseBody
@@ -282,46 +268,119 @@ public class GroupController {
         log.info("groupId = {}", groupId);
         log.info("memberId = {}", memberId);
         log.info("approvalYn = {}", approvalYn);
-
         //승인(y)
         if(approvalYn.equals("y")) {
-        	int result = groupService.insertGroupMember(map);
-        	log.info("result ={}", result);
-        	
-        	String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
-        	log.info("msg ={}", msg);
-        	
-        	int deleteResult = groupService.deleteGroupApplyList(map);
-        	log.info("deleteResult ={}", deleteResult);
+            int result = groupService.insertGroupMember(map);
+            log.info("result ={}", result);
+            
+            String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
+            log.info("msg ={}", msg);
+            
+            int deleteResult = groupService.deleteGroupApplyList(map);
+            log.info("deleteResult ={}", deleteResult);
         }
         //거절(n)
         else {
-        	int result = groupService.deleteGroupApplyList(map);
-        	log.info("result ={}", result);
-        	
-        	String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
-        	log.info("msg ={}", msg);
-        	
+            int result = groupService.deleteGroupApplyList(map);
+            log.info("result ={}", result);
+            
+            String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
+            log.info("msg ={}", msg);
+            
         }
         
         return "redirect:/group/groupPage/"+groupId;
     }
-	
-    @GetMapping("/groupMemberList/{groupId}") 
-    public ResponseEntity<List<Map<String, Object>>> groupMemberList(@PathVariable String groupId, @AuthenticationPrincipal Member member) {
-    		log.info("groupId ={}", groupId);
+    
+    @PostMapping("/deleteGroupBoard")
+    public String deleteGroupBoard(@RequestParam int no, @RequestParam String groupId){
+    	
+    	try{
+//    		int result = groupService.deleteGroupBoard(no);
+    		log.info("no = {}",no);
+    		log.info("groupId = {}",groupId);
+    		int result = groupService.deleteGroupBoard(no);
     		
-    		List<Map<String, Object>> groupMemberList = groupService.groupMemberList(groupId);
-    		log.info("groupMemberList ={}", groupMemberList);
+    	}catch(Exception e) {
+    		log.error(e.getMessage(),e);
+       	}
+    	return "redirect:/group/groupPage/"+groupId;
+    	
+    }
+    @PostMapping("/groupBoardModifying")
+    public ResponseEntity<Map<String,Object>> groupBoardModifying(@RequestParam int no, @RequestParam String content) {
+
+    	Map<String,Object> param = new HashMap<>();
+    	Map<String,Object> resultMap = new HashMap<>();
+    	
+    	try {
+    		log.info("no = {}",no);
+    		log.info("content = {}",content);
     		
-    		return ResponseEntity.ok(groupMemberList);
+    		param.put("no", no);
+    		param.put("content", content);
+    		int result = groupService.updateBoardContent(param);
+    		
+    		resultMap.put("msg","게시물 수정 성공");
+    		resultMap.put("result",result);
+    	}catch(Exception e) {
+    		log.error(e.getMessage(),e);
+    		resultMap.put("msg","게시물 수정 실패");
     	}
+    	
+    	return ResponseEntity.ok(resultMap);
+    	
+    }
+//    @PutMapping("/groupBoardModifying/{no}")
+//    public ResponseEntity<Map<String,Object>> groupBoardModifying(@PathVariable int no, @RequestBody String content) {
+//    	Map<String,Object> param = new HashMap<>();
+//    	Map<String,Object> resultMap = new HashMap<>();
+//    	
+//    	try {
+//    		log.info("no = {}",no);
+//    		log.info("content = {}",content);
+//    		
+//    		param.put("no", no);
+//    		param.put("content", content);
+//    		int result = groupService.updateBoardContent(param);
+//    		
+//    		resultMap.put("msg","게시물 수정 성공");
+//    		resultMap.put("result",result);
+//    	}catch(Exception e) {
+//    		log.error(e.getMessage(),e);
+//    		resultMap.put("msg","게시물 수정 실패");
+//    	}
+//    	
+//    	return ResponseEntity.ok(resultMap);
+//    }
+	
+//    @GetMapping("/groupMemberList/{groupId}") 
+//    public ResponseEntity<List<Map<String, Object>>> groupMemberList(@PathVariable String groupId, @AuthenticationPrincipal Member member) {
+//    		log.info("groupId ={}", groupId);
+//    		
+//    		List<Map<String, Object>> groupMemberList = groupService.groupMemberList(groupId);
+//    		log.info("groupMemberList ={}", groupMemberList);
+//    		
+//    		return ResponseEntity.ok(groupMemberList);
+//    }
+    
+    @GetMapping("/groupMemberList/{groupId}")
+    public String groupMemberList(@PathVariable String groupId, Model model){
+    	log.info("groupId ={}", groupId);
+    	
+    	List<Map<String, Object>> groupMemberList = groupService.groupMemberList2(groupId);
+    	log.info("groupMemberList = {}", groupMemberList);
+    	
+    	model.addAttribute("groupMemberList", groupMemberList);
+    	return "/group/groupMemberList";
+    }
     	
     @GetMapping("/groupSetting/{groupId}")
     public void groupSetting(@PathVariable String groupId, Model model){
     	Group groupInfo = groupService.selectGroupInfo(groupId);
     	log.info("groupInfo ={}", groupInfo);
     }
+    
 }
 
 

@@ -66,19 +66,24 @@ public class MemberController {
 		String encodedPassword = bcryptPasswordEncoder.encode(password);
 		member.setPassword(encodedPassword);
 		
-		String originalFilename = upFile.getOriginalFilename();
-		String renamedFilename = HanaUtils.rename(originalFilename);
+		log.info("upFile = {}", upFile);
+		log.info("upFile.getogName = {}", upFile.getOriginalFilename());
 		
-		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
-		
-		File saveImg = new File(saveDirectory, renamedFilename);
-		try {
-			upFile.transferTo(saveImg);
-		} catch (IllegalStateException | IOException e) {
-			log.error(e.getMessage(), e);
+		if(!upFile.getOriginalFilename().equals("")) {
+			String originalFilename = upFile.getOriginalFilename();
+			String renamedFilename = HanaUtils.rename(originalFilename);
+			
+			String saveDirectory = application.getRealPath("/resources/upload/member/profile");
+			
+			File saveImg = new File(saveDirectory, renamedFilename);
+			try {
+				upFile.transferTo(saveImg);
+			} catch (IllegalStateException | IOException e) {
+				log.error(e.getMessage(), e);
+			}
+			
+			member.setPicture(renamedFilename);					
 		}
-		
-		member.setPicture(renamedFilename);		
 		
 		int result = memberService.memberEnroll(member);
 		
@@ -117,11 +122,11 @@ public class MemberController {
 		try {
 			if(param.equals("shopInfo")) {
 				Shop shop = memberService.selectOneShopInfo(memberId);
-				log.info("shop={}", shop);
+				log.info("shop Setting ={}", shop);
 				if(shop != null) {
 					model.addAttribute(shop);
 				} else {
-					throw new Exception();
+					model.addAttribute("msg", "등록된 정보가 없습니다. 매장정보를 입력해주세요.");
 				}
 			}
 		} catch (Exception e) {
@@ -182,40 +187,44 @@ public class MemberController {
         }
     }
 	
+	//친구추가
 	@PostMapping("/addFollowing")
-	public String addFollowing(@AuthenticationPrincipal Member member, @RequestParam String friendId, RedirectAttributes redirectAttr) {
-		log.info("member={}", member.getId());
+	public String addFollowing(@AuthenticationPrincipal Member member, @RequestParam String friendId, String myId, RedirectAttributes redirectAttr) {
+		log.info("addFollowing.member={}", member.getId());
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("myId", member.getId());
+		map.put("myId", myId);
 		map.put("friendId", friendId);
 		log.info("map ={}", map);
 		
 		int result = memberService.addFollowing(map);
 		log.info("result ={}", result);
 		redirectAttr.addFlashAttribute("msg", result > 0? "친구 추가에 성공했습니다." : "친구 추가에 실패했습니다.");
-		return "redirect:/member/memberView/"+member.getId();
+		return "redirect:/member/memberView/"+friendId;
 	}
 	
+	
+	//팔로워리스트 가져오기
 	@GetMapping("/followerList")
 	@ResponseBody
-	public List<Follower> followerList(@RequestParam String id, Model model) {
-		List<Follower> follower = memberService.followerList(id);
-		log.info("follower={}", follower);
+	public List<Follower> followerList(@RequestParam String friendId, Model model) {
+		List<Follower> follower = memberService.followerList(friendId);
+		log.info("followerList.follower={}", follower);
 		model.addAttribute("follower", follower);
 		
 		return follower;
 		
 	}
  
+	//팔로잉리스트 가져오기
 	@GetMapping("/followingList")
 	@ResponseBody
-	public List<Follower> followingList(@RequestParam String id, Model model){
-		List<Follower> following = memberService.followingList(id);
-		log.info("following={}", following);
-		model.addAttribute("following", following);
+	public List<Follower> followingList(@RequestParam String friendId, Model model){
+		List<Follower> followingList = memberService.followingList(friendId);
+		log.info("followingList.followingList={}", followingList);
+		model.addAttribute("followingList", followingList);
 		
-		return following;
+		return followingList;
 	}
 	
 	
@@ -225,6 +234,7 @@ public class MemberController {
 	
 	@PostMapping("/shopSetting/shopInfo")
 	public String updateShopInfo(Shop shop, RedirectAttributes redirectAttr) {
+		log.info("updateShopInfo shop = {}", shop);
 		int result = memberService.updateShopInfo(shop);
 		
 		String msg = "";

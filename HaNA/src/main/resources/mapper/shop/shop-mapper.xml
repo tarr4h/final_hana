@@ -17,4 +17,9 @@
 			id != #{id}
 	</select>
 
+	<insert id="insertHashTag" parameterType="hashtag">
+		insert into
+			hashtag
+		values(concat(#{tagId}, seq_hashtag.nextval), #{tagName})
+	</insert>
 </mapper>

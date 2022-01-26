@@ -95,14 +95,24 @@ public class GroupServiceImpl implements GroupService{
 	}	
 
 	@Override
-    public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo) {
-        return groupDao.selectGroupBoardCommentList(boardNo);
-    }
-    
-    @Override
-    public int deleteBoardComment(int no) {
-        return groupDao.deleteBoardComment(no);
-    }
+	public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo) {
+		return groupDao.selectGroupBoardCommentList(boardNo);
+	}
+	
+	@Override
+	public int deleteBoardComment(int no) {
+		return groupDao.deleteBoardComment(no);
+	}
+
+	@Override
+	public int deleteGroupBoard(int no) {
+		return groupDao.deleteGroupBoard(no);
+	}
+
+	@Override
+	public int updateBoardContent(Map<String, Object> param) {
+		return groupDao.updateBoardContent(param);
+	}
 
 	@Override
 	public List<Map<String, Object>> groupMemberList(String groupId) {
@@ -113,6 +123,9 @@ public class GroupServiceImpl implements GroupService{
 	public Group selectGroupInfo(String groupId) {
 		return groupDao.selectGroupInfo(groupId);
 	}
-	
 
+	@Override
+	public List<Map<String, Object>> groupMemberList2(String groupId) {
+		return groupDao.groupMemberList2(groupId);
+	}
 }

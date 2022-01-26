@@ -166,6 +166,26 @@
 			default
 		)
 	</insert>
+	<select id="selectGroupBoardCommentList" resultType="groupBoardComment">
+		select
+			*
+		from
+			group_board_comment
+		where
+				board_no = #{boardNo}
+		start with
+			comment_level = 1
+		connect by prior
+			no = comment_ref -- level=1의 no와 나머지(level=2)의 comment_ref를 기준으로 연결
+		order siblings by
+			no   -- 형제요소끼리의 정렬 기준
+	</select>
+	<delete id="deleteBoardComment">
+		delete from
+			group_board_comment
+		where
+			no=#{no}
+	</delete>
 	
 	<insert id="insertGroupMember" parameterType="map">
 		insert into
@@ -186,6 +206,20 @@
 			group_id = #{groupId}
 	</delete>
 	
+	<delete id="deleteGroupBoard">
+		delete from
+			group_board
+		where
+			no = #{no}
+	</delete>
+	<update id="updateBoardContent">
+		update
+			group_board
+		set
+			content=#{content}
+		where
+			no=#{no}
+	</update>
 	<select id="groupMemberList" resultType="map">
 		select 
 		    m.picture,
@@ -204,6 +238,17 @@
 			group_
 		where
 			group_id = #{groupId}
+	</select>
+	
+	<select id="groupMemberList2" resultType="map">
+		select 
+		    m.picture,
+		    gml.*
+		from 
+		    member m join group_member_list gml
+		        on m.id = gml.member_id
+		where
+		    group_id = #{groupId}
 	</select>
 </mapper>
 

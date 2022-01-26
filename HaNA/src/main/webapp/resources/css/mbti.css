@@ -1,77 +1,190 @@
 @charset "UTF-8";
 
 #mbtiMain-Background {
-	width: 50%;
-	height: 100%;
-	background-color: #212529 !important;
+	width: 60%;
+	height: 400px;
+	background: rgb(250, 208, 201) !important;
 	text-align: center;
 	margin: auto;
 	border-radius: 40px 0;
+	position: absolute;
+    top: 40%;
+    left: 20%;
+}
+#mbtiResult-Background {
+	width: 60%;
+	height: 400px;
+	background: rgb(250, 208, 201) !important;
+	text-align: center;
+	margin: auto;
+	border-radius: 40px 0;
+	position: absolute;
+    top: 40%;
+    left: 20%;
+}
+#mbtiList-Background {
+	width: 60%;
+	height: 400px;
+	background: rgb(250, 208, 201) !important;
+	text-align: center;
+	margin: auto;
+	border-radius: 40px 0;
+	position: absolute;
+    top: 40%;
+    left: 20%;
 }
 
 #mainPage-h1 {
-	color: #ffffff;
-	padding: 2%;
+	color: rgb(110, 110, 109);
+ padding: 2%;
+	
 }
 
 #mainPage-button {
 	margin: 2%;
-	background-color: #ffe15a;
+	background-color:rgb(110, 110, 109);
+	color:rgb(250, 208, 201);
+	border-radius: 50%;
+	display: block;
+	margin:auto;
 }
 
 #mbtiList-Background {
 	width: 50%;
 	height: 100%;
-	background-color: #212529 !important;
-	text-align: center;
+	background-color: rgb(250, 208, 201)!important;
 	margin: auto;
+	text-align: center;
 	border-radius: 40px 0;
 }
 
 #mbtiListPage-ul {
-	color: #ffffff;
+	color: rgb(110, 110, 109);
 	list-style: none;
 }
 
 .mbtiListPage-p {
 	display: block;
-	color: #ffffff;
+	color: rgb(110, 110, 109);
+	 font-weight: 600;
 }
 
-#mbtiListPage-buttonPrev {
-	margin: 2%;
-	background-color: #ffe15a;
-	text-align: left;
-}
 
 #mbtiListPage-buttonNext {
 	margin: 2%;
-	background-color: #ffe15a;
-	text-align: right;
-}
-
-.mbtiListPage-shapes {
-	margin-right: 10px;
-	margin-left: 10px;
-}
-
-#mbtiListPage-buttonPrev {
-	border-radius: 20px 40px 60px 80px;
-}
-
-#mbtiListPage-buttonNext {
+	background-color:rgb(110, 110, 109);
+	color:rgb(250, 208, 201);
 	border-radius: 40px 20px 80px 60px;
+ 
+	
 }
 
-
-#shapes_2 {
-	width: 30px;
-	height: 30px;
-	margin-right: 10px;
-	margin-left: 10px;
+.cb1,
+.cb2 {
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transition: border-color ease 0.2s;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
+.cb1::before, .cb1::after,
+.cb2::before, .cb2::after {
+  position: absolute;
+  height: 0;
+  width: 4px;
+  background-color: #ec6767;
+  box-sizing: border-box;
+  display: inline-block;
+  transform-origin: left top;
+  border-radius: 5px;
+  content: ' ';
+  transition: opacity ease 0.5;
+}
+.cb2::before, .cb2::after {
+  background-color: #ec6767;
+}
+.cb1::before,
+.cb2::before {
+  top: 14.4px;
+  left: 8.2px;
+  box-shadow: 0 0 0 1px transparent;
+  transform: rotate(-135deg);
+}
+.cb1::after,
+.cb2::after {
+  top: 7.4px;
+  left: 1px;
+  transform: rotate(-45deg);
+}
+input:checked + .cb1 {
+  border-color: #f88686c9;
+}
+input:checked + .cb2 {
+  border-color: #f88686c9;
+}
+input:checked + .cb1::after,
+input:checked + .cb2::after {
+  height: 10px;
+  animation: bottomcheck 0.2s ease 0s forwards;
+}
+input:checked + .cb1::before,
+input:checked + .cb2::before {
+  height: 24px;
+  animation: topcheck 0.4s ease 0s forwards;
+}
+input {
+	display: none;
+}
+@keyframes bottomcheck {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 10px;
+  }
+}
+@keyframes topcheck {
+  0% {
+    height: 0;
+  }
+  50% {
+    height: 0;
+  }
+  100% {
+    height: 24px;
+  }
+}
 
 #mbtiListPage-buttonResult{
+	margin: 2%;
+	background-color:rgb(110, 110, 109);
+	color:rgb(250, 208, 201);
 	border-radius: 40px 20px 80px 60px;
+}
+#hoomButton{
+	margin: 2%;
+	background-color:rgb(110, 110, 109);
+	color:rgb(250, 208, 201);
+	border-radius: 50%
+}
+#mbtiInsert{
+	margin: 2%;
+	background-color:rgb(110, 110, 109);
+	color:rgb(250, 208, 201);
+	border-radius: 50%
+	
+}
+#mainPage-span{
+	display: block;
+	background: linear-gradient(to right, #A7A3FF,#FFA7A3, #671cc4, #5673bd); 
+	-webkit-background-clip: text; 
+	-webkit-text-fill-color: transparent;
+	
 }

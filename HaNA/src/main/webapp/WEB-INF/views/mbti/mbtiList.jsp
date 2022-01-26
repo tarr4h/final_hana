@@ -7,6 +7,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
+<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+</section>
+<section>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
@@ -17,47 +21,39 @@
 			<li>
 				<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
 					<input type="hidden" name="no" value="${list.no }" />
-					<span>비동의</span>
-						<input type="checkbox" id="shapes_2" name="memberResult" value="1"/>
-						<input type="checkbox" id="shapes_2" name="memberResult" value="2"/>
-					<span>동의</span>
+					<!-- memberResult-${list.no} 안넣어주면 리스트로 질문을 받기 때문에 라디오 박스가 딱 하나만 체크 되는데 문제마다 동의 또는 비동의로 
+					     하나만 체크 되게 하고 싶은 거니까 input과 label을 name 값으로 이어주고 ${list.no}를 줘서 문항 마다 체크를(동의 또는 비동의) 
+					     로 하나만 되게 할수 있도록 해주었다  -->
+					   <!-- 동의 -->
+					<span><i class="far fa-circle"></i></span>
+					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2"/>	
+					 	<label for="cbtest-${list.no}-yes" class="cb2"></label>
+					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" />
+					   <!-- 비동의 -->
+						<label for="cbtest-${list.no}-no" class="cb1"></label>
+					<span><i class="fas fa-times"></i></span>
 			</li>
 		 </c:forEach>
 		</ul>
-		<div  id="btn1" style="display:block;">
-		<button id="mbtiListPage-buttonPrev" ><i class="fas fa-angle-double-left"></i> prev</button>
-		</div>
-		 <!--  <input type="hidden" name="memberId" value="tksemf2543" />  -->
 		<button type="submit" form="mbtiForm" id="mbtiListPage-buttonNext">next <i class="fas fa-angle-double-right"></i></button>
 		<div id="btn" style="display: none; ">
-		<br /><br />
 		<button id="mbtiListPage-buttonResult">결과보기 <i class="fas fa-angle-double-right"></i></button>
 		</div>
 	</form>
 </div>
 
-
 <script>
 window.onload = function(){
-	
-	console.log($('form[name=mbtiFrm]').attr('action'));
-	console.log($('input[name=cPage]').val());
-	
-	if($('input[name=cPage]').val() == 7){
-		document.getElementById("btn1").style.display = 'none';
-	}
 	
 	if($('input[name=cPage]').val() == 37){
 		$("#mbtiListPage-buttonNext").hide();
 		document.getElementById("btn").style.display = 'block';
 		const path = '${pageContext.request.contextPath}/mbti/mbtiResult.do';
-		console.log(path);
 		$('form[name=mbtiFrm]').attr('action', path);
 	}
-
+	
 }
 
 </script>
-
-
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

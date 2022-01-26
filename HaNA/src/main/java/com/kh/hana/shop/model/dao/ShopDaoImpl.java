@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.hana.shop.model.vo.HashTag;
+
 @Repository
 public class ShopDaoImpl implements ShopDao {
 
@@ -16,6 +18,11 @@ public class ShopDaoImpl implements ShopDao {
 	@Override
 	public List<Map<String, Object>> selectShopList(Map<String, Object> data) {
 		return session.selectList("shop.selectShopList", data);
+	}
+
+	@Override
+	public int insertHashTag(HashTag hashTag) {
+		return session.insert("shop.insertHashTag", hashTag);
 	}
 	
 	

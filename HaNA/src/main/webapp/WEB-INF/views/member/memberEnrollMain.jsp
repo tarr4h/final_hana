@@ -61,7 +61,7 @@
 						<tr>
 							<td>프로필사진</td>
 							<td>
-								<input type="hidden" name="picture" value="notYet" />
+								<input type="hidden" name="picture" value="user_pic_default.png" />
 								<input type="file" name="pictureFile" id="" />
 							</td>
 						</tr>
@@ -93,10 +93,7 @@
 	</div>
 </div>
 
-
-<script type="text/javascript" 
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
-</script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a77e005ce8027e5f3a8ae1b650cc6e09&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	$("[name=ssn2]").blur((e) => {
@@ -137,32 +134,21 @@ function execDaumPostcode() {
             
             $("[name=addressAll]").val(data.roadAddress);
             
-        	var Addr_val = $('[name=addressAll]').val();
+            /* kakao */
+            var geocoder = new kakao.maps.services.Geocoder();
 
-        	// 도로명 주소를 좌표 값으로 변환(API)
-          	naver.maps.Service.geocode({
-                query: Addr_val
-            }, function(status, response) {
-                if (status !== naver.maps.Service.Status.OK) {
-                    return alert('잘못된 주소값입니다.');
+            var callback = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    console.log(result[0].x);
+                    console.log(result[0].y);
+                    $('[name=locationX]').val(result[0].x);
+                    $('[name=locationY]').val(result[0].y);
                 }
+            };
 
-                var result = response.v2, // 검색 결과의 컨테이너
-                    items = result.addresses; // 검색 결과의 배열
-                    
-                // 리턴 받은 좌표 값을 변수에 저장
-                let x = parseFloat(items[0].x);
-                let y = parseFloat(items[0].y);
-                
-                $('[name=locationX]').val(x);
-                $('[name=locationY]').val(y);
-            	
-                console.log(x);
-                console.log(y);
-                
-                close();
-            });
-        	
+            geocoder.addressSearch(data.roadAddress, callback);
+            
+        	close();
         }
     }).open();
 }

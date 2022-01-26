@@ -21,44 +21,28 @@
 	</script>
 	<sec:authentication property="principal" var="loginMember" />
 
-	<table class="memberListTable">
-		<tbody>
+	<div class="groupMemberListTableArea">
+		<table id="tbl-board" class="table table-striped table-hover">
+		<tr>
+			<th>프로필</th>
+			<th>그룹 아이디</th>
+			<th>멤버 아이디</th>
+			<th>회원등급</th>
+			<th>강퇴</th>
+		</tr>
+		<c:forEach items="${groupMemberList}" var="list">
 			<tr>
-				<th>그룹아이디</th>
-				<th>프로필</th>
-				<th>멤버아이디</th>
-				<th>회원등급</th>
+				<td>${list.PICTURE}</td> 
+				<td>${list.GROUP_ID}</td>
+				<td>${list.MEMBER_ID}</td>
+				<td>${list.MEMBER_LEVEL_CODE}</td>
+				<td><button type="button" class="btn btn-danger">강퇴</button></td>
 			</tr>
-		</tbody>
+		</c:forEach>
 	</table>
+	</div>
 
 
-	<script>
-	$(() => {
-		console.log("hi");
-		/* memberList(); */
-/* 		$.ajax({
-			url: "${pageContext.request.contextPath}/group/groupMemberList/${groupId}",
-			data: groupId = '${groupId}',
-			contentType: "application/json; charset=utf-8",
-			success(json){
-				console.log(json)
-				var listAdd = "<tr>" +
-				"<td>"+json.memberList[i].GroupId+"</td>"+
-				"<td>"+json.memberList[i].Picture+"</td>"+
-				"<td>"+json.memberList[i].MemberId+"</td>"+
-				"<td>"+json.memberList[i].MemberLevelCode+"</td>"+
-				"</tr>";
-				$(".table tbody").append(listAdd);
-			},
-			
-			error: fuction(xhr) {
-				alert("에러 : " + status);
-			}
-		}); */
-	})
-
-	</script>
 
 
 
