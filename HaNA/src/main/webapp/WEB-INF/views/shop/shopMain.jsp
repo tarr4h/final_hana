@@ -252,7 +252,7 @@ $(() => {
 	});
 
 	
-	 // Autocomplete 부분
+/* 	 // Autocomplete 부분
     $("#searchInput").autocomplete({
         source : function(request, response) {
             $.ajax({
@@ -289,10 +289,10 @@ $(() => {
         .append('<div>' + item.label + '</div>') 
         .appendTo(ul);
     };
- 
+  */
 	 
   
-/*   // test 부분 
+   // test 부분 
     $("#searchInput").autocomplete({
         source : function(request, response) {
             $.ajax({
@@ -329,9 +329,7 @@ $(() => {
             // .append('<div>' + item.label + '</div>') 
             // .appendTo(ul);
         	// dddd
-        	 
-        
-        	
+
         
         }
         , focus : function(evt, ui) { //  한글 오류 방지
@@ -344,7 +342,7 @@ $(() => {
     };
  
  
-  */
+  
  
 	
 </script>
