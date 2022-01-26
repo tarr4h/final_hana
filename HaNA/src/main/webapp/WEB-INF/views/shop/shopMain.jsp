@@ -75,11 +75,18 @@
 			<form class="form-inline d-flex">
 				<input class="form-control mr-sm-2" type="search"
 					placeholder="Search" aria-label="Search" id="searchInput">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-					id="searchBtn">Search</button>
+				
 			</form>
 		</nav>
 	</div>
+	
+	<div class="row searchResultArea my-0">
+		<div class="hashTagResult">
+		
+		</div>
+		<button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchBtn">Search</button>
+	</div>
+	
 
 	<!-- 매장 랭킹 영역 -->
 	<div class="row shopRank bg-dark text-white">
