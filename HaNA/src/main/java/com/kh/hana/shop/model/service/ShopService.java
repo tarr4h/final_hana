@@ -16,5 +16,7 @@ public interface ShopService {
 	List<Table> selectShopTableList(String id);
 
 	int deleteShopTable(String tableName);
+
+	int updateTable(Table table);
     
 }

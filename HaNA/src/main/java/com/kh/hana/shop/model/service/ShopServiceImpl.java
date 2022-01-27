@@ -79,5 +79,14 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.deleteShopTable(tableName);
 	}
 
+	@Override
+	public int updateTable(Table table) {
+		String beforeName = shopDao.selectOneTable(table);
+		if(beforeName.equals(table.getTableName())) {
+			table.setTableName(null);			
+		}
+		return shopDao.updateShopTable(table);
+	}
+
 	
 }

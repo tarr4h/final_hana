@@ -180,7 +180,7 @@ $(() => {
 							  </select>
 							</td>
 							<td>
-								<input type="submit" class="submitBtn" value="저장" onclick="submitFrm(\${calnum});" data-test="hi"/>
+								<input type="submit" class="updateBtn" value="수정" onclick="updateFrm(\${calnum});" data-test="hi"/>
 								<input type="button" class="deleteBtn" value="삭제" onclick="deleteTable(\${calnum});"/>
 							</td>
 						</form:form>
@@ -237,8 +237,8 @@ $("#tableAppendBtn").click((e) => {
 				  </select>
 				</td>
 				<td>
-					<input type="submit" class="submitBtn" value="저장" onclick="submitFrm(\${$(e.target).data('calnum')});" data-test="hi"/>
-					<input type="button" class="deleteBtn" value="삭제" onclick="deleteTable(\${$(e.target).data('calnum')});"/>
+					<input type="submit" class="enrollBtn" value="등록" onclick="enrollFrm(\${$(e.target).data('calnum')});" data-test="hi"/>
+					<input type="button" class="cancleBtn" value="취소" onclick="cancleTable(\${$(e.target).data('calnum')});"/>
 				</td>
 			</form:form>
 		</tr>
@@ -247,7 +247,13 @@ $("#tableAppendBtn").click((e) => {
 	$("#rsTable tbody").append(columnForm);
 });
 
-function submitFrm(num){
+/* 테이블 추가 취소 func */
+function cancleTable(num){
+	$(`#table\${num}`).remove();
+};
+
+/* 테이블 신규 등록 func */
+function enrollFrm(num){
 	const content = {
 			shopId: '${loginMember.id}',
 			tableName : $(`[name=tableName\${num}]`).val(),
@@ -278,6 +284,7 @@ function submitFrm(num){
 /* 테이블 삭제 func */
 function deleteTable(num){
 	let tableName = $(`[name=tableName\${num}]`).val();
+	
 	console.log(tableName);
 	$.ajax({
 		url: `${pageContext.request.contextPath}/shop/deleteShopTable/\${tableName}?${_csrf.parameterName}=${_csrf.token}`,
@@ -289,9 +296,35 @@ function deleteTable(num){
 	});
 	
 	$(`#table\${num}`).remove();
-	
-}
+};
 
+/* 테이블 수정 func */
+function updateFrm(num){
+	const content = {
+			shopId: '${loginMember.id}',
+			tableName : $(`[name=tableName\${num}]`).val(),
+			allowVisitor: $(`[name=allowVisitor\${num}]`).val(),
+			allowStart : $(`[name=allowStart\${num}]`).val(),
+			allowEnd : $(`[name=allowEnd\${num}]`).val(),
+			timeDiv : $(`[name=timeDiv\${num}]`).val(),
+			timeMax : $(`[name=timeMax\${num}]`).val(),
+			memo : $(`[name=memo\${num}]`).val(),
+			enable : $(`[name=enable\${num}]`).val()
+	};
+	
+	const tableStr = JSON.stringify(content);
+
+	$.ajax({
+		url: '${pageContext.request.contextPath}/shop/updateShopTable?${_csrf.parameterName}=${_csrf.token}',
+		method: "PUT",
+		data: tableStr,
+		contentType: "application/json; charset=utf-8",
+		success(res){
+			alert(res.msg);
+		},
+		error:console.log
+	});	
+}
 
 
 </script>

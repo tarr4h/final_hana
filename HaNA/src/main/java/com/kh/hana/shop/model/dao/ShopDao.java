@@ -22,6 +22,10 @@ public interface ShopDao {
 
 	int deleteShopTable(String tableName);
 
+	int updateShopTable(Table table);
+
+	String selectOneTable(Table table);
+
 	
 
 }

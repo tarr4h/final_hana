@@ -48,5 +48,16 @@ public class ShopDaoImpl implements ShopDao {
 		return session.delete("shop.deleteShopTable", tableName);
 	}
 
+	@Override
+	public int updateShopTable(Table table) {
+		return session.update("shop.updateShopTable", table);
+	}
+
+	@Override
+	public String selectOneTable(Table table) {
+		return session.selectOne("shop.selectOneTable", table);
+	}
+
+	
     
 }

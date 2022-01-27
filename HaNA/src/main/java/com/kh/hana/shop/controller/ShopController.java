@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -123,8 +124,17 @@ public class ShopController {
     	log.info("result = {}", result);
     	
     	String msg = result > 0 ? "삭제되었습니다." : "삭제되지 않았습니다."; 
-    	Map<String, Object> msgMap = new HashMap<>();
-    	msgMap.put("msg", msg);
     	return ResponseEntity.ok(msg);
+    }
+    
+    @PutMapping(value="/updateShopTable", produces="application/text;charset=utf8")
+    @ResponseBody
+    public ResponseEntity<?> updateShopTable(@RequestBody Table table){
+    	log.info("updateTable = {}", table);
+    	
+    	int result = shopService.updateTable(table);
+    	log.info("updateResult = {}", result);
+    	
+    	return ResponseEntity.ok(null);
     }
 }

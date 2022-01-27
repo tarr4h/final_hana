@@ -62,4 +62,34 @@
 		where
 			table_name = #{tableName}
     </delete>
+    
+    <update id="updateShopTable" parameterType="table">
+    	update shop_table_setting
+    	set
+    		<if test="tableName != null">		
+    		table_name = #{tableName},
+    		</if>
+    		allow_visitor = #{allowVisitor},
+    		allow_start = #{allowStart},
+    		allow_end = #{allowEnd},
+    		time_div = #{timeDiv},
+    		time_max = #{timeMax},
+    		memo = #{memo},
+    		enable = #{enable}
+    	where
+    		shop_id = #{shopId}
+    		and
+    		table_name = #{tableName}
+    </update>
+    
+    <select id="selectOneTable" parameterType="table" resultType="string">
+    	select
+    		table_name
+   		from
+   			shop_table_setting
+  		where
+  			shop_id = #{shopId}
+  			and
+  			table_name = #{tableName}
+    </select>
 </mapper>
