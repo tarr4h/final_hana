@@ -256,7 +256,10 @@ public class MemberController {
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 
-	
+	@PostMapping("/testModal")
+	public void testModal(@RequestParam MultipartFile upFile) {
+		 log.info("upFile = {}", upFile);
+	}
 
 
 }
