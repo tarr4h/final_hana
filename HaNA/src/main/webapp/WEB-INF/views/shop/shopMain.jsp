@@ -10,126 +10,137 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="AroundME" name="title" />
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/shop/shopMain.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/resources/css/shop/shopMain.css" />
+
+<!-- autocomplete 라이브러리 -->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 <!-- 우측 공간확보 -->
-<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
-		<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+<section class="body-section"
+	style="width: 200px; height: 100%; float: right; display: block;">
+	<span style="float: right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
 </section>
 <section class="body-section">
-<sec:authentication property="principal" var="loginMember" />
+	<sec:authentication property="principal" var="loginMember" />
 
-<div class="container mb-4">
-	<div class="row hashTagRank">
-		<table class="table table-striped table-dark my-0">
-			<thead>
-				<tr>
-					<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle">HashTag
-						Ranking</th>
-				</tr>
-				<tr>
-					<th scope="col">Rank</th>
-					<th scope="col">음식점</th>
-					<th scope="col">카페</th>
-					<th scope="col">헤어샵</th>
-					<th scope="col">노래방</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark ★</td>
-					<td>Otto ★</td>
-					<td>@mdo ★</td>
-					<td>@mdo ★</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td>Larry</td>
-					<td>the Bird</td>
-					<td>@twitter</td>
-					<td>@twitter</td>
-				</tr>
-				<tr>
-					<th scope="row">4</th>
-					<td>Larry</td>
-					<td>the Bird</td>
-					<td>@twitter</td>
-					<td>@twitter</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+	<div class="container mb-4">
+		<div class="row hashTagRank">
+			<table class="table table-striped table-dark my-0">
+				<thead>
+					<tr>
+						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle">HashTag
+							Ranking</th>
+					</tr>
+					<tr>
+						<th scope="col">Rank</th>
+						<th scope="col">음식점</th>
+						<th scope="col">카페</th>
+						<th scope="col">헤어샵</th>
+						<th scope="col">노래방</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">1</th>
+						<td>Mark ★</td>
+						<td>Otto ★</td>
+						<td>@mdo ★</td>
+						<td>@mdo ★</td>
+					</tr>
+					<tr>
+						<th scope="row">2</th>
+						<td>Jacob</td>
+						<td>Thornton</td>
+						<td>@fat</td>
+						<td>@fat</td>
+					</tr>
+					<tr>
+						<th scope="row">3</th>
+						<td>Larry</td>
+						<td>the Bird</td>
+						<td>@twitter</td>
+						<td>@twitter</td>
+					</tr>
+					<tr>
+						<th scope="row">4</th>
+						<td>Larry</td>
+						<td>the Bird</td>
+						<td>@twitter</td>
+						<td>@twitter</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
-	<!-- 검색 영역 -->
-	<div class="row searchArea my-0">
-		<nav class="navbar navbar-light bg-light justify-content-end">
-			<span class="navbar-brand mb-0 h1" id="searchTitle">Search
-				HashTag</span>
-			<form class="form-inline d-flex">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="Search" aria-label="Search" id="searchInput">
-				
-			</form>
-		</nav>
-	</div>
-	
-	<div class="row searchResultArea my-0">
-		<div class="hashTagResult">
-		
-		</div>
-		<button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchBtn">Search</button>
-	</div>
-	
+		<!-- 검색 영역 -->
+		<div class="row searchArea my-0">
+			<nav class="navbar navbar-light bg-light justify-content-end">
+				<span class="navbar-brand mb-0 h1" id="searchTitle">Search
+					HashTag</span>
+				<form class="form-inline d-flex">
+					<input class="form-control mr-sm-2" type="search"
+						placeholder="Search" aria-label="Search" id="searchInput">
 
-	<!-- 매장 랭킹 영역 -->
-	<div class="row shopRank bg-dark text-white">
-		<div
-			class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-			<span class="d-flex align-items-start">★★★</span> <span class="mb-4">조회
-				수 1위 매장</span>
-			<div class="shopProfile d-flex">
-				<!-- 프로필사진 영역 -->
-				<a href="#"> <img class="shopProfileImg"
-					src="${pageContext.request.contextPath }/resources/images/duck.png"
-					alt="" />
-				</a>
-			</div>
-			<span>매장ID</span> <span>조회 수</span>
+				</form>
+			</nav>
 		</div>
-		<div
-			class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-			<span class="d-flex align-items-start">★★★</span> <span class="mb-4">리뷰
-				수 1위 매장</span>
-			<div class="shopProfile d-flex">
-				<!-- 프로필사진 영역 -->
-				<img class="shopProfileImg"
-					src="${pageContext.request.contextPath }/resources/images/duck.png"
-					alt="" />
+
+		<div class="row searchResultArea my-0">
+			<div class="hashTagResult" id="hashTagResult">
+				<!-- HashTag 검색 후 클릭/엔터 시 동적으로 버튼 생길 공간  -->
 			</div>
-			<span>매장ID</span> <span>리뷰 수</span>
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+				id="searchBtn">Search</button>
 		</div>
-		<div
-			class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-			<span class="d-flex align-items-start">★★★</span> <span class="mb-4">예약
-				수 1위 매장</span>
-			<div class="shopProfile d-flex">
-				<!-- 프로필사진 영역 -->
-				<img class="shopProfileImg"
-					src="${pageContext.request.contextPath }/resources/images/duck.png"
-					alt="" />
+
+
+		<!-- 매장 랭킹 영역 -->
+		<div class="row shopRank bg-dark text-white">
+			<div
+				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
+				<span class="d-flex align-items-start">★★★</span> <span class="mb-4">조회
+					수 1위 매장</span>
+				<div class="shopProfile d-flex">
+					<!-- 프로필사진 영역 -->
+					<a href="#"> <img class="shopProfileImg"
+						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						alt="" />
+					</a>
+				</div>
+				<span>매장ID</span> <span>조회 수</span>
 			</div>
-			<span>매장ID</span> <span>예약 수</span>
+			<div
+				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
+				<span class="d-flex align-items-start">★★★</span> <span class="mb-4">리뷰
+					수 1위 매장</span>
+				<div class="shopProfile d-flex">
+					<!-- 프로필사진 영역 -->
+					<img class="shopProfileImg"
+						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						alt="" />
+				</div>
+				<span>매장ID</span> <span>리뷰 수</span>
+			</div>
+			<div
+				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
+				<span class="d-flex align-items-start">★★★</span> <span class="mb-4">예약
+					수 1위 매장</span>
+				<div class="shopProfile d-flex">
+					<!-- 프로필사진 영역 -->
+					<img class="shopProfileImg"
+						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						alt="" />
+				</div>
+				<span>매장ID</span> <span>예약 수</span>
+			</div>
 		</div>
-	</div>
-	<div class="row shopList bg-secondary text-white" id="shopList">
-		<!-- 
+		<div class="row shopList bg-secondary text-white" id="shopList">
+			<!-- 
        <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
         	<div class="shopProfile d-flex">
 	             프로필 사진 영역   	
@@ -138,16 +149,16 @@
        		<span class = "shopScroll">매장ID</span>
         </div>
        -->
+		</div>
+
+		<!-- pageBar -->
+		<div>pageNation</div>
 	</div>
 
-	<!-- pageBar -->
-	<div>pageNation</div>
-</div>
-
-<script type="text/javascript"
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
+	<script type="text/javascript"
+		src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
 </script>
-<script>
+	<script>
 
 var loading = false;
 var page = 1;
@@ -245,11 +256,92 @@ $(() => {
 	});
 
 	
-	// Autocomplete 부분
-	
-
+/* 	 // Autocomplete  부분 ( 원본 유지하려고 일단 주석 해놨습니다)
+    $("#searchInput").autocomplete({
+        source : function(request, response) {
+            $.ajax({
+                  url : "${pageContext.request.contextPath}/shop/hashTagAutocomplete",
+                 data : {search : $("#searchInput").val()},
+                 success : function(data){ 
+                    		console.log(data)
+                    response(
+                        $.map(data, function(item) {
+                            return {
+                                  label : item.tagName  //목록에 표시되는 값
+                            };
+                        })
+                    );  	
+                },
+                error : function(){ //실패
+						console.log("실패")
+                }
+            });
+        	}
+        , minLength : 1  // 조회를 위한 최소 글자수  
+        , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
+        ,select: function( event, ui ) {
+            //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
+        	console.log("select")
+        	
+        
+        }
+        , focus : function(evt, ui) { //  한글 오류 방지
+            return false;
+        }
+    }).autocomplete('instance')._renderItem = function(ul, item) { 
+		return $('<li>')
+        .append('<div>' + item.label + '</div>') 
+        .appendTo(ul);
+    };
+  */
+	 
+  
+   // test 부분 
+    $("#searchInput").autocomplete({
+        source : function(request, response) {
+            $.ajax({
+                  url : "${pageContext.request.contextPath}/shop/hashTagAutocomplete",
+                 data : {search : $("#searchInput").val()},
+                 success : function(data){ 
+                    		console.log(data)
+                    response(
+                        $.map(data, function(item) {
+                            return {
+                                  label : item.tagName  //목록에 표시되는 값
+                            };
+                        })
+                    );  	
+                },
+                error : function(){ //실패
+						console.log("실패")
+                }
+            });
+        	}
+        , minLength : 1  // 조회를 위한 최소 글자수  
+        , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
+        ,select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
+        	 // 검색 데이터 변수에 담기  
+        	var selectData = ui.item.value;
+        	console.log(selectData)
+        	// 검색 데이터를 클릭/엔터 하면 버튼이 동적으로 생성  
+			var hashTagBtn = document.createElement( 'button' );
+			var tagData = document.createTextNode(selectData);     	
+		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
+		    hashTagBtn.appendChild( tagData );
+        }
+        , focus : function(evt, ui) { //  한글 오류 방지
+            return false;
+        }
+    }).autocomplete('instance')._renderItem = function(ul, item) { 
+		return $('<li>')
+        .append('<div>' + item.label + '</div>') 
+        .appendTo(ul);
+    };
+ 
 
 </script>
+
+
 
 
 

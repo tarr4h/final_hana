@@ -11,6 +11,8 @@ public interface ShopDao {
 
 	int insertHashTag(HashTag hashTag);
 
+	 List<HashTag> hashTagAutocomplete(String search);
+
 	
 
 }
