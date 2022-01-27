@@ -12,7 +12,6 @@
 </section>
 <section>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
-
 <div id="mbtiMain-Background">
 <h1 id="mainPage-h1">나의 mbti 는 ?</h1>
 <span id = "mainPage-span">"mbti로 알아보는 내 성격 유형 테스트"</span>
@@ -23,10 +22,6 @@
     style="width:150px;height:150px;">
 </lord-icon>
 <button id="mainPage-button" onclick="location.href='${pageContext.request.contextPath}/mbti/mbtiList.do?cPage=1'">검사하기</button>
-
-
-
 </div>
-
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

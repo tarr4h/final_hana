@@ -4,12 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -385,6 +384,33 @@ public class GroupController {
 		return ResponseEntity.ok(map);
 	}
 	
+//    @GetMapping("/groupMemberList/{groupId}") 
+//    public ResponseEntity<List<Map<String, Object>>> groupMemberList(@PathVariable String groupId, @AuthenticationPrincipal Member member) {
+//    		log.info("groupId ={}", groupId);
+//    		
+//    		List<Map<String, Object>> groupMemberList = groupService.groupMemberList(groupId);
+//    		log.info("groupMemberList ={}", groupMemberList);
+//    		
+//    		return ResponseEntity.ok(groupMemberList);
+//    }
+    
+    @GetMapping("/groupMemberList/{groupId}")
+    public String groupMemberList(@PathVariable String groupId, Model model){
+    	log.info("groupId ={}", groupId);
+    	
+    	List<Map<String, Object>> groupMemberList = groupService.groupMemberList2(groupId);
+    	log.info("groupMemberList = {}", groupMemberList);
+    	
+    	model.addAttribute("groupMemberList", groupMemberList);
+    	return "/group/groupMemberList";
+    }
+    	
+    @GetMapping("/groupSetting/{groupId}")
+    public void groupSetting(@PathVariable String groupId, Model model){
+    	Group groupInfo = groupService.selectGroupInfo(groupId);
+    	log.info("groupInfo ={}", groupInfo);
+    }
+    
 	@PostMapping("/like")
 	public ResponseEntity<Map<String,Object>> like(@RequestParam int no, @AuthenticationPrincipal Member member){
 		Map<String,Object> map = new HashMap<>();
@@ -422,6 +448,20 @@ public class GroupController {
 	
 	@GetMapping("/groupCalendar")
 	public void groupCalendar() {}
+
+	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
+	public String deleteGroupMember (
+			@PathVariable String memberId,
+			@RequestParam String groupId) {
+		
+		log.info("memberId ={}", memberId);
+		log.info("groupId ={}", groupId);
+		int result = groupService.deleteGroupMember(memberId);
+		String msg = result > 0 ? "회원 탈퇴 성공" : "회원 탈퇴 실패";
+		log.info("msg ={}", msg);
+		
+		return null;
+	}
 }
 
 

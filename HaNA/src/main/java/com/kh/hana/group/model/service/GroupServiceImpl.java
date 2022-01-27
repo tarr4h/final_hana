@@ -109,7 +109,21 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.updateBoardContent(param);
 	}
 
+//	@Override
+//	public List<Map<String, Object>> groupMemberList(String groupId) {
+//		return groupDao.groupMemberList(groupId);
+//	}
+
 	@Override
+	public Group selectGroupInfo(String groupId) {
+		return groupDao.selectGroupInfo(groupId);
+	}
+
+	@Override
+	public List<Map<String, Object>> groupMemberList2(String groupId) {
+		return groupDao.groupMemberList2(groupId);
+	}
+
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
 		return groupDao.selectOneLikeLog(param);
 	}
@@ -127,6 +141,11 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int selectLikeCount(Map<String, Object> param) {
 		return groupDao.selectLikeCount(param);
+	}
+
+	@Override
+	public int deleteGroupMember(String memberId) {
+		return groupDao.deleteGroupMember(memberId);
 	}
 
 }
