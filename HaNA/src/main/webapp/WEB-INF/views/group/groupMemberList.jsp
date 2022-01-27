@@ -43,12 +43,12 @@ table th, td {
 							test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> <c:if
 							test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
 					<td>
-						<a href="<c:url value='/group/gradeGroupMember/${list.MEMBER_ID}' />"
-						class="btn btn-info" data-toggle="modal" data-target="#moaModal"
-						onclick="grade();">등급</a> 
+						<button class="btn btn-info" data-toggle="modal" data-target="#moaModal"
+						onclick="grade();">등급</button>
+						
 						<a href="<c:url value='/group/deleteGroupMember/${list.MEMBER_ID}/${list.GROUP_ID}' />"
 						class="btn btn-danger"
-						onclick="return confirm('회원 탈퇴를 진행하시겠습니까?');">삭제</a>
+						onclick="return confirm('회원 탈퇴를 진행하시겠습니까?');">탈퇴</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -67,22 +67,24 @@ table th, td {
 						<span aria-hidden="true">x</span>
 					</button>
 				</div>
+				
 				<div class="modal-body">
-					<form action="#" class="customRadio customCheckbox m-0 p-0">
+					<form action="${pageContext.request.contextPath}/group/gradeGroupMember" 
+						class="customRadio customCheckbox m-0 p-0">
 						<div class="row mb-0">
 							<div class="row justify-content-start">
 								<div class="col-12">
 									<div class="row">
-										<input type="radio" name="textEditor" id="dreamweaver" checked>
-										<label for="dreamweaver">리더</label>
+										<input type="radio" name="level" id="ld" value="ld" ${list.MEBER_LIST_CODE  eq 'ld' ? 'checked' : ''}>
+										<label for="ld" class="form-check-label">리더</label>
 									</div>
 									<div class="row">
-										<input type="radio" name="textEditor" id="sublime"> <label
-											for="sublime">매니저</label>
+										<input type="radio" name="level" id="mg" value="mg" ${list.MEMBER_LIST_CODE('mg') ? 'checked' : '' }> 
+										<label for="mg" class="form-check-label">매니저</label>
 									</div>
 									<div class="row">
-										<input type="radio" name="textEditor" id="sublime"> <label
-											for="sublime">멤버</label>
+										<input type="radio" name="level" id="mb" value="mb" ${list.MEMBER_LIST_CODE('mb') ? 'checked' : '' }>
+										<label for="mb" class="form-check-label">멤버</label>
 									</div>
 								</div>
 							</div>
@@ -90,7 +92,7 @@ table th, td {
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary" type="submit" type="button" data-dismiss="modal">save</button>
+					<a href="${contextPath.request.pageContext}/group/gradeGroupMember/${list.MEMBER_ID}/${list.MEMBER_LEVEL_CODE}"><button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="return confirm('회원 등급을 변경하시겠습니까?');">save</button></a>
 				</div>
 			</div>
 		</div>
