@@ -95,7 +95,7 @@
 				<!-- HashTag 검색 후 클릭/엔터 시 동적으로 버튼 생길 공간  -->
 			</div>
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-				id="searchBtn">Search</button>
+				id="searchBtn" >Search</button>
 		</div>
 
 
@@ -256,47 +256,8 @@ $(() => {
 	});
 
 	
-/* 	 // Autocomplete  부분 ( 원본 유지하려고 일단 주석 해놨습니다)
-    $("#searchInput").autocomplete({
-        source : function(request, response) {
-            $.ajax({
-                  url : "${pageContext.request.contextPath}/shop/hashTagAutocomplete",
-                 data : {search : $("#searchInput").val()},
-                 success : function(data){ 
-                    		console.log(data)
-                    response(
-                        $.map(data, function(item) {
-                            return {
-                                  label : item.tagName  //목록에 표시되는 값
-                            };
-                        })
-                    );  	
-                },
-                error : function(){ //실패
-						console.log("실패")
-                }
-            });
-        	}
-        , minLength : 1  // 조회를 위한 최소 글자수  
-        , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
-        ,select: function( event, ui ) {
-            //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
-        	console.log("select")
-        	
-        
-        }
-        , focus : function(evt, ui) { //  한글 오류 방지
-            return false;
-        }
-    }).autocomplete('instance')._renderItem = function(ul, item) { 
-		return $('<li>')
-        .append('<div>' + item.label + '</div>') 
-        .appendTo(ul);
-    };
-  */
-	 
-  
-   // test 부분 
+ 	 // Autocomplete  부분 ( 원본 유지하려고 일단 주석 해놨습니다)
+/*     var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
         source : function(request, response) {
             $.ajax({
@@ -325,9 +286,16 @@ $(() => {
         	console.log(selectData)
         	// 검색 데이터를 클릭/엔터 하면 버튼이 동적으로 생성  
 			var hashTagBtn = document.createElement( 'button' );
-			var tagData = document.createTextNode(selectData);     	
+        	var tagData = document.createTextNode(selectData);     	
 		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
 		    hashTagBtn.appendChild( tagData );
+		   
+		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
+		    tagDataArr.push(tagData.nodeValue); //배열의 끝에 요소 추가
+		   
+		    console.log("tagDataArr = " + tagDataArr)
+		    console.log("tagDataArr.length = " + tagDataArr.length)
+
         }
         , focus : function(evt, ui) { //  한글 오류 방지
             return false;
@@ -337,7 +305,107 @@ $(() => {
         .append('<div>' + item.label + '</div>') 
         .appendTo(ul);
     };
+    
+    
+ // 버튼 onclick시 ajax 실행   
+  $("#searchBtn").on("click",function(){
+	  $.ajax({
+			url : "${pageContext.request.contextPath}/shop/hashTagSearch",
+			data : {"tagDataArr" : tagDataArr},
+			success(data) {
+				console.log(data)
+			},
+			error: console.log
+			
+		}); 
+	  
+  }); 
  
+ // 엔터시 submit 막기  
+ document.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+  };
+});
+   */
+
+	 
+  
+   // test 부분 
+    var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
+    $("#searchInput").autocomplete({
+        source : function(request, response) {
+            $.ajax({
+                  url : "${pageContext.request.contextPath}/shop/hashTagAutocomplete",
+                 data : {search : $("#searchInput").val()},
+                 success : function(data){ 
+                    		console.log(data)
+                    response(
+                        $.map(data, function(item) {
+                            return {
+                                  label : item.tagName  //목록에 표시되는 값
+                            };
+                        })
+                    );  	
+                },
+                error : function(){ //실패
+						console.log("실패")
+                }
+            });
+        	}
+        , minLength : 1  // 조회를 위한 최소 글자수  
+        , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
+        ,select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
+        	 // 검색 데이터 변수에 담기  
+        	var selectData = ui.item.value;
+        	console.log(selectData)
+        	// 검색 데이터를 클릭/엔터 하면 버튼이 동적으로 생성  
+			var hashTagBtn = document.createElement( 'button' );
+        	var tagData = document.createTextNode(selectData);     	
+		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
+		    hashTagBtn.appendChild( tagData );
+		   
+		   
+		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
+		    tagDataArr.push(tagData.nodeValue); //배열의 끝에 요소 추가
+		   
+		    console.log("tagDataArr = " + tagDataArr)
+		    console.log("tagDataArr.length = " + tagDataArr.length)
+
+        }
+        , focus : function(evt, ui) { //  한글 오류 방지
+            return false;
+        }
+    }).autocomplete('instance')._renderItem = function(ul, item) { 
+		return $('<li>')
+        .append('<div>' + item.label + '</div>') 
+        .appendTo(ul);
+    };
+    
+    
+ // 버튼 onclick시 ajax 실행   
+  $("#searchBtn").on("click",function(){
+	  $.ajax({
+			url : "${pageContext.request.contextPath}/shop/hashTagSearch",
+			data : {"tagDataArr" : tagDataArr},
+			success(data) {
+				console.log(data)
+			},
+			error: console.log
+			
+		}); 
+	  
+  }); 
+ 
+ //  엔터시 submit 막기  
+ document.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+  };
+});
+  
+
+
 
 </script>
 
