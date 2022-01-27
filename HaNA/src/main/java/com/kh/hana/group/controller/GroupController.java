@@ -450,10 +450,10 @@ public class GroupController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/deleteGroupMember/{memberId}/{groupId}", method = RequestMethod.GET)
 	public String deleteGroupMember (
 			@PathVariable String memberId,
-			@RequestParam String groupId) {
+			@PathVariable String groupId) {
 		
 		log.info("memberId ={}", memberId);
 		log.info("groupId ={}", groupId);
@@ -461,7 +461,7 @@ public class GroupController {
 		String msg = result > 0 ? "회원 탈퇴 성공" : "회원 탈퇴 실패";
 		log.info("msg ={}", msg);
 		
-		return null;
+		return "redirect:/group/groupMemberList/"+groupId;
 	}
 }
 

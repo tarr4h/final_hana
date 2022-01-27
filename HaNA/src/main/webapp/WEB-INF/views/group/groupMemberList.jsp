@@ -46,11 +46,13 @@ table th, td {
 					<td><c:if test="${list.MEMBER_LEVEL_CODE eq 'ld'}">리더</c:if> <c:if
 							test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> <c:if
 							test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
-					<td><a
-						href="<c:url value='/group/gradeGroupMember/${list.MEMBER_ID}' />"
-						class="btn btn-info" onclick="grade();">등급</a> <a
-						href="<c:url value='/group/deleteGroupMember/${list.MEMBER_ID}' />"
-						class="btn btn-danger" onclick="delete();">삭제</a></td>
+					<td>
+						<a href="<c:url value='/group/gradeGroupMember/${list.MEMBER_ID}' />"
+						class="btn btn-info" onclick="grade();">등급</a> 
+							<input type="hidden" name="groupId" value="${list.GROUP_ID}"/>
+							<a href="<c:url value='/group/deleteGroupMember/${list.MEMBER_ID}/${list.GROUP_ID}' />"
+								class="btn btn-danger" onclick="delete();">삭제</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -62,6 +64,6 @@ table th, td {
 
 
 
-<a href="/" class="badge badge-dark">Dark</a>
+	<a href="/" class="badge badge-dark">Dark</a>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
