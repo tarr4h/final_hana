@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.hana.common.util.CalculateArea;
 import com.kh.hana.shop.model.dao.ShopDao;
 import com.kh.hana.shop.model.vo.HashTag;
+import com.kh.hana.shop.model.vo.Table;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,8 +52,32 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	
-	  @Override public List<HashTag> hashTagAutocomplete(String search) { 
+	@Override public List<HashTag> hashTagAutocomplete(String search) { 
 		  return shopDao.hashTagAutocomplete(search); 
 	}
 
+	@Override
+	public int insertShopTable(Table table) {
+		String verifyName = shopDao.verifyTableName(table.getTableName());
+		log.info("verify? = {}", verifyName == null);
+		int result = 0;
+		if(verifyName == null) {
+			result = shopDao.insertShopTable(table);			
+			return result;
+		} else {
+			return result;
+		}
+	}
+
+	@Override
+	public List<Table> selectShopTableList(String id) {
+		return shopDao.selectShopTableList(id);
+	}
+
+	@Override
+	public int deleteShopTable(String tableName) {
+		return shopDao.deleteShopTable(tableName);
+	}
+
+	
 }

@@ -30,4 +30,36 @@
             tag_name like #{search} || '%'
     
     </select>
+    
+    <insert id="insertShopTable" parameterType="table">
+    	insert into shop_table_setting
+    	values(#{shopId}, #{tableName}, #{allowVisitor}, #{allowStart}, #{allowEnd}, #{timeDiv}, #{timeMax}, #{memo}, #{enable})
+    </insert>
+    
+    <select id="verifyTableName" parameterType="string" resultType="string">
+    	select
+    		table_name
+   		from
+   			shop_table_setting
+  		where
+  			table_name = #{tableName}	
+    </select>
+    
+    <select id="selectShopTableList" parameterType="string" resultType="table">
+    	select
+    		*
+   		from
+   			shop_table_setting
+		where
+			shop_id = #{id}
+		order by
+			table_name
+    </select>
+    
+    <delete id="deleteShopTable" parameterType="string">
+    	delete from
+   			shop_table_setting
+		where
+			table_name = #{tableName}
+    </delete>
 </mapper>

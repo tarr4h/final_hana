@@ -257,6 +257,7 @@ public class MemberController {
 		return "redirect:/member/shopSetting/shopInfo";
 	}
 
+<<<<<<< HEAD
 
 	//게시글 작성하기
 	@PostMapping("/memberBoardEnroll")
@@ -296,5 +297,6 @@ public class MemberController {
 		 
 	}
 
+ 
 
 }
