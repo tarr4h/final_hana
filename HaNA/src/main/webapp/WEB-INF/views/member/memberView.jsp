@@ -245,22 +245,45 @@ $("#btn-follower-list").on( "click", function() {
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel"></h4>
+				<h4 class="modal-title" id="myModalLabel">게시글 작성</h4>
 			</div>
 			<div class="modal-body">
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
-						<tr>
-							<th>${member.id}</th>
-						</tr>
-						<tr>
-							<th>제목</th>
-						</tr>
-						<tr>
-							<th>내용</th>
-						</tr>
 					</thead>
 					<tbody id="modalTbody">
+	<form:form
+		name="boardFrm" 
+		action="${pageContext.request.contextPath}/member/memberBoardEnroll?${_csrf.parameterName}=${_csrf.token}" 
+		method="post"
+		enctype="multipart/form-data">
+		<input type="text" class="form-control" name="writer" value="${loginMember.id}" readonly required>
+		<br>
+		<div class="input-group mb-3" style="padding:0px;">
+		  <!-- <div class="input-group-prepend" style="padding:0px;">
+		    <span class="input-group-text">첨부파일1</span>
+		  </div> -->
+		   
+		  <div class="custom-file">
+		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile1" multiple>
+		   <!-- <label class="custom-file-label" for="upFile1">파일을 선택하세요</label> --> 
+		  </div>
+		</div>
+	 	<!--<div class="input-group mb-3" style="padding:0px;">
+		  <div class="input-group-prepend" style="padding:0px;">
+		    <span class="input-group-text">첨부파일2</span>
+		  </div> -->
+		 
+		  <div class="custom-file">
+		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile2" multiple>
+		    <!-- <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>-->
+		  </div>
+		  <br>
+		</div>
+	    <textarea class="form-control" name="content" placeholder="내용" required></textarea>
+		<br />
+		<input type="submit" class="btn btn-outline-success" value="저장" >
+	</form:form>
 						<%-- <tr>
 							<td>프로필</td>
 							<td>아이디</td>
@@ -436,14 +459,19 @@ $("#btn-following-list").click((e) => {
 			
 			const {memberId} = resp;
 			$.each(resp, (i, e) => {
-				console.log(e.memberId);
+				console.log(e.followers[0].memberId);
+				console.log(e.picture);
 				let tr= `
 				<tr>
 				<td>
-					\${e.memberId}
+					\${e.followers[0].memberId}
+					
+					 <img src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
+					 
 				</td>
 			</tr>
 			`;
+			console.log(tr);
 			$("#modalTbody").append(tr);
 		})
 	},

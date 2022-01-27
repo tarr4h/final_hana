@@ -87,7 +87,7 @@
 			following_id = #{myId}
 	
 	</select>
-
+ 
 	<select id="selectOneMember" parameterType="string" resultType="member">
 		select
 		 *
@@ -109,15 +109,38 @@
 		member_id = #{friendId}
 	</select>
 
-	<select id="followingList" resultType="follower">
-	select
-		*
-	from
-		follower
-	where
-	following_id = #{friendId}
+	<select id="followingList" resultMap="memberMap">
+select 
+    *
+from
+    member m left join follower f
+on 
+        m.id = f.member_id
+where 
+    f.following_id = #{friendId}
 	</select>
-	
+
+
+<resultMap type="member" id="memberMap">
+	<id column = "id" property ="id"/>
+	<result column= "password" property="password"/>
+	<result column= "name" property="name"/>
+	<result column= "picture" property="picture"/>
+	<result column= "personal_id" property="personalId"/>
+	<result column= "account_type" property="accountType"/>
+	<result column= "address_full" property="addressFull"/>
+	<result column= "address_all" property="addressAll"/>
+	<result column= "introduce" property="introduce"/>
+	<result column= "enabled" property="enabled"/>
+	<result column= "location_X" property="locationX"/>
+	<result column= "location_Y" property="locationY"/>
+
+	<collection property="followers" ofType="follower">
+		<result column="member_Id" property="memberId"/>
+		<result column="following_Id" property="followingId"/>
+	</collection>
+</resultMap>
+
 	<select id="selectOneShopInfo" parameterType="string" resultType="shop">
 		select
 			*
@@ -135,13 +158,23 @@
 		where id = #{id}
 	</update>
 
-
-
-
 	<insert id="insertShopInfo" parameterType="string">
 		insert into shop_info (id)
 		values(#{id})
 	</insert>
+
+	<insert id= "insertMemberBoard" parameterType="board">
+		insert into board (no,writer, content,picture)
+		values (seq_board_no.nextval, #{writer}, #{content}, #{picture})
+	</insert>
+
+
+
+
+
+
+
+
 
 
 </mapper>
