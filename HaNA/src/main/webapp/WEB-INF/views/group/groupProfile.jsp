@@ -14,36 +14,46 @@
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
 <sec:authentication property="principal" var="loginMember" />
 
-<div id="enroll-container" class="mx-auto text-center">
-	<form:form name="groupUpdateFrm" 
-		action="${pageContext.request.contextPath}/group/groupUpdate?${_csrf.parameterName}=${_csrf.token}" 
-		enctype="multipart/form-data" 
-		method="POST">
-		<table class="mx-auto">
-		 <input type="hidden" name="id" value="${group.groupId}" />
-		 	<tr>
-				<th>소모임 아이디</th>
-				<td>
-					<input type="text" class="form-control" name="name" id="name" value="${group.groupId}" required readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>소모임명</th>
-				<td>
-					<input type="text" class="form-control" name="name" id="name" value="${group.groupName}" required >
-				</td>
-			</tr>
-			<tr>
-				<th>프로필사진</th>
-				<td>
-					<input type="file" class="form-control" name="upFile" id="" value="파일 선택" />
-					<input type="hidden" name="picture" value="${group.image}" />
-				</td>
-			</tr>
-		</table>
-		<input type="submit" class="btn btn-dark"></button>
-	</form:form>
-</div>
+    <div id="enroll-container" class="mx-auto text-center">
+        <form:form name="groupUpdateFrm" 
+            action="${pageContext.request.contextPath}/group/groupUpdate?${_csrf.parameterName}=${_csrf.token}" 
+            enctype="multipart/form-data" 
+            method="POST">
+            <table class="mx-auto">
+             <input type="hidden" name="id" value="${group.groupId}" />
+                 <tr>
+                    <th>소모임 아이디</th>
+                    <td>
+                        <input type="text" class="form-control" name="name" id="name" value="${group.groupId}" required readonly style="background-color: rgb(235, 235, 235);">
+                    </td>
+                </tr>
+                <tr>
+                    <th>소모임명</th>
+                    <td>
+                        <input type="text" class="form-control" name="name" id="name" value="${group.groupName}" required >
+                    </td>
+                </tr>
+                <tr>
+                    <th>해시태그</th>
+                    <td>
+                        <input type="checkbox" name="hashtag" value="운동" id="hashtag-ex"/>
+                        <label for="hashtag-ex">운동</label>
+                        <input type="checkbox" name="hashtag" value="독서" id="hashtag-re"/>
+                        <label for="hashtag-re">독서</label>
+                        <input type="checkbox" name="hashtag" value="등산" id="hashtag-mu"/>
+                        <label for="hashtag-mu">등산</label>
+                    </td>
+                <tr>
+                    <th>프로필사진</th>
+                    <td>
+                        <input type="file" class="form-control" name="upFile" id="" value="파일 선택" />
+                        <input type="hidden" name="picture" value="${group.image}" />
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" class="btn btn-dark"></button>
+        </form:form>
+    </div>
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
