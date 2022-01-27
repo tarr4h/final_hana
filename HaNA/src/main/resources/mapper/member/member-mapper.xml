@@ -164,9 +164,8 @@ where
 	</insert>
 
 	<insert id= "insertMemberBoard" parameterType="board">
-		insert into board (writer, content,picture)
-		values (#{writer}, #{content}, #{picture})
- 
+		insert into board (no,writer, content,picture)
+		values (seq_board_no.nextval, #{writer}, #{content}, #{picture})
 	</insert>
 
 

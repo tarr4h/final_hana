@@ -260,22 +260,40 @@ public class MemberController {
 
 	//게시글 작성하기
 	@PostMapping("/memberBoardEnroll")
-	public String insertMemberBoard(Board board, 
-									RedirectAttributes redirectAttr,
-									 @RequestParam(name="uploadFile") MultipartFile[] uploadFile
-									) {
-		log.info("uploadFile={}", uploadFile);
-		log.info("insertMemberBoard board = {}", board);
-		//int result = memberService.insertMemberBoard(board);
-		//log.info("insertMemberBoard result = {}", result);
-		return "redirect:/member/memberSetting/memberSetting";
-		
-	}
+    public String insertMemberBoard(
+            Member member,
+            Board board, 
+            RedirectAttributes redirectAttr,
+            @RequestParam(name="uploadFile", required = false) MultipartFile[] uploadFiles) throws IllegalStateException, IOException {
+        String saveDirectory  = application.getRealPath("/resources/upload/member/board");
 
+            
+        	//String[] picture = new String[2];
+
+        for(int i = 0; i<uploadFiles.length; i++) {
+            MultipartFile uploadFile = uploadFiles[i];
+            if(!uploadFile.isEmpty()) {
+                String originalFilename = uploadFile.getOriginalFilename();
+                File dest = new File(saveDirectory);
+                uploadFile.transferTo(dest);
+                for(int j = 0; j< originalFilename.length(); j++) { 
+                	//board.getPicture(0) = originalFilename;
+                }
+                 
+            }
+        }
+        log.info("insertMemberBoard board = {}", board);
+        int result = memberService.insertMemberBoard(board);
+
+        return "redirect:/member/memberView/"+ member.getId();
+
+    }
+	
 	@PostMapping("/testModal")
 	public void testModal(@RequestParam MultipartFile upFile) {
 		 log.info("upFile = {}", upFile);
 
+		 
 	}
 
 

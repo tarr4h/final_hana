@@ -245,7 +245,7 @@ $("#btn-follower-list").on( "click", function() {
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel"></h4>
+				<h4 class="modal-title" id="myModalLabel">게시글 작성</h4>
 			</div>
 			<div class="modal-body">
 				<table class="table" style="text-align: center;" name="modalTable">
@@ -256,10 +256,9 @@ $("#btn-follower-list").on( "click", function() {
 		name="boardFrm" 
 		action="${pageContext.request.contextPath}/member/memberBoardEnroll?${_csrf.parameterName}=${_csrf.token}" 
 		method="post"
-		enctype="multipart/form-data"
-		>
+		enctype="multipart/form-data">
 		<input type="text" class="form-control" name="writer" value="${loginMember.id}" readonly required>
-		<!-- input:file소스 : https://getbootstrap.com/docs/4.1/components/input-group/#custom-file-input -->
+		<br>
 		<div class="input-group mb-3" style="padding:0px;">
 		  <!-- <div class="input-group-prepend" style="padding:0px;">
 		    <span class="input-group-text">첨부파일1</span>
@@ -267,18 +266,19 @@ $("#btn-follower-list").on( "click", function() {
 		   
 		  <div class="custom-file">
 		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile1" multiple>
-		    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
+		   <!-- <label class="custom-file-label" for="upFile1">파일을 선택하세요</label> --> 
 		  </div>
 		</div>
-	 <div class="input-group mb-3" style="padding:0px;">
+	 	<!--<div class="input-group mb-3" style="padding:0px;">
 		  <div class="input-group-prepend" style="padding:0px;">
 		    <span class="input-group-text">첨부파일2</span>
-		  </div>
+		  </div> -->
 		 
 		  <div class="custom-file">
 		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile2" multiple>
-		    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>-->
+		    <!-- <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>-->
 		  </div>
+		  <br>
 		</div>
 	    <textarea class="form-control" name="content" placeholder="내용" required></textarea>
 		<br />
