@@ -32,9 +32,7 @@
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
 <span>member picture 못찾는건 404</span><br />
-<span>사진 올릴때 어떤 multi-part 설정도 제공되지 않았기 때문에, part들을 처리할 수 없습니다. 오류뜨면</span><br />
-<span>server -> context.xml -> context안에 allowCasualMultipartParsing="true" path="/" 추가 </span><br />
-<span>소모임 회원 가입시 채팅방 추가 / 소모임 탈퇴시 채팅방 나가기</span><br />
+<span>소모임 회원 가입시 입장메세지 / 소모임 탈퇴시 나가기 메세지</span><br />
 <span>커밋할때 프로젝트 새로고침해서 저장한 이미지 다 불러오고 하기</span><br />
 <script>
 let id;
@@ -412,7 +410,7 @@ const displaychat = (check, e) =>{
 	var ampm = (hour > 12 ? "pm" : "am");
 	if(hour > 12)
 		hour = hour - 12;
-	var returnDate = (todayyear+todaymonth+todayday === year+month+day ? "Today " : "") + ampm+" " + hour + ":" + minute;
+	var returnDate = (todayyear+todaymonth+todayday === year+month+day ? "Today " : month+"월"+day+"일 ") + ampm+" " + hour + ":" + minute;
 	let chat = ``
 	
 	console.log("fileImg check =", e.fileImg);
