@@ -3,23 +3,31 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop">
-
-	<select id="selectShopList" parameterType="map" resultType="map">
-		select
-			*
-		from
-			shop_info
-		where
-			location_x <![CDATA[<]]> ${maxLocationX}
-			and
-			location_y <![CDATA[<]]> ${maxLocationY}
-			and
-			id != #{id}
-	</select>
-
-	<insert id="insertHashTag" parameterType="hashtag">
-		insert into
-			hashtag
-		values(concat(#{tagId}, seq_hashtag.nextval), #{tagName})
-	</insert>
+    <select id="selectShopList" parameterType="map" resultType="map">
+        select
+            *
+        from
+            shop_info
+        where
+            location_x <![CDATA[<]]> ${maxLocationX}
+            and
+            location_y <![CDATA[<]]> ${maxLocationY}
+            and
+            id != #{id}
+    </select>
+    <insert id="insertHashTag" parameterType="hashtag">
+        insert into
+            hashtag
+        values(concat(#{tagId}, seq_hashtag.nextval), #{tagName})
+    </insert>
+    
+    <select  id="selectHashTagList" resultType="hashtag">
+        select 
+            tag_name 
+        from
+            hashtag 
+        where 
+            tag_name like #{search} || '%'
+    
+    </select>
 </mapper>
