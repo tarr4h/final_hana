@@ -363,7 +363,8 @@ $(() => {
 			var hashTagBtn = document.createElement( 'button' );
         	var tagData = document.createTextNode(selectData);     	
 		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
-		    // 버튼 스타일 주기 
+		   
+		    // button style
 		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
 		 
@@ -386,6 +387,12 @@ $(() => {
     
  // 버튼 onclick시 ajax 실행   
   $("#searchBtn").on("click",function(){
+	 
+	  if(tagDataArr.length > 2){
+		  alert("추천 해시태그는 최대 2개 까지 가능합니다.");
+		  return;
+	  }
+	  
 	  $.ajax({
 			url : "${pageContext.request.contextPath}/shop/hashTagSearch",
 			data : {"tagDataArr" : tagDataArr},
