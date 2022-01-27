@@ -1,3 +1,7 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.kh.hana.member.model.vo.Member"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,7 +14,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소그룹페이지" name="title" />
 </jsp:include>
-
+<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
+</section>
+<section>
 <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
 	
@@ -21,18 +27,28 @@
 	function goGroupSetting() {
 		location.href = "${pageContext.request.contextPath}/group/groupSetting";
 	}
+	function goGroupMemberList() {
+		location.href = "${pageContext.request.contextPath}/group/groupMemberList/${group.groupId}";
+	}  
 </script>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
  
 <sec:authentication property="principal" var="loginMember"/>
-
+<%
+	List<Map<String,String>> memberList = (List<Map<String,String>>)request.getAttribute("groupMembers");
+	List<String> memberIdList = new ArrayList<>();
+	for(Map<String,String> m : memberList){
+		memberIdList.add(m.get("memberId"));
+	};
+	pageContext.setAttribute("memberIdList",memberIdList);
+%>
 <!-- 프로필 -->
 <div class="container mt-2">
 	<div class="row" id="myInfo">
 		<!-- 프로필이미지 영역 -->
 		<div
-			class="col-sm-5 d-flex justify-content-center align-items-center flex-column"
+			class="col-sm-6 d-flex justify-content-center align-items-center flex-column"
 			id="profileImg">
 			<div class="profileImg d-flex">
 				<!-- 이미지를 넣으세요 -->
@@ -56,8 +72,9 @@
 		</div>
 
 		<!-- 프로필 세부정보 영역 -->
-		<div class="col-sm-7" id="profileStatus">
-			<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
+		<div class="col-sm-6" id="profileStatus">
+		<div class="profileTableAreaContainer">
+		<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
 			<button type="button" class="btn btn-outline-dark" id="settingBtn"
 				onclick="goGroupSetting();">
 				<img
@@ -65,7 +82,7 @@
 					alt="" />
 			</button>
 			<button type="button" class="btn btn-outline-dark" id="settingBtn"
-				onclick="">
+				onclick="goGroupMemberList();">
 				<img
 					src="${pageContext.request.contextPath }/resources/images/icons/man.png"
 					alt="" />
@@ -74,50 +91,69 @@
 			<br />
 
 			<div class="profileTableArea">
-				<table id="profileTable">
-					<tbody>
-						<tr>
-							<th class="tableKey">그룹명</th>
-							<td class="tableValue">${group.groupName}</td>
-						</tr>
-						<tr>
-							<th><span class="tableKey">그룹 아이디</span></th>
-							<td>${group.groupId}</td>
-							<td rowspan="2">						<a
-							href="${pageContext.request.contextPath}/group/enrollGroupForm?groupId=${group.groupId}"
-							class="enroll-button">가입신청</a></td>
-						</tr>
-						<tr>
-							<th><span class="tableKey">리더</span></th>
-							<td>${group.leaderId}</td>
-						</tr>
-						<tr>
-							<th><span class="tableKey">멤버수</span></th>
-							<td>${group.memberCount}명</td>
-						</tr>
-					</tbody>
-				</table>
-				<div class="group-page-enroll-button">
-					<br>
-					<%-- <c:if test="${empty groupMember || empty loginMember}"> --%>
-					<%-- <c:remove var="enrolled"/> --%>
-					<c:if test="${!enrolled}">
-						<a
-							href="${pageContext.request.contextPath}/group/enrollGroupForm?groupId=${group.groupId}"
-							class="enroll-button">가입신청</a>
-					</c:if>
-				</div>
+			    <div class="row">
+			        <div class="col-sm-8">
+			       		<table id="profileTable">
+							<tbody>
+								<tr>
+									<th class="tableKey">그룹명</th>
+									<td class="tableValue">${group.groupName}</td>
+								</tr>
+								<tr>
+									<th><span class="tableKey">그룹 아이디</span></th>
+									<td>${group.groupId}</td>
+								</tr>
+								<tr>
+									<th><span class="tableKey">리더</span></th>
+									<td>${group.leaderId}</td>
+								</tr>
+								<tr class="memberCountTr" onclick="$('#groupMemberList').modal('show');">
+									<th><span class="tableKey" style="color:#673ab7c9;">멤버</span></th>
+									<td>${group.memberCount}명</td>
+								</tr>
+							</tbody>
+						</table>
+			        </div>
+			        <div class="col-sm-4 buttonArea">
+			        	<c:if test="${!memberIdList.contains(loginMember.id)}">
+							<div>
+								<a
+								href="${pageContext.request.contextPath}/group/enrollGroupForm?groupId=${group.groupId}"
+								class="enroll-button">가입신청</a>
+							</div>
+						</c:if>
+<% 
+	Member loginMember = (Member)pageContext.getAttribute("loginMember");
+	if(memberIdList.contains(loginMember.getId())){
+		for(Map<String,String> m : memberList){
+			if(m.get("memberId").equals(loginMember.getId())){
+				if(m.get("memberLevelCode").equals("ld") || m.get("memberLevelCode").equals("mg")){	
+%>
+						<div style="margin-top:18%;">
+							<div>
+								<a href="#" class="enroll-button">회원관리</a>
+							</div>
+							<div style="margin-top:10px;">
+								<a href="javascript:void(0);" onclick="enrollList();" class="enroll-button">가입승인</a>
+							</div>
+						</div>
+<% }}}};%>
+			        </div>
+			    </div>
 			</div>
+		</div>	
 		</div>
 	</div>
 </div>
 
 <div class="icon">
 	<a href="#"><i class="fas fa-pencil-alt"></i></a>
-	<a href="#"><i class="fas fa-calendar-alt"></i></a>
+	<a href="${pageContext.request.contextPath}/group/groupCalendar"><i class="fas fa-calendar-alt"></i></a>
 	<a href="#"><i class="far fa-comments"></i></a>
 </div>
 
+<!-- 게시물 목록 -->
+<!-- 가입신청 처리 -->
 <div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
@@ -131,41 +167,33 @@
 	</c:forEach>
 </div>
 
-<c:if test="${loginMember.id eq group.leaderId}">
-	<button id="myBtn" onclick="enrollList();">승인</button>
-</c:if>
-
-<div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
+<!-- 가입신청리스트 모달 -->
+<div class="modal fade" id="applyListModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog" style="max-width: 100%; width: auto; display: table;">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 60%; width: auto;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">가입 승인 리스트</h4>
 			</div>
 			<div class="modal-body">
-				<table class="table" style="text-align: center;" name="modalTable">
-					<thead class="table-light">
-						<tr>
-							<th>번호</th>
-							<th>아이디</th>
-							<th>가입신청내용</th>
-							<th>날짜</th>
-							<th>승인여부</th>
-						</tr>
-					</thead>
-					<tbody id="modalTbody">
-						<%-- <tr>
-							<td>${no}</td>
-							<td>member_id</td>
-							<td>content</td>
-							<td>regDate</td>
-							<td><button type="button"
-									class="btn btn-default btn-sm btn-success"
-									style="margin-right: 1%;">승인</button>
-								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
-						</tr> --%>
-					</tbody>
-				</table>
+				<div class="applyListTableContainer">
+					<table class="table" style="text-align: center;" name="modalTable">
+						<thead class="table-light">
+							<tr>
+								<th>번호</th>
+								<th>아이디</th>
+								<th>가입신청내용</th>
+								<th>날짜</th>
+								<th>승인여부</th>
+							</tr>
+						</thead>
+						<tbody id="modalTbody">
+							<tr>
+								<th colspan="5">가입신청이 없습니다.</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary">Save changes</button>
@@ -188,15 +216,12 @@
 						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
 					</tr>
 				</table>
-				<div style="position:relative;margin-right:70px;">
-				<span class="heart unlike" onclick="like();" style="position:absolute;">빈하트</span>
-				<span class="heart like" onclick="unlike();" style="color:red;position:absolute;">빨간하트</span>
-				<div style="color:gray;transform:translateX(30px);">
-				<span class="like_count"></span>
-				</div>
-				<!-- <i class="bi bi-heart"></i>
-				<i class="bi bi-heart-fill"></i> -->
-				</div>
+				<div style="position:relative;margin-right:-665px; margin-bottom:5%;">
+				<img src="https://img.icons8.com/plasticine/100/000000/like--v2.png" class="heart unlike" onclick="like();" style="position:absolute; width:50px;"/>
+				<img src="https://img.icons8.com/plasticine/100/000000/like--v1.png" class="heart like" onclick="unlike();" style="position:absolute; width:50px;"/>
+					<div>
+						<button type="button" class="btn-deleteBoard">삭제</button>
+					</div>
 				</div>
 				<div class="modal-body">
 					<div class="container">
@@ -246,6 +271,35 @@
 			</div>
 		</div>
 	</div>
+</div>
+	<!-- 회원목록보기 modal -->
+	<div class="modal fade" id="groupMemberList" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="groupMemberListTableContainer">
+						<table id="groupMemberListTable">
+							<c:forEach items="${groupMembers}" var="member">
+								<tr>
+				 					<td>
+				 						<a href="javascript:void(0);" onclick="goMemberView('${member.memberId}');" >
+				 						</a> 
+				 						<img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/${member.profile}" alt="" />
+				 					</td>
+				 					<th>
+				 						<a href="javascript:void(0);" onclick="goMemberView('${member.memberId}');" style="color:black; text-decoration:none;">
+				 							&nbsp;&nbsp;&nbsp;&nbsp;${member.memberId}
+				 						</a>
+				 					</th> 
+				 				</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 <style>
 	.board-main-image:hover {
@@ -266,10 +320,82 @@ let newContent;
 	    }
 	  });
 
-// 모달창
+// 회원수 tr 클릭
+
+    
+// 게시물 목록 이미지 클릭
 $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
+<<<<<<< HEAD
+	console.log("alksjdflkajsdlf",boardNo);
+=======
 	
+	$.ajax({
+/* 		url:`<c:out value='${pageContext.request.contextPath}'></c:out>/group/groupBoardDetail/\${boardNo}`
+ */		url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
+		success(data){
+	 
+	 		const {groupBoard, tagMembers} = data;
+ 			console.log(groupBoard);
+ 			
+ 			// modal의 header부분
+ 			const date = moment(groupBoard.regDate).format("YYYY년 MM월 DD일");
+			let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${groupBoard.writerProfile}`;
+	 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
+ 	 		$("#member-id").html(`&nbsp;&nbsp;\${groupBoard.writer}`); // 글쓴이 아이디
+	 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜, 태그 장소
+	 		$("#tag-place").html(`,&nbsp;&nbsp;\${groupBoard.placeName}`) // 날짜, 태그 장소
+	 		
+	 		//게시물 삭제 버튼
+	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer){
+	 			$(".btn-deleteBoard").css("display","none");
+	 		}
+	 		
+	 		// 이미지
+	 		$("#group-board-img-container").empty();
+ 			$.each(groupBoard.image, (i,e)=>{
+ 				console.log(i);
+ 				console.log(e);
+ 				
+ 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
+ 				$("#group-board-img-container").append(img); // 이미지 추가
+ 				
+ 			})
+ 			$(".group-board-img").css("width","100%");
+ 			$(".group-board-img").css("position","absolute");
+  			$(".group-board-img").css("left","0");
+			
+ 			//modal의 body부분
+ 			//태그 멤버 목록
+ 			
+  			$("#group-board-tag-member-list table").empty();
+ 			$.each(tagMembers, (i,e)=>{
+ 				let tr = `<tr style="padding-bottom:10px;">
+ 					<td><a href="#" ><img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/\${e.picture}" alt="" /></a></td>
+ 					<th><a href="#" style="color:black; text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;\${e.id}</a></th>
+ 				</tr>`;	
+  				$("#group-board-tag-member-list table").append(tr);
+ 			})
+			
+ 			//content
+ 			console.log($("#group-board-content"));
+ 			$("#group-board-content").html(`\${groupBoard.content}`);
+ 			
+ 			//댓글 리스트
+ 			getCommentList(groupBoard.no);
+ 			
+ 			//댓글 입력창
+ 			$("#group-board-comment-submit #boardNo").val(groupBoard.no);
+ 			
+ 		},
+ 		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	getPageDetail(boardNo);
 	
 	$('#groupPageDetail').modal("show");
@@ -277,12 +403,15 @@ $('.board-main-image').click((e)=>{
 
 // 게시물 상세보기 페이지 불러오기 함수
 function getPageDetail(boardNo){
+	console.log("aaa",boardNo);
 	$.ajax({
-		/* 		url:`<c:out value='${pageContext.request.contextPath}'></c:out>/group/groupBoardDetail/\${boardNo}`
-		 */		url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
+				url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
 				success(data){
 			 
 			 		const {groupBoard, tagMembers, isLiked} = data;
+			 		console.log(groupBoard);
+			 		console.log(tagMembers);
+			 		console.log(isLiked);
 		 			gb = groupBoard;
 		 			
 		 			// modal의 header부분
@@ -332,7 +461,7 @@ function getPageDetail(boardNo){
 		 			
 		  			$("#group-board-tag-member-list table").empty();
 		 			$.each(tagMembers, (i,e)=>{
-		 				let tr = `<tr style="padding-bottom:10px;">
+		 				let tr = `<tr>
 		 					<td><a href="javascript:void(0);" onclick="goMemberView('\${e.id}');" ><img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/\${e.picture}" alt="" /></a></td>
 		 					<th><a href="javascript:void(0);" onclick="goMemberView('\${e.id}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;\${e.id}</a></th>
 		 				</tr>`;	
@@ -367,7 +496,6 @@ function getLikeCount(){
 	$.ajax({
 		url:`${pageContext.request.contextPath}/group/getLikeCount/\${gb.no}`,
 		success(data){
-			console.log(data.likeCount);
 			$(".like_count").html(data.likeCount);
 		},
 		error(xhr, statusText, err){
@@ -494,7 +622,6 @@ function getCommentList(boardNo){
   	$.ajax({
   		url:`${pageContext.request.contextPath}/group/getCommentList/\${boardNo}`,
   		success(data){
-  			console.log(data);
   			$("#group-board-comment-list>table").empty();
 
   			$.each(data,(i,e)=>{
@@ -506,7 +633,7 @@ function getCommentList(boardNo){
 	  				<td style="width:50px;">
 	  					<img style="height:40px; border-radius:50%;" src="/hana/resources/upload/group/board/20220119_031942278_446.png" alt="" />
 	  				</td>
-					<td style="white-space:normal;">
+					<td >
 						<sub class="comment-writer"><a href="javascript:void(0);" onclick="goMemberView('\${e.writer}');" style="color:black; text-decoration:none; font-weight:bold;">\${e.writer}</a></sub>
 						<sub class="comment-date">\${date}</sub>
 						<br />
@@ -514,6 +641,25 @@ function getCommentList(boardNo){
 						&nbsp;&nbsp;&nbsp;\${e.content}
 					</td>`;
 				if(e.commentLevel == 1){
+					if(e.writer == "<sec:authentication property='principal.username'/>"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
+						tr+=`<td>
+								<span href='' class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span>
+							</td>
+							<td>
+								<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
+								<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
+							</td>`;	
+					}
+					else{ // 댓글레벨 1 && 내가 작성자가 아닐 때 (답글 버튼만)
+						tr+=`<td></td>
+						<td>
+							<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
+							<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
+						</td>`;	
+					}
+				}	
+				else{ // 댓글레벨 2 && 내가 작성자일 때 (삭제버튼만)
+					if(e.writer == "<sec:authentication property='principal.username'/>"){
 					if(e.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${group.leaderId}"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
 						tr+=`<td>
 								<span href='' class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span>
@@ -540,7 +686,6 @@ function getCommentList(boardNo){
 					}
 				}
 	  			tr += "</tr>"
-	  			console.log(tr);
 	  			$("#group-board-comment-list>table").append(tr);
   			})
   		},
@@ -656,58 +801,6 @@ function submitCommentFunc(e){
 
 
 	
-//가입신청리스트
-function test(){
-    $.ajax({
-        url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
-        data: {
-            groupId : '${groupId}'
-        },
-        success(res){
-            console.log(res);
-            $.each(res, function(i, e) {
-                console.log(e.NO);
-                let tr = `
-                    <tr>
-                        <td>
-                            \${e.NO}
-                        </td>
-                        <td>
-                            \${e.MEMBER_ID}
-                        </td>
-                        <td>
-                            \${e.CONTENT}
-                        </td>
-                        <td>
-                            \${e.REG_DATE}              
-                        </td>
-                        <td>
-                            <form:form name="groupApplyHandlingFrm">
-                                <input type="hidden" name="no" value="\${e.NO}"/>
-                                <input type="hidden" name="groupId" value="${group.groupId}"/>
-                                <input type="hidden" name="memberId" value="\${e.MEMBER_ID}"/>
-                                <input type="hidden" name="approvalYn" value=""/>
-                            </form:form>
-                            <button type="button" onclick="groupApplyHandlingFunc(this);"
-                                class="btn btn-default btn-sm btn-success"
-                                style="margin-right: 1%;" value="y">승인</button>
-                            <button type="button" onclick="groupApplyHandlingFunc(this);" class="btn btn-default btn-sm btn-danger" value="n">거절</button>
-                        </td>
-                    </tr>
-                `;
-                $("#modalTbody").append(tr);
-                $("#test_modal").modal();
-
-            })
-        },
-        error(xhr, statusText, err){
-			switch(xhr.status){
-			default: console.log(xhr, statusText, err);
-			}
-			console.log
-		}
-    })
-};
 
 function groupApplyHandlingFunc(e){
     console.log(e); // button객체    
@@ -739,56 +832,61 @@ function groupApplyHandlingFunc(e){
      
 }
 
-
-
-
-
 //가입신청리스트
 function enrollList(){
-    $.ajax({
-        url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
-        data: {
-            groupId : '${groupId}'
-        },
-        success(res){
-            console.log(res);
-            $("#modalTbody").empty();
-            $.each(res, function(i, e) {
-                console.log(e.NO);
-                let tr = `
-                    <tr>
-                        <td>
-                            \${e.NO}
-                        </td>
-                        <td>
-                            \${e.MEMBER_ID}
-                        </td>
-                        <td>
-                            \${e.CONTENT}
-                        </td>
-                        <td>
-                            \${e.REG_DATE}              
-                        </td>
-                        <td>
-                            <form:form name="groupApplyHandlingFrm">
-							   <input type="hidden" name="no" value="\${e.NO}"/>
-                                <input type="hidden" name="groupId" value="${group.groupId}"/>
-                                <input type="hidden" name="memberId" value="\${e.MEMBER_ID}"/>
-                                <input type="hidden" name="approvalYn" value=""/>
-                            </form:form>
-                            <button type="button" onclick="groupApplyHandlingFunc(this,this.value);"
-                                class="btn btn-default btn-sm btn-success"
-                                style="margin-right: 1%;" value="y">승인</button>
-                            <button type="button" onclick="groupApplyHandlingFunc(this,this.value);" class="btn btn-default btn-sm btn-danger" value="n">거절</button>
-                        </td>
-                    </tr>
-                `;
-                $("#modalTbody").append(tr);
-                $("#test_modal").modal();
-            })
-        },
-        error: console.log
-    })
+	 $.ajax({
+	        url: "${pageContext.request.contextPath}/group/getGroupApplyRequest",
+	        data: {
+	            groupId : '${groupId}'
+	        },
+	        success(res){
+	            console.log(res);
+	            if(res.length!==0){
+		            $("#modalTbody").empty();	            	
+	            }
+	            $.each(res, function(i, e) {	
+	            	console.log(e.REG_DATE);
+	            	const date = moment(e.REG_DATE).format("YYYY년 MM월 DD일");
+	            	console.log(date);
+	                let tr = `
+	                    <tr>
+	                        <td>
+	                            \${e.NO}
+	                        </td>
+	                        <td>
+	                            \${e.MEMBER_ID}
+	                        </td>
+	                        <td style="width:600px; padding-left:50px;padding-right:50px;">
+	                            \${e.CONTENT}
+	                        </td>
+	                        <td>
+	                            \${date}              
+	                        </td>
+	                        <td>
+	                            <form:form name="groupApplyHandlingFrm">
+	                                <input type="hidden" name="no" value="\${e.NO}"/>
+	                                <input type="hidden" name="groupId" value="${group.groupId}"/>
+	                                <input type="hidden" name="memberId" value="\${e.MEMBER_ID}"/>
+	                                <input type="hidden" name="approvalYn" value=""/>
+	                            </form:form>
+	                            <button type="button" onclick="groupApplyHandlingFunc(this);"
+	                                class="btn btn-default btn-sm btn-success"
+	                                style="margin-right: 1%;" value="y">승인</button>
+	                            <button type="button" onclick="groupApplyHandlingFunc(this);" class="btn btn-default btn-sm btn-danger" value="n">거절</button>
+	                        </td>
+	                    </tr>
+	                `;
+	                $("#modalTbody").append(tr);
+	            })
+				$("#applyListModal").modal();
+	        },
+	        error(xhr, statusText, err){
+				switch(xhr.status){
+				default: console.log(xhr, statusText, err);
+				}
+				console.log
+			}
+	    })
 };
 
 function groupApplyHandlingFunc(e, YN){
@@ -799,7 +897,6 @@ function groupApplyHandlingFunc(e, YN){
     console.log("YN = ",YN);
 /*     console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=no]").val());
     console.log($(e).siblings("[name=groupApplyHandlingFrm]").children("[name=approvalYn]").val()); */
-	<!-- 이거없으면 403오류 -->
     const csrfHeader = "${_csrf.headerName}";
 	const csrfToken = "${_csrf.token}";
 	const headers = {};
@@ -826,8 +923,10 @@ function groupApplyHandlingFunc(e, YN){
 </script>
 
 <style>
+.board-main-image:hover {cursor:pointer;}
+.memberCountTr:hover{cursor:pointer;}
 #myInfo {border: 1px solid black;}
-#profileImg {height: 400px;}
+#profileImg {height: 400px; padding-top:50px;}
 #profileStatus {height: 400px;}
 /* 세팅 버튼 */
 #settingBtn {float: right;height: 50px;width: 50px;border-radius: 100%;border: none;}
@@ -840,17 +939,29 @@ function groupApplyHandlingFunc(e, YN){
 /* 프로필정보 */
 .follow {display: inline-block;width: 100px;height: 30px;border: 1px solid black;}
 .followCount {display: inline-block;width: 100px;height: 30px;border: 1px solid black;}
-#profileTable {width: 100%;table-layout: fixed;margin: 13%;}
-.tableKey {width: 20%;}
-.tableValue {width: 80%;}
+.profileTableAreaContainer {width:100%;height:100%;display: flex;align-items: center;}
+.profileTableArea {margin-left:0;}
+#profileTable {width: 100%;table-layout: fixed; border-collapse: separate;border-spacing: 0 10px;}
+#tagMemberListTable {border-collapse: separate;border-spacing: 0 5px;}
+#groupMemberListTable {border-collapse: separate;border-spacing: 0 30px; margin-left:20%;}
+#groupMemberListTableContainer {height:50vh;overflow:auto;}
+.tableKey {width: 40%;}
+.tableValue {width: 60%;}
 pre {margin: 0;}
 #textArea {width: 100%;height: 150px;border: none;resize: none;background-color: white;padding-top: 30px;font-size: 16px;}
+.buttonArea {}
 </style>
 
 <style>
+.table-light th {min-width:70px;}
+.applyListTableContainer{overflow:auto; height:70vh;}
+.icon
 table {border-collapse: separate;border-spacing: 0 5px;}
 textarea { height:100px;border:none;width:100%;resize:none; }
 textarea:focus { outline:none; }
+.btn-reply{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
+input[type="submit"] {font-weight:bold;color:#384fc5c4;background-color:white;border:none;float:right;}
+.btn-deleteBoard {font-weight:bold;color:#384fc5c4;background-color:white;border:none;}
 .btn-submitContent{font-weight:bold;color:#384fc5c4;background-color:white;border:none;float:right;}
 .btn-boardModify{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
 .btn-reply{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
@@ -863,4 +974,5 @@ textarea::placeholder {color:gray; font-size: 1.1em;}
 </style>
 
 <a href="/" class="badge badge-dark">Dark</a>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

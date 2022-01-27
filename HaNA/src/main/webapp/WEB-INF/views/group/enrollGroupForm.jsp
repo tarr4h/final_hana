@@ -22,23 +22,32 @@
 </head>
 <body>
 
-<sec:authentication property="principal" var="loginMember"/>
 <div style="position:relative; display: inline-block; top: 50%; left: 25%; padding: 5px 100px; background-color: rgb(224,224,224); margin-top: 10%;">
         <form:form name="enrollGroupForm" method="post" action="${pageContext.request.contextPath}/group/enrollGroupForm">
+        <h1 style="text-align: center;">${groupId}</h1>
 		<table>
-            <h1 style="text-align: center;">${groupId}</h1>
 			<thead>
             <tr>
 				<th style="position: relative; top: 30%; left: 0%; display: inline-block;">신청이유</th>
 			</tr>
         </thead>
         <tbody>
-            <td><input type="text" name="content" value="" style="width:500px; height:300px; "/></td>
+        <tr>
+            <td>
+            	<textarea name="content" id="" cols="30" rows="10"></textarea>
+				<input type="hidden" name="groupId" value="${groupId}"/>
+				<input type="hidden" name="memberId" value="<sec:authentication property='principal.username'/>"/>
+            </td>        
+        </tr>
+        <tr>
+	        <td>
+				<br />
+				<input style="position: relative; float: right;" type="submit" value="가입신청" />  
+				<br /><br />      
+	        </td>
+        </tr>
         </tbody>
 		</table>
-		<input type="hidden" name="groupId" value="${groupId}"/>
-		<input type="hidden" name="memberId" value="${loginMember.id }"/>
-		<input style="position: relative; left: 100%;" type="submit" value="가입신청" />
 	</form:form>
     </div>
 </body>
