@@ -363,9 +363,10 @@ $(() => {
 			var hashTagBtn = document.createElement( 'button' );
         	var tagData = document.createTextNode(selectData);     	
 		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
+		    // 버튼 스타일 주기 
+		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
-		   
-		   
+		 
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
 		    tagDataArr.push(tagData.nodeValue); //배열의 끝에 요소 추가
 		   
