@@ -27,7 +27,7 @@
         </div>
         
         <div class="col-sm-8">
-        	<form:form name="personalUpdateFrm" method="POST" action="${pageContext.request.contextPath }/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+        	<form:form name="personalUpdateFrm" method="POST" action="${pageContext.request.contextPath }/member/memberUpdate" enctype="multipart/form-data">
 	        	<label for="username">이름</label>
 	        	<input type="text" name="name" id="name" value="${loginMember.name }"/>
 	        	<br />
