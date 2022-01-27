@@ -55,20 +55,14 @@ public class GroupController {
 	private ChatService chatService;
 	
 	@GetMapping("/groupPage/{groupId}")
-	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
-		Group group = groupService.selectOneGroup(groupId);
+	public String groupPage(@PathVariable String groupId, Model model) {
+		Group group = groupService.selectOneGroup(groupId);// 그룹정보 가져오기
 		log.debug("group = {}", group);
 		model.addAttribute(group);
-		String memberId = member.getId();
 		
-		Map<String, String> map = new HashMap<>();
-		map.put("memberId", memberId);
-		map.put("groupId", groupId);
-		Map<String, String> result = groupService.selectGroupEnrolled(map);
-		Boolean enrolled = (result != null? true:false);
-		
-		log.info("enrolled = {}", enrolled);
-		model.addAttribute("enrolled",enrolled);
+		List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
+		log.info("groupMembers = {}",groupMembers);
+		model.addAttribute("groupMembers",groupMembers);
 		
 		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
@@ -132,7 +126,7 @@ public class GroupController {
 
 	@GetMapping("/groupBoardForm/{groupId}")
 	public String groupBoardForm(@PathVariable String groupId, Model model){
-		List<Member> members = groupService.selectGroupMemberList(groupId);
+		List<Map<String,String>> members = groupService.selectGroupMemberList(groupId);
 		log.info("members = {}",members);
 		model.addAttribute("groupId",groupId);
 		model.addAttribute("members",members);
@@ -183,7 +177,7 @@ public class GroupController {
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
 		log.info("groupBoard = {}",groupBoard);
 		//태그멤버
-		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
+		List<Member> tagMembers = groupService.selectTagMemberList(groupBoard);
 		log.info("tagMembers = {}",tagMembers);
 		//좋아요여부
 		Map<String,Object> param = new HashMap<>();
@@ -220,7 +214,9 @@ public class GroupController {
 	}
 	
 	@PostMapping("/enrollGroupForm")
-	public String enrolledGroupForm(@RequestParam Map<String, Object> map, Model model) {
+	public String enrolledGroupForm(
+			@RequestParam Map<String, Object> map,
+			Model model) {
 		log.info("map = {}", map);
 		int result = groupService.insertEnrollGroupForm(map);
 		
@@ -450,6 +446,9 @@ public class GroupController {
 		return ResponseEntity.ok(map);
 	}
 	
+	@GetMapping("/groupCalendar")
+	public void groupCalendar() {}
+
 	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
 	public String deleteGroupMember (
 			@PathVariable String memberId,

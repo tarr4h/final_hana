@@ -31,16 +31,11 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public Map<String, String> selectGroupEnrolled(Map<String, String> map) {
-		return session.selectOne("group.selectGroupEnrolled",map);
-	}
-
-	@Override
 	public List<Group> selectGroupList(Member member) {
 		return session.selectList("group.selectGroupList",member);
 	}
   
-  @Override
+    @Override
 	public int insertGroupBoard(GroupBoardEntity groupBoard) {
 		return session.insert("group.insertGroupBoard", groupBoard);
 	}
@@ -51,12 +46,12 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<Member> selectMemberList(GroupBoardEntity groupBoard) {
-		return session.selectList("selectMemberList", groupBoard);
+	public List<Member> selectTagMemberList(GroupBoardEntity groupBoard) {
+		return session.selectList("selectTagMemberList", groupBoard);
 	}
 
 	@Override
-	public List<Member> selectGroupMemberList(String groupId) {
+	public List<Map<String,String>> selectGroupMemberList(String groupId) {
 		return session.selectList("selectGroupMemberList",groupId);
 	}
 
