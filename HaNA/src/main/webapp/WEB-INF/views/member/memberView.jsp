@@ -276,7 +276,7 @@ $("#btn-follower-list").on( "click", function() {
 		  </div>
 		 
 		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="file" id="upFile2" multiple>
+		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile2" multiple>
 		    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>-->
 		  </div>
 		</div>

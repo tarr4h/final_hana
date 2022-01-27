@@ -262,7 +262,7 @@ public class MemberController {
 	@PostMapping("/memberBoardEnroll")
 	public String insertMemberBoard(Board board, 
 									RedirectAttributes redirectAttr,
-									 @RequestParam(name="uploadFile") MultipartFile uploadFile
+									 @RequestParam(name="uploadFile") MultipartFile[] uploadFile
 									) {
 		log.info("uploadFile={}", uploadFile);
 		log.info("insertMemberBoard board = {}", board);
