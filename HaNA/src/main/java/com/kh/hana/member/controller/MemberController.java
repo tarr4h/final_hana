@@ -268,7 +268,7 @@ public class MemberController {
 		log.info("insertMemberBoard board = {}", board);
 		//int result = memberService.insertMemberBoard(board);
 		//log.info("insertMemberBoard result = {}", result);
-		return "redirect:/member/member/memberView";
+		return "redirect:/member/memberSetting/memberSetting";
 		
 	}
 
