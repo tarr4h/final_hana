@@ -46,18 +46,58 @@ table th, td {
 					<td><c:if test="${list.MEMBER_LEVEL_CODE eq 'ld'}">리더</c:if> <c:if
 							test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> <c:if
 							test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
-					<td>
-						<a href="<c:url value='/group/gradeGroupMember/${list.MEMBER_ID}' />"
-						class="btn btn-info" onclick="grade();">등급</a> 
-							<input type="hidden" name="groupId" value="${list.GROUP_ID}"/>
-							<a href="<c:url value='/group/deleteGroupMember/${list.MEMBER_ID}/${list.GROUP_ID}' />"
-								class="btn btn-danger" onclick="delete();">삭제</a>
-					</td>
+					<td><a
+						href="<c:url value='/group/gradeGroupMember/${list.MEMBER_ID}' />"
+						class="btn btn-info" data-toggle="modal" data-target="#moaModal"
+						onclick="grade();">등급</a> <a
+						href="<c:url value='/group/deleteGroupMember/${list.MEMBER_ID}/${list.GROUP_ID}' />"
+						class="btn btn-danger"
+						onclick="return confirm('회원 탈퇴를 진행하시겠습니까?');">삭제</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 
+	<!-- Moa Modal-->
+	<div class="modal fade" id="moaModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to test</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">x</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="#" class="customRadio customCheckbox m-0 p-0">
+						<div class="row mb-0">
+							<div class="row justify-content-start">
+								<div class="col-12">
+									<div class="row">
+										<input type="radio" name="textEditor" id="dreamweaver" checked>
+										<label for="dreamweaver">Back up all files folders</label>
+									</div>
+									<div class="row">
+										<input type="radio" name="textEditor" id="sublime"> <label
+											for="sublime">Back up photos and videos</label>
+									</div>
+									<div class="row">
+										<input type="radio" name="textEditor" id="sublime"> <label
+											for="sublime">Back up photos and videos</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 

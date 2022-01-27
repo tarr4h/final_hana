@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<fmt:requestEncoding value="utf-8" />
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param value="소그룹페이지" name="title" />
+</jsp:include>
+<section>
+<script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
+<sec:authentication property="principal" var="loginMember" />
+
+<div id="enroll-container" class="mx-auto text-center">
+	<form:form name="groupUpdateFrm" 
+		action="${pageContext.request.contextPath}/group/groupUpdate?${_csrf.parameterName}=${_csrf.token}" 
+		enctype="multipart/form-data" 
+		method="POST">
+		<table class="mx-auto">
+		 <input type="hidden" name="id" value="${group.groupId}" />
+		 	<tr>
+				<th>소모임 아이디</th>
+				<td>
+					<input type="text" class="form-control" name="name" id="name" value="${group.groupId}" required readonly>
+				</td>
+			</tr>
+			<tr>
+				<th>소모임명</th>
+				<td>
+					<input type="text" class="form-control" name="name" id="name" value="${group.groupName}" required >
+				</td>
+			</tr>
+			<tr>
+				<th>프로필사진</th>
+				<td>
+					<input type="file" class="form-control" name="upFile" id="" value="파일 선택" />
+					<input type="hidden" name="picture" value="${group.image}" />
+				</td>
+			</tr>
+		</table>
+		<input type="submit" class="btn btn-dark"></button>
+	</form:form>
+</div>
+
+<a href="/" class="badge badge-dark">Dark</a>
+</section>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -14,9 +14,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소그룹페이지" name="title" />
 </jsp:include>
-<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
-</section>
-<section>
+
 <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
 	
@@ -27,9 +25,6 @@
 	function goGroupSetting() {
 		location.href = "${pageContext.request.contextPath}/group/groupSetting";
 	}
-	function goGroupMemberList() {
-		location.href = "${pageContext.request.contextPath}/group/groupMemberList/${group.groupId}";
-	}  
 </script>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -82,7 +77,7 @@
 					alt="" />
 			</button>
 			<button type="button" class="btn btn-outline-dark" id="settingBtn"
-				onclick="goGroupMemberList();">
+				onclick="">
 				<img
 					src="${pageContext.request.contextPath }/resources/images/icons/man.png"
 					alt="" />
@@ -153,7 +148,6 @@
 </div>
 
 <!-- 게시물 목록 -->
-<!-- 가입신청 처리 -->
 <div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
@@ -219,9 +213,10 @@
 				<div style="position:relative;margin-right:-665px; margin-bottom:5%;">
 				<img src="https://img.icons8.com/plasticine/100/000000/like--v2.png" class="heart unlike" onclick="like();" style="position:absolute; width:50px;"/>
 				<img src="https://img.icons8.com/plasticine/100/000000/like--v1.png" class="heart like" onclick="unlike();" style="position:absolute; width:50px;"/>
-					<div>
-						<button type="button" class="btn-deleteBoard">삭제</button>
-					</div>
+				</div>
+				<div style="color:gray; margin-right:1%;">
+					<span class="like_count"></span>
+				</div>
 				</div>
 				<div class="modal-body">
 					<div class="container">
@@ -233,7 +228,7 @@
 								    <div class="row">
 								        <div class="col-sm-12" id="group-board-tag-member-list" style="border-bottom:solid #80808040 1px; height:100px; overflow:auto; padding:0px 20px 20px 20px;">
 								        	<p style="color:gray;">with</p>
-								        	<table>
+								        	<table id="tagMemberListTable">
 								        	
 								        	</table>
 								        </div>
@@ -271,7 +266,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 	<!-- 회원목록보기 modal -->
 	<div class="modal fade" id="groupMemberList" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered">
@@ -308,10 +302,8 @@
 </style>
 
 <script>
-
 let gb; // 스크립트에서 사용할 게시물 정보 
 let newContent;
-
 //ajax POST 요청 csrf
     var csrfToken = $("meta[name='_csrf']").attr("content");
     $.ajaxPrefilter(function(options, originalOptions, jqXHR){
@@ -319,88 +311,16 @@ let newContent;
 	        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 	    }
 	  });
-
 // 회원수 tr 클릭
-
     
 // 게시물 목록 이미지 클릭
 $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
-<<<<<<< HEAD
 	console.log("alksjdflkajsdlf",boardNo);
-=======
-	
-	$.ajax({
-/* 		url:`<c:out value='${pageContext.request.contextPath}'></c:out>/group/groupBoardDetail/\${boardNo}`
- */		url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
-		success(data){
-	 
-	 		const {groupBoard, tagMembers} = data;
- 			console.log(groupBoard);
- 			
- 			// modal의 header부분
- 			const date = moment(groupBoard.regDate).format("YYYY년 MM월 DD일");
-			let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${groupBoard.writerProfile}`;
-	 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
- 	 		$("#member-id").html(`&nbsp;&nbsp;\${groupBoard.writer}`); // 글쓴이 아이디
-	 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜, 태그 장소
-	 		$("#tag-place").html(`,&nbsp;&nbsp;\${groupBoard.placeName}`) // 날짜, 태그 장소
-	 		
-	 		//게시물 삭제 버튼
-	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer){
-	 			$(".btn-deleteBoard").css("display","none");
-	 		}
-	 		
-	 		// 이미지
-	 		$("#group-board-img-container").empty();
- 			$.each(groupBoard.image, (i,e)=>{
- 				console.log(i);
- 				console.log(e);
- 				
- 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
- 				$("#group-board-img-container").append(img); // 이미지 추가
- 				
- 			})
- 			$(".group-board-img").css("width","100%");
- 			$(".group-board-img").css("position","absolute");
-  			$(".group-board-img").css("left","0");
-			
- 			//modal의 body부분
- 			//태그 멤버 목록
- 			
-  			$("#group-board-tag-member-list table").empty();
- 			$.each(tagMembers, (i,e)=>{
- 				let tr = `<tr style="padding-bottom:10px;">
- 					<td><a href="#" ><img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/\${e.picture}" alt="" /></a></td>
- 					<th><a href="#" style="color:black; text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;\${e.id}</a></th>
- 				</tr>`;	
-  				$("#group-board-tag-member-list table").append(tr);
- 			})
-			
- 			//content
- 			console.log($("#group-board-content"));
- 			$("#group-board-content").html(`\${groupBoard.content}`);
- 			
- 			//댓글 리스트
- 			getCommentList(groupBoard.no);
- 			
- 			//댓글 입력창
- 			$("#group-board-comment-submit #boardNo").val(groupBoard.no);
- 			
- 		},
- 		error(xhr, statusText, err){
-			switch(xhr.status){
-			default: console.log(xhr, statusText, err);
-			}
-			console.log
-		}
-	})
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	getPageDetail(boardNo);
 	
 	$('#groupPageDetail').modal("show");
 });
-
 // 게시물 상세보기 페이지 불러오기 함수
 function getPageDetail(boardNo){
 	console.log("aaa",boardNo);
@@ -490,7 +410,6 @@ function getPageDetail(boardNo){
 function goMemberView(memberId){
 	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
 }
-
 //좋아요 개수
 function getLikeCount(){
 	$.ajax({
@@ -506,7 +425,6 @@ function getLikeCount(){
 		}
 	})
 }
-
 //좋아요 취소
 function unlike(){
 	$.ajax({
@@ -526,7 +444,6 @@ function unlike(){
 		}
 	})
 }
-
 // 좋아요
 function like(){
 	$.ajax({
@@ -549,7 +466,6 @@ function like(){
 		}
 	})
 }
-
 // 게시물 불러오기 함수
 function getContent(){
 	let boardContent = `\${gb.content}</br>`
@@ -558,7 +474,6 @@ function getContent(){
 	}
 	$("#group-board-content").html(boardContent);
 }
-
 //게시물 수정 폼 나오기
 function boardContentModifyFunc(){
 	$("#group-board-content").empty();
@@ -604,7 +519,6 @@ function submitModifiedContent(e){
 $(document.modifyContentFrm).submit((e)=>{
 	e.preventDefault();
 });
-
 function modifiedBoardSubmitFunc(){
 	if(confirm("수정하시겠습니까?")){
 		$(document.modifyContentFrm).submit();
@@ -616,14 +530,12 @@ function deleteGroupBoardFunc(){
 		$(document.groupBoardDeleteFrm).submit();
 	}
 };
-
 //댓글 리스트 불러오기
 function getCommentList(boardNo){
   	$.ajax({
   		url:`${pageContext.request.contextPath}/group/getCommentList/\${boardNo}`,
   		success(data){
   			$("#group-board-comment-list>table").empty();
-
   			$.each(data,(i,e)=>{
   				
  				const date = moment(e.regDate).format("YYYY년 MM월 DD일");
@@ -641,25 +553,6 @@ function getCommentList(boardNo){
 						&nbsp;&nbsp;&nbsp;\${e.content}
 					</td>`;
 				if(e.commentLevel == 1){
-					if(e.writer == "<sec:authentication property='principal.username'/>"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
-						tr+=`<td>
-								<span href='' class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span>
-							</td>
-							<td>
-								<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
-								<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
-							</td>`;	
-					}
-					else{ // 댓글레벨 1 && 내가 작성자가 아닐 때 (답글 버튼만)
-						tr+=`<td></td>
-						<td>
-							<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
-							<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
-						</td>`;	
-					}
-				}	
-				else{ // 댓글레벨 2 && 내가 작성자일 때 (삭제버튼만)
-					if(e.writer == "<sec:authentication property='principal.username'/>"){
 					if(e.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${group.leaderId}"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
 						tr+=`<td>
 								<span href='' class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span>
@@ -717,8 +610,6 @@ function deleteCommentFunc(no,boardNo){
 		})
 	}
 }
-
-
 //답글 버튼 눌렀을 때 답글창 나오기
 function showReplyForm(e){
 	// 답글 달고자 하는 댓글의 번호
@@ -746,7 +637,6 @@ function showReplyForm(e){
 	const $baseTr = $(e).parent().parent(); // 답글 다려는 댓글의 tr
 	const $tr = $(tr); //HTML담긴 제이쿼리 변수
 	$(e).removeAttr("onclick");
-
 	$tr.insertAfter($baseTr)
 		.find("form")
 		.submit((e) => { // submit시 실행될 콜백함수를 지정해줄 수도 있음
@@ -756,9 +646,6 @@ function showReplyForm(e){
 }
 	// 클릭이벤트핸들러 제거!
 	// 답글 다는 동안 답글버튼 또 눌렀을 때 새로운 html생성되는 것 방지
-
-
-
 //댓글 입력
 $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 	e.preventDefault();
@@ -766,7 +653,6 @@ $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 })
 //댓글 제출 함수
 function submitCommentFunc(e){
-
 	let boardNo = $("[name=boardNo]",e.target).val(); 
 	let o = {
 		boardNo:boardNo,
@@ -778,7 +664,6 @@ function submitCommentFunc(e){
 	console.log(o);
 	const jsonStr = JSON.stringify(o);
 	console.log(jsonStr);
-
 	$.ajax({
 		url:"<%=request.getContextPath()%>/group/enrollGroupBoardComment",
 		method:"POST",
@@ -798,10 +683,7 @@ function submitCommentFunc(e){
 		}
 	})
 };
-
-
 	
-
 function groupApplyHandlingFunc(e){
     console.log(e); // button객체    
     const $form = $(e).siblings("[name=groupApplyHandlingFrm]"); // 승인 및 거절 폼
@@ -831,7 +713,6 @@ function groupApplyHandlingFunc(e){
 	 })
      
 }
-
 //가입신청리스트
 function enrollList(){
 	 $.ajax({
@@ -888,7 +769,6 @@ function enrollList(){
 			}
 	    })
 };
-
 function groupApplyHandlingFunc(e, YN){
     console.log(e); // button객체    
     const $form = $(e).siblings("[name=groupApplyHandlingFrm]"); // 승인 및 거절 폼
@@ -919,11 +799,9 @@ function groupApplyHandlingFunc(e, YN){
 	 });
      
 }
-
 </script>
 
 <style>
-.board-main-image:hover {cursor:pointer;}
 .memberCountTr:hover{cursor:pointer;}
 #myInfo {border: 1px solid black;}
 #profileImg {height: 400px; padding-top:50px;}
@@ -959,9 +837,6 @@ pre {margin: 0;}
 table {border-collapse: separate;border-spacing: 0 5px;}
 textarea { height:100px;border:none;width:100%;resize:none; }
 textarea:focus { outline:none; }
-.btn-reply{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
-input[type="submit"] {font-weight:bold;color:#384fc5c4;background-color:white;border:none;float:right;}
-.btn-deleteBoard {font-weight:bold;color:#384fc5c4;background-color:white;border:none;}
 .btn-submitContent{font-weight:bold;color:#384fc5c4;background-color:white;border:none;float:right;}
 .btn-boardModify{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
 .btn-reply{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
@@ -974,5 +849,4 @@ textarea::placeholder {color:gray; font-size: 1.1em;}
 </style>
 
 <a href="/" class="badge badge-dark">Dark</a>
-</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

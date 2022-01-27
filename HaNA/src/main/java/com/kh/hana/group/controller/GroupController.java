@@ -462,6 +462,30 @@ public class GroupController {
 		
 		return "redirect:/group/groupMemberList/"+groupId;
 	}
+	
+	@GetMapping("/groupProfile/{groupId}")
+	public void groupProfile(@PathVariable String groupId) {
+		log.info("groupId ={}", groupId);
+	}
+	
+	@PostMapping("/groupUpdate")
+	public String groupUpdate(Group group, 
+							@RequestParam MultipartFile upFile,
+							RedirectAttributes redirectAttr,
+							@AuthenticationPrincipal Group oldGroup) {
+		
+		log.info("group ={}", group);
+		log.info("oldGroup ={}", oldGroup);
+		String oldImage = group.getImage();
+		
+		if(oldImage != null) {
+			String saveDirectory = application.getRealPath("/resources/upload/group/profile");
+			File file = new File(saveDirectory, oldImage);
+			boolean del = file.delete();
+			log.info("del ={}", del);
+		}
+		return "redirect:/group/groupProfile";
+	}
 }
 
 
