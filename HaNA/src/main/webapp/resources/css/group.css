@@ -96,7 +96,8 @@
 .icon i {
     font-size: 50px;
     color: gray;
-    letter-spacing: 70px;
+    padding-left: 35px;
+    padding-right: 35px;
 }
 
 

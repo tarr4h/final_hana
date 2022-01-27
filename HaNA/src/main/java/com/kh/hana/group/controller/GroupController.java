@@ -4,12 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,20 +55,14 @@ public class GroupController {
 	private ChatService chatService;
 	
 	@GetMapping("/groupPage/{groupId}")
-	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
-		Group group = groupService.selectOneGroup(groupId);
+	public String groupPage(@PathVariable String groupId, Model model) {
+		Group group = groupService.selectOneGroup(groupId);// 그룹정보 가져오기
 		log.debug("group = {}", group);
 		model.addAttribute(group);
-		String memberId = member.getId();
 		
-		Map<String, String> map = new HashMap<>();
-		map.put("memberId", memberId);
-		map.put("groupId", groupId);
-		Map<String, String> result = groupService.selectGroupEnrolled(map);
-		Boolean enrolled = (result != null? true:false);
-		
-		log.info("enrolled = {}", enrolled);
-		model.addAttribute("enrolled",enrolled);
+		List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
+		log.info("groupMembers = {}",groupMembers);
+		model.addAttribute("groupMembers",groupMembers);
 		
 		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
@@ -133,7 +126,7 @@ public class GroupController {
 
 	@GetMapping("/groupBoardForm/{groupId}")
 	public String groupBoardForm(@PathVariable String groupId, Model model){
-		List<Member> members = groupService.selectGroupMemberList(groupId);
+		List<Map<String,String>> members = groupService.selectGroupMemberList(groupId);
 		log.info("members = {}",members);
 		model.addAttribute("groupId",groupId);
 		model.addAttribute("members",members);
@@ -184,7 +177,7 @@ public class GroupController {
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
 		log.info("groupBoard = {}",groupBoard);
 		//태그멤버
-		List<Member> tagMembers = groupService.selectMemberList(groupBoard);
+		List<Member> tagMembers = groupService.selectTagMemberList(groupBoard);
 		log.info("tagMembers = {}",tagMembers);
 		//좋아요여부
 		Map<String,Object> param = new HashMap<>();
@@ -221,7 +214,9 @@ public class GroupController {
 	}
 	
 	@PostMapping("/enrollGroupForm")
-	public String enrolledGroupForm(@RequestParam Map<String, Object> map, Model model) {
+	public String enrolledGroupForm(
+			@RequestParam Map<String, Object> map,
+			Model model) {
 		log.info("map = {}", map);
 		int result = groupService.insertEnrollGroupForm(map);
 		
@@ -389,6 +384,33 @@ public class GroupController {
 		return ResponseEntity.ok(map);
 	}
 	
+//    @GetMapping("/groupMemberList/{groupId}") 
+//    public ResponseEntity<List<Map<String, Object>>> groupMemberList(@PathVariable String groupId, @AuthenticationPrincipal Member member) {
+//    		log.info("groupId ={}", groupId);
+//    		
+//    		List<Map<String, Object>> groupMemberList = groupService.groupMemberList(groupId);
+//    		log.info("groupMemberList ={}", groupMemberList);
+//    		
+//    		return ResponseEntity.ok(groupMemberList);
+//    }
+    
+    @GetMapping("/groupMemberList/{groupId}")
+    public String groupMemberList(@PathVariable String groupId, Model model){
+    	log.info("groupId ={}", groupId);
+    	
+    	List<Map<String, Object>> groupMemberList = groupService.groupMemberList2(groupId);
+    	log.info("groupMemberList = {}", groupMemberList);
+    	
+    	model.addAttribute("groupMemberList", groupMemberList);
+    	return "/group/groupMemberList";
+    }
+    	
+    @GetMapping("/groupSetting/{groupId}")
+    public void groupSetting(@PathVariable String groupId, Model model){
+    	Group groupInfo = groupService.selectGroupInfo(groupId);
+    	log.info("groupInfo ={}", groupInfo);
+    }
+    
 	@PostMapping("/like")
 	public ResponseEntity<Map<String,Object>> like(@RequestParam int no, @AuthenticationPrincipal Member member){
 		Map<String,Object> map = new HashMap<>();
@@ -422,6 +444,23 @@ public class GroupController {
 		map.put("likeCount",likeCount);
 		
 		return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping("/groupCalendar")
+	public void groupCalendar() {}
+
+	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
+	public String deleteGroupMember (
+			@PathVariable String memberId,
+			@RequestParam String groupId) {
+		
+		log.info("memberId ={}", memberId);
+		log.info("groupId ={}", groupId);
+		int result = groupService.deleteGroupMember(memberId);
+		String msg = result > 0 ? "회원 탈퇴 성공" : "회원 탈퇴 실패";
+		log.info("msg ={}", msg);
+		
+		return null;
 	}
 }
 

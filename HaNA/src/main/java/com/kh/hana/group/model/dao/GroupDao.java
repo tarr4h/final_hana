@@ -16,17 +16,15 @@ public interface GroupDao {
 
 	public int insertOneGroup(Group group);
 
-	public Map<String, String> selectGroupEnrolled(Map<String, String> map);
-
 	public List<Group> selectGroupList(Member member);
 	
 	public int insertGroupBoard(GroupBoardEntity groupBoard);
 
 	public GroupBoard selectOneBoard(int no);
 
-	List<Member> selectMemberList(GroupBoardEntity groupBoard);
+	List<Member> selectTagMemberList(GroupBoardEntity groupBoard);
 
-	public List<Member> selectGroupMemberList(String groupId);
+	public List<Map<String,String>> selectGroupMemberList(String groupId);
 
 	public List<GroupBoardEntity> selectGroupBoardList(String groupId);
 
@@ -47,6 +45,12 @@ public interface GroupDao {
 	public int deleteGroupBoard(int no);
 
 	public int updateBoardContent(Map<String, Object> param);
+	
+//	public List<Map<String, Object>> groupMemberList(String groupId);
+
+	public Group selectGroupInfo(String groupId);
+
+	public List<Map<String, Object>> groupMemberList2(String groupId);
 
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param);
 
@@ -55,5 +59,7 @@ public interface GroupDao {
 	public int insertLikeLog(Map<String, Object> param);
 
 	public int selectLikeCount(Map<String, Object> param);
+
+	public int deleteGroupMember(String memberId);
 
 }

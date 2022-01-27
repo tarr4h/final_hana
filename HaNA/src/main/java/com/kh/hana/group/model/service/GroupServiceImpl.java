@@ -34,11 +34,6 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public Map<String, String> selectGroupEnrolled(Map<String, String> map) {
-		return groupDao.selectGroupEnrolled(map);
-	}
-
-	@Override
 	public List<Group> selectGroupList(Member member) {
 		return groupDao.selectGroupList(member);
 	}
@@ -54,12 +49,12 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<Member> selectMemberList(GroupBoardEntity groupBoard) {
-		return groupDao.selectMemberList(groupBoard);
+	public List<Member> selectTagMemberList(GroupBoardEntity groupBoard) {
+		return groupDao.selectTagMemberList(groupBoard);
 	}
 
 	@Override
-	public List<Member> selectGroupMemberList(String groupId) {
+	public List<Map<String,String>> selectGroupMemberList(String groupId) {
 		return groupDao.selectGroupMemberList(groupId);
 	}
 
@@ -114,7 +109,21 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.updateBoardContent(param);
 	}
 
+//	@Override
+//	public List<Map<String, Object>> groupMemberList(String groupId) {
+//		return groupDao.groupMemberList(groupId);
+//	}
+
 	@Override
+	public Group selectGroupInfo(String groupId) {
+		return groupDao.selectGroupInfo(groupId);
+	}
+
+	@Override
+	public List<Map<String, Object>> groupMemberList2(String groupId) {
+		return groupDao.groupMemberList2(groupId);
+	}
+
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
 		return groupDao.selectOneLikeLog(param);
 	}
@@ -132,6 +141,11 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int selectLikeCount(Map<String, Object> param) {
 		return groupDao.selectLikeCount(param);
+	}
+
+	@Override
+	public int deleteGroupMember(String memberId) {
+		return groupDao.deleteGroupMember(memberId);
 	}
 
 }
