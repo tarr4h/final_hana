@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.kh.hana.shop.model.vo.HashTag;
+import com.kh.hana.shop.model.vo.Table;
 @Repository
 public class ShopDaoImpl implements ShopDao {
 	
@@ -20,9 +21,32 @@ public class ShopDaoImpl implements ShopDao {
     public int insertHashTag(HashTag hashTag) {
         return session.insert("shop.insertHashTag", hashTag);
     }
-      @Override public List<HashTag> hashTagAutocomplete(String search) { 
-          return session.selectList("shop.selectHashTagList", search); 
+    
+    @Override public List<HashTag> hashTagAutocomplete(String search) { 
+        return session.selectList("shop.selectHashTagList", search); 
     }
+
+    
+    
+	@Override
+	public String verifyTableName(String tableName) {
+		return session.selectOne("shop.verifyTableName", tableName);
+	}
+
+	@Override
+	public int insertShopTable(Table table) {
+		return session.insert("shop.insertShopTable", table);
+	}
+
+	@Override
+	public List<Table> selectShopTableList(String id) {
+		return session.selectList("shop.selectShopTableList", id);
+	}
+
+	@Override
+	public int deleteShopTable(String tableName) {
+		return session.delete("shop.deleteShopTable", tableName);
+	}
 
     
 }
