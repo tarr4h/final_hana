@@ -248,7 +248,7 @@ tbody td:hover {
 						<col width="10%">
 						<col width="15%">
 						<col width="15%">
-						<col width="15%">
+						<col width="17%">
 						<col width="25%">
 						<col width="15%">
 					</colgroup>
@@ -259,7 +259,7 @@ tbody td:hover {
 							<th>인원</th>
 							<th>시작시간</th>
 							<th>종료시간</th>
-							<th>시간단위(분)</th>
+							<th>시간단위(분)<br/>/최대시간(분)</th>
 							<th>특이사항</th>
 							<th>사용여부</th>
 						</tr>
@@ -292,6 +292,7 @@ tbody td:hover {
 							</td>
 							<td>
 								<input type="number" name="" id="" min="10" max="60" step="10" value="10" style="width:100px;"/>
+								<input type="number" name="" id="" min="10" step="10" value="60" style="width:100px;"/>
 							</td>
 							<td>ㅎasdfasdfasdfasdfasdfasdfasdfasdfasdfafasdfsadfasdfasdf6</td>
 							<td>
