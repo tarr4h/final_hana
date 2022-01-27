@@ -18,7 +18,7 @@
 .sel {
   font-size: 15px;
   display: inline-block;
-  width: 150px;
+  width: 100px;
   height: 30px;
   background-color: transparent;
   position: relative;
@@ -33,10 +33,12 @@
   color: powderblue;
   right: 20px;
   top: calc(50% - 0.5em);
+  transform: translateX(15px);
+  margin-left:5px;
 }
 
 .sel.active::before {
-  transform: rotateX(-180deg);
+  transform: rotateX(-180deg) translateX(15px);
 }
 
 .sel__placeholder {
@@ -116,6 +118,7 @@
 /* ----- Select Box Black Panther ----- */
 .sel {
   border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+  width:90px;
 }
 
 .sel--black-panther {
@@ -163,18 +166,21 @@ background: linear-gradient(45deg, #49a09d, #5f2c82);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width:100%;
 }
 
 table {
-    width: 800px;
+    width: 100%;
     border-collapse: collapse;
     /* overflow: hidden; */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    table-layout:fixed;
+    word-break:break-all;
 }
 
 th,
 td {
-    padding: 15px;
+    padding: 10px;
     background-color: rgba(255, 255, 255, 0.2);
     color: black;
 }
@@ -223,7 +229,7 @@ tbody td:hover {
 <div class="container">
     <div class="row">
     	<!-- 메뉴 영역 -->
-        <div class="col-sm-4">
+        <div class="col-sm-3">
         	<ul class="list-group">
         	  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/personal'">개인정보 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/shopInfo'">업체정보 변경</li>
@@ -233,34 +239,71 @@ tbody td:hover {
 			</ul>
         </div>
         <!-- 설정 영역 -->
-        <div class="col-sm-8">	        
+        <div class="col-sm-9">	        
 	        <div class="rsTableContaier">
+	        	<h3>예약 테이블 설정</h3>
 				<table id="rsTable">
+					<colgroup>
+						<col width="15%">
+						<col width="10%">
+						<col width="15%">
+						<col width="15%">
+						<col width="17%">
+						<col width="25%">
+						<col width="15%">
+					</colgroup>
+				
 					<thead>
 						<tr>
-							<th>Column 1</th>
-							<th>Column 2</th>
-							<th>Column 3</th>
-							<th>Column 4</th>
-							<th>Column 5</th>
+							<th>이름</th>
+							<th>인원</th>
+							<th>시작시간</th>
+							<th>종료시간</th>
+							<th>시간단위(분)<br/>/최대시간(분)</th>
+							<th>특이사항</th>
+							<th>사용여부</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>Cell 1</td>
-							<td>Cell 2</td>
-							<td>Cell 3</td>
-							<td>Cell 4</td>
-							<td><div class="sel sel--black-panther">
-			  <select name="select-profession" id="select-profession">
-			    <option value="" disabled>Profession</option>
-			    <option value="hacker">Hacker</option>
-			    <option value="gamer">Gamer</option>
-			    <option value="developer">Developer</option>
-			    <option value="programmer">Programmer</option>
-			    <option value="designer">Designer</option>
-			  </select>
-			</div></td>
+							<td>크고넓은방</td>
+							<td>
+								<input type="number" name="" id="" min="1" step="1" value="1" style="width:50px;"/>
+							</td>
+							<td>
+								<div class="sel sel--black-panther">
+								  <select name="select-time" id="select-time">
+								    <option value="" disabled>시작시간</option>
+								    <option value="09:00">09:00</option>
+								    <option value="10:00">10:00</option>
+								    <option value="11:00">11:00</option>
+								  </select>
+								</div>
+							</td>
+							<td>
+								<div class="sel sel--black-panther">
+								  <select name="select-time" id="select-time">
+								    <option value="" disabled>종료시간</option>
+								    <option value="09:00">09:00</option>
+								    <option value="10:00">10:00</option>
+								    <option value="11:00">11:00</option>
+								  </select>
+								</div>
+							</td>
+							<td>
+								<input type="number" name="" id="" min="10" max="60" step="10" value="10" style="width:100px;"/>
+								<input type="number" name="" id="" min="10" step="10" value="60" style="width:100px;"/>
+							</td>
+							<td>ㅎasdfasdfasdfasdfasdfasdfasdfasdfasdfafasdfsadfasdfasdf6</td>
+							<td>
+								<div class="sel sel--black-panther">
+								  <select name="select-enable" id="select-enable">
+								    <option value="" disabled>사용여부</option>
+								    <option value="true">true</option>
+								    <option value="false">false</option>
+								  </select>
+								</div>
+							</td>
 						</tr>
 						<tr>
 							<td>Cell 1</td>
@@ -268,13 +311,13 @@ tbody td:hover {
 							<td>Cell 3</td>
 							<td>Cell 4</td>
 							<td>Cell 5</td>
+							<td>Cell 6</td>
+							<td>Cell 7</td>
 						</tr>
 						<tr>
-							<td>Cell 1</td>
-							<td>Cell 2</td>
-							<td>Cell 3</td>
-							<td>Cell 4</td>
-							<td>Cell 5</td>
+							<td colspan=7 style="text-align:center;">
+								<input type="button" value="추가" />
+							</td>
 						</tr>
 					</tbody>
 				</table>
