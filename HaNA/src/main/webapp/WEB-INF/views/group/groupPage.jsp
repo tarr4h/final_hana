@@ -10,7 +10,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소그룹페이지" name="title" />
 </jsp:include>
-
+<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
+<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+</section>
+<section>
 <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
 	
@@ -21,6 +24,9 @@
 	function goGroupSetting() {
 		location.href = "${pageContext.request.contextPath}/group/groupSetting";
 	}
+	function goGroupMemberList() {
+		location.href = "${pageContext.request.contextPath}/group/groupMemberList/${group.groupId}";
+	}  
 </script>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -65,7 +71,7 @@
 					alt="" />
 			</button>
 			<button type="button" class="btn btn-outline-dark" id="settingBtn"
-				onclick="">
+				onclick="goGroupMemberList();">
 				<img
 					src="${pageContext.request.contextPath }/resources/images/icons/man.png"
 					alt="" />
@@ -118,6 +124,7 @@
 	<a href="#"><i class="far fa-comments"></i></a>
 </div>
 
+<!-- 가입신청 처리 -->
 <div class="container">
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
@@ -188,6 +195,51 @@
 						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
 					</tr>
 				</table>
+					<div>
+						<button type="button" class="btn-deleteBoard">삭제</button>
+					</div>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+					    <div class="row">
+					        <div class="col-sm-7" id="group-board-img-container" style="background-color:black; display: flex; align-items: center; position:relative;">
+ 					        </div>
+					        <div class="col-sm-5" style="">
+					        	<div class="container">
+								    <div class="row">
+								        <div class="col-sm-12" id="group-board-tag-member-list" style="border-bottom:solid #80808040 1px; height:100px; overflow:auto; padding:0px 20px 20px 20px;">
+								        	<p style="color:gray;">with</p>
+								        	<table>
+								        	
+								        	</table>
+								        </div>
+								        <div class="col-sm-12" id="group-board-content" style="border-bottom:solid #80808040 1px; height:300px; overflow:auto; padding:20px;"></div>
+								        <div class="col-sm-12" id="group-board-comment-list" style="border-bottom:solid #80808040 1px; height:500px; overflow-x:hidden; overflow-y:auto; padding:20px;">
+										<table style="width:100%;">
+										
+										</table>
+										</div>
+								        <div class="col-sm-12" id="group-board-comment-submit"style="height:150px; padding:20px;">
+								        	<form:form action="" name="groupBoardCommentSubmitFrm">
+								        		<input type="hidden" name="writer" value="<sec:authentication property='principal.username'/>">
+								        		<input type="hidden" name="boardNo" id="boardNo" value=""/>
+								        		<input type="hidden" name="commentLevel" value="1"/>
+								        		<input type="hidden" name="commentRef" value="0"/>
+									        	<textarea name="content" id="" cols="30" rows="10" placeholder="댓글입력..." ></textarea>
+									        	<div><input type="submit" value="게시"/></div>								        	
+								        	</form:form>
+								        </div>
+								    </div>
+								</div>
+					        </div>
+					    </div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					
+				<div>
+				<i class="bi bi-heart"></i>
+				<i class="bi bi-heart-fill"></i>
 				<div style="position:relative;margin-right:70px;">
 				<span class="heart unlike" onclick="like();" style="position:absolute;">빈하트</span>
 				<span class="heart like" onclick="unlike();" style="color:red;position:absolute;">빨간하트</span>
@@ -270,6 +322,71 @@ let newContent;
 $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
 	
+	$.ajax({
+/* 		url:`<c:out value='${pageContext.request.contextPath}'></c:out>/group/groupBoardDetail/\${boardNo}`
+ */		url:`<%=request.getContextPath()%>/group/groupBoardDetail/\${boardNo}`,
+		success(data){
+	 
+	 		const {groupBoard, tagMembers} = data;
+ 			console.log(groupBoard);
+ 			
+ 			// modal의 header부분
+ 			const date = moment(groupBoard.regDate).format("YYYY년 MM월 DD일");
+			let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${groupBoard.writerProfile}`;
+	 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
+ 	 		$("#member-id").html(`&nbsp;&nbsp;\${groupBoard.writer}`); // 글쓴이 아이디
+	 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜, 태그 장소
+	 		$("#tag-place").html(`,&nbsp;&nbsp;\${groupBoard.placeName}`) // 날짜, 태그 장소
+	 		
+	 		//게시물 삭제 버튼
+	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer){
+	 			$(".btn-deleteBoard").css("display","none");
+	 		}
+	 		
+	 		// 이미지
+	 		$("#group-board-img-container").empty();
+ 			$.each(groupBoard.image, (i,e)=>{
+ 				console.log(i);
+ 				console.log(e);
+ 				
+ 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
+ 				$("#group-board-img-container").append(img); // 이미지 추가
+ 				
+ 			})
+ 			$(".group-board-img").css("width","100%");
+ 			$(".group-board-img").css("position","absolute");
+  			$(".group-board-img").css("left","0");
+			
+ 			//modal의 body부분
+ 			//태그 멤버 목록
+ 			
+  			$("#group-board-tag-member-list table").empty();
+ 			$.each(tagMembers, (i,e)=>{
+ 				let tr = `<tr style="padding-bottom:10px;">
+ 					<td><a href="#" ><img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/\${e.picture}" alt="" /></a></td>
+ 					<th><a href="#" style="color:black; text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;\${e.id}</a></th>
+ 				</tr>`;	
+  				$("#group-board-tag-member-list table").append(tr);
+ 			})
+			
+ 			//content
+ 			console.log($("#group-board-content"));
+ 			$("#group-board-content").html(`\${groupBoard.content}`);
+ 			
+ 			//댓글 리스트
+ 			getCommentList(groupBoard.no);
+ 			
+ 			//댓글 입력창
+ 			$("#group-board-comment-submit #boardNo").val(groupBoard.no);
+ 			
+ 		},
+ 		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
 	getPageDetail(boardNo);
 	
 	$('#groupPageDetail').modal("show");
@@ -514,6 +631,25 @@ function getCommentList(boardNo){
 						&nbsp;&nbsp;&nbsp;\${e.content}
 					</td>`;
 				if(e.commentLevel == 1){
+					if(e.writer == "<sec:authentication property='principal.username'/>"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
+						tr+=`<td>
+								<span href='' class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span>
+							</td>
+							<td>
+								<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
+								<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
+							</td>`;	
+					}
+					else{ // 댓글레벨 1 && 내가 작성자가 아닐 때 (답글 버튼만)
+						tr+=`<td></td>
+						<td>
+							<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
+							<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
+						</td>`;	
+					}
+				}	
+				else{ // 댓글레벨 2 && 내가 작성자일 때 (삭제버튼만)
+					if(e.writer == "<sec:authentication property='principal.username'/>"){
 					if(e.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${group.leaderId}"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
 						tr+=`<td>
 								<span href='' class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span>
@@ -851,6 +987,9 @@ pre {margin: 0;}
 table {border-collapse: separate;border-spacing: 0 5px;}
 textarea { height:100px;border:none;width:100%;resize:none; }
 textarea:focus { outline:none; }
+.btn-reply{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
+input[type="submit"] {font-weight:bold;color:#384fc5c4;background-color:white;border:none;float:right;}
+.btn-deleteBoard {font-weight:bold;color:#384fc5c4;background-color:white;border:none;}
 .btn-submitContent{font-weight:bold;color:#384fc5c4;background-color:white;border:none;float:right;}
 .btn-boardModify{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
 .btn-reply{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
@@ -863,4 +1002,5 @@ textarea::placeholder {color:gray; font-size: 1.1em;}
 </style>
 
 <a href="/" class="badge badge-dark">Dark</a>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

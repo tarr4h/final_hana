@@ -220,6 +220,40 @@
 		where
 			no=#{no}
 	</update>
+
+	<select id="groupMemberList" resultType="map">
+		select 
+		    m.picture,
+		    gml.*
+		from 
+		    member m join group_member_list gml
+		        on m.id = gml.member_id
+		where
+		    group_id = #{groupId}
+	</select>
+	
+	<select id="selectGroupInfo" resultType="group">
+		select
+			*
+		from
+			group_
+		where
+			group_id = #{groupId}
+	</select>
+	
+	<select id="groupMemberList2" resultType="map">
+		select 
+		    m.picture,
+		    gml.*
+		from 
+		    member m join group_member_list gml
+		        on m.id = gml.member_id
+		where
+		    group_id = #{groupId}
+		order by
+            member_level_code
+	</select>
+
 	<select id="selectOneLikeLog" resultMap="likeLog">
 	select
 		*
@@ -230,10 +264,12 @@
 		and
 		member_id = #{memberId}
 	</select>
+	
 	<resultMap type="map" id="likeLog">
 		<result column="board_no" property="boardNo"/>
 		<result column="member_id" property="memberId"/>
 	</resultMap>
+	
 	<delete id="deleteLikeLog">
 		delete from
 			group_board_like
@@ -249,6 +285,7 @@
 			#{boardNo},#{memberId}
 		)
 	</insert>
+	
 	<select id="selectLikeCount" resultType="_int">
 	select
 		count(*)
@@ -261,5 +298,12 @@
 			board_no = #{no}
 		)	
 	</select>
+	
+	<delete id="deleteGroupMember">
+	delete from 
+		group_member_list 
+	where 
+		member_id = #{memberId}
+	</delete>
 </mapper>
 
