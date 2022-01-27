@@ -251,6 +251,7 @@ tbody td:hover {
 						<col width="17%">
 						<col width="25%">
 						<col width="15%">
+						<col width="10%">
 					</colgroup>
 				
 					<thead>
@@ -262,10 +263,11 @@ tbody td:hover {
 							<th>시간단위(분)<br/>/최대시간(분)</th>
 							<th>특이사항</th>
 							<th>사용여부</th>
+							<th>저장/삭제</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr id="table1" data-table-no="1">
 							<td>크고넓은방</td>
 							<td>
 								<input type="number" name="" id="" min="1" step="1" value="1" style="width:50px;"/>
@@ -304,8 +306,12 @@ tbody td:hover {
 								  </select>
 								</div>
 							</td>
+							<td>
+								<input type="button" value="저장" />
+								<input type="button" value="삭제" />
+							</td>
 						</tr>
-						<tr>
+						<tr id="table2" data-table-no="2">
 							<td>Cell 1</td>
 							<td>Cell 2</td>
 							<td>Cell 3</td>
@@ -314,12 +320,15 @@ tbody td:hover {
 							<td>Cell 6</td>
 							<td>Cell 7</td>
 						</tr>
+						
+					</tbody>
+					<tfoot>
 						<tr>
 							<td colspan=7 style="text-align:center;">
-								<input type="button" value="추가" />
+								<input type="button" id="tableAppendBtn" value="추가" />
 							</td>
 						</tr>
-					</tbody>
+					</tfoot>
 				</table>
 			</div>
         </div>
@@ -327,18 +336,28 @@ tbody td:hover {
 </div>
 
 
-<div class="sel sel--black-panther">
-  <select name="select-profession" id="select-profession">
-    <option value="" disabled>Profession</option>
-    <option value="hacker">Hacker</option>
-    <option value="gamer">Gamer</option>
-    <option value="developer">Developer</option>
-    <option value="programmer">Programmer</option>
-    <option value="designer">Designer</option>
-  </select>
-</div>
-
 <script>
+$("#tableAppendBtn").click((e) => {
+	const columnForm = `
+		<tr id="table2" data-table-no="2">
+		<td>Cell 1</td>
+		<td>Cell 2</td>
+		<td>Cell 3</td>
+		<td>Cell 4</td>
+		<td>Cell 5</td>
+		<td>Cell 6</td>
+		<td>Cell 7</td>
+	</tr>
+	`;
+	$("#rsTable").append(columnForm);
+});
+
+$(() => {
+	console.log($("#table1").data('table-no'));
+	console.log($("#table1").next().data('table-no'));
+	console.log($("#table2").prev().data('table-no'));
+})
+	
 $('.sel').each(function() {
 	  $(this).children('select').css('display', 'none');
 	  
@@ -386,5 +405,18 @@ $('.sel').each(function() {
 	});
 
 </script>
+
+<!-- input -->
+<!-- <div class="sel sel--black-panther">
+  <select name="select-profession" id="select-profession">
+    <option value="" disabled>Profession</option>
+    <option value="hacker">Hacker</option>
+    <option value="gamer">Gamer</option>
+    <option value="developer">Developer</option>
+    <option value="programmer">Programmer</option>
+    <option value="designer">Designer</option>
+  </select>
+</div> -->
+
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>>
