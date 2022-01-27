@@ -18,17 +18,15 @@ public interface GroupService {
 
 	int insertOneGroup(Group group);
 
-	Map<String, String> selectGroupEnrolled(Map<String, String> map);
-
 	List<Group> selectGroupList(Member member);
 
 	int insertGroupBoard(GroupBoardEntity groupBoard);
 
 	GroupBoard selectOneBoard(int no);
 
-	List<Member> selectMemberList(GroupBoardEntity groupBoard);
+	List<Member> selectTagMemberList(GroupBoardEntity groupBoard);
 
-	List<Member> selectGroupMemberList(String groupId);
+	List<Map<String,String>> selectGroupMemberList(String groupId);
 
 	List<GroupBoardEntity> selectGroupBoardList(String groupId);
 
