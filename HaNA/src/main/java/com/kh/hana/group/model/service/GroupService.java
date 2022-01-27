@@ -49,6 +49,12 @@ public interface GroupService {
 	int deleteGroupBoard(int no);
 
 	int updateBoardContent(Map<String, Object> param);
+	
+//	List<Map<String, Object>> groupMemberList(String groupId);
+
+	Group selectGroupInfo(String groupId);
+
+	List<Map<String, Object>> groupMemberList2(String groupId);
 
 	Map<String, Object> selectOneLikeLog(Map<String, Object> param);
 
@@ -57,4 +63,6 @@ public interface GroupService {
 	int insertLikeLog(Map<String, Object> param);
 
 	int selectLikeCount(Map<String, Object> param);
+
+	int deleteGroupMember(String memberId);
 }
