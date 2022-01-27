@@ -38,31 +38,30 @@ table th, td {
 			<c:forEach items="${groupMemberList}" var="list">
 				<tr>
 					<td>${list.GROUP_ID}</td>
-					<td> <img style="width: 100px; height: 100px; border-radius: 50%;" src="${pageContext.request.contextPath}/resources/upload/member/profile/${list.PICTURE}" alt="" /> </td>
+					<td><img
+						style="width: 100px; height: 100px; border-radius: 50%;"
+						src="${pageContext.request.contextPath}/resources/upload/member/profile/${list.PICTURE}"
+						alt="" /></td>
 					<td>${list.MEMBER_ID}</td>
 					<td><c:if test="${list.MEMBER_LEVEL_CODE eq 'ld'}">리더</c:if> <c:if
 							test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> <c:if
 							test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
-					<td>
-						<button type="button" class="btn btn-info"
-							onclick="gradeGroupMember">등급</button>
-						<button type="button" class="btn btn-danger"
-							onclick="deleteGroupMember">강퇴</button>
-					</td>
+					<td><a
+						href="<c:url value='/group/gradeGroupMember/${list.MEMBER_ID}' />"
+						class="btn btn-info" onclick="grade();">등급</a> <a
+						href="<c:url value='/group/deleteGroupMember/${list.MEMBER_ID}' />"
+						class="btn btn-danger" onclick="delete();">삭제</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 
-	<script>
-		
-	</script>
 
 
 
 
 
 
-	<a href="/" class="badge badge-dark">Dark</a>
+<a href="/" class="badge badge-dark">Dark</a>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

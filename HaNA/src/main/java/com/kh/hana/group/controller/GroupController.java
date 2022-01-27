@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -447,6 +448,20 @@ public class GroupController {
 		map.put("likeCount",likeCount);
 		
 		return ResponseEntity.ok(map);
+	}
+	
+	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
+	public String deleteGroupMember (
+			@PathVariable String memberId,
+			@RequestParam(required = false) String groupId) {
+		
+		log.info("memberId ={}", memberId);
+		log.info("groupId ={}", groupId);
+		int result = groupService.deleteGroupMember(memberId);
+		String msg = result > 0 ? "회원 탈퇴 성공" : "회원 탈퇴 실패";
+		log.info("msg ={}", msg);
+		
+		return "redirect:/group/groupMemberList/"+groupId;
 	}
 }
 

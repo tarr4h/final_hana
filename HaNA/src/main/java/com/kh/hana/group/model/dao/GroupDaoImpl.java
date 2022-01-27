@@ -145,6 +145,11 @@ public class GroupDaoImpl implements GroupDao {
 		return session.selectOne("selectLikeCount",param);
 	}
 
+	@Override
+	public int deleteGroupMember(String memberId) {
+		return session.delete("deleteGroupMember", memberId);
+	}
+
 
 
 }

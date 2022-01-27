@@ -298,5 +298,12 @@
 			board_no = #{no}
 		)	
 	</select>
+	
+	<delete id="deleteGroupMember">
+	delete from 
+		group_member_list 
+	where 
+		member_id = #{memberId}
+	</delete>
 </mapper>
 

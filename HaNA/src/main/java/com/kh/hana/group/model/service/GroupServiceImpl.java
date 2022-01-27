@@ -148,4 +148,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectLikeCount(param);
 	}
 
+	@Override
+	public int deleteGroupMember(String memberId) {
+		return groupDao.deleteGroupMember(memberId);
+	}
+
 }

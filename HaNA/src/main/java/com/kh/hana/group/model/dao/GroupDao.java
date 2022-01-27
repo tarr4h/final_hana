@@ -62,4 +62,6 @@ public interface GroupDao {
 
 	public int selectLikeCount(Map<String, Object> param);
 
+	public int deleteGroupMember(String memberId);
+
 }
