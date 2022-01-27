@@ -1,84 +1,75 @@
 @charset "UTF-8";
-
 #mbtiMain-Background {
-	width: 60%;
-	height: 400px;
-	background: rgb(250, 208, 201) !important;
-	text-align: center;
-	margin: auto;
-	border-radius: 40px 0;
-	position: absolute;
+    width: 60%;
+    height: 400px;
+    background: rgb(250, 208, 201) !important;
+    text-align: center;
+    margin: auto;
+    border-radius: 40px 0;
+    position: absolute;
     top: 40%;
     left: 20%;
 }
 #mbtiResult-Background {
-	width: 60%;
-	height: 400px;
-	background: rgb(250, 208, 201) !important;
-	text-align: center;
-	margin: auto;
-	border-radius: 40px 0;
-	position: absolute;
+    width: 60%;
+    height: 400px;
+    background: rgb(250, 208, 201) !important;
+    text-align: center;
+    margin: auto;
+    border-radius: 40px 0;
+    position: absolute;
     top: 40%;
     left: 20%;
 }
 #mbtiList-Background {
-	width: 60%;
-	height: 400px;
-	background: rgb(250, 208, 201) !important;
-	text-align: center;
-	margin: auto;
-	border-radius: 40px 0;
-	position: absolute;
+    width: 60%;
+    height: 400px;
+    background: rgb(250, 208, 201) !important;
+    text-align: center;
+    margin: auto;
+    border-radius: 40px 0;
+    position: absolute;
     top: 40%;
     left: 20%;
 }
-
 #mainPage-h1 {
-	color: rgb(110, 110, 109);
+    color: rgb(110, 110, 109);
  padding: 2%;
-	
+    
 }
-
 #mainPage-button {
-	margin: 2%;
-	background-color:rgb(110, 110, 109);
-	color:rgb(250, 208, 201);
-	border-radius: 50%;
-	display: block;
-	margin:auto;
+    margin: 2%;
+    background-color:rgb(110, 110, 109);
+    color:rgb(250, 208, 201);
+    border-radius: 50%;
+    display: block;
+    margin:auto;
 }
-
 #mbtiList-Background {
-	width: 50%;
-	height: 100%;
-	background-color: rgb(250, 208, 201)!important;
-	margin: auto;
-	text-align: center;
-	border-radius: 40px 0;
+    width: 50%;
+    height: 100%;
+    background-color: rgb(250, 208, 201)!important;
+    margin: auto;
+    text-align: center;
+    border-radius: 40px 0;
 }
-
 #mbtiListPage-ul {
-	color: rgb(110, 110, 109);
-	list-style: none;
+    color: rgb(110, 110, 109);
+    list-style: none;
 }
-
 .mbtiListPage-p {
-	display: block;
-	color: rgb(110, 110, 109);
-	 font-weight: 600;
+    display: block;
+    color: rgb(110, 110, 109);
+     font-weight: 600;
 }
-
-
 #mbtiListPage-buttonNext {
-	margin: 2%;
-	background-color:rgb(110, 110, 109);
-	color:rgb(250, 208, 201);
-	border-radius: 40px 20px 80px 60px;
+    margin: 2%;
+    background-color:rgb(110, 110, 109);
+    color:rgb(250, 208, 201);
+    border-radius: 40px 20px 80px 60px;
  
-	
+    
 }
-
 .cb1,
 .cb2 {
   height: 20px;
@@ -93,7 +84,6 @@
   cursor: pointer;
   border-radius: 50%;
 }
-
 .cb1::before, .cb1::after,
 .cb2::before, .cb2::after {
   position: absolute;
@@ -140,7 +130,7 @@ input:checked + .cb2::before {
   animation: topcheck 0.4s ease 0s forwards;
 }
 input {
-	display: none;
+    display: none;
 }
 @keyframes bottomcheck {
   0% {
@@ -161,30 +151,29 @@ input {
     height: 24px;
   }
 }
-
 #mbtiListPage-buttonResult{
-	margin: 2%;
-	background-color:rgb(110, 110, 109);
-	color:rgb(250, 208, 201);
-	border-radius: 40px 20px 80px 60px;
+    margin: 2%;
+    background-color:rgb(110, 110, 109);
+    color:rgb(250, 208, 201);
+    border-radius: 40px 20px 80px 60px;
 }
 #hoomButton{
-	margin: 2%;
-	background-color:rgb(110, 110, 109);
-	color:rgb(250, 208, 201);
-	border-radius: 50%
+    margin: 2%;
+    background-color:rgb(110, 110, 109);
+    color:rgb(250, 208, 201);
+    border-radius: 50%
 }
 #mbtiInsert{
-	margin: 2%;
-	background-color:rgb(110, 110, 109);
-	color:rgb(250, 208, 201);
-	border-radius: 50%
-	
+    margin: 2%;
+    background-color:rgb(110, 110, 109);
+    color:rgb(250, 208, 201);
+    border-radius: 50%
+    
 }
 #mainPage-span{
-	display: block;
-	background: linear-gradient(to right, #A7A3FF,#FFA7A3, #671cc4, #5673bd); 
-	-webkit-background-clip: text; 
-	-webkit-text-fill-color: transparent;
-	
+    display: block;
+    background: linear-gradient(to right, #A7A3FF,#FFA7A3, #671cc4, #5673bd); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    
 }

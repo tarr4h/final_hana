@@ -49,9 +49,10 @@ public class ShopServiceImpl implements ShopService {
 	public int insertHashTag(HashTag hashTag) {
 		return shopDao.insertHashTag(hashTag);
 	}
-	
-
 
 	
-	
+	  @Override public List<HashTag> hashTagAutocomplete(String search) { 
+		  return shopDao.hashTagAutocomplete(search); 
+	}
+
 }
