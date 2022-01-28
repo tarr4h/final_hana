@@ -130,13 +130,6 @@
 	</script>
 </c:if>
 
-
-<!-- <div class="container">
-	
-</div> -->
-
-
-
 <div class="container profile mt-2">
     <div class="row" id="myInfo">
     	<!-- 프로필이미지 영역 -->
@@ -210,6 +203,15 @@
 							<td><span class="tableKey">평점</span></td>
 							<td><span class="tableValue">4.9</span></td>
 						</tr>
+						<c:if test="${loginMember.id.equals(member.id) }">
+						<tr>
+							<td>
+								<input type="button" value="예약확인" id="reservationCheckBtn"/>
+								
+								<!-- reservation check Modal -->
+							</td>
+						</tr>
+						</c:if>
 						<c:if test="${!loginMember.id.equals(member.id) }">
 						<tr>
 							<td>
