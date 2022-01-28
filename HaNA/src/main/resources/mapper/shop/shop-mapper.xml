@@ -90,16 +90,15 @@
     </select>
     
     <select id="selectHashTagShopList" parameterType="map" resultType="map">
-
-            select
+        select
             *
-        	from
-             	hashtag a 
-           inner join 
-           		shop_info b
+        from
+           hashtag a 
+         inner join 
+           shop_info b
           on a.tag_id = b.id
         where
-           b.location_x <![CDATA[<]]> ${maxLocationX}
+         	b.location_x <![CDATA[<]]> ${maxLocationX}
             and
             b.location_y <![CDATA[<]]> ${maxLocationY}
             and
