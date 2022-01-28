@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.kh.hana.group.model.vo.Group, java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
@@ -13,6 +14,7 @@
 <section>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
 <sec:authentication property="principal" var="loginMember" />
+
 
     <div id="enroll-container" class="mx-auto text-center">
         <form:form name="groupUpdateFrm" 
@@ -36,11 +38,11 @@
                 <tr>
                     <th>해시태그</th>
                     <td>
-                        <input type="checkbox" name="hashtag" value="운동" id="hashtag-ex"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-ex" value="운동"/>
                         <label for="hashtag-ex">운동</label>
-                        <input type="checkbox" name="hashtag" value="독서" id="hashtag-re"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서"/>
                         <label for="hashtag-re">독서</label>
-                        <input type="checkbox" name="hashtag" value="등산" id="hashtag-mu"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산"/>
                         <label for="hashtag-mu">등산</label>
                     </td>
                 <tr>

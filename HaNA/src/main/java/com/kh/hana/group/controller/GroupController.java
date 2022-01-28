@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -463,9 +464,13 @@ public class GroupController {
 		return "redirect:/group/groupMemberList/"+groupId;
 	}
 	
-	@GetMapping("/groupProfile/{groupId}")
-	public void groupProfile(@PathVariable String groupId) {
-		log.info("groupId ={}", groupId);
+	@GetMapping("/groupProfile")
+	public void groupProfile(@RequestParam String groupId, Model model) {
+		log.info("groupProfile groupId = {}", groupId);
+		Group group = groupService.selectGroupInfo(groupId);
+    	log.info("groupInfo ={}", group);
+    	
+    	model.addAttribute(group);
 	}
 	
 	@PostMapping("/groupUpdate")

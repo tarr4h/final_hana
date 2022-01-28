@@ -43,8 +43,8 @@ table th, td {
 							test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> <c:if
 							test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
 					<td>
-						<button class="btn btn-info" data-toggle="modal" data-target="#moaModal"
-						onclick="grade();">등급</button>
+						<input type="button" class="btn btn-info" data-toggle="modal" data-target="#moaModal"
+						onclick="grade('${list.MEMBER_LEVEL_CODE}')" value="등급"/>
 						
 						<a href="<c:url value='/group/deleteGroupMember/${list.MEMBER_ID}/${list.GROUP_ID}' />"
 						class="btn btn-danger"
@@ -54,6 +54,18 @@ table th, td {
 			</c:forEach>
 		</table>
 	</div>
+<script>
+function grade(code){
+	console.log(code);
+	console.log(code == 'ld');
+	if(code == 'ld'){
+		$("#ld").prop('checked', true);	
+	}
+	if(code == 'mb'){
+		$("#mb").prop('checked', true);
+	}
+}
+</script>
 
 	<!-- 회원 조정 모달 -->
 	<div class="modal fade" id="moaModal" tabindex="-1" role="dialog"
