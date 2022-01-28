@@ -257,7 +257,7 @@ $(() => {
 
 	
  	 // Autocomplete  부분 ( 원본 유지하려고 일단 주석 해놨습니다)
-/*     var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
+/*   var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
         source : function(request, response) {
             $.ajax({
@@ -280,7 +280,8 @@ $(() => {
         	}
         , minLength : 1  // 조회를 위한 최소 글자수  
         , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
-        ,select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
+        , select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
+
         	 // 검색 데이터 변수에 담기  
         	var selectData = ui.item.value;
         	console.log(selectData)
@@ -288,58 +289,106 @@ $(() => {
 			var hashTagBtn = document.createElement( 'button' );
         	var tagData = document.createTextNode(selectData);     	
 		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
-		   
 		    // button style
 		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
-		 
+		    
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
 		    tagDataArr.push(tagData.nodeValue); //배열의 끝에 요소 추가
 		   
 		    console.log("tagDataArr = " + tagDataArr)
 		    console.log("tagDataArr.length = " + tagDataArr.length)
-
+        	
         }
         , focus : function(evt, ui) { //  한글 오류 방지
             return false;
         }
-    }).autocomplete('instance')._renderItem = function(ul, item) { 
+        , close : function(evt){
+        	// input에 있는 text  사라지게
+        	$("#searchInput").val('');
+        }
+        
+    }).autocomplete('instance')._renderItem = function(ul, item) {
 		return $('<li>')
         .append('<div>' + item.label + '</div>') 
-        .appendTo(ul);
+        .appendTo(ul);     
     };
     
     
  // 버튼 onclick시 ajax 실행   
-  $("#searchBtn").on("click",function(){
+   $("#searchBtn").on("click",function(){
+	 
 	  if(tagDataArr.length > 2){
 		  alert("추천 해시태그는 최대 2개 까지 가능합니다.");
 		  return;
 	  }
 	  
+	  	console.log("${loginMember.addressAll}");
+		var Addr_val = "${loginMember.addressAll}";
+	
+
+		// 도로명 주소를 좌표 값으로 변환(API)
+		naver.maps.Service.geocode({
+	        query: Addr_val
+	    }, function(status, response) {
+	        if (status !== naver.maps.Service.Status.OK) {
+	            return alert('잘못된 주소값입니다.');
+	        }
+
+	        var result = response.v2, // 검색 결과의 컨테이너
+	            items = result.addresses; // 검색 결과의 배열
+	            
+	        // 리턴 받은 좌표 값을 변수에 저장
+	        let x = parseFloat(items[0].x);
+	        let y = parseFloat(items[0].y);
+
+	  
+	  // 해시 태그 포함된 매장 list 불러오기 
 	  $.ajax({
 			url : "${pageContext.request.contextPath}/shop/hashTagSearch",
-			data : {"tagDataArr" : tagDataArr},
-			success(data) {
-				console.log(data)
+			data : {
+				"tagDataArr" : tagDataArr,
+				id : "${loginMember.id}",
+				locationX : x,
+				locationY : y
 			},
+			success(data) {
+					console.log(data);
+					const max = data.length;
+
+						  for(var i=0; i<data.length; i++){
+							console.log("if data[i].ID : " + data[i].ID)
+							console.log("if data[i].ID : " + data[i].TAG_NAME)
+							var htmlOut='';
+							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+							htmlOut += '<div class="shopProfile d-flex">';
+						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+						    htmlOut += '</div>';
+						    htmlOut += '<span class = "shopScroll">'+ data[i].ID + '</span>';
+						    htmlOut += '<span class = "shopScroll">'+'#'+ data[i].TAG_NAME + '</span>';
+							$('#shopList').append(htmlOut); 
+							
+						}  
+					},  
 			error: console.log
 			
 		}); 
-	  
+	   });
   }); 
+  
+ 
  
  //  엔터시 submit 막기  
  document.addEventListener('keydown', function(event) {
   if (event.keyCode === 13) {
     event.preventDefault();
   };
-}); */
-
-
-	 
+});
   
-   // test 부분 
+*/  
+
+
+   // test 부분  (나중에 지울거에용)
     var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
         source : function(request, response) {
@@ -406,16 +455,57 @@ $(() => {
 		  return;
 	  }
 	  
+	  	console.log("${loginMember.addressAll}");
+		var Addr_val = "${loginMember.addressAll}";
+	
+
+		// 도로명 주소를 좌표 값으로 변환(API)
+		naver.maps.Service.geocode({
+	        query: Addr_val
+	    }, function(status, response) {
+	        if (status !== naver.maps.Service.Status.OK) {
+	            return alert('잘못된 주소값입니다.');
+	        }
+
+	        var result = response.v2, // 검색 결과의 컨테이너
+	            items = result.addresses; // 검색 결과의 배열
+	            
+	        // 리턴 받은 좌표 값을 변수에 저장
+	        let x = parseFloat(items[0].x);
+	        let y = parseFloat(items[0].y);
+
+	  
+	  // 해시 태그 포함된 매장 list 불러오기 
 	  $.ajax({
 			url : "${pageContext.request.contextPath}/shop/hashTagSearch",
-			data : {"tagDataArr" : tagDataArr},
-			success(data) {
-				console.log("ajax data " + data)
+			data : {
+				"tagDataArr" : tagDataArr,
+				id : "${loginMember.id}",
+				locationX : x,
+				locationY : y
 			},
+			success(data) {
+					console.log(data);
+					const max = data.length;
+
+						  for(var i=0; i<data.length; i++){
+							console.log("if data[i].ID : " + data[i].ID)
+							console.log("if data[i].ID : " + data[i].TAG_NAME)
+							var htmlOut='';
+							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+							htmlOut += '<div class="shopProfile d-flex">';
+						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+						    htmlOut += '</div>';
+						    htmlOut += '<span class = "shopScroll">'+ data[i].ID + '</span>';
+						    htmlOut += '<span class = "shopScroll">'+'#'+ data[i].TAG_NAME + '</span>';
+							$('#shopList').append(htmlOut); 
+							
+						}  
+					},  
 			error: console.log
 			
 		}); 
-	  
+	   });
   }); 
   
  

@@ -58,6 +58,11 @@ public class ShopDaoImpl implements ShopDao {
 		return session.selectOne("shop.selectOneTable", table);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data) {
+		 return session.selectList("shop.selectHashTagShopList", data);
+	}
+
 	
     
 }
