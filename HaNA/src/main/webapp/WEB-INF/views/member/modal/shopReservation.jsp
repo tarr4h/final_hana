@@ -64,9 +64,9 @@
 				</div>
 				<!-- 내용 -->
 				<div class="modal-body">
-					<select name="table-select" id="table-select">
-
-					</select>
+					<table id="table-select">
+						<tbody></tbody>
+					</table>
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -167,19 +167,43 @@
 					id: '${shopInfo.id}'
 				},
 				success(res){					
-					let tableSelect = $("[name=table-select]");
-					let defaultOption = `<option value="" disabled selected>테이블 선택</option>`;
+					let tbody = $("#table-select tbody");
+					let th = `
+						<tr>
+							<th>선택</th>
+							<th>테이블명</th>
+							<th>최대인원</th>
+							<th>운영시간</th>
+							<th>특이사항</th>
+						</tr>
+					`;
 					
-					tableSelect.empty();					
-					tableSelect.append(defaultOption);
-					
-					$.each(res, (i, e) => {				
-						let option = `
-							<option value="\${e.tableId}">\${e.tableName}</option>
-						`;
-						$tableSelect.append(option);
-					});
-					
+					if(tbody.text() == ""){
+						tbody.empty();
+						tbody.append(th);
+						$.each(res, (i, e) => {				
+							let tr = `
+								<tr>
+									<td>
+										<input type="radio" name="tb-select" data-table-id="\${e.tableId}"/>
+									</td>
+									<td>
+										\${e.tableName}
+									</td>
+									<td>
+										\${e.allowVisitor}
+									</td>
+									<td>
+										\${e.allowStart} ~ \${e.allowEnd}
+									</td>
+									<td>
+										\${e.memo}
+									</td>
+								</tr>
+							`;
+							tbody.append(tr);
+						});
+					}
 				},
 				error:console.log
 			});
