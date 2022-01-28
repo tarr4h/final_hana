@@ -405,12 +405,6 @@ public class GroupController {
     	model.addAttribute("groupMemberList", groupMemberList);
     	return "/group/groupMemberList";
     }
-    	
-    @GetMapping("/groupSetting/{groupId}")
-    public void groupSetting(@PathVariable String groupId, Model model){
-    	Group groupInfo = groupService.selectGroupInfo(groupId);
-    	log.info("groupInfo ={}", groupInfo);
-    }
     
 	@PostMapping("/like")
 	public ResponseEntity<Map<String,Object>> like(@RequestParam int no, @AuthenticationPrincipal Member member){
@@ -473,6 +467,7 @@ public class GroupController {
     	model.addAttribute(group);
 	}
 	
+	// 프로필 수정
 	@PostMapping("/groupUpdate")
 	public String groupUpdate(Group group, 
 							@RequestParam MultipartFile upFile,
@@ -491,6 +486,8 @@ public class GroupController {
 		}
 		return "redirect:/group/groupProfile";
 	}
+	
+	// 등급 수정
 }
 
 

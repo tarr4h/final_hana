@@ -55,6 +55,7 @@ table th, td {
 		</table>
 	</div>
 <script>
+/* 현재 등급 */
 function grade(code){
 	console.log(code);
 	console.log(code == 'ld');
@@ -84,8 +85,10 @@ function grade(code){
 				</div>
 				
 				<div class="modal-body">
-					<form action="${pageContext.request.contextPath}/group/gradeGroupMember" 
+					<form action="${pageContext.request.contextPath}/group/updateGradeGroup" 
 						class="customRadio customCheckbox m-0 p-0">
+						<input type="hidden" name="groupId" id="groupId"/>
+						<input type="hidden" name="memberId" id="memberId"/>
 						<div class="row mb-0">
 							<div class="row justify-content-start">
 								<div class="col-12">
@@ -107,6 +110,7 @@ function grade(code){
 					</form>
 				</div>
 				<div class="modal-footer">
+					<input type="hidden" name="" />
 					<a href="${contextPath.request.pageContext}/group/gradeGroupMember/${list.MEMBER_ID}/${list.MEMBER_LEVEL_CODE}"><button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="return confirm('회원 등급을 변경하시겠습니까?');">save</button></a>
 				</div>
 			</div>

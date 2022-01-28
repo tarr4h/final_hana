@@ -15,7 +15,7 @@
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
 <sec:authentication property="principal" var="loginMember" />
 
-
+<br />
     <div id="enroll-container" class="mx-auto text-center">
         <form:form name="groupUpdateFrm" 
             action="${pageContext.request.contextPath}/group/groupUpdate?${_csrf.parameterName}=${_csrf.token}" 
@@ -38,11 +38,11 @@
                 <tr>
                     <th>해시태그</th>
                     <td>
-                        <input type="checkbox" name="hashtag" id="hashtag-ex" value="운동" onclick="hash('ex');"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-ex" value="운동" onclick="hash('운동');"/>
                         <label for="hashtag-ex">운동</label>
-                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서" onclick="hash('re');"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서" onclick="hash('독서');"/>
                         <label for="hashtag-re">독서</label>
-                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산" onclick="hash('mu');"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산" onclick="hash('등산');"/>
                         <label for="hashtag-mu">등산</label>
                     </td>
                 <tr>
@@ -53,21 +53,21 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" class="btn btn-dark"></button>
+            &nbsp; <input type="submit" class="btn btn-dark"></button>
         </form:form>
     </div>
 
 <script>
 function hash(tag){
 	console.log(tag);
-	if(tag == 'ex'){
-		$("#hashtag-ex").prop('checked', true);	
+	if(tag == '운동'){
+		$("#hashtag-ex").prop('checked');	
 	}
-	if(tag == 're'){
-		$("#hashtag-re").prop('checked', true);	
+	if(tag == '독서'){
+		$("#hashtag-re").prop('checked');	
 	}
-	if(tag == 'mu'){
-		$("#hashtag-mu").prop('checked', true);	
+	if(tag == '등산'){
+		$("#hashtag-mu").prop('checked');	
 	}
 }
 </script>
