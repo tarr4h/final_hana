@@ -20,5 +20,7 @@ public interface ShopService {
 	int updateTable(Table table);
 
 	List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data);
+
+	Table selectOneTable(Table table);
     
 }
