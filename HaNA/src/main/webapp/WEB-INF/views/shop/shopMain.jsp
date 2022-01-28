@@ -84,7 +84,7 @@
 					HashTag</span>
 				<form class="form-inline d-flex">
 					<input class="form-control mr-sm-2" type="search"
-						placeholder="Search" aria-label="Search" id="searchInput">
+						placeholder="Search" aria-label="Search" id="searchInput" value="">
 
 				</form>
 			</nav>
@@ -95,7 +95,7 @@
 				<!-- HashTag 검색 후 클릭/엔터 시 동적으로 버튼 생길 공간  -->
 			</div>
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-				id="searchBtn" >Search</button>
+				id="searchBtn">Search</button>
 		</div>
 
 
@@ -288,8 +288,11 @@ $(() => {
 			var hashTagBtn = document.createElement( 'button' );
         	var tagData = document.createTextNode(selectData);     	
 		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
-		    hashTagBtn.appendChild( tagData );
 		   
+		    // button style
+		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
+		    hashTagBtn.appendChild( tagData );
+		 
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
 		    tagDataArr.push(tagData.nodeValue); //배열의 끝에 요소 추가
 		   
@@ -309,6 +312,11 @@ $(() => {
     
  // 버튼 onclick시 ajax 실행   
   $("#searchBtn").on("click",function(){
+	  if(tagDataArr.length > 2){
+		  alert("추천 해시태그는 최대 2개 까지 가능합니다.");
+		  return;
+	  }
+	  
 	  $.ajax({
 			url : "${pageContext.request.contextPath}/shop/hashTagSearch",
 			data : {"tagDataArr" : tagDataArr},
@@ -321,13 +329,13 @@ $(() => {
 	  
   }); 
  
- // 엔터시 submit 막기  
+ //  엔터시 submit 막기  
  document.addEventListener('keydown', function(event) {
   if (event.keyCode === 13) {
     event.preventDefault();
   };
-});
-   */
+}); */
+
 
 	 
   
@@ -356,6 +364,7 @@ $(() => {
         , minLength : 1  // 조회를 위한 최소 글자수  
         , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
         ,select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
+
         	 // 검색 데이터 변수에 담기  
         	var selectData = ui.item.value;
         	console.log(selectData)
@@ -363,39 +372,53 @@ $(() => {
 			var hashTagBtn = document.createElement( 'button' );
         	var tagData = document.createTextNode(selectData);     	
 		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
+		    // button style
+		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
-		   
-		   
+		    
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
 		    tagDataArr.push(tagData.nodeValue); //배열의 끝에 요소 추가
 		   
 		    console.log("tagDataArr = " + tagDataArr)
 		    console.log("tagDataArr.length = " + tagDataArr.length)
+        	
+		    // input에 있는 text  사라지게 
+			 document.getElementById('searchInput').value('');
 
         }
         , focus : function(evt, ui) { //  한글 오류 방지
             return false;
         }
     }).autocomplete('instance')._renderItem = function(ul, item) { 
+	    
 		return $('<li>')
         .append('<div>' + item.label + '</div>') 
         .appendTo(ul);
+     
     };
     
     
  // 버튼 onclick시 ajax 실행   
-  $("#searchBtn").on("click",function(){
+   $("#searchBtn").on("click",function(){
+	 
+	  if(tagDataArr.length > 2){
+		  alert("추천 해시태그는 최대 2개 까지 가능합니다.");
+		  return;
+	  }
+	  
 	  $.ajax({
 			url : "${pageContext.request.contextPath}/shop/hashTagSearch",
 			data : {"tagDataArr" : tagDataArr},
 			success(data) {
-				console.log(data)
+				console.log("ajax data " + data)
 			},
 			error: console.log
 			
 		}); 
 	  
   }); 
+  
+ 
  
  //  엔터시 submit 막기  
  document.addEventListener('keydown', function(event) {
