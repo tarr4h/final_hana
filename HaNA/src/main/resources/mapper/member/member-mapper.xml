@@ -11,16 +11,16 @@
 
 
 	<update id="updateMember">
-	 update member set
-	 name = #{name},
-	 picture = #{picture},
-	 address_full = #{addressFull},
-	 address_all = #{addressAll},
-	 introduce = #{introduce},
-	 location_x = #{locationX},
-	 location_y = #{locationY}
-	 where 
-	 	id = #{id}	
+		 update member set
+			 name = #{name},
+			 picture = #{picture},
+			 address_full = #{addressFull},
+			 address_all = #{addressAll},
+			 introduce = #{introduce},
+			 location_x = #{locationX},
+			 location_y = #{locationY}
+		 where 
+		 	id = #{id}	
 	</update>
 
      <update id= "updatePersonality">
