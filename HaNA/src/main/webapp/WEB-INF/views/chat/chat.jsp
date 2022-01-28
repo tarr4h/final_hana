@@ -31,7 +31,7 @@
 </c:if>
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
-<span>member picture 못찾는건 404</span><br />
+<span>ajax로 만든 메세지 알람은 3초마다 쿼리문 출력돼서 주석</span><br />
 <span>소모임 회원 가입시 입장메세지 / 소모임 탈퇴시 나가기 메세지</span><br />
 <span>커밋할때 프로젝트 새로고침해서 저장한 이미지 다 불러오고 하기</span><br />
 <span>방입장할때 msg roomenter 쓰기</span><br />
@@ -48,6 +48,7 @@ $(()=>{
 	roomList();
 });
 
+
 const roomList = () => {
 	console.log(id);
 	$.ajax({
@@ -57,11 +58,13 @@ const roomList = () => {
 		},
 		method: "GET",
 		success(resp){
-			console.log(resp);
 			displayRoom("#chatList", resp);
 		},
-		error:console.log
 	});
+	<!-- 3초마다 -->
+/* 	setTimeout(function() {
+		roomList();	
+	}, 3000); */
 };
 <!-- <span class="online_icon"></span> -->
 const displayRoom = (selector, data) => {
@@ -70,8 +73,27 @@ const displayRoom = (selector, data) => {
 		
 		if(data.length){
 			$(data).each((i, room) => {
-				console.log(i, room);
+				/* console.log(i, room); */
 				const {roomNo, roomName, roomType, members, groupImg} = room;
+				
+				$.ajax({
+					url:`${pageContext.request.contextPath}/chat/roomUnreadChat.do`,
+					method:'GET',
+					data:{
+						roomNo : roomNo,
+						memberId : memberId,
+					},
+					success(data){
+						if(data != 0)
+							$(`#roomAlarm\${i}`).text(data);
+					},
+					error:console.log
+				});
+				
+				
+				
+				
+				
 				chatroom += `<div class="card-body contacts_body">
 					<ui class="contacts">
 					<li class="active">
@@ -82,6 +104,7 @@ const displayRoom = (selector, data) => {
 							<div class="user_info">
 								<span>\${roomType != 1 ? members : roomName}방</span>
 								<button onclick="roomchat(this.value)" value="\${roomNo}">버튼</button>
+								<span class="badge" id="roomAlarm\${i}"></span>
 							</div>
 						</div>
 					</li>
@@ -239,6 +262,7 @@ if(websocket !== undefined){
 		url : `${pageContext.request.contextPath}/chat/roomchat.do`,
 		data : {
 			no : no,
+			id : memberId
 		},
 		method: "GET",
 		success(resp){

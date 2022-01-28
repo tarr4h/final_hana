@@ -20,7 +20,7 @@
 		chat c left join member m 
 		on c.member_id = m.id 
 	where 
-		c.room_no = #{no} 
+		c.room_no = #{roomNo}  and to_char(message_reg_date, 'YYYY/MM/DD HH24:MI:SS') >= to_char((select MAX(message_reg_date) from chat where message = 'ROOMENTER' and member_id=#{memberId}), 'YYYY/MM/DD HH24:MI:SS')
 		order by c.message_reg_date
 	</select>
 	
@@ -114,31 +114,48 @@
 	insert
 		into
 	chat
-		values(#{roomNo},#{loginId},'ROOMENTER',default,default)
+		values(#{roomNo},#{loginId},'ROOMENTER',default,default,default)
 	</insert>
 	
 	<insert id="insertEnterMessage2">
 	insert
 		into
 	chat
-		values(#{roomNo},#{memberId},'ROOMENTER',default,default)
+		values(#{roomNo},#{memberId},'ROOMENTER',default,default,default)
 	</insert>
 	
-	<select id="findRoomNo" resultType="_int">
+	<select id="selectGroupRoomNo" resultType="_int">
 	select
 		room_no
 	from
 		chat_room
-	members like '%' ||  #{loginId} || '%' and members like '%' ||  #{memberId} || '%'
+	where group_room_id = #{groupId}
 	</select>
-	<select id="selectOneChatRoom" resultType="chatroom">
-	select
-		*
-	from
-		chat_room
-	where room_no = #{no}
-	</select>
-	<insert id="CreateGroupChat">
+	
+	<!-- group membercount에 roomNo넣었음 소모임 만든사람 insertmessage-->
+	<insert id="insertGroupMessage">
+	insert
+		into
+	chat
+		values(#{memberCount},#{leaderId},'ROOMENTER',default,default,default)
+	</insert>
+	
+	<!-- 소모임 가입 회원 입장메세지 -->
+	<insert id="insertGroupMessage22">
+	insert 
+		into 
+	chat 
+		values(
+		(select room_no from chat_room where group_room_id = #{groupId}), 
+		#{memberId},
+		'ROOMENTER',
+		default,
+		default,
+		default
+		);
+	</insert>
+	
+		<insert id="CreateGroupChat">
 	insert
 		into
 	chat_room
@@ -151,6 +168,23 @@
 		#{image}
 		)
 	</insert>
+	
+	<select id="findRoomNo" resultType="_int">
+	select
+		room_no
+	from
+		chat_room
+	where
+	members like '%' ||  #{loginId} || '%' and members like '%' ||  #{memberId} || '%'
+	</select>
+	<select id="selectOneChatRoom" resultType="chatroom">
+	select
+		*
+	from
+		chat_room
+	where room_no = #{no}
+	</select>
+
 	<delete id="exitRoom">
 	delete
 		from
@@ -168,15 +202,25 @@
 	member_id != #{memberId}
 	</select>
 	
-	<select id="dmalarm" resultType="chat">
+	<select id="dmalarm" resultType="_int">
 	select 
-		* 
+		count(*) 
 	from 
 		chat 
 	where 
 		room_no in (select room_no from chat where member_id = #{id}) 
 	and 
 		member_id != #{id} and unreadcount = 1
+	</select>
+	<select id="roomUnreadChat" resultType="_int">
+	select 
+		count(*) 
+	from 
+		chat 
+	where room_no = #{roomNo} 
+		and 
+	member_id != #{memberId} 
+		and unreadcount = 1
 	</select>
 	
 

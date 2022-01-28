@@ -38,7 +38,7 @@ public interface ChatService {
 
 	String searchPicture(String member);
 
-	List<Map<String, Object>> roomchat2(int no);
+	List<Map<String, Object>> roomchat2(Map<String, Object> param);
 
 	int exitRoom(int roomNo);
 
@@ -48,7 +48,11 @@ public interface ChatService {
 
 	List<String> selectListReceiver(Chat chat);
 
-	List<Chat> dmalarm(String id);
+	int dmalarm(String id);
+
+	int roomUnreadChat(Chat chat);
+
+	int insertGroupMessage22(Map<String, Object> param);
 
 
 

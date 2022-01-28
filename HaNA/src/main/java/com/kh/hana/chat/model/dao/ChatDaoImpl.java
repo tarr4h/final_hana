@@ -95,8 +95,8 @@ public class ChatDaoImpl implements ChatDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> roomchat2(int no) {
-		return session.selectList("chat.roomchat2", no);
+	public List<Map<String, Object>> roomchat2(Map<String, Object> param) {
+		return session.selectList("chat.roomchat2", param);
 	}
 
 	@Override
@@ -120,8 +120,28 @@ public class ChatDaoImpl implements ChatDao {
 	}
 
 	@Override
-	public List<Chat> dmalarm(String id) {
-		return session.selectList("chat.dmalarm",id);
+	public int dmalarm(String id) {
+		return session.selectOne("chat.dmalarm",id);
+	}
+
+	@Override
+	public int roomUnreadChat(Chat chat) {
+		return session.selectOne("chat.roomUnreadChat",chat);
+	}
+
+	@Override
+	public int insertGroupMessage(Group group) {
+		return session.insert("chat.insertGroupMessage",group);
+	}
+
+	@Override
+	public int selectGroupRoomNo(Group group) {
+		return session.selectOne("chat.selectGroupRoomNo", group);
+	}
+
+	@Override
+	public int insertGroupMessage22(Map<String, Object> param) {
+		return session.insert("chat.insertGroupMessage22",param);
 	}
 
 

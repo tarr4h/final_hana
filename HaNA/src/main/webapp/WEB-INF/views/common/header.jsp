@@ -109,7 +109,7 @@
 		<script>
 		$(document).ready( function() {
 			connect(1);	
-			dmAlarm();
+			//dmAlarm();
 		});
 		let memberId;
 		let websocketws;
@@ -226,11 +226,10 @@
 				method:'GET',
 				data:{id : memberId},
 				success(resp){
-					var count = resp.length;
-					if(count != 0)
-						$("#dmAlarm").text(count);
+					if(resp != 0)
+						$("#dmAlarm").text(resp);
 				},
-				error:console.log
+				/* error:console.log */
 			});
 			
 			<!-- 3초마다 -->

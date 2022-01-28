@@ -29,14 +29,15 @@
 	</appender>
 
 	<!-- Query Loggers  -->
-	<logger name="jdbc.sqlonly" additivity="false">
+<!-- 		    <RegexFilter regex="(?s).IGNORE_LOG." onMatch="DENY" onMismatch="NEUTRAL" useRawMsg="true" /> -->
+<!--  	<logger name="jdbc.sqlonly" additivity="false">
 		<level value="INFO" />
 		<appender-ref ref="sqlLogger"/>
 	</logger>
 	<logger name="jdbc.resultsettable" additivity="false">
 		<level value="INFO" />
 		<appender-ref ref="sqlLogger"/>
-	</logger>
+	</logger> -->
 	
 	
 	<!-- Application Loggers -->
