@@ -183,6 +183,7 @@ $(() => {
 								<input type="submit" class="updateBtn" value="수정" onclick="updateFrm(\${calnum});" data-test="hi"/>
 								<input type="button" class="deleteBtn" value="삭제" onclick="deleteTable(\${calnum});"/>
 							</td>
+							<input type="hidden" name="tableId\${calnum}" value="\${e.tableId}" />
 						</form:form>
 					</tr>
 						`;
@@ -284,10 +285,11 @@ function enrollFrm(num){
 /* 테이블 삭제 func */
 function deleteTable(num){
 	let tableName = $(`[name=tableName\${num}]`).val();
+	let tableId = $(`[name=tableId\${num}]`).val();
 	
 	console.log(tableName);
 	$.ajax({
-		url: `${pageContext.request.contextPath}/shop/deleteShopTable/\${tableName}?${_csrf.parameterName}=${_csrf.token}`,
+		url: `${pageContext.request.contextPath}/shop/deleteShopTable/\${tableId}?${_csrf.parameterName}=${_csrf.token}`,
 		method: 'DELETE',
 		success(res){
 			alert(res);
@@ -302,6 +304,7 @@ function deleteTable(num){
 function updateFrm(num){
 	const content = {
 			shopId: '${loginMember.id}',
+			tableId : $(`[name=tableId\${num}]`).val(),
 			tableName : $(`[name=tableName\${num}]`).val(),
 			allowVisitor: $(`[name=allowVisitor\${num}]`).val(),
 			allowStart : $(`[name=allowStart\${num}]`).val(),
@@ -320,7 +323,7 @@ function updateFrm(num){
 		data: tableStr,
 		contentType: "application/json; charset=utf-8",
 		success(res){
-			alert(res.msg);
+			alert(res);
 		},
 		error:console.log
 	});	

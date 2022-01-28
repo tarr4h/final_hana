@@ -29,8 +29,8 @@ public class ShopDaoImpl implements ShopDao {
     
     
 	@Override
-	public String verifyTableName(String tableName) {
-		return session.selectOne("shop.verifyTableName", tableName);
+	public String verifyTableName(Table table) {
+		return session.selectOne("shop.verifyTableName", table);
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public int deleteShopTable(String tableName) {
-		return session.delete("shop.deleteShopTable", tableName);
+	public int deleteShopTable(String tableId) {
+		return session.delete("shop.deleteShopTable", tableId);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public String selectOneTable(Table table) {
+	public Table selectOneTable(Table table) {
 		return session.selectOne("shop.selectOneTable", table);
 	}
 
