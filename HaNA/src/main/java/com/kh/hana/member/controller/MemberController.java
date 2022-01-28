@@ -268,23 +268,36 @@ public class MemberController {
             @RequestParam(name="uploadFile", required = false) MultipartFile[] uploadFiles) throws IllegalStateException, IOException {
         String saveDirectory  = application.getRealPath("/resources/upload/member/board");
 
-            
-        	//String[] picture = new String[2];
-
+        String[] arr = new String[2];
+        arr[0] = board.getPicture()[0];
+        arr[1] = board.getPicture()[1];
+        
         for(int i = 0; i<uploadFiles.length; i++) {
             MultipartFile uploadFile = uploadFiles[i];
             if(!uploadFile.isEmpty()) {
-                String originalFilename = uploadFile.getOriginalFilename();
+                String originalFilename = uploadFile.getOriginalFilename();                
                 File dest = new File(saveDirectory);
                 uploadFile.transferTo(dest);
-                for(int j = 0; j< originalFilename.length(); j++) { 
-                	//board.getPicture(0) = originalFilename;
-                }
+                
+                String[] arr2 = new String[2];
+                arr2[0] = originalFilename;
+                
+                arr = arr2;
+                
+//                arr2[0] =  uploadFile.getOriginalFilename();
+//                arr2[1] =  uploadFile.getOriginalFilename();
+                                
+//                for(int j = 0; j< originalFilename.length(); j++) { 
+//                	board.getPicture()[0] = originalFilename[j];
+//                	//board.getPicture()[1] = originalFilename;
+//                }
                  
             }
         }
+        log.info("board.getPicture()[0] ={}", board.getPicture()[0]);
+        log.info("board.getPicture()[1] ={}", board.getPicture()[1]);
         log.info("insertMemberBoard board = {}", board);
-        int result = memberService.insertMemberBoard(board);
+       // int result = memberService.insertMemberBoard(board);
 
         return "redirect:/member/memberView/"+ member.getId();
 
