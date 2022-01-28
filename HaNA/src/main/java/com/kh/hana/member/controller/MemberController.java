@@ -269,9 +269,7 @@ public class MemberController {
 
 		String saveDirectory  = application.getRealPath("/resources/upload/member/board");
 
-        String[] arr = new String[2];
-        arr[0] = board.getPicture()[0];
-        arr[1] = board.getPicture()[1];
+		String[] arr = new String[2];
         
         for(int i = 0; i<uploadFiles.length; i++) {
             MultipartFile uploadFile = uploadFiles[i];
@@ -280,25 +278,18 @@ public class MemberController {
                 File dest = new File(saveDirectory);
                 uploadFile.transferTo(dest);
                 
-                String[] arr2 = new String[2];
-                arr2[0] = originalFilename;
+                log.info("ofg = {}", originalFilename);
                 
-                arr = arr2;
-                
-//                arr2[0] =  uploadFile.getOriginalFilename();
-//                arr2[1] =  uploadFile.getOriginalFilename();
-                                
-//                for(int j = 0; j< originalFilename.length(); j++) { 
-//                	board.getPicture()[0] = originalFilename[j];
-//                	//board.getPicture()[1] = originalFilename;
-//                }
-                 
+                arr[i] = originalFilename;
             }
         }
+        
+        board.setPicture(arr);
+        
         log.info("board.getPicture()[0] ={}", board.getPicture()[0]);
         log.info("board.getPicture()[1] ={}", board.getPicture()[1]);
         log.info("insertMemberBoard board = {}", board);
-       // int result = memberService.insertMemberBoard(board);
+        int result = memberService.insertMemberBoard(board);
 
         return "redirect:/member/memberView/"+ member.getId();
 
