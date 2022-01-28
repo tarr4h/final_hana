@@ -257,8 +257,7 @@ $(() => {
 
 	
  	 // Autocomplete  부분 ( 원본 유지하려고 일단 주석 해놨습니다)
-  /* 
- 	 var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
+/*   var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
         source : function(request, response) {
             $.ajax({
@@ -324,16 +323,57 @@ $(() => {
 		  return;
 	  }
 	  
+	  	console.log("${loginMember.addressAll}");
+		var Addr_val = "${loginMember.addressAll}";
+	
+
+		// 도로명 주소를 좌표 값으로 변환(API)
+		naver.maps.Service.geocode({
+	        query: Addr_val
+	    }, function(status, response) {
+	        if (status !== naver.maps.Service.Status.OK) {
+	            return alert('잘못된 주소값입니다.');
+	        }
+
+	        var result = response.v2, // 검색 결과의 컨테이너
+	            items = result.addresses; // 검색 결과의 배열
+	            
+	        // 리턴 받은 좌표 값을 변수에 저장
+	        let x = parseFloat(items[0].x);
+	        let y = parseFloat(items[0].y);
+
+	  
+	  // 해시 태그 포함된 매장 list 불러오기 
 	  $.ajax({
 			url : "${pageContext.request.contextPath}/shop/hashTagSearch",
-			data : {"tagDataArr" : tagDataArr},
-			success(data) {
-				console.log("ajax data " + data)
+			data : {
+				"tagDataArr" : tagDataArr,
+				id : "${loginMember.id}",
+				locationX : x,
+				locationY : y
 			},
+			success(data) {
+					console.log(data);
+					const max = data.length;
+
+						  for(var i=0; i<data.length; i++){
+							console.log("if data[i].ID : " + data[i].ID)
+							console.log("if data[i].ID : " + data[i].TAG_NAME)
+							var htmlOut='';
+							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+							htmlOut += '<div class="shopProfile d-flex">';
+						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+						    htmlOut += '</div>';
+						    htmlOut += '<span class = "shopScroll">'+ data[i].ID + '</span>';
+						    htmlOut += '<span class = "shopScroll">'+'#'+ data[i].TAG_NAME + '</span>';
+							$('#shopList').append(htmlOut); 
+							
+						}  
+					},  
 			error: console.log
 			
 		}); 
-	  
+	   });
   }); 
   
  
@@ -344,12 +384,10 @@ $(() => {
     event.preventDefault();
   };
 });
- */ 
-
-
-
-	 
   
+*/  
+
+
    // test 부분 
     var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
@@ -447,8 +485,23 @@ $(() => {
 				locationY : y
 			},
 			success(data) {
-				console.log("ajax data " + data)
-			},
+					console.log(data);
+					const max = data.length;
+
+						  for(var i=0; i<data.length; i++){
+							console.log("if data[i].ID : " + data[i].ID)
+							console.log("if data[i].ID : " + data[i].TAG_NAME)
+							var htmlOut='';
+							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+							htmlOut += '<div class="shopProfile d-flex">';
+						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+						    htmlOut += '</div>';
+						    htmlOut += '<span class = "shopScroll">'+ data[i].ID + '</span>';
+						    htmlOut += '<span class = "shopScroll">'+'#'+ data[i].TAG_NAME + '</span>';
+							$('#shopList').append(htmlOut); 
+							
+						}  
+					},  
 			error: console.log
 			
 		}); 
