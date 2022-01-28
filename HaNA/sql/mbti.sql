@@ -119,6 +119,54 @@ commit;
 
 delete  from mbti_data where member_id ='tksemf2543';
 
+select * from hashtag;
+
+-- 조인 쿼리 -- 
+select *
+from hashtag  a inner join shop_info  b
+on a.tag_id = b.id;
 
 
+--------------
+select
+            *
+        from
+             	hashtag a 
+           inner join 
+           		shop_info b
+          on a.tag_id = b.id
+        where
+           (b.location_x <  127.1322903
+            and
+            b.location_y  <  37.542603799999995
+            and
+            b.id != 'k333')
+            and
+            a.tag_name = '해물탕'
+            and
+            a.tag_name= '매운탕';
 
+
+select 
+*
+from hashtag h , (select * from shop_info where
+            location_x  <  127.1322903
+            and
+            location_y  <  37.542603799999995
+            and
+            id != 'k333') s
+where 
+ tag_name = '해물탕'
+            and
+            tag_name = '매운탕';
+
+
+select 
+*
+from shop_info
+where 
+   location_x  <  127.1322903
+            and
+            location_y  <  37.542603799999995
+            and
+            id != 'k333';
