@@ -18,5 +18,7 @@ public interface ShopService {
 	int deleteShopTable(String tableId);
 
 	int updateTable(Table table);
+
+	List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data);
     
 }

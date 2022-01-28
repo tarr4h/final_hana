@@ -84,5 +84,30 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.updateShopTable(table);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data) {
+		List<Map<String, Object>> hashTagShopList = shopDao.selectHashTagShopList(data);
+		log.info("shopList = {}", hashTagShopList);
+		
+		String locationX = (String)data.get("locationX");
+		String locationY = (String)data.get("locationY");
+		
+		List<Map<String, Object>> lastShopList = new ArrayList<>();
+		for(Map<String, Object> shop : hashTagShopList) {
+			String x = (String) shop.get("LOCATION_X");
+			String y = (String) shop.get("LOCATION_Y");
+			log.info("serv shop = {}", shop);
+			boolean bool = CalculateArea.calculateArea(locationX, locationY, x, y);
+			log.info("calTest = {}", bool);
+			
+			if(bool == true) {
+				lastShopList.add(shop);
+			}
+		}
+		log.info("shopList LAsts = {}", lastShopList);
+		log.info("listSize = {}", lastShopList.size());
+		return lastShopList;
+	}
+
 	
 }
