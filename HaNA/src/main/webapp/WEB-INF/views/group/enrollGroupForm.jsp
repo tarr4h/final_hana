@@ -9,10 +9,14 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <fmt:requestEncoding value="utf-8" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="가입신청화면" name="title" />
 </jsp:include>
-
+<sec:authentication property="principal" var="loginMember" />
 
 <!DOCTYPE html>
 <html>
@@ -22,33 +26,82 @@
 </head>
 <body>
 
-<div style="position:relative; display: inline-block; top: 50%; left: 25%; padding: 5px 100px; background-color: rgb(224,224,224); margin-top: 10%;">
-        <form:form name="enrollGroupForm" method="post" action="${pageContext.request.contextPath}/group/enrollGroupForm">
-        <h1 style="text-align: center;">${groupId}</h1>
-		<table>
-			<thead>
-            <tr>
-				<th style="position: relative; top: 30%; left: 0%; display: inline-block;">신청이유</th>
-			</tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>
-            	<textarea name="content" id="" cols="30" rows="10"></textarea>
-				<input type="hidden" name="groupId" value="${groupId}"/>
-				<input type="hidden" name="memberId" value="<sec:authentication property='principal.username'/>"/>
-            </td>        
-        </tr>
-        <tr>
-	        <td>
-				<br />
-				<input style="position: relative; float: right;" type="submit" value="가입신청" />  
-				<br /><br />      
-	        </td>
-        </tr>
-        </tbody>
-		</table>
-	</form:form>
+<%--  	<div
+		style="position: relative; display: inline-block; top: 50%; left: 25%; padding: 5px 100px; background-color: rgb(224, 224, 224); margin-top: 10%;">
+		<form:form name="enrollGroupForm" method="post"
+			action="${pageContext.request.contextPath}/group/enrollGroupForm">
+			<h1 style="text-align: center;">${groupId}</h1>
+			<table>
+				<thead>
+					<tr>
+						<th
+							style="position: relative; top: 30%; left: 0%; display: inline-block;">신청이유</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><textarea name="content" id="" cols="30" rows="10"></textarea>
+							<input type="hidden" name="groupId" value="${groupId}" /> <input
+							type="hidden" name="memberId"
+							value="<sec:authentication property='principal.username'/>" /></td>
+					</tr>
+					<tr>
+						<td><br /> <input style="position: relative; float: right;"
+							type="submit" value="가입신청" /> <br />
+						<br /></td>
+					</tr>
+				</tbody>
+			</table>
+		</form:form>
+	</div>  --%>
+	
+<div class="padding">
+    <div style="text-align: center"> <i class="mdi mdi-forum"></i> <br>
+        <h1 style="color: #666; font-weight: bold; font-size: 50px;">${groupId}</h1><h4 style="color: #666;">소모임 신청</h4>
+        <br>
+        <p class="text-center" style="color:#444;">이 소모임이 마음에 드신다면?</p> 
+        <button type="submit" class="btn btn-outline-dark ml-sm-2 mb-2" style="border-radius: 50px" data-toggle="modal" data-target="#contact">&emsp;&emsp;신청폼 작성하기&emsp;&emsp;</button>
     </div>
+    
+    <!--Contact Modal-->
+    <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-light" id="exampleModalLabel">가입 신청 폼</h5> <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                </div>
+                
+                <div class="modal-body">
+                	<form:form name="enrollGroupForm" method="post" action="${pageContext.request.contextPath}/group/enrollGroupForm">
+                    <form>
+                        <div class="form-group"> 
+                        	<label for="exampleInputEmail1" style="color: #fff;">회원 아이디</label> 
+                        	<input type="text" class="form-control" id="memberId" readonly value=" ${loginMember.id}" >
+                        </div>
+                        <div class="form-group"> 
+                        	<label for="exampleFormControlTextarea1" style="color: #fff;">가입하고 싶은 이유를 자유롭게 작성해주세요.</label> 
+                        	<textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="2"></textarea> 
+                        	<input type="hidden" name="groupId" value="${groupId}" /> 
+                        	<input type="hidden" name="memberId" value="<sec:authentication property='principal.username'/>" /></td>
+                        </div>
+                    </form>
+                    </form:form>
+                </div>
+                
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px; width:100%;" data-dismiss="modal" aria-label="Close">Submit</button> </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+        .mdi {
+    font-size: 50px
+}
+
+.padding {
+    padding: 8rem !important
+} 
+    </style>
 </body>
 </html>
