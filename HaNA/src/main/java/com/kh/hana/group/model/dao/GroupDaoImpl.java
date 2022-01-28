@@ -66,8 +66,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
-		return session.selectList("getGroupApplyRequest", groupId);
+	public List<Map<String, Object>> selectGroupApplyList(String groupId) {
+		return session.selectList("selectGroupApplyList", groupId);
 	}
 	  
     @Override
@@ -91,8 +91,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public int deleteGroupApplyList(Map<String, Object> map) {
-		return session.delete("deleteGroupApplyList", map);
+	public int updateApplyHandled(Map<String, Object> map) {
+		return session.update("updateApplyHandled", map);
 	}
 
 	@Override

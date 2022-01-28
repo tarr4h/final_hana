@@ -32,7 +32,7 @@ public interface GroupDao {
 
 	public int insertEnrollGroupForm(Map<String, Object> map);
 
-	public List<Map<String, Object>> getGroupApplyRequest(String groupId);
+	public List<Map<String, Object>> selectGroupApplyList(String groupId);
 
 	public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo);
 
@@ -40,7 +40,7 @@ public interface GroupDao {
 
 	public int insertGroupMember(Map<String, Object> map);
 
-	public int deleteGroupApplyList(Map<String, Object> map);
+	public int updateApplyHandled(Map<String, Object> map);
 
 	public int deleteGroupBoard(int no);
 

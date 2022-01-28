@@ -255,7 +255,7 @@ public class GroupController {
     public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
         log.info("groupId ={}", groupId);
         
-        List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
+        List<Map<String, Object>> groupApplyList = groupService.selectGroupApplyList(groupId);
         log.info("groupApplyList ={}", groupApplyList);
         
         return ResponseEntity.ok(groupApplyList);       
@@ -263,39 +263,23 @@ public class GroupController {
 	
     @PostMapping("/groupApplyProccess")
     @ResponseBody
-    public String groupApplyProcess(
-            @RequestParam(name="no") int no, 
-            @RequestParam(name="groupId") String groupId,
-            @RequestParam(name="memberId") String memberId,
-            @RequestParam(name="approvalYn") String approvalYn,
-            @RequestParam Map<String, Object> map
-            ) {
-        log.info("no = {}", no);
-        log.info("groupId = {}", groupId);
-        log.info("memberId = {}", memberId);
-        log.info("approvalYn = {}", approvalYn);
-        //승인(y)
-        if(approvalYn.equals("y")) {
-            int result = groupService.insertGroupMember(map);
-            log.info("result ={}", result);
-            
-            String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
-            log.info("msg ={}", msg);
-            
-            int deleteResult = groupService.deleteGroupApplyList(map);
-            log.info("deleteResult ={}", deleteResult);
+    public String groupApplyProcess(@RequestParam Map<String, Object> map) {
+        log.info("no = {}", map.get("no"));
+        log.info("groupId = {}", map.get("groupId"));
+        log.info("memberId = {}", map.get("memberId"));
+        log.info("approvalYn = {}", map.get("approvalYn"));
+        //승인(Y)
+        int result = 0;
+        if(map.get("approvalYn").equals("Y")) {
+            result = groupService.insertGroupMember(map);  // 그룹 멤버 추가            
+            result = groupService.updateApplyHandled(map);  // 처리여부 + 승인여부 업데이트
         }
-        //거절(n)
+        //거절(N)
         else {
-            int result = groupService.deleteGroupApplyList(map);
-            log.info("result ={}", result);
-            
-            String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
-            log.info("msg ={}", msg);
-            
+            result = groupService.updateApplyHandled(map); // 처리여부 + 승인여부 업데이트
         }
         
-        return "redirect:/group/groupPage/"+groupId;
+        return "redirect:/group/groupPage/"+map.get("groupId");
     }
     
     @PostMapping("/deleteGroupBoard")

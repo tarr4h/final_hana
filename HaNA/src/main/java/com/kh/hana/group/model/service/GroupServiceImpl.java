@@ -69,8 +69,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
-		return groupDao.getGroupApplyRequest(groupId);
+	public List<Map<String, Object>> selectGroupApplyList(String groupId) {
+		return groupDao.selectGroupApplyList(groupId);
 	}
 
   
@@ -85,8 +85,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public int deleteGroupApplyList(Map<String, Object> map) {
-		return groupDao.deleteGroupApplyList(map);
+	public int updateApplyHandled(Map<String, Object> map) {
+		return groupDao.updateApplyHandled(map);
 	}	
 
 	@Override
