@@ -388,7 +388,7 @@ $(() => {
 */  
 
 
-   // test 부분 
+   // test 부분  (나중에 지울거에용)
     var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
         source : function(request, response) {
