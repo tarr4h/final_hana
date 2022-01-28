@@ -446,6 +446,15 @@ public class GroupController {
 		
 		return null;
 	}
+	
+	@PostMapping("/saveCalendarData")
+	public String saveCalendarData(@RequestBody Map<String,Object> param) {
+		log.info("param = {}",param);
+		
+		return "redirect:";
+	}
+	
+	
 }
 
 

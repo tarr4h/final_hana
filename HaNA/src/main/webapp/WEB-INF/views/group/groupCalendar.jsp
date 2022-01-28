@@ -109,10 +109,41 @@ document.addEventListener('DOMContentLoaded', function() {
 	}); */
 });
 
-function saveAll(){
+// 저장버튼 눌렀을 때
+function saveButton(){
 	allEvents = calendar.getEvents();
 	console.log(allEvents);
+	
+	let events = new Array();
+	for(let i=0; < allEvents.length; i++){
+		let obj = new Object();
+		
+		obj.title = allEvents[i]._def.title; // 타이틀
+		obj.allday = allEvents[i]._def.allDay; // 하루종일인지
+		obj.start = allEvents[i].instance.start; // 시작날짜 및 시간
+		obj.end = allEvents[i].instance.end; // 종료날짜 및 시간
+		
+	 	events.push(obj); // 이벤트 정보를 json문자열 형태로 변환
+	}
+	
+	const jsonString = JSON.stringify();
+	console.log(jsonString);
 }
+
+function saveCalendarData(data){
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/group/saveCalendarData",
+		method:"POST",
+		data:data,
+		success(data){
+			console.log(data);
+		},
+		error:console.log
+	})
+	
+}
+
 function deleteEvent(){
 	allEvents[0].remove();
 }
