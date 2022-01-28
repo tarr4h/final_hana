@@ -7,161 +7,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <style>
-/* ===== Horizontal Rule ===== */
-.rule {
-  border: none;
-  height: 1.5px;
-  background-image: linear-gradient(left, #f0f0f0, #c9bbae, #f0f0f0);
-}
-
-/* ===== Select Box ===== */
-.sel {
-  font-size: 15px;
-  display: inline-block;
-  width: 100px;
-  height: 30px;
-  background-color: transparent;
-  position: relative;
-  cursor: pointer;
-}
-
-.sel::before {
-  position: absolute;
-  content: '\f063';
-  font-family: 'FontAwesome';
-  font-size: 1em;
-  color: powderblue;
-  right: 20px;
-  top: calc(50% - 0.5em);
-  transform: translateX(15px);
-  margin-left:5px;
-}
-
-.sel.active::before {
-  transform: rotateX(-180deg) translateX(15px);
-}
-
-.sel__placeholder {
-  display: block;
-  font-family: 'Quicksand';
-  font-size: 15px;
-  color: #838e95;
-  padding: 0.2em 0.5em;
-  text-align: left;
-  pointer-events: none;
-  user-select: none;
-  visibility: visible;
-}
-
-.sel.active .sel__placeholder {
-  visibility: hidden;
-}
-
-.sel__placeholder::before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.2em 0.5em;
-  content: attr(data-placeholder);
-  visibility: hidden;
-}
-
-.sel.active .sel__placeholder::before {
-  visibility: visible;
-}
-
-.sel__box {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: -4px;
-  display: none;
-  list-style-type: none;
-  text-align: left;
-  font-size: 15px;
-  background-color: #FFF;
-  width: calc(100% + 8px);
-  box-sizing: border-box;
-}
-
-.sel.active .sel__box {
-  display: block;
-  animation: fadeInUp 500ms;
-}
-
-.sel__box__options {
-  display: list-item;
-  font-family: 'Quicksand';
-  font-size: 15px;
-  color: #838e95;
-  padding: 0.5em 1em;
-  user-select: none;
-}
-
-.sel__box__options::after {
-  content: '\f00c';
-  font-family: 'FontAwesome';
-  font-size: 0.5em;
-  margin-left: 5px;
-  display: none;
-}
-
-.sel__box__options.selected::after {
-  display: inline;
-}
-
-.sel__box__options:hover {
-  background-color: #ebedef;
-}
-
-/* ----- Select Box Black Panther ----- */
-.sel {
-  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
-  width:90px;
-}
-
-.sel--black-panther {
-  z-index: 3;
-}
-
-/* ----- Select Box Superman ----- */
-.sel--superman {
-/*   display: none; */
-  z-index: 2;
-}
-
-/* ===== Keyframes ===== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 20px, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-
-/* table */
-/* body {
+.rsTableContainer { 
     background: linear-gradient(45deg, #49a09d, #5f2c82);
-} */
-
-.rsTableContainer {
-background: linear-gradient(45deg, #49a09d, #5f2c82);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -193,14 +40,12 @@ thead th {
     background-color: #55608f;
 }
 
-tbody tr:hover {
-    background-color: #dddfe7;
-}
-
 tbody td {
     position: relative;
 }
-
+/* tbody tr:hover {
+    background-color: #dddfe7;
+}
 tbody td:hover:before {
     content: "";
     position: absolute;
@@ -212,10 +57,7 @@ tbody td:hover:before {
 }
 tbody td:hover {
 	background-color:#c7cfef;
-}
-
-
-
+} */
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -251,6 +93,7 @@ tbody td:hover {
 						<col width="17%">
 						<col width="25%">
 						<col width="15%">
+						<col width="10%">
 					</colgroup>
 				
 					<thead>
@@ -262,64 +105,17 @@ tbody td:hover {
 							<th>시간단위(분)<br/>/최대시간(분)</th>
 							<th>특이사항</th>
 							<th>사용여부</th>
+							<th>저장/삭제</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>크고넓은방</td>
-							<td>
-								<input type="number" name="" id="" min="1" step="1" value="1" style="width:50px;"/>
-							</td>
-							<td>
-								<div class="sel sel--black-panther">
-								  <select name="select-time" id="select-time">
-								    <option value="" disabled>시작시간</option>
-								    <option value="09:00">09:00</option>
-								    <option value="10:00">10:00</option>
-								    <option value="11:00">11:00</option>
-								  </select>
-								</div>
-							</td>
-							<td>
-								<div class="sel sel--black-panther">
-								  <select name="select-time" id="select-time">
-								    <option value="" disabled>종료시간</option>
-								    <option value="09:00">09:00</option>
-								    <option value="10:00">10:00</option>
-								    <option value="11:00">11:00</option>
-								  </select>
-								</div>
-							</td>
-							<td>
-								<input type="number" name="" id="" min="10" max="60" step="10" value="10" style="width:100px;"/>
-								<input type="number" name="" id="" min="10" step="10" value="60" style="width:100px;"/>
-							</td>
-							<td>ㅎasdfasdfasdfasdfasdfasdfasdfasdfasdfafasdfsadfasdfasdf6</td>
-							<td>
-								<div class="sel sel--black-panther">
-								  <select name="select-enable" id="select-enable">
-								    <option value="" disabled>사용여부</option>
-								    <option value="true">true</option>
-								    <option value="false">false</option>
-								  </select>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>Cell 1</td>
-							<td>Cell 2</td>
-							<td>Cell 3</td>
-							<td>Cell 4</td>
-							<td>Cell 5</td>
-							<td>Cell 6</td>
-							<td>Cell 7</td>
-						</tr>
+					<tbody></tbody>
+					<tfoot>
 						<tr>
 							<td colspan=7 style="text-align:center;">
-								<input type="button" value="추가" />
+								<input type="button" id="tableAppendBtn" value="추가" data-calnum="0"/>
 							</td>
 						</tr>
-					</tbody>
+					</tfoot>
 				</table>
 			</div>
         </div>
@@ -327,64 +123,178 @@ tbody td:hover {
 </div>
 
 
-<div class="sel sel--black-panther">
-  <select name="select-profession" id="select-profession">
-    <option value="" disabled>Profession</option>
-    <option value="hacker">Hacker</option>
-    <option value="gamer">Gamer</option>
-    <option value="developer">Developer</option>
-    <option value="programmer">Programmer</option>
-    <option value="designer">Designer</option>
-  </select>
-</div>
-
 <script>
-$('.sel').each(function() {
-	  $(this).children('select').css('display', 'none');
-	  
-	  var $current = $(this);
-	  
-	  $(this).find('option').each(function(i) {
-	    if (i == 0) {
-	      $current.prepend($('<div>', {
-	        class: $current.attr('class').replace(/sel/g, 'sel__box')
-	      }));
-	      
-	      var placeholder = $(this).text();
-	      $current.prepend($('<span>', {
-	        class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
-	        text: placeholder,
-	        'data-placeholder': placeholder
-	      }));
-	      
-	      return;
-	    }
-	    
-	    $current.children('div').append($('<span>', {
-	      class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
-	      text: $(this).text()
-	    }));
-	  });
-	});
+/* 등록된 table이 없는 경우 안내문구 노출 */
+/* onload 시 테이블 불러옴 */
+$(() => {
+	if($("#rsTable tbody").text() == ''){
+		$("#rsTable tbody").append("<tr data-table-no=0><td colspan=7>등록된 테이블이 없습니다. 추가를 통해 등록해주세요</td></tr>");
+	};
+	
+	$.ajax({
+		url: '${pageContext.request.contextPath}/shop/loadShopTable',
+		data:{
+			id: '${loginMember.id}'
+		},
+		success(res){
+			let calnum = $("#tableAppendBtn").data('calnum');
+			console.log(res != '');
+			if(res != ''){
+				if($("#rsTable tbody tr").last().data('table-no') == 0){
+					$("#rsTable tbody").empty();
+				};	
+			}
+			
+			
+			$.each(res, function(i, e){
+				calnum += 1;
+				$("#tableAppendBtn").data('calnum', calnum);
+				
+				let columnForm = `
+					<tr id="table\${calnum}" data-table-no="\${calnum}">
+						<form:form>
+							<td>
+								<textarea name="tableName\${calnum}" cols="10" rows="2">\${e.tableName}</textarea>
+							</td>
+							<td>
+								<input type="number" name="allowVisitor\${calnum}" min="1" step="1" value="\${e.allowVisitor}" style="width:50px;"/>
+							</td>
+							<td>
+							 	<input type="time" name="allowStart\${calnum}" value="\${e.allowStart}" style="width:100%;font-size:13px;"/>
+							</td>
+							<td>
+								<input type="time" name="allowEnd\${calnum}" value="\${e.allowEnd}" style="width:100%;font-size:13px;"/>
+							</td>
+							<td>
+								<input type="number" name="timeDiv\${calnum}" min="10" max="60" step="10" value="\${e.timeDiv}" style="width:100px;"/>
+								<input type="number" name="timeMax\${calnum}" min="10" step="10" value="\${e.timeMax}" style="width:100px;"/>
+							</td>
+							<td>
+								<textarea name="memo\${calnum}" cols="18" rows="3" placeholder="내용을 입력하세요">\${e.memo}</textarea>
+							</td>
+							<td>
+							  <select name="enable\${calnum}" id="select-enable">
+							    <option value="" disabled selected>사용여부</option>
+							    <option id="enableY" value="Y">Y</option>
+							    <option id="enableN" value="N">N</option>
+							  </select>
+							</td>
+							<td>
+								<input type="submit" class="submitBtn" value="저장" onclick="submitFrm(\${calnum});" data-test="hi"/>
+								<input type="button" class="deleteBtn" value="삭제" onclick="deleteTable(\${calnum});"/>
+							</td>
+						</form:form>
+					</tr>
+						`;
 
-	// Toggling the `.active` state on the `.sel`.
-	$('.sel').click(function() {
-	  $(this).toggleClass('active');
-	});
+				$("#rsTable tbody").append(columnForm);
+				
+				if(e.enable == 'Y'){
+					$(`[name=enable\${calnum}]`).children('#enableY').attr('selected', true);
+				} else{
+					$(`[name=enable\${calnum}]`).children('#enableN').attr('selected', true);
+				}
 
-	// Toggling the `.selected` state on the options.
-	$('.sel__box__options').click(function() {
-	  var txt = $(this).text();
-	  var index = $(this).index();
-	  
-	  $(this).siblings('.sel__box__options').removeClass('selected');
-	  $(this).addClass('selected');
-	  
-	  var $currentSel = $(this).closest('.sel');
-	  $currentSel.children('.sel__placeholder').text(txt);
-	  $currentSel.children('select').prop('selectedIndex', index + 1);
+			})
+		},
+		error: console.log
 	});
+});
+
+/* table 추가 등록 */
+$("#tableAppendBtn").click((e) => {
+	if($("#rsTable tbody tr").last().data('table-no') == 0){
+		$("#rsTable tbody").empty();
+	}
+	$(e.target).data('calnum', $(e.target).data('calnum')+1);
+	let columnForm = `
+		<tr id="table\${$(e.target).data('calnum')}" data-table-no="\${$(e.target).data('calnum')}">
+			<form:form>
+				<td>
+					<textarea name="tableName\${$(e.target).data('calnum')}" cols="10" rows="2" required></textarea>
+				</td>
+				<td>
+					<input type="number" name="allowVisitor\${$(e.target).data('calnum')}" min="1" step="1" value="1" style="width:50px;"/>
+				</td>
+				<td>
+				  	<input type="time" name="allowStart\${$(e.target).data('calnum')}" style="width:100%;font-size:13px;" min="10:00"/>
+				</td>
+				<td>
+				  	<input type="time" name="allowEnd\${$(e.target).data('calnum')}" style="width:100%;font-size:13px;" max="18:00"/>
+				</td>
+				<td>
+					<input type="number" name="timeDiv\${$(e.target).data('calnum')}" min="10" max="60" step="10" value="10" style="width:100px;"/>
+					<input type="number" name="timeMax\${$(e.target).data('calnum')}" min="10" step="10" value="60" style="width:100px;"/>
+				</td>
+				<td>
+					<textarea name="memo\${$(e.target).data('calnum')}" cols="18" rows="3" placeholder="내용을 입력하세요"></textarea>
+				</td>
+				<td>
+				  <select name="enable\${$(e.target).data('calnum')}" id="select-enable">
+				    <option value="" disabled>사용여부</option>
+				    <option value="Y">Y</option>
+				    <option value="N">N</option>
+				  </select>
+				</td>
+				<td>
+					<input type="submit" class="submitBtn" value="저장" onclick="submitFrm(\${$(e.target).data('calnum')});" data-test="hi"/>
+					<input type="button" class="deleteBtn" value="삭제" onclick="deleteTable(\${$(e.target).data('calnum')});"/>
+				</td>
+			</form:form>
+		</tr>
+			`;
+
+	$("#rsTable tbody").append(columnForm);
+});
+
+function submitFrm(num){
+	const content = {
+			shopId: '${loginMember.id}',
+			tableName : $(`[name=tableName\${num}]`).val(),
+			allowVisitor: $(`[name=allowVisitor\${num}]`).val(),
+			allowStart : $(`[name=allowStart\${num}]`).val(),
+			allowEnd : $(`[name=allowEnd\${num}]`).val(),
+			timeDiv : $(`[name=timeDiv\${num}]`).val(),
+			timeMax : $(`[name=timeMax\${num}]`).val(),
+			memo : $(`[name=memo\${num}]`).val(),
+			enable : $(`[name=enable\${num}]`).val()
+	};
+	
+	const tableStr = JSON.stringify(content);
+
+	$.ajax({
+		url: '${pageContext.request.contextPath}/shop/insertShopTable?${_csrf.parameterName}=${_csrf.token}',
+		method: "POST",
+		data: tableStr,
+		contentType: "application/json; charset=utf-8",
+		success(res){
+			alert(res.msg);
+		},
+		error:console.log
+	});
+	
+}
+
+/* 테이블 삭제 func */
+function deleteTable(num){
+	let tableName = $(`[name=tableName\${num}]`).val();
+	console.log(tableName);
+	$.ajax({
+		url: `${pageContext.request.contextPath}/shop/deleteShopTable/\${tableName}?${_csrf.parameterName}=${_csrf.token}`,
+		method: 'DELETE',
+		success(res){
+			alert(res);
+		},
+		error: console.log
+	});
+	
+	$(`#table\${num}`).remove();
+	
+}
+
+
 
 </script>
+
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>>
