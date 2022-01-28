@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -430,8 +431,18 @@ public class GroupController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@GetMapping("/groupCalendar")
-	public void groupCalendar() {}
+	@GetMapping("/groupCalendar/{groupId}")
+	public String groupCalendar(@PathVariable String groupId, Model model) {
+		Group group = groupService.selectOneGroup(groupId);// 그룹정보 가져오기
+		log.debug("group = {}", group);
+		model.addAttribute(group);
+		
+		List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
+		log.info("groupMembers = {}",groupMembers);
+		model.addAttribute("groupMembers",groupMembers);
+		
+		return "/group/groupCalendar";
+	}
 
 	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
 	public String deleteGroupMember (
@@ -448,10 +459,17 @@ public class GroupController {
 	}
 	
 	@PostMapping("/saveCalendarData")
-	public String saveCalendarData(@RequestBody Map<String,Object> param) {
-		log.info("param = {}",param);
+	public String saveCalendarData(@RequestBody Map<String,Object> param[]) {
+		// 1. 기존 데이터 초기화
 		
-		return "redirect:";
+		// param 배열이 비어있지 않으면
+		if(param.length!=0) {
+			log.info("param = {}",param);
+			for(Map<String,Object> p : param) {
+				System.out.println(p);
+			}
+		}
+		return "redirect:/group/groupCalendar";			
 	}
 	
 	

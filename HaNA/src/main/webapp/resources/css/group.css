@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 .group-list .create-group-form-container {
     margin:auto;
     width:500px;
@@ -155,5 +156,6 @@ ul.group-page-thumbnail li img {
 	height: 300px;
 	margin: auto;
 }
+
 
 
