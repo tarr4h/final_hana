@@ -108,7 +108,7 @@
 	<sec:authorize access="isAuthenticated()">
 		<script>
 		$(document).ready( function() {
-			connect(1);	
+			connect(1);
 			//dmAlarm();
 		});
 		let memberId;
