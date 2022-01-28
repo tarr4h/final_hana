@@ -83,7 +83,6 @@ public class ShopController {
     @GetMapping("/hashTagSearch")
     public ResponseEntity<?> hashTagSearch(@RequestParam(value="tagDataArr[]") List<String> tagDataArr) {
     	log.info("tagDataArr = {}", tagDataArr);
-		
     	return ResponseEntity.ok(tagDataArr);
     }
     
