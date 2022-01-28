@@ -9,7 +9,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <fmt:requestEncoding value="utf-8" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="소그룹페이지" name="title" />
+	<jsp:param value="프로필수정" name="title" />
 </jsp:include>
 <section>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
@@ -38,11 +38,11 @@
                 <tr>
                     <th>해시태그</th>
                     <td>
-                        <input type="checkbox" name="hashtag" id="hashtag-ex" value="운동"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-ex" value="운동" onclick="hash('ex');"/>
                         <label for="hashtag-ex">운동</label>
-                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서" onclick="hash('re');"/>
                         <label for="hashtag-re">독서</label>
-                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산" onclick="hash('mu');"/>
                         <label for="hashtag-mu">등산</label>
                     </td>
                 <tr>
@@ -56,6 +56,21 @@
             <input type="submit" class="btn btn-dark"></button>
         </form:form>
     </div>
+
+<script>
+function hash(tag){
+	console.log(tag);
+	if(tag == 'ex'){
+		$("#hashtag-ex").prop('checked', true);	
+	}
+	if(tag == 're'){
+		$("#hashtag-re").prop('checked', true);	
+	}
+	if(tag == 'mu'){
+		$("#hashtag-mu").prop('checked', true);	
+	}
+}
+</script>
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>

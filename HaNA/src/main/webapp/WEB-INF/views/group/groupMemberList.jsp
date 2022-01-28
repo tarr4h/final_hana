@@ -8,7 +8,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <fmt:requestEncoding value="utf-8" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="소그룹페이지" name="title" />
+	<jsp:param value="소모임멤버리스트" name="title" />
 </jsp:include>
 
 <section>
@@ -61,6 +61,9 @@ function grade(code){
 	if(code == 'ld'){
 		$("#ld").prop('checked', true);	
 	}
+	if(code == 'mg'){
+		$("#mg").prop('checked', true);
+	}
 	if(code == 'mb'){
 		$("#mb").prop('checked', true);
 	}
@@ -87,15 +90,15 @@ function grade(code){
 							<div class="row justify-content-start">
 								<div class="col-12">
 									<div class="row">
-										<input type="radio" name="level" id="ld" value="ld" ${list.MEBER_LIST_CODE  eq 'ld' ? 'checked' : ''}>
+										<input type="radio" name="level" id="ld" value="ld" >
 										<label for="ld" class="form-check-label">리더</label>
 									</div>
 									<div class="row">
-										<input type="radio" name="level" id="mg" value="mg" ${list.MEMBER_LIST_CODE('mg') ? 'checked' : '' }> 
+										<input type="radio" name="level" id="mg" value="mg"> 
 										<label for="mg" class="form-check-label">매니저</label>
 									</div>
 									<div class="row">
-										<input type="radio" name="level" id="mb" value="mb" ${list.MEMBER_LIST_CODE('mb') ? 'checked' : '' }>
+										<input type="radio" name="level" id="mb" value="mb">
 										<label for="mb" class="form-check-label">멤버</label>
 									</div>
 								</div>
