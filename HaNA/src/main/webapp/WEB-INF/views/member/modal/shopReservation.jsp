@@ -21,18 +21,6 @@
 				<!-- 내용 -->
 				<div class="modal-body">
 					${shopInfo.shopIntroduce }
-					<br />
-					<span>다음을 클릭해주세요</span>
-					<br />
-					<span>다음을 클릭해주세요</span>
-					<br />
-					<span>다음을 클릭해주세요</span>
-					<br />
-					<span>다음을 클릭해주세요</span>
-					<br />
-					<span>다음을 클릭해주세요</span>
-					<br />
-					<span>다음을 클릭해주세요</span>
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -48,19 +36,13 @@
 			<div class="modal-content">
 				<!-- header -->
 				<div class="modal-header">
-					<h3 class="modal-title">예약일시 선택</h3>
+					<h3 class="modal-title">예약일 선택</h3>
 						<button class="close" type="button" data-dismiss="modal" aria-label="Close">닫기</button>
 				</div>
 				<!-- 내용 -->
 				<div class="modal-body">
-					<input type="date" name="" id="" />
-					<select name="time-hour" id="time-hour">
-						<option value="" disabled selected>시간 선택</option>
-						
-					</select>
-					<select name="time-minutes" id="time-minutes">
-						<option value="" disabled selected>분 선택</option>
-					</select>
+					<input type="date" name="reservationDate" id="" />
+
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -83,8 +65,7 @@
 				<!-- 내용 -->
 				<div class="modal-body">
 					<select name="table-select" id="table-select">
-						<option value="" disabled selected>테이블 선택</option>
-						
+
 					</select>
 				</div>
 				<!-- footer -->
@@ -136,6 +117,7 @@
 			let nextModal = `#modal\${$(e.target).data('num')+1}`;
 			e.preventDefault();
 			$(curModal).css('display', 'none');
+			$(curModal).modal('hide');
 			$(nextModal).modal({backdrop:'static', keyboard:false});
 		});
 		/* 이전 버튼 */
@@ -145,6 +127,7 @@
 			
 			e.preventDefault();
 			$(prevModal).css('display', 'block');
+			$(prevModal).modal('show');
 			$(curModal).modal('hide');
 		})
 		/* x버튼 클릭 시에만 모달 닫히게 */
@@ -152,8 +135,53 @@
 			$(".modal.fade").modal("hide");
 		});
 		
-		/* 예약 등록하기 */
+		/* 예약 등록하기 클릭 */
 		$(".submitBtn").click((e) => {
 			$(".modal.fade").modal("hide");
+			console.log($("[name=table-select]").val(''));
 		});
+		
+		/* 모달 이동 시 제어 onload  */
+		$(() => {
+			/* show modal on event */
+			$(".modal").on('show.bs.modal', function(e){
+				console.log($(e.target).prop('id'), '열림');
+				
+				let modalId = $(e.target).prop('id');
+				if(modalId == 'modal3'){
+					tableModal();
+				}
+			});
+			
+			/* hide modal on event */
+			$(".modal").on('hidden.bs.modal', function(e){
+				console.log($(e.target).prop('id'), '닫힘');
+				/* console.log($(e.target).find('h3').text()); */
+			})
+		});
+		
+		function tableModal(){
+			$.ajax({
+				url: '${pageContext.request.contextPath}/shop/loadShopTable',
+				data: {
+					id: '${shopInfo.id}'
+				},
+				success(res){					
+					let tableSelect = $("[name=table-select]");
+					let defaultOption = `<option value="" disabled selected>테이블 선택</option>`;
+					
+					tableSelect.empty();					
+					tableSelect.append(defaultOption);
+					
+					$.each(res, (i, e) => {				
+						let option = `
+							<option value="\${e.tableId}">\${e.tableName}</option>
+						`;
+						$tableSelect.append(option);
+					});
+					
+				},
+				error:console.log
+			});
+		}
 	</script>
