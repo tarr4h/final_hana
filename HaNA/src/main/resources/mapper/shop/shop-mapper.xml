@@ -23,7 +23,7 @@
     
     <select  id="selectHashTagList" resultType="hashtag">
         select 
-            tag_name 
+            * 
         from
             hashtag 
         where 
@@ -88,4 +88,26 @@
   		where
   			table_id = #{tableId}
     </select>
+    
+    <select id="selectHashTagShopList" parameterType="map" resultType="map">
+
+            select
+            *
+        	from
+             	hashtag a 
+           inner join 
+           		shop_info b
+          on a.tag_id = b.id
+        where
+           b.location_x <![CDATA[<]]> ${maxLocationX}
+            and
+            b.location_y <![CDATA[<]]> ${maxLocationY}
+            and
+            b.id != #{id}
+            and
+            a.tag_name in(#{hashTagOne},#{hashTagTwo})
+    </select>
+    
+    
+    
 </mapper>
