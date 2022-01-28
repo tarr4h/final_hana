@@ -128,9 +128,6 @@ function execDaumPostcode() {
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('postcode').value = data.zonecode;
             document.getElementById("roadAddress").value = roadAddr;
-
-            console.log(data.buildingName);
-            console.log(data.roadAddress);
             
             $("[name=addressAll]").val(data.roadAddress);
             
@@ -143,6 +140,12 @@ function execDaumPostcode() {
                     console.log(result[0].y);
                     $('[name=locationX]').val(result[0].x);
                     $('[name=locationY]').val(result[0].y);
+                } else{
+                	console.log('실패');
+                	$("[name=addressAll]").val('');
+                	$("#roadAddress").val('');
+                	$("#postcode").val('');
+                	alert("유효하지 않은 주소입니다. 다시 검색해주세요.");
                 }
             };
 
