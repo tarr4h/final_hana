@@ -14,15 +14,15 @@ public interface MemberDao {
 
 	int updateMember(Member member);
 
-	int updatePersonality(Member member);
+	//int updatePersonality(Member member);
 
-	int updateInterest(Member member);
+	//int updateInterest(Member member);
 
-	Member selectPersonality(String id);
+	//Member selectPersonality(String id);
 
-	int insertPersonality(Member member);
+	//int insertPersonality(Member member);
 
-	int insertInterest(Member member);
+	//int insertInterest(Member member);
 
 	int addFollowing(Map<String, Object> map);
 

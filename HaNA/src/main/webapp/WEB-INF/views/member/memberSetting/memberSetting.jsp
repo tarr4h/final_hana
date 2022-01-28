@@ -9,10 +9,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="설정화면" name="memberSetting/"/>
 </jsp:include>
-<!-- 우측 공간확보 -->
-<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
-<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
-</section>
 <section>
 <sec:authentication property="principal" var="loginMember"/>
 
@@ -23,16 +19,11 @@
 		})
 	</script>	
 </c:if>
- 
-<div class="settingBar">
-  <a class="settingList" href="${pageContext.request.contextPath}/member/memberSetting/memberSetting">프로필편집</a>
-  <a class="settingList" href="#">비밀번호 변경</a>
-  <a class="settingList" href="#">계정 공개</a>
-  <a class="settingList" href="#">정보 공개</a>
-  <a class="settingList" href="#">예약 관리</a> 
-</div>
-  
+
 <style>
+.col-sm-4{
+	width : 350px;
+	}
  .settingBar{
     height: 60px;
     text-align: center;
@@ -46,9 +37,15 @@
       color: black;
     text-decoration: none;
 }
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: gray;
+    border-color: gray;
+    }
 .form-control {
     display: block;
-    width: 450px;
+    width: 480px;
     height : 50px;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
@@ -70,9 +67,34 @@
 	height : 38px;
 	margin-bottom : 15px;
 }
+.mx-auto{
+	width : 450px;
+	padding-left:50px;
+	}
+.mx-auto text-center{
+	margin-left : 10px;}
+.row {
+   --bs-gutter-x: -15rem;
+   }
+textarea.form-control {
+    min-height: 150px;
+}
 </style>
 
-
+<br><br><br>
+<div class="container">
+    <div class="row">
+    	<!-- 메뉴 영역 -->
+        <div class="col-sm-4">
+        	<ul class="list-group">
+			  <li class="list-group-item active" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">개인정보 변경</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ '">비밀번호 변경</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ '">계정 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ ">정보 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ ">예약 관리</li>
+			</ul>
+        </div>
+   
 <div id="enroll-container" class="mx-auto text-center">
 	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" method="POST">
 		<table class="mx-auto">
@@ -89,7 +111,9 @@
 			<tr>
 				<th>프로필사진</th>
 				<td>
-					<input type="file" class="form-control" name="upFile" id="" value="파일 선택" />
+					<img src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}" alt="" style="width:30%;"/>
+					<br><br> 
+					<input type="file" class="form-control" name="upFile" id="" value="${loginMember.picture}" />
 					<input type="hidden" name="picture" value="${loginMember.picture }" />
 				</td>
 			</tr>
@@ -98,8 +122,7 @@
 				<th>소개</th>
 				<td>
 				<!-- <input type="text" class="form-control" name="introduce" id="introduce" value="${loginMember.introduce}" required> -->	
-				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="20" >  ${loginMember.introduce} </textarea>
-				
+				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="80" >  ${loginMember.introduce} </textarea>
 				</td>
 			</tr>
 			<tr>
@@ -114,7 +137,7 @@
 					<input type="hidden" name="locationY" />
 				</td>
 			</tr>  
-			<tr>
+	<!-- <tr>
 				<th>내 성격</th>
 				<td>	
 					<select name="personality" id="personality" class="custom-select" required>
@@ -152,12 +175,13 @@
 				</select>
 				</td>
 			</tr> 
-
+			 -->		
 		</table>
- 
-		<input type="submit" class="btn btn-dark"></button>
-		<input type="reset" class="btn btn-dark"></button>
+		<input type="submit" class="btn btn-dark">
+		<input type="reset" class="btn btn-dark">
 	</form:form>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript" 

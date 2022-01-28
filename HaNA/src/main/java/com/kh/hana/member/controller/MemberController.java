@@ -189,7 +189,7 @@ public class MemberController {
         oldMember.setLocationY(member.getLocationY());
 
         redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
-        if(member.getAccountType() == 1) {
+        if(member.getAccountType() != 1) {
         	return "redirect:/member/memberSetting/memberSetting";        	
         } else {
     		return "redirect:/member/shopSetting/personal";

@@ -14,7 +14,7 @@ public interface MemberService {
 
 	int updateMember(Member member, Member oldMember);
 
-	Member selectPersonality(String id);
+	//Member selectPersonality(String id);
 
 	int updateShopInfo(Shop shop);
 

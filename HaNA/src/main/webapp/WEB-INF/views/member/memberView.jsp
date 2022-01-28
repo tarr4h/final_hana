@@ -24,10 +24,374 @@
 	alert("${msg}");
 	</script>
 </c:if>
- 
+  
 
+<div class="container mt-2">
+    <div class="row" id="myInfo">
+    	<!-- 프로필이미지 영역 -->
+        <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
+        	<div class="profileImg d-flex">
+        		<!-- 이미지를 넣으세요 -->
+        		<img src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.picture}" alt=""/>
+        	</div>
+        	<div class="profileBtn">
+        		<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
+        		<img src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png" alt="" />
+        	</div>
+        </div>
+        <!-- 프로필 세부정보 영역 -->
+        <div class="col-sm-7" id="profileStatus">
+		<br>
+        	<span>팔로잉 : </span>
+        	 <button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
+        	&nbsp;&nbsp;&nbsp;&nbsp; 
+        	<span>팔로워 : </span>
+        	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button> 
+ 			
+ 			
+<script>
+$("#btn-following-list").on( "click", function() {
+    $("#test_modal").modal();
+});
+
+$("#btn-follower-list").on( "click", function() {
+    $("#test_modal1").modal();
+});
+</script>
+
+ <!-- 팔로잉리스트 모달창 -->
+       <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>팔로잉</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody">
+						<%-- <tr>
+							<td>프로필</td>
+							<td>아이디</td>
+							<td><button type="button"
+									class="btn btn-default btn-sm btn-success"
+									style="margin-right: 1%;">승인</button>
+								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
+						</tr> --%>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 팔로워리스트 모달창 -->
+       <div class="modal fade" id="test_modal1" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>팔로워</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody1">
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- 글쓰기모달 -->
+    <div class="modal fade" id="boardFormModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">게시글 작성</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+					</thead>
+					<tbody id="modalTbody">
+	<form:form
+		name="boardFrm" 
+		action="${pageContext.request.contextPath}/member/memberBoardEnroll?${_csrf.parameterName}=${_csrf.token}" 
+		method="post"
+		enctype="multipart/form-data">
+		<input type="text" class="form-control" name="writer" value="${loginMember.id}" readonly required>
+		<br>
+		<div class="input-group mb-3" style="padding:0px;">
+		  <!-- <div class="input-group-prepend" style="padding:0px;">
+		    <span class="input-group-text">첨부파일1</span>
+		  </div> -->
+		   
+		  <div class="custom-file">
+		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile1" multiple>
+		   <!-- <label class="custom-file-label" for="upFile1">파일을 선택하세요</label> --> 
+		  </div>
+		</div>
+	 	<!--<div class="input-group mb-3" style="padding:0px;">
+		  <div class="input-group-prepend" style="padding:0px;">
+		    <span class="input-group-text">첨부파일2</span>
+		  </div> -->
+		 
+		  <div class="custom-file">
+		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile2" multiple>
+		    <!-- <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>-->
+		  </div>
+		  <br>
+		</div>
+	    <textarea class="form-control" name="content" placeholder="내용" rows="15" cols="15" required></textarea>
+		<br />
+		<input type="submit" class="btn btn-outline-success" value="저장" >
+	</form:form>
+						<%-- <tr>
+							<td>프로필</td>
+							<td>아이디</td>
+							<td><button type="button"
+									class="btn btn-default btn-sm btn-success"
+									style="margin-right: 1%;">승인</button>
+								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
+						</tr> --%>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>      
+        </div>
+</div>
+        
+        
+        
+        	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
+        
+			<c:if test="${loginMember.id.equals(member.id) }">
+        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
+        		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
+        	</button>
+        	</c:if>
+        	<c:if test="${!loginMember.id.equals(member.id) }">
+        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
+        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
+        	</button>
+        	</c:if>
+        	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
+        		<input type="hidden" name ="friendId" value="${member.id}" />
+        		<input type="hidden" name ="myId" value="${loginMember.id}" />
+        	</form:form>
+
+            <br /><br/>
+            
+            <div class="profileTableArea">
+				<table id="profileTable">
+					<tbody>
+						<tr>
+							<td class="tableKey">아이디</td>
+							<td class="tableValue">${member.id}</td>
+						</tr>
+					<!-- <tr>
+							<td><span class="tableKey">성격</span></td>
+							<c:if test="${empty member.personality}">
+							<td><button type="button" class="btn btn-dark" onclick="goSetting();">설정하기</button></td>
+						 
+							</c:if>
+							<td>${member.personality}</td>
+						</tr>
+						<tr>
+							<td><span class="tableKey">관심</span></td>
+							<c:if test="${empty member.interest}">
+							<td><button type="button" class="btn btn-dark" onclick="goSetting();">설정하기</button></td>
+							</c:if>
+							<td>${member.interest}</td>
+						</tr>
+						 -->	
+						<tr>
+							<td><span class="tableKey">지역</span></td>
+							<td>${member.addressFull}</td>
+						</tr>
+				<!--  		<tr>
+							<td><span class="tableKey">취미</span></td>
+							<td>낚시</td>
+						</tr>-->
+						<tr>
+							<td rowspan=2><span class="tableKey">소개</span></td>
+							<td class="tableValue" rowspan=1>
+								 ${member.introduce} 
+							<!-- <pre><textarea id="textArea" readonly disabled>  
+								</textarea></pre> --> 	
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+    <c:if test="${loginMember.id.equals(member.id) }">
+        	<button id="btn-add" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+	</c:if>
+		</div>
+   </div>
+</div> 
+    
+<div class="container mt-2">       
+    <div class="row">   
+ 
+        <!-- 탭 영역 -->
+        <!-- <div class="col-sm-12 d-flex justify-content-center align-items-center" id="tab">
+        	<input type="button" class="m-3" value="버튼1" />
+        	<input type="button" class="m-3" value="버튼2" />
+        	<input type="button" class="m-3" value="버튼3" />
+        </div> -->
+    </div>
+        
+    <div class="row">    
+        <!-- thumbnail 1st line -->
+        <div class="thumbnail col-sm-4 ">
+        	<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
+        </div>
+        <div class="thumbnail col-sm-4">
+        	<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
+        </div>
+        <div class="thumbnail col-sm-4">
+        </div>
+        
+        <!-- thumbnail 2nd line  -->
+        <div class="thumbnail col-sm-4">
+        </div>
+        <div class="thumbnail col-sm-4">
+        </div>
+        <div class="thumbnail col-sm-4">
+        </div>
+        
+        <!-- thumbnail 3rd line -->
+        <div class="thumbnail col-sm-4">
+        </div>
+        <div class="thumbnail col-sm-4">
+        </div>
+        <div class="thumbnail col-sm-4">
+        </div>
+    </div>
+</div>
+        
+<script>
+//설정페이지로 이동
+function goSetting(){
+	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
+}
+
+//친구추가하기
+function addFollowing(){
+	if(confirm("친구추가를 하시겠습니까?")){
+		$(document.addFollowingFrm).submit();
+	}
+}
+
+//글쓰기
+/* $("#btn-add").click((e) => {
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/boardForm",	
+		success(resp){
+			console.log(resp);
+		},
+		error : console.log
+	});
+});
+  */
+
+//팔로잉 리스트 가져오기
+$("#btn-following-list").click((e) => {
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/followingList",
+		data : $("[name=friendId]"),
+		success(resp){
+			console.log("결과 :"+ resp);
 			
 
+			$("#modalTbody").empty();
+			
+			const {memberId} = resp;
+			$.each(resp, (i, e) => {
+				console.log(e.followers[0].memberId);
+				console.log(e.picture);
+				let tr= `
+				<tr>
+					<td>
+						<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
+						<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].memberId}">\${e.followers[0].memberId}</a>
+					</td>
+				</tr>
+			`;
+			console.log(tr);
+			$("#modalTbody").append(tr);
+		})
+	},
+	error: console.log
+	})
+});
+ 
+
+
+//팔로워 리스트 가져오기 
+$("#btn-follower-list").click((e) => {
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/followerList",
+		data : $("[name=friendId]"),
+		success(resp){
+			console.log(resp);
+			
+			$("#modalTbody1").empty();
+			
+			const {followingId} = resp;
+			$.each(resp, (i, e) => {
+				console.log(e.followingId);
+				let tr= `
+					<tr>
+					<td>
+						<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
+						<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followingId}">\${e.followingId}</a>
+					</td>
+				</tr>
+			`;
+			$("#modalTbody1").append(tr);
+			
+		})
+	},
+	error: console.log
+	})
+});
+ 
+ 
+
+//글쓰기
+$("#btn-add").click(()=> {
+	console.log("ddd");
+  $("#boardFormModal").modal();
+});
+</script>
+        
 <style>
 	#myInfo{
 		border: 1px solid black;
@@ -132,392 +496,18 @@
 	.thumbnail img{
 		width: 100%;
 	}
-
+	
+	#a {
+    color: black;
+    text-decoration: none;
+}
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    width: 70px;
+}
 </style>
-
-<div class="container mt-2">
-    <div class="row" id="myInfo">
-    	<!-- 프로필이미지 영역 -->
-        <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
-        	<div class="profileImg d-flex">
-        		<!-- 이미지를 넣으세요 -->
-        		<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
-        	</div>
-        	<div class="profileBtn">
-        		<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png" alt="" />
-        	</div>
-        </div>
-
-        <!-- 프로필 세부정보 영역 -->
-        <div class="col-sm-7" id="profileStatus">
-        	<span>팔로잉 : </span>
-        	 <button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
-        	&nbsp;&nbsp;&nbsp;&nbsp; 
-        	<span>팔로워 : </span>
-        	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button> 
- 			
- 			
-<script>
-$("#btn-following-list").on( "click", function() {
-    $("#test_modal").modal();
-});
-
-$("#btn-follower-list").on( "click", function() {
-    $("#test_modal1").modal();
-});
-</script>
-
- <!-- 팔로잉리스트 모달창 -->
-       <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel"></h4>
-			</div>
-			<div class="modal-body">
-				<table class="table" style="text-align: center;" name="modalTable">
-					<thead class="table-light">
-						<tr>
-							<th>팔로잉</th>
-						</tr>
-					</thead>
-					<tbody id="modalTbody">
-						<%-- <tr>
-							<td>프로필</td>
-							<td>아이디</td>
-							<td><button type="button"
-									class="btn btn-default btn-sm btn-success"
-									style="margin-right: 1%;">승인</button>
-								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
-						</tr> --%>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- 팔로워리스트 모달창 -->
-       <div class="modal fade" id="test_modal1" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel"></h4>
-			</div>
-			<div class="modal-body">
-				<table class="table" style="text-align: center;" name="modalTable">
-					<thead class="table-light">
-						<tr>
-							<th>팔로워</th>
-						</tr>
-					</thead>
-					<tbody id="modalTbody1">
-						<%-- <tr>
-							<td>프로필</td>
-							<td>아이디</td>
-							<td><button type="button"
-									class="btn btn-default btn-sm btn-success"
-									style="margin-right: 1%;">승인</button>
-								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
-						</tr> --%>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<!-- 글쓰기모달 -->
-    <div class="modal fade" id="boardFormModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">게시글 작성</h4>
-			</div>
-			<div class="modal-body">
-				<table class="table" style="text-align: center;" name="modalTable">
-					<thead class="table-light">
-					</thead>
-					<tbody id="modalTbody">
-	<form:form
-		name="boardFrm" 
-		action="${pageContext.request.contextPath}/member/memberBoardEnroll?${_csrf.parameterName}=${_csrf.token}" 
-		method="post"
-		enctype="multipart/form-data">
-		<input type="text" class="form-control" name="writer" value="${loginMember.id}" readonly required>
-		<br>
-		<div class="input-group mb-3" style="padding:0px;">
-		  <!-- <div class="input-group-prepend" style="padding:0px;">
-		    <span class="input-group-text">첨부파일1</span>
-		  </div> -->
-		   
-		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile1" multiple>
-		   <!-- <label class="custom-file-label" for="upFile1">파일을 선택하세요</label> --> 
-		  </div>
-		</div>
-	 	<!--<div class="input-group mb-3" style="padding:0px;">
-		  <div class="input-group-prepend" style="padding:0px;">
-		    <span class="input-group-text">첨부파일2</span>
-		  </div> -->
-		 
-		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile2" multiple>
-		    <!-- <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>-->
-		  </div>
-		  <br>
-		</div>
-	    <textarea class="form-control" name="content" placeholder="내용" required></textarea>
-		<br />
-		<input type="submit" class="btn btn-outline-success" value="저장" >
-	</form:form>
-						<%-- <tr>
-							<td>프로필</td>
-							<td>아이디</td>
-							<td><button type="button"
-									class="btn btn-default btn-sm btn-success"
-									style="margin-right: 1%;">승인</button>
-								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
-						</tr> --%>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>      
-        </div>
-</div>
-        
-        
-        
-        	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
-        
-			<c:if test="${loginMember.id.equals(member.id) }">
-        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
-        	</button>
-        	</c:if>
-        	<c:if test="${!loginMember.id.equals(member.id) }">
-        	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
-        	</button>
-        	</c:if>
-        	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
-        		<input type="hidden" name ="friendId" value="${member.id}" />
-        		<input type="hidden" name ="myId" value="${loginMember.id}" />
-        	</form:form>
-
-            <br />
-            
-            <div class="profileTableArea">
-				<table id="profileTable">
-					<tbody>
-						<tr>
-							<td class="tableKey">아이디</td>
-							<td class="tableValue">${member.id}</td>
-						</tr>
-						<tr>
-							<td><span class="tableKey">성격</span></td>
-							<c:if test="${empty member.personality}">
-							<td><button type="button" class="btn btn-dark" onclick="goSetting();">설정하기</button></td>
-						 
-							</c:if>
-							<td>${member.personality}</td>
-						</tr>
-						<tr>
-							<td><span class="tableKey">관심</span></td>
-							<c:if test="${empty member.interest}">
-							<td><button type="button" class="btn btn-dark" onclick="goSetting();">설정하기</button></td>
-							</c:if>
-							<td>${member.interest}</td>
-						</tr>
-						<tr>
-							<td><span class="tableKey">지역</span></td>
-							<td>${member.addressFull}</td>
-						</tr>
-				<!--  		<tr>
-							<td><span class="tableKey">취미</span></td>
-							<td>낚시</td>
-						</tr>-->
-						<tr>
-							<td rowspan=2><span class="tableKey">소개</span></td>
-							<td class="tableValue" rowspan=1>
-								 ${member.introduce} 
-							<!-- <pre><textarea id="textArea" readonly disabled>  
-								</textarea></pre> --> 	
-							</td>
-						</tr>
-						<tr>
-							
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-        	<button style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
-		</div>
-   </div>
-</div> 
-    
-    <c:if test="${loginMember.id.equals(member.id) }">
-    <div class="row" style="height:50px">    
-       	<input type="button" id="btn-add" 
-       			style="float:right;" >
-       	<i style="font-size: 30px;" class="fas fa-pencil-alt"></i>
-	</div> 
-	</c:if>
-<div class="container mt-2">       
-    <div class="row">   
- 
-        <!-- 탭 영역 -->
-        <!-- <div class="col-sm-12 d-flex justify-content-center align-items-center" id="tab">
-        	<input type="button" class="m-3" value="버튼1" />
-        	<input type="button" class="m-3" value="버튼2" />
-        	<input type="button" class="m-3" value="버튼3" />
-        </div> -->
-    </div>
-        
-    <div class="row">    
-        <!-- thumbnail 1st line -->
-        <div class="thumbnail col-sm-4 ">
-        	<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
-        </div>
-        <div class="thumbnail col-sm-4">
-        	<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-        
-        <!-- thumbnail 2nd line  -->
-        <div class="thumbnail col-sm-4">
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-        
-        <!-- thumbnail 3rd line -->
-        <div class="thumbnail col-sm-4">
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-    </div>
-</div>
-        
-<script>
-//설정페이지로 이동
-function goSetting(){
-	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
-}
-
-//친구추가하기
-function addFollowing(){
-	if(confirm("친구추가를 하시겠습니까?")){
-		$(document.addFollowingFrm).submit();
-	}
-}
-
-//글쓰기
-/* $("#btn-add").click((e) => {
-	$.ajax({
-		url : "${pageContext.request.contextPath}/member/boardForm",	
-		success(resp){
-			console.log(resp);
-		},
-		error : console.log
-	});
-});
-  */
-
-//팔로잉 리스트 가져오기
-$("#btn-following-list").click((e) => {
-	$.ajax({
-		url : "${pageContext.request.contextPath}/member/followingList",
-		data : $("[name=friendId]"),
-		success(resp){
-			console.log(resp);
-			
-
-			$("#modalTbody").empty();
-			
-			const {memberId} = resp;
-			$.each(resp, (i, e) => {
-				console.log(e.followers[0].memberId);
-				console.log(e.picture);
-				let tr= `
-				<tr>
-				<td>
-					\${e.followers[0].memberId}
-					
-					 <img src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
-					 
-				</td>
-			</tr>
-			`;
-			console.log(tr);
-			$("#modalTbody").append(tr);
-		})
-	},
-	error: console.log
-	})
-});
- 
- 
-
-//팔로워 리스트 가져오기 
-$("#btn-follower-list").click((e) => {
-	$.ajax({
-		url : "${pageContext.request.contextPath}/member/followerList",
-		data : $("[name=friendId]"),
-		success(resp){
-			console.log(resp);
-			
-			$("#modalTbody1").empty();
-			
-			const {followingId} = resp;
-			$.each(resp, (i, e) => {
-				console.log(e.followingId);
-				let tr= `
-				<tr>
-				<td>
-					\${e.followingId}
-				</td>
-			</tr>
-			`;
-			$("#modalTbody1").append(tr);
-			
-		})
-	},
-	error: console.log
-	})
-});
- 
- 
-
-//글쓰기
-$("#btn-add").click(()=> {
-	console.log("ddd");
-  $("#boardFormModal").modal();
-});
-</script>
-        
         
         
 

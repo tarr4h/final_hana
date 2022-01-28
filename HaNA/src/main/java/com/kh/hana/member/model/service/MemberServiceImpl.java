@@ -33,40 +33,37 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updateMember(Member member, Member oldMember) {
-		int result1 = memberDao.updateMember(member);
-		log.info("result1 ={}", result1);
-		int result2 = 0;
-		int result3 = 0;
-		log.info("memberPersonality ={}", member.getPersonality());
-		if(oldMember.getPersonality() != null) {
-			result2 = memberDao.updatePersonality(member);
-		}else {
-			result2 = memberDao.insertPersonality(member);
-		}
-		
-		if(oldMember.getInterest() != null) {
-			result3 = memberDao.updateInterest(member);
-		}else {
-			result3 = memberDao.insertInterest(member);
-		}
-
-		log.info("member={}", member);
-		
-		if(result1 == 1 || result2 == 1 || result3 ==1) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
-		
+		int result = memberDao.updateMember(member);
+		log.info("result ={}", result);
+//		int result2 = 0;
+//		int result3 = 0;
+//  	log.info("memberPersonality ={}", member.getPersonality());
+//		if(oldMember.getPersonality() != null) {
+//			result2 = memberDao.updatePersonality(member);
+//		}else {
+//			result2 = memberDao.insertPersonality(member);
+//		}
+//		
+//		if(oldMember.getInterest() != null) {
+//			result3 = memberDao.updateInterest(member);
+//		}else {
+//			result3 = memberDao.insertInterest(member);
+//		}		
+//		if(result1 == 1) {
+//			return 1;
+//		}
+//		else {
+//			return 0;
+//		}
+		return result;		
 	}
 
-	@Override
-	public Member selectPersonality(String id) {
-		Member member = memberDao.selectPersonality(id);
-		log.info("id={}", id);
-		return member;
-	}
+//	@Override
+//	public Member selectPersonality(String id) {
+//		Member member = memberDao.selectPersonality(id);
+//		log.info("id={}", id);
+//		return member;
+//	}
 
 	@Override
 	public int updateShopInfo(Shop shop) {
