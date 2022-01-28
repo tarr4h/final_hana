@@ -84,7 +84,7 @@
 					HashTag</span>
 				<form class="form-inline d-flex">
 					<input class="form-control mr-sm-2" type="search"
-						placeholder="Search" aria-label="Search" id="searchInput" value="">
+						placeholder="Search" aria-label="Search" id="searchInput">
 
 				</form>
 			</nav>
@@ -95,7 +95,7 @@
 				<!-- HashTag 검색 후 클릭/엔터 시 동적으로 버튼 생길 공간  -->
 			</div>
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-				id="searchBtn">Search</button>
+				id="searchBtn" >Search</button>
 		</div>
 
 
@@ -270,7 +270,6 @@ $(() => {
 		console.log("${loginMember.addressAll}");
 		var Addr_val = "${loginMember.addressAll}";
 	
-
 		// 도로명 주소를 좌표 값으로 변환(API)
 		naver.maps.Service.geocode({
 	        query: Addr_val
@@ -296,36 +295,43 @@ $(() => {
 				},
 				success(res){
 					 list = res;
-					console.log(list.length);
+					console.log(list);
 					const max = list.length;
 
-					
+					// 해시태그 있을때 
 					if(startNum == 0){
 						  for(var i=0; i<endNum; i++){
-							console.log("if list[i].ID : " + list[i].ID)
 							var htmlOut='';
 							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
 							htmlOut += '<div class="shopProfile d-flex">';
 						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 						    htmlOut += '</div>';
 						    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+						    if(list[i].TAG_NAME === ""){
+							console.log(list[i])
+							htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    	
+						    }
 							$('#shopList').append(htmlOut); 
 							
 						}  
-					}  
-						else{
+					}else{
 						 	for(var i=startNum; i<endNum; i++){  
+							console.log(list[i])
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+ list[i].ID +'</span>';
+								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+								    if(list[i].TAG_NAME === ""){
+										console.log(list[i])
+									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    	
+									}
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
 										return;
-									}
+								}
 						 	}
 						  }  
 				page++;
@@ -419,9 +425,6 @@ $(() => {
     };
     
     
- 
- 
- 
  //  엔터시 submit 막기  
  document.addEventListener('keydown', function(event) {
   if (event.keyCode === 13) {
@@ -429,6 +432,10 @@ $(() => {
   };
 });
   
+
+ 
+ 
+ 
 </script>
 
 

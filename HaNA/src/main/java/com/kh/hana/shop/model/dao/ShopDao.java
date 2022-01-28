@@ -26,8 +26,9 @@ public interface ShopDao {
 
 	Table selectOneTable(Table table);
 
-	//List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data);
+	List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data);
 
+	
 	
 
 }
