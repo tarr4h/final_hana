@@ -469,21 +469,13 @@ public class GroupController {
 	
 	// 프로필 수정
 	@PostMapping("/groupUpdate")
-	public String groupUpdate(Group group, 
-							@RequestParam MultipartFile upFile,
-							RedirectAttributes redirectAttr,
-							@AuthenticationPrincipal Group oldGroup) {
+	public String groupUpdate(Group group) {
+		log.info("groupUpdate ={}", group);
+		int result = groupService.groupUpdate(group);
 		
-		log.info("group ={}", group);
-		log.info("oldGroup ={}", oldGroup);
-		String oldImage = group.getImage();
+		String msg = result > 0 ? "수정 완료" : "수정 실패";
+		log.info("msg ={}", msg);
 		
-		if(oldImage != null) {
-			String saveDirectory = application.getRealPath("/resources/upload/group/profile");
-			File file = new File(saveDirectory, oldImage);
-			boolean del = file.delete();
-			log.info("del ={}", del);
-		}
 		return "redirect:/group/groupProfile";
 	}
 	
