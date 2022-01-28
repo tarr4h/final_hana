@@ -283,6 +283,18 @@ public class GroupController {
             String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
             log.info("msg ={}", msg);
             
+            //소모임채팅 입장 메세지
+            Map<String, Object> param = new HashMap<>();
+            param.put("groupId", groupId);
+            param.put("memberId", memberId);
+            int result3 = 0;
+            if(result > 0) {
+            	result3 = chatService.insertGroupMessage22(param);
+            	log.info("소모임 가입 일반회원 입장메세지 완료");
+            }
+            else 
+            	log.info("소모임 가입 일반회원 입장메세지 실패");
+                       
             int deleteResult = groupService.deleteGroupApplyList(map);
             log.info("deleteResult ={}", deleteResult);
         }
