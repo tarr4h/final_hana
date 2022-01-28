@@ -471,10 +471,10 @@ public class GroupController {
 	@PostMapping("/groupUpdate")
 	public String groupUpdate(Group group) {
 		log.info("groupUpdate ={}", group);
-		int result = groupService.groupUpdate(group);
-		
-		String msg = result > 0 ? "수정 완료" : "수정 실패";
-		log.info("msg ={}", msg);
+//		int result = groupService.groupUpdate(group);
+//		
+//		String msg = result > 0 ? "수정 완료" : "수정 실패";
+//		log.info("msg ={}", msg);
 		
 		return "redirect:/group/groupProfile";
 	}
