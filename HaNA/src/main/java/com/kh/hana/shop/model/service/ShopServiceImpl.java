@@ -109,5 +109,10 @@ public class ShopServiceImpl implements ShopService {
 		return lastShopList;
 	}
 
+	@Override
+	public Table selectOneTable(Table table) {
+		return shopDao.selectOneTable(table);
+	}
+
 	
 }
