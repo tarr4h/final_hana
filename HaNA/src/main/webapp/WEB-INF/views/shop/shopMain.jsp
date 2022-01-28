@@ -383,7 +383,7 @@ $(() => {
 		    console.log("tagDataArr.length = " + tagDataArr.length)
         	
 		    // input에 있는 text  사라지게 
-			// document.getElementById('searchInput').value('');
+			 document.getElementById('searchInput').value('');
 
         }
         , focus : function(evt, ui) { //  한글 오류 방지
