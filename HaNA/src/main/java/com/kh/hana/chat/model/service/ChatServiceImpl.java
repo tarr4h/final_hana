@@ -12,7 +12,10 @@ import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.member.model.vo.Member;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class ChatServiceImpl implements ChatService {
 	
 	@Autowired
@@ -80,7 +83,14 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public int CreateGroupChat(Group group) {
-		return chatDao.CreateGroupChat(group);
+		int result = chatDao.CreateGroupChat(group);
+		int roomNo = chatDao.selectGroupRoomNo(group);
+		group.setMemberCount(roomNo);
+		int result2 = 0;
+		log.info("CreateGroupChat serviceImpl roomNo넣음= {}", group);
+		if(result > 0)
+			result2 = chatDao.insertGroupMessage(group);
+		return result2;
 	}
 
 	@Override
@@ -94,8 +104,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<Map<String, Object>> roomchat2(int no) {
-		return chatDao.roomchat2(no);
+	public List<Map<String, Object>> roomchat2(Map<String, Object> param) {
+		return chatDao.roomchat2(param);
 	}
 
 	@Override
@@ -107,6 +117,35 @@ public class ChatServiceImpl implements ChatService {
 	public int insertFileMessage(Chat chat) {
 		return chatDao.insertFileMessage(chat);
 	}
+
+	@Override
+	public int updateUnreadCount(Chat chat) {
+		return chatDao.updateUnreadCount(chat);
+	}
+
+	@Override
+	public List<String> selectListReceiver(Chat chat) {
+		return chatDao.selectListReceiver(chat);
+	}
+
+	@Override
+	public int dmalarm(String id) {
+		return chatDao.dmalarm(id);
+	}
+
+	@Override
+	public int roomUnreadChat(Chat chat) {
+		return chatDao.roomUnreadChat(chat);
+	}
+
+	@Override
+	public int insertGroupMessage22(Map<String, Object> param) {
+		return chatDao.insertGroupMessage22(param);
+	}
+
+
+
+
 
 
 

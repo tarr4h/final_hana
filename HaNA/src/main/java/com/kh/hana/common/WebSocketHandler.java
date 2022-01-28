@@ -1,21 +1,17 @@
 package com.kh.hana.common;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -25,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
+import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,19 +36,30 @@ public class WebSocketHandler extends TextWebSocketHandler{
 
 	 // 채팅방 목록 <방 번호, List<session> >이 들어간다.
     private Map<Integer, List<WebSocketSession>> RoomList = new HashMap<>();
+    private Map<Integer, Map<WebSocketSession, String>> RoomList2 = new HashMap<>();
     // session, 방 번호가 들어간다.
     private Map<WebSocketSession, Integer> sessionList = new HashMap<>();
     
+    private Map<String, WebSocketSession> userSessions = new HashMap<>();
+    private Map<WebSocketSession, String> sessionsuser = new HashMap<>();
+    private Map<String, WebSocketSession> testsession = new HashMap<String, WebSocketSession>();
+    
     int roomNo;
     
+    String memberId;
+    
     private static int i;
+    private static int ii=0;
 	
 	//연결
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		i++;
+		ii++;
 		log.info("{} 연결 성공 => 접속 인원 : {}명", session.getId(),i);
-		log.info("RoomList = {} , sessionList = {}", RoomList, sessionList);
+		log.info("RoomList = {} , sessionList = {}", RoomList2, sessionList);
+		testsession.put(i+session.getId(), session);
+		System.out.println(testsession);
 
 	}
 	
@@ -60,89 +68,167 @@ public class WebSocketHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 	    // 전달받은 메세지
         String msg = message.getPayload();
+        log.info("msg = {}", msg);
         
         // Json객체 → Java객체
         // 출력값 : {"roomNo":21,"name":"jeonyeseong","message":"ENTER"}
         Chat chat = objectMapper.readValue(msg,Chat.class);
         log.info("handleTextMessage - chat = {}", chat);
-        roomNo = chat.getRoomNo();
-        if(chat.getMessage() != null) {
+        
+        List<String> loginusers = chatService.selectListReceiver(chat);
+        log.info("loginusers = {}", loginusers);
+        
+        if(chat.getMessage() != null && chat.getMessage().equals("ENTER22")) {
         	
-        	// 받은 메세지에 담긴 roomId로 해당 채팅방을 찾아온다.
-        	ChatRoom chatRoom = chatService.selectChatRoom(chat.getRoomNo());
-        	log.info("handleTextMessage - chatRoom = {}", chatRoom);
+        	userSessions.put(chat.getMemberId(), session);
         	
-        	// roomlist 생성
-        	if(RoomList.get(chatRoom.getRoomNo()) == null && chat.getMessage().equals("ENTER") && chatRoom != null) {
+        	sessionsuser.put(session, chat.getMemberId());
+        	log.info("userSession에 id값 넣음 ={}", userSessions);
+        	
+        }
+        else {
+        	userSessions.put(chat.getMemberId(), session);
+        	
+        	sessionsuser.put(session, chat.getMemberId());
+        	log.info("userSession에 id값 넣음 ={}", userSessions);
+        	
+        	if(chat.getMessage() != null) {
         		
-        		// 채팅방에 들어갈 session들
-        		List<WebSocketSession> sessionTwo = new ArrayList<>();
-        		// session 추가
-        		sessionTwo.add(session);
-        		// sessionList에 추가
-        		sessionList.put(session, chatRoom.getRoomNo());
-        		// RoomList에 추가
-        		RoomList.put(chatRoom.getRoomNo(), sessionTwo);
-        		// 확인용
-        		log.info("RoomList 생성 {}", RoomList);
-        		log.info("sessionList에 session, roomNo 저장 {}", sessionList);
-        	}
-        	
-        	else if(RoomList.get(chatRoom.getRoomNo()) != null && chat.getMessage().equals("ENTER") && chatRoom != null) {
-        		RoomList.get(chatRoom.getRoomNo()).add(session);
-        		sessionList.put(session, chatRoom.getRoomNo());
-        		log.info("{}RoomList에 session 저장",chatRoom.getRoomNo());
-        	}
-        	
-        	else if(RoomList.get(chatRoom.getRoomNo()) != null && !chat.getMessage().equals("ENTER") && chatRoom != null) {
-        		// 메세지에 id, message, picture을 담는다.
-        		TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage()+ ","  + chat.getPicture()+ ","  +chat.getMessageRegDate());
-        		log.info("메세지 보내기 testMessage = {}", textMessage);
+        		// 받은 메세지에 담긴 roomId로 해당 채팅방을 찾아온다.
+        		ChatRoom chatRoom = chatService.selectChatRoom(chat.getRoomNo());
+        		log.info("handleTextMessage - chatRoom = {}", chatRoom);
         		
-        		//읽음 표시 나중에 현재 session 수
-        		//int sessionCount = 0;
         		
-        		for(WebSocketSession sess : RoomList.get(chat.getRoomNo())) {
-        			sess.sendMessage(textMessage);
-        			//sessionCount++;
+        		// roomlist 생성
+        		if(RoomList2.get(chatRoom.getRoomNo()) == null && chat.getMessage().equals("ENTER") && chatRoom != null) {
+        			
+//        			// 채팅방에 들어갈 session들
+//        			List<WebSocketSession> sessionTwo = new ArrayList<>();
+//        			// session 추가
+//        			sessionTwo.add(session);
+//        			// sessionList에 추가
+//        			sessionList.put(session, chatRoom.getRoomNo());
+//        			// RoomList에 추가
+//        			RoomList.put(chatRoom.getRoomNo(), sessionTwo);
+//        			// 확인용
+//        			log.info("RoomList 생성 {}", RoomList);
+//        			log.info("sessionList에 session, roomNo 저장 {}", sessionList);
+        			
+        			Map<WebSocketSession, String> sessionTwo = new HashMap<>();
+        			sessionTwo.put(session, chat.getMemberId());
+        			RoomList2.put(chatRoom.getRoomNo(), sessionTwo);
+        			log.info("RoomList2 생성 {}", RoomList2);
+        			log.info("sessionList에 session, roomNo 저장 {}", sessionList);
+        			
+        			int result = chatService.updateUnreadCount(chat);
+        			log.info(result > 0 ? "---------------unreadcount 성공" : "---------------unreadcount 실패");
+        			
+        			
+        			//timerupdate(chat);
         		}
         		
-        		// 동적쿼리에서 사용할 sessionCount 저장
-        		// sessionCount == 2 일 때는 unReadCount = 0,
-        		// sessionCount == 1 일 때는 unReadCount = 1
-        		//chat.setSessionCount(sessionCount);
+        		else if(RoomList2.get(chatRoom.getRoomNo()) != null && chat.getMessage().equals("ENTER") && chatRoom != null) {
+//        			RoomList.get(chatRoom.getRoomNo()).add(session);
+//        			sessionList.put(session, chatRoom.getRoomNo());
+//        			log.info("{}RoomList에 session 저장",chatRoom.getRoomNo());
+
+        			RoomList2.get(chatRoom.getRoomNo()).put(session, chat.getMemberId());
+        			sessionList.put(session, chatRoom.getRoomNo());
+        			log.info("RoomList2 추가 {}", RoomList2);
+        			log.info("sessionList에 session, roomNo 저장 {}", sessionList);
+        			
+        			int result = chatService.updateUnreadCount(chat);
+        			log.info(result > 0 ? "---------------unreadcount 성공" : "---------------unreadcount 실패");
+        			//timerupdate(chat);
+        		}
         		
+        		else if(RoomList2.get(chatRoom.getRoomNo()) != null && !chat.getMessage().equals("ENTER") && chatRoom != null) {
+        			//세션이 너무 자주 갱신돼서 roomlist도 갱신
+        			RoomList2.get(chatRoom.getRoomNo()).put(session, chat.getMemberId());
+        			sessionList.put(session, chatRoom.getRoomNo());
+        			log.info("test ---- RoomList2 추가 {}", RoomList2);
+        			log.info("test ---- sessionList에 session, roomNo 저장 {}", sessionList);
+        			
+        			// 메세지에 id, message, picture을 담는다.
+        			TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage()+ ","  + chat.getPicture()+ ","  +chat.getMessageRegDate()+","+chat.getRoomNo());
+        			log.info("메세지 보내기 testMessage = {}", textMessage);      			
+        			
+        			List<String> loginusers222 = new ArrayList<>(loginusers);
+        			
+        			log.info("로그인유저 제거 전 = {}", loginusers222);
+        			
+        			for(WebSocketSession sess : RoomList2.get(chat.getRoomNo()).keySet()) {
+        				loginusers222.remove(RoomList2.get(chat.getRoomNo()).get(sess));
+        				sess.sendMessage(textMessage);
+        				
+        			}
+        			log.info("로그인유저 채팅 맴버 제거 후 = {}", loginusers222);
+        			log.info("원래 로그인유저 = {}", loginusers);
+        			
+        				//같은 채팅방에 없구 로그인한 유저가 있으면 뿌려주기
+        				for(String user : loginusers222) {
+
+        					//없으면 null나옴
+        					log.info("로그인한 유저 확인 반복문 session = {}", userSessions.get(user));
+        					if(userSessions.get(user) != null)
+        						userSessions.get(user).sendMessage(textMessage);
+        				}
+
+        				log.info("로그인유저 채팅 맴버 제거 후 = {}", loginusers222);
+        				log.info("원래 로그인유저 = {}", loginusers);
+        			
+        			//timerupdate(chat);
+        			
+        			//DB에 저장한다.
+        			int a = chatService.insertMessage(chat);
+        			
+        			if(a == 1) {
+        				log.info("메세지 전송 및 DB 저장 성공");
+//            			int result = chatService.updateUnreadCount(chat);
+//            			log.info(result > 0 ? "---------------unreadcount 성공" : "---------------unreadcount 실패");
+        			}else {
+        				log.info("메세지 전송 실패!!! & DB 저장 실패!!");
+        			}
+        			
+        		}
+        	}
+        	else if(chat.getMessage() == null && chat.getFileImg() != null) {
+        		log.info("파일보내기파일보내기파일보내기파일보내기파일보내기파일보내기파일보내기");
+        		TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage()+ ","  + chat.getPicture()+ ","  +chat.getMessageRegDate()+","+chat.getRoomNo()+","+chat.getFileImg());
+        		log.info("메세지 보내기 testMessage = {}", textMessage);
+        		
+        		//loginusers를 받아서 같이 채팅하고있는 유저 빼기
+    			List<String> loginusers222 = new ArrayList<>(loginusers);
+    			
+    			for(WebSocketSession sess : RoomList2.get(chat.getRoomNo()).keySet()) {
+    				loginusers222.remove(RoomList2.get(chat.getRoomNo()).get(sess));
+    				sess.sendMessage(textMessage);
+    				
+    			}
+    			
+    			//같은 채팅방에 없구 로그인한 유저가 있으면 뿌려주기
+    			for(String user : loginusers222) {
+    				
+    				//없으면 null나옴
+    				log.info("로그인한 유저 확인 반복문 session = {}", userSessions.get(user));
+    				if(userSessions.get(user) != null)
+    					userSessions.get(user).sendMessage(textMessage);
+    			}
+        		
+        		//timerupdate(chat);
         		//DB에 저장한다.
-        		int a = chatService.insertMessage(chat);
+        		int a = chatService.insertFileMessage(chat);
         		
         		if(a == 1) {
         			log.info("메세지 전송 및 DB 저장 성공");
+//        			int result = chatService.updateUnreadCount(chat);
+//        			log.info(result > 0 ? "---------------unreadcount 성공" : "---------------unreadcount 실패");
         		}else {
         			log.info("메세지 전송 실패!!! & DB 저장 실패!!");
         		}
-        		
         	}
-        }
-        else if(chat.getMessage() == null) {
-    		TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage()+ ","  + chat.getPicture()+ ","  +chat.getMessageRegDate()+","+chat.getFileImg());
-    		log.info("메세지 보내기 testMessage = {}", textMessage);
-    		
-    		//읽음 표시 나중에 현재 session 수
-    		//int sessionCount = 0;
-    		
-    		for(WebSocketSession sess : RoomList.get(chat.getRoomNo())) {
-    			sess.sendMessage(textMessage);
-    			//sessionCount++;
-    		} 		
-    		
-    		//DB에 저장한다.
-    		int a = chatService.insertFileMessage(chat);
-    		
-    		if(a == 1) {
-    			log.info("메세지 전송 및 DB 저장 성공");
-    		}else {
-    			log.info("메세지 전송 실패!!! & DB 저장 실패!!");
-    		}
+        	
+        	//여기까지 enter22
         }
 		
 	}
@@ -154,13 +240,39 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		log.info("{} 연결 종료 => 접속 인원 : {}명", session.getId(),i);
         // sessionList에 session이 있다면
 		log.info("sessionList.get(session) = {}", sessionList.get(session));
-        if(sessionList.get(session) != null) {
-            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 List<session>에서 해당 session을 지운다.
-            RoomList.get(sessionList.get(session)).remove(session);
-            sessionList.remove(session);
-        }
-        log.info("연결 끝 RoomList = {} , sessionList = {}", RoomList, sessionList);
+//        if(sessionList.get(session) != null) {
+//            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 List<session>에서 해당 session을 지운다.
+//            RoomList.get(sessionList.get(session)).remove(session);
+//            sessionList.remove(session);
+//        }
+		
+		if(sessionList.get(session) != null) {
+			RoomList2.get(sessionList.get(session)).remove(session);
+			sessionList.remove(session);
+		}
+		
+        log.info("연결 끝 RoomList2 = {} , sessionList = {}", RoomList2, sessionList);
+        
+        
+        //session을 찾아서 지워야됨
+        userSessions.remove(sessionsuser.get(session));
+        sessionsuser.remove(session);
+        log.info("userSession에 id값 뺌 ={}", userSessions);
+        
+        System.out.println(testsession);
 	}
+	
+	//timerupdate(chat); -> 채팅방 들어가있을때 메세지 확인
+//	public void timerupdate(Chat chat1) {
+//        Timer scheduler = new Timer();
+//        TimerTask task = new TimerTask() {
+//            @Override
+//            public void run() {
+//                chatService.updateUnreadCount(chat1);
+//            }
+//        };
+//        scheduler.scheduleAtFixedRate(task, 1000, 5000); // 1초 뒤 5초마다 반복실행
+//	}
 
 
 }
