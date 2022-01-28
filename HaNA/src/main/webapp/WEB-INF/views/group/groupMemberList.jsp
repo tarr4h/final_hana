@@ -54,22 +54,6 @@ table th, td {
 			</c:forEach>
 		</table>
 	</div>
-<script>
-/* 현재 등급 */
-function grade(code){
-	console.log(code);
-	console.log(code == 'ld');
-	if(code == 'ld'){
-		$("#ld").prop('checked', true);	
-	}
-	if(code == 'mg'){
-		$("#mg").prop('checked', true);
-	}
-	if(code == 'mb'){
-		$("#mb").prop('checked', true);
-	}
-}
-</script>
 
 	<!-- 회원 조정 모달 -->
 	<div class="modal fade" id="moaModal" tabindex="-1" role="dialog"
@@ -85,7 +69,7 @@ function grade(code){
 				</div>
 				
 				<div class="modal-body">
-					<form action="${pageContext.request.contextPath}/group/updateGroupGrade" 
+					<form action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" 
 						class="customRadio customCheckbox m-0 p-0">
 						<input type="hidden" name="groupId" id="groupId"/>
 						<input type="hidden" name="memberId" id="memberId"/>
@@ -115,12 +99,36 @@ function grade(code){
 							<input type="hidden" name="memberId" value="${list.MEMBER_ID}" />
 							<input type="hidden" name="groupLevelCode" value="${list.MEMBER_LEVEL_CODE}" />
 					</form:form>
-					<button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="return confirm('회원 등급을 변경하시겠습니까?');">save</button>
+					<button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="updateGroupGradeFunc();">save</button>
 					<%-- <a href="${contextPath.request.pageContext}/group/gradeGroupMember/${list.MEMBER_ID}/${list.MEMBER_LEVEL_CODE}"></a> --%>
 				</div>
 			</div>
 		</div>
 	</div>
+
+<script>
+/* 현재 등급 체크 함수 */
+function grade(code){
+	console.log(code);
+	console.log(code == 'ld');
+	if(code == 'ld'){
+		$("#ld").prop('checked', true);	
+	}
+	if(code == 'mg'){
+		$("#mg").prop('checked', true);
+	}
+	if(code == 'mb'){
+		$("#mb").prop('checked', true);
+	}
+}
+
+/* 회원 등급 변경 함수 */
+function updateGroupGradeFunc(){
+	if(confirm("회원 등급을 변경하시겠습니까?")){
+		$(document.groupGradeUpdateFrm).submit();
+	}
+}; 
+</script>
 
 <style>
  html,

@@ -15,6 +15,11 @@
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
 <sec:authentication property="principal" var="loginMember" />
 
+<%
+	String[] hashtag = request.getParameterValues("hashtag");
+	List<String> hashtagList = hashtag != null ? Arrays.asList(hashtag) : null;
+	pageContext.setAttribute("hashtagList", hashtagList);
+%>
 <br />
     <div id="enroll-container" class="mx-auto text-center">
         <form:form name="groupUpdateFrm" 
@@ -38,11 +43,11 @@
                 <tr>
                     <th>해시태그</th>
                     <td>
-                        <input type="checkbox" name="hashtag" id="hashtag-ex" value="운동" onclick="hash('운동');"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-ex" value="운동" onclick="hash('운동');" ${hashtagList.contains('운동') ? 'checked' : '' }/>
                         <label for="hashtag-ex">운동</label>
-                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서" onclick="hash('독서');"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서" onclick="hash('독서');" ${hashtagList.contains('독서') ? 'checked' : '' }/>
                         <label for="hashtag-re">독서</label>
-                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산" onclick="hash('등산');"/>
+                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산" onclick="hash('등산');" ${hashtagList.contains('등산') ? 'checked' : '' }/>
                         <label for="hashtag-mu">등산</label>
                     </td>
                 <tr>
