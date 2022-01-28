@@ -33,16 +33,18 @@
     
     <insert id="insertShopTable" parameterType="table">
     	insert into shop_table_setting
-    	values(#{shopId}, #{tableName}, #{allowVisitor}, #{allowStart}, #{allowEnd}, #{timeDiv}, #{timeMax}, #{memo}, #{enable})
+    	values(#{shopId}, concat('table-', seq_shop_table_setting.nextval), #{tableName}, #{allowVisitor}, #{allowStart}, #{allowEnd}, #{timeDiv}, #{timeMax}, #{memo}, #{enable})
     </insert>
     
-    <select id="verifyTableName" parameterType="string" resultType="string">
+    <select id="verifyTableName" parameterType="table" resultType="string">
     	select
     		table_name
    		from
    			shop_table_setting
   		where
-  			table_name = #{tableName}	
+  			shop_id = #{shopId}
+  			and
+  			table_name = #{tableName}
     </select>
     
     <select id="selectShopTableList" parameterType="string" resultType="table">
@@ -60,6 +62,30 @@
     	delete from
    			shop_table_setting
 		where
-			table_name = #{tableName}
+			table_id = #{tableId}
     </delete>
+    
+    <update id="updateShopTable" parameterType="table">
+    	update shop_table_setting
+    	set		
+    		table_name = #{tableName},
+    		allow_visitor = #{allowVisitor},
+    		allow_start = #{allowStart},
+    		allow_end = #{allowEnd},
+    		time_div = #{timeDiv},
+    		time_max = #{timeMax},
+    		memo = #{memo},
+    		enable = #{enable}
+    	where
+    		table_id = #{tableId}
+    </update>
+    
+    <select id="selectOneTable" parameterType="table" resultType="table">
+    	select
+    		*
+   		from
+   			shop_table_setting
+  		where
+  			table_id = #{tableId}
+    </select>
 </mapper>

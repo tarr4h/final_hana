@@ -58,7 +58,7 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public int insertShopTable(Table table) {
-		String verifyName = shopDao.verifyTableName(table.getTableName());
+		String verifyName = shopDao.verifyTableName(table);
 		log.info("verify? = {}", verifyName == null);
 		int result = 0;
 		if(verifyName == null) {
@@ -75,8 +75,13 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public int deleteShopTable(String tableName) {
-		return shopDao.deleteShopTable(tableName);
+	public int deleteShopTable(String tableId) {
+		return shopDao.deleteShopTable(tableId);
+	}
+
+	@Override
+	public int updateTable(Table table) {
+		return shopDao.updateShopTable(table);
 	}
 
 	

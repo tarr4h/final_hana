@@ -16,11 +16,15 @@ public interface ShopDao {
 
 	int insertShopTable(Table table);
 
-	String verifyTableName(String tableName);
+	String verifyTableName(Table table);
 
 	List<Table> selectShopTableList(String id);
 
-	int deleteShopTable(String tableName);
+	int deleteShopTable(String tableId);
+
+	int updateShopTable(Table table);
+
+	Table selectOneTable(Table table);
 
 	
 

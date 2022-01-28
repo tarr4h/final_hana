@@ -266,7 +266,8 @@ public class MemberController {
             Board board, 
             RedirectAttributes redirectAttr,
             @RequestParam(name="uploadFile", required = false) MultipartFile[] uploadFiles) throws IllegalStateException, IOException {
-        String saveDirectory  = application.getRealPath("/resources/upload/member/board");
+
+		String saveDirectory  = application.getRealPath("/resources/upload/member/board");
 
             
         	//String[] picture = new String[2];
