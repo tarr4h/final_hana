@@ -63,4 +63,6 @@ public interface GroupService {
 	int selectLikeCount(Map<String, Object> param);
 
 	int deleteGroupMember(String memberId);
+
+	int updateGroupGrade(Map<String, Object> map);
 }

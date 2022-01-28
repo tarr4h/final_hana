@@ -145,6 +145,11 @@ public class GroupDaoImpl implements GroupDao {
 		return session.delete("deleteGroupMember", memberId);
 	}
 
+	@Override
+	public int updateGroupGrade(Map<String, Object> map) {
+		return session.update("updateGroupGrade", map);
+	}
+
 
 
 }

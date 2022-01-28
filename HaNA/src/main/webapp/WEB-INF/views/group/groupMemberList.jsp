@@ -85,7 +85,7 @@ function grade(code){
 				</div>
 				
 				<div class="modal-body">
-					<form action="${pageContext.request.contextPath}/group/updateGradeGroup" 
+					<form action="${pageContext.request.contextPath}/group/updateGroupGrade" 
 						class="customRadio customCheckbox m-0 p-0">
 						<input type="hidden" name="groupId" id="groupId"/>
 						<input type="hidden" name="memberId" id="memberId"/>
@@ -110,8 +110,13 @@ function grade(code){
 					</form>
 				</div>
 				<div class="modal-footer">
-					<input type="hidden" name="" />
-					<a href="${contextPath.request.pageContext}/group/gradeGroupMember/${list.MEMBER_ID}/${list.MEMBER_LEVEL_CODE}"><button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="return confirm('회원 등급을 변경하시겠습니까?');">save</button></a>
+					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade" method="POST">
+							<input type="hidden" name="groupId" value="${list.GROUP_ID}" />
+							<input type="hidden" name="memberId" value="${list.MEMBER_ID}" />
+							<input type="hidden" name="groupLevelCode" value="${list.MEMBER_LEVEL_CODE}" />
+					</form:form>
+					<button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="return confirm('회원 등급을 변경하시겠습니까?');">save</button>
+					<%-- <a href="${contextPath.request.pageContext}/group/gradeGroupMember/${list.MEMBER_ID}/${list.MEMBER_LEVEL_CODE}"></a> --%>
 				</div>
 			</div>
 		</div>

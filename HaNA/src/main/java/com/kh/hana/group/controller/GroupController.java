@@ -488,6 +488,21 @@ public class GroupController {
 	}
 	
 	// 등급 수정
+	@PostMapping("/updateGroupGrade")
+	public String updateGroupGrade (
+				@RequestParam String groupId, 
+				@RequestParam String memberId, 
+				@RequestParam String memberLevelCode,
+				@RequestParam Map<String, Object> map
+				) {
+		
+		log.info("map = {}", map);
+		int result = groupService.updateGroupGrade(map);
+		
+		return null;
+	}
+	
+
 }
 
 

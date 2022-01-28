@@ -148,4 +148,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.deleteGroupMember(memberId);
 	}
 
+	@Override
+	public int updateGroupGrade(Map<String, Object> map) {
+		return groupDao.updateGroupGrade(map);
+	}
+
 }

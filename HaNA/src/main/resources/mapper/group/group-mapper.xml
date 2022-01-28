@@ -297,5 +297,16 @@
 	where 
 		member_id = #{memberId}
 	</delete>
+	
+	<update id="updateGroupGrade">
+	update 
+	    group_member_list 
+	set 
+	    member_level_code = #{memberLevelCode} 
+	where 
+	    member_id = #{memberId} 
+	    and 
+	    group_id = #{groupId}
+	</update>
 </mapper>
 
