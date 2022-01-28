@@ -38,10 +38,22 @@ public interface ChatService {
 
 	String searchPicture(String member);
 
-	List<Map<String, Object>> roomchat2(int no);
+	List<Map<String, Object>> roomchat2(Map<String, Object> param);
 
 	int exitRoom(int roomNo);
 
 	int insertFileMessage(Chat chat);
+
+	int updateUnreadCount(Chat chat);
+
+	List<String> selectListReceiver(Chat chat);
+
+	int dmalarm(String id);
+
+	int roomUnreadChat(Chat chat);
+
+	int insertGroupMessage22(Map<String, Object> param);
+
+
 
 }
