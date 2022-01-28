@@ -2,19 +2,25 @@ package com.kh.hana.shop.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.kh.hana.member.model.vo.Member;
+
 import com.kh.hana.shop.model.service.ShopService;
 import com.kh.hana.shop.model.vo.HashTag;
+import com.kh.hana.shop.model.vo.Table;
+
 import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
@@ -81,5 +87,55 @@ public class ShopController {
     	return ResponseEntity.ok(tagDataArr);
     }
     
+    @PostMapping("/insertShopTable")
+    public ResponseEntity<?> insertShopTable(@RequestBody Table table){
+    	log.info("table = {}", table);
+    	
+    	int result = shopService.insertShopTable(table);
+    	log.info("insertTable result = {}", result);
+    	
+    	String msg = "";
+    	if(result == 1) {
+    		msg = "등록되었습니다.";
+    	} else {
+    		msg = "중복된 테이블명 입니다. 테이블명을 수정해주세요";
+    	}
+    	Map<String, Object> msgMap = new HashMap<>();
+    	msgMap.put("msg", msg);
+    	
+    	return ResponseEntity.ok(msgMap);
+    }
     
+    @GetMapping("/loadShopTable")
+    public ResponseEntity<?> selectShopTableList(@RequestParam String id){
+    	log.info("loadShopTable id = {}", id);
+    	
+    	List<Table> tableList = shopService.selectShopTableList(id);
+    	
+    	return ResponseEntity.ok(tableList);
+    }
+    
+    @DeleteMapping(value="/deleteShopTable/{tableId}", produces="application/text;charset=utf8")
+    @ResponseBody
+    public ResponseEntity<?> deleteShopTable(@PathVariable String tableId){
+    	log.info("tableId = {}", tableId);
+    	
+    	int result = shopService.deleteShopTable(tableId);
+    	log.info("result = {}", result);
+    	
+    	String msg = result > 0 ? "삭제되었습니다." : "삭제되지 않았습니다."; 
+    	return ResponseEntity.ok(msg);
+    }
+    
+    @PutMapping(value="/updateShopTable", produces="application/text;charset=utf8")
+    @ResponseBody
+    public ResponseEntity<?> updateShopTable(@RequestBody Table table){
+    	log.info("updateTable = {}", table);
+    	
+    	int result = shopService.updateTable(table);
+    	log.info("updateResult = {}", result);
+    	
+    	String msg = result > 0 ? "수정되었습니다." : "수정되지 않았습니다."; 
+    	return ResponseEntity.ok(msg);
+    }
 }

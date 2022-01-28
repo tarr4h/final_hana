@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
+import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
@@ -110,6 +111,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Follower> followingList(String friendId) {
 		return memberDao.followingList(friendId);
+	}
+
+	@Override
+	public int insertMemberBoard(Board board) {
+		return memberDao.insertMemberBoard(board);
 	}
  
  
