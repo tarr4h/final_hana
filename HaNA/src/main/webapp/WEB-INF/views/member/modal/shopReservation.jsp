@@ -64,9 +64,9 @@
 				</div>
 				<!-- 내용 -->
 				<div class="modal-body">
-					<select name="table-select" id="table-select">
-
-					</select>
+					<table id="table-select">
+						<tbody></tbody>
+					</table>
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -83,16 +83,21 @@
 			<div class="modal-content">
 				<!-- header -->
 				<div class="modal-header">
-					<h3 class="modal-title">세부예약 설정</h3>
+					<h3 class="modal-title">예약시간 설정</h3>
 						<button class="close" type="button" data-dismiss="modal" aria-label="Close">닫기</button>
 				</div>
 				<!-- 내용 -->
 				<div class="modal-body">
-					<%-- <form:form name="testFrm" action="${pageContext.request.contextPath }/member/testModal" method="POST" enctype="multipart/form-data">
-						<input type="text" name="username" id="" />
-						<input type="file" name="upFile" id="" />
-						<input type="submit" id="testBtn" value="제출" />
-					</form:form> --%>
+					<table id="time-select">
+						<thead>
+							<tr>
+								<th>선택</th>
+								<th>시작시간</th>
+								<th>종료시간</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -151,6 +156,9 @@
 				if(modalId == 'modal3'){
 					tableModal();
 				}
+				if(modalId == 'modal4'){
+					timeModal();
+				}
 			});
 			
 			/* hide modal on event */
@@ -160,6 +168,7 @@
 			})
 		});
 		
+		/* 테이블 선택 func */
 		function tableModal(){
 			$.ajax({
 				url: '${pageContext.request.contextPath}/shop/loadShopTable',
@@ -167,21 +176,81 @@
 					id: '${shopInfo.id}'
 				},
 				success(res){					
-					let tableSelect = $("[name=table-select]");
-					let defaultOption = `<option value="" disabled selected>테이블 선택</option>`;
+					let tbody = $("#table-select tbody");
+					let th = `
+						<tr>
+							<th>선택</th>
+							<th>테이블명</th>
+							<th>최대인원</th>
+							<th>운영시간</th>
+							<th>특이사항</th>
+						</tr>
+					`;
 					
-					tableSelect.empty();					
-					tableSelect.append(defaultOption);
+					if(tbody.text() == ""){
+						tbody.empty();
+						tbody.append(th);
+						$.each(res, (i, e) => {
+							if(e.enable == 'Y'){
+								let tr = `
+									<tr>
+										<td>
+											<input type="radio" name="tb-select" data-table-id="\${e.tableId}"/>
+										</td>
+										<td>
+											\${e.tableName}
+										</td>
+										<td>
+											\${e.allowVisitor}
+										</td>
+										<td>
+											\${e.allowStart} ~ \${e.allowEnd}
+										</td>
+										<td>
+											\${e.memo}
+										</td>
+									</tr>
+								`;
+								tbody.append(tr);								
+							}
+						});
+					}
+				},
+				error:console.log
+			});
+		};
+		
+		/* 시간선택 Modal  */
+		function timeModal(){
+			let tableId = $("[name=tb-select]:checked").data('table-id');
+			
+			$.ajax({
+				url: '${pageContext.request.contextPath}/shop/selectOneTable/getReservationTime',
+				data:{
+					tableId: tableId
+				},
+				success(res){
+					console.log(res);
 					
-					$.each(res, (i, e) => {				
-						let option = `
-							<option value="\${e.tableId}">\${e.tableName}</option>
+					$.each(res, (i, e) => {
+						let tr = `
+							<tr>
+								<td>
+									<input type="radio" name="time-select"/>
+								</td>
+								<td>
+									\${e.startTime}
+								</td>
+								<td>
+									\${e.endTime}
+								</td>
+							</tr>
 						`;
-						$tableSelect.append(option);
-					});
+						$("#time-select tbody").append(tr);
+					})
 					
 				},
 				error:console.log
 			});
-		}
+		};
 	</script>

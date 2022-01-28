@@ -19,6 +19,7 @@ public interface ShopService {
 
 	int updateTable(Table table);
 
+	Table selectOneTable(Table table);
 
     
 }

@@ -115,4 +115,11 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.updateShopTable(table);
 	}
 
+	@Override
+	public Table selectOneTable(Table table) {
+		return shopDao.selectOneTable(table);
+	}
+
+	
+
 }

@@ -1,4 +1,9 @@
 package com.kh.hana.shop.controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,5 +159,52 @@ public class ShopController {
     	
     	String msg = result > 0 ? "수정되었습니다." : "수정되지 않았습니다."; 
     	return ResponseEntity.ok(msg);
+    }
+    
+    @GetMapping("/selectOneTable/getReservationTime")
+    public ResponseEntity<?> getReservationTime(Table reqTable){
+    	log.info("selectOneTable = {}", reqTable);
+    	
+    	Table table = shopService.selectOneTable(reqTable);
+    	
+    	List<Map<String, Object>> timeMapList = new ArrayList<>();
+    	
+    	String startTime = table.getAllowStart();
+    	int timeDiv = table.getTimeDiv();
+    	String endTime = table.getAllowEnd();
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    	
+    	Date psStartTime = new Date();
+    	Date psEndTime = new Date();
+    	try {
+			psStartTime = sdf.parse(startTime);
+			psEndTime = sdf.parse(endTime);
+			
+			while(true) {
+				Date eachStartTime = psStartTime;  
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(psStartTime);
+				cal.add(Calendar.MINUTE, timeDiv);
+				psStartTime = cal.getTime();
+				if(psStartTime.after(psEndTime)) {
+					cal.add(Calendar.MINUTE, -timeDiv);
+					psStartTime = cal.getTime();
+					break;
+				}
+				log.info("시작 = {}, 종료 = {}", sdf.format(eachStartTime), sdf.format(psStartTime));
+		    	Map<String, Object> timeMap = new HashMap<>();
+				timeMap.put("startTime", sdf.format(eachStartTime));
+				timeMap.put("endTime", sdf.format(psStartTime));
+				timeMapList.add(timeMap);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+    	
+    	log.info("timeList = {}", timeMapList);
+    	
+    	
+    	return ResponseEntity.ok(timeMapList);
     }
 }
