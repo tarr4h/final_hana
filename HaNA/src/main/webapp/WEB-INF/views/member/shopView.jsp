@@ -224,7 +224,9 @@
 				</table>
 			</div>
 			<!-- 글쓰기버튼 -->
+			<c:if test="${loginMember.id.equals(member.id) }">
         	<button style="float:right;"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+        	</c:if>
 		</div>
     </div>
 </div> 
