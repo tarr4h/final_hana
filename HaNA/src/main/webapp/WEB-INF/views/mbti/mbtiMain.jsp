@@ -21,7 +21,7 @@
     colors="primary:#ee6d66,secondary:#d59f80"
     style="width:150px;height:150px;">
 </lord-icon>
-<button id="mainPage-button" onclick="location.href='${pageContext.request.contextPath}/mbti/mbtiList.do?cPage=1'">검사하기</button>
+<button id="mainPage-button" onclick="location.href='${pageContext.request.contextPath}/mbti/mbtiList.do?cPage=1'">START</button>
 </div>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

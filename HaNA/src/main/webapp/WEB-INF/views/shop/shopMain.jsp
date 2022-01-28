@@ -159,6 +159,103 @@
 		src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
 </script>
 	<script>
+	
+// 원본유지 용
+/* var loading = false;
+var page = 1;
+var endNum = 6;
+var startNum = 0;
+
+function scrollPage(){
+$(() => {
+
+		console.log("${loginMember.addressAll}");
+		var Addr_val = "${loginMember.addressAll}";
+	
+
+		// 도로명 주소를 좌표 값으로 변환(API)
+		naver.maps.Service.geocode({
+	        query: Addr_val
+	    }, function(status, response) {
+	        if (status !== naver.maps.Service.Status.OK) {
+	            return alert('잘못된 주소값입니다.');
+	        }
+
+	        var result = response.v2, // 검색 결과의 컨테이너
+	            items = result.addresses; // 검색 결과의 배열
+	            
+	        // 리턴 받은 좌표 값을 변수에 저장
+	        let x = parseFloat(items[0].x);
+	        let y = parseFloat(items[0].y);
+
+	    	$.ajax({
+				url: `${pageContext.request.contextPath}/shop/shopList`,
+				data: {
+						id : "${loginMember.id}",
+						locationX : x,
+						locationY : y
+				},
+				success(res){
+					 list = res;
+					console.log(list.length);
+					const max = list.length;
+
+					
+					if(startNum == 0){
+						  for(var i=0; i<endNum; i++){
+							console.log("if list[i].ID : " + list[i].ID)
+							var htmlOut='';
+							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+							htmlOut += '<div class="shopProfile d-flex">';
+						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+						    htmlOut += '</div>';
+						    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+							$('#shopList').append(htmlOut); 
+							
+						}  
+					}  
+						else{
+						 	for(var i=startNum; i<endNum; i++){  
+									var htmlOut='';
+									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+									htmlOut += '<div class="shopProfile d-flex">';
+								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+								    htmlOut += '</div>';
+								    htmlOut += '<span class = "shopScroll">'+ list[i].ID +'</span>';
+									$('#shopList').append(htmlOut);
+									// list[i].ID가 마지막이라면 return
+									if(i == max -1){
+										return;
+									}
+						 	}
+						  }  
+				page++;
+				endNum -= 1; //  6-1 = 5 
+				startNum = (endNum +1) ;  // 6 12
+				endNum += 7; //12 18
+				console.log("false 전 start :" + startNum) 
+				console.log("false 전 end :" +endNum)
+				
+				loading = false;
+				if(list.length === 0){	
+					loading = true;
+				}
+				},
+				error:console.log			
+			});
+	    });
+	});
+};
+	// scroll 위치지정 및 ajax실행
+	$(window).scroll(function(){
+		if($(window).scrollTop() + 10 >= $(document).height() - $(window).height()){
+			if(!loading){
+				loading = true;
+				scrollPage();
+			}
+		}
+	}); */
+	
 
 var loading = false;
 var page = 1;
@@ -389,7 +486,8 @@ $(() => {
 
 
    // test 부분  (나중에 지울거에용)
-    var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
+
+  var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
         source : function(request, response) {
             $.ajax({
@@ -487,7 +585,6 @@ $(() => {
 			success(data) {
 					console.log(data);
 					const max = data.length;
-
 						  for(var i=0; i<data.length; i++){
 							console.log("if data[i].ID : " + data[i].ID)
 							console.log("if data[i].ID : " + data[i].TAG_NAME)
