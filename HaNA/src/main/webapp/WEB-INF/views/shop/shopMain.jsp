@@ -314,7 +314,7 @@ $(() => {
 							$('#shopList').append(htmlOut); 
 							
 						}  
-					}else{
+					}else{ // 해시태그 없을때
 						 	for(var i=startNum; i<endNum; i++){  
 							console.log(list[i])
 									var htmlOut='';
