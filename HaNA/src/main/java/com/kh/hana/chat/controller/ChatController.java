@@ -213,5 +213,25 @@ public class ChatController {
     	
     	return resource;
     }
+    
+    @GetMapping("/updateunreadcount.do")
+    public ResponseEntity<?> updateunreadcount(Chat chat){
+    	log.info("updateunreadcount.do chat = {}", chat);
+    	
+    	int result = chatService.updateUnreadCount(chat);
+    	log.info("이건 onmessage 메세지 수신받을때 읽음처리");
+    	log.info("{}",result > 0 ? "읽음 처리 완료!" : "읽음 처리 실패!");
+    	
+    	return null;
+    }
+    
+    @GetMapping("/dmalarm.do")
+    public ResponseEntity<?> dmalarm(String id){
+
+    	List<Chat> unreadChat = chatService.dmalarm(id);
+
+    	
+    	return ResponseEntity.ok(unreadChat); 
+    }
     		
 }

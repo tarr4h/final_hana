@@ -46,4 +46,11 @@ public interface ChatDao {
 
 	int insertFileMessage(Chat chat);
 
+	int updateUnreadCount(Chat chat);
+
+	List<String> selectListReceiver(Chat chat);
+
+	List<Chat> dmalarm(String id);
+
+
 }

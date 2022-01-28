@@ -34,6 +34,8 @@
 <span>member picture 못찾는건 404</span><br />
 <span>소모임 회원 가입시 입장메세지 / 소모임 탈퇴시 나가기 메세지</span><br />
 <span>커밋할때 프로젝트 새로고침해서 저장한 이미지 다 불러오고 하기</span><br />
+<span>방입장할때 msg roomenter 쓰기</span><br />
+<span>알림오는 페이지에서 아무것도안하면 audio 오류(자동재생금지)</span><br />
 <script>
 let id;
 let picture;
@@ -181,8 +183,10 @@ const displayRoom = (selector, data) => {
 	<input type="hidden" name="roomNo"/>
 </form>
 <script>
-<!-- roomNo 전역변수 -->
-let roomNo;
+/* <!-- roomNo 전역변수 -->
+let roomNo; */
+
+<!-- 채팅방 선택하면 -->
 function roomchat(no){
 	console.log("No = ", no);
 	$("#roomchat1").html("");
@@ -230,6 +234,7 @@ if(websocket !== undefined){
 		error:console.log
 	});
  	
+ 	<!-- 채팅 메세지 -->
 	$.ajax({
 		url : `${pageContext.request.contextPath}/chat/roomchat.do`,
 		data : {
@@ -246,7 +251,7 @@ if(websocket !== undefined){
 	});
 		
 	sendBtn();
-	
+	//connect(1);
 	connect();
 };
 
@@ -344,7 +349,7 @@ const btnSend = () => {
 }
 
 // 웹소켓
-let websocket;
+/* let websocket;
 //입장 버튼을 눌렀을 때 호출되는 함수
 function connect() {
     // 웹소켓 주소
@@ -355,7 +360,7 @@ function connect() {
     websocket.onopen = onOpen;
     websocket.onmessage = onMessage;
     
-}
+} */
 //웹 소켓에 연결되었을 때 호출될 함수
 function onOpen() {
 	console.log("onOpen roomNo = ", roomNo);
@@ -369,7 +374,7 @@ function onOpen() {
     console.log("opOpen");
 }
 <!-- 메세지 수신 -->
-function onMessage(e){
+/* function onMessage(e){
 	let eSplit = e.data.split(",");
 
 	const data = {
@@ -377,13 +382,13 @@ function onMessage(e){
 		"message" : eSplit[1],
 		"picture" : eSplit[2],
 		"messageRegDate" : today,
-		"fileImg" : eSplit[4]
+		"fileImg" : eSplit[5]
 	};
 	console.log(data);
 	if(data.memberId != id){
 		msgCheck(data);
 	}
-}
+} */
 		
 function msgCheck(e){
 	const check = (e.memberId != id) ? "left" : "right";
@@ -411,11 +416,12 @@ const displaychat = (check, e) =>{
 	if(hour > 12)
 		hour = hour - 12;
 	var returnDate = (todayyear+todaymonth+todayday === year+month+day ? "Today " : month+"월"+day+"일 ") + ampm+" " + hour + ":" + minute;
+
 	let chat = ``
 	
 	console.log("fileImg check =", e.fileImg);
 	
-	<!-- 파일전송시 -->
+	<!-- 파일전송시 (undefined) -->
 	if(e.fileImg !== undefined){
 		console.log("아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ");
 		if(check === 'right'){
@@ -560,7 +566,9 @@ const closeBtn = () => {
 	$("#msgHeader").html('');
 	$("#roomchat1").html('');
 	$("#sendMsgBtn").html('');
+	roomNo = null;
 	websocket.close();
+	connect(1);
 };
 
 //친구검색 자동완성

@@ -108,6 +108,23 @@ public class ChatServiceImpl implements ChatService {
 		return chatDao.insertFileMessage(chat);
 	}
 
+	@Override
+	public int updateUnreadCount(Chat chat) {
+		return chatDao.updateUnreadCount(chat);
+	}
+
+	@Override
+	public List<String> selectListReceiver(Chat chat) {
+		return chatDao.selectListReceiver(chat);
+	}
+
+	@Override
+	public List<Chat> dmalarm(String id) {
+		return chatDao.dmalarm(id);
+	}
+
+
+
 
 
 }

@@ -64,6 +64,15 @@
 	CHAT 
 		VALUES(#{roomNo}, #{memberId}, #{message}, default, default, #{fileImg})
 	</insert>
+	<update id="updateUnreadCount">
+	update 
+		chat 
+	set 
+		unreadcount = 0 
+	where member_id != #{memberId}
+		and room_no = #{roomNo}
+	</update>
+	
 	<select id="memberList" resultType="member">
 	select
 		*
@@ -148,6 +157,27 @@
 	chat_room
 		where room_no = #{roomNo}
 	</delete>
+	<select id="selectListReceiver" resultType="string">
+	select 
+		distinct member_id 
+		from 
+	chat 
+		where 
+	room_no = #{roomNo} 
+		and 
+	member_id != #{memberId}
+	</select>
+	
+	<select id="dmalarm" resultType="chat">
+	select 
+		* 
+	from 
+		chat 
+	where 
+		room_no in (select room_no from chat where member_id = #{id}) 
+	and 
+		member_id != #{id} and unreadcount = 1
+	</select>
 	
 
 </mapper>

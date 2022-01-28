@@ -109,5 +109,22 @@ public class ChatDaoImpl implements ChatDao {
 		return session.insert("chat.insertFileMessage",chat);
 	}
 
+	@Override
+	public int updateUnreadCount(Chat chat) {
+		return session.update("chat.updateUnreadCount",chat);
+	}
+
+	@Override
+	public List<String> selectListReceiver(Chat chat) {
+		return session.selectList("chat.selectListReceiver",chat);
+	}
+
+	@Override
+	public List<Chat> dmalarm(String id) {
+		return session.selectList("chat.dmalarm",id);
+	}
+
+
+
 
 }
