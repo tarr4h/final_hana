@@ -31,10 +31,8 @@
 </c:if>
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
-<span>ajax로 만든 메세지 알람은 3초마다 쿼리문 출력돼서 주석</span><br />
-<span>소모임 회원 가입시 입장메세지 / 소모임 탈퇴시 나가기 메세지</span><br />
-<span>커밋할때 프로젝트 새로고침해서 저장한 이미지 다 불러오고 하기</span><br />
-<span>방입장할때 msg roomenter 쓰기</span><br />
+<span>안읽은 메세지 표시는 log.info 쿼리 나오는거 막고 주석해제</span><br />
+<span>소모임 탈퇴시 나가기 메세지 하기</span><br />
 <span>알림오는 페이지에서 아무것도안하면 audio 오류(자동재생금지)</span><br />
 <script>
 let id;
