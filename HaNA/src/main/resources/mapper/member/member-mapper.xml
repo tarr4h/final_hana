@@ -169,6 +169,11 @@ where
 	</insert>
 
 
+	<update id="updatePassword">
+		update member
+		set password = #{password}
+		where id = #{id}
+	</update>
 
 
 

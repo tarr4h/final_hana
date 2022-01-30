@@ -87,11 +87,10 @@ textarea.form-control {
     	<!-- 메뉴 영역 -->
         <div class="col-sm-4">
         	<ul class="list-group">
-			  <li class="list-group-item active" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">개인정보 변경</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ '">비밀번호 변경</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ '">계정 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ ">정보 공개</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ ">예약 관리</li>
 			</ul>
         </div>
    

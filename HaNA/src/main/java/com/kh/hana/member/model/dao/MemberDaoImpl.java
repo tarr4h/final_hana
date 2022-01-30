@@ -101,6 +101,11 @@ public class MemberDaoImpl implements MemberDao {
 	public int insertMemberBoard(Board board) {
 		return session.insert("member.insertMemberBoard", board);
 	}
+ 
+	@Override
+	public int updatePassword(Member updateMember) {
+		return session.update("member.updatePassword", updateMember);
+	}
 
 	
 

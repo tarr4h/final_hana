@@ -10,8 +10,10 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -139,6 +141,7 @@ public class MemberController {
 	}
 	
 	
+	//정보 수정하기
 	@PostMapping("/memberUpdate")
     public String memberUpdate(Member member, @RequestParam MultipartFile upFile,
                                 @AuthenticationPrincipal Member oldMember,
@@ -167,7 +170,6 @@ public class MemberController {
 
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
-		oldMember.setName(member.getName());
 		oldMember.setPicture(member.getPicture());			
         oldMember.setIntroduce(member.getIntroduce());
         oldMember.setAddressFull(member.getAddressFull());
@@ -177,6 +179,13 @@ public class MemberController {
         oldMember.setLocationX(member.getLocationX());
         oldMember.setLocationY(member.getLocationY());
 
+//    	Authentication newAuthentication = 
+//				new UsernamePasswordAuthenticationToken(
+//						oldMember, 
+//						oldMember.getPassword());
+//		
+//		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+//        
         redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
         if(member.getAccountType() != 1) {
         	return "redirect:/member/memberSetting/memberSetting";        	
@@ -287,9 +296,52 @@ public class MemberController {
 	@PostMapping("/testModal")
 	public void testModal(@RequestParam MultipartFile upFile) {
 		 log.info("upFile = {}", upFile);
-
-		 
 	}
+	
+	
+	//비밀번호 수정하기
+	@PostMapping("/updatePassword")
+	public String updatePassword(@RequestParam String password, 
+								@RequestParam String newPassword, 
+								@RequestParam String passwordCheck,
+								Member updateMember, 
+								@AuthenticationPrincipal Member oldMember,
+								RedirectAttributes redirectAttr,
+								Model model
+								) {
+			log.info("passwordUpdate.password= {}", password);
+			log.info("passwordUpdate.newPassword= {}", newPassword);
+			log.info("passwordUpdate.passwordCheck= {}", passwordCheck);
+			log.info("passwordUpdate.updatemember= {}", updateMember);
+			log.info("passwordUpdate.oldMember = {}", oldMember);
+
+			if(bcryptPasswordEncoder.matches(password, oldMember.getPassword())) {
+				String encodedPassword = bcryptPasswordEncoder.encode(newPassword);
+				updateMember.setPassword(encodedPassword);
+				int result = memberService.updatePassword(updateMember);
+				String msg = result > 0 ? "비밀번호가 수정되었습니다." : "비밀번호 수정에 실패했습니다.";
+				redirectAttr.addFlashAttribute("msg", msg);
+				oldMember.setPassword(bcryptPasswordEncoder.encode(updateMember.getPassword()));
+				
+				log.info("oldMember.password = {}", oldMember.getPassword());
+				log.info("SecurityContextHolder.getContext().getAuthentication() = {}",
+						SecurityContextHolder.getContext().getAuthentication());
+			 
+					if(oldMember.getAccountType() == 1) {
+						return "redirect:/member/memberView/"+oldMember.getId(); 
+					} else {
+						return "redirect:/member/shopSetting/password";
+					}
+			}else {
+				String msg = "현재 비밀번호가 일치하지 않습니다.";
+				model.addAttribute("msg",msg);
+				return "/member/memberSetting/updatePassword";	
+			}
+	}
+	
+	
+ 
+	
 
  
 
