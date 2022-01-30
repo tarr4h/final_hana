@@ -14,7 +14,7 @@ public class ShopDaoImpl implements ShopDao {
     
     @Override
     public List<Map<String, Object>> selectShopList(Map<String, Object> data) {
-        return session.selectList("shop.selectShopList", data);
+    		return session.selectList("shop.selectShopList", data);
     }
     
     @Override
@@ -26,8 +26,6 @@ public class ShopDaoImpl implements ShopDao {
         return session.selectList("shop.selectHashTagList", search); 
     }
 
-    
-    
 	@Override
 	public String verifyTableName(Table table) {
 		return session.selectOne("shop.verifyTableName", table);
@@ -60,8 +58,12 @@ public class ShopDaoImpl implements ShopDao {
 
 	@Override
 	public List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data) {
-		 return session.selectList("shop.selectHashTagShopList", data);
+		return session.selectList("shop.selectHashTagShopList",data);
 	}
+
+
+	
+	 
 
 	
     

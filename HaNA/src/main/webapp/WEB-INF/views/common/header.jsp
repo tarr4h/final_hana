@@ -26,6 +26,8 @@
 	.navbar-expand-lg { height : 10em;}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
+	div#headerAlert{display: none; text-align: center;}
+	span.badge{color:red;}
 </style>
 <c:if test="${param.error != null }">
 	<script>
@@ -62,7 +64,7 @@
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
 		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM</a>
+		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM<span class="badge" id="dmAlarm"></span></a>
 		      </li>
 		      </sec:authorize>
 		      <li class="nav-item">
@@ -98,13 +100,146 @@
 		    </ul>
 		  </div>
 		</nav>
+		<div id="headerAlert" class="alert alert-success" role="alert"></div>
 	</header>
-	
+	<audio id="audio_play">
+		<source src="${pageContext.request.contextPath }/resources/upload/chat/mp3/kakao2.mp3">
+	</audio>
 	<sec:authorize access="isAuthenticated()">
 		<script>
- 
+		$(document).ready( function() {
+			connect(1);
+			//dmAlarm();
+		});
+		let memberId;
+		let websocketws;
 		
-  
+		<!-- roomNo 전역변수 -->
+		let roomNo;
+		
+		<sec:authorize access="isAuthenticated()">
+			memberId = '<sec:authentication property="principal.id"/>';
+		</sec:authorize>
+		console.log("memberId = ", memberId);
+		console.log("heaer roomNo chaech = ", roomNo);
+		let websocket;
+		//입장 버튼을 눌렀을 때 호출되는 함수
+
+		function connect(type) {
+		    // 웹소켓 주소
+		    var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat";
+		    // 소켓 객체 생성
+		    websocket = new WebSocket(wsUri);
+		    //웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록
+		    if(type == 1){
+		    websocket.onopen = onOpenws;
+		    }
+		    else{
+			websocket.onopen = onOpen;
+		    //websocket.onmessage = onMessage;
+		    }
+		    websocket.onmessage = onMessagews;
+		    	
+		    	
+		    
+		}
+		//웹 소켓에 연결되었을 때 호출될 함수
+ 		function onOpenws() {
+			console.log("headerdfasdfasdfafdafasfdasfd")
+ 		     const data = {
+		         "memberId" : memberId,
+ 		         "message" : "ENTER22" 
+		    };
+		    let jsonData = JSON.stringify(data);
+		    websocket.send(jsonData);
+		    console.log("opOpen"); 
+		}
+		<!-- 메세지 알림 -->
+		function onMessagews(e){
+			let eSplit = e.data.split(",");
+			console.log("onMessagews eSplit[4] = ",eSplit[4]);
+			console.log("onMessagews roomNo = ",roomNo);
+			console.log(eSplit[4] === roomNo);
+			/* console.log(eSplit[5].equals(roomNo)); */
+ 			if(eSplit[4] === roomNo){
+				console.log("보낸 메세지 roomNo랑 입장한 roomNo가 같음");
+ 
+				const data = {
+					"memberId" : eSplit[0],
+					"message" : eSplit[1],
+					"picture" : eSplit[2],
+					"messageRegDate" : today,
+					"fileImg" : eSplit[5]
+				};
+				console.log(data);
+				if(data.memberId != id){
+					msgCheck(data);
+				} 
+				
+				unreadCheck(e);
+			}
+			else{
+				
+		 	beep();
+			console.log("onMessagefasfdadfasdfasf = ",e.data);
+			let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
+			$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
+			$("div#headerAlert").css('display','block');
+			setTimeout(function(){
+				$("div#headerAlert").css('display','none');
+			},5000);
+			} 
+				
+			
+
+		}
+		
+		<!-- 채팅 메세지 수신오면 확인 -->
+		const unreadCheck = (e) => {
+			let eSplit = e.data.split(",");
+			$.ajax({
+				url:`${pageContext.request.contextPath}/chat/updateunreadcount.do`,
+				method:'GET',
+				data : {
+					roomNo : eSplit[4],
+					memberId : eSplit[0]
+				},
+				success(resp){
+					console.log("unreadcheck");
+						
+				},
+				error:console.log
+			});
+			
+		}
+		
+		<!-- 카톡음 -->
+		function beep() { 
+			var audio = document.getElementById('audio_play');
+			audio.play();
+			audio.loop = false;
+			} 
+		
+		const dmAlarm = () => {
+			$.ajax({
+				url:`${pageContext.request.contextPath}/chat/dmalarm.do`,
+				method:'GET',
+				data:{id : memberId},
+				success(resp){
+					if(resp != 0)
+						$("#dmAlarm").text(resp);
+				},
+				/* error:console.log */
+			});
+			
+			<!-- 3초마다 -->
+			setTimeout(function() {
+				dmAlarm();	
+			}, 3000);
+		};
+		
+
+			
 		</script>
 	</sec:authorize>
 

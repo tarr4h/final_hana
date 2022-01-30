@@ -29,5 +29,6 @@ public interface ShopDao {
 	List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data);
 
 	
+	
 
 }

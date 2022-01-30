@@ -66,9 +66,6 @@ public class MemberController {
 		String encodedPassword = bcryptPasswordEncoder.encode(password);
 		member.setPassword(encodedPassword);
 		
-		log.info("upFile = {}", upFile);
-		log.info("upFile.getogName = {}", upFile.getOriginalFilename());
-		
 		if(!upFile.getOriginalFilename().equals("")) {
 			String originalFilename = upFile.getOriginalFilename();
 			String renamedFilename = HanaUtils.rename(originalFilename);
@@ -92,7 +89,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/{view}/{id}")
-	public String memberView(@PathVariable String id, @PathVariable String view, Model model, Authentication authentication) {
+	public String memberView(@PathVariable String id, @PathVariable String view, Model model) {
 		//following 수 조회
 		int followingCount = memberService.countFollowing(id);
 		log.info("followingCount = {}", followingCount);
@@ -108,9 +105,7 @@ public class MemberController {
 		log.info("member={}", member);
 		model.addAttribute("member", member);
 		
-		Member checkMember = (Member) authentication.getPrincipal();
-		log.info("checkMember = {}", checkMember);
-		if(checkMember.getAccountType() == 0) {
+		if(member.getAccountType() == 0) {
 			Shop shopInfo = memberService.selectOneShopInfo(id);
 			log.info("shopInfo = {}", shopInfo);
 			model.addAttribute("shopInfo", shopInfo);
@@ -148,19 +143,15 @@ public class MemberController {
     public String memberUpdate(Member member, @RequestParam MultipartFile upFile,
                                 @AuthenticationPrincipal Member oldMember,
                                 RedirectAttributes redirectAttr) {
-        log.info("member={}", member);
-        log.info("oldMember={}", oldMember);
+		
+        String newProfile = upFile.getOriginalFilename();
         
-        String oldProfile = member.getPicture();
-        
-        if(oldProfile != null) {
+        if(!newProfile.equals("")) {
 			String saveDirectory = application.getRealPath("/resources/upload/member/profile");
-			File file = new	File(saveDirectory, oldProfile);
-			boolean bool = file.delete();
-			log.info("bool = {}", bool);
+			File file = new	File(saveDirectory, member.getPicture());
+			file.delete();
 			  
-			String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename());
-			  
+			String renamedFilename = HanaUtils.rename(newProfile);
 			File regFile = new File(saveDirectory, renamedFilename);
 			  
 			try {
@@ -177,9 +168,7 @@ public class MemberController {
         //spring-security memberController memberUpdate쪽
         oldMember.setName(member.getName());
 		oldMember.setName(member.getName());
-		if(!upFile.getOriginalFilename().equals("")) {
-			oldMember.setPicture(member.getPicture());			
-		}
+		oldMember.setPicture(member.getPicture());			
         oldMember.setIntroduce(member.getIntroduce());
         oldMember.setAddressFull(member.getAddressFull());
         oldMember.setAddressAll(member.getAddressAll());

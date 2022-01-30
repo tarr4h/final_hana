@@ -1,4 +1,9 @@
 package com.kh.hana.shop.controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +39,33 @@ public class ShopController {
         
     }
     
+	/*
+	 * @GetMapping("/shopList") public ResponseEntity<?>
+	 * selectShopList(@RequestParam String id, @RequestParam String
+	 * locationX, @RequestParam String locationY) { Map<String, Object> data = new
+	 * HashMap<>(); data.put("id", id); data.put("locationX", locationX);
+	 * data.put("locationY", locationY);
+	 * 
+	 * // 8.23km내 double maxX = Double.parseDouble(locationX) + 0.0927; double maxY
+	 * = Double.parseDouble(locationY) + 0.074;
+	 * 
+	 * String maxLocationX = Double.toString(maxX); String maxLocationY =
+	 * Double.toString(maxY);
+	 * 
+	 * data.put("maxLocationX", maxLocationX); data.put("maxLocationY",
+	 * maxLocationY);
+	 * 
+	 * log.info("data = {}", data);
+	 * 
+	 * List<Map<String, Object>> shopList = shopService.selectShopList(data);
+	 * log.info("length = {}", shopList.size());
+	 * 
+	 * return ResponseEntity.ok(shopList); }
+	 */    
+    
     @GetMapping("/shopList")
-    public ResponseEntity<?> selectShopList(@RequestParam String id, @RequestParam String locationX, @RequestParam String locationY) {
+    public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY) {
+    	log.info("selectDataArr = {}", selectDataArr);
         Map<String, Object> data = new HashMap<>();
         data.put("id", id);
         data.put("locationX", locationX);
@@ -52,8 +82,8 @@ public class ShopController {
         data.put("maxLocationY", maxLocationY);
         
         log.info("data = {}", data);
-        
-        List<Map<String, Object>> shopList = shopService.selectShopList(data);
+   
+        List<Map<String, Object>> shopList = shopService.selectShopList(data,selectDataArr);
         log.info("length = {}", shopList.size());
         
         return ResponseEntity.ok(shopList);
@@ -78,41 +108,7 @@ public class ShopController {
         
         return ResponseEntity.ok(tagList);
     }
-    
-    
-    @GetMapping("/hashTagSearch")
-    public ResponseEntity<?> hashTagSearch(@RequestParam(value="tagDataArr[]") List<String> tagDataArr,@RequestParam String id, @RequestParam String locationX, @RequestParam String locationY) {
-    	log.info("tagDataArr = {}", tagDataArr);
-    	log.info("Id = {}", id);
-    	log.info("locationX = {}", locationX);
-    	log.info("locationY = {}", locationY);
-    	
-    	Map<String, Object> data = new HashMap<>();             
-    	data.put("hashTagOne", tagDataArr.get(0));
-    	data.put("hashTagTwo",tagDataArr.get(1));	
-        data.put("id", id);
-        data.put("locationX", locationX);
-        data.put("locationY", locationY);
-        
-//      8.23km내
-        double maxX = Double.parseDouble(locationX) + 0.0927;
-        double maxY = Double.parseDouble(locationY) + 0.074;
-        
-        String maxLocationX = Double.toString(maxX);
-        String maxLocationY = Double.toString(maxY);
-        
-        data.put("maxLocationX", maxLocationX);
-        data.put("maxLocationY", maxLocationY);
-        
-        log.info("data = {}", data);
-        
-        List<Map<String, Object>> hashTagShopList = shopService.selectHashTagShopList(data);
-        log.info("hashTagShopList = {}", hashTagShopList);
-        log.info("length = {}", hashTagShopList.size());
 
-    	return ResponseEntity.ok(hashTagShopList);
-    }
-    
     @PostMapping("/insertShopTable")
     public ResponseEntity<?> insertShopTable(@RequestBody Table table){
     	log.info("table = {}", table);
@@ -163,5 +159,52 @@ public class ShopController {
     	
     	String msg = result > 0 ? "수정되었습니다." : "수정되지 않았습니다."; 
     	return ResponseEntity.ok(msg);
+    }
+    
+    @GetMapping("/selectOneTable/getReservationTime")
+    public ResponseEntity<?> getReservationTime(Table reqTable){
+    	log.info("selectOneTable = {}", reqTable);
+    	
+    	Table table = shopService.selectOneTable(reqTable);
+    	
+    	List<Map<String, Object>> timeMapList = new ArrayList<>();
+    	
+    	String startTime = table.getAllowStart();
+    	int timeDiv = table.getTimeDiv();
+    	String endTime = table.getAllowEnd();
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    	
+    	Date psStartTime = new Date();
+    	Date psEndTime = new Date();
+    	try {
+			psStartTime = sdf.parse(startTime);
+			psEndTime = sdf.parse(endTime);
+			
+			while(true) {
+				Date eachStartTime = psStartTime;  
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(psStartTime);
+				cal.add(Calendar.MINUTE, timeDiv);
+				psStartTime = cal.getTime();
+				if(psStartTime.after(psEndTime)) {
+					cal.add(Calendar.MINUTE, -timeDiv);
+					psStartTime = cal.getTime();
+					break;
+				}
+				log.info("시작 = {}, 종료 = {}", sdf.format(eachStartTime), sdf.format(psStartTime));
+		    	Map<String, Object> timeMap = new HashMap<>();
+				timeMap.put("startTime", sdf.format(eachStartTime));
+				timeMap.put("endTime", sdf.format(psStartTime));
+				timeMapList.add(timeMap);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+    	
+    	log.info("timeList = {}", timeMapList);
+    	
+    	
+    	return ResponseEntity.ok(timeMapList);
     }
 }
