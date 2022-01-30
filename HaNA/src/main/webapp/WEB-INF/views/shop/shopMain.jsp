@@ -85,7 +85,6 @@
 				<form class="form-inline d-flex">
 					<input class="form-control mr-sm-2" type="search"
 						placeholder="Search" aria-label="Search" id="searchInput">
-
 				</form>
 			</nav>
 		</div>
@@ -95,7 +94,7 @@
 				<!-- HashTag 검색 후 클릭/엔터 시 동적으로 버튼 생길 공간  -->
 			</div>
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-				id="searchBtn" >Search</button>
+				id="searchBtn">Search</button>
 		</div>
 
 
@@ -161,7 +160,6 @@
 	<script>
 	
 // 원본유지 용
-
 /* var loading = false;
 var page = 1;
 var endNum = 6;
@@ -170,8 +168,6 @@ var selectDataArr = []; //hashTag 담을 배열
 var hashTagData = ""; // 검색 데이터 잠시 담을 변수
 
 function scrollPage(){
-$(() => {
-
 		console.log("${loginMember.addressAll}");
 		var Addr_val = "${loginMember.addressAll}";
 	
@@ -202,49 +198,76 @@ $(() => {
 					 list = res;
 					console.log(list);
 					const max = list.length;
-
-					// 해시태그 있을때 
-					if(startNum == 0){
-						  for(var i=0; i<endNum; i++){
-							var htmlOut='';
-							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
-							htmlOut += '<div class="shopProfile d-flex">';
-						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-						    htmlOut += '</div>';
-						    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-						    if(list[i].TAG_NAME === ""){
-							console.log(list[i])
-							htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    	
-						    }
-							$('#shopList').append(htmlOut); 
-							
-						}  
-					}else{ // 해시태그 없을때
+					// list.TAG_NAME 값 비교가 안되서 어차피 tag_name은 있거나 없거나 이니까 변수로 옮겨서 null 체크 
+					var  tagName ="";	
+					for(var i =0; i<list.length; i++){
+						 tagName = list[i].TAG_NAME;
+					}
+		
+				if(tagName == null){ // 해시태그 없을때
+					if(startNum == 0 ){
+							  for(var i=0; i<endNum; i++){
+								var htmlOut='';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+								htmlOut += '<div class="shopProfile d-flex">';
+							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+							    htmlOut += '</div>';
+							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';					    					
+								$('#shopList').append(htmlOut); 
+							}  
+					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
-							console.log(list[i])
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-								    if(list[i].TAG_NAME === ""){
-										console.log(list[i])
-									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    	
-									}
+								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';						    										    	
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
 										return;
 								}
 						 	}
-						  }  
+						}
+				}else if (tagName != null){ // 해시태그 있을때
+					if(startNum == 0 ){
+							  for(var i=0; i<endNum; i++){
+								var htmlOut='';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+								htmlOut += '<div class="shopProfile d-flex">';
+							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+							    htmlOut += '</div>';
+							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    					
+								$('#shopList').append(htmlOut); 
+								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
+								if(i == max -1){
+									return;
+								}
+							}  
+					}else{ 
+						 	for(var i=startNum; i<endNum; i++){  
+									var htmlOut='';
+									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+									htmlOut += '<div class="shopProfile d-flex">';
+								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+								    htmlOut += '</div>';
+								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    										    	
+									$('#shopList').append(htmlOut);
+									// list[i].ID가 마지막이라면 return
+									if(i == max -1){
+										return;
+								}
+						 	}
+						}
+				}
+
 				page++;
 				endNum -= 1; //  6-1 = 5 
 				startNum = (endNum +1) ;  // 6 12
 				endNum += 7; //12 18
-				console.log("false 전 start :" + startNum) 
-				console.log("false 전 end :" +endNum)
 				
 				loading = false;
 				if(list.length === 0){	
@@ -254,7 +277,6 @@ $(() => {
 				error:console.log			
 			});
 	    });
-	});
 };
 	// scroll 위치지정 및 ajax실행
 	$(window).scroll(function(){
@@ -376,23 +398,23 @@ function scrollPage(){
 					 list = res;
 					console.log(list);
 					const max = list.length;
-					var  tagName ="";				
+					// list.TAG_NAME 값 비교가 안되서 어차피 tag_name은 있거나 없거나 이니까 변수로 옮겨서 null 체크 
+					var  tagName ="";	
 					for(var i =0; i<list.length; i++){
 						 tagName = list[i].TAG_NAME;
 					}
 		
-				if(tagName == null){
-					console.log("해시태그 없을때")
+				if(tagName == null){ // 해시태그 없을때
 					if(startNum == 0 ){
-						  for(var i=0; i<endNum; i++){
-							var htmlOut='';
-							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
-							htmlOut += '<div class="shopProfile d-flex">';
-						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-						    htmlOut += '</div>';
-						    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';					    					
-							$('#shopList').append(htmlOut); 
-						}  
+							  for(var i=0; i<endNum; i++){
+								var htmlOut='';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+								htmlOut += '<div class="shopProfile d-flex">';
+							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+							    htmlOut += '</div>';
+							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';					    					
+								$('#shopList').append(htmlOut); 
+							}  
 					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
 									var htmlOut='';
@@ -408,21 +430,24 @@ function scrollPage(){
 								}
 						 	}
 						}
-				}else if (tagName != null){
-					console.log("해시태그 있을때")
+				}else if (tagName != null){ // 해시태그 있을때
 					if(startNum == 0 ){
-						  for(var i=0; i<list.length; i++){
-							var htmlOut='';
-							htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
-							htmlOut += '<div class="shopProfile d-flex">';
-						    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-						    htmlOut += '</div>';
-						    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-							htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    					
-							$('#shopList').append(htmlOut); 
-						}  
+							  for(var i=0; i<endNum; i++){
+								var htmlOut='';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+								htmlOut += '<div class="shopProfile d-flex">';
+							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+							    htmlOut += '</div>';
+							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    					
+								$('#shopList').append(htmlOut); 
+								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
+								if(i == max -1){
+									return;
+								}
+							}  
 					}else{ 
-						 	for(var i=startNum; i<list.length; i++){  
+						 	for(var i=startNum; i<endNum; i++){  
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
 									htmlOut += '<div class="shopProfile d-flex">';
