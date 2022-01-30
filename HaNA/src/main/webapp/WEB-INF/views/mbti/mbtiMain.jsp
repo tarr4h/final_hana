@@ -13,7 +13,6 @@
 <section>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 <div id="mbtiMain-Background">
-<img src="/resources/images/homework-ga2b45b073_1920.png" alt="이미지" />
 <h1 id="mainPage-h1">나는 어떤 사람 일까 ?</h1>
 <span id = "mainPage-span">"mbti로 알아보는 내 성격 유형 테스트"</span>
 <lord-icon
