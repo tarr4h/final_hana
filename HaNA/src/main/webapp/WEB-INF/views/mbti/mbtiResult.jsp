@@ -17,6 +17,7 @@
 
 
 <div id="mbtiMain-Background">
+<div id = "mbtiResult-border">
 	<h1 id="mainPage-h1">결과</h1>
 	<div>
 		<h4 style="color: #ffffff;">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
@@ -27,6 +28,7 @@
 	</div>
 	<button id= "hoomButton" onclick="location.href='http://localhost:9090/hana'">홈으로</button>
 	<button id="mbtiInsert">프로필 반영</button>
+</div>
 </div>
 
 

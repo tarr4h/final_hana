@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
+	
 	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm" name="mbtiFrm">
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
@@ -26,7 +27,7 @@
 					     로 하나만 되게 할수 있도록 해주었다  -->
 					   <!-- 동의 -->
 					<span><i class="far fa-circle"></i></span>
-					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2"/>	
+					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2" checked/>	
 					 	<label for="cbtest-${list.no}-yes" class="cb2"></label>
 					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" />
 						<label for="cbtest-${list.no}-no" class="cb1"></label>
@@ -40,6 +41,7 @@
 		<button id="mbtiListPage-buttonResult">결과보기 <i class="fas fa-angle-double-right"></i></button>
 		</div>
 	</form>
+
 </div>
 
 <script>

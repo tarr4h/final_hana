@@ -5,10 +5,10 @@
     background: rgb(250, 208, 201) !important;
     text-align: center;
     margin: auto;
-    border-radius: 40px 0;
     position: absolute;
     top: 40%;
     left: 20%;
+    border: 6px ridge;
 }
 #mbtiResult-Background {
     width: 60%;
@@ -16,21 +16,20 @@
     background: rgb(250, 208, 201) !important;
     text-align: center;
     margin: auto;
-    border-radius: 40px 0;
     position: absolute;
     top: 40%;
     left: 20%;
+    border: 6px ridge;
 }
 #mbtiList-Background {
-    width: 60%;
-    height: 400px;
+    height: 100%;
     background: rgb(250, 208, 201) !important;
     text-align: center;
     margin: auto;
-    border-radius: 40px 0;
     position: absolute;
     top: 40%;
     left: 20%;
+    border: 6px ridge;
 }
 #mainPage-h1 {
     color: rgb(110, 110, 109);
@@ -45,14 +44,7 @@
     display: block;
     margin:auto;
 }
-#mbtiList-Background {
-    width: 50%;
-    height: 100%;
-    background-color: rgb(250, 208, 201)!important;
-    margin: auto;
-    text-align: center;
-    border-radius: 40px 0;
-}
+
 #mbtiListPage-ul {
     color: rgb(110, 110, 109);
     list-style: none;
@@ -68,7 +60,6 @@
     color:rgb(250, 208, 201);
     border-radius: 40px 20px 80px 60px;
  
-    
 }
 .cb1,
 .cb2 {
@@ -175,5 +166,12 @@ input {
     background: linear-gradient(to right, #A7A3FF,#FFA7A3, #671cc4, #5673bd); 
     -webkit-background-clip: text; 
     -webkit-text-fill-color: transparent;
-    
 }
+#mbtiResult-border{
+	border: 2px inset;
+	margin: 20px;
+	position: relative;
+    top: 60px
+	
+}
+
