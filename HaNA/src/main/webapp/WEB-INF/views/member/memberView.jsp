@@ -75,14 +75,6 @@ $("#btn-follower-list").on( "click", function() {
 						</tr>
 					</thead>
 					<tbody id="modalTbody">
-						<%-- <tr>
-							<td>프로필</td>
-							<td>아이디</td>
-							<td><button type="button"
-									class="btn btn-default btn-sm btn-success"
-									style="margin-right: 1%;">승인</button>
-								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
-						</tr> --%>
 					</tbody>
 				</table>
 			</div>
@@ -159,13 +151,13 @@ $("#btn-follower-list").on( "click", function() {
 	    <textarea class="form-control" name="content" placeholder="내용을 입력하세요." rows="17" cols="15" required></textarea>
 		<br>
 				<input type="submit" class="btn btn-secondary save" value="등록하기" >
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 	</form:form>
 					</tbody>
 				</table>
 			</div>
 			<div class="modal-footer">
 			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
-				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>      
         </div>
@@ -373,15 +365,14 @@ $("#btn-add").click(()=> {
 });
 
 
-//이미지 가져오기
+//글 작성시 이미지 바로 나오게
 function readMultipleImage(input) {
     const multipleContainer = document.getElementById("multiple-container")
     
     // 인풋 태그에 파일들이 있는 경우
     if(input.files) {
-        // 이미지 파일 검사 (생략)
         console.log(input.files)
-        // 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
+        // 유사배열을 배열로 변환 -forEach문으로 처리
         const fileArr = Array.from(input.files)
         const $colDiv1 = document.createElement("div")
         const $colDiv2 = document.createElement("div")
@@ -421,21 +412,21 @@ inputMultipleImage.addEventListener("change", e => {
 </script>
         
 <style>
-#multiple-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr ;
-}
-.image {
-    display: block;
-    width: 80%;
-}
-.image-label {
-    position: relative;
-    bottom: 22px;
-    left: 5px;
-    color: white;
-    text-shadow: 2px 2px 2px black;
-}
+	#multiple-container {
+	    display: grid;
+	    grid-template-columns: 1fr 1fr  ;
+	}
+	.image {
+	    display: block;
+	    width: 100%;
+	}
+	.image-label {
+	    position: relative;
+	    bottom: 22px;
+	    left: 5px;
+	    color: white;
+	    text-shadow: 2px 2px 2px black;
+	}
 	#myInfo{
 		border: 1px solid black;
 	}
@@ -544,13 +535,21 @@ inputMultipleImage.addEventListener("change", e => {
     color: black;
     text-decoration: none;
 }
+.btn-secondary.save {
+    color: #fff;
+    background-color: black;
+    border-color: #6c757d;
+    width: 90px;
+    font-size: 15px;
+    margin-left : 450px;
+}
 .btn-secondary {
     color: #fff;
     background-color: black;
     border-color: #6c757d;
     width: 90px;
     font-size: 15px;
-    
+    margin-left : 20px;
 }
 .tableKey {
     width: 17%;
