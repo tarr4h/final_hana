@@ -22,7 +22,7 @@
 	<h1 id="mainResultPage-h1">나의 성격 유형</h1>
 	
 	<div>
-		<h4 style="color: #212529; position: relative; bottom: 350px;">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
+		<h4 style="color: #ffffff; position: relative; bottom: 350px;">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
 		<input type="hidden" id="mbtiResult"
 			value="${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }" />
 		<input type="hidden" id="memberId"
