@@ -445,7 +445,7 @@ function scrollPage(){
 						 	}
 						}
 				}else if (tagName != null){ // 해시태그 있을때
-					if(startNum == 0 || startNum ==12  ){
+					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<endNum; i++){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
@@ -556,8 +556,7 @@ function scrollPage(){
         	$("#searchInput").val('');
         	selectDataArr.push(hashTagData);
         	console.log("selectDataArr" + selectDataArr)
-        
-        	
+
         }
         
     }).autocomplete('instance')._renderItem = function(ul, item) {
@@ -583,13 +582,8 @@ function clickList(){
 	$("#hashTagResult").empty();
 
 }
- 
 
-  
-  
-  
 </script>
-
 
 </section>
 
