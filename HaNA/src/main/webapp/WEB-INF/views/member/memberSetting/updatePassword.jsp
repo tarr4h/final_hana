@@ -80,9 +80,29 @@ function passwordValidate(){
     line-height: inherit;
     width: 350px;
     border-radius: 5px;
-    height: 39px;
+    height: 42px;
     border-color: gainsboro;
-    border-style: solid;
+    border-style: solid; 
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+    text-align: center;
+}
+.btn-dark {
+    color: #fff;
+    background-color: #212529;
+    border-color: #212529;
+    margin-left: 100px;
+}
+ #command {
+    margin-left: 100px;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>>

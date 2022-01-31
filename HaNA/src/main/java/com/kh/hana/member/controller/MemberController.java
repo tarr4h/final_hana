@@ -288,7 +288,8 @@ public class MemberController {
         log.info("board.getPicture()[1] ={}", board.getPicture()[1]);
         log.info("insertMemberBoard board = {}", board);
         int result = memberService.insertMemberBoard(board);
-
+        String msg = result > 0 ? "게시글이 등록되었습니다." : "게시글 등록에 실패했습니다.";
+        redirectAttr.addFlashAttribute("msg",msg);
         return "redirect:/member/memberView/"+ member.getId();
 
     }
@@ -339,7 +340,7 @@ public class MemberController {
 			}
 	}
 	
-	
+ 
  
 	
 

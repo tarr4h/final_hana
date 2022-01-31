@@ -20,66 +20,7 @@
 	</script>	
 </c:if>
 
-<style>
-.col-sm-4{
-	width : 350px;
-	}
- .settingBar{
-    height: 60px;
-    text-align: center;
-    margin-top: 80px;
-    margin-bottom: 60px;
-    border-bottom-style: ridge;
-    }
-.settingList {
-	font-size: 16px;
-    margin-left: 34px;
-      color: black;
-    text-decoration: none;
-}
-.list-group-item.active {
-    z-index: 2;
-    color: #fff;
-    background-color: gray;
-    border-color: gray;
-    }
-.form-control {
-    display: block;
-    width: 480px;
-    height : 50px;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 0.25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    margin-bottom : 15px;
-} 
-.custom-select{
-	width : 450px;
-	height : 38px;
-	margin-bottom : 15px;
-}
-.mx-auto{
-	width : 450px;
-	padding-left:50px;
-	}
-.mx-auto text-center{
-	margin-left : 10px;}
-.row {
-   --bs-gutter-x: -15rem;
-   }
-textarea.form-control {
-    min-height: 150px;
-}
-</style>
+
 
 <br><br><br>
 <div class="container">
@@ -99,7 +40,7 @@ textarea.form-control {
 		<table class="mx-auto">
 		 <input type="hidden" name="id" value="${loginMember.id}" />
 			<tr>
-				<th>이름</th>
+				<th class="title">이름</th>
 				<td>
 					<div id="memberId-container">
 						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >
@@ -108,7 +49,7 @@ textarea.form-control {
 				</td>
 			</tr>
 			<tr>
-				<th>프로필사진</th>
+				<th class="title">사진</th>
 				<td>
 					<img src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}" alt="" style="width:30%;"/>
 					<br><br> 
@@ -118,14 +59,14 @@ textarea.form-control {
 			</tr>
 		
 			<tr>
-				<th>소개</th>
+				<th class="title">소개</th>
 				<td>
 				<!-- <input type="text" class="form-control" name="introduce" id="introduce" value="${loginMember.introduce}" required> -->	
 				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="80" >  ${loginMember.introduce} </textarea>
 				</td>
 			</tr>
 			<tr>
-				<th>지역</th>
+				<th class="title">지역</th>
 	  		  	<td>	
 					<input type="text" class="form-control" id="postcode" placeholder="우편번호">
 					<input type="button" class="form-control" onclick="execDaumPostcode()" value="우편번호 찾기">
@@ -246,5 +187,80 @@ function execDaumPostcode() {
 }
 </script>
 
+<style>
+.col-sm-4{
+	width : 328px;
+	margin-right: -100px;
+	margin-left : -120px;
+	}
+ .settingBar{
+    height: 60px;
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 60px;
+    border-bottom-style: ridge;
+    }
+.settingList {
+	font-size: 16px;
+    margin-left: 34px;
+      color: black;
+    text-decoration: none;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: gray;
+    border-color: gray;
+    }
+.form-control {
+    display: block;
+    width: 460px;
+    height : 50px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom : 15px;
+    margin-left: 20px;
+} 
+.custom-select{
+	width : 450px;
+	height : 38px;
+	margin-bottom : 15px;
+}
+.mx-auto{
+	width : 430px;
+	padding-left:50px;
+	}
+.mx-auto text-center{
+	margin-left : 10px;}
+.row {
+   --bs-gutter-x: -15rem;
+   }
+textarea.form-control {
+    min-height: 150px;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+    text-align: center;
+}
+ 
+</style>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

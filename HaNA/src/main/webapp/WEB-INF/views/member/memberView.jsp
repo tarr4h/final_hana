@@ -25,7 +25,7 @@
 	</script>
 </c:if>
   
-
+ 
 <div class="container mt-2">
     <div class="row" id="myInfo">
     	<!-- 프로필이미지 영역 -->
@@ -41,11 +41,11 @@
         </div>
         <!-- 프로필 세부정보 영역 -->
         <div class="col-sm-7" id="profileStatus">
-		<br>
-        	<span>팔로잉 : </span>
+		<br><br><br>
+        	<span class="followTitle">팔로잉 : </span>
         	 <button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
         	&nbsp;&nbsp;&nbsp;&nbsp; 
-        	<span>팔로워 : </span>
+        	<span class="followTitle">팔로워 : </span>
         	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button> 
  			
  			
@@ -123,9 +123,8 @@ $("#btn-follower-list").on( "click", function() {
 
 
 <!-- 글쓰기모달 -->
-    <div class="modal fade" id="boardFormModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+    <div class="modal fade" id="boardFormModal" tabindex="-1"  >
+	<div class="modal-dialog modal-xl modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">게시글 작성</h4>
@@ -141,17 +140,18 @@ $("#btn-follower-list").on( "click", function() {
 		method="post"
 		enctype="multipart/form-data">
 		<input type="text" class="form-control" name="writer" value="${loginMember.id}" readonly required>
+		<input type="hidden" name="id" value="${loginMember.id}" />
 		<br>
-		<div class="input-group mb-3" style="padding:0px;">
-		  <!-- <div class="input-group-prepend" style="padding:0px;">
+		 <!-- <div class="input-group mb-3" style="padding:0px;">
+		 <div class="input-group-prepend" style="padding:0px;">
 		    <span class="input-group-text">첨부파일1</span>
 		  </div> -->
 		   
 		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile1" multiple>
+		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile1" multiple required>
 		   <!-- <label class="custom-file-label" for="upFile1">파일을 선택하세요</label> --> 
 		  </div>
-		</div>
+		  <br>
 	 	<!--<div class="input-group mb-3" style="padding:0px;">
 		  <div class="input-group-prepend" style="padding:0px;">
 		    <span class="input-group-text">첨부파일2</span>
@@ -163,24 +163,16 @@ $("#btn-follower-list").on( "click", function() {
 		  </div>
 		  <br>
 		</div>
-	    <textarea class="form-control" name="content" placeholder="내용" rows="15" cols="15" required></textarea>
-		<br />
-		<input type="submit" class="btn btn-outline-success" value="저장" >
+	    <textarea class="form-control" name="content" placeholder="내용" rows="17" cols="15" required></textarea>
+		<br>
+				<input type="submit" class="btn btn-secondary save" value="저장" >
 	</form:form>
-						<%-- <tr>
-							<td>프로필</td>
-							<td>아이디</td>
-							<td><button type="button"
-									class="btn btn-default btn-sm btn-success"
-									style="margin-right: 1%;">승인</button>
-								<button type="button" class="btn btn-default btn-sm btn-danger">거절</button></td>
-						</tr> --%>
 					</tbody>
 				</table>
 			</div>
 			<div class="modal-footer">
 			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>      
         </div>
@@ -211,7 +203,7 @@ $("#btn-follower-list").on( "click", function() {
 				<table id="profileTable">
 					<tbody>
 						<tr>
-							<td class="tableKey">아이디</td>
+							<td><span class="tableKey">아이디</span></td>
 							<td class="tableValue">${member.id}</td>
 						</tr>
 					<!-- <tr>
@@ -232,7 +224,7 @@ $("#btn-follower-list").on( "click", function() {
 						 -->	
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>${member.addressFull}</td>
+							<td class="tableValue">${member.addressAll}</td>
 						</tr>
 				<!--  		<tr>
 							<td><span class="tableKey">취미</span></td>
@@ -503,9 +495,30 @@ $("#btn-add").click(()=> {
 }
 .btn-secondary {
     color: #fff;
-    background-color: #6c757d;
+    background-color: black;
     border-color: #6c757d;
-    width: 70px;
+    width: 90px;
+    font-size: 15px;
+    
+}
+.tableKey {
+    width: 17%;
+    font-size: 16px;
+    padding-bottom: 1px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+.tableValue {
+    width: 80%;
+    font-size: 20px;
+    padding-bottom: 6px;
+}
+.followTitle {
+    font-size: 15px;
+}
+#settingBtn img {
+    width: 130%;
+   	margin-top: -120px;
 }
 </style>
         
