@@ -263,20 +263,21 @@ public class MemberController {
             Member member,
             Board board, 
             RedirectAttributes redirectAttr,
+            Model model,
             @RequestParam(name="uploadFile", required = false) MultipartFile[] uploadFiles) throws IllegalStateException, IOException {
 
 		String saveDirectory  = application.getRealPath("/resources/upload/member/board");
-
 		String[] arr = new String[2];
         
         for(int i = 0; i<uploadFiles.length; i++) {
             MultipartFile uploadFile = uploadFiles[i];
             if(!uploadFile.isEmpty()) {
-                String originalFilename = uploadFile.getOriginalFilename();                
-                File dest = new File(saveDirectory);
+                String originalFilename = uploadFile.getOriginalFilename(); 
+                String renamedFilename = HanaUtils.rename(originalFilename);
+                File dest = new File(saveDirectory, renamedFilename);
                 uploadFile.transferTo(dest);
                 
-                log.info("ofg = {}", originalFilename);
+                log.info("ogf = {}", originalFilename);
                 
                 arr[i] = originalFilename;
             }
@@ -287,9 +288,12 @@ public class MemberController {
         log.info("board.getPicture()[0] ={}", board.getPicture()[0]);
         log.info("board.getPicture()[1] ={}", board.getPicture()[1]);
         log.info("insertMemberBoard board = {}", board);
+        
         int result = memberService.insertMemberBoard(board);
         String msg = result > 0 ? "게시글이 등록되었습니다." : "게시글 등록에 실패했습니다.";
         redirectAttr.addFlashAttribute("msg",msg);
+        model.addAttribute("board", board);
+        log.info("board = {}", board);
         return "redirect:/member/memberView/"+ member.getId();
 
     }

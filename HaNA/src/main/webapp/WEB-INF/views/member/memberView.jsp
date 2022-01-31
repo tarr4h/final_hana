@@ -147,25 +147,18 @@ $("#btn-follower-list").on( "click", function() {
 		    <span class="input-group-text">첨부파일1</span>
 		  </div> -->
 		   
-		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile1" multiple required>
-		   <!-- <label class="custom-file-label" for="upFile1">파일을 선택하세요</label> --> 
-		  </div>
-		  <br>
-	 	<!--<div class="input-group mb-3" style="padding:0px;">
-		  <div class="input-group-prepend" style="padding:0px;">
-		    <span class="input-group-text">첨부파일2</span>
-		  </div> -->
-		 
-		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="uploadFile" id="upFile2" multiple>
-		    <!-- <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>-->
-		  </div>
-		  <br>
+		   
+		    <input type="file" style="display: block;"  name="uploadFile" id="input-multiple-image" 
+		    	  multiple required> 
+		    <span>최대 2장까지 가능합니다.</span> 
+		  	<br>
+		  	<div id="multiple-container">
+			</div>
+		  	<br><br>
 		</div>
-	    <textarea class="form-control" name="content" placeholder="내용" rows="17" cols="15" required></textarea>
+	    <textarea class="form-control" name="content" placeholder="내용을 입력하세요." rows="17" cols="15" required></textarea>
 		<br>
-				<input type="submit" class="btn btn-secondary save" value="저장" >
+				<input type="submit" class="btn btn-secondary save" value="등록하기" >
 	</form:form>
 					</tbody>
 				</table>
@@ -177,9 +170,7 @@ $("#btn-follower-list").on( "click", function() {
 		</div>      
         </div>
 </div>
-        
-        
-        
+ 
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
         
 			<c:if test="${loginMember.id.equals(member.id) }">
@@ -375,16 +366,76 @@ $("#btn-follower-list").click((e) => {
 	})
 });
  
- 
-
 //글쓰기
 $("#btn-add").click(()=> {
 	console.log("ddd");
   $("#boardFormModal").modal();
 });
+
+
+//이미지 가져오기
+function readMultipleImage(input) {
+    const multipleContainer = document.getElementById("multiple-container")
+    
+    // 인풋 태그에 파일들이 있는 경우
+    if(input.files) {
+        // 이미지 파일 검사 (생략)
+        console.log(input.files)
+        // 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
+        const fileArr = Array.from(input.files)
+        const $colDiv1 = document.createElement("div")
+        const $colDiv2 = document.createElement("div")
+        $colDiv1.classList.add("column")
+        $colDiv2.classList.add("column")
+        fileArr.forEach((file, index) => {
+            const reader = new FileReader()
+            const $imgDiv = document.createElement("div")   
+            const $img = document.createElement("img")
+            $img.classList.add("image")
+            $imgDiv.appendChild($img)
+          
+            reader.onload = e => {
+                $img.src = e.target.result
+            }
+            
+            console.log(file.name)
+            if(index % 2 == 0) {
+                $colDiv1.appendChild($imgDiv)
+            } else {
+                $colDiv2.appendChild($imgDiv)
+            }
+            
+            reader.readAsDataURL(file)
+        })
+        multipleContainer.appendChild($colDiv1)
+        multipleContainer.appendChild($colDiv2)
+    }
+}
+const inputMultipleImage = document.getElementById("input-multiple-image")
+inputMultipleImage.addEventListener("change", e => {
+    readMultipleImage(e.target)
+    $imgDiv.style.width = ($img.naturalWidth)  * 0.3 + "px"
+    $imgDiv.style.height = ($img.naturalHeight) * 0.3 + "px"
+ 
+})
 </script>
         
 <style>
+#multiple-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+}
+.image {
+    display: block;
+    width: 80%;
+}
+.image-label {
+    position: relative;
+    bottom: 22px;
+    left: 5px;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
 	#myInfo{
 		border: 1px solid black;
 	}
