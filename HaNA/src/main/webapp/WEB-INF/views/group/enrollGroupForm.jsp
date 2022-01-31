@@ -25,36 +25,6 @@
 <title>소그룹 가입 신청 폼</title>
 </head>
 <body>
-
-<%--  	<div
-		style="position: relative; display: inline-block; top: 50%; left: 25%; padding: 5px 100px; background-color: rgb(224, 224, 224); margin-top: 10%;">
-		<form:form name="enrollGroupForm" method="post"
-			action="${pageContext.request.contextPath}/group/enrollGroupForm">
-			<h1 style="text-align: center;">${groupId}</h1>
-			<table>
-				<thead>
-					<tr>
-						<th
-							style="position: relative; top: 30%; left: 0%; display: inline-block;">신청이유</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><textarea name="content" id="" cols="30" rows="10"></textarea>
-							<input type="hidden" name="groupId" value="${groupId}" /> <input
-							type="hidden" name="memberId"
-							value="<sec:authentication property='principal.username'/>" /></td>
-					</tr>
-					<tr>
-						<td><br /> <input style="position: relative; float: right;"
-							type="submit" value="가입신청" /> <br />
-						<br /></td>
-					</tr>
-				</tbody>
-			</table>
-		</form:form>
-	</div>  --%>
-	
 <div class="padding">
     <div style="text-align: center"> <i class="mdi mdi-forum"></i> <br>
         <h1 style="color: #666; font-weight: bold; font-size: 50px;">${groupId}</h1><h4 style="color: #666;">소모임 신청</h4>
@@ -72,27 +42,32 @@
                 </div>
                 
                 <div class="modal-body">
-                	<form:form name="enrollGroupForm" method="post" action="${pageContext.request.contextPath}/group/enrollGroupForm">
-                    <form>
+                    <form:form name="enrollGroupForm" method="post" action="${pageContext.request.contextPath}/group/enrollGroupForm">
                         <div class="form-group"> 
                         	<label for="exampleInputEmail1" style="color: #fff;">회원 아이디</label> 
                         	<input type="text" class="form-control" id="memberId" readonly value=" ${loginMember.id}" >
                         </div>
                         <div class="form-group"> 
                         	<label for="exampleFormControlTextarea1" style="color: #fff;">가입하고 싶은 이유를 자유롭게 작성해주세요.</label> 
-                        	<textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="2"></textarea> 
+                        	<textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="content" ></textarea> 
                         	<input type="hidden" name="groupId" value="${groupId}" /> 
-                        	<input type="hidden" name="memberId" value="<sec:authentication property='principal.username'/>" /></td>
+                        	<input type="hidden" name="memberId" value="<sec:authentication property='principal.username'/>" />
                         </div>
-                    </form>
+                		<div class="modal-footer"> <button type="submit" id="submitBtn" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px; width:100%;" data-dismiss="modal" aria-label="Close">Submit</button> </div>
                     </form:form>
                 </div>
                 
-                <div class="modal-footer"> <button type="button" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px; width:100%;" data-dismiss="modal" aria-label="Close">Submit</button> </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+	$("#submitBtn").click((e) => {
+		console.log("test");
+		$(document.enrollGroupForm).submit();
+	})
+</script>
 
 <style>
         .mdi {

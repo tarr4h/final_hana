@@ -495,9 +495,9 @@ public class GroupController {
 	@PostMapping("/updateGroupGrade")
 	@ResponseBody
 	public String updateGroupGrade (
-				@RequestParam String groupId, 
-				@RequestParam String memberId, 
-				@RequestParam String memberLevelCode,
+				@RequestParam(name="groupId") String groupId, 
+				@RequestParam(name="memberId") String memberId, 
+				@RequestParam(name="memberLevelCode") String memberLevelCode,
 				@RequestParam Map<String, Object> map
 				) {
 		
@@ -511,7 +511,7 @@ public class GroupController {
 		String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
 		log.info("msg ={}", msg);
 		
-		return "redirect:/group/groupMemberList"+groupId;
+		return "redirect:/group/groupMemberList/"+groupId;
 	}
 	
 

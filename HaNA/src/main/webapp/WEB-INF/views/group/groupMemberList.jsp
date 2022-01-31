@@ -69,10 +69,11 @@ table th, td {
 				</div>
 				
 				<div class="modal-body">
-					<form action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" 
+					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" 
 						class="customRadio customCheckbox m-0 p-0">
 						<input type="hidden" name="groupId" id="groupId"/>
 						<input type="hidden" name="memberId" id="memberId"/>
+						<input type="hidden" name="memberLevelCode" id="memberLevelCode"/>
 						<div class="row mb-0">
 							<div class="row justify-content-start">
 								<div class="col-12">
@@ -91,15 +92,15 @@ table th, td {
 								</div>
 							</div>
 						</div>
-					</form>
+					</form:form>
 				</div>
 				<div class="modal-footer">
 					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade" method="POST">
-							<input type="hidden" name="groupId" value="${list.GROUP_ID}" />
-							<input type="hidden" name="memberId" value="${list.MEMBER_ID}" />
-							<input type="hidden" name="groupLevelCode" value="${list.MEMBER_LEVEL_CODE}" />
+							<input type="hidden" name="groupId" value="${groupId}" />
+							<input type="hidden" name="memberId" value="${memberId}" />
+							<input type="hidden" name="memberLevelCode" value="${memberLevelCode}" />
+						<button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="updateGroupGradeFunc();">save</button>
 					</form:form>
-					<button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="updateGroupGradeFunc();">save</button>
 					<%-- <a href="${contextPath.request.pageContext}/group/gradeGroupMember/${list.MEMBER_ID}/${list.MEMBER_LEVEL_CODE}"></a> --%>
 				</div>
 			</div>
