@@ -90,14 +90,6 @@
 				<!-- 내용 -->
 				<div class="modal-body">
 					<table id="time-select">
-						<thead>
-							<tr>
-								<th>선택</th>
-								<th>시작시간</th>
-								<th>종료시간</th>
-								<th>상태</th>
-							</tr>
-						</thead>
 						<tbody></tbody>
 					</table>
 				</div>
@@ -151,17 +143,13 @@
 			let curModal = `#modal\${$(e.target).data('num')}`;										
 			let nextModal = `#modal\${$(e.target).data('num')+1}`;
 			if(curModal == '#modal1'){
-				e.preventDefault();
-				$(curModal).css('display', 'none');
-				$(curModal).modal('hide');
-				$(nextModal).modal({backdrop:'static', keyboard:false});
+				modalChange(curModal, nextModal);
 			}
 			
 			if(curModal == '#modal2'){
 				let selectDate = $(curModal).find("[name=reservationDate]").val();
 				let selDate = new Date(selectDate);
 				let nowDate = new Date();
-				
 				let bool = selDate.getMonth() == nowDate.getMonth() && selDate.getDate() == nowDate.getDate();
 				
 				if($(curModal).find("[name=reservationDate]").val() == ''){
@@ -171,32 +159,28 @@
 					alert("오늘 이전은 선택할 수 없습니다.");
 					$(curModal).find("[name=reservationDate]").focus();
 				} else{
-					e.preventDefault();
-					$(curModal).css('display', 'none');
-					$(curModal).modal('hide');
-					$(nextModal).modal({backdrop:'static', keyboard:false});		
+					modalChange(curModal, nextModal);	
 				}
 				
 			} else if(curModal == '#modal3'){
 				if($('[name=tb-select]:checked').val() == null){
 					alert('테이블을 선택해주세요');
 				} else{
-					e.preventDefault();
-					$(curModal).css('display', 'none');
-					$(curModal).modal('hide');
-					$(nextModal).modal({backdrop:'static', keyboard:false});
+					modalChange(curModal, nextModal);
 				}
 			} else if(curModal == '#modal4'){
 				if($('[name=time-select]:checked').val() == null){
 					alert('예약시간을 선택해주세요');
 				} else{
-					e.preventDefault();
-					$(curModal).css('display', 'none');
-					$(curModal).modal('hide');
-					$(nextModal).modal({backdrop:'static', keyboard:false});
+					modalChange(curModal, nextModal);
 				}
 			}
-			
+		
+		function modalChange(cur, next){
+			$(cur).css('display', 'none');
+			$(cur).modal('hide');
+			$(next).modal({backdrop:'static', keyboard:false});
+		}
 			
 		});
 		/* 이전 버튼 */
@@ -210,7 +194,6 @@
 		})
 		/* x버튼 클릭 시에만 모달 닫히게 */
 		$(".close").click((e) => {
-			/* $(".modal.fade").modal("hide"); */
 			window.location.reload();
 		});
 		
@@ -231,7 +214,6 @@
 					submitRequest();
 				}
 			}
-			/* $(".modal.fade").modal("hide"); */
 		});
 		
 		/* 모달 이동 시 제어 onload  */
@@ -271,9 +253,12 @@
 							<th>특이사항</th>
 						</tr>
 					`;
-					
 					/* if(tbody.text() == ""){ */
 						tbody.empty();
+					
+					if(res == ''){
+						tbody.append("예약 가능한 테이블이 존재하지 않습니다.");
+					} else{
 						tbody.append(th);
 						$.each(res, (i, e) => {
 							if(e.enable == 'Y'){
@@ -299,8 +284,8 @@
 								`;
 								tbody.append(tr);								
 							}
-						});
-					/* } */
+						});	
+					}
 				},
 				error:console.log
 			});
@@ -310,7 +295,6 @@
 		function timeModal(){
 			let tableId = $("[name=tb-select]:checked").data('table-id');
 			let resDate = $("[name=reservationDate]").val();
-			console.log(resDate);
 			
 			$.ajax({
 				url: '${pageContext.request.contextPath}/shop/selectOneTable/getReservationTime',
@@ -318,9 +302,23 @@
 					tableId: tableId,
 					date: resDate
 				},
-				success(res){				
+				success(res){
 					$("#time-select tbody").empty();
-/* 					if($("#time-select tbody").text() == ""){ */
+					if(res == ''){
+						$("#time-select tbody").append("예약 가능한 시간대가 존재하지 않습니다.");
+					} else{
+						const th = `
+							<thead>
+								<tr>
+									<th>선택</th>
+									<th>시작시간</th>
+									<th>종료시간</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+						`;
+						$("#time-select").append(th);
+						
 						$.each(res, (i, e) => {
 							let status = e.status;
 							let disabled = 'disabled';
@@ -339,8 +337,8 @@
 								</tr>
 							`;
 							$("#time-select tbody").append(tr);
-						})						
-/* 					} */
+						});				
+					}		
 				},
 				error:console.log
 			});
@@ -348,17 +346,12 @@
 		
 		function submitRequest(){
 			let userId_ = '${loginMember.id}';
-			
 			let reservationDate_ = $("[name=reservationDate]").val();
-			
 			let tableId_ = $("[name=tb-select]:checked").data('table-id');
-			
 			let startTime_ = $("[name=time-select]:checked").parent().next().text();
 			let endTime_ = $("[name=time-select]:checked").parent().next().next().text();
-			
 			let visitors_ = $("[name=visitors]").val();
 			let reqOrder_ = $("[name=req_order]").val();
-			
 			let allowVisitor = $(`#allowVisitor\${tableId_}`).val();
 			
 			let data = {
@@ -373,7 +366,6 @@
 			};
 			
 			let jsonData = JSON.stringify(data);
-			console.log(jsonData);
 			
 			$.ajax({
 				url: '${pageContext.request.contextPath}/shop/reservation/insert?${_csrf.parameterName}=${_csrf.token}',

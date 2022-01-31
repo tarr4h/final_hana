@@ -72,7 +72,6 @@ public class ShopDaoImpl implements ShopDao {
 		return session.selectList("shop.selectTableReservation", infoMap);
 	}
 
-
 	
     
 }

@@ -285,12 +285,15 @@ function enrollFrm(num){
 /* 테이블 삭제 func */
 function deleteTable(num){
 	let tableName = $(`[name=tableName\${num}]`).val();
-	let tableId = $(`[name=tableId\${num}]`).val();
+	let tableId_ = $(`[name=tableId\${num}]`).val();
 	
 	console.log(tableName);
 	$.ajax({
-		url: `${pageContext.request.contextPath}/shop/deleteShopTable/\${tableId}?${_csrf.parameterName}=${_csrf.token}`,
+		url: `${pageContext.request.contextPath}/shop/deleteShopTable?${_csrf.parameterName}=${_csrf.token}`,
 		method: 'DELETE',
+		data:{
+			tableId: tableId_
+		},
 		success(res){
 			alert(res);
 		},

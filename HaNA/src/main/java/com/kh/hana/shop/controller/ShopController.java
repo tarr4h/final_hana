@@ -144,7 +144,9 @@ public class ShopController {
     
     @DeleteMapping(value="/deleteShopTable/{tableId}", produces="application/text;charset=utf8")
     @ResponseBody
-    public ResponseEntity<?> deleteShopTable(@PathVariable String tableId){
+    public ResponseEntity<?> deleteShopTable(@RequestBody Table table){
+    	
+    	String tableId = table.getTableId();
     	log.info("tableId = {}", tableId);
     	
     	int result = shopService.deleteShopTable(tableId);
@@ -172,7 +174,7 @@ public class ShopController {
     	
     	Map<String, Object> infoMap = new HashMap<>();
     	infoMap.put("date", date);
-    	infoMap.put("shopId", reqTable.getTableId());
+    	infoMap.put("tableId", reqTable.getTableId());
     	
     	List<Reservation> reservation = shopService.selectTableReservation(infoMap);
     	
