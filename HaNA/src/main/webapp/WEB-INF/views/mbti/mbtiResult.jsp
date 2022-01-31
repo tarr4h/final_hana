@@ -18,7 +18,7 @@
 
 <div id="mbtiMain-Background">
 <img src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지" style="width: 100%; height: 100%;
-    position: relative;"/>>
+    position: relative;"/>
 	<h1 id="mainResultPage-h1">나의 성격 유형</h1>
 	
 	<div>
