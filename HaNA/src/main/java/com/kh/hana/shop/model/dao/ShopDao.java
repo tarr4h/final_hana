@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.hana.shop.model.vo.HashTag;
+import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Table;
 
 public interface ShopDao {
@@ -27,6 +28,10 @@ public interface ShopDao {
 	Table selectOneTable(Table table);
 
 	List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data);
+
+	int insertReservation(Reservation reservation);
+
+	List<Reservation> selectTableReservation(Map<String, Object> infoMap);
 
 	
 

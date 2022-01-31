@@ -1,4 +1,5 @@
 package com.kh.hana.shop.controller;
+import java.beans.PropertyEditor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,10 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.shop.model.service.ShopService;
 import com.kh.hana.shop.model.vo.HashTag;
+import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Table;
 
 import lombok.extern.slf4j.Slf4j;
@@ -170,10 +175,14 @@ public class ShopController {
     }
     
     @GetMapping("/selectOneTable/getReservationTime")
-    public ResponseEntity<?> getReservationTime(Table reqTable){
-    	log.info("selectOneTable = {}", reqTable);
-    	
+    public ResponseEntity<?> getReservationTime(Table reqTable, @RequestParam Date date){    	
     	Table table = shopService.selectOneTable(reqTable);
+    	
+    	Map<String, Object> infoMap = new HashMap<>();
+    	infoMap.put("date", date);
+    	infoMap.put("shopId", reqTable.getTableId());
+    	
+    	List<Reservation> reservation = shopService.selectTableReservation(infoMap);
     	
     	List<Map<String, Object>> timeMapList = new ArrayList<>();
     	
@@ -200,10 +209,15 @@ public class ShopController {
 					psStartTime = cal.getTime();
 					break;
 				}
-				log.info("시작 = {}, 종료 = {}", sdf.format(eachStartTime), sdf.format(psStartTime));
 		    	Map<String, Object> timeMap = new HashMap<>();
 				timeMap.put("startTime", sdf.format(eachStartTime));
 				timeMap.put("endTime", sdf.format(psStartTime));
+		    	for(Reservation res : reservation) {
+		    		if(res.getTimeStart().equals(sdf.format(eachStartTime))) {
+		    			timeMap.put("status", res.getReservationStatus());
+		    		}
+		    	}
+				
 				timeMapList.add(timeMap);
 			}
 		} catch (ParseException e) {
@@ -214,5 +228,26 @@ public class ShopController {
     	
     	
     	return ResponseEntity.ok(timeMapList);
+    }
+    
+    @PostMapping(value="/reservation/insert", produces="application/text;charset=utf8")
+    @ResponseBody
+    public ResponseEntity<?> insertReservation(@RequestBody Reservation reservation){
+    	
+    	log.info("insertReservation REs = {}", reservation);
+    	
+    	int result = shopService.insertReservation(reservation);
+    	log.info("reservation result = {}", result);
+    	
+    	String msg = result > 0 ? "등록되었습니다." : "예약 실패, 다시 시도해주세요";
+    	
+    	return ResponseEntity.ok(msg);
+    }
+    
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	PropertyEditor editor = new CustomDateEditor(sdf, true);
+    	binder.registerCustomEditor(Date.class, editor);
     }
 }

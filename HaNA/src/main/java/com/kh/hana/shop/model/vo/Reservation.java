@@ -10,17 +10,22 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TableManage implements Serializable {
+public class Reservation implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String reservationNo;
+	private String reservationTableId;
+	private String reservationUser;
+	private String shopId;
 	private Date reservationDate;
-	private Date timeStart;
-	private Date timeEnd;
+	private String timeStart;
+	private String timeEnd;
 	private int visitorCount;
 	private String reqOrder;
 	private String reservationStatus;
-	private String reqUserId;
-	private String reservationTableNo;
-	private String shopId;
 	
 }
