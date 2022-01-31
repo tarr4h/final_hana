@@ -175,11 +175,22 @@ where
 		where id = #{id}
 	</update>
 
-
-
-
-
-
-
+	<select id= "selectBoardList" resultType = "board">
+		select 
+			*
+		from
+			board
+		where
+			writer = #{id}
+	</select>
+	
+	<select id="selectOneBoard" >
+		select 
+			*
+		from
+			board
+		where
+			no = #{no}
+	</select>
 
 </mapper>

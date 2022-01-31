@@ -230,48 +230,55 @@ $("#btn-follower-list").on( "click", function() {
 		</div>
    </div>
 </div> 
-    
+<br>
 <div class="container mt-2">       
     <div class="row">   
- 
-        <!-- 탭 영역 -->
-        <!-- <div class="col-sm-12 d-flex justify-content-center align-items-center" id="tab">
-        	<input type="button" class="m-3" value="버튼1" />
-        	<input type="button" class="m-3" value="버튼2" />
-        	<input type="button" class="m-3" value="버튼3" />
-        </div> -->
     </div>
-        
+<!-- 게시물목록 -->        
     <div class="row">    
-        <!-- thumbnail 1st line -->
-        <div class="thumbnail col-sm-4 ">
-        	<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
-        </div>
-        <div class="thumbnail col-sm-4">
-        	<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-        
-        <!-- thumbnail 2nd line  -->
-        <div class="thumbnail col-sm-4">
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-        
-        <!-- thumbnail 3rd line -->
-        <div class="thumbnail col-sm-4">
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
-        <div class="thumbnail col-sm-4">
-        </div>
+        <c:forEach items="${boardList}" var="board" varStatus="vs">
+	        <div class="thumbnail col-sm-4" >
+	         
+	       	 	<input type="hidden" value="${board.no}" id="boardNo"/>
+	        	<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
+						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
+						alt="" onclick="goBoardDetail()"/>
+			 
+	        </div>
+        </c:forEach>
     </div>
 </div>
-        
+
 <script>
+//게시물 목록
+$('.board-main-image').click((e)=>{
+	let boardNo = $(e.target).siblings("#boardNo").val();
+	console.log("boardNo1",boardNo);
+	goBoardDetail(boardNo);
+	
+	$('#groupPageDetail').modal("show");
+});
+//게시물 상세보기
+function goBoardDetail(boardNo){
+	console.log("boardNo2",boardNo);
+	 $.ajax({
+			url : "${pageContext.request.contextPath}/member/memberViewBoard/memberBoardDetail/\${boardNo}",
+			success(resp){
+				console.log("확인"+resp);
+				const {board} = resp;
+				console.log("확인"+ board);			
+			},
+			error(xhr, statusText, err){
+				switch(xhr.status){
+				default: console.log(xhr, statusText, err);
+				}
+				 
+			}
+		})
+ 
+} 
+
+
 //설정페이지로 이동
 function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
@@ -409,6 +416,8 @@ inputMultipleImage.addEventListener("change", e => {
     $imgDiv.style.height = ($img.naturalHeight) * 0.3 + "px"
  
 })
+ 
+ 
 </script>
         
 <style>
@@ -569,6 +578,11 @@ inputMultipleImage.addEventListener("change", e => {
 #settingBtn img {
     width: 130%;
    	margin-top: -120px;
+}
+.thumbnail {
+    height: 300px;
+    border: 1px solid white;
+    padding: 5px;
 }
 </style>
         

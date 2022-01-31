@@ -121,6 +121,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updatePassword(updateMember);
 	}
 
+	@Override
+	public Board selectOneBoard(int no) {
+		return memberDao.selectOneBoard(no);
+	}
+
+	@Override
+	public List<Board> selectBoardList(String id) {
+		return memberDao.selectBoardList(id);
+	}
+ 
+
 
  
 	

@@ -35,6 +35,10 @@ public interface MemberService {
 	int insertMemberBoard(Board board);
 
 	int updatePassword(Member updateMember);
+
+	Board selectOneBoard(int no);
+
+	List<Board> selectBoardList(String id);
  
 
 }

@@ -107,6 +107,21 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.updatePassword", updateMember);
 	}
 
+	@Override
+	public Board selectOneBoard(int no) {
+		return session.selectOne("member.selectOneBoard", no);
+	}
+
+	@Override
+	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
+		return session.selectOne("member.selectOneLikeLog", param);
+	}
+
+	@Override
+	public List<Board> selectBoardList(String id) {
+		return session.selectList("member.selectBoardList", id);
+	}
+
 	
 
  

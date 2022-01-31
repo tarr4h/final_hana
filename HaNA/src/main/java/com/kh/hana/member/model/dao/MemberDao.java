@@ -47,6 +47,12 @@ public interface MemberDao {
 
 	int updatePassword(Member updateMember);
 
+	Board selectOneBoard(int no);
+
+	Map<String, Object> selectOneLikeLog(Map<String, Object> param);
+
+	List<Board> selectBoardList(String id);
+
  
 
 }

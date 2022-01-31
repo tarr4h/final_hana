@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Follower;
@@ -112,6 +114,12 @@ public class MemberController {
 			log.info("shopInfo = {}", shopInfo);
 			model.addAttribute("shopInfo", shopInfo);
 		}
+		
+		//게시글 목록 가져오기
+		List<Board> boardList = memberService.selectBoardList(id);
+		log.info("boardList = {}", boardList);
+		
+		model.addAttribute("boardList", boardList);
 		
 		return "/member/"+view;
 	}
@@ -344,10 +352,18 @@ public class MemberController {
 			}
 	}
 	
- 
- 
 	
+ //게시글 상세보기
+	@GetMapping("/memberViewBoard/memberBoardDetail/{no}")
+	public ResponseEntity<Map<String,Object>> boardDetail(Member member, @PathVariable int no, Model model) { 
+	Board boardDetail = memberService.selectOneBoard(no);
+	log.info("boardDetail = {}", boardDetail);
+	
+	Map<String, Object> map = new HashMap<>();
+	map.put("boardDetail", boardDetail);
+	
+	return ResponseEntity.ok(map);
 
- 
+	}
 
 }
