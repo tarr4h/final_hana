@@ -6,7 +6,7 @@ import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Table;
 public interface ShopService {
 	
-    List<Map<String, Object>> selectShopList(Map<String, Object> data);
+    List<Map<String, Object>> selectShopList(Map<String, Object> data, List<String> selectDataArr);
     
     int insertHashTag(HashTag hashTag);
     
@@ -20,13 +20,10 @@ public interface ShopService {
 
 	int updateTable(Table table);
 
-	List<Map<String, Object>> selectHashTagShopList(Map<String, Object> data);
-
 	Table selectOneTable(Table table);
 
 	int insertReservation(Reservation reservation);
 
 	List<Reservation> selectTableReservation(Map<String, Object> infoMap);
-
     
 }
