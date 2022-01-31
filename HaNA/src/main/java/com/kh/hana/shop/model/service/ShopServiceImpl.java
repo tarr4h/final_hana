@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.hana.common.util.CalculateArea;
 import com.kh.hana.shop.model.dao.ShopDao;
 import com.kh.hana.shop.model.vo.HashTag;
+import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Table;
 
 import lombok.extern.slf4j.Slf4j;
@@ -119,6 +120,17 @@ public class ShopServiceImpl implements ShopService {
 	public Table selectOneTable(Table table) {
 		return shopDao.selectOneTable(table);
 	}
+
+	@Override
+	public int insertReservation(Reservation reservation) {
+		return shopDao.insertReservation(reservation);
+	}
+
+	@Override
+	public List<Reservation> selectTableReservation(Map<String, Object> infoMap) {
+		return shopDao.selectTableReservation(infoMap);
+	}
+
 
 	
 
