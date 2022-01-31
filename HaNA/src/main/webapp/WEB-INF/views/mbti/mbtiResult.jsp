@@ -17,10 +17,12 @@
 
 
 <div id="mbtiMain-Background">
-<div id = "mbtiResult-border">
-	<h1 id="mainPage-h1">결과</h1>
+<img src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지" style="width: 100%; height: 100%;
+    position: relative;"/>>
+	<h1 id="mainResultPage-h1">나의 성격 유형</h1>
+	
 	<div>
-		<h4 style="color: #ffffff;">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
+		<h4 style="color: #212529; position: relative; bottom: 350px;">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
 		<input type="hidden" id="mbtiResult"
 			value="${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }" />
 		<input type="hidden" id="memberId"
@@ -28,7 +30,7 @@
 	</div>
 	<button id= "hoomButton" onclick="location.href='http://localhost:9090/hana'">홈으로</button>
 	<button id="mbtiInsert">프로필 반영</button>
-</div>
+
 </div>
 
 

@@ -94,7 +94,7 @@
 				<!-- HashTag 검색 후 클릭/엔터 시 동적으로 버튼 생길 공간  -->
 			</div>
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-				id="searchBtn">Search</button>
+				id="searchBtn" onclick="clickList();">Search</button>
 		</div>
 
 
@@ -394,7 +394,7 @@ function scrollPage(){
 						locationY : y,
 						selectDataArr : selectDataArr
 				},
-				success(res){
+				success(res){	
 					 list = res;
 					console.log(list);
 					const max = list.length;
@@ -403,7 +403,8 @@ function scrollPage(){
 					for(var i =0; i<list.length; i++){
 						 tagName = list[i].TAG_NAME;
 					}
-		
+					
+					 
 				if(tagName == null){ // 해시태그 없을때
 					if(startNum == 0 ){
 							  for(var i=0; i<endNum; i++){
@@ -412,7 +413,7 @@ function scrollPage(){
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';					    					
+							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';	
 								$('#shopList').append(htmlOut); 
 							}  
 					}else{ 
@@ -422,7 +423,7 @@ function scrollPage(){
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';						    										    	
+								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';	
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
@@ -439,7 +440,7 @@ function scrollPage(){
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    					
+								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';	
 								$('#shopList').append(htmlOut); 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
 								if(i == max -1){
@@ -454,7 +455,7 @@ function scrollPage(){
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
 								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';						    										    	
+									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';		
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
@@ -560,9 +561,19 @@ function scrollPage(){
 });
   
 
+
+function clickList(){
+	console.log("클릭")
+	$("#shopList").empty();
+	console.log("지워짐")
+	scrollPage();
+
+}
  
- 
- 
+
+  
+  
+  
 </script>
 
 

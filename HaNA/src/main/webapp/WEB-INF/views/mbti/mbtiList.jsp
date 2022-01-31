@@ -14,7 +14,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
-	
+<img src="/hana/resources/images/white-g27215466c_1920.png" alt="이미지" style="width: 900px;
+    height: 600px; position: relative; left: 100px"/>
 	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm" name="mbtiFrm">
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
