@@ -2,6 +2,7 @@ package com.kh.hana.shop.model.service;
 import java.util.List;
 import java.util.Map;
 import com.kh.hana.shop.model.vo.HashTag;
+import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Table;
 public interface ShopService {
 	
@@ -21,5 +22,8 @@ public interface ShopService {
 
 	Table selectOneTable(Table table);
 
+	int insertReservation(Reservation reservation);
+
+	List<Reservation> selectTableReservation(Map<String, Object> infoMap);
     
 }
