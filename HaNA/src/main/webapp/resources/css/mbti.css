@@ -168,20 +168,20 @@ input {
     margin: 2%;
     border-radius: 50%;
     position: relative;
-    bottom: 300px;
+    bottom: 322px;
     background-color: rgb(245 193 0);
     color: #eaecee;
-    left: 10px;  
+	right: 20px;
    
 }
 #mbtiInsert{
     margin: 2%;
     border-radius: 50%;
      position: relative;
-    bottom: 300px;
+    bottom: 322px;
     background-color: rgb(245 193 0);
     color: #eaecee;
-    left: 10px;
+    left: 35px;
 
     
 }
@@ -201,9 +201,29 @@ input {
     padding: 2%;
     position: relative;
     z-index: 1;
-    bottom: 380px;
+    bottom: 382px;
     text-shadow: 4px 4px 2px #6c757d;
 }
-    
+#mainResultPage-h5{
+	display: block;
+    background: linear-gradient(to right, #1ed0d7,#ebcc6e, #158714, #294ca459);
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 1;
+    bottom: 386px;
+    font-size: 16px;
+}   
 
+#mainResultPage-p{
+	display: block;
+    background: linear-gradient(to right, #1ed0d7,#b1b7bc, #6c757d, #294ca459);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 1;
+    bottom: 349px;
+    right: 120px;
+	
+}
 
