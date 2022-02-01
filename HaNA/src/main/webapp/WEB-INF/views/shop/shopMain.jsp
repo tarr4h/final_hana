@@ -154,11 +154,9 @@
 		<div>pageNation</div>
 	</div>
 
-	<script type="text/javascript"
-		src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
-</script>
-	<script>
-	
+<script type="text/javascript"src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder"></script>
+
+<script>
 // 원본유지 용
 /* var loading = false;
 var page = 1;
@@ -204,8 +202,7 @@ function scrollPage(){
 					for(var i =0; i<list.length; i++){
 						 tagName = list[i].TAG_NAME;
 					}
-					
-					 
+	 
 				if(tagName == null){ // 해시태그 없을때
 					if(startNum == 0 ){
 							  for(var i=0; i<endNum; i++){
@@ -215,7 +212,7 @@ function scrollPage(){
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';	
-								$('#shopList').append(htmlOut); 
+								$('#shopList').append(htmlOut); 	
 							}  
 					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
@@ -233,7 +230,8 @@ function scrollPage(){
 						 	}
 						}
 				}else if (tagName != null){ // 해시태그 있을때
-					if(startNum == 0 || startNum ==12  ){
+					$("#shopList").empty(); //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
+					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<endNum; i++){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
@@ -243,6 +241,7 @@ function scrollPage(){
 							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
 								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';	
 								$('#shopList').append(htmlOut); 
+								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
 								if(i == max -1){
 									return;
@@ -258,14 +257,14 @@ function scrollPage(){
 								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
 									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';		
 									$('#shopList').append(htmlOut);
+									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
 										return;
 								}
 						 	}
 						}
-				}
-
+					}
 				page++;
 				endNum -= 1; //  6-1 = 5 
 				startNum = (endNum +1) ;  // 6 12
@@ -291,7 +290,7 @@ function scrollPage(){
 	});
 
 	
- 	 // Autocomplete  부분 
+ // Autocomplete  부분 
    var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
         source : function(request, response) {
@@ -317,8 +316,12 @@ function scrollPage(){
         , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
         , select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
 
-        	 // 검색 데이터 변수에 담기  
-        	  hashTagData  = ui.item.value;
+        	// 배열 길이가 2개면 0 으로 초기화 (다른 데이터 담으려고) 
+			if(selectDataArr.length == 2 ){
+        	selectDataArr.length = 0;	
+        	}
+        	// 검색 데이터 변수에 담기  
+        	hashTagData  = ui.item.value;
         	console.log("변수 " +  hashTagData)
         
         	// 검색 데이터를 클릭/엔터 하면 버튼이 동적으로 생성  
@@ -328,13 +331,7 @@ function scrollPage(){
 		    // button style
 		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
-		    
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
-		    tagDataArr.push(tagData.nodeValue); //배열의 끝에 요소 추가
-		   
-		    console.log("tagDataArr = " + tagDataArr)
-		    console.log("tagDataArr.length = " + tagDataArr.length)
-        	
         }
         , focus : function(evt, ui) { //  한글 오류 방지
             return false;
@@ -344,8 +341,7 @@ function scrollPage(){
         	$("#searchInput").val('');
         	selectDataArr.push(hashTagData);
         	console.log("selectDataArr" + selectDataArr)
-        
-        	
+
         }
         
     }).autocomplete('instance')._renderItem = function(ul, item) {
@@ -365,13 +361,15 @@ function scrollPage(){
 
 // 해시 태그 선택 후 검색 버튼 클릭시 
 function clickList(){
-	console.log("클릭")
 	$("#shopList").empty();
 	scrollPage();
+	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
 
 } */
 
+
+// test 부분 
 var loading = false;
 var page = 1;
 var endNum = 6;
@@ -381,7 +379,6 @@ var hashTagData = ""; // 검색 데이터 잠시 담을 변수
 
 
 function scrollPage(){
-	console.log("두번")
 		console.log("${loginMember.addressAll}");
 		var Addr_val = "${loginMember.addressAll}";
 	
@@ -427,8 +424,7 @@ function scrollPage(){
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';	
-								$('#shopList').append(htmlOut); 
-								
+								$('#shopList').append(htmlOut); 	
 							}  
 					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
@@ -446,7 +442,7 @@ function scrollPage(){
 						 	}
 						}
 				}else if (tagName != null){ // 해시태그 있을때
-					$("#shopList").empty(); //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해둠 
+					$("#shopList").empty(); //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<endNum; i++){
 								var htmlOut='';
@@ -457,7 +453,7 @@ function scrollPage(){
 							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
 								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';	
 								$('#shopList').append(htmlOut); 
-								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 tag 내역 삭제 
+								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
 								if(i == max -1){
 									return;
@@ -473,15 +469,14 @@ function scrollPage(){
 								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
 									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';		
 									$('#shopList').append(htmlOut);
-									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 tag 내역 삭제
+									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
 										return;
 								}
 						 	}
 						}
-				}
-
+					}
 				page++;
 				endNum -= 1; //  6-1 = 5 
 				startNum = (endNum +1) ;  // 6 12
@@ -507,7 +502,7 @@ function scrollPage(){
 	});
 
 	
- 	 // Autocomplete  부분 
+ // Autocomplete  부분 
    var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
         source : function(request, response) {
@@ -533,12 +528,12 @@ function scrollPage(){
         , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
         , select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
 
-        	// 배열 길이가 2개면 o으로 초기화 후 다른 데이터 담으려고 
+        	// 배열 길이가 2개면 0 으로 초기화 (다른 데이터 담으려고) 
 			if(selectDataArr.length == 2 ){
         	selectDataArr.length = 0;	
         	}
-        	 // 검색 데이터 변수에 담기  
-        	  hashTagData  = ui.item.value;
+        	// 검색 데이터 변수에 담기  
+        	hashTagData  = ui.item.value;
         	console.log("변수 " +  hashTagData)
         
         	// 검색 데이터를 클릭/엔터 하면 버튼이 동적으로 생성  
@@ -549,7 +544,6 @@ function scrollPage(){
 		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
-        	
         }
         , focus : function(evt, ui) { //  한글 오류 방지
             return false;
@@ -581,7 +575,6 @@ function scrollPage(){
 function clickList(){
 	$("#shopList").empty();
 	scrollPage();
-	console.log("처음")
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
 

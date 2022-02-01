@@ -8,45 +8,39 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <fmt:requestEncoding value="utf-8" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
-<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+<section class="body-section"
+	style="width: 200px; height: 100%; float: right; display: block;">
+	<span style="float: right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
 </section>
 <section>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/resources/css/mbti.css" />
-
-<div id="mbtiMain-Background">
-<img src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지" style="width: 100%; height: 100%;
-    position: relative;"/>
-    <p id="mainResultPage-p">당신의 성격 유형은 :</p>
-    <div id = "mainResultPage-append"></div>
-	<!-- 
-	<h1 id="mainResultPage-h1"></h1>
-	<h5 id = "mainResultPage-h5"></h5>
-	 -->
-	<div>
-		<h4 style="color: #ffffff; position: relative; bottom: 370px;">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
-		<input type="hidden" id="mbtiResult"
-			value="${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }" />
-		<input type="hidden" id="memberId"
-			value="${memberId}" />
+	<link rel="stylesheet"
+		href="${pageContext.request.contextPath }/resources/css/mbti.css" />
+	<div id="mbtiMain-Background">
+		<img src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지"
+			style="width: 100%; height: 100%; position: relative;" />
+		<p id="mainResultPage-p">당신의 성격 유형은 :</p>
+		<div id="mainResultPage-append"></div>
+		<div>
+			<h4 style="color: #ffffff; position: relative; bottom: 370px;">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
+			<input type="hidden" id="mbtiResult"
+				value="${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }" />
+			<input type="hidden" id="memberId" value="${memberId}" />
+		</div>
+		<button id="hoomButton"
+			onclick="location.href='http://localhost:9090/hana'">홈으로</button>
+		<button id="mbtiInsert">프로필 반영</button>
 	</div>
-	<button id= "hoomButton" onclick="location.href='http://localhost:9090/hana'">홈으로</button>
-	<button id="mbtiInsert">프로필 반영</button>
-
-</div>
 
 
 <script>
+var mbtiResult = $("#mbtiResult").val();	
+				
 	$('#mbtiInsert').on('click', function() {
-
-		var mbti = $("#mbtiResult").val();		
-
 	 	$.ajax({
 			url : "${pageContext.request.contextPath}/mbti/addMbtiProfile.do",
 			method : "GET",
 			data : {
-				"mbti" : mbti
+				"mbti" : mbtiResult
 			},
 			success(map) {
 				console.log(map)
@@ -59,7 +53,6 @@
 	
 	});
 	
-var mbtiResult = $("#mbtiResult").val();	
 	if(mbtiResult == 'ISTJ'){
 		var htmlOut='';
 		htmlOut += '<h1 id="mainResultPage-h1">'+'청렴결백한 논리주의자'+'</h1>';

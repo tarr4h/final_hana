@@ -47,14 +47,12 @@
 
 <script>
 window.onload = function(){
-	
 	if($('input[name=cPage]').val() == 37){
 		$("#mbtiListPage-buttonNext").hide();
 		document.getElementById("btn").style.display = 'block';
 		const path = '${pageContext.request.contextPath}/mbti/mbtiResult.do';
 		$('form[name=mbtiFrm]').attr('action', path);
 	}
-	
 }
 
 </script>
