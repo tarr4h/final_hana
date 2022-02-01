@@ -170,7 +170,7 @@ input {
     position: relative;
     bottom: 322px;
     background-color: rgb(245 193 0);
-    color: #eaecee;
+    color: #ffffff;
 	right: 20px;
    
 }
@@ -180,10 +180,8 @@ input {
      position: relative;
     bottom: 322px;
     background-color: rgb(245 193 0);
-    color: #eaecee;
+    color: #ffffff;
     left: 35px;
-
-    
 }
 #mainPage-span{
     display: block;
@@ -201,17 +199,17 @@ input {
     padding: 2%;
     position: relative;
     z-index: 1;
-    bottom: 382px;
+    bottom: 375px;
     text-shadow: 4px 4px 2px #6c757d;
 }
 #mainResultPage-h5{
 	display: block;
-    background: linear-gradient(to right, #1ed0d7,#ebcc6e, #158714, #294ca459);
+    background: linear-gradient(to right, #cfcfcf,#ebcc6e, #158714, #f8f8f859);
     -webkit-background-clip: text; 
     -webkit-text-fill-color: transparent;
     position: relative;
     z-index: 1;
-    bottom: 386px;
+    bottom: 380px;
     font-size: 16px;
 }   
 
@@ -223,7 +221,6 @@ input {
     position: relative;
     z-index: 1;
     bottom: 349px;
-    right: 120px;
-	
+    right: 120px;	
 }
 

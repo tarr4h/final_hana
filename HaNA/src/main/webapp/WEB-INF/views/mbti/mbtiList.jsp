@@ -27,13 +27,13 @@
 					     하나만 체크 되게 하고 싶은 거니까 input과 label을 name 값으로 이어주고 ${list.no}를 줘서 문항 마다 체크를(동의 또는 비동의) 
 					     로 하나만 되게 할수 있도록 해주었다  -->
 					   <!-- 동의 -->
-					<span><i class="far fa-circle"></i></span>
+					<span style="position: relative; bottom: 5px; margin:4px;"><i class="far fa-circle"></i></span>
 					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2" checked/>	
 					 	<label for="cbtest-${list.no}-yes" class="cb2"></label>
 					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" />
 						<label for="cbtest-${list.no}-no" class="cb1"></label>
 					   <!-- 비동의 -->
-					<span><i class="fas fa-times"></i></span>
+					<span style="position: relative; bottom: 5px; margin:4px;"><i class="fas fa-times"></i></span>
 			</li>
 		 </c:forEach>
 		</ul>

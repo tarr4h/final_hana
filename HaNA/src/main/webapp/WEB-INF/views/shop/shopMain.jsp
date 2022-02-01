@@ -381,6 +381,7 @@ var hashTagData = ""; // 검색 데이터 잠시 담을 변수
 
 
 function scrollPage(){
+	console.log("두번")
 		console.log("${loginMember.addressAll}");
 		var Addr_val = "${loginMember.addressAll}";
 	
@@ -416,8 +417,7 @@ function scrollPage(){
 					for(var i =0; i<list.length; i++){
 						 tagName = list[i].TAG_NAME;
 					}
-					
-					 
+	 
 				if(tagName == null){ // 해시태그 없을때
 					if(startNum == 0 ){
 							  for(var i=0; i<endNum; i++){
@@ -428,6 +428,7 @@ function scrollPage(){
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';	
 								$('#shopList').append(htmlOut); 
+								
 							}  
 					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
@@ -445,6 +446,7 @@ function scrollPage(){
 						 	}
 						}
 				}else if (tagName != null){ // 해시태그 있을때
+					$("#shopList").empty(); //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해둠 
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<endNum; i++){
 								var htmlOut='';
@@ -455,6 +457,7 @@ function scrollPage(){
 							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
 								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';	
 								$('#shopList').append(htmlOut); 
+								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 tag 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
 								if(i == max -1){
 									return;
@@ -470,6 +473,7 @@ function scrollPage(){
 								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
 									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';		
 									$('#shopList').append(htmlOut);
+									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 tag 내역 삭제
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
 										return;
@@ -529,6 +533,10 @@ function scrollPage(){
         , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
         , select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
 
+        	// 배열 길이가 2개면 o으로 초기화 후 다른 데이터 담으려고 
+			if(selectDataArr.length == 2 ){
+        	selectDataArr.length = 0;	
+        	}
         	 // 검색 데이터 변수에 담기  
         	  hashTagData  = ui.item.value;
         	console.log("변수 " +  hashTagData)
@@ -540,12 +548,7 @@ function scrollPage(){
 		    // button style
 		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
-		    
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
-		    tagDataArr.push(tagData.nodeValue); //배열의 끝에 요소 추가
-		   
-		    console.log("tagDataArr = " + tagDataArr)
-		    console.log("tagDataArr.length = " + tagDataArr.length)
         	
         }
         , focus : function(evt, ui) { //  한글 오류 방지
@@ -578,6 +581,7 @@ function scrollPage(){
 function clickList(){
 	$("#shopList").empty();
 	scrollPage();
+	console.log("처음")
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
 
