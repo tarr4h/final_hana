@@ -5,10 +5,10 @@
     background: rgb(250, 208, 201) !important;
     text-align: center;
     margin: auto;
-    border-radius: 40px 0;
     position: absolute;
     top: 40%;
     left: 20%;
+    border: 6px ridge;
 }
 #mbtiResult-Background {
     width: 60%;
@@ -16,46 +16,46 @@
     background: rgb(250, 208, 201) !important;
     text-align: center;
     margin: auto;
-    border-radius: 40px 0;
     position: absolute;
     top: 40%;
     left: 20%;
+    border: 6px ridge;
 }
 #mbtiList-Background {
-    width: 60%;
-    height: 400px;
-    background: rgb(250, 208, 201) !important;
+    background: #e9ecef;
     text-align: center;
-    margin: auto;
-    border-radius: 40px 0;
-    position: absolute;
-    top: 40%;
-    left: 20%;
+
 }
 #mainPage-h1 {
-    color: rgb(110, 110, 109);
- padding: 2%;
-    
+  	color: rgb(255 222 89);
+    padding: 2%;
+    z-index: 1;
+    position: relative;
+    bottom: 350px;
+    right: 20px;
+    text-shadow: 4px 4px 2px #6c757d;
 }
+    
+
 #mainPage-button {
     margin: 2%;
-    background-color:rgb(110, 110, 109);
-    color:rgb(250, 208, 201);
+ 	background-color: rgb(25 93 126);
+    color: rgb(255 222 89);
     border-radius: 50%;
     display: block;
     margin:auto;
+    position: relative;
+    z-index: 1;
+    bottom: 210px;
+    left: 100px;
 }
-#mbtiList-Background {
-    width: 50%;
-    height: 100%;
-    background-color: rgb(250, 208, 201)!important;
-    margin: auto;
-    text-align: center;
-    border-radius: 40px 0;
-}
+
 #mbtiListPage-ul {
     color: rgb(110, 110, 109);
     list-style: none;
+    position: relative;
+    bottom: 530px;
+   left: 80px;
 }
 .mbtiListPage-p {
     display: block;
@@ -64,11 +64,13 @@
 }
 #mbtiListPage-buttonNext {
     margin: 2%;
-    background-color:rgb(110, 110, 109);
-    color:rgb(250, 208, 201);
+    background-color:#195d7e;
+    color:#ffde59;
     border-radius: 40px 20px 80px 60px;
- 
-    
+    position: relative;
+    z-index: 1;
+    bottom: 580px;
+ 	left:280px;
 }
 .cb1,
 .cb2 {
@@ -89,7 +91,7 @@
   position: absolute;
   height: 0;
   width: 4px;
-  background-color: #ec6767;
+  background-color: #ffc107;
   box-sizing: border-box;
   display: inline-block;
   transform-origin: left top;
@@ -98,7 +100,7 @@
   transition: opacity ease 0.5;
 }
 .cb2::before, .cb2::after {
-  background-color: #ec6767;
+  background-color: #ffc107;
 }
 .cb1::before,
 .cb2::before {
@@ -114,10 +116,10 @@
   transform: rotate(-45deg);
 }
 input:checked + .cb1 {
-  border-color: #f88686c9;
+  border-color: #ffc107;
 }
 input:checked + .cb2 {
-  border-color: #f88686c9;
+  border-color: #ffc107;
 }
 input:checked + .cb1::after,
 input:checked + .cb2::after {
@@ -153,27 +155,55 @@ input {
 }
 #mbtiListPage-buttonResult{
     margin: 2%;
-    background-color:rgb(110, 110, 109);
-    color:rgb(250, 208, 201);
+    background-color:#195d7e;
+    color:#ffde59;
     border-radius: 40px 20px 80px 60px;
+    position: relative;
+    z-index: 1;
+     bottom: 580px;
+ 	left:280px;
+ 
 }
 #hoomButton{
     margin: 2%;
-    background-color:rgb(110, 110, 109);
-    color:rgb(250, 208, 201);
-    border-radius: 50%
+    border-radius: 50%;
+    position: relative;
+    bottom: 300px;
+    background-color: rgb(245 193 0);
+    color: #eaecee;
+    left: 10px;  
+   
 }
 #mbtiInsert{
     margin: 2%;
-    background-color:rgb(110, 110, 109);
-    color:rgb(250, 208, 201);
-    border-radius: 50%
+    border-radius: 50%;
+     position: relative;
+    bottom: 300px;
+    background-color: rgb(245 193 0);
+    color: #eaecee;
+    left: 10px;
+
     
 }
 #mainPage-span{
     display: block;
-    background: linear-gradient(to right, #A7A3FF,#FFA7A3, #671cc4, #5673bd); 
+    background: linear-gradient(to right, #1ed0d7,#ebcc6e, #158714, #294ca459);
     -webkit-background-clip: text; 
     -webkit-text-fill-color: transparent;
-    
+    position: relative;
+    z-index: 1;
+    bottom: 340px;
+    right: 30px;
 }
+
+#mainResultPage-h1{
+	color: rgb(255 222 89);
+    padding: 2%;
+    position: relative;
+    z-index: 1;
+    bottom: 380px;
+    text-shadow: 4px 4px 2px #6c757d;
+}
+    
+
+
