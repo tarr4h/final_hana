@@ -1,42 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<sec:authorize access="isAuthenticated()">
-<sec:authentication property="principal" var="loginMember" />
-<!-- 사용자작성 css -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<fmt:requestEncoding value="utf-8"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param value="메인화면" name="title"/>
+</jsp:include>
+
+    <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main.css" />
-
+<sec:authentication property="principal" var="loginMember" />
    <main>
       <div class="feeds">
+<span>임시 메인 화면</span>
+${groupboard}
         <!-- article -->
+        <c:if test="${not empty groupboard}">
+        <c:forEach items="${groupboard}" var="groupboard" varStatus="vs">
         <article>
-          <header>
+          <header id="mainheader">
             <div class="profile-of-article">
-              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="dlwlrma님의 프로필 사진">
-              <span class="userID main-id point-span">dlwlrma</span>
+              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}" alt="writerProfile">
+              <span class="userID main-id point-span">${groupboard.writer}</span>
             </div>
             <img class="icon-react icon-more" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="more">
           </header>
           <div class="main-image">
-            <img src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" class="mainPic">
+          	<c:forEach items="${groupboard.image}" var="images" varStatus="vs">
+            <img src="${pageContext.request.contextPath }/resources/upload/group/board/${images}" class="mainPic">
+          	</c:forEach>
           </div>
           <div class="icons-react">
             <div class="icons-left">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="하트">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="말풍선">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="DM">  
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart.svg" alt="하트"/>
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
             </div>
-            <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="북마크">
+            <%-- <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="북마크"> --%>
           </div>
           <!-- article text data -->
           <div class="reaction">
             <div class="liked-people">
-              <img class="pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="johnnyjsuh님의 프로필 사진">
-              <p><span class="point-span">johnnyjsuh</span>님 <span class="point-span">외 2,412,751명</span>이 좋아합니다</p>
+              <%-- <img class="pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="johnnyjsuh님의 프로필 사진"> --%>
+              <p><span class="point-span">좋아요 부분</span>님 <span class="point-span">외 2,412,751명</span>이 좋아합니다</p>
             </div>
+            
+            <!-- 태그 -->
             <div class="description">
-              <p><span class="point-span userID">dlwlrma</span><span class="at-tag">@wkorea @gucci</span> 🌱</p>
+              <p>
+              <span class="point-span userID">${groupboard.writer}</span>
+              <span class="at-tag">
+              <c:forEach items="${groupboard.tagMembers}" var="tagmembers" varStatus="vs">
+              @${tagmembers}
+              </c:forEach>
+              </span>
+              </p>
             </div>
+            
             <div class="comment-section">
               <ul class="comments">
                 <li>
@@ -56,6 +80,8 @@
             <button type="submit" class="submit-comment" disabled>게시</button>
           </div>
         </article>
+        </c:forEach>
+        </c:if>
         
         <!-- 여기 게시글 반복문 추가 -->
 
@@ -70,7 +96,7 @@
           </div>
         </div>
         <!-- story section -->
-        <div class="section-story">
+<%--         <div class="section-story">
           <div class="menu-title">
             <span class="sub-title">스토리</span>
             <span class="find-more">모두 보기</span>
@@ -113,7 +139,7 @@
               </div>
             </li>
           </ul>
-        </div>
+        </div> --%>
         <!-- recommendation section -->
         <div class="section-recommend">
           <div class="menu-title">
@@ -156,5 +182,5 @@
 
       </div>
     </main>
-</sec:authorize>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+    
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

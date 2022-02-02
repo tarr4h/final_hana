@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.member.model.vo.Member;
 
 public interface ChatDao {
@@ -59,6 +60,8 @@ public interface ChatDao {
 	int selectGroupRoomNo(Group group);
 
 	int insertGroupMessage22(Map<String, Object> param);
+
+	List<GroupBoard> selectListGroupBoard(String memberId);
 
 
 }

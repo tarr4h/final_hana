@@ -223,5 +223,25 @@
 		and unreadcount = 1
 	</select>
 	
+	
+	
+	
+	<!-- main 페이지 -->
+	<select id="selectListGroupBoard" resultType="groupBoard">
+	select
+	 *
+	 from(
+	 		select
+	         row_number() over(order by g.reg_date desc) rnum,
+				g.*,
+				m.picture writer_profile
+			from
+				group_board g join member m
+				on g.writer = m.id
+			where
+				g.group_id in ( select group_id from group_member_list where member_id = #{memberId})
+	) where rnum <![CDATA[<=]]> 2
+	</select>
+	
 
 </mapper>
