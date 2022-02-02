@@ -13,14 +13,10 @@
 <section>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 <div id="mbtiMain-Background">
-<h1 id="mainPage-h1">나의 mbti 는 ?</h1>
-<span id = "mainPage-span">"mbti로 알아보는 내 성격 유형 테스트"</span>
-<lord-icon
-    src="https://cdn.lordicon.com/cnhaewqi.json"
-    trigger="loop"
-    colors="primary:#ee6d66,secondary:#d59f80"
-    style="width:150px;height:150px;">
-</lord-icon>
+<img src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지" style="width: 100%; height: 100%;
+    position: relative;"/>
+<h1 id="mainPage-h1">나는 어떤 사람 일까 ?</h1>
+<span id = "mainPage-span">"mbti로 알아보는 성격 유형 테스트"</span>
 <button id="mainPage-button" onclick="location.href='${pageContext.request.contextPath}/mbti/mbtiList.do?cPage=1'">START</button>
 </div>
 </section>

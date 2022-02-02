@@ -158,8 +158,18 @@
 			}
 			
 			if(curModal == '#modal2'){
+				let selectDate = $(curModal).find("[name=reservationDate]").val();
+				let selDate = new Date(selectDate);
+				let nowDate = new Date();
+				
+				let bool = selDate.getMonth() == nowDate.getMonth() && selDate.getDate() == nowDate.getDate();
+				
 				if($(curModal).find("[name=reservationDate]").val() == ''){
 					alert("날짜를 선택해주세요");
+					$(curModal).find("[name=reservationDate]").focus();
+				} else if(selDate < nowDate && !bool) {
+					alert("오늘 이전은 선택할 수 없습니다.");
+					$(curModal).find("[name=reservationDate]").focus();
 				} else{
 					e.preventDefault();
 					$(curModal).css('display', 'none');
