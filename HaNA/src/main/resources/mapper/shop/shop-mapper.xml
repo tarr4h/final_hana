@@ -107,6 +107,30 @@
             a.tag_name in(#{hashTagOne},#{hashTagTwo})
     </select>
     
-    
-    
+    <insert id="insertReservation" parameterType="reservation">
+    	insert into shop_table_reservation
+    	values(
+    		concat(#{shopId}, seq_shop_table_reservation_res_no.nextval),
+    		#{reservationTableId},
+    		#{reservationUser},
+    		#{shopId},
+    		#{reservationDate},
+    		#{timeStart},
+    		#{timeEnd},
+    		#{visitorCount},
+    		#{reqOrder},
+    		default
+    	)
+    </insert>
+
+	<select id="selectTableReservation" parameterType="map" resultType="reservation">
+		select
+			*
+		from
+			shop_table_reservation
+		where
+			to_date(reservation_date) = #{date}
+			and
+			reservation_table_id = #{shopId}
+	</select>
 </mapper>
