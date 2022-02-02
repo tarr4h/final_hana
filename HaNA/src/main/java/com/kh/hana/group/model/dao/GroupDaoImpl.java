@@ -150,6 +150,21 @@ public class GroupDaoImpl implements GroupDao {
 		return session.update("updateGroupGrade", map);
 	}
 
+	@Override
+	public int updateGroup(Group group) {
+		return session.update("updateGroup", group);
+	}
+
+	@Override
+	public int updateHashtag(Group group) {
+		return session.update("updateHashtag", group);
+	}
+
+	@Override
+	public int insertHashtag(Group group) {
+		return session.insert("insertHashtag", group);
+	}
+
 
 
 }

@@ -36,6 +36,7 @@ import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -479,26 +480,14 @@ public class GroupController {
     	model.addAttribute(group);
 	}
 	
-	// 프로필 수정
-	@PostMapping("/groupUpdate")
-	public String groupUpdate(Group group) {
-		log.info("groupUpdate ={}", group);
-//		int result = groupService.groupUpdate(group);
-//		
-//		String msg = result > 0 ? "수정 완료" : "수정 실패";
-//		log.info("msg ={}", msg);
-		
-		return "redirect:/group/groupProfile";
-	}
-	
 	// 등급 수정
 	@PostMapping("/updateGroupGrade")
-	@ResponseBody
-	public String updateGroupGrade (
+	public ResponseEntity<Map<String,Object>> updateGroupGrade (
 				@RequestParam(name="groupId") String groupId, 
 				@RequestParam(name="memberId") String memberId, 
 				@RequestParam(name="memberLevelCode") String memberLevelCode,
-				@RequestParam Map<String, Object> map
+				@RequestParam Map<String, Object> map,
+				@AuthenticationPrincipal GroupMemberList groupMemberList
 				) {
 		
 		log.info("groupId = {}", groupId);
@@ -511,7 +500,47 @@ public class GroupController {
 		String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
 		log.info("msg ={}", msg);
 		
-		return "redirect:/group/groupMemberList/"+groupId;
+		return ResponseEntity.ok(map);
+	}
+	
+	
+	// 프로필 수정
+	@PostMapping("/groupUpdate")
+	public String groupUpdate(Group group, @RequestParam MultipartFile upFile,
+								@AuthenticationPrincipal Group oldGroup,
+								RedirectAttributes redirectAttr) {
+		
+		String newProfile = upFile.getOriginalFilename();
+		
+		if(!newProfile.equals("")) {
+			String saveDirectory = application.getRealPath("/resources/upload/group/profile");
+			File file = new File(saveDirectory, group.getImage());
+			file.delete();
+			
+			String renamdeFilename = HanaUtils.rename(newProfile);
+			File regFile = new File(saveDirectory, renamdeFilename);
+			
+			try {
+				upFile.transferTo(regFile);
+			} catch (IllegalStateException | IOException e) {
+				log.error(e.getMessage(), e);
+			}
+			group.setImage(renamdeFilename);
+		}
+		
+		int result = groupService.updateGroup(group, oldGroup);
+		
+		oldGroup.setGroupId(group.getGroupId());
+		oldGroup.setBoardCount(group.getBoardCount());
+		oldGroup.setGroupName(group.getGroupName());
+		oldGroup.setHashtag(group.getHashtag());
+		oldGroup.setImage(group.getImage());
+		oldGroup.setLeaderId(group.getLeaderId());
+		oldGroup.setMemberCount(group.getMemberCount());
+		
+		String msg = result > 0 ? "프로필 편집 성공" : "프로필 편집 실패";
+		
+		return "redirect:/group/groupProfile";
 	}
 	
 

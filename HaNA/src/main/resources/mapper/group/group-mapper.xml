@@ -242,8 +242,14 @@
 		        on m.id = gml.member_id
 		where
 		    group_id = #{groupId}
-		order by
-            member_level_code
+		order by 
+            (
+            CASE member_level_code
+            WHEN 'ld' THEN 0
+            WHEN 'mg' THEN 1
+            ELSE 2
+            END
+                ) 
 	</select>
 
 	<select id="selectOneLikeLog" resultMap="likeLog">
@@ -308,5 +314,21 @@
 	    and 
 	    group_id = #{groupId}
 	</update>
+	
+	<update id="updateGroup">
+	update 
+		group_
+	set
+		group_id = #{groupId},
+		borad_count = #{boardCount},
+		group_name = #{groupName},
+		hashtag = #{hashtag},
+		image = #{image},
+		leader_id = #{leaderId},
+		member_count = #{memberCount}
+	where
+		group_id = #{groupId}
+	</update>
+
 </mapper>
 

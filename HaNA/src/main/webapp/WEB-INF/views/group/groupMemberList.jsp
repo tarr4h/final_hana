@@ -37,11 +37,13 @@ table th, td {
 					<td><img
 						style="width: 100px; height: 100px; border-radius: 50%;"
 						src="${pageContext.request.contextPath}/resources/upload/member/profile/${list.PICTURE}"
-						alt="" /></td>
+						alt="" />
+					</td>
 					<td>${list.MEMBER_ID}</td>
-					<td><c:if test="${list.MEMBER_LEVEL_CODE eq 'ld'}">리더</c:if> <c:if
-							test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> <c:if
-							test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
+					<td>
+						<c:if test="${list.MEMBER_LEVEL_CODE eq 'ld'}">리더</c:if> 
+						<c:if test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> 
+						<c:if test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
 					<td>
 						<input type="button" class="btn btn-info" data-toggle="modal" data-target="#moaModal"
 						onclick="grade('${list.MEMBER_LEVEL_CODE}')" value="등급"/>
@@ -69,11 +71,11 @@ table th, td {
 				</div>
 				
 				<div class="modal-body">
-					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" 
+					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" method="POST" 
 						class="customRadio customCheckbox m-0 p-0">
-						<input type="hidden" name="groupId" id="groupId"/>
-						<input type="hidden" name="memberId" id="memberId"/>
-						<input type="hidden" name="memberLevelCode" id="memberLevelCode"/>
+						<input type="hidden" name="groupId" id="groupId" value="${groupId}"/>
+						<input type="hidden" name="memberId" id="memberId" value="${memberId}"/>
+						<input type="hidden" name="memberLevelCode" id="memberLevelCode" value="${memberLevelCode}"/>
 						<div class="row mb-0">
 							<div class="row justify-content-start">
 								<div class="col-12">
@@ -92,17 +94,12 @@ table th, td {
 								</div>
 							</div>
 						</div>
+							<div class="modal-footer">
+								<button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="updateGroupGradeFunc();">save</button>
+							</div>
 					</form:form>
 				</div>
-				<div class="modal-footer">
-					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade" method="POST">
-							<input type="hidden" name="groupId" value="${groupId}" />
-							<input type="hidden" name="memberId" value="${memberId}" />
-							<input type="hidden" name="memberLevelCode" value="${memberLevelCode}" />
-						<button class="btn btn-primary" type="submit" data-dismiss="modal" onclick="updateGroupGradeFunc();">save</button>
-					</form:form>
 					<%-- <a href="${contextPath.request.pageContext}/group/gradeGroupMember/${list.MEMBER_ID}/${list.MEMBER_LEVEL_CODE}"></a> --%>
-				</div>
 			</div>
 		</div>
 	</div>

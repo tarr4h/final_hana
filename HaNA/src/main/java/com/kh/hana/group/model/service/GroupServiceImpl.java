@@ -13,10 +13,13 @@ import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
 
 @Service
+@Slf4j
 @Transactional(rollbackFor=Exception.class) // 익셉션 발생시 롤백
 public class GroupServiceImpl implements GroupService{
 
@@ -151,6 +154,27 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int updateGroupGrade(Map<String, Object> map) {
 		return groupDao.updateGroupGrade(map);
+	}
+
+	@Override
+	public int updateGroup(Group group, Group oldGroup) {
+		int result1 = groupDao.updateGroup(group);
+		log.info("result1 ={}", result1);
+		
+		int result2 = 0;
+		log.info("groupHashtah ={}", group.getHashtag());
+		if(oldGroup.getHashtag() != null) {
+			result2 = groupDao.updateHashtag(group);
+		}else {
+			result2 = groupDao.insertHashtag(group);
+		}
+
+		log.info("group ={}", group);
+		if(result1 == 1 || result2 == 1) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 }

@@ -64,4 +64,10 @@ public interface GroupDao {
 
 	public int updateGroupGrade(Map<String, Object> map);
 
+	public int updateGroup(Group group);
+
+	public int updateHashtag(Group group);
+
+	public int insertHashtag(Group group);
+
 }
