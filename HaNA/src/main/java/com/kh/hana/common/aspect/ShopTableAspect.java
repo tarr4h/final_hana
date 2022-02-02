@@ -26,25 +26,37 @@ public class ShopTableAspect {
 	@Autowired
 	public ShopService shopService;
 
-	@Pointcut("execution(* com.kh.hana.shop.controller.ShopController.updateShopTable(..)) || execution(* com.kh.hana.shop.controller.ShopController.updateShopTable(..))")
+	@Pointcut("execution(* com.kh.hana.shop.controller.ShopController.updateShopTable(..)) || execution(* com.kh.hana.shop.controller.ShopController.deleteShopTable(..))")
 	public void aroundManageTablePointcut() {};
 	
 	@Around("aroundManageTablePointcut()")
-	public Object aroundManageShopTable(ProceedingJoinPoint joinPoint) throws Throwable {
-		Object[] arg = joinPoint.getArgs();
-		Table table = (Table) arg[0];
-		
-		Map<String, Object> infoMap = new HashMap<>();
-		infoMap.put("tableId", table.getTableId());
-		
-		List<Reservation> resultTable = shopService.selectTableReservation(infoMap);
-		
-		if(!resultTable.isEmpty()) {
-			return ResponseEntity.ok("등록된 예약이 있어 수정 및 삭제가 불가합니다.");
-		} else {
-			Object returnObj = joinPoint.proceed();
+	public Object aroundManageShopTable(ProceedingJoinPoint joinPoint) {
+		try {
+			Object[] arg = joinPoint.getArgs();
+			Table table = (Table) arg[0];
 			
+			String callMethod = joinPoint.getSignature().toString();
+			log.info("method contains keyword = {}", callMethod.contains("update"));
+			
+			Map<String, Object> infoMap = new HashMap<>();
+			infoMap.put("tableId", table.getTableId());
+			
+			List<Reservation> resultTable = shopService.selectTableReservation(infoMap);
+			
+			if(!resultTable.isEmpty()) {
+				if(callMethod.contains("update")) {
+					table.setUpdatable("Y");
+					int result = shopService.updateTable(table);
+				}
+				
+				throw new Throwable();
+			}
+			
+			Object returnObj = joinPoint.proceed();
+				
 			return returnObj;
+		} catch (Throwable e) {
+			return ResponseEntity.status(404).build();
 		}
 		
 		

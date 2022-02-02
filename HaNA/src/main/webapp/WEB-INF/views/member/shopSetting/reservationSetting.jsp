@@ -138,7 +138,6 @@ $(() => {
 		},
 		success(res){
 			let calnum = $("#tableAppendBtn").data('calnum');
-			console.log(res != '');
 			if(res != ''){
 				if($("#rsTable tbody tr").last().data('table-no') == 0){
 					$("#rsTable tbody").empty();
@@ -152,39 +151,37 @@ $(() => {
 				
 				let columnForm = `
 					<tr id="table\${calnum}" data-table-no="\${calnum}">
-						<form:form>
-							<td>
-								<textarea name="tableName\${calnum}" cols="10" rows="2">\${e.tableName}</textarea>
-							</td>
-							<td>
-								<input type="number" name="allowVisitor\${calnum}" min="1" step="1" value="\${e.allowVisitor}" style="width:50px;"/>
-							</td>
-							<td>
-							 	<input type="time" name="allowStart\${calnum}" value="\${e.allowStart}" style="width:100%;font-size:13px;"/>
-							</td>
-							<td>
-								<input type="time" name="allowEnd\${calnum}" value="\${e.allowEnd}" style="width:100%;font-size:13px;"/>
-							</td>
-							<td>
-								<input type="number" name="timeDiv\${calnum}" min="10" max="60" step="10" value="\${e.timeDiv}" style="width:100px;"/>
-								<input type="number" name="timeMax\${calnum}" min="10" step="10" value="\${e.timeMax}" style="width:100px;"/>
-							</td>
-							<td>
-								<textarea name="memo\${calnum}" cols="18" rows="3" placeholder="내용을 입력하세요">\${e.memo}</textarea>
-							</td>
-							<td>
-							  <select name="enable\${calnum}" id="select-enable">
-							    <option value="" disabled selected>사용여부</option>
-							    <option id="enableY" value="Y">Y</option>
-							    <option id="enableN" value="N">N</option>
-							  </select>
-							</td>
-							<td>
-								<input type="submit" class="updateBtn" value="수정" onclick="updateFrm(\${calnum});" data-test="hi"/>
-								<input type="button" class="deleteBtn" value="삭제" onclick="deleteTable(\${calnum});"/>
-							</td>
-							<input type="hidden" name="tableId\${calnum}" value="\${e.tableId}" />
-						</form:form>
+						<td>
+							<textarea name="tableName\${calnum}" cols="10" rows="2">\${e.tableName}</textarea>
+						</td>
+						<td>
+							<input type="number" name="allowVisitor\${calnum}" min="1" step="1" value="\${e.allowVisitor}" style="width:50px;"/>
+						</td>
+						<td>
+						 	<input type="time" name="allowStart\${calnum}" value="\${e.allowStart}" style="width:100%;font-size:13px;"/>
+						</td>
+						<td>
+							<input type="time" name="allowEnd\${calnum}" value="\${e.allowEnd}" style="width:100%;font-size:13px;"/>
+						</td>
+						<td>
+							<input type="number" name="timeDiv\${calnum}" min="10" max="60" step="10" value="\${e.timeDiv}" style="width:100px;"/>
+							<input type="number" name="timeMax\${calnum}" min="10" step="10" value="\${e.timeMax}" style="width:100px;"/>
+						</td>
+						<td>
+							<textarea name="memo\${calnum}" cols="18" rows="3" placeholder="내용을 입력하세요">\${e.memo}</textarea>
+						</td>
+						<td>
+						  <select name="enable\${calnum}" id="select-enable">
+						    <option value="" disabled selected>사용여부</option>
+						    <option id="enableY" value="Y">Y</option>
+						    <option id="enableN" value="N">N</option>
+						  </select>
+						</td>
+						<td>
+							<input type="submit" class="updateBtn" value="수정" onclick="updateFrm(\${calnum});"/>
+							<input type="button" class="deleteBtn" value="삭제" onclick="deleteTable(\${calnum});"/>
+						</td>
+						<input type="hidden" name="tableId\${calnum}" value="\${e.tableId}" />
 					</tr>
 						`;
 
@@ -210,38 +207,36 @@ $("#tableAppendBtn").click((e) => {
 	$(e.target).data('calnum', $(e.target).data('calnum')+1);
 	let columnForm = `
 		<tr id="table\${$(e.target).data('calnum')}" data-table-no="\${$(e.target).data('calnum')}">
-			<form:form>
-				<td>
-					<textarea name="tableName\${$(e.target).data('calnum')}" cols="10" rows="2" required></textarea>
-				</td>
-				<td>
-					<input type="number" name="allowVisitor\${$(e.target).data('calnum')}" min="1" step="1" value="1" style="width:50px;"/>
-				</td>
-				<td>
-				  	<input type="time" name="allowStart\${$(e.target).data('calnum')}" style="width:100%;font-size:13px;" min="10:00"/>
-				</td>
-				<td>
-				  	<input type="time" name="allowEnd\${$(e.target).data('calnum')}" style="width:100%;font-size:13px;" max="18:00"/>
-				</td>
-				<td>
-					<input type="number" name="timeDiv\${$(e.target).data('calnum')}" min="10" max="60" step="10" value="10" style="width:100px;"/>
-					<input type="number" name="timeMax\${$(e.target).data('calnum')}" min="10" step="10" value="60" style="width:100px;"/>
-				</td>
-				<td>
-					<textarea name="memo\${$(e.target).data('calnum')}" cols="18" rows="3" placeholder="내용을 입력하세요"></textarea>
-				</td>
-				<td>
-				  <select name="enable\${$(e.target).data('calnum')}" id="select-enable">
-				    <option value="" disabled>사용여부</option>
-				    <option value="Y">Y</option>
-				    <option value="N">N</option>
-				  </select>
-				</td>
-				<td>
-					<input type="submit" class="enrollBtn" value="등록" onclick="enrollFrm(\${$(e.target).data('calnum')});" data-test="hi"/>
-					<input type="button" class="cancleBtn" value="취소" onclick="cancleTable(\${$(e.target).data('calnum')});"/>
-				</td>
-			</form:form>
+			<td>
+				<textarea name="tableName\${$(e.target).data('calnum')}" cols="10" rows="2" required></textarea>
+			</td>
+			<td>
+				<input type="number" name="allowVisitor\${$(e.target).data('calnum')}" min="1" step="1" value="1" style="width:50px;"/>
+			</td>
+			<td>
+			  	<input type="time" name="allowStart\${$(e.target).data('calnum')}" style="width:100%;font-size:13px;" min="10:00"/>
+			</td>
+			<td>
+			  	<input type="time" name="allowEnd\${$(e.target).data('calnum')}" style="width:100%;font-size:13px;" max="18:00"/>
+			</td>
+			<td>
+				<input type="number" name="timeDiv\${$(e.target).data('calnum')}" min="10" max="60" step="10" value="10" style="width:100px;"/>
+				<input type="number" name="timeMax\${$(e.target).data('calnum')}" min="10" step="10" value="60" style="width:100px;"/>
+			</td>
+			<td>
+				<textarea name="memo\${$(e.target).data('calnum')}" cols="18" rows="3" placeholder="내용을 입력하세요"></textarea>
+			</td>
+			<td>
+			  <select name="enable\${$(e.target).data('calnum')}" id="select-enable">
+			    <option value="" disabled>사용여부</option>
+			    <option value="Y">Y</option>
+			    <option value="N">N</option>
+			  </select>
+			</td>
+			<td>
+				<input type="submit" class="enrollBtn" value="등록" onclick="enrollFrm(\${$(e.target).data('calnum')});"/>
+				<input type="button" class="cancleBtn" value="취소" onclick="cancleTable(\${$(e.target).data('calnum')});"/>
+			</td>
 		</tr>
 			`;
 
@@ -276,6 +271,14 @@ function enrollFrm(num){
 		contentType: "application/json; charset=utf-8",
 		success(res){
 			alert(res.msg);
+			$(`#table\${num}`).find("td:last").empty();
+			
+			let btns = `
+				<input type="submit" class="updateBtn" value="수정" onclick="updateFrm(\${num});"/>
+				<input type="button" class="deleteBtn" value="삭제" onclick="deleteTable(\${num});"/>
+			`;
+			
+			$(`#table\${num}`).find("td:last").append(btns);
 		},
 		error:console.log
 	});
@@ -284,27 +287,42 @@ function enrollFrm(num){
 
 /* 테이블 삭제 func */
 function deleteTable(num){
-	let tableName = $(`[name=tableName\${num}]`).val();
+	if(!confirm("삭제하시겠습니까?\n예약이 등록되어 있는 경우 삭제가 불가합니다.")){
+		return;
+	};
+	
 	let tableId_ = $(`[name=tableId\${num}]`).val();
 	
-	console.log(tableName);
+	let content = {
+			tableId: tableId_
+	}
+	
+	let jsonData = JSON.stringify(content);
+	
 	$.ajax({
 		url: `${pageContext.request.contextPath}/shop/deleteShopTable?${_csrf.parameterName}=${_csrf.token}`,
 		method: 'DELETE',
-		data:{
-			tableId: tableId_
+		data: jsonData,
+		contentType: "application/json; charset=utf-8",
+		success(res, textStatus, xhr){
+			alert("삭제되었습니다.");
+			$(`#table\${num}`).remove();
 		},
-		success(res){
-			alert(res);
-		},
-		error: console.log
+		error(xhr){
+			if(xhr.status == 404){
+				alert("등록된 예약이 있어 삭제할 수 없습니다.");
+			}
+		}
 	});
 	
-	$(`#table\${num}`).remove();
 };
 
 /* 테이블 수정 func */
 function updateFrm(num){
+	if(!confirm("수정하시겠습니까?\n예약이 등록되어 있는 경우, 특이사항과 사용여부만 변경 가능합니다.")){
+		return;
+	};
+	
 	const content = {
 			shopId: '${loginMember.id}',
 			tableId : $(`[name=tableId\${num}]`).val(),
@@ -325,10 +343,14 @@ function updateFrm(num){
 		method: "PUT",
 		data: tableStr,
 		contentType: "application/json; charset=utf-8",
-		success(res){
-			alert(res);
+		success(res, textStatus, xhr){
+			alert("수정되었습니다.");
 		},
-		error:console.log
+		error(xhr){
+			if(xhr.status == 404){
+				alert("등록된 예약이 있습니다.\n특이사항과 사용여부만 수정 되었습니다.");
+			}
+		}
 	});	
 }
 

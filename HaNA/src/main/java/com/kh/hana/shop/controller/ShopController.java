@@ -142,7 +142,7 @@ public class ShopController {
     	return ResponseEntity.ok(tableList);
     }
     
-    @DeleteMapping(value="/deleteShopTable/{tableId}", produces="application/text;charset=utf8")
+    @DeleteMapping(value="/deleteShopTable", produces="application/text;charset=utf8")
     @ResponseBody
     public ResponseEntity<?> deleteShopTable(@RequestBody Table table){
     	
@@ -151,9 +151,8 @@ public class ShopController {
     	
     	int result = shopService.deleteShopTable(tableId);
     	log.info("result = {}", result);
-    	
-    	String msg = result > 0 ? "삭제되었습니다." : "삭제되지 않았습니다."; 
-    	return ResponseEntity.ok(msg);
+    	 
+    	return ResponseEntity.ok().build();
     }
     
     @PutMapping(value="/updateShopTable", produces="application/text;charset=utf8")
@@ -163,9 +162,8 @@ public class ShopController {
     	
     	int result = shopService.updateTable(table);
     	log.info("updateResult = {}", result);
-    	
-    	String msg = result > 0 ? "수정되었습니다." : "수정되지 않았습니다."; 
-    	return ResponseEntity.ok(msg);
+    	 
+    	return ResponseEntity.ok().build();
     }
     
     @GetMapping("/selectOneTable/getReservationTime")
