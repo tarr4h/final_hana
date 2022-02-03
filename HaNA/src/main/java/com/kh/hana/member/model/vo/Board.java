@@ -3,27 +3,31 @@ package com.kh.hana.member.model.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.kh.hana.member.model.vo.Member;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Board implements Serializable{
-
+@ToString(callSuper = true)
+public class Board extends BoardEntity implements Serializable{
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String writerProfile;
+	public Board(int no, String writer, String content, Date regDate, String boardType, String[] picture,
+			String writerProfile) {
+		super(no, writer, content, regDate, boardType, picture);
+		this.writerProfile = writerProfile;
+	}
+ 
 	
-	private int no;
-	private String writer;
-	private String content;
-	private Date regDate;
-	private String boardType;
-	private String[] picture;
-
+	
+	
 }

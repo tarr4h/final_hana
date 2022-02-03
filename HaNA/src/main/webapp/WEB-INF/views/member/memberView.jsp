@@ -5,11 +5,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
- 
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberView.css" />
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!-- 우측 공간확보 -->
@@ -250,7 +250,7 @@ $("#btn-follower-list").on( "click", function() {
     </div>
 </div>
 <!-- 게시물 상세보기 Modal-->
-	<div class="modal fade" id="groupPageDetail" tabindex="-1">
+	<div class="modal fade" id="pageDetail" tabindex="-1">
 		<div class="modal-dialog modal-xl modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -274,31 +274,31 @@ $("#btn-follower-list").on( "click", function() {
 				<div class="modal-body">
 					<div class="container">
 					    <div class="row">
-					        <div class="col-sm-7" id="group-board-img-container" style="background-color:black; display: flex; align-items: center; position:relative;">
+					        <div class="col-sm-7" id="board-img-container" style="background-color:black; display: flex; align-items: center; position:relative;">
  					        </div>
 					        <div class="col-sm-5" style="">
 					        	<div class="container">
 								    <div class="row">
-								        <div class="col-sm-12" id="group-board-tag-member-list" style="border-bottom:solid #80808040 1px; height:100px; overflow:auto; padding:0px 20px 20px 20px;">
-								        	<p style="color:gray;">with</p>
+								        <div class="col-sm-12" id="board-tag-member-list" style="border-bottom:solid #80808040 1px; height:60px; overflow:auto; padding:0px 20px 20px 20px;">
+								        	<p style="color:gray;"></p>
 								        	<table id="tagMemberListTable">
 								        	
 								        	</table>
 								        </div>
-								        <div class="col-sm-12" id="group-board-content" style="border-bottom:solid #80808040 1px; height:300px; overflow:auto; padding:20px;"></div>
-								        <div class="col-sm-12" id="group-board-comment-list" style="border-bottom:solid #80808040 1px; height:500px; overflow-x:hidden; overflow-y:auto; padding:20px;">
+								        <div class="col-sm-12" id="board-content" style="border-bottom:solid #80808040 1px; height:300px; overflow:auto; padding:20px;"></div>
+								        <div class="col-sm-12" id="board-comment-list" style="border-bottom:solid #80808040 1px; height:500px; overflow-x:hidden; overflow-y:auto; padding:20px;">
 										<table style="width:100%;">
 										
 										</table>
 										</div>
-								        <div class="col-sm-12" id="group-board-comment-submit"style="height:150px; padding:20px;">
+								        <div class="col-sm-12" id="board-comment-submit"style="height:150px; padding:20px;">
 								        	<form:form action="" name="boardCommentSubmitFrm">
 								        		<input type="hidden" name="writer" value="<sec:authentication property='principal.username'/>">
 								        		<input type="hidden" name="boardNo" id="boardNo" value=""/> 
 								        		<input type="hidden" name="commentLevel" value="1"/>
 								        		<input type="hidden" name="commentRef" value="0"/>
-									        	<textarea name="content" id="" cols="30" rows="10" placeholder="댓글입력..." ></textarea>									        	   
-									        	<div><input type="submit" data-no="${board.no}" value="게시"/></div>	
+									        	<textarea name="content" id="textareaComment" cols="30" rows="10" placeholder="댓글입력..." ></textarea>									        	   
+									        	<div><input type="submit" value="게시"/></div>	
 				 						        	
 								        	</form:form>
 								        </div>
@@ -310,7 +310,7 @@ $("#btn-follower-list").on( "click", function() {
 				</div>
 				<div class="modal-footer">
 					<div style="margin:10px 0px;">
-						<form:form name="boardDeleteFrm" action="${pageContext.request.contextPath}/member/deleteBoard" method="POST">
+						<form:form name="boardDeleteFrm" action="${pageContext.request.contextPath}/member/deleteBoard?${_csrf.parameterName}=${_csrf.token}" method="POST">
  							<input type="hidden" name="id" value="${member.id}"/>
 						<c:forEach items="${boardList}" var="board" varStatus="vs">
 							<input type="hidden" name="no" value="${board.no}" />
@@ -324,139 +324,7 @@ $("#btn-follower-list").on( "click", function() {
 	</div>
 <script>
 let boardDetail;
-//게시물 목록
-$('.board-main-image').click((e)=>{
-	let boardNo = $(e.target).siblings("#boardNo").val();
-	console.log("boardNo1",boardNo);
-	goBoardDetail(boardNo);
-	
-	$('#groupPageDetail').modal("show");
-});
-//게시물 상세보기
-function goBoardDetail(boardNo){
-	console.log("boardNo2",boardNo);
-	 $.ajax({
-			url : "${pageContext.request.contextPath}/member/memberBoardDetail/"+boardNo,
-			success(resp){
-				console.log("확인", resp);
-				const data = resp;
-				boardDetail = data;
-				console.log("확인", boardDetail);
-			
-				 
-				
-	 			const date = moment(boardDetail.regDate).format("YYYY년 MM월 DD일");
-				let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${boardDetail.writerProfile}`;
-		 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
-	 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${boardDetail.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${boardDetail.boardDetail.writer}</a>`); // 글쓴이 아이디
-		 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜 
-		 		
-		 		// 이미지
-		 		$("#group-board-img-container").empty();
-	 			$.each(boardDetail.boardDetail.picture, (i,e)=>{
-	 				console.log("e", e);
-	 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/member/board/\${e}' alt="" class="group-board-img"/>`
-	 				$("#group-board-img-container").append(img); // 이미지 추가
-	 				
-	 			})
-	 			$(".group-board-img").css("width","100%");
-	 			$(".group-board-img").css("position","absolute");
-	  			$(".group-board-img").css("left","0");
-		 		
-	 			//내용
-	 			let content = `\${boardDetail.boardDetail.content}</br>`
-	  			$("#group-board-content").html(content);
-	 			
-	 			//댓글 리스트
-	 			//getCommentList(boardNo);
-	 			
-	 			//댓글 입력창
-	 			$("#group-board-comment-submit #boardNo").val(board.no);
-	 			
-			},
-			error(xhr, statusText, err){
-				switch(xhr.status){
-				default: console.log(xhr, statusText, err);
-				}
-				console.log
-			}
-		})
-}
-//게시물 삭제 함수
-function deleteBoardFunc(){
-	if(confirm("게시물을 삭제하시겠습니까?")){
-		$(document.boardDeleteFrm).submit();
-	}
-}
-//댓글 입력
-$(document.boardCommentSubmitFrm).submit((e)=>{
-	e.preventDefault();
-	submitCommentFunc(e);
-	console.log("eee!!!",e)
-})
-//댓글 제출 함수
-function submitCommentFunc(e){
-	console.log("eeee???", e.target);
-	console.log("boardDetail", boardDetail);
- 	let boardNo = boardDetail.boardDetail.no;
- 	console.log("boardNo = ",boardDetail.boardDetail.no);
- 	 
-	let o = {
-		boardNo:boardNo,
-		writer:$("[name=writer]",e.target).val(),
-		commentLevel:$("[name=commentLevel]",e.target).val(),			
-		commentRef:$("[name=commentRef]",e.target).val(),			
-		content:$("[name=content]",e.target).val(),	
-	}
-	console.log(o);
-	const jsonStr = JSON.stringify(o);
-	console.log("가져온 값",jsonStr);
-	$.ajax({
-		url:"<%=request.getContextPath()%>/member/enrollBoardComment",
-		method:"POST",
-		dataType:"json",
-		data:jsonStr,
-		contentType:"application/json; charset=utf-8",
-		success(data){
-			console.log(data);
-			$("[name=content]",e.target).val("");
-			//getCommentList(boardNo);
-		},
-		error(xhr, statusText, err){
-			switch(xhr.status){
-			default: console.log(xhr, statusText, err);
-			}
-			console.log
-		}
-	})
-};  
-//계정페이지로 이동
-function goMemberView(memberId){
-	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
-}
-//설정페이지로 이동
-function goSetting(){
-	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
-}
-//친구추가하기
-function addFollowing(){
-	if(confirm("친구추가를 하시겠습니까?")){
-		$(document.addFollowingFrm).submit();
-	}
-}
-
-//글쓰기
-/* $("#btn-add").click((e) => {
-	$.ajax({
-		url : "${pageContext.request.contextPath}/member/boardForm",	
-		success(resp){
-			console.log(resp);
-		},
-		error : console.log
-	});
-});
-  */
-
+let newContent;
 //팔로잉 리스트 가져오기
 $("#btn-following-list").click((e) => {
 	$.ajax({
@@ -487,9 +355,6 @@ $("#btn-following-list").click((e) => {
 	error: console.log
 	})
 });
- 
-
-
 //팔로워 리스트 가져오기 
 $("#btn-follower-list").click((e) => {
 	$.ajax({
@@ -518,13 +383,156 @@ $("#btn-follower-list").click((e) => {
 	error: console.log
 	})
 });
- 
+//친구추가하기
+function addFollowing(){
+	if(confirm("친구추가를 하시겠습니까?")){
+		$(document.addFollowingFrm).submit();
+	}
+}
+//게시물 목록
+$('.board-main-image').click((e)=>{
+	let boardNo = $(e.target).siblings("#boardNo").val();
+	console.log("boardNo1",boardNo);
+	getPageDetail(boardNo);
+	
+	$('#pageDetail').modal("show");
+});
+//게시물 상세보기
+function getPageDetail(boardNo){
+	console.log("boardNo2",boardNo);
+	 $.ajax({
+			url : "${pageContext.request.contextPath}/member/memberBoardDetail/"+boardNo,
+			success(resp){
+				console.log("확인", resp);
+				const data = resp;
+				boardDetail = data;
+				console.log("확인", boardDetail);
+			 
+	 			const date = moment(boardDetail.boardDetail.regDate).format("YYYY년 MM월 DD일");
+				let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${boardDetail.boardDetail.writerProfile}`;
+		 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
+	 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${boardDetail.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${boardDetail.boardDetail.writer}</a>`); // 글쓴이 아이디
+		 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜 
+		 		
+		 		// 이미지
+		 		$("#board-img-container").empty();
+	 			$.each(boardDetail.boardDetail.picture, (i,e)=>{
+	 				console.log("e", e);
+	 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/member/board/\${e}' alt="" class="board-img"/>`
+	 				$("#board-img-container").append(img); // 이미지 추가
+	 				
+	 			})
+	 			$(".board-img").css("width","100%");
+	 			$(".board-img").css("position","absolute");
+	  			$(".board-img").css("left","0");
+		 		
+	 			//내용
+	 			let content = `\${boardDetail.boardDetail.content}</br>`
+	  			$("#board-content").html(content);
+	 			
+	 			//content
+	 			getContent();
+	 			
+	 			//댓글 리스트
+	 			getCommentList(board.no);
+	 			
+	 			
+	 			//댓글 입력창
+	 			$("#board-comment-submit #boardNo").val(board.no);
+	 			
+			},
+			error(xhr, statusText, err){
+				switch(xhr.status){
+				default: console.log(xhr, statusText, err);
+				}
+				console.log
+			}
+		})
+}
+function modifiedBoardSubmitFunc(){
+	if(confirm("수정하시겠습니까?")){
+		$(document.modifyContentFrm).submit();
+	}
+}
+//게시물 삭제 함수
+function deleteBoardFunc(){
+	if(confirm("게시물을 삭제하시겠습니까?")){
+		$(document.boardDeleteFrm).submit();
+	}
+};
+//게시물 불러오기 함수
+function getContent(){
+	let boardContent = `\${boardDetail.boardDetail.content}</br>`
+	if(boardDetail.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${member.id}"){
+		boardContent += `<button class='btn-boardModify' onclick="boardContentModifyFunc();">수정</button></br>`
+	}
+	$("#board-content").html(boardContent);
+}
+//게시물 수정 폼 나오기
+function boardContentModifyFunc(){
+	$("#board-content").empty();
+	let form = `
+		<div style="height:90%;">
+			<input type="hidden" name="no" value="\${boardDetail.boardDetail.no}"/>
+			<textarea style="height:100%;" name="content">\${boardDetail.boardDetail.content}</textarea>
+		</div>
+		<button class="btn-submitContent" onclick="submitModifiedContent(this);">등록</button>
+	`;
+	$("#board-content").append(form);
+	
+	// textarea의 변경값 실시간 감지
+	$("textarea[name=content]").on("propertychange change keyup paste input", function() {
+	   // 현재 변경된 데이터 셋팅
+	   newContent = $(this).val();
+	});
+	
+}
+//게시물 수정 제출 함수
+function submitModifiedContent(e){
+	const no = $(e).siblings("div").children("[name=no]").val();
+	console.log("newContent",newContent);
+	$.ajax({
+		url:`${pageContext.request.contextPath}/member/boardModifying?${_csrf.parameterName}=${_csrf.token}`,
+		method:"POST",
+		data:{
+			"no":no,
+			"content":newContent
+		},
+		success(data){
+			console.log(data);
+			getPageDetail(boardDetail.boardDetail.no);
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			
+		}
+	}) 
+}
+$(document.modifyContentFrm).submit((e)=>{
+	e.preventDefault();
+});
+function modifiedBoardSubmitFunc(){
+	if(confirm("수정하시겠습니까?")){
+		$(document.modifyContentFrm).submit();
+	}
+}
+//계정페이지로 이동
+function goMemberView(memberId){
+	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
+}
+//설정페이지로 이동
+function goSetting(){
+	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
+}
+
+
 //글쓰기
 $("#btn-add").click(()=> {
 	console.log("ddd");
   $("#boardFormModal").modal();
 });
-
 
 //글 작성시 이미지 바로 나오게
 function readMultipleImage(input) {
@@ -570,176 +578,166 @@ inputMultipleImage.addEventListener("change", e => {
     $imgDiv.style.height = ($img.naturalHeight) * 0.3 + "px"
  
 })
- 
- 
+//답글 버튼 눌렀을 때 답글창 나오기
+function showReplyForm(e){
+	// 답글 달고자 하는 댓글의 번호
+	const commentRef = $(e).val(); // 댓글번호 가져오기
+	console.log($(e).siblings("#reply-board-no"));
+	const boardNo = $(e).siblings("#reply-board-no").val();
+	console.log(commentRef);
+	console.log(boardNo);
+	
+	const tr = `<tr>
+				<td></td>
+				<td colspan="3" style="text-align:left padding-left:50px;">
+					<form>
+				    <input type="hidden" name="boardNo" value="\${boardNo}" />
+				    <input type="hidden" name="writer" value="<sec:authentication property='principal.username'/>" />
+				    <input type="hidden" name="commentLevel" value="2" />
+				    <input type="hidden" name="commentRef" value="\${commentRef}" />    
+					<textarea style="height:45px;" placeholder="답글입력..." name="content" cols="60" rows="2"></textarea>
+				    <button type="submit" class="btn-comment-enroll2 btn-reply">등록</button>
+				</form>
+				</td>
+			</tr>`;
+	
+	// e.target인 버튼태그의 부모tr을 찾고, 다음 형제요소로 추가
+	const $baseTr = $(e).parent().parent(); // 답글 다려는 댓글의 tr
+	const $tr = $(tr); //HTML담긴 제이쿼리 변수
+	$(e).removeAttr("onclick");
+	$tr.insertAfter($baseTr)
+		.find("form")
+		.submit((e) => { // submit시 실행될 콜백함수를 지정해줄 수도 있음
+			e.preventDefault();	
+			submitCommentFunc(e);
+	});
+}
+//댓글 입력
+$(document.boardCommentSubmitFrm).submit((e)=>{
+	e.preventDefault();
+	submitCommentFunc(e);
+	console.log("eee!!!",e)
+})
+//댓글 리스트 불러오기
+function getCommentList(boardNo){
+	console.log("보드넘버 확인!!!!!!!!!!!!!!!!!!!!!!",boardNo)
+  	$.ajax({
+  		url:`${pageContext.request.contextPath}/member/getCommentList/\${boardNo}`,
+  		success(data){
+  			$("#board-comment-list>table").empty();
+  			$.each(data,(i,e)=>{
+  				
+ 				const date = moment(e.regDate).format("YYYY년 MM월 DD일");
+ 				
+	  			let tr = `
+	  				<tr class="level\${e.commentLevel}">
+	  				<td style="width:50px;">
+	  					<img style="height:40px; border-radius:50%;" src="/hana/resources/upload/member/profile/${member.picture}" alt="" />
+	  				</td>
+					<td >
+						<sub class="comment-writer"><a href="javascript:void(0);" onclick="goMemberView('\${e.writer}');" style="color:black; text-decoration:none; font-weight:bold;">\${e.writer}</a></sub>
+						<sub class="comment-date">\${date}</sub>
+						<br />
+						<!-- 댓글내용 -->
+						&nbsp;&nbsp;&nbsp;\${e.content}
+					</td>`;
+				if(e.commentLevel == 1){
+					if(e.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${member.id}"){ //댓글 레벨 1 && 내가 작성자일 때 (삭제, 답글 버튼 모두)
+						tr+=`<td>
+								<span href='' class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span>
+							</td>
+							<td>
+								<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
+								<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
+							</td>`;	
+					}
+					else{ // 댓글레벨 1 && 내가 작성자가 아닐 때 (답글 버튼만)
+						tr+=`<td></td>
+						<td>
+							<button class="btn-reply" onclick="showReplyForm(this);" value="\${e.no}">답글</button>
+							<input type="hidden" id="reply-board-no" value="\${boardNo}"/>
+						</td>`;	
+					}
+				}	
+				else{ // 댓글레벨 2 && 내가 작성자 혹은 그룹 리더일 때 (삭제버튼만)
+					if(e.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${member.id}"){
+						tr+=`<td></td><td style='padding-left:5px;'><span class='btn-boardCommentDelete' onclick='deleteCommentFunc(\${e.no},\${e.boardNo})'>삭제</span></td>`;	
+					}
+					else{ // 댓글레벨 2 && 내가 작성자가 아닐 때 (아무버튼도 없음)
+						tr+="<td></td><td></td>";	
+					}
+				}
+	  			tr += "</tr>"
+	  			$("#board-comment-list>table").append(tr);
+  			})
+  		},
+  		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			
+		}
+  	})
+};
+//댓글 제출 함수
+function submitCommentFunc(e){
+	console.log("eeee???", e.target);
+	console.log("boardDetail", boardDetail);
+ 	let boardNo = boardDetail.boardDetail.no;
+ 	console.log("boardNo = ",boardDetail.boardDetail.no);
+ 	 
+	let o = {
+		boardNo:boardNo,
+		commentLevel:$("[name=commentLevel]",e.target).val(),			
+		writer:$("[name=writer]",e.target).val(),
+		content:$("[name=content]",e.target).val(),	
+		commentRef:$("[name=commentRef]",e.target).val(),			
+	}
+	console.log(o);
+	const jsonStr = JSON.stringify(o);
+	console.log("가져온 값",jsonStr);
+	$.ajax({
+		url:"${pageContext.request.contextPath}/member/enrollBoardComment?${_csrf.parameterName}=${_csrf.token}",
+		method:"POST",
+		dataType:"json",
+		data:jsonStr,
+		contentType:"application/json; charset=utf-8",
+		success(data){
+			console.log("넘어온 값!!",data);
+			$("[name=content]",e.target).val("");
+			getCommentList(boardNo);
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+}; 
+//댓글 삭제 함수
+function deleteCommentFunc(no,boardNo){
+	console.log("댓글삭제 no!!!",no);
+	if(confirm("정말 삭제하시겠습니까?")){
+		$.ajax({
+			url:`${pageContext.request.contextPath}/member/boardCommentDelete/\${no}?${_csrf.parameterName}=${_csrf.token}`,
+			method:"DELETE",
+			success(data){
+				console.log(data);
+				getCommentList(boardNo);
+			},
+			error(xhr, statusText, err){
+				switch(xhr.status){
+				default: console.log(xhr, statusText, err);
+				}
+				console.log
+			}
+		})
+	}
+}
 </script>
         
-<style>
-	#multiple-container {
-	    display: grid;
-	    grid-template-columns: 1fr 1fr  ;
-	}
-	.image {
-	    display: block;
-	    width: 100%;
-	}
-	.image-label {
-	    position: relative;
-	    bottom: 22px;
-	    left: 5px;
-	    color: white;
-	    text-shadow: 2px 2px 2px black;
-	}
-	#myInfo{
-		border: 1px solid black;
-	}
-	#profileImg{
-		height: 400px;
-	}
-	#profileStatus{
-		height: 400px;
-	}
-	/* 세팅 버튼 */
-	#settingBtn {
-		float: right;
-		height:50px;
-		width: 50px;
-		border-radius: 100%;
-		border: none;
-	}
-	#settingBtn img {
-		width: 130%;
-	}
-	
-	/* 프로필이미지 */
-	.profileImg.d-flex{
-		width:230px;
-		height:230px;
-		border:1px solid black;
-		border-radius:100%;
-		background-color: red;
-	}
-	.profileImg img {
-		width: 100%;
-		border-radius: 100%;
-	}
-	.profileBtn{
-		border: 1px solid black;
-		width: 50px;
-		height: 50px;
-		border-radius:100%;
-		transform: translateX(80px) translateY(-50px);
-		z-index: 1;
-		background-color: white;
-	}
-	.profileBtn img {
-		width: 100%;
-		border-radius: 100%;
-	}
 
-	/* 프로필정보 */
-	.follow {
-		display: inline-block;
-		width: 100px;
-		height: 30px;
-		border: 1px solid black;
-	}
-	.followCount{
-		display: inline-block;
-		width: 100px;
-		height: 30px;
-		border: 1px solid black;
-	}
-	#profileTable{
-		width: 100%;
-		table-layout:fixed;
-	}
-	.tableKey{
-		width: 20%;
-		font-size: 16px;
-		padding-bottom : 6px;
-	}
-	.tableValue{
-		width: 80%;
-		font-size: 18px;
-		padding-bottom : 6px;
-	}
-	tbody, td, tfoot, th, thead, tr {
-    border-color: inherit;
-    border-style: solid;
-    border-width: 0;
-    font-size: 16px;
-    padding-bottom : 6px;
-}
-	pre{
-		margin:0;
-	}
-	#textArea{
-		width: 100%;
-		height: 150px;
-		border: none;
-		resize: none;
-		background-color: white;
-		padding-top: 30px;
-		font-size:16px;
-	}
-	
-	/* thumbnail list */
-	.thumbnail{
-		height: 300px;
-		border: 1px solid black;
-		padding: 5px;
-	}
-	.thumbnail img{
-		width: 100%;
-	}
-	
-	#a {
-    color: black;
-    text-decoration: none;
-}
-.btn-secondary.save {
-    color: #fff;
-    background-color: black;
-    border-color: #6c757d;
-    width: 90px;
-    font-size: 15px;
-    margin-left : 450px;
-}
-.btn-secondary {
-    color: #fff;
-    background-color: black;
-    border-color: #6c757d;
-    width: 90px;
-    font-size: 15px;
-    margin-left : 20px;
-}
-.tableKey {
-    width: 17%;
-    font-size: 16px;
-    padding-bottom: 1px;
-    font-weight: 700;
-    margin-left: 10px;
-}
-.tableValue {
-    width: 80%;
-    font-size: 20px;
-    padding-bottom: 6px;
-}
-.followTitle {
-    font-size: 15px;
-}
-#settingBtn img {
-    width: 130%;
-   	margin-top: -120px;
-}
-.thumbnail {
-    height: 300px;
-    border: 1px solid white;
-    padding: 5px;
-}
-</style>
-        
         
 
 <a href="/" class="badge badge-dark">Dark</a>

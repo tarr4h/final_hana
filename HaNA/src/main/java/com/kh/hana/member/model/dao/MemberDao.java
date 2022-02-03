@@ -58,6 +58,12 @@ public interface MemberDao {
 
 	int deleteBoard(int no);
 
+	List<BoardComment> selectBoardCommentList(int boardNo);
+
+	int deleteBoardComment(int no);
+
+	int updateBoardContent(Map<String, Object> param);
+
  
 
 }

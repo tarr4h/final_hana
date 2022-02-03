@@ -141,6 +141,21 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteBoard(int no) {
 		return memberDao.deleteBoard(no);
 	}
+
+	@Override
+	public List<BoardComment> selectBoardCommentList(int boardNo) {
+		return memberDao.selectBoardCommentList(boardNo);
+	}
+
+	@Override
+	public int deleteBoardComment(int no) {
+		return memberDao.deleteBoardComment(no);
+	}
+
+	@Override
+	public int updateBoardContent(Map<String, Object> param) {
+		return memberDao.updateBoardContent(param);
+	}
  
 
 

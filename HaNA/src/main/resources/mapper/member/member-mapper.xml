@@ -200,7 +200,7 @@ where
 	insert into
 			 board_comment
 		values(
-			seq_board_comment.nextval,
+			seq_board_comment_no.nextval,
 			#{boardNo},
 			#{commentLevel},
 			#{writer},
@@ -224,8 +224,35 @@ where
 			no = #{no}
 	</delete>
 
+	<select id="selectBoardCommentList" resultType="boardComment">
+		select
+			*
+		from
+			board_comment
+		where
+				board_no = #{boardNo}
+		start with
+			comment_level = 1
+		connect by prior
+			no = comment_ref 
+		order siblings by
+			no  
+	</select>
+	
+		<delete id="deleteBoardComment">
+		delete from
+			board_comment
+		where
+			no=#{no}
+	</delete>
 
-
-
+	<update id="updateBoardContent">
+		update
+				board
+		set
+			content=#{content}
+		where
+			no=#{no}
+	</update>
 
 </mapper>

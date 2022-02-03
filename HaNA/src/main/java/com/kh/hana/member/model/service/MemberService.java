@@ -33,7 +33,7 @@ public interface MemberService {
  
 	Shop selectOneShopInfo(String memberId);
 
-	int insertMemberBoard(Board board);
+	int insertMemberBoard(Board  board);
 
 	int updatePassword(Member updateMember);
 
@@ -44,6 +44,12 @@ public interface MemberService {
 	int enrollBoardComment(BoardComment boardComment);
 
 	int deleteBoard(int no);
+
+	List<BoardComment> selectBoardCommentList(int boardNo);
+
+	int deleteBoardComment(int no);
+
+	int updateBoardContent(Map<String, Object> param);
  
 
 }

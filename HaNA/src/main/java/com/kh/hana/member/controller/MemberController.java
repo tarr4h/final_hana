@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
+import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
@@ -270,7 +272,7 @@ public class MemberController {
 	@PostMapping("/memberBoardEnroll")
     public String insertMemberBoard(
             Member member,
-            Board board, 
+            Board  board, 
             RedirectAttributes redirectAttr,
             Model model,
             @RequestParam(name="uploadFile", required = false) MultipartFile[] uploadFiles) throws IllegalStateException, IOException {
@@ -357,7 +359,7 @@ public class MemberController {
 	//게시글 상세보기
 	@GetMapping("/memberBoardDetail/{no}")
 	public ResponseEntity<Map<String,Object>> boardDetail(@ModelAttribute Member member, @PathVariable int no, Model model) { 
-	Board boardDetail = memberService.selectOneBoard(no);
+	Board  boardDetail = memberService.selectOneBoard(no);
 	log.info("boardDetail = {}", boardDetail);
 	
 	Map<String, Object> map = new HashMap<>();
@@ -383,7 +385,31 @@ public class MemberController {
 	    	
 	    }
 	
-	
+	 //게시글수정하기
+	 @PostMapping("/boardModifying")
+	    public ResponseEntity<Map<String,Object>> boardModifying(@RequestParam int no, @RequestParam String content) {
+
+	    	Map<String,Object> param = new HashMap<>();
+	    	Map<String,Object> resultMap = new HashMap<>();
+	    	
+	    	try {
+	    		log.info("no = {}",no);
+	    		log.info("content = {}",content);
+	    		
+	    		param.put("no", no);
+	    		param.put("content", content);
+	    		int result = memberService.updateBoardContent(param);
+	    		
+	    		resultMap.put("msg","게시물 수정 성공");
+	    		resultMap.put("result",result);
+	    	}catch(Exception e) {
+	    		log.error(e.getMessage(),e);
+	    		resultMap.put("msg","게시물 수정 실패");
+	    	}
+	    	
+	    	return ResponseEntity.ok(resultMap);
+	    	
+	    }
 	//댓글등록
 	@PostMapping("/enrollBoardComment")
 	@ResponseBody
@@ -397,9 +423,31 @@ public class MemberController {
 		return map;
 	}
 	
+	//댓글리스트 가져오기
+	@GetMapping("/getCommentList/{boardNo}")
+	public ResponseEntity<List<BoardComment>> getCommentList(@PathVariable int boardNo){
+		log.info("리스트!!!!!!!boardNo = {}",boardNo);
+		List<BoardComment> list = memberService.selectBoardCommentList(boardNo);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
+	}
 	
-	
-	
+	//댓글 삭제하기
+	@DeleteMapping("/boardCommentDelete/{no}")
+	public ResponseEntity<Map<String,Object>> boardCommentDelete(@PathVariable int no) {
+		Map<String, Object> map = new HashMap<>();
+		try{
+			log.info("댓글삭제하기.no = {}",no);
+			int result = memberService.deleteBoardComment(no);
+			log.info("result = {}",result);
+			map.put("msg", "삭제 성공!");
+			map.put("result",result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			map.put("msg", "삭제 실패, 관리자에게 문의");
+		}
+		return ResponseEntity.ok(map);
+	}	
 	
 	
 	
