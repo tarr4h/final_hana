@@ -37,7 +37,14 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public int insertOneGroup(Group group) {
-		return groupDao.insertOneGroup(group);
+		int result = 0;
+		try {
+			result = groupDao.insertOneGroup(group);
+			result = chatDao.CreateGroupChat(group);
+		}catch(Exception e) {
+			throw e;
+		}
+		return result;
 	}
 
 	@Override

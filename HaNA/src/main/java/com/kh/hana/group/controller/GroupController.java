@@ -52,9 +52,7 @@ public class GroupController {
 	
 	@Autowired
 	private ServletContext application;
-	
-	@Autowired
-	private ChatService chatService;
+
 	
 	private void getGroupInfo(String groupId, Model model) {
 		Group group = groupService.selectOneGroup(groupId);// 그룹정보 가져오기
@@ -114,11 +112,7 @@ public class GroupController {
 			}
 			
 			int result = groupService.insertOneGroup(group);
-			int chatresult = 0;
-			if(result > 0) {
-				chatresult = chatService.CreateGroupChat(group);
-				log.info("{}", chatresult > 0 ? "그룹채팅생성 성공" : "그룹채팅생성 실패");
-			}
+			
 			redirectAttr.addFlashAttribute("msg", "소모임 등록 성공!");	
 			redirectAttr.addFlashAttribute("result", result);	
 			return "redirect:/group/groupPage/"+group.getGroupId();
@@ -280,7 +274,6 @@ public class GroupController {
         try {
         	if(map.get("approvalYn").equals("Y")) {
         		result = groupService.insertGroupMember(map);  // 그룹 멤버 추가            
-        		
         	}
         	//거절(N)
         	else {
