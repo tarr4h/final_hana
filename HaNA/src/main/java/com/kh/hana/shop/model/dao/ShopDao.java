@@ -11,7 +11,7 @@ public interface ShopDao {
 
 	List<Map<String, Object>> selectShopList(Map<String, Object> data);
 
-	int insertHashTag(HashTag hashTag);
+	int insertShopHashTag(HashTag hashTag);
 
 	 List<HashTag> hashTagAutocomplete(String search);
 
@@ -32,6 +32,14 @@ public interface ShopDao {
 	int insertReservation(Reservation reservation);
 
 	List<Reservation> selectTableReservation(Map<String, Object> infoMap);
+
+	HashTag searchHashTag(HashTag hashTag);
+
+	int insertHashTag(HashTag hashTag);
+
+	HashTag searchShopHashTag(HashTag hashTag);
+
+	List<HashTag> selectShopHashTag(String memberId);
 
 
 

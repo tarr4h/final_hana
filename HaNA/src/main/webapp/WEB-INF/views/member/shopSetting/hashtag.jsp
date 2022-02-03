@@ -12,6 +12,12 @@
 
 <sec:authentication property="principal" var="loginMember"/>
 
+<c:if test="${not empty msg}">
+	<script>
+		alert("${msg}");
+	</script>
+</c:if>
+
 <h1>shop프로필설정</h1>
 <div class="container">
     <div class="row">
@@ -30,17 +36,13 @@
         	<!-- 등록 해시태그 -->
 			<div class="myHashTag">
 				<span>등록된 해시태그</span>
+				<br />
 				<div class="myTagArea">
 				
 				</div>
 			</div>
         	<br />
         	<br />
-        	<!-- 해시태그 조회 -->
-        	<div class="insertHashTag">
-        		<label for="searchHashTag">해시태그 조회하기</label>
-        		<input type="text" name="searchHashTag" id="" />
-        	</div>
         	<br />
         	<br />
         	<br />
@@ -49,6 +51,7 @@
         		<form:form action="${pageContext.request.contextPath }/shop/insertHashTag" method="POST">
 	        		<label for="regHashTag">해시태그 등록하기</label>
 	        		<input type="text" name="tagName" id="" />
+	        		<input type="hidden" name="memberId" value="${loginMember.id }" />
 	        		<input type="submit" value="등록" />
         		</form:form>
         	</div>
@@ -57,5 +60,27 @@
     </div>
     
 </div>
+
+<script>
+	$(() => {
+		$.ajax({
+			url: '${pageContext.request.contextPath}/shop/selectShopHashTag',
+			data:{
+				memberId: '${loginMember.id}',
+			},
+			success(res){
+				console.log(res);
+				$.each(res, (i, e) => {
+					let btn = `
+						<button>\${e.tagName}</button>
+					`;
+					$(".myTagArea").append(btn);
+				});
+			},
+			error: console.log
+		});
+	});
+
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -15,11 +15,55 @@
             and
             id != #{id}
     </select>
+    
+    <select id="searchHashTag" parameterType="hashtag" resultType="hashtag">
+    	select
+    		*
+   		from
+   			hashtag
+  		where
+  			tag_name = #{tagName} 	
+    </select>
+    
+    <select id="searchShopHashTag" parameterType="hashtag" resultType="hashtag">
+        	select
+    		*
+   		from
+   			shophashtag
+  		where
+  			tag_id = #{tagId} 
+  			and
+  			member_id = #{memberId}	
+    </select>
+    
     <insert id="insertHashTag" parameterType="hashtag">
-        insert into
-            hashtag
-        values(concat(#{tagId}, seq_hashtag.nextval), #{tagName})
+    	insert into
+    		hashtag
+   		values(concat(#{tagId}, seq_hashtag.nextval), #{tagName})
     </insert>
+    
+    <insert id="insertShopHashTag" parameterType="hashtag">
+        <selectKey order="BEFORE" resultType="string" keyProperty="tagId">
+        	select
+        		tag_id
+       		from
+       			hashtag
+      		where
+      			tag_name = #{tagName}
+        </selectKey>
+        insert into
+            shophashtag
+        values(#{memberId}, #{tagId})
+    </insert>
+    
+    <select id="selectShopHashTag" parameterType="string" resultType="hashtag">
+    	select
+    		*
+    	from
+    		shophashtag s left join hashtag h on s.tag_id = h.tag_id
+    	where
+    		member_id = #{memberId}    
+    </select>
     
     <select  id="selectHashTagList" resultType="hashtag">
         select 
@@ -95,18 +139,17 @@
         select
             *
         from
-           hashtag a 
-         inner join 
-           shop_info b
-          on a.tag_id = b.id
+            shop_info i
+  		  	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id 
         where
-         	b.location_x <![CDATA[<]]> ${maxLocationX}
+         	i.location_x <![CDATA[<]]> ${maxLocationX}
             and
-            b.location_y <![CDATA[<]]> ${maxLocationY}
+            i.location_y <![CDATA[<]]> ${maxLocationY}
             and
-            b.id != #{id}
+            i.id != #{id}
             and
-            a.tag_name in(#{hashTagOne},#{hashTagTwo})
+            h.tag_name in(#{hashTagOne},#{hashTagTwo})
     </select>
     
     <insert id="insertReservation" parameterType="reservation">
@@ -137,4 +180,6 @@
 			to_date(reservation_date) = #{date}
 			</if>
 	</select>
+	
+	
 </mapper>

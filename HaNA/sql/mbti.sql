@@ -113,11 +113,10 @@ create table mbti_data(
     result  number ,
     constraint fk_mbti_data foreign key(member_id) references member(id) on delete cascade
 );
-select * from mbti_data  where member_id ='tksemf2543';
+select * from mbti_data  where member_id ='k33';
 commit;
 
 
-delete  from mbti_data where member_id ='tksemf2543';
 
 select * from hashtag;
 
@@ -145,10 +144,17 @@ select
             and
             a.tag_name in('해물탕','매운탕');
   ------------- 
-
+select * from shophashtag;
 select * from hashtag;
 select * from shop_info;
-
+commit;
+select
+    *
+from 
+    shop_info i
+    left join shophashtag s on i.id = s.member_id 
+    left join hashtag h on s.tag_id = h.tag_id 
+where member_id = 'shop34';
 
 
 

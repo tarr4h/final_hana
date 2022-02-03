@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -97,12 +98,31 @@ public class ShopController {
     @PostMapping("/insertHashTag")
     public String insertHashTag(HashTag hashTag, RedirectAttributes redirectAttr) {
         log.info("hashTag = {}", hashTag);
-        hashTag.setTagId("shop");
+        hashTag.setTagId("shop-hashtag-");
         
         int result = shopService.insertHashTag(hashTag);
         log.info("hashTag Result = {}", result);
         
+        String msg = "";
+        if(result > 0) {
+        	msg = "등록에 성공했습니다.";
+        } else {
+        	msg = "이미 등록된 해시태그 입니다.";
+        }
+        
+        redirectAttr.addFlashAttribute("msg", msg);
+        
         return "redirect:/member/shopSetting/hashtag";
+    }
+    
+    @GetMapping("/selectShopHashTag")
+    public ResponseEntity<?> selectShopHashTag(@RequestParam String memberId){
+    	log.info("memberId = {}", memberId);
+    	
+    	List<HashTag> shopHashTagList = shopService.selectShopHashTag(memberId);
+    	log.info("shopHashTag List = {}", shopHashTagList);
+    	
+    	return ResponseEntity.ok(shopHashTagList);
     }
     
     @GetMapping("/hashTagAutocomplete")
