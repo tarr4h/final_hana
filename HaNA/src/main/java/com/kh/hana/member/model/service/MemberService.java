@@ -50,6 +50,8 @@ public interface MemberService {
 	int deleteBoardComment(int no);
 
 	int updateBoardContent(Map<String, Object> param);
+
+	int insertLikeLog(Map<String, Object> param);
  
 
 }

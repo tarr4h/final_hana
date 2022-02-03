@@ -156,6 +156,11 @@ public class MemberServiceImpl implements MemberService {
 	public int updateBoardContent(Map<String, Object> param) {
 		return memberDao.updateBoardContent(param);
 	}
+
+	@Override
+	public int insertLikeLog(Map<String, Object> param) {
+		return memberDao.insertLikeLog(param);
+	}
  
 
 

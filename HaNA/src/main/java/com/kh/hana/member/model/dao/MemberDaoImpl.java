@@ -151,6 +151,11 @@ public class MemberDaoImpl implements MemberDao {
 	public int updateBoardContent(Map<String, Object> param) {
 		return session.update("member.updateBoardContent", param);
 				}
+
+	@Override
+	public int insertLikeLog(Map<String, Object> param) {
+		return session.insert("member.insertLikeLog", param);
+	}
 	 
 			 
 

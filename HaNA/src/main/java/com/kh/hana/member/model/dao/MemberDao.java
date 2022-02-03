@@ -64,6 +64,8 @@ public interface MemberDao {
 
 	int updateBoardContent(Map<String, Object> param);
 
+	int insertLikeLog(Map<String, Object> param);
+
  
 
 }

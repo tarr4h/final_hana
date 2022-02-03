@@ -414,6 +414,28 @@ function getPageDetail(boardNo){
 	 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${boardDetail.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${boardDetail.boardDetail.writer}</a>`); // 글쓴이 아이디
 		 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜 
 		 		
+		 		// 좋아요 버튼
+		 		if(isLiked){
+		 			$(".unlike").css("display","none");
+		 			$(".like").css("display","inline");
+		 		}else{
+		 			$(".like").css("display","none");			 			
+		 			$(".unlike").css("display","inline");			 			
+		 		}
+	 	 		
+		 		//좋아요 개수
+		 		getLikeCount();
+		 		
+		 		// modal footer부분 - 게시물 삭제 버튼
+	 	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer && "<sec:authentication property='principal.username'/>" != "${member.id}"){
+		 			$(".btn-deleteBoard").css("display","none");
+		 		}else{
+		 			$(".btn-deleteBoard").css("display","block");
+		 			$(document.groupBoardDeleteFrm)
+		 				.children("[name=no]").val(boardNo);
+		 		}
+				
+		 		
 		 		// 이미지
 		 		$("#board-img-container").empty();
 	 			$.each(boardDetail.boardDetail.picture, (i,e)=>{
@@ -526,7 +548,62 @@ function goMemberView(memberId){
 function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
-
+//좋아요 개수
+function getLikeCount(){
+	$.ajax({
+		url:`${pageContext.request.contextPath}/member/getLikeCount/\${boardDetail.boardDetail.no}`,
+		success(data){
+			$(".like_count").html(data.likeCount);
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+}
+//좋아요 취소
+function unlike(){
+	$.ajax({
+		url:`${pageContext.request.contextPath}/member/unlike/\${boardDetail.boardDetail.no}`,
+		method:"DELETE",
+		success(data){
+			console.log(data);
+			$(".like").css("display","none");			 			
+ 			$(".unlike").css("display","inline");
+ 			getLikeCount();
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+}
+//좋아요
+function like(){
+	$.ajax({
+		url:`${pageContext.request.contextPath}/member/like`,
+		method:"POST",
+		data:{
+			"no":boardDetail.boardDetail.no
+		},
+		success(data){
+			console.log(data);
+			$(".like").css("display","inline");			 			
+ 			$(".unlike").css("display","none");
+ 			getLikeCount();
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+}
 
 //글쓰기
 $("#btn-add").click(()=> {

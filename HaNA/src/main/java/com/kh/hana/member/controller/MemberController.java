@@ -449,7 +449,29 @@ public class MemberController {
 		return ResponseEntity.ok(map);
 	}	
 	
-	
+	//좋아요
+	@PostMapping("/like")
+	public ResponseEntity<Map<String,Object>> like(@RequestParam int no, @AuthenticationPrincipal Member member){
+		Map<String,Object> map = new HashMap<>();
+		
+		try {
+			log.info("no = {}",no);
+			log.info("member = {}",member);
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",member.getId());
+			param.put("boardNo",no);
+			int result = memberService.insertLikeLog(param);
+			
+			map.put("msg", "like 성공");
+			map.put("result", result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			map.put("result", "like 실패");
+		}
+		
+		
+		return ResponseEntity.ok(map);
+	}
 	
 	
 	

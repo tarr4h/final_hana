@@ -254,5 +254,13 @@ where
 		where
 			no=#{no}
 	</update>
+	
+		<insert id="insertLikeLog">
+		insert into
+			 board_like
+		values(
+			#{boardNo},#{memberId}
+		)
+	</insert>
 
 </mapper>
