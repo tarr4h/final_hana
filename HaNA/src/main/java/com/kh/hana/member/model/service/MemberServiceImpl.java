@@ -25,8 +25,7 @@ public class MemberServiceImpl implements MemberService {
 	public int memberEnroll(Member member) {
 		int result = memberDao.memberEnroll(member);
 		if(member.getAccountType() == 0) {
-			int sub = memberDao.insertShopInfo(member.getId());
-			log.info("memberEnroll > insertShopInfo = {}", sub);
+			result = memberDao.insertShopInfo(member.getId());
 		}
 		return result;
 	}

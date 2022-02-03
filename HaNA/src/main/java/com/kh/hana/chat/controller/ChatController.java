@@ -77,10 +77,13 @@ public class ChatController {
     }
     
     @GetMapping("/roomchat.do")
-    public ResponseEntity<?> roomchat(int no){
+    public ResponseEntity<?> roomchat(int no, String id){
     	log.info("no = {}",no);
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("roomNo", no);
+    	param.put("memberId", id);
     	
-    	List<Map<String, Object>> chat = chatService.roomchat2(no);
+    	List<Map<String, Object>> chat = chatService.roomchat2(param);
     	//log.info("chat = {}", chat); 	  	
     	
     	return ResponseEntity.ok(chat);
@@ -113,23 +116,22 @@ public class ChatController {
     		int result = chatService.createChatRoom(param);
     		log.info("createChatRoom result = {}", result);
     		if(result > 0) {
-    			redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
-    			//불필요한 부분
-//    			int roomNo = chatService.findRoomNo(param);
-//    			param.put("roomNo", roomNo);
-//    			int result2 = chatService.insertEnterMessage(param);
-//    			log.info("insertEnterMessage result2 = {}, result3 = {}", result2);
-//    			if(result2 > 0)
-//    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
-//    			else
-//    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 실패");
+    			//redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
+    			int roomNo = chatService.findRoomNo(param);
+    			param.put("roomNo", roomNo);
+    			int insert1 = chatService.insertEnterMessage(param);
+    			if(insert1 > 0)
+    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
+    			}
+    			else
+    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 실패");
     		}
     		else
     			redirectAttr.addFlashAttribute("msg", "채팅방이 있습니다");
     			
-    	}
     	return "redirect:/chat/chat.do";
-    }
+    	}
+
     			
     @GetMapping("/roomheader.do")
     public ResponseEntity<?> RoomHeader(String id, int no){
@@ -212,6 +214,32 @@ public class ChatController {
 		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
     	
     	return resource;
+    }
+    
+    @GetMapping("/updateunreadcount.do")
+    public ResponseEntity<?> updateunreadcount(Chat chat){
+    	log.info("updateunreadcount.do chat = {}", chat);
+    	
+    	int result = chatService.updateUnreadCount(chat);
+    	log.info("이건 onmessage 메세지 수신받을때 읽음처리");
+    	log.info("{}",result > 0 ? "읽음 처리 완료!" : "읽음 처리 실패!");
+    	
+    	return null;
+    }
+    
+    @GetMapping("/dmalarm.do")
+    public ResponseEntity<?> dmalarm(String id){
+
+    	int unreadChat = chatService.dmalarm(id);
+
+    	
+    	return ResponseEntity.ok(unreadChat); 
+    }
+    
+    @GetMapping("/roomUnreadChat.do")
+    public ResponseEntity<?> roomUnreadChat(Chat chat){
+    	int roomUnreadChat = chatService.roomUnreadChat(chat);
+    	return ResponseEntity.ok(roomUnreadChat);
     }
     		
 }

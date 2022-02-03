@@ -269,23 +269,29 @@ public class GroupController {
 	
     @PostMapping("/groupApplyProccess")
     @ResponseBody
-    public String groupApplyProcess(@RequestParam Map<String, Object> map) {
+    public ResponseEntity<Map<String,Object>> groupApplyProcess(@RequestParam Map<String, Object> map) {
         log.info("no = {}", map.get("no"));
         log.info("groupId = {}", map.get("groupId"));
         log.info("memberId = {}", map.get("memberId"));
         log.info("approvalYn = {}", map.get("approvalYn"));
         //승인(Y)
         int result = 0;
-        if(map.get("approvalYn").equals("Y")) {
-            result = groupService.insertGroupMember(map);  // 그룹 멤버 추가            
-            result = groupService.updateApplyHandled(map);  // 처리여부 + 승인여부 업데이트
-        }
-        //거절(N)
-        else {
-            result = groupService.updateApplyHandled(map); // 처리여부 + 승인여부 업데이트
+        Map<String,Object> resultMap = new HashMap<>();
+        try {
+        	if(map.get("approvalYn").equals("Y")) {
+        		result = groupService.insertGroupMember(map);  // 그룹 멤버 추가            
+        		
+        	}
+        	//거절(N)
+        	else {
+        		result = groupService.updateApplyHandled(map); // 처리여부 + 승인여부 업데이트
+        	}
+        	resultMap.put("msg", "처리 완료");
+        }catch(Exception e) {
+        	resultMap.put("msg", "처리 실패");
         }
         
-        return "redirect:/group/groupPage/"+map.get("groupId");
+        return ResponseEntity.ok(resultMap);
     }
     
     @PostMapping("/deleteGroupBoard")

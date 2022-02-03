@@ -29,7 +29,8 @@
 	</appender>
 
 	<!-- Query Loggers  -->
-	<logger name="jdbc.sqlonly" additivity="false">
+<!-- 		    <RegexFilter regex="(?s).IGNORE_LOG." onMatch="DENY" onMismatch="NEUTRAL" useRawMsg="true" /> -->
+  	<logger name="jdbc.sqlonly" additivity="false">
 		<level value="INFO" />
 		<appender-ref ref="sqlLogger"/>
 	</logger>
@@ -42,6 +43,19 @@
 	<!-- Application Loggers -->
 	<logger name="com.kh.hana">
 		<level value="info" />
+	</logger>
+	<logger name="com.kh.hana.common.util">
+		<level value="info"/>
+	</logger>
+	<logger name="com.kh.hana.common.aspect">
+		<level value="info"/>
+	</logger>
+	
+	<logger name="com.kh.hana.chat">
+		<level value="warn" />
+	</logger>
+	<logger name="com.kh.hana.common">
+		<level value="warn"/>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

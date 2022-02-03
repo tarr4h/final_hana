@@ -67,13 +67,15 @@
     
     <update id="updateShopTable" parameterType="table">
     	update shop_table_setting
-    	set		
+    	set
+    		<if test="updatable.equals('Y')">		
     		table_name = #{tableName},
     		allow_visitor = #{allowVisitor},
     		allow_start = #{allowStart},
     		allow_end = #{allowEnd},
     		time_div = #{timeDiv},
     		time_max = #{timeMax},
+    		</if>
     		memo = #{memo},
     		enable = #{enable}
     	where
@@ -107,6 +109,32 @@
             a.tag_name in(#{hashTagOne},#{hashTagTwo})
     </select>
     
-    
-    
+    <insert id="insertReservation" parameterType="reservation">
+    	insert into shop_table_reservation
+    	values(
+    		concat(#{shopId}, seq_shop_table_reservation_res_no.nextval),
+    		#{reservationTableId},
+    		#{reservationUser},
+    		#{shopId},
+    		#{reservationDate},
+    		#{timeStart},
+    		#{timeEnd},
+    		#{visitorCount},
+    		#{reqOrder},
+    		default
+    	)
+    </insert>
+
+	<select id="selectTableReservation" parameterType="map" resultType="reservation">
+		select
+			*
+		from
+			shop_table_reservation
+		where
+			reservation_table_id = #{tableId}			
+			<if test="date != null">
+			and
+			to_date(reservation_date) = #{date}
+			</if>
+	</select>
 </mapper>
