@@ -80,10 +80,29 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Override
 	public int insertHashTag(HashTag hashTag) {
-		return shopDao.insertHashTag(hashTag);
+		HashTag tag = shopDao.searchHashTag(hashTag);
+		
+		int result = 0;
+		if(tag == null) {
+			result = shopDao.insertHashTag(hashTag);
+			if(result > 0) {
+				result = shopDao.insertShopHashTag(hashTag);
+			}
+		} else {
+			hashTag.setTagId(tag.getTagId());
+			HashTag shopHashTag = shopDao.searchShopHashTag(hashTag);
+			if(shopHashTag == null) {
+				result = shopDao.insertShopHashTag(hashTag);				
+			}
+		}
+		return result;
 	}
 
-	
+	@Override
+	public List<HashTag> selectShopHashTag(String memberId) {
+		return shopDao.selectShopHashTag(memberId);
+	}
+
 	@Override public List<HashTag> hashTagAutocomplete(String search) { 
 		  return shopDao.hashTagAutocomplete(search); 
 	}
