@@ -320,12 +320,10 @@
 		group_
 	set
 		group_id = #{groupId},
-		borad_count = #{boardCount},
 		group_name = #{groupName},
 		hashtag = #{hashtag},
 		image = #{image},
-		leader_id = #{leaderId},
-		member_count = #{memberCount}
+		leader_id = #{leaderId}
 	where
 		group_id = #{groupId}
 	</update>

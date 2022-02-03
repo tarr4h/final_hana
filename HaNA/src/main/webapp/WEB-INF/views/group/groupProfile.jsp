@@ -106,8 +106,6 @@
 	                    </div>
 	                </div>
 	                <input type="hidden" name="leaderId" value="${group.leaderId}">
-	                <input type="hidden" name="boardCount" value="${group.boardCount}">
-	                <input type="hidden" name="memberCount" value="${group.memberCount}">
 	                <div class="mt-5 text-left"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
 	            </div>
 	        </div>

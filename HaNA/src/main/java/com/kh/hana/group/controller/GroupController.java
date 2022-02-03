@@ -531,12 +531,10 @@ public class GroupController {
 		int result = groupService.updateGroup(group, oldGroup);
 		
 		oldGroup.setGroupId(group.getGroupId());
-		oldGroup.setBoardCount(group.getBoardCount());
 		oldGroup.setGroupName(group.getGroupName());
 		oldGroup.setHashtag(group.getHashtag());
 		oldGroup.setImage(group.getImage());
 		oldGroup.setLeaderId(group.getLeaderId());
-		oldGroup.setMemberCount(group.getMemberCount());
 		
 		String msg = result > 0 ? "프로필 편집 성공" : "프로필 편집 실패";
 		
