@@ -196,7 +196,7 @@ where
 			b.no = #{no}
 	</select>
 
-	<insert id="boardComment">
+	<insert id="enrollBoardComment">
 	insert into
 			 board_comment
 		values(

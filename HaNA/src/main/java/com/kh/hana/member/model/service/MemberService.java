@@ -41,7 +41,7 @@ public interface MemberService {
 
 	List<Board> selectBoardList(String id);
 
-	int insertBoardComment(BoardComment boardComment);
+	int enrollBoardComment(BoardComment boardComment);
 
 	int deleteBoard(int no);
  

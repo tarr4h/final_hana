@@ -389,7 +389,7 @@ public class MemberController {
 	@ResponseBody
 	public Map<String,Object> enrollBoardComment(@RequestBody BoardComment boardComment){
 		log.info("boardComment = {}",boardComment);
-		int result = memberService.insertBoardComment(boardComment);
+		int result = memberService.enrollBoardComment(boardComment);
 		
 		Map<String,Object> map = new HashMap<>();
 		map.put("msg", "댓글 등록 성공");

@@ -133,8 +133,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int insertBoardComment(BoardComment boardComment) {
-		return memberDao.insertBoardComment(boardComment);
+	public int enrollBoardComment(BoardComment boardComment) {
+		return memberDao.enrollBoardComment(boardComment);
 	}
 
 	@Override

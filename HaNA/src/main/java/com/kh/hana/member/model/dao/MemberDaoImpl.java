@@ -124,8 +124,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int insertBoardComment(BoardComment boardComment) {
-		return session.insert("member.insertBoardComment", boardComment);
+	public int enrollBoardComment(BoardComment boardComment) {
+		return session.insert("member.enrollBoardComment", boardComment);
 	}
 
 	@Override

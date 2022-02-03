@@ -323,7 +323,6 @@ $("#btn-follower-list").on( "click", function() {
 		</div>
 	</div>
 <script>
- 
 let boardDetail;
 //게시물 목록
 $('.board-main-image').click((e)=>{
@@ -340,7 +339,8 @@ function goBoardDetail(boardNo){
 			url : "${pageContext.request.contextPath}/member/memberBoardDetail/"+boardNo,
 			success(resp){
 				console.log("확인", resp);
-				const {boardDetail} = resp;
+				const data = resp;
+				boardDetail = data;
 				console.log("확인", boardDetail);
 			
 				 
@@ -348,12 +348,12 @@ function goBoardDetail(boardNo){
 	 			const date = moment(boardDetail.regDate).format("YYYY년 MM월 DD일");
 				let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${boardDetail.writerProfile}`;
 		 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
-	 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${boardDetail.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${boardDetail.writer}</a>`); // 글쓴이 아이디
+	 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${boardDetail.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${boardDetail.boardDetail.writer}</a>`); // 글쓴이 아이디
 		 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜 
 		 		
 		 		// 이미지
 		 		$("#group-board-img-container").empty();
-	 			$.each(boardDetail.picture, (i,e)=>{
+	 			$.each(boardDetail.boardDetail.picture, (i,e)=>{
 	 				console.log("e", e);
 	 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/member/board/\${e}' alt="" class="group-board-img"/>`
 	 				$("#group-board-img-container").append(img); // 이미지 추가
@@ -364,7 +364,7 @@ function goBoardDetail(boardNo){
 	  			$(".group-board-img").css("left","0");
 		 		
 	 			//내용
-	 			let content = `\${boardDetail.content}</br>`
+	 			let content = `\${boardDetail.boardDetail.content}</br>`
 	  			$("#group-board-content").html(content);
 	 			
 	 			//댓글 리스트
@@ -397,8 +397,10 @@ $(document.boardCommentSubmitFrm).submit((e)=>{
 //댓글 제출 함수
 function submitCommentFunc(e){
 	console.log("eeee???", e.target);
- 	let boardNo = $("[name=boardNo]", e.target).val(); 
-	console.log("boardNo!!!!!!!!!", boardNo);
+	console.log("boardDetail", boardDetail);
+ 	let boardNo = boardDetail.boardDetail.no;
+ 	console.log("boardNo = ",boardDetail.boardDetail.no);
+ 	 
 	let o = {
 		boardNo:boardNo,
 		writer:$("[name=writer]",e.target).val(),
