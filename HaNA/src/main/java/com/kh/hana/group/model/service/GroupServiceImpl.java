@@ -15,6 +15,7 @@ import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 
 @Service
 @Transactional(rollbackFor=Exception.class) // 익셉션 발생시 롤백
@@ -146,6 +147,21 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int deleteGroupMember(String memberId) {
 		return groupDao.deleteGroupMember(memberId);
+	}
+
+	@Override
+	public int deleteAllCalendar(String groupId) {
+		return groupDao.deleteAllCalendar(groupId);
+	}
+
+	@Override
+	public int insertCalendarData(Map<String, Object> p) {
+		return groupDao.insertCalendarData(p);
+	}
+
+	@Override
+	public List<GroupCalendar> selectCalendarData(String groupId) {
+		return groupDao.selectCalendarData(groupId);
 	}
 
 }

@@ -10,6 +10,7 @@ import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 
 
 public interface GroupService {
@@ -63,4 +64,10 @@ public interface GroupService {
 	int selectLikeCount(Map<String, Object> param);
 
 	int deleteGroupMember(String memberId);
+
+	int deleteAllCalendar(String groupId);
+
+	int insertCalendarData(Map<String, Object> p);
+
+	List<GroupCalendar> selectCalendarData(String groupId);
 }

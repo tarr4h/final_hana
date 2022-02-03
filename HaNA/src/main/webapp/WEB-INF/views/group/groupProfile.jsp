@@ -62,8 +62,8 @@
 					alt="" />
 			</div>
 		</div>
-
-		<!-- 프로필 세부정보 영역 -->
+<!-- 		<div class="col-sm-2"></div>
+ -->		<!-- 프로필 세부정보 영역 -->
 		<div class="col-sm-6" id="profileStatus">
 		<div class="profileTableAreaContainer">
 		<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
@@ -137,11 +137,12 @@
 		</div>
 	</div>
 </div>
-
+<div>
 <div class="icon">
-	<a href="#"><i class="fas fa-pencil-alt"></i></a>
+	<a href="${pageContext.request.contextPath}/group/groupPage/${group.groupId}"><i class="fas fa-pencil-alt"></i></a>
 	<a href="${pageContext.request.contextPath}/group/groupCalendar/${group.groupId}"><i class="fas fa-calendar-alt"></i></a>
 	<a href="#"><i class="far fa-comments"></i></a>
+</div>
 </div>
 
 <!-- 회원목록보기 modal -->

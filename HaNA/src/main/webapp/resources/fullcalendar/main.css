@@ -944,7 +944,7 @@ A VERTICAL event
     color: var(--fc-event-text-color, #fff);
     height: 100%;
   }
-
+ 
 .fc-v-event .fc-event-main-frame {
     height: 100%;
     display: flex;

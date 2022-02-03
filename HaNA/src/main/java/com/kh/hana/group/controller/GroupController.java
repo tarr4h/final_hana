@@ -36,6 +36,7 @@ import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -55,8 +56,7 @@ public class GroupController {
 	@Autowired
 	private ChatService chatService;
 	
-	@GetMapping("/groupPage/{groupId}")
-	public String groupPage(@PathVariable String groupId, Model model) {
+	private void getGroupInfo(String groupId, Model model) {
 		Group group = groupService.selectOneGroup(groupId);// 그룹정보 가져오기
 		log.debug("group = {}", group);
 		model.addAttribute(group);
@@ -64,6 +64,11 @@ public class GroupController {
 		List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
 		log.info("groupMembers = {}",groupMembers);
 		model.addAttribute("groupMembers",groupMembers);
+	}
+	
+	@GetMapping("/groupPage/{groupId}")
+	public String groupPage(@PathVariable String groupId, Model model) {
+		getGroupInfo(groupId,model);
 		
 		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
@@ -433,15 +438,33 @@ public class GroupController {
 	
 	@GetMapping("/groupCalendar/{groupId}")
 	public String groupCalendar(@PathVariable String groupId, Model model) {
-		Group group = groupService.selectOneGroup(groupId);// 그룹정보 가져오기
-		log.debug("group = {}", group);
-		model.addAttribute(group);
-		
-		List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
-		log.info("groupMembers = {}",groupMembers);
-		model.addAttribute("groupMembers",groupMembers);
-		
+		getGroupInfo(groupId,model);
 		return "/group/groupCalendar";
+	}
+	
+	@PostMapping("/saveCalendarData")
+	public String saveCalendarData(@RequestBody Map<String,Object> param[]) {
+		// 1. 기존 데이터 초기화
+		String groupId = "ss";
+		int result = groupService.deleteAllCalendar(groupId);
+		// param 배열이 비어있지 않으면
+		if(param.length!=0) {
+			log.info("param = {}",param);
+			for(Map<String,Object> p : param) {
+				System.out.println(p);
+				result = groupService.insertCalendarData(p);
+			}
+		}
+		return "redirect:/group/groupCalendar/"+groupId;			
+	}
+	
+	@GetMapping("/getCalendarData/{groupId}")
+	public ResponseEntity<GroupCalendar[]> getCalendarData(@PathVariable String groupId){
+		log.info("groupId = {}",groupId);
+		List<GroupCalendar> list = groupService.selectCalendarData(groupId);
+		GroupCalendar events[] = list.toArray(new GroupCalendar[list.size()]);
+		log.info("events = {}",events);
+		return ResponseEntity.ok(events);
 	}
 
 	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
@@ -458,19 +481,6 @@ public class GroupController {
 		return null;
 	}
 	
-	@PostMapping("/saveCalendarData")
-	public String saveCalendarData(@RequestBody Map<String,Object> param[]) {
-		// 1. 기존 데이터 초기화
-		
-		// param 배열이 비어있지 않으면
-		if(param.length!=0) {
-			log.info("param = {}",param);
-			for(Map<String,Object> p : param) {
-				System.out.println(p);
-			}
-		}
-		return "redirect:/group/groupCalendar";			
-	}
 	
 	
 }

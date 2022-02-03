@@ -312,5 +312,26 @@
 	where 
 		member_id = #{memberId}
 	</delete>
+	
+	<delete id="deleteAllCalendar">
+	delete from
+		group_calendar
+	where 
+		title != 'asdf'
+	</delete>
+	<insert id="insertCalendarData">
+	insert into
+		group_calendar
+	values(
+		#{title},#{allday},#{start},#{end}
+	)
+	</insert>
+	<select id="selectCalendarData" resultType="groupCalendar">
+	select
+		*
+	from
+		group_calendar
+	</select>
+	
 </mapper>
 

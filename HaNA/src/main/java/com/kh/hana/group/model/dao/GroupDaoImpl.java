@@ -13,6 +13,7 @@ import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
@@ -143,6 +144,21 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public int deleteGroupMember(String memberId) {
 		return session.delete("deleteGroupMember", memberId);
+	}
+
+	@Override
+	public int deleteAllCalendar(String groupId) {
+		return session.delete("deleteAllCalendar",groupId);
+	}
+
+	@Override
+	public int insertCalendarData(Map<String, Object> p) {
+		return session.insert("insertCalendarData",p);
+	}
+
+	@Override
+	public List<GroupCalendar> selectCalendarData(String groupId) {
+		return session.selectList("selectCalendarData",groupId);
 	}
 
 
