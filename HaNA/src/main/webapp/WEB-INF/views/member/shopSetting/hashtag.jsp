@@ -12,6 +12,12 @@
 
 <sec:authentication property="principal" var="loginMember"/>
 
+<c:if test="${not empty msg}">
+	<script>
+		alert("${msg}");
+	</script>
+</c:if>
+
 <h1>shop프로필설정</h1>
 <div class="container">
     <div class="row">
@@ -30,6 +36,7 @@
         	<!-- 등록 해시태그 -->
 			<div class="myHashTag">
 				<span>등록된 해시태그</span>
+				<br />
 				<div class="myTagArea">
 				
 				</div>
@@ -53,5 +60,27 @@
     </div>
     
 </div>
+
+<script>
+	$(() => {
+		$.ajax({
+			url: '${pageContext.request.contextPath}/shop/selectShopHashTag',
+			data:{
+				memberId: '${loginMember.id}',
+			},
+			success(res){
+				console.log(res);
+				$.each(res, (i, e) => {
+					let btn = `
+						<button>\${e.tagName}</button>
+					`;
+					$(".myTagArea").append(btn);
+				});
+			},
+			error: console.log
+		});
+	});
+
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

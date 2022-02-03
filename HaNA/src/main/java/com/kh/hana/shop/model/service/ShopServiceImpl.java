@@ -80,16 +80,33 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Override
 	public int insertHashTag(HashTag hashTag) {
-		int result = shopDao.insertHashTag(hashTag);
-		if(result == 0) {
-			log.info("존재하지 않는 hashTag");
+		HashTag tag = shopDao.searchHashTag(hashTag);
+		log.info("hashTag = {}", tag);
+		log.info("tag bool = {}", tag == null);
+		
+		int result = 0;
+		if(tag == null) {
+			result = shopDao.insertHashTag(hashTag);
+			if(result > 0) {
+				result = shopDao.insertShopHashTag(hashTag);
+			}
 		} else {
-			log.info("hashTag 등록됨");
+			hashTag.setTagId(tag.getTagId());
+			log.info("setTagId = {}", tag.getTagId());
+			HashTag shopHashTag = shopDao.searchShopHashTag(hashTag);
+			log.info("shopHashTag = {}", shopHashTag);
+			if(shopHashTag == null) {
+				result = shopDao.insertShopHashTag(hashTag);				
+			}
 		}
-		return 0;
+		return result;
 	}
 
-	
+	@Override
+	public List<HashTag> selectShopHashTag(String memberId) {
+		return shopDao.selectShopHashTag(memberId);
+	}
+
 	@Override public List<HashTag> hashTagAutocomplete(String search) { 
 		  return shopDao.hashTagAutocomplete(search); 
 	}
