@@ -146,6 +146,10 @@ select
             a.tag_name in('해물탕','매운탕');
   ------------- 
 
+select * from hashtag;
+select * from shop_info;
+
+
 
 
   

@@ -33,6 +33,8 @@ public interface ShopDao {
 
 	List<Reservation> selectTableReservation(Map<String, Object> infoMap);
 
+
+
 	
 	
 

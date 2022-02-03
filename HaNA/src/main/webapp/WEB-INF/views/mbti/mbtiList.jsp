@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
+<img src="/hana/resources/images/white-g27215466c_1920.png" alt="이미지" style="width: 900px;
+    height: 600px; position: relative; left: 100px"/>
 	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm" name="mbtiFrm">
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
@@ -25,13 +27,13 @@
 					     하나만 체크 되게 하고 싶은 거니까 input과 label을 name 값으로 이어주고 ${list.no}를 줘서 문항 마다 체크를(동의 또는 비동의) 
 					     로 하나만 되게 할수 있도록 해주었다  -->
 					   <!-- 동의 -->
-					<span><i class="far fa-circle"></i></span>
-					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2"/>	
+					<span style="position: relative; bottom: 5px; margin:4px;"><i class="far fa-circle"></i></span>
+					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2" checked/>	
 					 	<label for="cbtest-${list.no}-yes" class="cb2"></label>
 					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" />
 						<label for="cbtest-${list.no}-no" class="cb1"></label>
 					   <!-- 비동의 -->
-					<span><i class="fas fa-times"></i></span>
+					<span style="position: relative; bottom: 5px; margin:4px;"><i class="fas fa-times"></i></span>
 			</li>
 		 </c:forEach>
 		</ul>
@@ -40,18 +42,17 @@
 		<button id="mbtiListPage-buttonResult">결과보기 <i class="fas fa-angle-double-right"></i></button>
 		</div>
 	</form>
+
 </div>
 
 <script>
 window.onload = function(){
-	
 	if($('input[name=cPage]').val() == 37){
 		$("#mbtiListPage-buttonNext").hide();
 		document.getElementById("btn").style.display = 'block';
 		const path = '${pageContext.request.contextPath}/mbti/mbtiResult.do';
 		$('form[name=mbtiFrm]').attr('action', path);
 	}
-	
 }
 
 </script>
