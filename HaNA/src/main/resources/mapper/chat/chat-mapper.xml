@@ -152,7 +152,7 @@
 		default,
 		default,
 		default
-		);
+		)
 	</insert>
 	
 		<insert id="CreateGroupChat">

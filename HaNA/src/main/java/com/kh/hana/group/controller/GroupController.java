@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -35,6 +36,7 @@ import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -50,12 +52,9 @@ public class GroupController {
 	
 	@Autowired
 	private ServletContext application;
+
 	
-	@Autowired
-	private ChatService chatService;
-	
-	@GetMapping("/groupPage/{groupId}")
-	public String groupPage(@PathVariable String groupId, Model model) {
+	private void getGroupInfo(String groupId, Model model) {
 		Group group = groupService.selectOneGroup(groupId);// 그룹정보 가져오기
 		log.debug("group = {}", group);
 		model.addAttribute(group);
@@ -63,6 +62,11 @@ public class GroupController {
 		List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
 		log.info("groupMembers = {}",groupMembers);
 		model.addAttribute("groupMembers",groupMembers);
+	}
+	
+	@GetMapping("/groupPage/{groupId}")
+	public String groupPage(@PathVariable String groupId, Model model) {
+		getGroupInfo(groupId,model);
 		
 		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
@@ -108,11 +112,7 @@ public class GroupController {
 			}
 			
 			int result = groupService.insertOneGroup(group);
-			int chatresult = 0;
-			if(result > 0) {
-				chatresult = chatService.CreateGroupChat(group);
-				log.info("{}", chatresult > 0 ? "그룹채팅생성 성공" : "그룹채팅생성 실패");
-			}
+			
 			redirectAttr.addFlashAttribute("msg", "소모임 등록 성공!");	
 			redirectAttr.addFlashAttribute("result", result);	
 			return "redirect:/group/groupPage/"+group.getGroupId();
@@ -255,7 +255,7 @@ public class GroupController {
     public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
         log.info("groupId ={}", groupId);
         
-        List<Map<String, Object>> groupApplyList = groupService.getGroupApplyRequest(groupId);
+        List<Map<String, Object>> groupApplyList = groupService.selectGroupApplyList(groupId);
         log.info("groupApplyList ={}", groupApplyList);
         
         return ResponseEntity.ok(groupApplyList);       
@@ -263,51 +263,28 @@ public class GroupController {
 	
     @PostMapping("/groupApplyProccess")
     @ResponseBody
-    public String groupApplyProcess(
-            @RequestParam(name="no") int no, 
-            @RequestParam(name="groupId") String groupId,
-            @RequestParam(name="memberId") String memberId,
-            @RequestParam(name="approvalYn") String approvalYn,
-            @RequestParam Map<String, Object> map
-            ) {
-        log.info("no = {}", no);
-        log.info("groupId = {}", groupId);
-        log.info("memberId = {}", memberId);
-        log.info("approvalYn = {}", approvalYn);
-        //승인(y)
-        if(approvalYn.equals("y")) {
-            int result = groupService.insertGroupMember(map);
-            log.info("result ={}", result);
-            
-            String msg = result > 0 ? "가입 승인 성공" : "가입 승인 실패";
-            log.info("msg ={}", msg);
-            
-            //소모임채팅 입장 메세지
-            Map<String, Object> param = new HashMap<>();
-            param.put("groupId", groupId);
-            param.put("memberId", memberId);
-            int result3 = 0;
-            if(result > 0) {
-            	result3 = chatService.insertGroupMessage22(param);
-            	log.info("소모임 가입 일반회원 입장메세지 완료");
-            }
-            else 
-            	log.info("소모임 가입 일반회원 입장메세지 실패");
-                       
-            int deleteResult = groupService.deleteGroupApplyList(map);
-            log.info("deleteResult ={}", deleteResult);
-        }
-        //거절(n)
-        else {
-            int result = groupService.deleteGroupApplyList(map);
-            log.info("result ={}", result);
-            
-            String msg = result > 0 ? "가입 거절 성공" : "가입 거절 실패";
-            log.info("msg ={}", msg);
-            
+    public ResponseEntity<Map<String,Object>> groupApplyProcess(@RequestParam Map<String, Object> map) {
+        log.info("no = {}", map.get("no"));
+        log.info("groupId = {}", map.get("groupId"));
+        log.info("memberId = {}", map.get("memberId"));
+        log.info("approvalYn = {}", map.get("approvalYn"));
+        //승인(Y)
+        int result = 0;
+        Map<String,Object> resultMap = new HashMap<>();
+        try {
+        	if(map.get("approvalYn").equals("Y")) {
+        		result = groupService.insertGroupMember(map);  // 그룹 멤버 추가            
+        	}
+        	//거절(N)
+        	else {
+        		result = groupService.updateApplyHandled(map); // 처리여부 + 승인여부 업데이트
+        	}
+        	resultMap.put("msg", "처리 완료");
+        }catch(Exception e) {
+        	resultMap.put("msg", "처리 실패");
         }
         
-        return "redirect:/group/groupPage/"+groupId;
+        return ResponseEntity.ok(resultMap);
     }
     
     @PostMapping("/deleteGroupBoard")
@@ -458,8 +435,36 @@ public class GroupController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@GetMapping("/groupCalendar")
-	public void groupCalendar() {}
+	@GetMapping("/groupCalendar/{groupId}")
+	public String groupCalendar(@PathVariable String groupId, Model model) {
+		getGroupInfo(groupId,model);
+		return "/group/groupCalendar";
+	}
+	
+	@PostMapping("/saveCalendarData")
+	public String saveCalendarData(@RequestBody Map<String,Object> param[]) {
+		// 1. 기존 데이터 초기화
+		String groupId = "ss";
+		int result = groupService.deleteAllCalendar(groupId);
+		// param 배열이 비어있지 않으면
+		if(param.length!=0) {
+			log.info("param = {}",param);
+			for(Map<String,Object> p : param) {
+				System.out.println(p);
+				result = groupService.insertCalendarData(p);
+			}
+		}
+		return "redirect:/group/groupCalendar/"+groupId;			
+	}
+	
+	@GetMapping("/getCalendarData/{groupId}")
+	public ResponseEntity<GroupCalendar[]> getCalendarData(@PathVariable String groupId){
+		log.info("groupId = {}",groupId);
+		List<GroupCalendar> list = groupService.selectCalendarData(groupId);
+		GroupCalendar events[] = list.toArray(new GroupCalendar[list.size()]);
+		log.info("events = {}",events);
+		return ResponseEntity.ok(events);
+	}
 
 	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
 	public String deleteGroupMember (
@@ -474,6 +479,9 @@ public class GroupController {
 		
 		return null;
 	}
+	
+	
+	
 }
 
 

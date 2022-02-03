@@ -575,10 +575,10 @@ A HORIZONTAL event
 */
 .fc-h-event { /* allowed to be top-level */
   display: block;
-  border: 1px solid #3788d8;
-  border: 1px solid var(--fc-event-border-color, #3788d8);
-  background-color: #3788d8;
-  background-color: var(--fc-event-bg-color, #3788d8)
+  border: 1px solid white;
+  border: 1px solid var(--fc-event-border-color, white);
+  background-color: rgb(115, 184, 209);
+  background-color: var(--fc-event-bg-color, rgb(115, 184, 209))
 
 }
 .fc-h-event .fc-event-main {
@@ -603,7 +603,7 @@ A HORIZONTAL event
     left: 0;  /* for sticky */
     right: 0; /* for sticky */
     max-width: 100%; /* clip overflow on this element */
-    overflow: hidden;
+	white-space:normal;
   }
 .fc-h-event.fc-event-selected:before {
     /* expand hit area */
@@ -871,7 +871,7 @@ A HORIZONTAL event
   }
 .fc-daygrid-event { /* make root-level, because will be dragged-and-dropped outside of a component root */
   position: relative; /* for z-indexes assigned later */
-  white-space: nowrap;
+  white-space: normal;
   border-radius: 3px; /* dot event needs this to when selected */
   font-size: .85em;
   font-size: var(--fc-small-font-size, .85em);
@@ -944,7 +944,7 @@ A VERTICAL event
     color: var(--fc-event-text-color, #fff);
     height: 100%;
   }
-
+ 
 .fc-v-event .fc-event-main-frame {
     height: 100%;
     display: flex;
