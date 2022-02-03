@@ -81,8 +81,6 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public int insertHashTag(HashTag hashTag) {
 		HashTag tag = shopDao.searchHashTag(hashTag);
-		log.info("hashTag = {}", tag);
-		log.info("tag bool = {}", tag == null);
 		
 		int result = 0;
 		if(tag == null) {
@@ -92,9 +90,7 @@ public class ShopServiceImpl implements ShopService {
 			}
 		} else {
 			hashTag.setTagId(tag.getTagId());
-			log.info("setTagId = {}", tag.getTagId());
 			HashTag shopHashTag = shopDao.searchShopHashTag(hashTag);
-			log.info("shopHashTag = {}", shopHashTag);
 			if(shopHashTag == null) {
 				result = shopDao.insertShopHashTag(hashTag);				
 			}
