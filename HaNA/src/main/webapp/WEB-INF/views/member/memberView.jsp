@@ -5,10 +5,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+ 
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!-- 우측 공간확보 -->
 <section class="body-section" style="width:200px;height:100%;float:right;display:block;">
 <span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
@@ -140,9 +143,8 @@ $("#btn-follower-list").on( "click", function() {
 		  </div> -->
 		   
 		   
-		    <input type="file" style="display: block;"  name="uploadFile" id="input-multiple-image" 
-		    	  multiple required> 
-		    <span>최대 2장까지 가능합니다.</span> 
+		    <input type="file" style="display: block;"  name="uploadFile" id="input-multiple-image" class="multi" maxlength="2" 
+		    	 required> 
 		  	<br>
 		  	<div id="multiple-container">
 			</div>
@@ -237,19 +239,92 @@ $("#btn-follower-list").on( "click", function() {
 <!-- 게시물목록 -->        
     <div class="row">    
         <c:forEach items="${boardList}" var="board" varStatus="vs">
-	        <div class="thumbnail col-sm-4" >
-	         
-	       	 	<input type="hidden" value="${board.no}" id="boardNo"/>
+	        <div class="thumbnail col-sm-4" >     
+	       	 	<input type="hidden" value="${board.no}" id="boardNo" name="no"/>
 	        	<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
-						alt="" onclick="goBoardDetail()"/>
+						alt=""  />
 			 
 	        </div>
         </c:forEach>
     </div>
 </div>
-
+<!-- 게시물 상세보기 Modal-->
+	<div class="modal fade" id="groupPageDetail" tabindex="-1">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+				<table>
+					<tr>
+						<td rowspan="2" id="member-profile"><img src="" style="height:50px;width:50px; border-radius:50%"/></td>
+						<th id="member-id"></th>
+					</tr>
+					<tr>
+						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
+					</tr>
+				</table>
+				<div style="position:relative;margin-right:-665px; margin-bottom:5%;">
+				<img src="https://img.icons8.com/plasticine/100/000000/like--v2.png" class="heart unlike" onclick="like();" style="position:absolute; width:50px;"/>
+				<img src="https://img.icons8.com/plasticine/100/000000/like--v1.png" class="heart like" onclick="unlike();" style="position:absolute; width:50px;"/>
+				</div>
+				<div style="color:gray; margin-right:1%;">
+					<span class="like_count"></span>
+				</div>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+					    <div class="row">
+					        <div class="col-sm-7" id="group-board-img-container" style="background-color:black; display: flex; align-items: center; position:relative;">
+ 					        </div>
+					        <div class="col-sm-5" style="">
+					        	<div class="container">
+								    <div class="row">
+								        <div class="col-sm-12" id="group-board-tag-member-list" style="border-bottom:solid #80808040 1px; height:100px; overflow:auto; padding:0px 20px 20px 20px;">
+								        	<p style="color:gray;">with</p>
+								        	<table id="tagMemberListTable">
+								        	
+								        	</table>
+								        </div>
+								        <div class="col-sm-12" id="group-board-content" style="border-bottom:solid #80808040 1px; height:300px; overflow:auto; padding:20px;"></div>
+								        <div class="col-sm-12" id="group-board-comment-list" style="border-bottom:solid #80808040 1px; height:500px; overflow-x:hidden; overflow-y:auto; padding:20px;">
+										<table style="width:100%;">
+										
+										</table>
+										</div>
+								        <div class="col-sm-12" id="group-board-comment-submit"style="height:150px; padding:20px;">
+								        	<form:form action="" name="boardCommentSubmitFrm">
+								        		<input type="hidden" name="writer" value="<sec:authentication property='principal.username'/>">
+								        		<input type="hidden" name="boardNo" id="boardNo" value=""/> 
+								        		<input type="hidden" name="commentLevel" value="1"/>
+								        		<input type="hidden" name="commentRef" value="0"/>
+									        	<textarea name="content" id="" cols="30" rows="10" placeholder="댓글입력..." ></textarea>									        	   
+									        	<div><input type="submit" data-no="${board.no}" value="게시"/></div>	
+				 						        	
+								        	</form:form>
+								        </div>
+								    </div>
+								</div>
+					        </div>
+					    </div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div style="margin:10px 0px;">
+						<form:form name="boardDeleteFrm" action="${pageContext.request.contextPath}/member/deleteBoard" method="POST">
+ 							<input type="hidden" name="id" value="${member.id}"/>
+						<c:forEach items="${boardList}" var="board" varStatus="vs">
+							<input type="hidden" name="no" value="${board.no}" />
+						</c:forEach>
+						</form:form>
+						<button type="submit" class="btn-deleteBoard" onclick="deleteBoardFunc();">게시물 삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <script>
+ 
+let boardDetail;
 //게시물 목록
 $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#boardNo").val();
@@ -262,28 +337,105 @@ $('.board-main-image').click((e)=>{
 function goBoardDetail(boardNo){
 	console.log("boardNo2",boardNo);
 	 $.ajax({
-			url : "${pageContext.request.contextPath}/member/memberViewBoard/memberBoardDetail/\${boardNo}",
+			url : "${pageContext.request.contextPath}/member/memberBoardDetail/"+boardNo,
 			success(resp){
-				console.log("확인"+resp);
-				const {board} = resp;
-				console.log("확인"+ board);			
+				console.log("확인", resp);
+				const {boardDetail} = resp;
+				console.log("확인", boardDetail);
+			
+				 
+				
+	 			const date = moment(boardDetail.regDate).format("YYYY년 MM월 DD일");
+				let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${boardDetail.writerProfile}`;
+		 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
+	 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${boardDetail.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${boardDetail.writer}</a>`); // 글쓴이 아이디
+		 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜 
+		 		
+		 		// 이미지
+		 		$("#group-board-img-container").empty();
+	 			$.each(boardDetail.picture, (i,e)=>{
+	 				console.log("e", e);
+	 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/member/board/\${e}' alt="" class="group-board-img"/>`
+	 				$("#group-board-img-container").append(img); // 이미지 추가
+	 				
+	 			})
+	 			$(".group-board-img").css("width","100%");
+	 			$(".group-board-img").css("position","absolute");
+	  			$(".group-board-img").css("left","0");
+		 		
+	 			//내용
+	 			let content = `\${boardDetail.content}</br>`
+	  			$("#group-board-content").html(content);
+	 			
+	 			//댓글 리스트
+	 			//getCommentList(boardNo);
+	 			
+	 			//댓글 입력창
+	 			$("#group-board-comment-submit #boardNo").val(board.no);
+	 			
 			},
 			error(xhr, statusText, err){
 				switch(xhr.status){
 				default: console.log(xhr, statusText, err);
 				}
-				 
+				console.log
 			}
 		})
- 
-} 
-
-
+}
+//게시물 삭제 함수
+function deleteBoardFunc(){
+	if(confirm("게시물을 삭제하시겠습니까?")){
+		$(document.boardDeleteFrm).submit();
+	}
+}
+//댓글 입력
+$(document.boardCommentSubmitFrm).submit((e)=>{
+	e.preventDefault();
+	submitCommentFunc(e);
+	console.log("eee!!!",e)
+})
+//댓글 제출 함수
+function submitCommentFunc(e){
+	console.log("eeee???", e.target);
+ 	let boardNo = $("[name=boardNo]", e.target).val(); 
+	//const boardNo = $(e.target).data("no");
+	let o = {
+		boardNo:boardNo,
+		writer:$("[name=writer]",e.target).val(),
+		commentLevel:$("[name=commentLevel]",e.target).val(),			
+		commentRef:$("[name=commentRef]",e.target).val(),			
+		content:$("[name=content]",e.target).val(),	
+	}
+	console.log(o);
+	const jsonStr = JSON.stringify(o);
+	console.log("가져온 값",jsonStr);
+	$.ajax({
+		url:"<%=request.getContextPath()%>/member/enrollBoardComment",
+		method:"POST",
+		dataType:"json",
+		data:jsonStr,
+		contentType:"application/json; charset=utf-8",
+		success(data){
+			console.log(data);
+			$("[name=content]",e.target).val("");
+			//getCommentList(boardNo);
+		},
+		error(xhr, statusText, err){
+			switch(xhr.status){
+			default: console.log(xhr, statusText, err);
+			}
+			console.log
+		}
+	})
+};  
+//계정페이지로 이동
+function goMemberView(memberId){
+	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
+}
 //설정페이지로 이동
 function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
-
 //친구추가하기
 function addFollowing(){
 	if(confirm("친구추가를 하시겠습니까?")){

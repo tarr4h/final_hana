@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
@@ -120,6 +121,16 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Board> selectBoardList(String id) {
 		return session.selectList("member.selectBoardList", id);
+	}
+
+	@Override
+	public int insertBoardComment(BoardComment boardComment) {
+		return session.insert("member.insertBoardComment", boardComment);
+	}
+
+	@Override
+	public int deleteBoard(int no) {
+		return session.delete("member.deleteBoard", no);
 	}
 
 	

@@ -182,15 +182,50 @@ where
 			board
 		where
 			writer = #{id}
+		order by reg_date desc
 	</select>
 	
-	<select id="selectOneBoard" >
+	<select id="selectOneBoard" resultType = "board">
 		select 
-			*
+			b.*,
+			m.picture writer_profile
 		from
+			board b join member m
+			on b.writer = m.id
+		where
+			b.no = #{no}
+	</select>
+
+	<insert id="boardComment">
+	insert into
+			 board_comment
+		values(
+			seq_board_comment.nextval,
+			#{boardNo},
+			#{commentLevel},
+			#{writer},
+			#{content},
+			<choose>
+				<when test="commentRef eq 0">
+					null,
+				</when>
+				<otherwise>
+					#{commentRef},
+				</otherwise>
+			</choose>
+			default
+		)
+	</insert>
+
+	<delete id="deleteBoard">
+	delete from
 			board
 		where
 			no = #{no}
-	</select>
+	</delete>
+
+
+
+
 
 </mapper>

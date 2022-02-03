@@ -11,7 +11,6 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,8 +18,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,9 +29,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
-import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
@@ -353,17 +354,59 @@ public class MemberController {
 	}
 	
 	
- //게시글 상세보기
-	@GetMapping("/memberViewBoard/memberBoardDetail/{no}")
-	public ResponseEntity<Map<String,Object>> boardDetail(Member member, @PathVariable int no, Model model) { 
+	//게시글 상세보기
+	@GetMapping("/memberBoardDetail/{no}")
+	public ResponseEntity<Map<String,Object>> boardDetail(@ModelAttribute Member member, @PathVariable int no, Model model) { 
 	Board boardDetail = memberService.selectOneBoard(no);
 	log.info("boardDetail = {}", boardDetail);
 	
 	Map<String, Object> map = new HashMap<>();
 	map.put("boardDetail", boardDetail);
 	
-	return ResponseEntity.ok(map);
-
+	return ResponseEntity.ok()
+						.body(map);
 	}
+	
+	//게시글 삭제하기
+	 @PostMapping("/deleteBoard")
+	    public String deleteBoard(@RequestParam int no, @RequestParam String id){
+	    	
+	    	try{
+	    		log.info("delete.no = {}",no);
+	    		log.info("delete.member.id = {}",id);
+	    		int result = memberService.deleteBoard(no);
+	    		
+	    	}catch(Exception e) {
+	    		log.error(e.getMessage(),e);
+	       	}
+	    	return "redirect:/member/memberView/"+id;
+	    	
+	    }
+	
+	
+	//댓글등록
+	@PostMapping("/enrollBoardComment")
+	@ResponseBody
+	public Map<String,Object> enrollBoardComment(@RequestBody BoardComment boardComment){
+		log.info("boardComment = {}",boardComment);
+		int result = memberService.insertBoardComment(boardComment);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("msg", "댓글 등록 성공");
+		map.put("result",result);
+		return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

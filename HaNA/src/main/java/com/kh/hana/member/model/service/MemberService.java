@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
@@ -39,6 +40,10 @@ public interface MemberService {
 	Board selectOneBoard(int no);
 
 	List<Board> selectBoardList(String id);
+
+	int insertBoardComment(BoardComment boardComment);
+
+	int deleteBoard(int no);
  
 
 }

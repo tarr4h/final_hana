@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
 import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
@@ -129,6 +130,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Board> selectBoardList(String id) {
 		return memberDao.selectBoardList(id);
+	}
+
+	@Override
+	public int insertBoardComment(BoardComment boardComment) {
+		return memberDao.insertBoardComment(boardComment);
+	}
+
+	@Override
+	public int deleteBoard(int no) {
+		return memberDao.deleteBoard(no);
 	}
  
 
