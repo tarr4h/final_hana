@@ -26,5 +26,6 @@ public class Table implements Serializable {
 	private int timeMax;
 	private String memo;
 	private String enable;
+	private String updatable;
 	
 }
