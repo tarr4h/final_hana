@@ -181,4 +181,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectCalendarData(groupId);
 	}
 
+	@Override
+	public int deleteCalendarData(Map<String, Object> param) {
+		return groupDao.deleteCalendarData(param);
+	}
+
 }
