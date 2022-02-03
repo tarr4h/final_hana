@@ -66,8 +66,5 @@ public interface GroupDao {
 
 	public int updateGroup(Group group);
 
-	public int updateHashtag(Group group);
-
-	public int insertHashtag(Group group);
 
 }

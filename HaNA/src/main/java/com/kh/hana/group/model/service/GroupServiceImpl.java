@@ -158,23 +158,9 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public int updateGroup(Group group, Group oldGroup) {
-		int result1 = groupDao.updateGroup(group);
-		log.info("result1 ={}", result1);
-		
-		int result2 = 0;
-		log.info("groupHashtah ={}", group.getHashtag());
-		if(oldGroup.getHashtag() != null) {
-			result2 = groupDao.updateHashtag(group);
-		}else {
-			result2 = groupDao.insertHashtag(group);
-		}
-
-		log.info("group ={}", group);
-		if(result1 == 1 || result2 == 1) {
-			return 1;
-		} else {
-			return 0;
-		}
+		return groupDao.updateGroup(group);
 	}
+
+	
 
 }
