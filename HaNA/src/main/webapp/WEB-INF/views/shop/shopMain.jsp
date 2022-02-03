@@ -375,10 +375,10 @@ var page = 1;
 var endNum = 6;
 var startNum = 0;
 var selectDataArr = []; //hashTag 담을 배열
-var hashTagData = ""; // 검색 데이터 잠시 담을 변수
+ var hashTagData = ""; // 검색 데이터 잠시 담을 변수 
 
 
-function scrollPage(){
+function scrollPage(){	
 		console.log("${loginMember.addressAll}");
 		var Addr_val = "${loginMember.addressAll}";
 	
@@ -414,6 +414,7 @@ function scrollPage(){
 					for(var i =0; i<list.length; i++){
 						 tagName = list[i].TAG_NAME;
 					}
+					
 	 
 				if(tagName == null){ // 해시태그 없을때
 					if(startNum == 0 ){
@@ -442,6 +443,7 @@ function scrollPage(){
 						 	}
 						}
 				}else if (tagName != null){ // 해시태그 있을때
+					// selectDataArr.length = 0; // 배열에 데이터가 누적 되지 않게 초기화 해줌 
 					$("#shopList").empty(); //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<endNum; i++){
@@ -503,18 +505,17 @@ function scrollPage(){
 
 	
  // Autocomplete  부분 
-   var tagDataArr = [];  // tagButton을 가지고 검색시 tag데이터를 담을 배열
     $("#searchInput").autocomplete({
-        source : function(request, response) {
+        source : function(request, response) {	
             $.ajax({
                   url : "${pageContext.request.contextPath}/shop/hashTagAutocomplete",
                  data : {search : $("#searchInput").val()},
                  success : function(data){ 
-                    		console.log(data)
+                    		console.log(data)	
                     response(
                         $.map(data, function(item) {
                             return {
-                                  label : item.tagName  //목록에 표시되는 값
+                                  label : item.tagName  //목록에 표시되는 값 
                             };
                         })
                     );  	
@@ -527,15 +528,10 @@ function scrollPage(){
         , minLength : 1  // 조회를 위한 최소 글자수  
         , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
         , select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
-
-        	// 배열 길이가 2개면 0 으로 초기화 (다른 데이터 담으려고) 
-			if(selectDataArr.length == 2 ){
-        	selectDataArr.length = 0;	
-        	}
         	// 검색 데이터 변수에 담기  
         	hashTagData  = ui.item.value;
         	console.log("변수 " +  hashTagData)
-        
+
         	// 검색 데이터를 클릭/엔터 하면 버튼이 동적으로 생성  
 			var hashTagBtn = document.createElement( 'button' );
         	var tagData = document.createTextNode(hashTagData);     	
@@ -553,7 +549,7 @@ function scrollPage(){
         	$("#searchInput").val('');
         	selectDataArr.push(hashTagData);
         	console.log("selectDataArr" + selectDataArr)
-
+        	
         }
         
     }).autocomplete('instance')._renderItem = function(ul, item) {
@@ -577,6 +573,7 @@ function clickList(){
 	scrollPage();
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
+
 
 }
 

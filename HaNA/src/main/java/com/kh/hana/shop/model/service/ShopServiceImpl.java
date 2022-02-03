@@ -32,12 +32,16 @@ public class ShopServiceImpl implements ShopService {
 			log.info("해시태그가 없는 = {}", shopList);
 		}else {
 			// 해시태그가 있을때 
-			data.put("hashTagOne",selectDataArr.get(0));
-			data.put("hashTagTwo",selectDataArr.get(1));
+			List<String> tags = new ArrayList<>();
+			for(String str : selectDataArr) {
+				tags.add(str);
+				data.put("tags", tags);
+				log.info("tags = {}", tags);
+				log.info("data = {}", data);
+			}
 			 shopList = shopDao.selectHashTagShopList(data);			
 			 log.info("해시태그 있는  = {}", shopList);
 		}
-		
 		String locationX = (String)data.get("locationX");
 		String locationY = (String)data.get("locationY");
 		
