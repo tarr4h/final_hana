@@ -398,7 +398,7 @@ $(document.boardCommentSubmitFrm).submit((e)=>{
 function submitCommentFunc(e){
 	console.log("eeee???", e.target);
  	let boardNo = $("[name=boardNo]", e.target).val(); 
-	//const boardNo = $(e.target).data("no");
+	console.log("boardNo!!!!!!!!!", boardNo);
 	let o = {
 		boardNo:boardNo,
 		writer:$("[name=writer]",e.target).val(),
