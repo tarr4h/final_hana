@@ -442,7 +442,7 @@
 					if(res == ''){
 						tbody.append("예약 가능한 테이블이 존재하지 않습니다.");
 					} else{
-						tbody.append(th);
+						/* tbody.append(th); */
 						$.each(res, (i, e) => {
 							if(e.enable == 'Y'){
 								let tr = `
