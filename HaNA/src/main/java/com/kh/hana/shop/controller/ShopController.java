@@ -17,7 +17,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.hana.common.util.CreateCalendar;
 import com.kh.hana.shop.model.service.ShopService;
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
@@ -142,16 +142,17 @@ public class ShopController {
     	return ResponseEntity.ok(tableList);
     }
     
-    @DeleteMapping(value="/deleteShopTable/{tableId}", produces="application/text;charset=utf8")
+    @DeleteMapping(value="/deleteShopTable", produces="application/text;charset=utf8")
     @ResponseBody
-    public ResponseEntity<?> deleteShopTable(@PathVariable String tableId){
+    public ResponseEntity<?> deleteShopTable(@RequestBody Table table){
+    	
+    	String tableId = table.getTableId();
     	log.info("tableId = {}", tableId);
     	
     	int result = shopService.deleteShopTable(tableId);
     	log.info("result = {}", result);
-    	
-    	String msg = result > 0 ? "삭제되었습니다." : "삭제되지 않았습니다."; 
-    	return ResponseEntity.ok(msg);
+    	 
+    	return ResponseEntity.ok().build();
     }
     
     @PutMapping(value="/updateShopTable", produces="application/text;charset=utf8")
@@ -161,9 +162,8 @@ public class ShopController {
     	
     	int result = shopService.updateTable(table);
     	log.info("updateResult = {}", result);
-    	
-    	String msg = result > 0 ? "수정되었습니다." : "수정되지 않았습니다."; 
-    	return ResponseEntity.ok(msg);
+    	 
+    	return ResponseEntity.ok().build();
     }
     
     @GetMapping("/selectOneTable/getReservationTime")
@@ -172,7 +172,7 @@ public class ShopController {
     	
     	Map<String, Object> infoMap = new HashMap<>();
     	infoMap.put("date", date);
-    	infoMap.put("shopId", reqTable.getTableId());
+    	infoMap.put("tableId", reqTable.getTableId());
     	
     	List<Reservation> reservation = shopService.selectTableReservation(infoMap);
     	
@@ -234,6 +234,17 @@ public class ShopController {
     	String msg = result > 0 ? "등록되었습니다." : "예약 실패, 다시 시도해주세요";
     	
     	return ResponseEntity.ok(msg);
+    }
+    
+    @GetMapping("/createCalendar")
+    @ResponseBody
+    public ResponseEntity<?> createCalendar(@RequestParam int year, @RequestParam int month){
+    	log.info("year, month = {}, {}", year, month);
+    	
+    	Map<String, Object> map = CreateCalendar.createCalendar(year, month);
+    	log.info("map = {}", map);
+    	
+    	return ResponseEntity.ok(map);
     }
     
     @InitBinder
