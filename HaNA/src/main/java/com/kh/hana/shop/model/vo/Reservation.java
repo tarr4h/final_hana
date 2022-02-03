@@ -2,7 +2,6 @@ package com.kh.hana.shop.model.vo;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -17,7 +17,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.hana.common.util.CreateCalendar;
 import com.kh.hana.shop.model.service.ShopService;
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
@@ -234,6 +234,17 @@ public class ShopController {
     	String msg = result > 0 ? "등록되었습니다." : "예약 실패, 다시 시도해주세요";
     	
     	return ResponseEntity.ok(msg);
+    }
+    
+    @GetMapping("/createCalendar")
+    @ResponseBody
+    public ResponseEntity<?> createCalendar(@RequestParam int year, @RequestParam int month){
+    	log.info("year, month = {}, {}", year, month);
+    	
+    	Map<String, Object> map = CreateCalendar.createCalendar(year, month);
+    	log.info("map = {}", map);
+    	
+    	return ResponseEntity.ok(map);
     }
     
     @InitBinder
