@@ -36,11 +36,6 @@
 			</div>
         	<br />
         	<br />
-        	<!-- 해시태그 조회 -->
-        	<div class="insertHashTag">
-        		<label for="searchHashTag">해시태그 조회하기</label>
-        		<input type="text" name="searchHashTag" id="" />
-        	</div>
         	<br />
         	<br />
         	<br />
@@ -49,6 +44,7 @@
         		<form:form action="${pageContext.request.contextPath }/shop/insertHashTag" method="POST">
 	        		<label for="regHashTag">해시태그 등록하기</label>
 	        		<input type="text" name="tagName" id="" />
+	        		<input type="hidden" name="memberId" value="${loginMember.id }" />
 	        		<input type="submit" value="등록" />
         		</form:form>
         	</div>

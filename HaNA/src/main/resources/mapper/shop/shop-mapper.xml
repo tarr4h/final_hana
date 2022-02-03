@@ -15,10 +15,19 @@
             and
             id != #{id}
     </select>
+    
     <insert id="insertHashTag" parameterType="hashtag">
+        <selectKey order="BEFORE" resultType="string" keyProperty="tagId">
+        	select
+        		tag_id
+       		from
+       			hashtag
+      		where
+      			tag_name = #{tagName}
+        </selectKey>
         insert into
-            hashtag
-        values(concat(#{tagId}, seq_hashtag.nextval), #{tagName})
+            shophashtag
+        values(#{memberId}, #{tagId})
     </insert>
     
     <select  id="selectHashTagList" resultType="hashtag">
@@ -137,4 +146,6 @@
 			to_date(reservation_date) = #{date}
 			</if>
 	</select>
+	
+	
 </mapper>

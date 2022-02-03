@@ -80,7 +80,13 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Override
 	public int insertHashTag(HashTag hashTag) {
-		return shopDao.insertHashTag(hashTag);
+		int result = shopDao.insertHashTag(hashTag);
+		if(result == 0) {
+			log.info("존재하지 않는 hashTag");
+		} else {
+			log.info("hashTag 등록됨");
+		}
+		return 0;
 	}
 
 	
