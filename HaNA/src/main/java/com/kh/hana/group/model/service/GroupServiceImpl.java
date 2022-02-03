@@ -7,21 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.hana.chat.model.dao.ChatDao;
 import com.kh.hana.group.model.dao.GroupDao;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 
+@Slf4j
 @Service
 @Transactional(rollbackFor=Exception.class) // 익셉션 발생시 롤백
 public class GroupServiceImpl implements GroupService{
 
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private ChatDao chatDao;
 	
 	@Override
 	public Group selectOneGroup(String groupId) {
@@ -30,7 +37,14 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public int insertOneGroup(Group group) {
-		return groupDao.insertOneGroup(group);
+		int result = 0;
+		try {
+			result = groupDao.insertOneGroup(group);
+			result = chatDao.CreateGroupChat(group);
+		}catch(Exception e) {
+			throw e;
+		}
+		return result;
 	}
 
 	@Override
@@ -69,8 +83,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
-		return groupDao.getGroupApplyRequest(groupId);
+	public List<Map<String, Object>> selectGroupApplyList(String groupId) {
+		return groupDao.selectGroupApplyList(groupId);
 	}
 
   
@@ -81,12 +95,20 @@ public class GroupServiceImpl implements GroupService{
 	
 	@Override
 	public int insertGroupMember(Map<String, Object> map) {
-		return groupDao.insertGroupMember(map);
+		int result = 0;
+		try {
+			result = groupDao.insertGroupMember(map); // 멤버 추가
+			result = groupDao.updateApplyHandled(map); // 처리여부 업데이트
+    		result = chatDao.insertGroupMessage22(map); // 그룹톡 입장
+		}catch(Exception e) {
+			throw e;
+		}
+		return result;
 	}
 
 	@Override
-	public int deleteGroupApplyList(Map<String, Object> map) {
-		return groupDao.deleteGroupApplyList(map);
+	public int updateApplyHandled(Map<String, Object> map) {
+		return groupDao.updateApplyHandled(map);
 	}	
 
 	@Override
@@ -109,10 +131,6 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.updateBoardContent(param);
 	}
 
-//	@Override
-//	public List<Map<String, Object>> groupMemberList(String groupId) {
-//		return groupDao.groupMemberList(groupId);
-//	}
 
 	@Override
 	public Group selectGroupInfo(String groupId) {
@@ -146,6 +164,21 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int deleteGroupMember(String memberId) {
 		return groupDao.deleteGroupMember(memberId);
+	}
+
+	@Override
+	public int deleteAllCalendar(String groupId) {
+		return groupDao.deleteAllCalendar(groupId);
+	}
+
+	@Override
+	public int insertCalendarData(Map<String, Object> p) {
+		return groupDao.insertCalendarData(p);
+	}
+
+	@Override
+	public List<GroupCalendar> selectCalendarData(String groupId) {
+		return groupDao.selectCalendarData(groupId);
 	}
 
 }

@@ -9,6 +9,7 @@ import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 
 public interface GroupDao {
 	
@@ -32,7 +33,7 @@ public interface GroupDao {
 
 	public int insertEnrollGroupForm(Map<String, Object> map);
 
-	public List<Map<String, Object>> getGroupApplyRequest(String groupId);
+	public List<Map<String, Object>> selectGroupApplyList(String groupId);
 
 	public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo);
 
@@ -40,7 +41,7 @@ public interface GroupDao {
 
 	public int insertGroupMember(Map<String, Object> map);
 
-	public int deleteGroupApplyList(Map<String, Object> map);
+	public int updateApplyHandled(Map<String, Object> map);
 
 	public int deleteGroupBoard(int no);
 
@@ -61,5 +62,11 @@ public interface GroupDao {
 	public int selectLikeCount(Map<String, Object> param);
 
 	public int deleteGroupMember(String memberId);
+
+	public int deleteAllCalendar(String groupId);
+
+	public int insertCalendarData(Map<String, Object> p);
+
+	public List<GroupCalendar> selectCalendarData(String groupId);
 
 }
