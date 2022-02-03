@@ -13,6 +13,7 @@ import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
@@ -66,8 +67,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getGroupApplyRequest(String groupId) {
-		return session.selectList("getGroupApplyRequest", groupId);
+	public List<Map<String, Object>> selectGroupApplyList(String groupId) {
+		return session.selectList("selectGroupApplyList", groupId);
 	}
 	  
     @Override
@@ -91,8 +92,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public int deleteGroupApplyList(Map<String, Object> map) {
-		return session.delete("deleteGroupApplyList", map);
+	public int updateApplyHandled(Map<String, Object> map) {
+		return session.update("updateApplyHandled", map);
 	}
 
 	@Override
@@ -143,6 +144,21 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public int deleteGroupMember(String memberId) {
 		return session.delete("deleteGroupMember", memberId);
+	}
+
+	@Override
+	public int deleteAllCalendar(String groupId) {
+		return session.delete("deleteAllCalendar",groupId);
+	}
+
+	@Override
+	public int insertCalendarData(Map<String, Object> p) {
+		return session.insert("insertCalendarData",p);
+	}
+
+	@Override
+	public List<GroupCalendar> selectCalendarData(String groupId) {
+		return session.selectList("selectCalendarData",groupId);
 	}
 
 
