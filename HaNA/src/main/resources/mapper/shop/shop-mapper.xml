@@ -67,13 +67,15 @@
     
     <update id="updateShopTable" parameterType="table">
     	update shop_table_setting
-    	set		
+    	set
+    		<if test="updatable.equals('Y')">		
     		table_name = #{tableName},
     		allow_visitor = #{allowVisitor},
     		allow_start = #{allowStart},
     		allow_end = #{allowEnd},
     		time_div = #{timeDiv},
     		time_max = #{timeMax},
+    		</if>
     		memo = #{memo},
     		enable = #{enable}
     	where
@@ -129,8 +131,10 @@
 		from
 			shop_table_reservation
 		where
-			to_date(reservation_date) = #{date}
+			reservation_table_id = #{tableId}			
+			<if test="date != null">
 			and
-			reservation_table_id = #{shopId}
+			to_date(reservation_date) = #{date}
+			</if>
 	</select>
 </mapper>

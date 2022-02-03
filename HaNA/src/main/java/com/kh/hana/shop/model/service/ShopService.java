@@ -25,5 +25,5 @@ public interface ShopService {
 	int insertReservation(Reservation reservation);
 
 	List<Reservation> selectTableReservation(Map<String, Object> infoMap);
-    
+
 }
