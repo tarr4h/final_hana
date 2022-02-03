@@ -70,4 +70,6 @@ public interface GroupService {
 	int insertCalendarData(Map<String, Object> p);
 
 	List<GroupCalendar> selectCalendarData(String groupId);
+
+	int deleteCalendarData(Map<String, Object> param);
 }
