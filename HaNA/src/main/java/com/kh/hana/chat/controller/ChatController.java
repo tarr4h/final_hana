@@ -37,7 +37,10 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
+import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.member.model.vo.memberBoard;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -258,7 +261,8 @@ public class ChatController {
     	List<GroupBoard> groupboard = chatService.selectListGroupBoard(memberId);
     	//log.info("groupboard 몇개 나왔는지= {}", groupboard.size());
     	
-    	//팔로잉 친구 최근게시글 3개
+    	//팔로잉한 친구 최근게시글 3개
+    	List<memberBoard> board = chatService.selectListMemberBoard(memberId);
     	
     	//추천친구 (같은 그룹에 있지만 팔로잉 안된 친구 or 나를 팔로잉한 친구 or mbti나 취향?이 같은 친구)
     	
@@ -266,6 +270,7 @@ public class ChatController {
     	
     	
     	model.addAttribute("groupboard", groupboard);
+    	model.addAttribute("board", board);
     }
     
     @GetMapping("/boardcommentList.do")
@@ -276,6 +281,27 @@ public class ChatController {
     	
     	return ResponseEntity.ok(list);
     };
+    
+//    @GetMapping("/memberboardcommentList.do")
+//    public ResponseEntity<?> memberboardcommentList(int boardNo){
+//    	log.info("boardcommentList boardNo = {}", boardNo);
+//		//List<BoardComment> list = chatService.selectMemberBoardCommentList(boardNo);
+//		log.info("list = {}",list);
+//    	
+//    	return ResponseEntity.ok(list);
+//    };
+    
+    @GetMapping("insertgroupBoardcomment.do")
+    public ResponseEntity<?> insertgroupBoardcomment(GroupBoardComment groupBoardComment){
+    	log.info("insertgroupBoardcomment groupBoardComment= {}", groupBoardComment);
+    	int result = groupService.insertGroupBoardComment(groupBoardComment);
+    	if(result > 0)
+    		log.info("main 그룹게시판 댓글작성 성공!");
+    	else
+    		log.info("main 그룹게시판 댓글작성 실패!");
+    		
+    	return ResponseEntity.ok(null);
+    }
     
     		
 }

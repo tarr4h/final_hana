@@ -11,7 +11,9 @@ import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.member.model.vo.memberBoard;
 
 @Repository
 public class ChatDaoImpl implements ChatDao {
@@ -148,6 +150,11 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public List<GroupBoard> selectListGroupBoard(String memberId) {
 		return session.selectList("chat.selectListGroupBoard", memberId);
+	}
+
+	@Override
+	public List<memberBoard> selectListMemberBoard(String memberId) {
+		return session.selectList("chat.selectListMemberBoard",memberId);
 	}
 
 

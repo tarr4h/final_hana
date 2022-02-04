@@ -11,7 +11,9 @@ import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.member.model.vo.memberBoard;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -147,6 +149,11 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public List<GroupBoard> selectListGroupBoard(String memberId) {
 		return chatDao.selectListGroupBoard(memberId);
+	}
+
+	@Override
+	public List<memberBoard> selectListMemberBoard(String memberId) {
+		return chatDao.selectListMemberBoard(memberId);
 	}
 
 

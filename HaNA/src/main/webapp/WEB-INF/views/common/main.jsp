@@ -9,13 +9,14 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="title"/>
 </jsp:include>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main.css" />
 <sec:authentication property="principal" var="loginMember" />
 <style id="mainCss"></style>
 <script>
+let today = Date.now()-(9 * 60 * 60 * 1000);
 //댓글리스트 가져오기
 const boardcommentList=(boardNo)=>{
 	console.log("boardNo = ", boardNo);
@@ -155,39 +156,20 @@ const slideMargin = 0; //슬라이드간의 margin 값
     </td>
     </tr>
     <tr>
-    <td>
-            <div class="comment-section">
-              <ul class="comments">
-                <li>
-                  <span><span class="point-span userID">postmalone</span>내가 입으면 더 잘어울릴 것 같아</span>
-<%--                   <img class="comment-heart" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="하트"> --%>
-                </li>
-              </ul>
-            </div>    
-            <div class="comment-section">
-              <ul class="comments">
-                <li>
-                  <span><span class="point-span userID">postmalone</span>내가 입으면 더 잘어울릴 것 같아</span>
-<%--                   <img class="comment-heart" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="하트"> --%>
-                </li>
-              </ul>
-            </div>                
-            <div class="comment-section">
-              <ul class="comments">
-                <li>
-                  <span><span class="point-span userID">postmalone</span>내가 입으면 더 잘어울릴 것 같아</span>
-<%--                   <img class="comment-heart" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="하트"> --%>
-                </li>
-              </ul>
-            </div>            
+    <td class="commentTd${vss.index }">
+				<div class="comment-section">
+			         <ul class="comments${vss.index }">
+		              </ul>
+		            </div>
+                          
     </td>
     </tr> 
     <tr>
     <td>
     		<div class="hl"></div>
           <div class="comment">
-            <input id="input-comment" class="input-comment" type="text" placeholder="댓글 달기..." >
-            <button type="submit" class="submit-comment" disabled>게시</button>
+            <input id="input-comment${vss.index }" class="input-comment" type="text" placeholder="댓글 달기..." >
+            <button type="button" class="submit-comment" onclick="commetWrite${vss.index}();">게시</button>
           </div>
     </td>
     </tr>  
@@ -237,15 +219,254 @@ $(`.next${vss.index }`).on('click', function () {
 		},
 		method: "GET",
 		success(resp){
-
+			
 			console.log("${vss.index } =",resp);
+			let commentList =``;
+				$(resp).each((i, comment) => {
+					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
+					const date = moment(regDate).format("YYYY년 MM월 DD일");
+					commentList += `<li>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}</span>
+		                </li>
+		                <li>
+			              <div class="time-log">
+			                <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}">\${date}</span>
+			              </div>
+		                </li>  `;
+					
+				});
+				$(".commentTd${vss.index} .comments${vss.index }").html(commentList);
+
 		},
 		error:console.log
 	});
+	
+//forEach에서 일반 댓글쓰기
+const commetWrite${vss.index}=()=>{
+	console.log("vvsindex = ", ${vss.index});
+	let msg = $("input#input-comment${vss.index}").val();
+	if(msg == ''){
+		alert("메세지를 입력하세요");
+		return;		
+	}
+		
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/insertgroupBoardcomment.do`,
+		method:"GET",
+		data:{
+			writer : memberId,
+			boardNo : ${groupboard.no},
+			content : msg,
+			commentLevel : 1,
+			commentRef : 0,
+		},
+		success(resp){
+			console.log('댓글작성');
+		},
+		error:console.log
+	});
+	console.log("msg = ",msg);
+	const date = moment(today).format("YYYY년 MM월 DD일");
+	let commentList =`<li>
+        <span><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
+        </li>
+        <li>
+          <div class="time-log">
+            <span>\${date}</span>
+          </div>
+        </li>  `;
+	$(".commentTd${vss.index} .comments${vss.index }").append(commentList);
+	$("input#input-comment${vss.index}").val('');
+};
 </script>
 
         </c:forEach>
         </c:if>
+        
+        
+        <!-- 맴버게시판@@@@@@@@@@@@@@@@@@ -->
+	    <c:if test="${not empty board}">
+        <c:forEach items="${board}" var="board" varStatus="vss">
+    <article>
+    <table>
+    <tr>
+    <td>
+              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${board.writerProfile}" alt="writerProfile">
+              <span class="userID main-id point-span">${board.writer}</span>
+    </td>
+    </tr>
+    <tr>
+    <td>     	
+           <div class="main-image" id="slideShow0${vss.index }">
+          	<ul class="slides0${vss.index }">
+				<c:forEach items="${board.picture}" var="images" varStatus="vs">
+	          	<li><img width="610px" height="400px" src="${pageContext.request.contextPath }/resources/upload/member/board/${images}"></li>
+	          	</c:forEach>
+          	</ul>
+            <p class="controller0${vss.index }">
+	            <span class="prev0${vss.index }">&lang;</span> 
+	            <span class="next0${vss.index }">&rang;</span>
+            </p>
+          </div>
+    </td>
+    </tr>
+    <tr>
+    <td>
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart.svg" alt="하트"/>
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
+    </td>
+    </tr>
+    <tr>
+    <td>
+              <span>asdfsadfasf님 외 123123명이 좋아합니다.</span>
+    </td>
+    </tr>
+    <tr>
+    <td width="550px" style="word-break:break-all">
+              <span class="main-header-comment">
+              ${board.writer} ${board.content}
+              </span>
+    </td>
+    </tr>
+<%--     <tr>
+    <td>
+              <span class="at-tag">
+				<c:forEach items="${groupboard.tagMembers}" var="tagmembers" varStatus="vs">
+              	@${tagmembers}
+              	</c:forEach>
+              </span>
+    </td>
+    </tr> --%>
+    <tr>
+    <td class="commentTd0${vss.index }">
+				<div class="comment-section">
+			         <ul class="comments0${vss.index }">
+		              </ul>
+		            </div>
+                          
+    </td>
+    </tr> 
+    <tr>
+    <td>
+    		<div class="hl"></div>
+          <div class="comment">
+            <input id="input-comment0${vss.index }" class="input-comment" type="text" placeholder="댓글 달기..." >
+            <button type="button" class="submit-comment" onclick="commetWrite0${vss.index}();">게시</button>
+          </div>
+    </td>
+    </tr>  
+    </table>
+    </article>
+
+        <script>
+        <!-- mainCss에 append해주기 -->
+       forEachCss('0'+${vss.index });
+const slides0${vss.index } = document.querySelector('.slides0${vss.index }'); //전체 슬라이드 컨테이너 
+const slideImg0${vss.index } = document.querySelectorAll('.slides0${vss.index } li'); //모든 슬라이드들
+let currentIdx0${vss.index } = 0; //현재 슬라이드 index 
+const slideindex0${vss.index } = slideImg0${vss.index }.length; // 슬라이드 개수 
+
+
+//전체 슬라이드 컨테이너 넓이 설정  (slideWidth + slideMargin) * slideindex + 'px';
+console.log("sdfsdf",'0'+${vss.index });
+console.log("slides0${vss.index } = ",slides0${vss.index });
+console.log("slideImg0${vss.index } = ",slideImg0${vss.index });
+console.log("slideindex0${vss.index } = ",slideindex0${vss.index });
+slides0${vss.index }.style.width = (slideWidth + slideMargin) * slideindex0${vss.index } + 'px';
+
+
+function moveSlide0${vss.index }(num0${vss.index }) { 
+	slides0${vss.index }.style.left = -num0${vss.index } * 715 + 'px'; 
+	currentIdx0${vss.index } = num0${vss.index }; 
+	} 
+
+
+$(`.prev0${vss.index }`).on('click', function () { 
+	/*첫 번째 슬라이드로 표시 됐을때는 이전 버튼 눌러도 아무런 반응 없게 하기 위해 currentIdx !==0일때만 moveSlide 함수 불러옴 */ 
+	if (currentIdx0${vss.index } !== 0) moveSlide0${vss.index }(currentIdx0${vss.index } - 1); 
+
+	}); 
+$(`.next0${vss.index }`).on('click', function () { 
+		/* 마지막 슬라이드로 표시 됐을때는 다음 버튼 눌러도 아무런 반응 없게 하기 위해 currentIdx !==slideindex - 1 일때만 moveSlide 함수 불러옴 */ 
+		if (currentIdx0${vss.index } !== slideindex0${vss.index } - 1) { 
+			moveSlide0${vss.index }(currentIdx0${vss.index } + 1); 
+
+			} 
+		});
+
+//forEach문에서 댓글 불러오기
+ 	$.ajax({
+		url : `${pageContext.request.contextPath}/chat/memberboardcommentList.do`,
+		data : {
+			boardNo : ${board.no}
+		},
+		method: "GET",
+		success(resp){
+			
+			console.log("0${vss.index } =",resp);
+			let commentList =``;
+				$(resp).each((i, comment) => {
+					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
+					const date = moment(regDate).format("YYYY년 MM월 DD일");
+					commentList += `<li>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}</span>
+		                </li>
+		                <li>
+			              <div class="time-log">
+			                <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}">\${date}</span>
+			              </div>
+		                </li>  `;
+					
+				});
+				$(".commentTd0${vss.index} .comments0${vss.index }").html(commentList);
+
+		},
+		error:console.log
+	});
+	
+//forEach에서 일반 댓글쓰기
+const commetWrite0${vss.index}=()=>{
+	console.log("0vvsindex = ", '0'+${vss.index});
+	let msg = $("input#input-comment0${vss.index}").val();
+	if(msg == ''){
+		alert("메세지를 입력하세요");
+		return;		
+	}
+		
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/insertgroupBoardcomment.do`,
+		method:"GET",
+		data:{
+			writer : memberId,
+			boardNo : ${board.no},
+			content : msg,
+			commentLevel : 1,
+			commentRef : 0,
+		},
+		success(resp){
+			console.log('댓글작성');
+		},
+		error:console.log
+	});
+	console.log("msg = ",msg);
+	const date = moment(today).format("YYYY년 MM월 DD일");
+	let commentList =`<li>
+        <span><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
+        </li>
+        <li>
+          <div class="time-log">
+            <span>\${date}</span>
+          </div>
+        </li>  `;
+	$(".commentTd0${vss.index} .comments0${vss.index }").append(commentList);
+	$("input#input-comment0${vss.index}").val('');
+};
+</script>
+        </c:forEach>
+        </c:if>
+
+
         
     </div>
     <!-- 여기까지 feed div -->
@@ -304,4 +525,10 @@ $(`.next${vss.index }`).on('click', function () {
 
       </div>
     </main>
+	
+
+
+    <style>
+    .commentLevel2{margin-left: 50px}
+    </style>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

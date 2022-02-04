@@ -240,7 +240,23 @@
 				on g.writer = m.id
 			where
 				g.group_id in ( select group_id from group_member_list where member_id = #{memberId})
-	) where rnum <![CDATA[<=]]> 2
+	) where rnum <![CDATA[<=]]> 3
+	</select>
+	
+	<select id="selectListMemberBoard" resultType="memberBoard">
+	 select
+	 *
+	 from(
+	 		select
+	         row_number() over(order by b.reg_date desc) rnum,
+				b.*,
+				m.picture writer_profile
+			from
+				board b join member m
+				on b.writer = m.id
+			where 
+				b.writer in (select following_id from follower where member_id = #{memberId})
+	) where rnum <![CDATA[<=]]> 3
 	</select>
 	
 

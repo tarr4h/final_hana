@@ -23,7 +23,10 @@ public class Board implements Serializable{
 	private String writer;
 	private String content;
 	private Date regDate;
-	private int boardType;
+	private String boardType;
 	private String[] picture;
+	
+	
+	
 
 }
