@@ -166,6 +166,11 @@ public class GroupDaoImpl implements GroupDao {
 		return session.delete("deleteCalendarData",param);
 	}
 
+	@Override
+	public List<GroupBoardEntity> selectGroupBoardListByLocation(GroupBoard groupBoard) {
+		return session.selectList("selectGroupBoardListByLocation",groupBoard);
+	}
+
 
 
 }

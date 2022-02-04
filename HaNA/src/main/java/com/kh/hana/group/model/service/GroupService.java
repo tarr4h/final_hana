@@ -72,4 +72,6 @@ public interface GroupService {
 	List<GroupCalendar> selectCalendarData(String groupId);
 
 	int deleteCalendarData(Map<String, Object> param);
+
+	List<GroupBoardEntity> selectGroupBoardListByLocation(GroupBoard groupBoard);
 }

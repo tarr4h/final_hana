@@ -71,4 +71,6 @@ public interface GroupDao {
 
 	public int deleteCalendarData(Map<String, Object> param);
 
+	public List<GroupBoardEntity> selectGroupBoardListByLocation(GroupBoard groupBoard);
+
 }

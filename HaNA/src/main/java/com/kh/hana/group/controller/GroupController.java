@@ -502,7 +502,15 @@ public class GroupController {
 		return null;
 	}
 	
-	
+	@GetMapping("/searchLocation")
+	public String searchLocation (GroupBoard groupBoard, Model model) {
+		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardListByLocation(groupBoard);
+		log.info("groupBoardList = {}", groupBoardList);
+		model.addAttribute("groupBoardList", groupBoardList);
+		GroupBoard locaInfo = groupBoard;
+		model.addAttribute("locaInfo",locaInfo);
+		return "/group/locationBoardPage";
+	}
 	
 }
 

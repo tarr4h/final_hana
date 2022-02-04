@@ -186,4 +186,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.deleteCalendarData(param);
 	}
 
+	@Override
+	public List<GroupBoardEntity> selectGroupBoardListByLocation(GroupBoard groupBoard) {
+		return groupDao.selectGroupBoardListByLocation(groupBoard);
+	}
+
 }
