@@ -1,157 +1,184 @@
+<%@page import="com.kh.hana.member.model.vo.Member"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.kh.hana.group.model.vo.Group, java.util.*"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<fmt:requestEncoding value="utf-8" />
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="프로필수정" name="title" />
-</jsp:include>
-<section>
-<script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
-<sec:authentication property="principal" var="loginMember" />
+<script>
+// 리더만 수정할 수 있는 버튼 (만 있음)
+	function goGroupSetting() {
+		location.href = "${pageContext.request.contextPath}/group/groupSetting";
+	}
+//ajax POST 요청 csrf
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+	    if (options['type'].toLowerCase() === "post" || options['type'].toLowerCase() === "delete" || options['type'].toLowerCase() === "put") {
+	        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+	    }
+	  });
 
+</script>
+<sec:authentication property="principal" var="loginMember"/>
 <%
-	String[] hashtag = request.getParameterValues("hashtag");
-	List<String> hashtagList = hashtag != null ? Arrays.asList(hashtag) : null;
-	pageContext.setAttribute("hashtagList", hashtagList);
-%> 
+	List<Map<String,String>> memberList = (List<Map<String,String>>)request.getAttribute("groupMembers");
+	List<String> memberIdList = new ArrayList<>();
+	for(Map<String,String> m : memberList){
+		memberIdList.add(m.get("memberId"));
+	};
+	pageContext.setAttribute("memberIdList",memberIdList);
+%>
 
-<br />
-<%--     <div id="enroll-container" class="mx-auto text-center">
-        <form:form name="groupUpdateFrm" 
-            action="${pageContext.request.contextPath}/group/groupUpdate?${_csrf.parameterName}=${_csrf.token}" 
-            enctype="multipart/form-data" 
-            method="POST">
-            <table class="mx-auto">
-             <input type="hidden" name="id" value="${group.groupId}" />
-                 <tr>
-                 	<th>현재 프로필</th>
-                 	<td><img style="width: 100px; height: 100px; border-radius: 50%;" src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}" alt="" /></td>
-                 </tr>
-                <tr>
-                    <th>변경할 프로필</th>
-                    <td>
-                        <input type="file" class="form-control" name="upFile" id="" value="파일 선택" />
-                        <input type="hidden" name="picture" value="${group.image}" />
-                    </td>
-                </tr>
-                 <tr>
-                    <th>소모임 아이디</th>
-                    <td>
-                        <input type="text" class="form-control" name="name" id="name" value="${group.groupId}" required readonly style="background-color: rgb(235, 235, 235);">
-                    </td>
-                </tr>
-                <tr>
-                    <th>소모임명</th>
-                    <td>
-                        <input type="text" class="form-control" name="name" id="name" value="${group.groupName}" required >
-                    </td>
-                </tr>
-                <tr>
-                    <th>해시태그</th>
-                    <td>
-                       <input type="checkbox" name="hashtag" id="hashtag-ex" value="운동" onclick="hash('운동');" ${group.hashtag[0].contains('운동') ? 'checked' : '' } ${group.hashtag[1].contains('운동') ? 'checked' : '' } ${group.hashtag[2].contains('운동') ? 'checked' : '' }/>
-                        <label for="hashtag-ex">운동</label>
-                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서" onclick="hash('독서');" ${group.hashtag[0].contains('독서') ? 'checked' : '' } ${group.hashtag[1].contains('독서') ? 'checked' : '' } ${group.hashtag[2].contains('독서') ? 'checked' : '' }/>
-                        <label for="hashtag-re">독서</label>
-                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산" onclick="hash('등산');" ${group.hashtag[0].contains('등산') ? 'checked' : '' } ${group.hashtag[1].contains('등산') ? 'checked' : '' } ${group.hashtag[2].contains('등산') ? 'checked' : '' }/>
-                        <label for="hashtag-mu">등산</label>
-                    </td>
+<!-- 프로필 -->
+<div class="container mt-2">
+	<div class="row" id="myInfo">
+		<!-- 프로필이미지 영역 -->
+		<div
+			class="col-sm-6 d-flex justify-content-center align-items-center flex-column"
+			id="profileImg">
+			<div class="profileImg d-flex">
+				<!-- 이미지를 넣으세요 -->
+				<c:if test="${empty group.image}">
+					<img
+						src="${pageContext.request.contextPath}/resources/images/user.png"
+						alt="" />
+				</c:if>
+				<c:if test="${not empty group.image}">
+					<img
+						src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
+						alt="" />
+				</c:if>
+			</div>
+		<c:if test="${loginMember.id.equals(group.leaderId) }">
+			<div class="profileBtn">
+				<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
+				<form:form action="${pageContext.request.contextPath}/group/profileImage?${_csrf.parameterName}=${_csrf.token}" id="upFileForm" accept="image/*" method="post" enctype="multipart/form-data">
+					<input type="hidden" name=groupId value="${group.groupId}"/>
+					<input type="hidden" name=image value="${group.image}"/>
+					<input type="file" name="upFile" id="file" style="display:none" onchange="upFile(value)"/>
+				<div class="changeImage" onclick="onclick=document.all.file.click()" style="cursor: pointer;">
+				<img 
+					src="${pageContext.request.contextPath}/resources/images/icons/plusIcon.png"
+					alt=""/>
+				<button type="submit" class="btn btn-outline-dark" style="border: white;"></button>
+				</div>
+				</form:form>
+			</div>
+		</c:if>
+				
+		</div>
+<!-- 		<div class="col-sm-2"></div>
+ -->		<!-- 프로필 세부정보 영역 -->
+		<div class="col-sm-6" id="profileStatus">
+		<div class="profileTableAreaContainer">
+		<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
+			<button type="button" class="btn btn-outline-dark" id="settingBtn"
+				onclick="goGroupSetting();">
+				<img
+					src="${pageContext.request.contextPath }/resources/images/icons/setting.png"
+					alt="" />
+			</button>
+			<button type="button" class="btn btn-outline-dark" id="settingBtn"
+				onclick="">
+				<img
+					src="${pageContext.request.contextPath }/resources/images/icons/man.png"
+					alt="" />
+			</button>
 
-            </table>
-            &nbsp; <input type="submit" class="btn btn-dark">
-        </form:form>
-    </div> --%>
+			<br />
 
-<div class="container rounded bg-white mt-5 mb-5">
-	<form:form name="groupUpdateFrm" action="${pageContext.request.contextPath}/group/groupUpdate?${_csrf.parameterName}=${_csrf.token}" method="POST" enctype="multipart/form-data">
-	    <div class="row">
-	        <div class="col-md-6 border-right">
-	            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-		            <img src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}" style="width: 180px; height: 180px; border-radius: 50%;"><br />
-		            <span class="font-weight-bold">소모임 ${group.groupName}의 프로필</span>
-		            <span class="text-black-50">${group.groupId}</span>
-		            <span></span>
-	            </div>
-	        </div>
-	        <div class="col-md-5 border-right">
-	            <div class="p-3 py-5">
-	                <div class="d-flex justify-content-between align-items-center mb-3">
-	                    <h5 class="text-right">Edit your profile</h5>
-	                </div>
-	                <div class="row mt-2">
-	                    <div class="col-md-7"><label class="labels">소모임 아이디</label><input type="text" class="form-control" placeholder="first name" name="groupId" value="${group.groupId}" required readonly></div>
-	                </div>
-	                <div class="row mt-3">
-	                    <div class="col-md-7"><label class="labels">소모임명</label><input type="text" class="form-control" placeholder="headline" name="groupName" value="${group.groupName}" required></div>
-	                </div>
-	                <div class="row mt-3">
-	                    <div class="col-md-12"><label class="labels">해시태그</label><br />
-	                    	<input type="checkbox" name="hashtag" id="hashtag-ex" value="운동" onclick="hash('운동');" ${group.hashtag[0].contains('운동') ? 'checked' : '' } ${group.hashtag[1].contains('운동') ? 'checked' : '' } ${group.hashtag[2].contains('운동') ? 'checked' : '' }/>
-	                        <label for="hashtag-ex">운동</label>
-	                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서" onclick="hash('독서');" ${group.hashtag[0].contains('독서') ? 'checked' : '' } ${group.hashtag[1].contains('독서') ? 'checked' : '' } ${group.hashtag[2].contains('독서') ? 'checked' : '' }/>
-	                        <label for="hashtag-re">독서</label>
-	                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산" onclick="hash('등산');" ${group.hashtag[0].contains('등산') ? 'checked' : '' } ${group.hashtag[1].contains('등산') ? 'checked' : '' } ${group.hashtag[2].contains('등산') ? 'checked' : '' }/>
-	                        <label for="hashtag-mu">등산</label>
-	                    </div>
-	                </div>
-	                <div class="row mt-3">
-	                    <div class="col-md-7"><label class="labels">프로필 사진</label><input type="file" class="form-control" placeholder="country" name="upFile" value="파일 선택">
-	                    <input type="hidden" name="image" value="${group.image}" />
-	                    </div>
-	                </div>
-	                <input type="hidden" name="leaderId" value="${group.leaderId}">
-	                <div class="mt-5 text-left"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
-	            </div>
-	        </div>
-	    </div>
-    </form:form>
+			<div class="profileTableArea">
+			    <div class="row">
+			        <div class="col-sm-8">
+			       		<table id="profileTable">
+							<tbody>
+								<tr>
+									<th class="tableKey">그룹명</th>
+									<td class="tableValue">${group.groupName}</td>
+								</tr>
+								<tr>
+									<th><span class="tableKey">그룹 아이디</span></th>
+									<td>${group.groupId}</td>
+								</tr>
+								<tr>
+									<th><span class="tableKey">리더</span></th>
+									<td>${group.leaderId}</td>
+								</tr>
+								<tr class="memberCountTr" onclick="$('#groupMemberList').modal('show');">
+									<th><span class="tableKey" style="color:#673ab7c9;">멤버</span></th>
+									<td>${group.memberCount}명</td>
+								</tr>
+							</tbody>
+						</table>
+			        </div>
+			        <div class="col-sm-4 buttonArea">
+			        	<c:if test="${!memberIdList.contains(loginMember.id)}">
+							<div>
+								<a
+								href="${pageContext.request.contextPath}/group/enrollGroupForm?groupId=${group.groupId}"
+								class="enroll-button">가입신청</a>
+							</div>
+						</c:if>
+<% 
+	Member loginMember = (Member)pageContext.getAttribute("loginMember");
+	if(memberIdList.contains(loginMember.getId())){
+		for(Map<String,String> m : memberList){
+			if(m.get("memberId").equals(loginMember.getId())){
+				if(m.get("memberLevelCode").equals("ld") || m.get("memberLevelCode").equals("mg")){	
+%>
+						<div style="margin-top:18%;">
+							<div>
+								<a href="#" class="enroll-button">회원관리</a>
+							</div>
+							<div style="margin-top:10px;">
+								<a href="javascript:void(0);" onclick="enrollList();" class="enroll-button">가입승인</a>
+							</div>
+						</div>
+<% }}}};%>
+			        </div>
+			    </div>
+			</div>
+		</div>	
+		</div>
+	</div>
+</div>
+<div>
+<div class="icon">
+	<a href="${pageContext.request.contextPath}/group/groupPage/${group.groupId}"><i class="fas fa-pencil-alt"></i></a>
+	<a href="${pageContext.request.contextPath}/group/groupCalendar/${group.groupId}"><i class="fas fa-calendar-alt"></i></a>
+	<a href="#"><i class="far fa-comments"></i></a>
+</div>
 </div>
 
-<script>
-function hash(tag){
-	console.log(tag);
-	if(tag == '운동'){
-		$("#hashtag-ex").prop('checked');	
-	}
-	if(tag == '독서'){
-		$("#hashtag-re").prop('checked');	
-	}
-	if(tag == '등산'){
-		$("#hashtag-mu").prop('checked');	
-	}
-}
-</script> 
-
-
-<style>
-.form-control:focus {
-    box-shadow: none;
-    border-color: #BA68C8
-}
-
-.back:hover {
-    color: #682773;
-    cursor: pointer
-}
-
-.labels {
-    font-size: 11px
-}
-
-.add-experience:hover {
-    background: #BA68C8;
-    color: #fff;
-    cursor: pointer;
-    border: solid 1px #BA68C8
-}
-</style>
-
-<a href="/" class="badge badge-dark">Dark</a>
-</section>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+<!-- 회원목록보기 modal -->
+	<div class="modal fade" id="groupMemberList" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="groupMemberListTableContainer">
+						<table id="groupMemberListTable">
+							<c:forEach items="${groupMembers}" var="member">
+								<tr>
+				 					<td>
+				 						<a href="javascript:void(0);" onclick="goMemberView('${member.memberId}');" >
+				 						</a> 
+				 						<img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/${member.profile}" alt="" />
+				 					</td>
+				 					<th>
+				 						<a href="javascript:void(0);" onclick="goMemberView('${member.memberId}');" style="color:black; text-decoration:none;">
+				 							&nbsp;&nbsp;&nbsp;&nbsp;${member.memberId}
+				 						</a>
+				 					</th> 
+				 				</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

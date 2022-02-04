@@ -10,6 +10,7 @@ import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupCalendar;
 
 
 public interface GroupService {
@@ -34,7 +35,7 @@ public interface GroupService {
 
 	int insertEnrollGroupForm(Map<String, Object> map);
 
-	List<Map<String, Object>> getGroupApplyRequest(String groupId);
+	List<Map<String, Object>> selectGroupApplyList(String groupId);
 
 	List<GroupBoardComment> selectGroupBoardCommentList(int boardNo);
 
@@ -42,7 +43,7 @@ public interface GroupService {
 	
 	int insertGroupMember(Map<String, Object> map);
 
-	int deleteGroupApplyList(Map<String, Object> map);
+	int updateApplyHandled(Map<String, Object> map);
 
 	int deleteGroupBoard(int no);
 
@@ -66,5 +67,13 @@ public interface GroupService {
 
 	int updateGroupGrade(Map<String, Object> map);
 
-	int updateGroup(Group group, Group oldGroup);
+	int updateGroup(Group group);
+
+	int deleteAllCalendar(String groupId);
+
+	int insertCalendarData(Map<String, Object> p);
+
+	List<GroupCalendar> selectCalendarData(String groupId);
+
+	int profileImage(Group group);
 }
