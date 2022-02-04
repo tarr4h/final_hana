@@ -201,11 +201,10 @@ function scrollPage(){
 						selectDataArr : selectDataArr
 				},
 				success(res){	
-					 list = res;
-					console.log(list);
+					var  list = res;
 					const max = list.length;
 					// list.TAG_NAME 값 비교가 안되서 어차피 tag_name은 있거나 없거나 이니까 변수로 옮겨서 null 체크 
-				 	var  tagName ="";	
+				 	var  tagName ="";				 	
 					for(var i =0; i<list.length; i++){
 						 tagName = list[i].TAG_NAME;
 					}
@@ -215,7 +214,7 @@ function scrollPage(){
 					if(startNum == 0 ){
 							  for(var i=0; i<endNum; i++){
 								var htmlOut='';
-								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/k333\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
@@ -225,11 +224,11 @@ function scrollPage(){
 								if(i == max -1){
 									return;
 							}
-							}  
+						}  
 					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
 									var htmlOut='';
-									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/k333\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
@@ -239,6 +238,7 @@ function scrollPage(){
 									if(i == max -1){
 										return;
 								}
+								
 						 	}
 						}
 				}else if (tagName != null){ // 해시태그 있을때	
@@ -246,7 +246,7 @@ function scrollPage(){
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<list.length; i++){
 								var htmlOut='';
-								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/k333\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
@@ -262,7 +262,7 @@ function scrollPage(){
 					}else{ 
 						 	for(var i=startNum; i<list.length; i++){  
 									var htmlOut='';
-									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
+									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/k333\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
@@ -383,6 +383,15 @@ function clickList(){
 	$("#hashTagResult").empty();
 
 }
+
+// 매장 클릭시 해당 계정 페이지로 
+//  $(document).on("click","#divCheck",function(){ 
+	//	console.log("클릭 이벤트")
+	
+	//	location.href='http://localhost:9090/hana/member/shopView/k333'
+
+//});  
+
 
 </script>
 
