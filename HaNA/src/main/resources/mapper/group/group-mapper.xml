@@ -257,8 +257,14 @@
 		        on m.id = gml.member_id
 		where
 		    group_id = #{groupId}
-		order by
-            member_level_code
+		order by 
+            (
+            CASE member_level_code
+            WHEN 'ld' THEN 0
+            WHEN 'mg' THEN 1
+            ELSE 2
+            END
+                ) 
 	</select>
 
 	<select id="selectOneLikeLog" resultMap="likeLog">
@@ -313,17 +319,42 @@
 		member_id = #{memberId}
 	</delete>
 	
+	<update id="updateGroupGrade">
+	update 
+	    group_member_list 
+	set 
+	    member_level_code = #{memberLevelCode} 
+	where 
+	    member_id = #{memberId} 
+	    and 
+	    group_id = #{groupId}
+	</update>
+	
+	<update id="updateGroup" parameterType="group">
+	update 
+		group_
+	set
+		group_id = #{groupId},
+		group_name = #{groupName},
+		hashtag = #{hashtag},
+		image = #{image},
+		leader_id = #{leaderId}
+	where
+		group_id = #{groupId}
+	</update>
+
 	<delete id="deleteAllCalendar">
 	delete from
 		group_calendar
 	where 
-		title != 'asdf'
+		group_id=#{groupId}
 	</delete>
+	
 	<insert id="insertCalendarData">
 	insert into
 		group_calendar
 	values(
-		#{title},#{allday},#{start},#{end}
+		#{groupId},#{title},#{allDay},#{start},#{end}
 	)
 	</insert>
 	<select id="selectCalendarData" resultType="groupCalendar">
@@ -331,7 +362,32 @@
 		*
 	from
 		group_calendar
+	where
+		group_id = #{groupId}
 	</select>
 	
+	<insert id="profileImage">
+	update 
+		group_
+	set
+		image = #{image}
+	where
+		group_id = #{groupId}
+	</insert>
+
+	 <delete id="deleteCalendarData">
+	 delete from
+	 	group_calendar
+	 where
+	 	group_id = #{groupId}
+	 	and
+	 	title=#{title}
+	 	and
+	 	all_day=#{allDay}
+	 	and
+	 	start_=#{start}
+	 	and
+	 	end_=#{end}
+	 </delete>
 </mapper>
 

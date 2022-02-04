@@ -63,10 +63,18 @@ public interface GroupDao {
 
 	public int deleteGroupMember(String memberId);
 
+	public int updateGroupGrade(Map<String, Object> map);
+
+	public int updateGroup(Group group);
+
 	public int deleteAllCalendar(String groupId);
 
 	public int insertCalendarData(Map<String, Object> p);
 
 	public List<GroupCalendar> selectCalendarData(String groupId);
+
+	public int profileImage(Group group);
+
+	public int deleteCalendarData(Map<String, Object> param);
 
 }

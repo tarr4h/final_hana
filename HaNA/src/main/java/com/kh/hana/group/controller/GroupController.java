@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,6 +37,7 @@ import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupCalendar;
 import com.kh.hana.member.model.vo.Member;
 
@@ -393,12 +395,6 @@ public class GroupController {
     	model.addAttribute("groupMemberList", groupMemberList);
     	return "/group/groupMemberList";
     }
-    	
-    @GetMapping("/groupSetting/{groupId}")
-    public void groupSetting(@PathVariable String groupId, Model model){
-    	Group groupInfo = groupService.selectGroupInfo(groupId);
-    	log.info("groupInfo ={}", groupInfo);
-    }
     
 	@PostMapping("/like")
 	public ResponseEntity<Map<String,Object>> like(@RequestParam int no, @AuthenticationPrincipal Member member){
@@ -441,20 +437,22 @@ public class GroupController {
 		return "/group/groupCalendar";
 	}
 	
-	@PostMapping("/saveCalendarData")
-	public String saveCalendarData(@RequestBody Map<String,Object> param[]) {
+	@PostMapping("/saveCalendarData/{groupId}")
+	public ResponseEntity<Map<String,Object>> saveCalendarData(@RequestBody Map<String,Object> param[], @PathVariable String groupId) {
+		Map<String,Object> map = new HashMap<>();
+		
 		// 1. 기존 데이터 초기화
-		String groupId = "ss";
+		log.info("groupId = {}",groupId);
 		int result = groupService.deleteAllCalendar(groupId);
 		// param 배열이 비어있지 않으면
 		if(param.length!=0) {
 			log.info("param = {}",param);
 			for(Map<String,Object> p : param) {
-				System.out.println(p);
+				p.put("groupId",groupId);
 				result = groupService.insertCalendarData(p);
 			}
 		}
-		return "redirect:/group/groupCalendar/"+groupId;			
+		return ResponseEntity.ok(map);
 	}
 	
 	@GetMapping("/getCalendarData/{groupId}")
@@ -466,10 +464,30 @@ public class GroupController {
 		return ResponseEntity.ok(events);
 	}
 
+	@PostMapping("/deleteCalendarData/{groupId}")
+	public ResponseEntity<Map<String,Object>> deleteCalendarData(@RequestBody Map<String,Object> param, @PathVariable String groupId){
+		Map<String,Object> map = new HashMap<>();
+		int result = 0;
+		try {
+			param.put("groupId", groupId);
+			log.info("param = {}",param);
+			result = groupService.deleteCalendarData(param);
+			map.put("msg", "일정 삭제 성공");
+			map.put("result", result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			
+			map.put("msg", "일정 삭제 실패");
+			map.put("result", result);
+		}
+		return ResponseEntity.ok(map);
+	}
+	
+	
 	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
 	public String deleteGroupMember (
 			@PathVariable String memberId,
-			@RequestParam String groupId) {
+			@PathVariable String groupId) {
 		
 		log.info("memberId ={}", memberId);
 		log.info("groupId ={}", groupId);
@@ -477,11 +495,103 @@ public class GroupController {
 		String msg = result > 0 ? "회원 탈퇴 성공" : "회원 탈퇴 실패";
 		log.info("msg ={}", msg);
 		
-		return null;
+		return "redirect:/group/groupMemberList/"+groupId;
 	}
 	
+	// 등급 수정
+		@PostMapping("/updateGroupGrade")
+		public String updateGroupGrade (
+					@RequestParam(name="groupId") String groupId, 
+					@RequestParam(name="memberId") String memberId, 
+					@RequestParam(name="memberLevelCode") String memberLevelCode,
+					@RequestParam Map<String, Object> map,
+					@AuthenticationPrincipal GroupMemberList groupMemberList
+					) {
+			
+			log.info("groupId = {}", groupId);
+			log.info("memberId = {}", memberId);
+			log.info("memberLevelCode = {}", memberLevelCode);
+			log.info("map = {}", map);
+			
+			int result = groupService.updateGroupGrade(map);
+			log.info("map ={}", map);
+			String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
+			log.info("msg ={}", msg);
+			
+			return "redirect:/group/groupMemberList/"+groupId;
+		}
+		
+		
+	@GetMapping("/groupSetting")
+	public void groupSetting(@RequestParam String groupId, Model model) {
+		log.info("groupSetting groupId = {}", groupId);
+		Group group = groupService.selectGroupInfo(groupId);
+    	log.info("groupInfo ={}", group);
+    	
+    	model.addAttribute(group);
+	}
 	
+	// 프로필 수정
+	@PostMapping("/groupUpdate")
+	public String groupUpdate(Group group, @RequestParam MultipartFile upFile,
+								RedirectAttributes redirectAttr) {
+		String newProfile = upFile.getOriginalFilename();
+		
+		if(!newProfile.equals("")) {
+			String saveDirectory = application.getRealPath("/resources/upload/group/profile");
+			File file = new File(saveDirectory, group.getImage());
+			boolean bool = file.delete();
+			log.info("파일삭제여부 = {}", bool);
+			
+			String renamdeFilename = HanaUtils.rename(newProfile);
+			File regFile = new File(saveDirectory, renamdeFilename);
+			
+			try {
+				upFile.transferTo(regFile);
+			} catch (IllegalStateException | IOException e) {
+				log.error(e.getMessage(), e);
+			}
+			group.setImage(renamdeFilename);
+		}
+		
+		int result = groupService.updateGroup(group);
+		
+		String msg = result > 0 ? "프로필 편집 성공" : "프로필 편집 실패";
+		
+		log.info("msg ={}", msg);
+		
+		return "redirect:/group/groupSetting?groupId="+group.getGroupId();
+	}
 	
+	// 프로필 이미지만 수정 (+버튼)
+	@PostMapping("/profileImage")
+	public String profileImage(Group group, @RequestParam MultipartFile upFile) {
+		String newProfile = upFile.getOriginalFilename();
+		
+		if(!newProfile.equals("")) {
+			String saveDirectory = application.getRealPath("/resources/upload/group/profile");
+			File file = new File(saveDirectory, group.getImage());
+			boolean bool = file.delete();
+			log.info("파일삭제여부 = {}", bool);
+			
+			String renamdeFilename = HanaUtils.rename(newProfile);
+			File regFile = new File(saveDirectory, renamdeFilename);
+			
+			try {
+				upFile.transferTo(regFile);
+			} catch (IllegalStateException | IOException e) {
+				log.error(e.getMessage(), e);
+			}
+			group.setImage(renamdeFilename);
+		}
+		
+		int result = groupService.profileImage(group);
+		String msg  = result > 0 ? "프로필 사진 업로드 성공" : "프로필 사진 업로드 실패";
+		log.info("msg ={}", msg);
+		log.info("groupId={}", group.getGroupId());
+		return "redirect:/group/groupPage/"+group.getGroupId();
+	}
+
 }
 
 

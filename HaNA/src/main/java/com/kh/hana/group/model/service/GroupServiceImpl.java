@@ -20,8 +20,8 @@ import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardEntity;
 import com.kh.hana.group.model.vo.GroupCalendar;
 
-@Slf4j
 @Service
+@Slf4j
 @Transactional(rollbackFor=Exception.class) // 익셉션 발생시 롤백
 public class GroupServiceImpl implements GroupService{
 
@@ -167,6 +167,16 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
+	public int updateGroupGrade(Map<String, Object> map) {
+		return groupDao.updateGroupGrade(map);
+	}
+
+	@Override
+	public int updateGroup(Group group) {
+		return groupDao.updateGroup(group);
+	}
+
+	
 	public int deleteAllCalendar(String groupId) {
 		return groupDao.deleteAllCalendar(groupId);
 	}
@@ -179,6 +189,15 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public List<GroupCalendar> selectCalendarData(String groupId) {
 		return groupDao.selectCalendarData(groupId);
+	}
+
+	@Override
+	public int profileImage(Group group) {
+		return groupDao.profileImage(group);
+	}
+
+	public int deleteCalendarData(Map<String, Object> param) {
+		return groupDao.deleteCalendarData(param);
 	}
 
 }
