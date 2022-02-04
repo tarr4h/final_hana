@@ -69,4 +69,6 @@ public interface GroupDao {
 
 	public List<GroupCalendar> selectCalendarData(String groupId);
 
+	public int deleteCalendarData(Map<String, Object> param);
+
 }
