@@ -161,6 +161,16 @@ public class MemberServiceImpl implements MemberService {
 	public int insertLikeLog(Map<String, Object> param) {
 		return memberDao.insertLikeLog(param);
 	}
+
+	@Override
+	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
+		return memberDao.selectOneLikeLog(param);
+	}
+
+	@Override
+	public int deleteLikeLog(Map<String, Object> param) {
+		return memberDao.deleteLikeLog(param);
+	}
  
 
 

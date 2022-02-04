@@ -156,6 +156,11 @@ public class MemberDaoImpl implements MemberDao {
 	public int insertLikeLog(Map<String, Object> param) {
 		return session.insert("member.insertLikeLog", param);
 	}
+
+	@Override
+	public int deleteLikeLog(Map<String, Object> param) {
+		return session.delete("member.deleteLikeLog", param);
+	}
 	 
 			 
 

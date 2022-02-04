@@ -263,4 +263,31 @@ where
 		)
 	</insert>
 
+	<select id="selectOneLikeLog" resultMap="likeLog">
+	select
+		*
+	from
+		 board_like
+	where
+		board_no = #{boardNo}
+		and
+		member_id = #{memberId}
+	</select>
+	<resultMap type="map" id="likeLog">
+		<result column="board_no" property="boardNo"/>
+		<result column="member_id" property="memberId"/>
+	</resultMap>
+
+	<delete id="deleteLikeLog">
+		delete from
+			board_like
+		where
+			board_no = #{boardNo}
+			and
+			member_id = #{memberId}
+	</delete>
+
+
+
+
 </mapper>

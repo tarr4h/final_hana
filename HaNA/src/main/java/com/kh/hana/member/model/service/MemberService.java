@@ -52,6 +52,10 @@ public interface MemberService {
 	int updateBoardContent(Map<String, Object> param);
 
 	int insertLikeLog(Map<String, Object> param);
+
+	Map<String, Object> selectOneLikeLog(Map<String, Object> param);
+
+	int deleteLikeLog(Map<String, Object> param);
  
 
 }

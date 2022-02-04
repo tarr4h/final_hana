@@ -290,7 +290,7 @@ public class MemberController {
                 
                 log.info("ogf = {}", originalFilename);
                 
-                arr[i] = originalFilename;
+                arr[i] = renamedFilename;
             }
         }
         
@@ -358,12 +358,24 @@ public class MemberController {
 	
 	//게시글 상세보기
 	@GetMapping("/memberBoardDetail/{no}")
-	public ResponseEntity<Map<String,Object>> boardDetail(@ModelAttribute Member member, @PathVariable int no, Model model) { 
+	public ResponseEntity<Map<String,Object>> boardDetail(@ModelAttribute Member member,
+				@AuthenticationPrincipal Member loginMember, @PathVariable int no, Model model) { 
+	
+	//게시글 정보
 	Board  boardDetail = memberService.selectOneBoard(no);
 	log.info("boardDetail = {}", boardDetail);
 	
+	//좋아요여부
+	Map<String,Object> param = new HashMap<>();
+	param.put("memberId",loginMember.getId());
+	param.put("boardNo", no);
+	Map<String,Object> likeLog = memberService.selectOneLikeLog(param);
+	boolean isLiked = likeLog == null? false : true;
+	log.info("isLiked = {}",isLiked);
+	
 	Map<String, Object> map = new HashMap<>();
 	map.put("boardDetail", boardDetail);
+	map.put("isLiked",isLiked);
 	
 	return ResponseEntity.ok()
 						.body(map);
@@ -455,8 +467,8 @@ public class MemberController {
 		Map<String,Object> map = new HashMap<>();
 		
 		try {
-			log.info("no = {}",no);
-			log.info("member = {}",member);
+			log.info("좋아요 no = {}",no);
+			log.info("좋아요 member = {}",member);
 			Map<String,Object> param = new HashMap<>();
 			param.put("memberId",member.getId());
 			param.put("boardNo",no);
@@ -473,7 +485,30 @@ public class MemberController {
 		return ResponseEntity.ok(map);
 	}
 	
-	
+	//싫어요
+	@DeleteMapping("/unlike/{no}")
+	public ResponseEntity<Map<String,Object>> unlike(@PathVariable int no, @AuthenticationPrincipal Member member) {
+		Map<String,Object> map = new HashMap<>();
+		
+		try {
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",member.getId());
+			param.put("boardNo",no);
+			map.put("memberId",member.getId());
+			map.put("boardNo",no);
+			
+			int result = memberService.deleteLikeLog(param);
+			
+			map.put("msg", "unlike 성공");
+			map.put("result", result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			map.put("result", "unlike 실패");
+		}
+		
+		
+		return ResponseEntity.ok(map);
+	}
 	
 	
 	

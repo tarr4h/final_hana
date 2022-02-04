@@ -325,6 +325,7 @@ $("#btn-follower-list").on( "click", function() {
 <script>
 let boardDetail;
 let newContent;
+let isLiked;
 //팔로잉 리스트 가져오기
 $("#btn-following-list").click((e) => {
 	$.ajax({
@@ -404,14 +405,18 @@ function getPageDetail(boardNo){
 			url : "${pageContext.request.contextPath}/member/memberBoardDetail/"+boardNo,
 			success(resp){
 				console.log("확인", resp);
-				const data = resp;
+				const data = resp.boardDetail;
+				const Like = resp.isLiked;
+				//const {baordDetail:data} = resp;
 				boardDetail = data;
-				console.log("확인", boardDetail);
+				isLiked = Like;
+				console.log("boardDetail확인", boardDetail);
+				console.log("isLiked확인", isLiked);
 			 
-	 			const date = moment(boardDetail.boardDetail.regDate).format("YYYY년 MM월 DD일");
-				let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${boardDetail.boardDetail.writerProfile}`;
+	 			const date = moment(boardDetail.regDate).format("YYYY년 MM월 DD일");
+				let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${boardDetail.writerProfile}`;
 		 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
-	 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${boardDetail.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${boardDetail.boardDetail.writer}</a>`); // 글쓴이 아이디
+	 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${boardDetail.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${boardDetail.writer}</a>`); // 글쓴이 아이디
 		 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜 
 		 		
 		 		// 좋아요 버튼
@@ -424,21 +429,21 @@ function getPageDetail(boardNo){
 		 		}
 	 	 		
 		 		//좋아요 개수
-		 		getLikeCount();
+		 		//getLikeCount();
 		 		
 		 		// modal footer부분 - 게시물 삭제 버튼
-	 	 		if("<sec:authentication property='principal.username'/>" != groupBoard.writer && "<sec:authentication property='principal.username'/>" != "${member.id}"){
+	 	 		if("<sec:authentication property='principal.username'/>" != boardDetail.writer && "<sec:authentication property='principal.username'/>" != "${member.id}"){
 		 			$(".btn-deleteBoard").css("display","none");
 		 		}else{
 		 			$(".btn-deleteBoard").css("display","block");
-		 			$(document.groupBoardDeleteFrm)
+		 			$(document.boardDeleteFrm)
 		 				.children("[name=no]").val(boardNo);
 		 		}
 				
 		 		
 		 		// 이미지
 		 		$("#board-img-container").empty();
-	 			$.each(boardDetail.boardDetail.picture, (i,e)=>{
+	 			$.each(boardDetail.picture, (i,e)=>{
 	 				console.log("e", e);
 	 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/member/board/\${e}' alt="" class="board-img"/>`
 	 				$("#board-img-container").append(img); // 이미지 추가
@@ -449,18 +454,18 @@ function getPageDetail(boardNo){
 	  			$(".board-img").css("left","0");
 		 		
 	 			//내용
-	 			let content = `\${boardDetail.boardDetail.content}</br>`
+	 			let content = `\${boardDetail.content}</br>`
 	  			$("#board-content").html(content);
 	 			
 	 			//content
 	 			getContent();
 	 			
 	 			//댓글 리스트
-	 			getCommentList(board.no);
+	 			getCommentList(boardDetail.no);
 	 			
 	 			
 	 			//댓글 입력창
-	 			$("#board-comment-submit #boardNo").val(board.no);
+	 			$("#board-comment-submit #boardNo").val(boardDetail.no);
 	 			
 			},
 			error(xhr, statusText, err){
@@ -484,7 +489,7 @@ function deleteBoardFunc(){
 };
 //게시물 불러오기 함수
 function getContent(){
-	let boardContent = `\${boardDetail.boardDetail.content}</br>`
+	let boardContent = `\${boardDetail.content}</br>`
 	if(boardDetail.writer == "<sec:authentication property='principal.username'/>" || "<sec:authentication property='principal.username'/>" == "${member.id}"){
 		boardContent += `<button class='btn-boardModify' onclick="boardContentModifyFunc();">수정</button></br>`
 	}
@@ -495,8 +500,8 @@ function boardContentModifyFunc(){
 	$("#board-content").empty();
 	let form = `
 		<div style="height:90%;">
-			<input type="hidden" name="no" value="\${boardDetail.boardDetail.no}"/>
-			<textarea style="height:100%;" name="content">\${boardDetail.boardDetail.content}</textarea>
+			<input type="hidden" name="no" value="\${boardDetail.no}"/>
+			<textarea style="height:100%;" name="content">\${boardDetail.content}</textarea>
 		</div>
 		<button class="btn-submitContent" onclick="submitModifiedContent(this);">등록</button>
 	`;
@@ -522,7 +527,7 @@ function submitModifiedContent(e){
 		},
 		success(data){
 			console.log(data);
-			getPageDetail(boardDetail.boardDetail.no);
+			getPageDetail(boardDetail.no);
 		},
 		error(xhr, statusText, err){
 			switch(xhr.status){
@@ -551,7 +556,7 @@ function goSetting(){
 //좋아요 개수
 function getLikeCount(){
 	$.ajax({
-		url:`${pageContext.request.contextPath}/member/getLikeCount/\${boardDetail.boardDetail.no}`,
+		url:`${pageContext.request.contextPath}/member/getLikeCount/\${boardDetail.no}`,
 		success(data){
 			$(".like_count").html(data.likeCount);
 		},
@@ -566,7 +571,7 @@ function getLikeCount(){
 //좋아요 취소
 function unlike(){
 	$.ajax({
-		url:`${pageContext.request.contextPath}/member/unlike/\${boardDetail.boardDetail.no}`,
+		url:`${pageContext.request.contextPath}/member/unlike/\${boardDetail.no}`,
 		method:"DELETE",
 		success(data){
 			console.log(data);
@@ -588,10 +593,10 @@ function like(){
 		url:`${pageContext.request.contextPath}/member/like`,
 		method:"POST",
 		data:{
-			"no":boardDetail.boardDetail.no
+			"no":boardDetail.no
 		},
 		success(data){
-			console.log(data);
+			console.log("좋아요 data", data);
 			$(".like").css("display","inline");			 			
  			$(".unlike").css("display","none");
  			getLikeCount();
@@ -760,8 +765,8 @@ function getCommentList(boardNo){
 function submitCommentFunc(e){
 	console.log("eeee???", e.target);
 	console.log("boardDetail", boardDetail);
- 	let boardNo = boardDetail.boardDetail.no;
- 	console.log("boardNo = ",boardDetail.boardDetail.no);
+ 	let boardNo = boardDetail.no;
+ 	console.log("boardNo = ",boardDetail.no);
  	 
 	let o = {
 		boardNo:boardNo,
