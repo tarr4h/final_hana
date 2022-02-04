@@ -161,6 +161,11 @@ public class GroupDaoImpl implements GroupDao {
 		return session.selectList("selectCalendarData",groupId);
 	}
 
+	@Override
+	public int deleteCalendarData(Map<String, Object> param) {
+		return session.delete("deleteCalendarData",param);
+	}
+
 
 
 }

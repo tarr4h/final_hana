@@ -17,7 +17,7 @@ public class GroupCalendar implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String title;
-	private String allday;
+	private boolean allDay;
 	private String start;
 	private String end;
 }
