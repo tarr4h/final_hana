@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    
 	<div class="external-events-container-container">
 			<div class="external-events-container">
 				  <div id='external-events'>
-
+					<div style="margin-bottom:20px; font-weight:bold;">drag event <br /> after create</div>
 				    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-				      <div class='fc-event-main title'>이벤트 생성 후 드래그</div>
+				      <div class='fc-event-main title'></div>
 				    </div>
 				    <div>
 				    	<textarea placeholder="이벤트 제목 입력.." id="eventTitleInput"></textarea>
@@ -34,11 +36,10 @@
 %>
 <script>
 
-let calendar;
-let allEvents;
-let currentTitle;
-var events_data;
 
+let calendar;
+let currentTitle;
+let allEvents;
 
 	//ajax POST 요청 csrf
 	var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -48,22 +49,7 @@ var events_data;
 	    }
 	  });
 	
-	
-	function getEventsData(){
-		let d;
-		$.ajax({
-			url:"${pageContext.request.contextPath}/group/getCalendarData/${groupId}",
-			success(data){
-				d = data;
-				console.log(d);
-				events_data = data;
-			},
-			error:console.log
-		})
-		return d;
-	}
-	console.log(events_data);
-	
+	// 캘린더
 	document.addEventListener('DOMContentLoaded', function() {
 		  var Calendar = FullCalendar.Calendar;
 		  var Draggable = FullCalendar.Draggable;
@@ -96,7 +82,56 @@ var events_data;
 		      center: 'title',
 		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
 		    },
-		    events:events_data,
+		    //이벤트 불러오기
+		    events:[
+		    	$.ajax({
+					url:"${pageContext.request.contextPath}/group/getCalendarData/${groupId}",
+					dataType: 'json',
+					success:function (data){
+						for(i=0; i<data.length; i++){
+					    	let start = new Date(data[i]['start']);
+					    	let end = new Date(data[i]['end']);
+					    	console.log(start);
+					    	console.log(end);
+					    	start.setHours(start.getHours()-9);
+					    	end.setHours(end.getHours()-9);
+
+							calendar.addEvent({
+								title:data[i]['title'],
+								start:start,
+								end:end,
+								allDay:data[i]['allDay']
+							})	
+						}
+					},
+					error:console.log
+				})
+		    ],
+		    // 이벤트 클릭시 삭제
+		    eventClick:function(info){
+		    
+		    	if(confirm(`\${info.event.title} - 를 삭제하시겠습니까?`)){
+		    		let obj = {
+							title:info.event.title,
+							allDay:info.event.allDay,
+							start:info.event._instance.range.start,
+							end:info.event._instance.range.end
+		    		};
+		    		let data = JSON.stringify(obj);
+		    		console.log(data);
+		    		$.ajax({
+						url:"${pageContext.request.contextPath}/group/deleteCalendarData/${groupId}",
+						method:"POST",
+						contentType:"application/json",
+						data:data,
+						success:function (data){
+							window.location.reload();
+						},
+						error:console.log
+					})
+		    	}
+		    	
+		    },
 		    editable: true,
 		    droppable: true, // this allows things to be dropped onto the calendar
 		    /* drop: function(info) {
@@ -110,13 +145,6 @@ var events_data;
 		  
 		 
 		  calendar.render();
-	/* 	$("#calendar-container").click((e)=>{
-			$(e.target).append("<span class='closeon'>X</span>");
-			console.log("aslkdjf");
-			$(e.target).find(".closeon").click(function() {
-		       $('#calendar').fullCalendar('removeEvents',$(e.target));
-		    });
-		}); */
 	});
 	
 	// 저장버튼 눌렀을 때
@@ -129,7 +157,7 @@ var events_data;
 			let obj = new Object();
 			
 			obj.title = allEvents[i]._def.title; // 타이틀
-			obj.allday = allEvents[i]._def.allDay; // 하루종일인지
+			obj.allDay = allEvents[i]._def.allDay; // 하루종일인지
 			obj.start = allEvents[i]._instance.range.start; // 시작날짜 및 시간
 			obj.end = allEvents[i]._instance.range.end; // 종료날짜 및 시간
 			
@@ -141,11 +169,11 @@ var events_data;
 		
 		saveCalendarData(jsonString);
 	}
-	
+	// 데이터 저장 함수
 	function saveCalendarData(data){
 		
 		$.ajax({
-			url:"${pageContext.request.contextPath}/group/saveCalendarData",
+			url:"${pageContext.request.contextPath}/group/saveCalendarData/${groupId}",
 			method:"POST",
 			contentType: 'application/json',
 			data:data,
@@ -157,10 +185,7 @@ var events_data;
 		
 	}
 	
-	function deleteEvent(){
-		allEvents[0].remove();
-	}
-	
+	// 이벤트 생성
 	$("#eventTitleInput").on("keyup",function(){
 		currentTitle = $(this).val();
 		console.log(currentTitle);
@@ -170,18 +195,5 @@ var events_data;
 		$(".title").html(currentTitle);
 	 }
 		
-	
-	$(document.loginFrm).submit((e)=>{
-		e.preventDefault();
-		$.ajax({
-			url:'${pageContext.request.contextPath}/member/memberLogin.do',
-			method:"POST",
- 				data:$(e.target).serialize(), 
-				succes(resp){
-				console.log();
-				alert("로그인 성공!");
-			},
-			error:console.log				
-		});
-	});
+
 </script>	

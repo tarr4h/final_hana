@@ -10,7 +10,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <section class="body-section"
 	style="width: 200px; height: 100%; float: right; display: block;">
-	<span style="float: right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
+	<span style="float: right;"></span>
 </section>
 <section>
 	<link rel="stylesheet"

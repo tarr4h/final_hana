@@ -75,5 +75,9 @@ public interface GroupService {
 
 	List<GroupCalendar> selectCalendarData(String groupId);
 
+<<<<<<< HEAD
 	int profileImage(Group group);
+=======
+	int deleteCalendarData(Map<String, Object> param);
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 }

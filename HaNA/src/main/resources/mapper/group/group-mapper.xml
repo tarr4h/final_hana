@@ -347,14 +347,14 @@
 	delete from
 		group_calendar
 	where 
-		title != 'asdf'
+		group_id=#{groupId}
 	</delete>
 	
 	<insert id="insertCalendarData">
 	insert into
 		group_calendar
 	values(
-		#{title},#{allday},#{start},#{end}
+		#{groupId},#{title},#{allDay},#{start},#{end}
 	)
 	</insert>
 	<select id="selectCalendarData" resultType="groupCalendar">
@@ -362,7 +362,10 @@
 		*
 	from
 		group_calendar
+	where
+		group_id = #{groupId}
 	</select>
+<<<<<<< HEAD
 	
 	<insert id="profileImage">
 	update 
@@ -372,5 +375,21 @@
 	where
 		group_id = #{groupId}
 	</insert>
+=======
+	 <delete id="deleteCalendarData">
+	 delete from
+	 	group_calendar
+	 where
+	 	group_id = #{groupId}
+	 	and
+	 	title=#{title}
+	 	and
+	 	all_day=#{allDay}
+	 	and
+	 	start_=#{start}
+	 	and
+	 	end_=#{end}
+	 </delete>
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 </mapper>
 

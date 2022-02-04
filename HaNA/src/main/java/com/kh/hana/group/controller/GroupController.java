@@ -437,20 +437,22 @@ public class GroupController {
 		return "/group/groupCalendar";
 	}
 	
-	@PostMapping("/saveCalendarData")
-	public String saveCalendarData(@RequestBody Map<String,Object> param[]) {
+	@PostMapping("/saveCalendarData/{groupId}")
+	public ResponseEntity<Map<String,Object>> saveCalendarData(@RequestBody Map<String,Object> param[], @PathVariable String groupId) {
+		Map<String,Object> map = new HashMap<>();
+		
 		// 1. 기존 데이터 초기화
-		String groupId = "ss";
+		log.info("groupId = {}",groupId);
 		int result = groupService.deleteAllCalendar(groupId);
 		// param 배열이 비어있지 않으면
 		if(param.length!=0) {
 			log.info("param = {}",param);
 			for(Map<String,Object> p : param) {
-				System.out.println(p);
+				p.put("groupId",groupId);
 				result = groupService.insertCalendarData(p);
 			}
 		}
-		return "redirect:/group/groupCalendar/"+groupId;			
+		return ResponseEntity.ok(map);
 	}
 	
 	@GetMapping("/getCalendarData/{groupId}")
@@ -462,7 +464,27 @@ public class GroupController {
 		return ResponseEntity.ok(events);
 	}
 
-	@RequestMapping(value = "/deleteGroupMember/{memberId}/{groupId}", method = RequestMethod.GET)
+	@PostMapping("/deleteCalendarData/{groupId}")
+	public ResponseEntity<Map<String,Object>> deleteCalendarData(@RequestBody Map<String,Object> param, @PathVariable String groupId){
+		Map<String,Object> map = new HashMap<>();
+		int result = 0;
+		try {
+			param.put("groupId", groupId);
+			log.info("param = {}",param);
+			result = groupService.deleteCalendarData(param);
+			map.put("msg", "일정 삭제 성공");
+			map.put("result", result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			
+			map.put("msg", "일정 삭제 실패");
+			map.put("result", result);
+		}
+		return ResponseEntity.ok(map);
+	}
+	
+	
+	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
 	public String deleteGroupMember (
 			@PathVariable String memberId,
 			@PathVariable String groupId) {

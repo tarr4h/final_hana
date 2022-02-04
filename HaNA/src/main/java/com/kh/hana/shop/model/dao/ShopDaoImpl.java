@@ -19,8 +19,28 @@ public class ShopDaoImpl implements ShopDao {
     }
     
     @Override
-    public int insertHashTag(HashTag hashTag) {
-        return session.insert("shop.insertHashTag", hashTag);
+	public HashTag searchHashTag(HashTag hashTag) {
+		return session.selectOne("shop.searchHashTag", hashTag);
+	}
+    
+	@Override
+	public List<HashTag> selectShopHashTag(String memberId) {
+		return session.selectList("shop.selectShopHashTag", memberId);
+	}
+
+	@Override
+	public HashTag searchShopHashTag(HashTag hashTag) {
+		return session.selectOne("shop.searchShopHashTag", hashTag);
+	}
+
+	@Override
+	public int insertHashTag(HashTag hashTag) {
+		return session.insert("shop.insertHashTag", hashTag);
+	}
+
+	@Override
+    public int insertShopHashTag(HashTag hashTag) {
+        return session.insert("shop.insertShopHashTag", hashTag);
     }
     
     @Override public List<HashTag> hashTagAutocomplete(String search) { 

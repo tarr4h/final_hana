@@ -26,4 +26,6 @@ public interface ShopService {
 
 	List<Reservation> selectTableReservation(Map<String, Object> infoMap);
 
+	List<HashTag> selectShopHashTag(String memberId);
+
 }

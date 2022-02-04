@@ -73,6 +73,10 @@ public interface GroupDao {
 
 	public List<GroupCalendar> selectCalendarData(String groupId);
 
+<<<<<<< HEAD
 	public int profileImage(Group group);
+=======
+	public int deleteCalendarData(Map<String, Object> param);
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 
 }

@@ -172,8 +172,13 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int profileImage(Group group) {
 		return session.insert("profileImage", group);
+=======
+	public int deleteCalendarData(Map<String, Object> param) {
+		return session.delete("deleteCalendarData",param);
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	}
 
 
