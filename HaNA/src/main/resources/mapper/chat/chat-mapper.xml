@@ -223,5 +223,67 @@
 		and unreadcount = 1
 	</select>
 	
+	
+	
+	
+	<!-- main 페이지 -->
+	<select id="selectListGroupBoard" resultType="groupBoard">
+	select
+	 *
+	 from(
+	 		select
+	         row_number() over(order by g.reg_date desc) rnum,
+				g.*,
+				m.picture writer_profile
+			from
+				group_board g join member m
+				on g.writer = m.id
+			where
+				g.group_id in ( select group_id from group_member_list where member_id = #{memberId})
+	) where rnum <![CDATA[<=]]> 3
+	</select>
+	
+	<select id="selectListMemberBoard" resultType="board">
+	 select
+	 *
+	 from(
+	 		select
+	         row_number() over(order by b.reg_date desc) rnum,
+				b.*,
+				m.picture writer_profile
+			from
+				board b join member m
+				on b.writer = m.id
+			where 
+				b.writer in (select following_id from follower where member_id = #{memberId})
+	) where rnum <![CDATA[<=]]> 3
+	</select>
+	
+	<select id="followingRecommendList" resultType="member">
+	select
+		id, picture, name
+	from
+		member
+	where
+		id in (
+		select
+		distinct member_id
+		from
+		follower
+		where following_id = #{memberId} and
+		member_id not in(
+		select following_id from follower where member_id = #{memberId} and following_id in (select member_id from follower where following_id = #{memberId})))
+	</select>
+	
+	<select id="groupRecommendList" resultType="member">
+	select
+	 id, picture
+	 from
+	 member
+	 where
+	 id in (
+	 select distinct member_id from group_member_list where group_id in (select group_id from group_member_list where member_id =#{memberId}) and member_id != #{memberId} and member_id not in (select following_id from follower where member_id = #{memberId}))	
+	</select>
+	
 
 </mapper>
