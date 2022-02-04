@@ -28,4 +28,8 @@ public interface ShopService {
 
 	List<HashTag> selectShopHashTag(String memberId);
 
+	int shopReservationCount(String shopId);
+
+	List<Reservation> selectShopReservationListByDate(Map<String, Object> map);
+
 }

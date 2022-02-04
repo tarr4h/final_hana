@@ -33,6 +33,8 @@ public interface MemberService {
  
 	Shop selectOneShopInfo(String memberId);
 
+	int updateMemberProfile(Member member);
+	
 	int insertMemberBoard(Board  board);
 
 	int updatePassword(Member updateMember);

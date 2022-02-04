@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.member.model.dao.MemberDao;
@@ -118,6 +116,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public int updateMemberProfile(Member member) {
+		return memberDao.updateMemberProfile(member);
+	}
+	
 	public int updatePassword(Member updateMember) {
 		return memberDao.updatePassword(updateMember);
 	}
@@ -176,11 +178,7 @@ public class MemberServiceImpl implements MemberService {
 	public int selectLikeCount(Map<String, Object> param) {
 		return memberDao.selectLikeCount(param);
 	}
- 
 
-
- 
-	
 	 
 	
 	

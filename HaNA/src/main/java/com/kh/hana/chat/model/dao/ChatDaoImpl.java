@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Member;
 
 @Repository
@@ -142,6 +144,26 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public int insertGroupMessage22(Map<String, Object> param) {
 		return session.insert("chat.insertGroupMessage22",param);
+	}
+
+	@Override
+	public List<GroupBoard> selectListGroupBoard(String memberId) {
+		return session.selectList("chat.selectListGroupBoard", memberId);
+	}
+
+	@Override
+	public List<Board> selectListMemberBoard(String memberId) {
+		return session.selectList("chat.selectListMemberBoard",memberId);
+	}
+
+	@Override
+	public List<Member> followingRecommendList(String memberId) {
+		return session.selectList("chat.followingRecommendList",memberId);
+	}
+
+	@Override
+	public List<Member> groupRecommendList(String memberId) {
+		return session.selectList("chat.groupRecommendList",memberId);
 	}
 
 

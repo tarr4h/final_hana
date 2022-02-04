@@ -224,7 +224,6 @@ public class ShopController {
     	log.info("insertReservation REs = {}", reservation);
     	
     	int result = shopService.insertReservation(reservation);
-    	log.info("reservation result = {}", result);
     	
     	String msg = result > 0 ? "등록되었습니다." : "예약 실패, 다시 시도해주세요";
     	
@@ -240,6 +239,26 @@ public class ShopController {
     	log.info("map = {}", map);
     	
     	return ResponseEntity.ok(map);
+    }
+    
+    @GetMapping("/shopReservationCount")
+    public ResponseEntity<?> shopReservationCount(@RequestParam String shopId){
+    	log.info("shopId for count = {}", shopId);
+    	int count = shopService.shopReservationCount(shopId);
+    	log.info("count = {}", count);
+    	return ResponseEntity.ok(count);
+    }
+    
+    @GetMapping("/selectShopReservationListByDate")
+    public ResponseEntity<?> selectShopReservationListByDate(@RequestParam String date, @RequestParam String shopId){    	
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("date", date);
+    	map.put("shopId", shopId);
+    	
+    	List<Reservation> reservationList = shopService.selectShopReservationListByDate(map);
+    	log.info("reservationList by Date = {}", reservationList);
+    	
+    	return ResponseEntity.ok(reservationList);
     }
     
     @InitBinder
