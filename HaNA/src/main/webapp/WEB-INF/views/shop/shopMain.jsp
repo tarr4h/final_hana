@@ -220,7 +220,11 @@ function scrollPage(){
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';	
-								$('#shopList').append(htmlOut); 	
+								$('#shopList').append(htmlOut);
+								// list[i].ID가 마지막이라면 return
+								if(i == max -1){
+									return;
+							}
 							}  
 					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
