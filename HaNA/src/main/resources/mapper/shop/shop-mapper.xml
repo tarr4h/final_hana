@@ -142,14 +142,18 @@
             shop_info i
   		  	left join shophashtag s on i.id = s.member_id 
     		left join hashtag h on s.tag_id = h.tag_id 
-        where
+        <where>
          	i.location_x <![CDATA[<]]> ${maxLocationX}
             and
             i.location_y <![CDATA[<]]> ${maxLocationY}
             and
             i.id != #{id}
             and
-            h.tag_name in(#{hashTagOne},#{hashTagTwo})
+            h.tag_name in
+            <foreach collection="tags" item="tags" open="(" close =")" separator=",">
+            #{tags}
+            </foreach>
+        </where>
     </select>
     
     <insert id="insertReservation" parameterType="reservation">
