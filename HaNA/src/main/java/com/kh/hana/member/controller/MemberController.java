@@ -280,11 +280,36 @@ public class MemberController {
 
     }
 	
-	@PostMapping("/testModal")
-	public void testModal(@RequestParam MultipartFile upFile) {
-		 log.info("upFile = {}", upFile);
-
-		 
+	@PostMapping("/profileUpdate")
+	public String profileUpdate(@RequestParam MultipartFile upFile, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
+		log.info("upFile = {}", upFile);
+		log.info("file ofn = {}", upFile.getOriginalFilename());
+		String memberId = member.getId();
+		
+		log.info("member oldpic = {}", member.getPicture());
+        
+		String saveDirectory = application.getRealPath("/resources/upload/member/profile");
+		File file = new	File(saveDirectory, member.getPicture());
+		file.delete();
+		  
+		String renamedFilename = HanaUtils.rename(upFile.getOriginalFilename());
+		File regFile = new File(saveDirectory, renamedFilename);
+		  
+		try {
+			upFile.transferTo(regFile);
+		} catch (IllegalStateException | IOException e) {
+			log.error(e.getMessage(), e);
+		}
+		  
+		member.setPicture(renamedFilename);	
+		
+		int result = memberService.updateMemberProfile(member);
+		
+		log.info("profileUpdateResult = {}", result);
+		
+		redirectAttr.addFlashAttribute("msg", result > 0 ? "프로필사진이 업데이트 되었습니다." : "프로필 사진 업데이트 실패");
+		
+		return "redirect:/member/shopView/"+memberId;
 	}
 
  

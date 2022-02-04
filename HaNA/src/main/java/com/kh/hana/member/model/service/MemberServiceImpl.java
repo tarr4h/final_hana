@@ -116,8 +116,13 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMemberBoard(Board board) {
 		return memberDao.insertMemberBoard(board);
 	}
+
+	@Override
+	public int updateMemberProfile(Member member) {
+		return memberDao.updateMemberProfile(member);
+	}
  
- 
+	
 	
 	 
 	

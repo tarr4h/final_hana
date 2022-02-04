@@ -168,8 +168,11 @@ where
 		values (seq_board_no.nextval, #{writer}, #{content}, #{picture})
 	</insert>
 
-
-
+	<update id="updateMemberProfile" parameterType="member">
+		update member
+		set picture = #{picture}
+		where id = #{id}
+	</update>
 
 
 

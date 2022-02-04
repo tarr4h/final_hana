@@ -249,7 +249,6 @@ public class ShopController {
     	log.info("insertReservation REs = {}", reservation);
     	
     	int result = shopService.insertReservation(reservation);
-    	log.info("reservation result = {}", result);
     	
     	String msg = result > 0 ? "등록되었습니다." : "예약 실패, 다시 시도해주세요";
     	
