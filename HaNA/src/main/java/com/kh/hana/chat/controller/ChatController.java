@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,9 @@ import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.common.util.HanaUtils;
+import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +54,9 @@ public class ChatController {
 	
 	@Autowired
 	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private GroupService groupService;
 	
 	@GetMapping("/chat.do")
 	public void chat() {}
@@ -250,6 +256,7 @@ public class ChatController {
     	//자기가 속한 소모임 최근게시글 3개
     	String memberId = authentication.getName();
     	List<GroupBoard> groupboard = chatService.selectListGroupBoard(memberId);
+    	//log.info("groupboard 몇개 나왔는지= {}", groupboard.size());
     	
     	//팔로잉 친구 최근게시글 3개
     	
@@ -260,5 +267,15 @@ public class ChatController {
     	
     	model.addAttribute("groupboard", groupboard);
     }
+    
+    @GetMapping("/boardcommentList.do")
+    public ResponseEntity<?> boardcommentList(int boardNo){
+    	log.info("boardcommentList boardNo = {}", boardNo);
+		List<GroupBoardComment> list = groupService.selectGroupBoardCommentList(boardNo);
+		log.info("list = {}",list);
+    	
+    	return ResponseEntity.ok(list);
+    };
+    
     		
 }

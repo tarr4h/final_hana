@@ -118,6 +118,7 @@ const displayRoom = (selector, data) => {
 		$target.html(chatroom);
 };
 </script>
+
 	<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-4 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
@@ -648,6 +649,7 @@ const closeChatRoom = (roomType)=>{
 	}
 		
 };
+	
 	
 </script>
 
