@@ -157,6 +157,16 @@ public class ChatDaoImpl implements ChatDao {
 		return session.selectList("chat.selectListMemberBoard",memberId);
 	}
 
+	@Override
+	public List<Member> followingRecommendList(String memberId) {
+		return session.selectList("chat.followingRecommendList",memberId);
+	}
+
+	@Override
+	public List<Member> groupRecommendList(String memberId) {
+		return session.selectList("chat.groupRecommendList",memberId);
+	}
+
 
 
 

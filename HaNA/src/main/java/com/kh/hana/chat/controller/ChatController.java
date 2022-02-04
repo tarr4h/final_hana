@@ -264,9 +264,10 @@ public class ChatController {
     	//팔로잉한 친구 최근게시글 3개
     	List<memberBoard> board = chatService.selectListMemberBoard(memberId);
     	
-    	//추천친구 (같은 그룹에 있지만 팔로잉 안된 친구 or 나를 팔로잉한 친구 or mbti나 취향?이 같은 친구)
-    	
-    	
+    	//추천친구 (같은 그룹에 있지만 팔로잉 안된 친구 or 맞팔 안된 친구)
+    	List<Member> memberList = chatService.recommendMemberList(memberId);
+    	if(memberList.size() >0)
+    		model.addAttribute(memberList);
     	
     	
     	model.addAttribute("groupboard", groupboard);

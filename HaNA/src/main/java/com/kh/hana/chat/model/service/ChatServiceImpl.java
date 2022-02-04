@@ -1,10 +1,12 @@
 package com.kh.hana.chat.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.hana.chat.model.dao.ChatDao;
 import com.kh.hana.chat.model.vo.Chat;
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@Transactional
 public class ChatServiceImpl implements ChatService {
 	
 	@Autowired
@@ -154,6 +157,25 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public List<memberBoard> selectListMemberBoard(String memberId) {
 		return chatDao.selectListMemberBoard(memberId);
+	}
+
+	@Override
+	public List<Member> recommendMemberList(String memberId) {
+		List<Member> member1 = chatDao.followingRecommendList(memberId);
+		List<Member> member2 = chatDao.groupRecommendList(memberId);
+		List<Member> member = new ArrayList<Member>();
+		if(member1.size() > 0 && member2.size() >0) {
+			member.addAll(member1);
+			member.addAll(member2);
+		}
+		else if(member1.size() == 0 && member2.size() != 0) {
+			member.addAll(member2);
+		}
+		else if(member1.size() != 0 && member2.size() == 0) {
+			member.addAll(member1);
+		}
+			
+		return member;
 	}
 
 

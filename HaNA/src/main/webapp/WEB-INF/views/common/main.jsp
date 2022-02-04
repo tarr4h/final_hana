@@ -101,14 +101,20 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
-    ${groupboard}
+    <span>맴버 그룹 좋아요 불러오기</span>
+    <span>맴버 그룹 좋아요 누르기</span>
+    <span>맴버 게시판 댓글 불러오기</span>
+    <span>그룹 게시판 대댓글 작성가능하게</span>
+    <span>추천 친구 팔로우신청</span>
+    <span>게시글에서 작성자한테 dm보내기</span>
+    <span></span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
     <table>
     <tr>
     <td>
-              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}" alt="writerProfile">
+              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}">
               <span class="userID main-id point-span">${groupboard.writer}</span>
     </td>
     </tr>
@@ -291,7 +297,7 @@ const commetWrite${vss.index}=()=>{
     <table>
     <tr>
     <td>
-              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${board.writerProfile}" alt="writerProfile">
+              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${board.writerProfile}">
               <span class="userID main-id point-span">${board.writer}</span>
     </td>
     </tr>
@@ -486,40 +492,24 @@ const commetWrite0${vss.index}=()=>{
         <div class="section-recommend">
           <div class="menu-title">
             <span class="sub-title">회원님을 위한 추천</span>
-            <span class="find-more">모두 보기</span>
+            <!-- <span class="find-more">모두 보기</span> -->
           </div>
-          <ul class="recommend-list">
+<ul class="recommend-list">
+          <c:if test="${not empty memberList}">
+          <c:forEach items="${memberList}" var="member">
             <li>
               <div class="recommend-friend-profile">
-                <img class="img-profile" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="renebaebae님의 프로필 사진">
+                <img class="img-profile" src="${pageContext.request.contextPath }/resources/upload/member/profile/${member.picture}">
                 <div class="profile-text">
-                  <span class="userID point-span">renebaebae</span>
-                  <span class="sub-span">hi_sseulgi님 외 2명이 팔로우합니다</span>
+                  <span class="userID point-span">${member.id}</span>
+                  <span class="sub-span">${member.name != null ? '나를 팔로잉한 친구' : '같은 소모임에 있는 친구'}</span>
                 </div>
               </div>
               <span class="btn-follow">팔로우</span>
             </li>
-            <li>
-              <div class="recommend-friend-profile">
-                <img class="img-profile" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="_jeongjaehyun님의 프로필 사진">
-                <div class="profile-text">
-                  <span class="userID point-span">_jeongjaehyun</span>
-                  <span class="sub-span">johnnyjsuh님이 팔로우합니다</span>  
-                </div>
-              </div>
-              <span class="btn-follow">팔로우</span>
-            </li>
-            <li>
-              <div class="recommend-friend-profile">
-                <img class="img-profile" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="leehi_hi님의 프로필 사진">
-                <div class="profile-text">
-                  <span class="userID point-span">leehi_hi</span>
-                  <span class="sub-span">jennierubyjane님 외 5명이 팔로우합...</span>  
-                </div>
-              </div>
-              <span class="btn-follow">팔로우</span>
-            </li>
-          </ul>
+          </c:forEach>
+          </c:if>
+</ul>
         </div>
 
 

@@ -138,7 +138,9 @@ article {
     margin-bottom: 20px;
 }
 .section-recommend {
-    height: 220px;
+    overflow:scroll;
+    height:300px;
+    
 }
 /* article */
 header#mainheader {

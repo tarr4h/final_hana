@@ -61,6 +61,8 @@ public interface ChatService {
 
 	List<memberBoard> selectListMemberBoard(String memberId);
 
+	List<Member> recommendMemberList(String memberId);
+
 
 
 }

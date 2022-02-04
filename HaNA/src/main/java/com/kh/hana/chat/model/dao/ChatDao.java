@@ -67,5 +67,9 @@ public interface ChatDao {
 
 	List<memberBoard> selectListMemberBoard(String memberId);
 
+	List<Member> followingRecommendList(String memberId);
+
+	List<Member> groupRecommendList(String memberId);
+
 
 }
