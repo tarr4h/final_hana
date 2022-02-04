@@ -9,7 +9,6 @@ import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Member;
-import com.kh.hana.member.model.vo.memberBoard;
 
 public interface ChatService {
 
@@ -59,7 +58,7 @@ public interface ChatService {
 
 	List<GroupBoard> selectListGroupBoard(String memberId);
 
-	List<memberBoard> selectListMemberBoard(String memberId);
+	List<Board> selectListMemberBoard(String memberId);
 
 	List<Member> recommendMemberList(String memberId);
 

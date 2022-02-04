@@ -40,7 +40,6 @@ import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
-import com.kh.hana.member.model.vo.memberBoard;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -262,7 +261,7 @@ public class ChatController {
     	//log.info("groupboard 몇개 나왔는지= {}", groupboard.size());
     	
     	//팔로잉한 친구 최근게시글 3개
-    	List<memberBoard> board = chatService.selectListMemberBoard(memberId);
+    	List<Board> board = chatService.selectListMemberBoard(memberId);
     	
     	//추천친구 (같은 그룹에 있지만 팔로잉 안된 친구 or 맞팔 안된 친구)
     	List<Member> memberList = chatService.recommendMemberList(memberId);

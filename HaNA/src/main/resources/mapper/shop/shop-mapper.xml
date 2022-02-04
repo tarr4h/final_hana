@@ -142,14 +142,18 @@
             shop_info i
   		  	left join shophashtag s on i.id = s.member_id 
     		left join hashtag h on s.tag_id = h.tag_id 
-        where
+        <where>
          	i.location_x <![CDATA[<]]> ${maxLocationX}
             and
             i.location_y <![CDATA[<]]> ${maxLocationY}
             and
             i.id != #{id}
             and
-            h.tag_name in(#{hashTagOne},#{hashTagTwo})
+            h.tag_name in
+            <foreach collection="tags" item="tags" open="(" close =")" separator=",">
+            #{tags}
+            </foreach>
+        </where>
     </select>
     
     <insert id="insertReservation" parameterType="reservation">
@@ -181,5 +185,25 @@
 			</if>
 	</select>
 	
+	<select id="shopReservationCount" parameterType="string" resultType="int">
+		select
+			count(*)
+		from
+			shop_table_reservation
+		where
+			shop_id = #{shopId}
+			and
+			reservation_date > sysdate-1	
+	</select>
 	
+	<select id="selectShopReservationListByDate" parameterType="map" resultType="reservation">
+		select
+			*
+		from
+			shop_table_reservation
+		where
+			shop_id = #{shopId}
+			and
+			to_date(reservation_date) = #{date}
+	</select>
 </mapper>

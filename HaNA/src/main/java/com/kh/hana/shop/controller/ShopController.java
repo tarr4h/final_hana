@@ -44,31 +44,6 @@ public class ShopController {
     public void shopMain() {
         
     }
-    
-	/*
-	 * @GetMapping("/shopList") public ResponseEntity<?>
-	 * selectShopList(@RequestParam String id, @RequestParam String
-	 * locationX, @RequestParam String locationY) { Map<String, Object> data = new
-	 * HashMap<>(); data.put("id", id); data.put("locationX", locationX);
-	 * data.put("locationY", locationY);
-	 * 
-	 * // 8.23km내 double maxX = Double.parseDouble(locationX) + 0.0927; double maxY
-	 * = Double.parseDouble(locationY) + 0.074;
-	 * 
-	 * String maxLocationX = Double.toString(maxX); String maxLocationY =
-	 * Double.toString(maxY);
-	 * 
-	 * data.put("maxLocationX", maxLocationX); data.put("maxLocationY",
-	 * maxLocationY);
-	 * 
-	 * log.info("data = {}", data);
-	 * 
-	 * List<Map<String, Object>> shopList = shopService.selectShopList(data);
-	 * log.info("length = {}", shopList.size());
-	 * 
-	 * return ResponseEntity.ok(shopList); }
-	 */    
-    
     @GetMapping("/shopList")
     public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY) {
     	log.info("selectDataArr = {}", selectDataArr);
@@ -249,7 +224,6 @@ public class ShopController {
     	log.info("insertReservation REs = {}", reservation);
     	
     	int result = shopService.insertReservation(reservation);
-    	log.info("reservation result = {}", result);
     	
     	String msg = result > 0 ? "등록되었습니다." : "예약 실패, 다시 시도해주세요";
     	
@@ -265,6 +239,26 @@ public class ShopController {
     	log.info("map = {}", map);
     	
     	return ResponseEntity.ok(map);
+    }
+    
+    @GetMapping("/shopReservationCount")
+    public ResponseEntity<?> shopReservationCount(@RequestParam String shopId){
+    	log.info("shopId for count = {}", shopId);
+    	int count = shopService.shopReservationCount(shopId);
+    	log.info("count = {}", count);
+    	return ResponseEntity.ok(count);
+    }
+    
+    @GetMapping("/selectShopReservationListByDate")
+    public ResponseEntity<?> selectShopReservationListByDate(@RequestParam String date, @RequestParam String shopId){    	
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("date", date);
+    	map.put("shopId", shopId);
+    	
+    	List<Reservation> reservationList = shopService.selectShopReservationListByDate(map);
+    	log.info("reservationList by Date = {}", reservationList);
+    	
+    	return ResponseEntity.ok(reservationList);
     }
     
     @InitBinder

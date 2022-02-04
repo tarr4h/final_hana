@@ -101,12 +101,13 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
-    <span>맴버 그룹 좋아요 불러오기</span>
-    <span>맴버 그룹 좋아요 누르기</span>
-    <span>맴버 게시판 댓글 불러오기</span>
-    <span>그룹 게시판 대댓글 작성가능하게</span>
-    <span>추천 친구 팔로우신청</span>
-    <span>게시글에서 작성자한테 dm보내기</span>
+    <span>맴버 그룹 좋아요 불러오기</span><br />
+    <span>맴버 그룹 좋아요 누르기</span><br />
+    <span>맴버 게시판 댓글 불러오기</span><br />
+    <span>그룹 게시판 대댓글 작성가능하게</span><br />
+    <span>추천 친구 팔로우신청</span><br />
+    <span>게시글에서 작성자한테 dm보내기</span><br />
+    <span>로그인맴버 프로필사진</span>
     <span></span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
