@@ -11,8 +11,20 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script>
+	$(function () {
+		$('#target-image').click(function (e) {
+			e.preventDefault();
+			$('#file').click();
+		});
+	});
 
-	// 리더만 수정할 수 있는 버튼 (만 있음)
+	function changeImage(){
+		alert('프로필 사진을 변경하시겠습니까?');
+		document.getElementById('upFileForm').submit();
+        return false;
+	}
+
+// 리더만 수정할 수 있는 버튼 (만 있음)
 	function goGroupSetting() {
 		location.href = "${pageContext.request.contextPath}/group/groupSetting";
 	}
@@ -55,12 +67,20 @@
 						alt="" />
 				</c:if>
 			</div>
+		<c:if test="${loginMember.id.equals(group.leaderId) }">
 			<div class="profileBtn">
 				<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
-				<img
-					src="${pageContext.request.contextPath}/resources/images/icons/plusIcon.png"
-					alt="" />
+				<form:form action="${pageContext.request.contextPath}/group/profileImage?${_csrf.parameterName}=${_csrf.token}" id="upFileForm" accept="image/*" method="post" enctype="multipart/form-data">
+					<input type="hidden" name=groupId value="${group.groupId}"/>
+					<input type="hidden" name=image value="${group.image}"/>
+						<label for="target-image">
+							<img src="${pageContext.request.contextPath}/resources/images/icons/plusIcon.png"alt="" id="target-image" style="cursor: pointer;"/>
+						</label>
+					<input type="file" name="upFile" id="file" style="display:none" onchange="changeImage()"/>
+				</form:form>
 			</div>
+		</c:if>
+				
 		</div>
 <!-- 		<div class="col-sm-2"></div>
  -->		<!-- 프로필 세부정보 영역 -->
@@ -123,7 +143,7 @@
 %>
 						<div style="margin-top:18%;">
 							<div>
-								<a href="#" class="enroll-button">회원관리</a>
+								<a href="${pageContext.request.contextPath}/group/groupMemberList/${group.groupId}" class="enroll-button">회원관리</a>
 							</div>
 							<div style="margin-top:10px;">
 								<a href="javascript:void(0);" onclick="enrollList();" class="enroll-button">가입승인</a>
