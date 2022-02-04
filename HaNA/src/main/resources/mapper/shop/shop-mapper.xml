@@ -185,5 +185,25 @@
 			</if>
 	</select>
 	
+	<select id="shopReservationCount" parameterType="string" resultType="int">
+		select
+			count(*)
+		from
+			shop_table_reservation
+		where
+			shop_id = #{shopId}
+			and
+			reservation_date > sysdate-1	
+	</select>
 	
+	<select id="selectShopReservationListByDate" parameterType="map" resultType="reservation">
+		select
+			*
+		from
+			shop_table_reservation
+		where
+			shop_id = #{shopId}
+			and
+			to_date(reservation_date) = #{date}
+	</select>
 </mapper>

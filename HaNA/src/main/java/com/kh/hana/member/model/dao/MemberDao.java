@@ -46,6 +46,8 @@ public interface MemberDao {
 
 	int insertMemberBoard(Board board);
 
+	int updateMemberProfile(Member member);
+
 	int updatePassword(Member updateMember);
 
 	Board selectOneBoard(int no);

@@ -1,15 +1,11 @@
 package com.kh.hana.member.model.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
@@ -167,6 +163,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("selectLikeCount",param);
 	}
 			 
+
+	@Override
+	public int updateMemberProfile(Member member) {
+		return session.update("member.updateMemberProfile", member);
+	}
 
 	
 
