@@ -1,21 +1,26 @@
 package com.kh.hana.chat.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.hana.chat.model.dao.ChatDao;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@Transactional
 public class ChatServiceImpl implements ChatService {
 	
 	@Autowired
@@ -141,6 +146,35 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public int insertGroupMessage22(Map<String, Object> param) {
 		return chatDao.insertGroupMessage22(param);
+	}
+
+	@Override
+	public List<GroupBoard> selectListGroupBoard(String memberId) {
+		return chatDao.selectListGroupBoard(memberId);
+	}
+
+	@Override
+	public List<Board> selectListMemberBoard(String memberId) {
+		return chatDao.selectListMemberBoard(memberId);
+	}
+
+	@Override
+	public List<Member> recommendMemberList(String memberId) {
+		List<Member> member1 = chatDao.followingRecommendList(memberId);
+		List<Member> member2 = chatDao.groupRecommendList(memberId);
+		List<Member> member = new ArrayList<Member>();
+		if(member1.size() > 0 && member2.size() >0) {
+			member.addAll(member1);
+			member.addAll(member2);
+		}
+		else if(member1.size() == 0 && member2.size() != 0) {
+			member.addAll(member2);
+		}
+		else if(member1.size() != 0 && member2.size() == 0) {
+			member.addAll(member1);
+		}
+			
+		return member;
 	}
 
 
