@@ -112,12 +112,6 @@
 	.modal {
 		margin-top : 150px;
 	}
-
-	/* input file */
-	.input-file-button{
-		width: 100%;
-		height: 100%;
-	}
 </style>
 
 <!-- 우측 공간확보 -->
@@ -226,9 +220,10 @@
 						<c:if test="${loginMember.id.equals(member.id) }">
 						<tr>
 							<td>
-								<input type="button" value="예약확인" id="reservationCheckBtn"/>
+								<input type="button" value="예약확인" id="reservationListBtn"/>
 								
 								<!-- reservation check Modal -->
+								<jsp:include page="/WEB-INF/views/member/modal/shopReservationList.jsp"></jsp:include>
 							</td>
 						</tr>
 						</c:if>

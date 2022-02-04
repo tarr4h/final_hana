@@ -150,6 +150,16 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.selectTableReservation(infoMap);
 	}
 
+	@Override
+	public int shopReservationCount(String shopId) {
+		return shopDao.shopReservationCount(shopId);
+	}
+
+	@Override
+	public List<Reservation> selectShopReservationListByDate(Map<String, Object> map) {
+		return shopDao.selectShopReservationListByDate(map);
+	}
+
 
 	
 

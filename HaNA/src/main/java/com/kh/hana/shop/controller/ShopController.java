@@ -266,6 +266,26 @@ public class ShopController {
     	return ResponseEntity.ok(map);
     }
     
+    @GetMapping("/shopReservationCount")
+    public ResponseEntity<?> shopReservationCount(@RequestParam String shopId){
+    	log.info("shopId for count = {}", shopId);
+    	int count = shopService.shopReservationCount(shopId);
+    	log.info("count = {}", count);
+    	return ResponseEntity.ok(count);
+    }
+    
+    @GetMapping("/selectShopReservationListByDate")
+    public ResponseEntity<?> selectShopReservationListByDate(@RequestParam String date, @RequestParam String shopId){    	
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("date", date);
+    	map.put("shopId", shopId);
+    	
+    	List<Reservation> reservationList = shopService.selectShopReservationListByDate(map);
+    	log.info("reservationList by Date = {}", reservationList);
+    	
+    	return ResponseEntity.ok(reservationList);
+    }
+    
     @InitBinder
     public void initBinder(WebDataBinder binder) {
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

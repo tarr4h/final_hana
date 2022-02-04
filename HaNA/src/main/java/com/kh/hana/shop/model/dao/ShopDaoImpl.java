@@ -92,6 +92,16 @@ public class ShopDaoImpl implements ShopDao {
 		return session.selectList("shop.selectTableReservation", infoMap);
 	}
 
+	@Override
+	public int shopReservationCount(String shopId) {
+		return session.selectOne("shop.shopReservationCount", shopId);
+	}
+
+	@Override
+	public List<Reservation> selectShopReservationListByDate(Map<String, Object> map) {
+		return session.selectList("shop.selectShopReservationListByDate", map);
+	}
+
 	
     
 }
