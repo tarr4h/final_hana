@@ -38,18 +38,24 @@
 					<div id="reservation-count-all">
 						<span>총 예약 건 수 : </span>
 						<span id="resCount"></span>
+						<br />
+						<span>해당일의 예약 건 수 : </span>
+						<span id="dailyResCount"></span>
 					</div>
 					<!-- 일자별 예약리스트 -->
 					<div id="reservation-list" style="max-height:300px;overflow:scroll">
+						<input type="hidden" name="" id="res-year" />
+						<input type="hidden" name="" id="res-month"/>
+						<input type="hidden" name="" id="res-date" />
 						<table id="reservationTable">
 							<thead>
 								<tr>
 									<th colspan="2">
-										<input type="button" value="&lt;" class="res-dateBtn" id="res-prevDate" data-res-date="a"/>
+										<input type="button" value="&lt;" class="res-dateBtn" id="res-prevDate"/>
 									</th>
 									<th colspan="4" id="res-today"></th>
 									<th colspan="2">
-										<input type="button" value="&gt;" class="res-dateBtn" id="res-nextDate" data-res-date="b"/>
+										<input type="button" value="&gt;" class="res-dateBtn" id="res-nextDate"/>
 									</th>
 								</tr>
 								<tr>
@@ -83,7 +89,11 @@
 		shopReservationCount();
 		setDate();
 		console.log($("#res-today").text());
-		shopReservationListByDate($("#res-today").text());
+		
+		let rYear = $("#res-year").val();
+		let rMonth = $("#res-month").val();
+		let rDate = $("#res-date").val();
+		shopReservationListByDate(`\${rYear}-\${rMonth}-\${rDate}`);
 	});
 	
 	/* 예약확인 클릭 시 modal 노출 */
@@ -91,12 +101,70 @@
 		$("#listModal1").modal({backdrop:'static', keyboard:false});
 	});
 	
-	$(".res-dateBtn").click((e) => {
-		let targetDate = $(e.target).data('res-date');
-		console.log(targetDate);
-		shopReservationListByDate(targetDate);
-		$("#res-today").text(targetDate);
+	/* 다음일 버튼 클릭 이벤트 */
+	$("#res-nextDate").click((e) => {
+		let nYear = $("#res-year").val()*1;
+		let nMonth = $("#res-month").val()*1;
+		let nDate = $("#res-date").val()*1;
+		
+		let calDate = new Date(nYear, nMonth, 0);
+		
+		let targetDate;
+		if(nMonth == 12 && nDate == 31){
+			targetDate = `\${nYear+1}-1-1`;
+			shopReservationListByDate(targetDate);
+			$("#res-today").text(`\${nYear+1}년 1월 1일`);
+			$("#res-year").val(nYear+1);
+			$("#res-month").val(1);
+			$("#res-date").val(1);
+		} else if(nDate + 1 > calDate.getDate()){
+			targetDate = `\${nYear}-\${nMonth+1}-1`;
+			shopReservationListByDate(targetDate);
+			$("#res-today").text(`\${nYear}년 \${nMonth+1}월 1일`);
+			$("#res-month").val(nMonth+1);
+			$("#res-date").val(1);
+		} else{
+			targetDate = `\${nYear}-\${nMonth}-\${nDate+1}`;
+			shopReservationListByDate(targetDate);
+			$("#res-today").text(`\${nYear}년 \${nMonth}월 \${nDate+1}일`);
+			$("#res-date").val(nDate+1);			
+		}
 	});
+	
+	/* 이전일 버튼 클릭 이벤트 */
+	$("#res-prevDate").click((e) => {
+		let pYear = $("#res-year").val()*1;
+		let pMonth = $("#res-month").val()*1;
+		let pDate = $("#res-date").val()*1;
+		
+		let calDate = new Date(pYear, pMonth-1, 0);
+		console.log(calDate.getDate())
+		
+		let targetDate;
+		
+		if(pMonth == 1 && pDate == 1){
+			targetDate = `\${pYear-1}-12-31`;
+			shopReservationListByDate(targetDate);
+			$("#res-today").text(`\${pYear-1}년 12월 31일`);
+			$("#res-year").val(pYear-1);
+			$("#res-month").val(12);
+			$("#res-date").val(31);
+			console.log($("#res-date").val());
+		} else if(pDate - 1 < 1){
+			targetDate = `\${pYear}-\${pMonth-1}-\${calDate.getDate()}`;
+			shopReservationListByDate(targetDate);
+			$("#res-today").text(`\${pYear}년 \${pMonth-1}월 \${calDate.getDate()}일`);
+			$("#res-month").val(pMonth-1);
+			$("#res-date").val(calDate.getDate());
+			console.log($("#res-date").val());
+		} else{
+			targetDate = `\${pYear}-\${pMonth}-\${pDate-1}`;
+			shopReservationListByDate(targetDate);
+			$("#res-today").text(`\${pYear}년 \${pMonth}월 \${pDate-1}일`);
+			$("#res-date").val(pDate-1);			
+		}
+	});
+	
 	
 	function setDate(){
 		const today = new Date();
@@ -104,9 +172,15 @@
 		let month = today.getMonth()+1;
 		let date = today.getDate();
 		
-		$("#res-today").text(`\${year}-\${month}-\${date}`);
-		$("#res-prevDate").data('res-date', `\${year}-\${month}-\${date-1}`);
-		$("#res-nextDate").data('res-date', `\${year}-\${month}-\${date+1}`);
+		$("#res-year").val(year);
+		$("#res-month").val(month);
+		$("#res-date").val(date);
+		
+		$("#res-today").text(`\${year}년 \${month}월 \${date}일`);
+	}
+	
+	function addDate(){
+		
 	}
 	
 	function shopReservationCount(){
@@ -131,13 +205,14 @@
 			},
 			success(res){
 				$("#reservationTable tbody").empty();
-				console.log(res);
+				
+				let countNum = 0;
 				$.each(res, (i, e) => {
 					let convertDate = new Date(e.reservationDate);
 					let tr = `
 						<tr>
 							<td>
-								\${convertDate.getFullYear()}년 \${convertDate.getMonth()}월 \${convertDate.getDate()}일
+								\${convertDate.getFullYear()}년 \${convertDate.getMonth()+1}월 \${convertDate.getDate()}일
 							</td>
 							<td>
 								\${e.reservationUser}
@@ -163,7 +238,10 @@
 						</tr>
 					`;
 					$("#reservationTable tbody").append(tr);
+					countNum += 1;
 				});
+				$("#dailyResCount").text('');
+				$("#dailyResCount").text(countNum);
 			},
 			error: console.log
 		});

@@ -200,13 +200,14 @@
 				let selectMonth = $("#resMonth").val();
 				let selectYear = $("#resYear").val();
 				
+				console.log(selectMonth);
+				
 				let nowDate = new Date();
 				
-				let bool = selectMonth == nowDate.getMonth() && selectDate == nowDate.getDate();
-				
+				let bool = selectDate <= nowDate.getDate()-1 && selectMonth <= nowDate.getMonth();  
 				if(selectDate == ''){
 					alert("날짜를 선택해주세요");
-				} else if(selectDate < nowDate.getDate() && !bool) {
+				} else if(bool) {
 					alert("오늘 이전은 선택할 수 없습니다.");
 				} else{
 					modalChange(curModal, nextModal);	
