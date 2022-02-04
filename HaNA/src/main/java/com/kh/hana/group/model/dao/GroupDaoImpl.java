@@ -147,6 +147,16 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
+	public int updateGroupGrade(Map<String, Object> map) {
+		return session.update("updateGroupGrade", map);
+	}
+	
+	@Override
+	public int updateGroup(Group group) {
+		return session.update("updateGroup", group);
+	}
+		
+	@Override
 	public int deleteAllCalendar(String groupId) {
 		return session.delete("deleteAllCalendar",groupId);
 	}
@@ -161,6 +171,11 @@ public class GroupDaoImpl implements GroupDao {
 		return session.selectList("selectCalendarData",groupId);
 	}
 
+	@Override
+	public int profileImage(Group group) {
+		return session.insert("profileImage", group);
+	}
+	
 	@Override
 	public int deleteCalendarData(Map<String, Object> param) {
 		return session.delete("deleteCalendarData",param);

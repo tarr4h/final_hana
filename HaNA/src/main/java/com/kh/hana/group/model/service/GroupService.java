@@ -65,11 +65,17 @@ public interface GroupService {
 
 	int deleteGroupMember(String memberId);
 
+	int updateGroupGrade(Map<String, Object> map);
+
+	int updateGroup(Group group);
+
 	int deleteAllCalendar(String groupId);
 
 	int insertCalendarData(Map<String, Object> p);
 
 	List<GroupCalendar> selectCalendarData(String groupId);
+
+	int profileImage(Group group);
 
 	int deleteCalendarData(Map<String, Object> param);
 
