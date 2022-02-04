@@ -167,6 +167,13 @@ var hashTagData = ""; // 검색 데이터 잠시 담을 변수
 
 
 function scrollPage(){	
+	
+		//  페이지 들어 왔을때 (태그 선택 후 검색 버튼을 클릭 하지 않았을 경우) 스크롤을 하면 거리기반 매장만 뜨게 
+		if(chkClick == false) {
+			 selectDataArr.length = 0; // 태그 데이터 삭제 
+			 $("#hashTagResult").empty(); // 버튼 내역 삭제 
+		} 
+		
 		console.log("${loginMember.addressAll}");
 		var Addr_val = "${loginMember.addressAll}";
 	
@@ -203,6 +210,7 @@ function scrollPage(){
 						 tagName = list[i].TAG_NAME;
 					}
 					 
+					
 				if(tagName == null){ // 해시태그 없을때
 					if(startNum == 0 ){
 							  for(var i=0; i<endNum; i++){
@@ -229,10 +237,10 @@ function scrollPage(){
 								}
 						 	}
 						}
-				}else if (tagName != null){ // 해시태그 있을때
+				}else if (tagName != null){ // 해시태그 있을때	
 					$("#shopList").empty(); //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
-							  for(var i=0; i<endNum; i++){
+							  for(var i=0; i<list.length; i++){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
 								htmlOut += '<div class="shopProfile d-flex">';
@@ -248,7 +256,7 @@ function scrollPage(){
 								}
 							}  
 					}else{ 
-						 	for(var i=startNum; i<endNum; i++){  
+						 	for(var i=startNum; i<list.length; i++){  
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">';
 									htmlOut += '<div class="shopProfile d-flex">';
@@ -315,8 +323,12 @@ function scrollPage(){
         , autoFocus : true // 첫번째 항목 자동 포커스(기본값 : false) 
         , select: function( event, ui) {  //  리스트에서 태크 선택 하였을때 선택한 데이터에 의한 이벤트발생
         	
-        	// selectDataArr.length = 0;
-        	
+        	// 검색을 했을때는 기존에 남아 있는 selectDataArr 에 데이터들을 삭제 
+        	  if(chkClick == true) {
+        		 selectDataArr.length = 0;
+					 chkClick = false;
+        	} 
+
         	// 검색 데이터 변수에 담기  
         	hashTagData  = ui.item.value;
         	console.log("변수 " +  hashTagData)
@@ -358,13 +370,13 @@ function scrollPage(){
   
 
 // 해시 태그 선택 후 검색 버튼 클릭시 
+var chkClick = false;
 function clickList(){
+	chkClick = true;
 	$("#shopList").empty();
 	scrollPage();
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
-
-
 
 }
 
