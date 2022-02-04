@@ -571,7 +571,7 @@ function getLikeCount(){
 //좋아요 취소
 function unlike(){
 	$.ajax({
-		url:`${pageContext.request.contextPath}/member/unlike/\${boardDetail.no}`,
+		url:`${pageContext.request.contextPath}/member/unlike/\${boardDetail.no}?${_csrf.parameterName}=${_csrf.token}`,
 		method:"DELETE",
 		success(data){
 			console.log(data);
@@ -590,7 +590,7 @@ function unlike(){
 //좋아요
 function like(){
 	$.ajax({
-		url:`${pageContext.request.contextPath}/member/like`,
+		url:`${pageContext.request.contextPath}/member/like?${_csrf.parameterName}=${_csrf.token}`,
 		method:"POST",
 		data:{
 			"no":boardDetail.no

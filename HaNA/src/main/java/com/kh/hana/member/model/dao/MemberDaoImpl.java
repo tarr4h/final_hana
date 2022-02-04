@@ -161,7 +161,11 @@ public class MemberDaoImpl implements MemberDao {
 	public int deleteLikeLog(Map<String, Object> param) {
 		return session.delete("member.deleteLikeLog", param);
 	}
-	 
+
+	@Override
+	public int selectLikeCount(Map<String, Object> param) {
+		return session.selectOne("selectLikeCount",param);
+	}
 			 
 
 	

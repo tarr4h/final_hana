@@ -287,7 +287,18 @@ where
 			member_id = #{memberId}
 	</delete>
 
-
+		<select id="selectLikeCount" resultType="_int">
+	select
+		count(*)
+	from(
+		select
+			*
+		from
+			board_like
+		where
+			board_no = #{no}
+		)	
+	</select>
 
 
 </mapper>

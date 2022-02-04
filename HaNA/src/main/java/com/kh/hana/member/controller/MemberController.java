@@ -510,7 +510,17 @@ public class MemberController {
 		return ResponseEntity.ok(map);
 	}
 	
-	
+	@GetMapping("/getLikeCount/{no}")
+	public ResponseEntity<Map<String,Object>> getLikeCount(@PathVariable int no){
+		Map<String,Object> map = new HashMap<>();
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("no",no);
+		int likeCount = memberService.selectLikeCount(param);
+		map.put("likeCount",likeCount);
+		
+		return ResponseEntity.ok(map);
+	}
 	
 	
 

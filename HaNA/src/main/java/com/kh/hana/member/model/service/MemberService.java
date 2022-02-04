@@ -56,6 +56,8 @@ public interface MemberService {
 	Map<String, Object> selectOneLikeLog(Map<String, Object> param);
 
 	int deleteLikeLog(Map<String, Object> param);
+
+	int selectLikeCount(Map<String, Object> param);
  
 
 }
