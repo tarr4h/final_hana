@@ -74,5 +74,4 @@ public interface GroupService {
 
 	int deleteCalendarData(Map<String, Object> param);
 
-	List<BoardComment> selectMemberBoardCommentList(int boardNo);
 }
