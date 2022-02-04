@@ -276,7 +276,7 @@ public class MemberController {
             Board  board, 
             RedirectAttributes redirectAttr,
             Model model,
-            @RequestParam(name="uploadFile", required = false) MultipartFile[] files) throws IllegalStateException, IOException {
+            @RequestParam(name="file", required = false) MultipartFile[] files)  {
 
 		try {
 			log.info("board = {}",board);

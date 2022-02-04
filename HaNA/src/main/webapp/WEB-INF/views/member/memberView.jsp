@@ -5,6 +5,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script src="/js/summernote/summernote-lite.js"></script>
+<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+
+<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
@@ -129,32 +133,41 @@ $("#btn-follower-list").on( "click", function() {
 					<thead class="table-light">
 					</thead>
 					<tbody id="modalTbody">
-	<form:form
-		name="boardFrm" 
-		action="${pageContext.request.contextPath}/member/memberBoardEnroll?${_csrf.parameterName}=${_csrf.token}" 
-		method="post"
-		enctype="multipart/form-data">
-		<input type="text" class="form-control" name="writer" value="${loginMember.id}" readonly required>
-		<input type="hidden" name="id" value="${loginMember.id}" />
-		<br>
-		 <!-- <div class="input-group mb-3" style="padding:0px;">
-		 <div class="input-group-prepend" style="padding:0px;">
-		    <span class="input-group-text">첨부파일1</span>
-		  </div> -->
-		   
-		   
-		    <input type="file" style="display: block;"  name="uploadFile" id="input-multiple-image" class="multi" maxlength="2" 
-		    	 required> 
-		  	<br>
-		  	<div id="multiple-container">
-			</div>
-		  	<br><br>
-		</div>
-	    <textarea class="form-control" name="content" placeholder="내용을 입력하세요." rows="17" cols="15" required></textarea>
-		<br>
-				<input type="submit" class="btn btn-secondary save" value="등록하기" >
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-	</form:form>
+						 <form:form
+        action="${pageContext.request.contextPath}/member/memberBoardEnroll?${_csrf.parameterName}=${_csrf.token}"
+        method="POST"
+        enctype="multipart/form-data">
+        <table>
+            <tr>
+            <td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/></td>
+            <td><input type="hidden" value="${id}" name="id"/></td>
+            </tr>
+            <tr>
+            <td>
+                <label for="file1">첨부파일 1</label>
+                <input type="file" name="file" id="file1" onchange="setThumbnail(event);"/>
+                <div id="image_container"></div>
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <label for="file1">첨부파일 2</label>
+                <input type="file" name="file" id="file2"/>
+            </td>
+            </tr> 
+            <tr>
+            <td>
+                <label for="file1">첨부파일 3</label>
+                <input type="file" name="file" id="file3"/>
+            </td>
+            </tr> 
+            <tr>
+            <td><textarea  name="content" id="summernote"/></textarea></td>
+            </tr>
+ 
+            <tr><td><input type="submit" /></td></tr>
+        </table>
+    </form:form>
 					</tbody>
 				</table>
 			</div>
@@ -817,10 +830,30 @@ function deleteCommentFunc(no,boardNo){
 		})
 	}
 }
+ 
+$(document).ready(function() {
+	//여기 아래 부분
+	$('#summernote').summernote({
+		  height: 300,                 // 에디터 높이
+		  minHeight: null,             // 최소 높이
+		  maxHeight: null,             // 최대 높이
+		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		  lang: "ko-KR",					// 한글 설정
+		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+          
+	});
+});
 </script>
-        
-
-        
+ 
+<style>
+#boardContent {
+    width: 450px;
+    height: 400px;
+    border-radius: 10px;
+    border-color: gray;
+    border-bottom-color: gray;
+}
+</style>
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
