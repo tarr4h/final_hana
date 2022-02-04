@@ -9,10 +9,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="설정화면" name="memberSetting/"/>
 </jsp:include>
-<!-- 우측 공간확보 -->
-<section class="body-section" style="width:200px;height:100%;float:right;display:block;">
-<span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
-</section>
 <section>
 <sec:authentication property="principal" var="loginMember"/>
 
@@ -23,62 +19,29 @@
 		})
 	</script>	
 </c:if>
- 
-<div class="settingBar">
-  <a class="settingList" href="${pageContext.request.contextPath}/member/memberSetting/memberSetting">프로필편집</a>
-  <a class="settingList" href="#">비밀번호 변경</a>
-  <a class="settingList" href="#">계정 공개</a>
-  <a class="settingList" href="#">정보 공개</a>
-  <a class="settingList" href="#">예약 관리</a> 
-</div>
-  
-<style>
- .settingBar{
-    height: 60px;
-    text-align: center;
-    margin-top: 80px;
-    margin-bottom: 60px;
-    border-bottom-style: ridge;
-    }
-.settingList {
-	font-size: 16px;
-    margin-left: 34px;
-      color: black;
-    text-decoration: none;
-}
-.form-control {
-    display: block;
-    width: 450px;
-    height : 50px;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 0.25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    margin-bottom : 15px;
-} 
-.custom-select{
-	width : 450px;
-	height : 38px;
-	margin-bottom : 15px;
-}
-</style>
 
 
+
+<br><br><br>
+<div class="container">
+    <div class="row">
+    	<!-- 메뉴 영역 -->
+        <div class="col-sm-4">
+        	<ul class="list-group">
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">계정 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">정보 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">내 예약내역</li>
+			</ul>
+        </div>
+   
 <div id="enroll-container" class="mx-auto text-center">
 	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" method="POST">
 		<table class="mx-auto">
 		 <input type="hidden" name="id" value="${loginMember.id}" />
 			<tr>
-				<th>이름</th>
+				<th class="title">이름</th>
 				<td>
 					<div id="memberId-container">
 						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >
@@ -87,23 +50,24 @@
 				</td>
 			</tr>
 			<tr>
-				<th>프로필사진</th>
+				<th class="title">사진</th>
 				<td>
-					<input type="file" class="form-control" name="upFile" id="" value="파일 선택" />
+					<img src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}" alt="" style="width:30%;"/>
+					<br><br> 
+					<input type="file" class="form-control" name="upFile" id="" value="${loginMember.picture}" />
 					<input type="hidden" name="picture" value="${loginMember.picture }" />
 				</td>
 			</tr>
 		
 			<tr>
-				<th>소개</th>
+				<th class="title">소개</th>
 				<td>
 				<!-- <input type="text" class="form-control" name="introduce" id="introduce" value="${loginMember.introduce}" required> -->	
-				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="20" >  ${loginMember.introduce} </textarea>
-				
+				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="80" >  ${loginMember.introduce} </textarea>
 				</td>
 			</tr>
 			<tr>
-				<th>지역</th>
+				<th class="title">지역</th>
 	  		  	<td>	
 					<input type="text" class="form-control" id="postcode" placeholder="우편번호">
 					<input type="button" class="form-control" onclick="execDaumPostcode()" value="우편번호 찾기">
@@ -114,7 +78,7 @@
 					<input type="hidden" name="locationY" />
 				</td>
 			</tr>  
-			<tr>
+	<!-- <tr>
 				<th>내 성격</th>
 				<td>	
 					<select name="personality" id="personality" class="custom-select" required>
@@ -152,12 +116,13 @@
 				</select>
 				</td>
 			</tr> 
-
+			 -->		
 		</table>
- 
-		<input type="submit" class="btn btn-dark"></button>
-		<input type="reset" class="btn btn-dark"></button>
+		<input type="submit" class="btn btn-dark">
+		<input type="reset" class="btn btn-dark">
 	</form:form>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript" 
@@ -223,5 +188,80 @@ function execDaumPostcode() {
 }
 </script>
 
+<style>
+.col-sm-4{
+	width : 328px;
+	margin-right: -100px;
+	margin-left : -120px;
+	}
+ .settingBar{
+    height: 60px;
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 60px;
+    border-bottom-style: ridge;
+    }
+.settingList {
+	font-size: 16px;
+    margin-left: 34px;
+      color: black;
+    text-decoration: none;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: gray;
+    border-color: gray;
+    }
+.form-control {
+    display: block;
+    width: 460px;
+    height : 50px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom : 15px;
+    margin-left: 20px;
+} 
+.custom-select{
+	width : 450px;
+	height : 38px;
+	margin-bottom : 15px;
+}
+.mx-auto{
+	width : 430px;
+	padding-left:50px;
+	}
+.mx-auto text-center{
+	margin-left : 10px;}
+.row {
+   --bs-gutter-x: -15rem;
+   }
+textarea.form-control {
+    min-height: 150px;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+    text-align: center;
+}
+ 
+</style>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -44,31 +44,6 @@ public class ShopController {
     public void shopMain() {
         
     }
-    
-	/*
-	 * @GetMapping("/shopList") public ResponseEntity<?>
-	 * selectShopList(@RequestParam String id, @RequestParam String
-	 * locationX, @RequestParam String locationY) { Map<String, Object> data = new
-	 * HashMap<>(); data.put("id", id); data.put("locationX", locationX);
-	 * data.put("locationY", locationY);
-	 * 
-	 * // 8.23km내 double maxX = Double.parseDouble(locationX) + 0.0927; double maxY
-	 * = Double.parseDouble(locationY) + 0.074;
-	 * 
-	 * String maxLocationX = Double.toString(maxX); String maxLocationY =
-	 * Double.toString(maxY);
-	 * 
-	 * data.put("maxLocationX", maxLocationX); data.put("maxLocationY",
-	 * maxLocationY);
-	 * 
-	 * log.info("data = {}", data);
-	 * 
-	 * List<Map<String, Object>> shopList = shopService.selectShopList(data);
-	 * log.info("length = {}", shopList.size());
-	 * 
-	 * return ResponseEntity.ok(shopList); }
-	 */    
-    
     @GetMapping("/shopList")
     public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY) {
     	log.info("selectDataArr = {}", selectDataArr);
