@@ -12,7 +12,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import org.omg.CORBA.Request;
+// import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -374,16 +374,6 @@ public class GroupController {
 		
 		return ResponseEntity.ok(map);
 	}
-	
-//    @GetMapping("/groupMemberList/{groupId}") 
-//    public ResponseEntity<List<Map<String, Object>>> groupMemberList(@PathVariable String groupId, @AuthenticationPrincipal Member member) {
-//    		log.info("groupId ={}", groupId);
-//    		
-//    		List<Map<String, Object>> groupMemberList = groupService.groupMemberList(groupId);
-//    		log.info("groupMemberList ={}", groupMemberList);
-//    		
-//    		return ResponseEntity.ok(groupMemberList);
-//    }
     
     @GetMapping("/groupMemberList/{groupId}")
     public String groupMemberList(@PathVariable String groupId, Model model){
