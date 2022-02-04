@@ -168,6 +168,11 @@ where
 		values (seq_board_no.nextval, #{writer}, #{content}, #{picture})
 	</insert>
 
+	<update id="updateMemberProfile" parameterType="member">
+		update member
+		set picture = #{picture}
+		where id = #{id}
+	</update>
 
 	<update id="updatePassword">
 		update member
@@ -195,6 +200,7 @@ where
 		where
 			b.no = #{no}
 	</select>
+
 
 	<insert id="enrollBoardComment">
 	insert into

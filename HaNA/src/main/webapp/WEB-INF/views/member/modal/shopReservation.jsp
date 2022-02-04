@@ -113,6 +113,7 @@
 				<!-- 내용 -->
 				<div class="modal-body">
 					<table id="table-select">
+						<thead></thead>
 						<tbody></tbody>
 					</table>
 				</div>
@@ -137,6 +138,7 @@
 				<!-- 내용 -->
 				<div class="modal-body">
 					<table id="time-select">
+						<thead></thead>
 						<tbody></tbody>
 					</table>
 				</div>
@@ -198,13 +200,14 @@
 				let selectMonth = $("#resMonth").val();
 				let selectYear = $("#resYear").val();
 				
+				console.log(selectMonth);
+				
 				let nowDate = new Date();
 				
-				let bool = selectMonth == nowDate.getMonth() && selectDate == nowDate.getDate();
-				
+				let bool = selectDate <= nowDate.getDate()-1 && selectMonth <= nowDate.getMonth();  
 				if(selectDate == ''){
 					alert("날짜를 선택해주세요");
-				} else if(selectDate < nowDate.getDate() && !bool) {
+				} else if(bool) {
 					alert("오늘 이전은 선택할 수 없습니다.");
 				} else{
 					modalChange(curModal, nextModal);	
@@ -428,6 +431,7 @@
 				},
 				success(res){					
 					let tbody = $("#table-select tbody");
+					let thead = $("#table-select thead");
 					let th = `
 						<tr>
 							<th>선택</th>
@@ -438,11 +442,11 @@
 						</tr>
 					`;
 					tbody.empty();
-					
+					thead.empty();
 					if(res == ''){
 						tbody.append("예약 가능한 테이블이 존재하지 않습니다.");
 					} else{
-						tbody.append(th);
+						thead.append(th);
 						$.each(res, (i, e) => {
 							if(e.enable == 'Y'){
 								let tr = `
@@ -491,20 +495,19 @@
 				},
 				success(res){
 					$("#time-select tbody").empty();
+					$("#time-select thead").empty();
 					if(res == ''){
 						$("#time-select tbody").append("예약 가능한 시간대가 존재하지 않습니다.");
 					} else{
 						const th = `
-							<thead>
-								<tr>
-									<th>선택</th>
-									<th>시작시간</th>
-									<th>종료시간</th>
-									<th>상태</th>
-								</tr>
-							</thead>
+							<tr>
+								<th>선택</th>
+								<th>시작시간</th>
+								<th>종료시간</th>
+								<th>상태</th>
+							</tr>
 						`;
-						$("#time-select").append(th);
+						$("#time-select thead").append(th);
 						
 						$.each(res, (i, e) => {
 							let status = e.status;
