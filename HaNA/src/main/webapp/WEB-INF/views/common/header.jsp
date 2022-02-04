@@ -124,6 +124,7 @@
 		let websocket;
 		//입장 버튼을 눌렀을 때 호출되는 함수
 
+		//ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat
 		function connect(type) {
 		    // 웹소켓 주소
 		    var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat";

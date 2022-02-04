@@ -6,6 +6,8 @@ import java.util.Map;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
+import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.Member;
 
 public interface ChatService {
@@ -53,6 +55,12 @@ public interface ChatService {
 	int roomUnreadChat(Chat chat);
 
 	int insertGroupMessage22(Map<String, Object> param);
+
+	List<GroupBoard> selectListGroupBoard(String memberId);
+
+	List<Board> selectListMemberBoard(String memberId);
+
+	List<Member> recommendMemberList(String memberId);
 
 
 

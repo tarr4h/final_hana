@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupMemberList;
@@ -78,4 +79,5 @@ public interface GroupService {
 	int profileImage(Group group);
 
 	int deleteCalendarData(Map<String, Object> param);
+
 }
