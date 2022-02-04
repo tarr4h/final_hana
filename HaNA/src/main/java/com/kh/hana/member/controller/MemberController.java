@@ -3,6 +3,7 @@
  
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -275,39 +276,42 @@ public class MemberController {
             Board  board, 
             RedirectAttributes redirectAttr,
             Model model,
-            @RequestParam(name="uploadFile", required = false) MultipartFile[] uploadFiles) throws IllegalStateException, IOException {
+            @RequestParam(name="uploadFile", required = false) MultipartFile[] files) throws IllegalStateException, IOException {
 
-		String saveDirectory  = application.getRealPath("/resources/upload/member/board");
-		String[] arr = new String[2];
-        
-        for(int i = 0; i<uploadFiles.length; i++) {
-            MultipartFile uploadFile = uploadFiles[i];
-            if(!uploadFile.isEmpty()) {
-                String originalFilename = uploadFile.getOriginalFilename(); 
-                String renamedFilename = HanaUtils.rename(originalFilename);
-                File dest = new File(saveDirectory, renamedFilename);
-                uploadFile.transferTo(dest);
-                
-                log.info("ogf = {}", originalFilename);
-                
-                arr[i] = renamedFilename;
-            }
-        }
-        
-        board.setPicture(arr);
-        
-        log.info("board.getPicture()[0] ={}", board.getPicture()[0]);
-        log.info("board.getPicture()[1] ={}", board.getPicture()[1]);
-        log.info("insertMemberBoard board = {}", board);
-        
-        int result = memberService.insertMemberBoard(board);
-        String msg = result > 0 ? "게시글이 등록되었습니다." : "게시글 등록에 실패했습니다.";
-        redirectAttr.addFlashAttribute("msg",msg);
-        model.addAttribute("board", board);
-        log.info("board = {}", board);
-        return "redirect:/member/memberView/"+ member.getId();
+		try {
+			log.info("board = {}",board);
 
-    }
+			List<String> fileList = new ArrayList<>();
+			
+			for(MultipartFile file : files) {
+				if(!file.isEmpty()) {
+					String originalFilename = file.getOriginalFilename();
+					String renamedFilename = HanaUtils.rename(originalFilename);
+					String saveDirectory = application.getRealPath("/resources/upload/member/board");
+					
+					File dest = new File(saveDirectory,renamedFilename);
+					file.transferTo(dest);
+					
+					fileList.add(renamedFilename);
+				}
+			}
+			
+			log.info("fileList = {}",fileList);
+			if(!fileList.isEmpty()) {
+				String[] fileArray = fileList.toArray(new String[0]);
+				board.setPicture(fileArray);
+			}
+			
+			log.info("board = {}",board);
+			
+			int result = memberService.insertMemberBoard(board);
+			
+			return "redirect:/member/memberView/"+member.getId();
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return "redirect:/member/memberView/"+member.getId();
+		}
+	}
 	
 	@PostMapping("/testModal")
 	public void testModal(@RequestParam MultipartFile upFile) {
