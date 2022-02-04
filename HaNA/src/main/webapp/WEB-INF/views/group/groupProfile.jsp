@@ -60,7 +60,7 @@
 				<form:form action="${pageContext.request.contextPath}/group/profileImage?${_csrf.parameterName}=${_csrf.token}" id="upFileForm" accept="image/*" method="post" enctype="multipart/form-data">
 					<input type="hidden" name=groupId value="${group.groupId}"/>
 					<input type="hidden" name=image value="${group.image}"/>
-					<input type="file" name="upFile" id="file" style="display:none" onchange="upFile(value)"/>
+					<input type="file" name="upFile" id="file" style="display:none"/>
 				<div class="changeImage" onclick="onclick=document.all.file.click()" style="cursor: pointer;">
 				<img 
 					src="${pageContext.request.contextPath}/resources/images/icons/plusIcon.png"

@@ -365,7 +365,6 @@
 	where
 		group_id = #{groupId}
 	</select>
-<<<<<<< HEAD
 	
 	<insert id="profileImage">
 	update 
@@ -375,7 +374,7 @@
 	where
 		group_id = #{groupId}
 	</insert>
-=======
+
 	 <delete id="deleteCalendarData">
 	 delete from
 	 	group_calendar
@@ -390,6 +389,5 @@
 	 	and
 	 	end_=#{end}
 	 </delete>
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 </mapper>
 

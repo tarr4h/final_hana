@@ -192,13 +192,12 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-<<<<<<< HEAD
 	public int profileImage(Group group) {
 		return groupDao.profileImage(group);
-=======
+	}
+
 	public int deleteCalendarData(Map<String, Object> param) {
 		return groupDao.deleteCalendarData(param);
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	}
 
 }
