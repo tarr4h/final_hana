@@ -154,12 +154,6 @@ body {
 </style>
 <section>
 
-<c:if test="${not empty msg }">
-	<script>
-		alert("${msg}");
-	</script>
-</c:if>
-
 <div class="container mt-5">
 	<div class="row">
 		<div class="col-sm"></div>

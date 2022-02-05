@@ -50,13 +50,18 @@
 		border-radius: 100%;
 	}
 	.profileBtn{
-		border: 1px solid black;
 		width: 50px;
 		height: 50px;
 		border-radius:100%;
 		transform: translateX(80px) translateY(-50px);
 		z-index: 1;
+	}
+	.extraSet{
+		border-radius:100%;
 		background-color: white;
+	}
+	.input-file-button:hover{
+		cursor: pointer;
 	}
 	.profileBtn img {
 		width: 100%;
