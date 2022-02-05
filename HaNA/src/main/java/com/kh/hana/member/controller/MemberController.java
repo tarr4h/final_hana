@@ -31,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.HanaUtils;
-import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
@@ -93,6 +92,9 @@ public class MemberController {
 		int result = memberService.memberEnroll(member);
 		
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원가입에 성공했습니다." : "회원가입에 실패했습니다.");
+//		if(member.getAccountType() == 1) {
+//			redirectAttr.addFlashAttribute("shopGuide", )
+//		}
 		return "redirect:/member/login";					
 	}
 	
@@ -141,11 +143,8 @@ public class MemberController {
 			if(param.equals("shopInfo")) {
 				Shop shop = memberService.selectOneShopInfo(memberId);
 				log.info("shop Setting ={}", shop);
-				if(shop != null) {
-					model.addAttribute(shop);
-				} else {
-					model.addAttribute("msg", "등록된 정보가 없습니다. 매장정보를 입력해주세요.");
-				}
+				log.info("shopSetting null ? = {}", shop);
+				model.addAttribute(shop);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,34 +154,13 @@ public class MemberController {
 	
 	//정보 수정하기
 	@PostMapping("/memberUpdate")
-    public String memberUpdate(Member member, @RequestParam MultipartFile upFile,
-                                @AuthenticationPrincipal Member oldMember,
-                                RedirectAttributes redirectAttr) {
-		
-        String newProfile = upFile.getOriginalFilename();
-        
-        if(!newProfile.equals("")) {
-			String saveDirectory = application.getRealPath("/resources/upload/member/profile");
-			File file = new	File(saveDirectory, member.getPicture());
-			file.delete();
-			  
-			String renamedFilename = HanaUtils.rename(newProfile);
-			File regFile = new File(saveDirectory, renamedFilename);
-			  
-			try {
-				upFile.transferTo(regFile);
-			} catch (IllegalStateException | IOException e) {
-				log.error(e.getMessage(), e);
-			}
-			  
-			member.setPicture(renamedFilename);	
-		}
+    public String memberUpdate(Member member, @AuthenticationPrincipal Member oldMember, RedirectAttributes redirectAttr) {
+		log.info("memberUpdate member = {}", member);
         
         int result = memberService.updateMember(member, oldMember);
 
         //spring-security memberController memberUpdate쪽
-        oldMember.setName(member.getName());
-		oldMember.setPicture(member.getPicture());			
+        oldMember.setName(member.getName());	
         oldMember.setIntroduce(member.getIntroduce());
         oldMember.setAddressFull(member.getAddressFull());
         oldMember.setAddressAll(member.getAddressAll());
@@ -190,16 +168,9 @@ public class MemberController {
         oldMember.setInterest(member.getInterest());
         oldMember.setLocationX(member.getLocationX());
         oldMember.setLocationY(member.getLocationY());
-
-//    	Authentication newAuthentication = 
-//				new UsernamePasswordAuthenticationToken(
-//						oldMember, 
-//						oldMember.getPassword());
-//		
-//		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-//        
+        
         redirectAttr.addFlashAttribute("msg", result > 0? "프로필 편집에 성공했습니다." : "프로필 편집에 실패했습니다.");
-        if(member.getAccountType() != 1) {
+        if(oldMember.getAccountType() == 1) {
         	return "redirect:/member/memberSetting/memberSetting";        	
         } else {
     		return "redirect:/member/shopSetting/personal";
@@ -315,8 +286,6 @@ public class MemberController {
 
 	@PostMapping("/profileUpdate")
 	public String profileUpdate(@RequestParam MultipartFile upFile, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
-		log.info("upFile = {}", upFile);
-		log.info("file ofn = {}", upFile.getOriginalFilename());
 		String memberId = member.getId();
 		
 		log.info("member oldpic = {}", member.getPicture());
@@ -338,11 +307,13 @@ public class MemberController {
 		
 		int result = memberService.updateMemberProfile(member);
 		
-		log.info("profileUpdateResult = {}", result);
-		
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "프로필사진이 업데이트 되었습니다." : "프로필 사진 업데이트 실패");
 		
-		return "redirect:/member/shopView/"+memberId;
+		if(member.getAccountType() == 1) {
+			return "redirect:/member/memberView/"+memberId;
+		} else {
+			return "redirect:/member/shopView/"+memberId;			
+		}
 	}
 	
 	

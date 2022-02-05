@@ -45,17 +45,18 @@
 		border-radius: 100%;
 	}
 	.profileBtn{
-		/* border: 1px solid black; */
 		width: 50px;
 		height: 50px;
 		border-radius:100%;
 		transform: translateX(80px) translateY(-50px);
 		z-index: 1;
-/* 		background-color: white; */
 	}
 	.extraSet{
 		border-radius:100%;
 		background-color: white;
+	}
+	.input-file-button:hover{
+		cursor: pointer;
 	}
 	.profileBtn img {
 		width: 100%;
@@ -285,6 +286,7 @@
 		$("#reviewTabBtn").removeClass("active");
 	});
 
+	/* profile 사진 업데이트 */
 	$(".input-file-button").click((e) => {
 		if(!confirm("파일을 등록하시겠습니까?")){
 			return false;

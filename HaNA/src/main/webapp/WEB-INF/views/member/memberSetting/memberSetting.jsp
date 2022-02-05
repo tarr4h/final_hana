@@ -32,7 +32,7 @@
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">계정 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">정보 공개</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">내 예약내역</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
         </div>
    
@@ -48,17 +48,7 @@
 					 				
 					</div>
 				</td>
-			</tr>
-			<tr>
-				<th class="title">사진</th>
-				<td>
-					<img src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}" alt="" style="width:30%;"/>
-					<br><br> 
-					<input type="file" class="form-control" name="upFile" id="" value="${loginMember.picture}" />
-					<input type="hidden" name="picture" value="${loginMember.picture }" />
-				</td>
-			</tr>
-		
+			</tr>		
 			<tr>
 				<th class="title">소개</th>
 				<td>
