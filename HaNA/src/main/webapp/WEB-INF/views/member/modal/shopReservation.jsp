@@ -204,7 +204,7 @@
 				
 				let nowDate = new Date();
 				
-				let bool = selectDate <= nowDate.getDate()-1 && selectMonth <= nowDate.getMonth();  
+				let bool = selectDate <= nowDate.getDate()-1 && selectMonth <= nowDate.getMonth() && selectYear <= nowDate.getFullYear();  
 				if(selectDate == ''){
 					alert("날짜를 선택해주세요");
 				} else if(bool) {

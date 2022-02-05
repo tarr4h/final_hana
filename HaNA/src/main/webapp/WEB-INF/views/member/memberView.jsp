@@ -38,8 +38,17 @@
         		<img src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.picture}" alt=""/>
         	</div>
         	<div class="profileBtn">
-        		<!-- (+)버튼을 이미지로 넣고, 클릭 시 변경 이벤트 걸기 -->
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png" alt="" />
+    		 	<c:if test="${loginMember.id.equals(member.id) }">
+        		<div class="extraSet">
+        		<!-- (+)버튼을 -->
+        		<form:form name="profileUpdateFrm" action="${pageContext.request.contextPath }/member/profileUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+	        		<label class="input-file-button" for="input-file">
+	        			<img src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png" alt="" />
+	        		</label>
+	        		<input type="file" name="upFile" id="input-file" style="display:none;"/>
+        		</form:form>
+        		</div>
+        		</c:if>
         	</div>
         </div>
         <!-- 프로필 세부정보 영역 -->
@@ -280,6 +289,16 @@ function goMemberView(memberId){
 function goSetting(){
 	location.href = "${pageContext.request.contextPath}/member/memberSetting/memberSetting";
 }
+/* profile 사진 업데이트 */
+$(".input-file-button").click((e) => {
+	if(!confirm("파일을 등록하시겠습니까?")){
+		return false;
+	};
+});
+$("#input-file").change((e) => {
+	console.log("파일등록");
+	$(document.profileUpdateFrm).submit();
+});
 </script>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 

@@ -13,7 +13,6 @@
 	<update id="updateMember">
 		 update member set
 			 name = #{name},
-			 picture = #{picture},
 			 address_full = #{addressFull},
 			 address_all = #{addressAll},
 			 introduce = #{introduce},
