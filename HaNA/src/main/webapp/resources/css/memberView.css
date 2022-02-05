@@ -32,6 +32,7 @@
 		width: 50px;
 		border-radius: 100%;
 		border: none;
+		margin-top: -60px;
 	}
 	#settingBtn img {
 		width: 130%;
@@ -162,7 +163,7 @@
 }
 #settingBtn img {
     width: 130%;
-   	margin-top: -120px;
+    
 }
 .thumbnail {
     height: 300px;
