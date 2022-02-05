@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.ServletContext;
 
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -507,28 +504,28 @@ public class GroupController {
 		model.addAttribute("locaInfo",locaInfo);
 		return "/group/locationBoardPage";
 	}
-	// 등급 수정
-	@PostMapping("/updateGroupGrade")
-	public String updateGroupGrade (
-				@RequestParam(name="groupId") String groupId, 
-				@RequestParam(name="memberId") String memberId, 
-				@RequestParam(name="memberLevelCode") String memberLevelCode,
-				@RequestParam Map<String, Object> map,
-				@AuthenticationPrincipal GroupMemberList groupMemberList
-				) {
-		
-		log.info("groupId = {}", groupId);
-		log.info("memberId = {}", memberId);
-		log.info("memberLevelCode = {}", memberLevelCode);
-		log.info("map = {}", map);
-		
-		int result = groupService.updateGroupGrade(map);
-		log.info("map ={}", map);
-		String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
-		log.info("msg ={}", msg);
-		
-		return "redirect:/group/groupMemberList/"+groupId;
-	}
+// 등급 수정
+		@PostMapping("/updateGroupGrade")
+		public String updateGroupGrade (
+					@RequestParam(name="groupId") String groupId, 
+					@RequestParam(name="memberId") String memberId, 
+					@RequestParam(name="memberLevelCode") String memberLevelCode,
+					@RequestParam Map<String, Object> map,
+					@AuthenticationPrincipal GroupMemberList groupMemberList
+					) {
+			
+			log.info("groupId = {}", groupId);
+			log.info("memberId = {}", memberId);
+			log.info("memberLevelCode = {}", memberLevelCode);
+			log.info("map = {}", map);
+			
+			int result = groupService.updateGroupGrade(map);
+			log.info("map ={}", map);
+			String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
+			log.info("msg ={}", msg);
+			
+			return "redirect:/group/groupMemberList/"+groupId;
+		}
 		
 		
 	@GetMapping("/groupSetting")
@@ -540,7 +537,6 @@ public class GroupController {
     	model.addAttribute(group);
 	}
 	
-	// 프로필 수정
 	@PostMapping("/groupUpdate")
 	public String groupUpdate(Group group, @RequestParam MultipartFile upFile,
 								RedirectAttributes redirectAttr) {
@@ -600,6 +596,7 @@ public class GroupController {
 		log.info("groupId={}", group.getGroupId());
 		return "redirect:/group/groupPage/"+group.getGroupId();
 	}
+	
 
 }
 
