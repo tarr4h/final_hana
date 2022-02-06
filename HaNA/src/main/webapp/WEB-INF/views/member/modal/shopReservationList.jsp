@@ -179,10 +179,6 @@
 		$("#res-today").text(`\${year}년 \${month}월 \${date}일`);
 	}
 	
-	function addDate(){
-		
-	}
-	
 	function shopReservationCount(){
 		$.ajax({
 			url: '${pageContext.request.contextPath}/shop/shopReservationCount',
@@ -200,7 +196,7 @@
 		$.ajax({
 			url: '${pageContext.request.contextPath}/shop/selectShopReservationListByDate',
 			data:{
-				shopId: '${loginMember.id}',
+				id: '${loginMember.id}',
 				date
 			},
 			success(res){

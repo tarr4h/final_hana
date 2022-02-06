@@ -32,4 +32,8 @@ public interface ShopService {
 
 	List<Reservation> selectShopReservationListByDate(Map<String, Object> map);
 
+	Map<String, Object> selectMyReservationList(Map<String, Object> map);
+
+	int deleteReservation(String reservationNo);
+
 }
