@@ -116,6 +116,9 @@ create table mbti_data(
 select * from mbti_data  where member_id ='k33';
 commit;
 
+constraint fk_code foreign key(tag_id)
+         references hashtag(tag_id) on delete cascade
+
 
 
 select * from hashtag;
@@ -158,7 +161,13 @@ from
 where member_id = 'shop111';
 
 
+create table ranking ( 
+	tag_id varchar2(50),   	 
+	tag_date date,		
+	constraint tag_ranking_fk foreign key(tag_id)
+        references hashtag(tag_id) on delete cascade
+);
 
-  
+  select *from ranking;
 
 

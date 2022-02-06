@@ -353,7 +353,7 @@ function scrollPage(){
         	// input에 있는 text  사라지게
         	$("#searchInput").val('');
         	selectDataArr.push(hashTagData);
-        	console.log("selectDataArr" + selectDataArr)
+        	
         	
         }
         
@@ -381,6 +381,24 @@ function clickList(){
 	scrollPage();
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
+	
+	console.log("selectDataArr" + selectDataArr)
+	var today = new Date();
+	// 날짜
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+	var dateString = year + '-' + month  + '-' + day;
+	console.log(dateString);
+	
+	// 시간 
+	var hours = ('0' + today.getHours()).slice(-2); 
+	var minutes = ('0' + today.getMinutes()).slice(-2);
+	var seconds = ('0' + today.getSeconds()).slice(-2); 
+	var timeString = hours + ':' + minutes  + ':' + seconds;
+	console.log(timeString);
+
+	
 
 }
 
