@@ -206,4 +206,28 @@
 			and
 			to_date(reservation_date) = #{date}
 	</select>
+	
+	<select id="selectMyReservationList" parameterType="map" resultType="reservation">
+		select
+			*
+		from
+			shop_table_reservation
+		where
+			reservation_user = #{id}
+			<if test="state == 1">
+				and
+				reservation_date > sysdate - 1
+			</if>
+			<if test="state == 0">
+				and
+				reservation_date <![CDATA[<]]> sysdate
+			</if>
+		order by
+			reservation_date
+	</select>
+	
+	<delete id="deleteReservation" parameterType="string">
+		delete from shop_table_reservation
+		where reservation_no = #{reservationNo}
+	</delete>
 </mapper>
