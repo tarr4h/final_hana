@@ -76,7 +76,18 @@
 				</tbody>
 			</table>
 		</div>
-
+		
+		<!-- 거리 설정 영역 -->
+		<div class="row searchArea my-0">
+			<div style="float:left;">
+				<label for="dis1">8km</label>
+				<input type="radio" name="maxDistance" id="dis1" value="8" checked/>
+				<label for="dis2">4km</label>
+				<input type="radio" name="maxDistance" id="dis2" value="4"/>
+				<label for="dis3">2km</label>
+				<input type="radio" name="maxDistance" id="dis3" value="2"/>
+			</div>
+		</div>
 		<!-- 검색 영역 -->
 		<div class="row searchArea my-0">
 			<nav class="navbar navbar-light bg-light justify-content-end">
@@ -158,6 +169,8 @@
 
 <script>
 
+
+
 var loading = false;
 var page = 1;
 var endNum = 6;
@@ -173,8 +186,7 @@ function scrollPage(){
 			 selectDataArr.length = 0; // 태그 데이터 삭제 
 			 $("#hashTagResult").empty(); // 버튼 내역 삭제 
 		} 
-		
-		console.log("${loginMember.addressAll}");
+
 		var Addr_val = "${loginMember.addressAll}";
 	
 		// 도로명 주소를 좌표 값으로 변환(API)
@@ -198,6 +210,7 @@ function scrollPage(){
 						id : "${loginMember.id}",
 						locationX : x,
 						locationY : y,
+						maxDistance : $("[name=maxDistance]:checked").val(),
 						selectDataArr : selectDataArr
 				},
 				success(res){	
@@ -381,10 +394,13 @@ function clickList(){
 	scrollPage();
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
+};
 
-}
-
-
+$("[name=maxDistance]").change((e) => {
+	console.log($("[name=maxDistance]:checked").val());
+	$("#shopList").empty();
+	/* scrollPage(); */
+});
 </script>
 
 </section>

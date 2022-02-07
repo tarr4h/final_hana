@@ -42,9 +42,9 @@
         	<ul class="list-group">
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ '">계정 공개</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/ ">정보 공개</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/myReservationList'">내 예약내역</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member// '">계정 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member// ">정보 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
         </div>
         <div class="col-sm-8">
@@ -73,17 +73,7 @@
 			<div class="myResListArea">
 				<table id="myReservationTable">
 					<thead>
-						<tr>
-							<th></th>
-						</tr>
-						<tr>
-							<th>예약일</th>
-							<th>업체</th>
-							<th>시간</th>
-							<th>인원</th>
-							<th>공유하기</th>
-							<th>취소하기</th>
-						</tr>
+
 					</thead>
 					<tbody></tbody>
 				</table>
@@ -124,6 +114,7 @@
 	});
 	
 	/* 현재 이후 일자별 예약 내역 ajax */
+	/* state : 1 - 현재+미래, 0 - 과거 */
 	function myPresentReservation(cPage){
 		$.ajax({
 			url: '${pageContext.request.contextPath}/shop/myReservation',
@@ -133,8 +124,39 @@
 				cPage
 			},
 			success(res){
+				let date = new Date();
+				let month = date.getMonth()+1;
+				let date_ = date.getDate();
+				let hours;
+				let minutes;
+				if(date.getHours() < 10){
+					hours = `0\${date.getHours()}`;
+				} else {
+					hours = date.getHours();
+				};
+				if(date.getMinutes() < 10){
+					minutes = `0\${date.getMinutes()}`;
+				} else {
+					minutes = date.getMinutes();
+				}
+				
+				let dateSet = `\${hours}:\${minutes}`;
+				
 				$("#myReservationTable tbody").empty();
+				$("#myReservationTable thead").empty();
 				$(".pageBar").text('');
+				let thead = `
+					<tr>
+						<th>예약일</th>
+						<th>업체</th>
+						<th>시간</th>
+						<th>인원</th>
+						<th>상태</th>
+						<th>공유하기</th>
+						<th>취소하기</th>
+					</tr>
+				`;
+				$("#myReservationTable thead").append(thead);
 				$.each(res.myList, (i, e) => {
 					let resDate = new Date(e.reservationDate);
 					let tr = `
@@ -143,19 +165,23 @@
 							<td>\${e.shopId}</td>
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
 							<td>\${e.visitorCount}명</td>
+							<td>\${e.reservationStatus}</td>
 							<td>
 								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}');"/>
 							</td>
 							<td>
-								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservationModal('\${e.reservationNo}');"/>
+								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
 							</td>
 						</tr>
 					`;
 					$("#myReservationTable tbody").append(tr);
-					if(e.reservationUser != '${loginMember.id}'){
+					let userBool = e.reservationUser != '${loginMember.id}';
+					let statusBool = e.reservationStatus == '예약취소';
+					let timeBool = dateSet >= e.timeStart && month == resDate.getMonth()+1 && date_ == resDate.getDate();
+					if(userBool || statusBool || timeBool){
 						$("#myReservationTable tbody").find(".cancleResBtn:last").prop('disabled', 'true');
 						$("#myReservationTable tbody").find(".shareResBtn:last").prop('disabled', 'true');
-					};
+					}
 				});
 				
 				$(".pageBar").append(res.pageBar);
@@ -176,7 +202,18 @@
 			},
 			success(res){
 				$("#myReservationTable tbody").empty();
+				$("#myReservationTable thead").empty();
 				$(".pageBar").text('');
+				let thead = `
+					<tr>
+						<th>예약일</th>
+						<th>업체</th>
+						<th>시간</th>
+						<th>인원</th>
+						<th>후기 작성하기</th>
+					</tr>
+				`;
+				$("#myReservationTable thead").append(thead);
 				$.each(res.myList, (i, e) => {
 					let resDate = new Date(e.reservationDate);
 					let tr = `
@@ -186,14 +223,14 @@
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
 							<td>\${e.visitorCount}명</td>
 							<td>
-								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" disabled/>
-							</td>
-							<td>
-								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" disabled/>
+								<input type="button" value="후기 작성" class="reviewBtn" data-rs-no="\${e.reservationNo}"/>
 							</td>
 						</tr>
 					`;
 					$("#myReservationTable tbody").append(tr);
+					if(e.reviewStatus == 'Y'){
+						$("#myReservationTable tbody").find(".reviewBtn:last").prop('disabled', 'true');
+					}
 				});
 				$(".pageBar").append(res.pageBar);
 			},
@@ -204,21 +241,20 @@
 	/* 예약 취소 : 본인에게만 취소 활성화 */
 	function cancleReservation(reservationNo){
 		console.log(reservationNo);
-		if(!confirm('해당 예약을 삭제하시겠습니까?')){
+		if(!confirm('해당 예약을 취소하시겠습니까?')){
 			return false;
 		}
 		$.ajax({
 			url: '${pageContext.request.contextPath}/shop/cancleReservation?${_csrf.parameterName}=${_csrf.token}',
-			method: 'DELETE',
+			method: 'PUT',
 			data: reservationNo,
 			success(res){
-				console.log(res);
 				if(res == 1){
-					$(`.cancleResBtn[data-rs-no=\${reservationNo}]`).parent().parent().remove();
-					alert("삭제되었습니다.");
+					alert("취소되었습니다.");
 				} else {
-					alert("삭제에 실패했습니다.");
+					alert("취소 실패했습니다.");
 				}
+				location.reload();
 			},
 			error: console.log
 		});
