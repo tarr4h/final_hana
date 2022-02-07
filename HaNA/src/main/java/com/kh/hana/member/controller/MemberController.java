@@ -305,7 +305,7 @@ public class MemberController {
 	
 	//게시글작성2
 	@PostMapping("/insertBoard")
-	public String insertBoard(Board board, @RequestParam(value="upFile") MultipartFile[] upFiles, RedirectAttributes redirectAttr) {
+	public String insertBoard(Board board, @RequestParam(value="upFile") MultipartFile[] upFiles, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
 		String[] picArr = new String[upFiles.length];
 		String saveDirectory = application.getRealPath("/resources/upload/member/board");
 		
@@ -325,15 +325,16 @@ public class MemberController {
 		board.setPicture(picArr);
 		
 		int result = memberService.insertMemberBoard(board);
-		String msg = "";
-		if(result > 0) {
-			msg = "게시글이 등록되었습니다.";
-		} else {
-			msg = "등록 실패";
-		};
+		String msg = result > 0 ? "게시글이 등록되었습니다." : "등록 실패";
+		
 		redirectAttr.addFlashAttribute("msg", msg);
 		
-		return "redirect:/member/memberView/"+board.getWriter();
+		if(member.getAccountType() == 1) {
+			return "redirect:/member/memberView/"+member.getId();			
+		} else {
+			return "redirect:/member/shopView/"+member.getId();
+		}
+		
 	};
 
 	@PostMapping("/profileUpdate")
