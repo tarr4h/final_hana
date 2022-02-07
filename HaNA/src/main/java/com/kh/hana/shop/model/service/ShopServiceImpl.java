@@ -145,6 +145,16 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.selectShopReservationListByDate(map);
 	}
 
+	@Override
+	public Map<String, Object> selectMyReservationList(Map<String, Object> map) {
+		return shopDao.selecetMyReservationList(map);
+	}
+
+	@Override
+	public int deleteReservation(String reservationNo) {
+		return shopDao.deleteReservation(reservationNo);
+	}
+
 
 	
 

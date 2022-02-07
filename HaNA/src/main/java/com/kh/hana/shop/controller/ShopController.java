@@ -8,12 +8,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.CreateCalendar;
+import com.kh.hana.common.util.HanaUtils;
+import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.service.ShopService;
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
@@ -204,7 +205,7 @@ public class ShopController {
 		    			timeMap.put("status", res.getReservationStatus());
 		    		}
 		    	}
-				
+		    	
 				timeMapList.add(timeMap);
 			}
 		} catch (ParseException e) {
@@ -232,33 +233,70 @@ public class ShopController {
     
     @GetMapping("/createCalendar")
     @ResponseBody
-    public ResponseEntity<?> createCalendar(@RequestParam int year, @RequestParam int month){
-    	log.info("year, month = {}, {}", year, month);
-    	
+    public ResponseEntity<?> createCalendar(@RequestParam int year, @RequestParam int month){    	
     	Map<String, Object> map = CreateCalendar.createCalendar(year, month);
-    	log.info("map = {}", map);
     	
     	return ResponseEntity.ok(map);
     }
     
     @GetMapping("/shopReservationCount")
     public ResponseEntity<?> shopReservationCount(@RequestParam String shopId){
-    	log.info("shopId for count = {}", shopId);
     	int count = shopService.shopReservationCount(shopId);
-    	log.info("count = {}", count);
     	return ResponseEntity.ok(count);
     }
     
     @GetMapping("/selectShopReservationListByDate")
-    public ResponseEntity<?> selectShopReservationListByDate(@RequestParam String date, @RequestParam String shopId){    	
+    public ResponseEntity<?> selectShopReservationListByDate(@RequestParam String date, @RequestParam String id){    	
     	Map<String, Object> map = new HashMap<>();
     	map.put("date", date);
-    	map.put("shopId", shopId);
+    	map.put("shopId", id);
     	
     	List<Reservation> reservationList = shopService.selectShopReservationListByDate(map);
     	log.info("reservationList by Date = {}", reservationList);
     	
     	return ResponseEntity.ok(reservationList);
+    }
+    
+    @GetMapping("/myReservation")
+    public ResponseEntity<?> selectMyReservation(@RequestParam int state, @RequestParam(defaultValue="1") int cPage, @AuthenticationPrincipal Member member){
+    	int limit = 10;
+    	int offset = (cPage -1) * limit;
+    	
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("state", state);
+    	map.put("id", member.getId());
+    	map.put("limit", limit);
+    	map.put("offset", offset);
+    	
+    	 
+    	Map<String, Object> myList = shopService.selectMyReservationList(map);
+    	int totalBoardCount = (int) myList.get("totalBoard");
+    	log.info("totalBoardCount = {}", totalBoardCount);
+    	
+    	String func = "";
+    	if(state == 1) {
+    		func = "myPresentReservation";
+    	} else {
+    		func = "myPastReservation";
+    	}
+    	
+    	String pageBar = HanaUtils.getPagebarAjax(cPage, 10, totalBoardCount, func);
+    	
+    	Map<String, Object> result = new HashMap<>();
+    	result.put("myList", myList.get("rowBoundsReservation"));
+    	result.put("pageBar", pageBar);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+    @DeleteMapping(value="/cancleReservation")
+    public ResponseEntity<?> deleteReservation(@RequestBody String reservationNo) {
+    	
+    	log.info("resNo = {}", reservationNo);
+    	
+    	int result = shopService.deleteReservation(reservationNo);
+    	
+    	return ResponseEntity.ok(result);
     }
     
     @InitBinder

@@ -200,8 +200,6 @@
 				let selectMonth = $("#resMonth").val();
 				let selectYear = $("#resYear").val();
 				
-				console.log(selectMonth);
-				
 				let nowDate = new Date();
 				
 				let bool = selectDate <= nowDate.getDate()-1 && selectMonth <= nowDate.getMonth() && selectYear <= nowDate.getFullYear();  
@@ -395,7 +393,6 @@
 							$("#calendarTable tbody").append(tdNormal);
 						}
 						
-						
 						if(startDow%7 == 0){
 							$("#calendarTable tbody").append("</tr><tr>");
 						};
@@ -496,6 +493,22 @@
 				success(res){
 					$("#time-select tbody").empty();
 					$("#time-select thead").empty();
+					
+					let nowDate = new Date();
+					let nowHours;
+					let nowMinutes;
+					if(nowDate.getHours() < 10){
+						nowHours = `0\${nowDate.getHours()}`; 
+					} else{
+						nowHours = nowDate.getHours();
+					}
+					if(nowDate.getMinutes() < 10){
+						nowMinutes = `0\${nowDate.getMinutes()}`;
+					} else{
+						nowMinutes = nowDate.getMinutes();
+					}
+					
+					let nowDateSet = `\${nowHours}:\${nowMinutes}`;
 					if(res == ''){
 						$("#time-select tbody").append("예약 가능한 시간대가 존재하지 않습니다.");
 					} else{
@@ -526,7 +539,11 @@
 									<td>\${status}</td>
 								</tr>
 							`;
-							$("#time-select tbody").append(tr);
+							let bool = (nowDate.getMonth()+1 >= reqMonth) && (nowDate.getDate() >= reqDate) && (nowDateSet >= e.startTime);
+							console.log(!bool);
+							if(!bool){
+								$("#time-select tbody").append(tr);
+							}
 						});				
 					}		
 				},

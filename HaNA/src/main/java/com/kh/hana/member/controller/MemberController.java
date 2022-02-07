@@ -132,7 +132,6 @@ public class MemberController {
 	
 	@GetMapping("/memberSetting/{param}")
 	public void memberSetting(@PathVariable String param) {
-
 	}
 	
 	@GetMapping("/shopSetting/{param}")
