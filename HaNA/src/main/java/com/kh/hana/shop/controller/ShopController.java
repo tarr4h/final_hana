@@ -141,14 +141,11 @@ public class ShopController {
     @DeleteMapping(value="/deleteShopTable", produces="application/text;charset=utf8")
     @ResponseBody
     public ResponseEntity<?> deleteShopTable(@RequestBody Table table){
-    	
     	String tableId = table.getTableId();
-    	log.info("tableId = {}", tableId);
     	
     	int result = shopService.deleteShopTable(tableId);
-    	log.info("result = {}", result);
     	 
-    	return ResponseEntity.ok().build();
+    	return ResponseEntity.ok(result);
     }
     
     @PutMapping(value="/updateShopTable", produces="application/text;charset=utf8")
