@@ -545,18 +545,18 @@ public class MemberController {
 	
 	//계정 비공개
 	@PostMapping("/accountPrivate")
-	 public String checkAccountPrivate(@RequestParam String id, @RequestParam String accountCheck){
+	 public String checkAccountPrivate(@RequestParam String id, @RequestParam int accountCheck, Model model){
     	
     	try{
     		log.info("checkAccountPrivate.member.id = {}",id);
-    		log.info("checkAccountPrivate.account = {}",accountCheck);
+    		log.info("checkAccountPrivate.accountCheck = {}",accountCheck);
     		
     		Map<String,Object> map = new HashMap<>();
     		map.put("id",id);
     		map.put("accountCheck",accountCheck);
     		
     		int result = memberService.checkAccountPrivate(map);
-    		
+    		model.addAttribute("map",map);
     		
     	}catch(Exception e) {
     		log.error(e.getMessage(),e);

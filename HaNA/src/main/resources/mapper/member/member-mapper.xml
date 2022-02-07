@@ -95,6 +95,7 @@
 		on m.id = p.member_id
 			full outer join interest i
 		on m.id = i.member_id
+			
 		where
 			id = #{id}
 	</select>

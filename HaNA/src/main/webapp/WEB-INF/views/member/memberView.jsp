@@ -23,14 +23,20 @@
 	crossorigin="anonymous">
 </script>
 <sec:authentication property="principal" var="loginMember"/>
-
+ 
 <c:if test="${not empty msg}">
 	<script>
 	alert("${msg}");
 	</script>
 </c:if>
+		<c:choose>
+    		<c:when test="${accountCheck ==2}" >
+    	 	<span>비공개계정입니다.</span>
+    		</c:when>
+    	  <c:otherwise>
 <div class="container mt-2">
     <div class="row" id="myInfo">
+    	
     	<!-- 프로필이미지 영역 -->
         <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
         	<div class="profileImg d-flex">
@@ -59,7 +65,7 @@
         	&nbsp;&nbsp;&nbsp;&nbsp; 
         	<span class="followTitle">팔로워 : </span>
         	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button> 
- 					
+	
 <script>
 $("#btn-following-list").on( "click", function() {
     $("#test_modal").modal();
@@ -203,7 +209,8 @@ $("#btn-follower-list").on( "click", function() {
 	        </c:forEach>
 	    </div>
 	</div>
-
+ 	</c:otherwise>
+ 	</c:choose>	
 <script>
 let boardDetail;
 let newContent;
