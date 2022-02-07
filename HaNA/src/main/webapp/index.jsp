@@ -11,8 +11,10 @@
 </jsp:include>
 
 <!-- chatcontroller 맨 밑에서 requestmapping -->
+
 <sec:authorize access="isAuthenticated()">
 <jsp:forward page="/common/main.do"/>
 </sec:authorize>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

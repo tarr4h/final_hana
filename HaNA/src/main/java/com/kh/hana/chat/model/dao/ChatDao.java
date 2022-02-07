@@ -70,5 +70,7 @@ public interface ChatDao {
 
 	List<Member> groupRecommendList(String memberId);
 
+	int insertShareMessage(Map<String, Object> param);
+
 
 }
