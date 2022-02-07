@@ -10,7 +10,7 @@ import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 import com.kh.hana.group.model.vo.GroupMemberList;
-import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupCalendar;
 
 
@@ -22,15 +22,15 @@ public interface GroupService {
 
 	List<Group> selectGroupList(Member member);
 
-	int insertGroupBoard(GroupBoardEntity groupBoard);
+	int insertGroupBoard(GroupBoard groupBoard);
 
 	GroupBoard selectOneBoard(int no);
 
-	List<Member> selectTagMemberList(GroupBoardEntity groupBoard);
+	List<Member> selectTagMemberList(GroupBoard groupBoard);
 
 	List<Map<String,String>> selectGroupMemberList(String groupId);
 
-	List<GroupBoardEntity> selectGroupBoardList(String groupId);
+	List<GroupBoard> selectGroupBoardList(String groupId);
 
 	int insertGroupBoardComment(GroupBoardComment groupBoardComment);
 
@@ -80,4 +80,5 @@ public interface GroupService {
 
 	int deleteCalendarData(Map<String, Object> param);
 
+	List<GroupBoard> selectGroupBoardListByLocation(GroupBoard groupBoard);
 }

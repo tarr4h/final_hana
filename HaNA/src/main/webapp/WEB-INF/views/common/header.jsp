@@ -21,7 +21,7 @@
 
 <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
 <style>
-	.section-over-div {min-height : 1000px;}
+	.section-over-div {min-height : 100vw;}
 	.navbar-expand-lg { height : 10em;}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
@@ -34,6 +34,15 @@
 		location.href = '${pageContext.request.contextPath}/member/login';
 	</script>
 </c:if>
+<script>
+//ajax POST 요청 csrf
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+	    if (options['type'].toLowerCase() === "post" || options['type'].toLowerCase() === "delete" || options['type'].toLowerCase() === "put") {
+	        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+	    }
+	  });
+</script>
 </head>
 <body>
 	<sec:authentication property="principal" var="loginMember"/>	
