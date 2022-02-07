@@ -50,6 +50,9 @@
 	<logger name="com.kh.hana.common.aspect">
 		<level value="info"/>
 	</logger>
+	<logger name="com.kh.hana.common.interceptor">
+		<level value="info"/>
+	</logger>
 	
 	<logger name="com.kh.hana.chat">
 		<level value="warn" />
