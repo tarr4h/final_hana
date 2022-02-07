@@ -7,14 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CalculateArea {
 
-	
-	public static boolean calculateArea(String X, String Y, String A, String B) {
+	// X, Y : 기준 locationX, locationY - A, B : 비교할 locationX, locationY
+	public static boolean calculateArea(String X, String Y, String A, String B, int limit) {
 		
 		String lo1X = X;
 		String lo1Y = Y;
 		String lo2X = A;
 		String lo2Y = B;
 		
+		if(X == A && Y == B) {
+			return true;
+		}
 		
 		BigDecimal aX1 = BigDecimal.valueOf(Double.parseDouble(lo1X));
 		BigDecimal aY1 = BigDecimal.valueOf(Double.parseDouble(lo1Y));
@@ -44,17 +47,7 @@ public class CalculateArea {
 		double ycCal = (ybCal - yb) * 60;
 		String ycCal2 = Double.toString(ycCal);
 		double yc = Double.parseDouble(ycCal2);
-		 
-		
-//		log.info("xa = {} ", xa);
-//		log.info("xb = {} ", xb);
-//		log.info("xc = {} ", xc);
-//				
-//		log.info("ya = {}", ya);
-//		log.info("yb = {}", yb);
-//		log.info("yc = {}", yc);
-		
-	
+
 		double result1 = (xa * 88.9) + (xb * 1.48) + (xc * 0.025);
 		double result2 = (ya * 111.3) + (yb * 1.86) + (yc * 0.031);
 		
@@ -62,10 +55,9 @@ public class CalculateArea {
 		double finalResult = Math.sqrt((result1 * result1) + (result2 * result2));
 		
 		log.info("finalResult = {}", finalResult);
-//		log.info("8km bool = {}", finalResult < 8);
-
 		
-		boolean bool = finalResult < 8;
+		// int : 반경(km)
+		boolean bool = finalResult < limit;
 		
 		return bool;
 	}
