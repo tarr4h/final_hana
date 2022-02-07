@@ -8,7 +8,7 @@ import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
-import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupCalendar;
 
 public interface GroupDao {
@@ -19,15 +19,15 @@ public interface GroupDao {
 
 	public List<Group> selectGroupList(Member member);
 	
-	public int insertGroupBoard(GroupBoardEntity groupBoard);
+	public int insertGroupBoard(GroupBoard groupBoard);
 
 	public GroupBoard selectOneBoard(int no);
 
-	List<Member> selectTagMemberList(GroupBoardEntity groupBoard);
+	List<Member> selectTagMemberList(GroupBoard groupBoard);
 
 	public List<Map<String,String>> selectGroupMemberList(String groupId);
 
-	public List<GroupBoardEntity> selectGroupBoardList(String groupId);
+	public List<GroupBoard> selectGroupBoardList(String groupId);
 
 	public int insertGroupBoardComment(GroupBoardComment groupBoardComment);
 
@@ -76,5 +76,7 @@ public interface GroupDao {
 	public int profileImage(Group group);
 
 	public int deleteCalendarData(Map<String, Object> param);
+
+	public List<GroupBoard> selectGroupBoardListByLocation(GroupBoard groupBoard);
 
 }
