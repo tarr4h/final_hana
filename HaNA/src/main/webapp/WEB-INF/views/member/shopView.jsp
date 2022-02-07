@@ -6,114 +6,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberView.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
-
-<style>
-	#myInfo{
-		border: 1px solid black;
-	}
-	#profileImg{
-		height: 400px;
-	}
-	#profileStatus{
-		height: 400px;
-	}
-	/* 세팅 버튼 */
-	.icon {
-		float: right;
-		height:50px;
-		width: 50px;
-		border-radius: 100%;
-		border: none;
-	}
-	.icon img {
-		width: 130%;
-	}
-	
-	/* 프로필이미지 */
-	.profileImg.d-flex{
-		width:230px;
-		height:230px;
-		border:1px solid black;
-		border-radius:100%;
-	}
-	.profileImg img {
-		width: 100%;
-		border-radius: 100%;
-	}
-	.profileBtn{
-		width: 50px;
-		height: 50px;
-		border-radius:100%;
-		transform: translateX(80px) translateY(-50px);
-		z-index: 1;
-	}
-	.extraSet{
-		border-radius:100%;
-		background-color: white;
-	}
-	.input-file-button:hover{
-		cursor: pointer;
-	}
-	.profileBtn img {
-		width: 100%;
-		border-radius: 100%;
-	}
-
-	/* 프로필정보 */
-	.follow {
-		display: inline-block;
-		width: 100px;
-		height: 30px;
-		border: 1px solid black;
-	}
-	.followCount{
-		display: inline-block;
-		width: 100px;
-		height: 30px;
-		border: 1px solid black;
-	}
-	#profileTable{
-		width: 100%;
-		table-layout:fixed;
-	}
-	.tableKey{
-		width: 20%;
-	}
-	.tableValue{
-		width: 80%;
-	}
-	pre{
-		margin:0;
-	}
-	#textArea{
-		width: 100%;
-		height: 150px;
-		border: none;
-		resize: none;
-		background-color: white;
-		padding-top: 30px;
-		font-size:16px;
-	}
-	
-	/* thumbnail list */
-	.thumbnail{
-		height: 300px;
-		border: 1px solid black;
-		padding: 5px;
-	}
-	.thumbnail img{
-		width: 100%;
-	}
-	
-	/* modal */
-	.modal {
-		margin-top : 150px;
-	}
-</style>
 
 <!-- 우측 공간확보 -->
 <section class="body-section" style="width:200px;height:100%;float:right;display:block;">
@@ -123,7 +19,7 @@
 
 <section class="body-section">
 
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://kit.fontawesome.com/0748f32490.js"	crossorigin="anonymous">
 </script>
 <sec:authentication property="principal" var="loginMember"/>
@@ -159,10 +55,12 @@
 
         <!-- 프로필 세부정보 영역 -->
         <div class="col-sm-7" id="profileStatus">
+        <br /><br /><br />
         	<span class="followTitle">팔로잉 :</span>
         	<button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
         	<span class="followTitle">팔로워 : </span>
         	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button>
+        	 
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
         	<c:if test="${loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark icon" id="settingBtn" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/personal'">
@@ -180,7 +78,7 @@
         	</form:form>
         	</c:if>
 
-            <br />
+            <br /><br />
             
             <div class="profileTableArea">
 				<table id="profileTable">
@@ -236,7 +134,7 @@
 			</div>
 			<!-- 글쓰기버튼 -->
 			<c:if test="${loginMember.id.equals(member.id) }">
-        	<button style="float:right;" id="boardModalBtn"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+        	<button id="boardModalBtn" style="float:right; margin-top:30px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
         	<jsp:include page="/WEB-INF/views/member/boardModal/boardModal.jsp"></jsp:include>
         	</c:if>
 		</div>
@@ -295,6 +193,15 @@
 			$(document.addFollowingFrm).submit();
 		}
 	};
+	
+	//게시물 목록
+	$('.board-main-image').click((e)=>{
+		let boardNo = $(e.target).siblings("#boardNo").val();
+		console.log("boardNo1",boardNo);
+		getPageDetail(boardNo);
+		
+		$('#pageDetail').modal("show");
+	});
 
 </script>
 

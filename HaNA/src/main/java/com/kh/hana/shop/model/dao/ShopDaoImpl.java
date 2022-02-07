@@ -122,8 +122,8 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public int deleteReservation(String reservationNo) {
-		return session.delete("shop.deleteReservation", reservationNo);
+	public int cancleReservation(String reservationNo) {
+		return session.update("shop.cancleReservation", reservationNo);
 	}
 
 	@Override

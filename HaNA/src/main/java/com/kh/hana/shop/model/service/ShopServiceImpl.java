@@ -23,7 +23,7 @@ public class ShopServiceImpl implements ShopService {
 	private ShopDao shopDao;
 
 	@Override
-	public List<Map<String, Object>> selectShopList(Map<String, Object> data,List<String> selectDataArr) {
+	public List<Map<String, Object>> selectShopList(Map<String, Object> data,List<String> selectDataArr, int limit) {
 		List<Map<String, Object>> shopList = new ArrayList<Map<String, Object>>();
 		
 		// 해시태그가 없을때 
@@ -50,7 +50,7 @@ public class ShopServiceImpl implements ShopService {
 			String x = (String) shop.get("LOCATION_X");
 			String y = (String) shop.get("LOCATION_Y");
 			log.info("serv shop = {}", shop);
-			boolean bool = CalculateArea.calculateArea(locationX, locationY, x, y);
+			boolean bool = CalculateArea.calculateArea(locationX, locationY, x, y, limit);
 			log.info("calTest = {}", bool);
 			
 			if(bool == true) {
@@ -172,8 +172,8 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public int deleteReservation(String reservationNo) {
-		return shopDao.deleteReservation(reservationNo);
+	public int cancleReservation(String reservationNo) {
+		return shopDao.cancleReservation(reservationNo);
 	}
 
 	

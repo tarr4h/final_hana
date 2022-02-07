@@ -11,9 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Reservation implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String reservationNo;
@@ -26,5 +23,8 @@ public class Reservation implements Serializable {
 	private int visitorCount;
 	private String reqOrder;
 	private String reservationStatus;
+	private String attendUser;
+	private String reqAccept;
+	private String reviewStatus;
 	
 }

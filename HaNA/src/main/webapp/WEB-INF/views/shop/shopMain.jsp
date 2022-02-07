@@ -76,7 +76,18 @@
 				</tbody>
 			</table>
 		</div>
-
+		
+		<!-- 거리 설정 영역 -->
+		<div class="row searchArea my-0">
+			<div style="float:left;">
+				<label for="dis1">8km</label>
+				<input type="radio" name="maxDistance" id="dis1" value="8" checked/>
+				<label for="dis2">4km</label>
+				<input type="radio" name="maxDistance" id="dis2" value="4"/>
+				<label for="dis3">2km</label>
+				<input type="radio" name="maxDistance" id="dis3" value="2"/>
+			</div>
+		</div>
 		<!-- 검색 영역 -->
 		<div class="row searchArea my-0">
 			<nav class="navbar navbar-light bg-light justify-content-end">
@@ -158,6 +169,8 @@
 
 <script>
 
+
+
 var loading = false;
 var page = 1;
 var endNum = 6;
@@ -173,8 +186,7 @@ function scrollPage(){
 			 selectDataArr.length = 0; // 태그 데이터 삭제 
 			 $("#hashTagResult").empty(); // 버튼 내역 삭제 
 		} 
-		
-		console.log("${loginMember.addressAll}");
+
 		var Addr_val = "${loginMember.addressAll}";
 	
 		// 도로명 주소를 좌표 값으로 변환(API)
@@ -198,6 +210,7 @@ function scrollPage(){
 						id : "${loginMember.id}",
 						locationX : x,
 						locationY : y,
+						maxDistance : $("[name=maxDistance]:checked").val(),
 						selectDataArr : selectDataArr
 				},
 				success(res){	
@@ -242,7 +255,7 @@ function scrollPage(){
 						 	}
 						}
 				}else if (tagName != null){ // 해시태그 있을때	
-					$("#shopList").empty(); //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
+					/* $("#shopList").empty(); */ //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<list.length; i++){
 								var htmlOut='';
@@ -378,10 +391,19 @@ var chkClick = false;
 
 function clickList(){
 	chkClick = true;
+	startNum = 0;
 	$("#shopList").empty();
 	scrollPage();
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
+
+
+$("[name=maxDistance]").change((e) => {
+	console.log($("[name=maxDistance]:checked").val());
+	startNum = 0;
+	$("#shopList").empty();
+	scrollPage();
+});
 	
 	// 날짜
 	var today = new Date();
@@ -412,10 +434,11 @@ function clickList(){
 		
 	}); 
 
+};
 
-	
-	
+
 }
+
 
 
 
