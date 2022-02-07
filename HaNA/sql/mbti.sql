@@ -121,8 +121,8 @@ constraint fk_code foreign key(tag_id)
 
 
 
-select * from hashtag;
-
+select *
+ from hashtag;
 
 -- 조인 쿼리 -- 
 select *
@@ -163,11 +163,18 @@ where member_id = 'shop111';
 
 create table ranking ( 
 	tag_id varchar2(50),   	 
-	tag_date date,		
+	tag_date date,	
+    count number(4),
 	constraint tag_ranking_fk foreign key(tag_id)
         references hashtag(tag_id) on delete cascade
 );
 
   select *from ranking;
+  
+  select * 
+  from ranking r left join hashtag h 
+  on r.tag_id = h.tag_id
+  where  h.tag_name = '해물탕';
 
-
+insert  into ranking 
+values ('shop-hashtag-26','2022-02-07',1);

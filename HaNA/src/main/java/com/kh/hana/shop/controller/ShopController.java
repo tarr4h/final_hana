@@ -109,6 +109,21 @@ public class ShopController {
         
         return ResponseEntity.ok(tagList);
     }
+    
+    @GetMapping("/insertRankingData") 
+    public ResponseEntity<?> insertRankingData(@RequestParam(value="selectDataArr[]") List<String> selectDataArr , @RequestParam String tagDate) {
+        log.info("selectDataArr = {}", selectDataArr);
+        log.info("tagDate = {}", tagDate);
+        
+        Map<String, Object> rankingMap = new HashMap<>();
+  //       	rankingMap.put("tagDate", tagDate);
+        	rankingMap.put("tags", selectDataArr);
+			log.info("rankingMap = {}", rankingMap);
+
+         int result = shopService.insertRankingData(rankingMap,tagDate);
+        
+        return ResponseEntity.ok(null);
+    }
 
     @PostMapping("/insertShopTable")
     public ResponseEntity<?> insertShopTable(@RequestBody Table table){

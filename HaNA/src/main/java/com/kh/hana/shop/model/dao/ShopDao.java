@@ -49,6 +49,8 @@ public interface ShopDao {
 
 	int deleteReservation(String reservationNo);
 
+	List<Object> selectRankingData(Map<String, Object> rankingMap);
+
 
 	
 	

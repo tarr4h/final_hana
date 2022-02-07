@@ -91,6 +91,19 @@ public class ShopServiceImpl implements ShopService {
 	@Override public List<HashTag> hashTagAutocomplete(String search) { 
 		  return shopDao.hashTagAutocomplete(search); 
 	}
+	
+	@Override
+	public int insertRankingData(Map<String, Object> rankingMap ,String tagDate) {
+		List<Object> selectData = shopDao.selectRankingData(rankingMap);
+		log.info("selectData = {}" ,selectData );
+		if(selectData.isEmpty()) {
+			log.info("없음");
+		}else {
+			log.info("있음");
+			
+		}
+		return 0;
+	}
 
 	@Override
 	public int insertShopTable(Table table) {
@@ -154,6 +167,8 @@ public class ShopServiceImpl implements ShopService {
 	public int deleteReservation(String reservationNo) {
 		return shopDao.deleteReservation(reservationNo);
 	}
+
+	
 
 
 	

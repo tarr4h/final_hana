@@ -375,6 +375,7 @@ function scrollPage(){
 
 // 해시 태그 선택 후 검색 버튼 클릭시 
 var chkClick = false;
+
 function clickList(){
 	chkClick = true;
 	$("#shopList").empty();
@@ -382,25 +383,42 @@ function clickList(){
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
 	
-	console.log("selectDataArr" + selectDataArr)
-	var today = new Date();
 	// 날짜
+	var today = new Date();
 	var year = today.getFullYear();
 	var month = ('0' + (today.getMonth() + 1)).slice(-2);
 	var day = ('0' + today.getDate()).slice(-2);
-	var dateString = year + '-' + month  + '-' + day;
-	console.log(dateString);
+	var tagDate = year + '-' + month  + '-' + day;
+	console.log(tagDate);
 	
 	// 시간 
-	var hours = ('0' + today.getHours()).slice(-2); 
+	/*var hours = ('0' + today.getHours()).slice(-2); 
 	var minutes = ('0' + today.getMinutes()).slice(-2);
 	var seconds = ('0' + today.getSeconds()).slice(-2); 
-	var timeString = hours + ':' + minutes  + ':' + seconds;
-	console.log(timeString);
+	var tagTime = hours + ':' + minutes  + ':' + seconds;
+	console.log(tagTime);*/
+	
+	// 검색 버튼 클릭시 태그 , 해당 날짜 DB 저장
+ 	$.ajax({
+		url : "${pageContext.request.contextPath}/shop/insertRankingData",
+		data : {
+			selectDataArr : selectDataArr,
+			tagDate : tagDate
+		},
+		success(data) {
+			console.log(data)
+		},
+		error: console.log
+		
+	}); 
+
 
 	
-
+	
 }
+
+
+
 
 
 </script>

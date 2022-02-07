@@ -126,6 +126,11 @@ public class ShopDaoImpl implements ShopDao {
 		return session.delete("shop.deleteReservation", reservationNo);
 	}
 
+	@Override
+	public List<Object> selectRankingData(Map<String, Object> rankingMap) {
+		return session.selectList("shop.selectRankingData",rankingMap);
+	}
+
 	
     
 }

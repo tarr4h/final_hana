@@ -11,6 +11,8 @@ public interface ShopService {
     int insertHashTag(HashTag hashTag);
     
     List<HashTag> hashTagAutocomplete(String search);
+    
+    int insertRankingData(Map<String, Object> rankingMap, String tagDate);
 
 	int insertShopTable(Table table);
 
@@ -35,5 +37,7 @@ public interface ShopService {
 	Map<String, Object> selectMyReservationList(Map<String, Object> map);
 
 	int deleteReservation(String reservationNo);
+
+	
 
 }
