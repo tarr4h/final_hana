@@ -205,4 +205,30 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectGroupBoardListByLocation(groupBoard);
 	}
 
+	@Override
+	public int insertGroupVisitLog(Map<String, Object> param) {
+		int result = 0;
+		Map<String,Object> map = groupDao.selectGroupVisitLog(param);
+		if(map==null) {
+			result = groupDao.insertGroupVisitLog(param);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> selectVisitCountList(Map<String, Object> param) {
+		return groupDao.selectVisitCountList(param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectCommentCountList(Map<String, Object> param) {
+		return groupDao.selectCommentCountList(param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectLikeCountList(Map<String, Object> param) {
+		return groupDao.selectLikeCountList(param);
+	}
+
 }

@@ -211,23 +211,25 @@
 		select
 			*
 		from
-			shop_table_reservation
+			shop_table_reservation_share s left join shop_table_reservation r
+			on s.reservation_no = r.reservation_no
 		where
-			reservation_user = #{id}
+			s.attend_user = #{id}
 			<if test="state == 1">
 				and
-				reservation_date > sysdate - 1
+				r.reservation_date > sysdate - 1
 			</if>
 			<if test="state == 0">
 				and
-				reservation_date <![CDATA[<]]> sysdate
+				r.reservation_date + 1 <![CDATA[<]]> sysdate
 			</if>
 		order by
-			reservation_date
+			r.reservation_date, time_start
 	</select>
 	
-	<delete id="deleteReservation" parameterType="string">
-		delete from shop_table_reservation
+	<update id="cancleReservation" parameterType="string">
+		update shop_table_reservation
+		set reservation_status = '예약취소'
 		where reservation_no = #{reservationNo}
-	</delete>
+	</update>
 </mapper>

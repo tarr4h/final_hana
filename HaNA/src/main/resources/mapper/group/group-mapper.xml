@@ -87,7 +87,7 @@
 	</select>
 	<select id="selectGroupMemberList" resultMap="groupMemberListMap">
 		select
-			id, member_level_code, picture
+			group_id, m.id as id, member_level_code, picture
 		from
 			member m join group_member_list gml
 			on m.id = gml.member_id
@@ -98,6 +98,7 @@
         <result column="id" property="memberId"/>
 		<result column="picture" property="profile"/>
         <result column="member_level_code" property="memberLevelCode"/>
+        <result column="group_id" property="groupId"/>
 	</resultMap>
 	
 	
@@ -292,11 +293,12 @@
 			and
 			member_id = #{memberId}
 	</delete>
+	
 	<insert id="insertLikeLog">
 		insert into
 			group_board_like
 		values(
-			#{boardNo},#{memberId}
+			#{boardNo},#{memberId},default
 		)
 	</insert>
 	
@@ -403,5 +405,155 @@
 	 	and
 	 	place_name = #{placeName}
 	 </select>
+	 
+	 <insert id="insertGroupVisitLog">
+	 insert into
+	 	group_visit_log
+	 values(
+	 	#{groupId},
+	 	#{member.id},
+	 	default
+	 )
+	 </insert>
+	 
+	 <select id="selectGroupVisitLog" resultMap="visitLogMap">
+	 select
+	 	*
+	 from
+	 	group_visit_log
+	 where
+	 	group_id = #{groupId}
+	 	and
+	 	member_id = #{member.id}
+	 	and
+	 	trunc(visit_date) = trunc(sysdate)
+	 </select>
+	 
+	 <resultMap id="visitLogMap" type="map">
+	 	<result column="group_id" property="groupId"/>
+	 	<result column="member_id" property="memberId"/>
+	 	<result column="visit_date" property="visitDate"/>
+	 </resultMap>
+	 
+	 <select resultMap="graphMap" id="selectVisitCountList">
+	select
+	    member_id as member,
+	    NVL(count,0) as count
+	from
+	(select
+	    member_id
+	from
+	    group_member_list
+	where
+	    group_id = #{groupId}) table1 -- group의 멤버 리스트
+	left join
+	 (select 
+	    member_id,
+	    count(member_id) as count
+	    from (select
+                 member_id
+             from
+                 group_visit_log
+             where
+                 group_id=#{groupId}
+                 <if test="day != 0">
+               	and
+                 visit_date between sysdate-#{day} and sysdate
+               	</if>
+                 )
+	 	group by member_id) table2
+	 using (member_id) -- 그룹멤버만 노출될 수 있도록 두 테이블 조인
+ 	 order by
+ 	 	count desc
+
+	 </select>
+	 <select resultMap="graphMap" id="selectCommentCountList">
+	 select
+	    member_id as member,
+	    NVL(count,0) as count
+	 from
+        (select
+            member_id
+        from
+            group_member_list
+        where
+            group_id=#{groupId}) table1 -- 그룹의 회원 목록(아이디만)
+        left join
+        (select
+            writer,
+            count(writer) as count
+        from (select
+                  gbc.writer
+                 from
+                     (select 
+                     	*
+                     from
+                     	group_board
+                     where
+                     	group_id = #{groupId}) gb join group_board_comment gbc
+                     on gb.no = gbc.board_no
+                 <where>
+                 	  <if test="day != 0">
+                     gbc.reg_date between sysdate-#{day} and sysdate
+                 	  </if>
+                 </where>
+                 )
+        group by
+            writer) table2
+	 	on table1.member_id = table2.writer -- 댓글이 0개인 사람도 확인하기 위해 두 테이블 조인
+	 order by
+	 	count desc
+	 </select>
+	 
+	 <select resultMap="graphMap" id="selectLikeCountList">
+	select
+        member_id as member,
+        NVL(count,0) as count
+    from
+        (select
+            table2.member_id,
+            count
+        from
+            (select
+                gbl.member_id as member_id,
+                count(gbl.member_id) count
+            from
+                (select
+                    no
+                from
+                    group_board
+                where
+                    group_id=#{groupId}) gb -- 그룹 게시물 목록
+                join
+                (select
+                	*
+                from
+                	group_board_like -- 좋아요 목록
+                <where>
+                 	  <if test="day != 0">
+                     reg_date between sysdate-#{day} and sysdate
+                     </if>
+                 </where>
+                ) gbl
+                on gb.no = gbl.board_no
+            group by
+           		gbl.member_id) table1 -- 그룹의 게시물에 좋아요를 누른 사람 목록
+                
+            right join 
+                (select
+                    member_id
+                from
+                    group_member_list
+                where
+                    group_id = #{groupId}) table2 -- 그룹에 가입된 사람 목록
+            on table1.member_id = table2.member_id)
+        order by
+        	count desc
+	 </select>
+	 
+	 <resultMap id="graphMap" type="map">
+	 <result column="member" property="memberId"/>
+	 <result column="count" property="count"/>
+	 </resultMap>
 </mapper>
 

@@ -21,7 +21,7 @@
 
 <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
 <style>
-	.section-over-div {min-height : 100vw;}
+	.section-over-div {min-height : 100vh;}
 	.navbar-expand-lg { height : 10em;}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
