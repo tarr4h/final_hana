@@ -15,15 +15,15 @@
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <sec:authentication property="principal" var="loginMember" />
 <script>
-let memberid2;
+
+let memberId2;
 let memberLevelCode2;
+
 /* 현재 등급 체크 함수 */
- 
-const grade2=(code)=>{
+/* const grade2=(code)=>{
 	console.log("asdfadf1",code);
-/* 	console.log("asdfadf2",memberId);
-	console.log("asdfadf3",groupId); */
-};
+};  */
+
 </script>
 <style>
 table th, td {
@@ -119,15 +119,15 @@ table th, td {
 
 <script>
 
-function grade(code,memberid,groupid){
-	console.log("asdfadf1",code);
-	console.log("asdfadf1",memberid);
-	console.log("asdfadf1",groupid);
+function grade(code,memberId,groupId){
+	/* console.log("asdfadf1",code);
+	console.log("asdfadf1",memberId);
+	console.log("asdfadf1",groupId); */
 	
-	memberid2 = memberid;
+	memberId2 = memberId;
 	memberLevelCode2 = code;
-	console.log("제발1", memberid2);
-	console.log("제발2", memberLevelCode2);
+	console.log(memberId2);
+	console.log(memberLevelCode2);
 
  	console.log(code);
 	console.log(code == 'ld');
@@ -145,9 +145,9 @@ function grade(code,memberid,groupid){
 /* 회원 등급 변경 함수 */
 function updateGroupGradeFunc(){
 	if(confirm("회원 등급을 변경하시겠습니까?")){
-		console.log("updateGroupGradeFunc = ",memberid2);
+		console.log("updateGroupGradeFunc = ",memberId2);
 		console.log("updateGroupGradeFunc = ",memberLevelCode2);
-		$("[name=groupGradeUpdateFrm] input[name=memberId]").val(memberid2);
+		$("[name=groupGradeUpdateFrm] input[name=memberId]").val(memberId2);
 		$("[name=groupGradeUpdateFrm] input[name=memberLevelCode]").val(memberLevelCode2);
 		$(document.groupGradeUpdateFrm).submit();
 	}

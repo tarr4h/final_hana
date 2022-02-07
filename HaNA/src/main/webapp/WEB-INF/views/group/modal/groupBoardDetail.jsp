@@ -158,7 +158,6 @@ function getPageDetail(boardNo){
 		 				
 		 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
 		 				$("#group-board-img-container").append(img); // 이미지 추가
-		 				
 		 			})
 		 			$(".group-board-img").css("width","100%");
 		 			$(".group-board-img").css("position","absolute");
