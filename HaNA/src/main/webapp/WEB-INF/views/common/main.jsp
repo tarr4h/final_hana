@@ -103,7 +103,6 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <div class="feeds">
     <span>맴버 그룹 좋아요 불러오기</span><br />
     <span>맴버 그룹 좋아요 누르기</span><br />
-    <span>맴버 게시판 댓글 불러오기</span><br />
     <span>그룹 게시판 대댓글 작성가능하게</span><br />
     <span>추천 친구 팔로우신청</span><br />
     <span>게시글에서 작성자한테 dm보내기</span><br />
@@ -149,7 +148,7 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <tr>
     <td width="550px" style="word-break:break-all">
               <span class="main-header-comment">
-              ${groupboard.writer} ${groupboard.content}
+              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}">${groupboard.writer} ${groupboard.content}
               </span>
     </td>
     </tr>
@@ -332,7 +331,7 @@ const commetWrite${vss.index}=()=>{
     <tr>
     <td width="550px" style="word-break:break-all">
               <span class="main-header-comment">
-              ${board.writer} ${board.content}
+              <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${board.writerProfile}">${board.writer} ${board.content}
               </span>
     </td>
     </tr>
@@ -442,7 +441,7 @@ const commetWrite0${vss.index}=()=>{
 	}
 		
 	$.ajax({
-		url:`${pageContext.request.contextPath}/chat/insertgroupBoardcomment.do`,
+		url:`${pageContext.request.contextPath}/chat/insertmemberBoardcomment.do`,
 		method:"GET",
 		data:{
 			writer : memberId,

@@ -37,6 +37,7 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
+import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
@@ -59,6 +60,9 @@ public class ChatController {
 	
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping("/chat.do")
 	public void chat() {}
@@ -282,16 +286,16 @@ public class ChatController {
     	return ResponseEntity.ok(list);
     };
     
-//    @GetMapping("/memberboardcommentList.do")
-//    public ResponseEntity<?> memberboardcommentList(int boardNo){
-//    	log.info("boardcommentList boardNo = {}", boardNo);
-//		//List<BoardComment> list = chatService.selectMemberBoardCommentList(boardNo);
-//		log.info("list = {}",list);
-//    	
-//    	return ResponseEntity.ok(list);
-//    };
+    @GetMapping("/memberboardcommentList.do")
+    public ResponseEntity<?> memberboardcommentList(int boardNo){
+    	log.info("boardcommentList boardNo = {}", boardNo);
+    	List<BoardComment> list = memberService.selectBoardCommentList(boardNo);
+		log.info("list = {}",list);
+    	
+    	return ResponseEntity.ok(list);
+    };
     
-    @GetMapping("insertgroupBoardcomment.do")
+    @GetMapping("/insertgroupBoardcomment.do")
     public ResponseEntity<?> insertgroupBoardcomment(GroupBoardComment groupBoardComment){
     	log.info("insertgroupBoardcomment groupBoardComment= {}", groupBoardComment);
     	int result = groupService.insertGroupBoardComment(groupBoardComment);
@@ -299,7 +303,19 @@ public class ChatController {
     		log.info("main 그룹게시판 댓글작성 성공!");
     	else
     		log.info("main 그룹게시판 댓글작성 실패!");
-    		
+
+    	return ResponseEntity.ok(null);
+    }
+    
+    @GetMapping("/insertmemberBoardcomment.do")
+    public ResponseEntity<?> insertmemberBoardcomment(BoardComment boardComment){
+    	log.info("insertgroupBoardcomment groupBoardComment= {}", boardComment);
+    	int result = memberService.enrollBoardComment(boardComment);
+    	if(result > 0)
+    		log.info("main 일반게시판 댓글작성 성공!");
+    	else
+    		log.info("main 일반게시판 댓글작성 실패!");
+
     	return ResponseEntity.ok(null);
     }
     
