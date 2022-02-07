@@ -93,6 +93,7 @@ $('.board-main-image').click((e)=>{
 	getPageDetail(boardNo);
 	
 	$('#groupPageDetail').modal("show");
+
 });
 // 게시물 상세보기 페이지 불러오기 함수
 function getPageDetail(boardNo){

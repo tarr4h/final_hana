@@ -137,11 +137,6 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectGroupInfo(groupId);
 	}
 
-	@Override
-	public List<Map<String, Object>> groupMemberList2(String groupId) {
-		return groupDao.groupMemberList2(groupId);
-	}
-
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
 		return groupDao.selectOneLikeLog(param);
 	}

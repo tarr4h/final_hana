@@ -117,11 +117,6 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> groupMemberList2(String groupId) {
-		return session.selectList("groupMemberList2", groupId);
-	}
-
-	@Override
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
 		return session.selectOne("selectOneLikeLog",param);
 	}

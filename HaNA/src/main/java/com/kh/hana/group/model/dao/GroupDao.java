@@ -51,8 +51,6 @@ public interface GroupDao {
 
 	public Group selectGroupInfo(String groupId);
 
-	public List<Map<String, Object>> groupMemberList2(String groupId);
-
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param);
 
 	public int deleteLikeLog(Map<String, Object> param);

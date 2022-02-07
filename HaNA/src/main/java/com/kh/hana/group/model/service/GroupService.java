@@ -53,8 +53,6 @@ public interface GroupService {
 
 	Group selectGroupInfo(String groupId);
 
-	List<Map<String, Object>> groupMemberList2(String groupId);
-
 	Map<String, Object> selectOneLikeLog(Map<String, Object> param);
 
 	int deleteLikeLog(Map<String, Object> param);

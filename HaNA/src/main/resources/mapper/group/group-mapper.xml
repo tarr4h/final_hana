@@ -93,6 +93,14 @@
 			on m.id = gml.member_id
 		where
 			gml.group_id = #{groupId}
+		order by 
+            (
+            CASE member_level_code
+            WHEN 'ld' THEN 0
+            WHEN 'mg' THEN 1
+            ELSE 2
+            END
+                )
 	</select>
  	<resultMap type="map" id="groupMemberListMap">
         <result column="id" property="memberId"/>
@@ -227,17 +235,6 @@
 		where
 			no=#{no}
 	</update>
-
-	<select id="groupMemberList" resultType="map">
-		select 
-		    m.picture,
-		    gml.*
-		from 
-		    member m join group_member_list gml
-		        on m.id = gml.member_id
-		where
-		    group_id = #{groupId}
-	</select>
 	
 	<select id="selectGroupInfo" resultType="group">
 		select
@@ -246,25 +243,6 @@
 			group_
 		where
 			group_id = #{groupId}
-	</select>
-	
-	<select id="groupMemberList2" resultType="map">
-		select 
-		    m.picture,
-		    gml.*
-		from 
-		    member m join group_member_list gml
-		        on m.id = gml.member_id
-		where
-		    group_id = #{groupId}
-		order by 
-            (
-            CASE member_level_code
-            WHEN 'ld' THEN 0
-            WHEN 'mg' THEN 1
-            ELSE 2
-            END
-                ) 
 	</select>
 
 	<select id="selectOneLikeLog" resultMap="likeLog">
@@ -323,7 +301,7 @@
 	update 
 	    group_member_list 
 	set 
-	    member_level_code = #{memberLevelCode} 
+	    member_level_code = #{level} 
 	where 
 	    member_id = #{memberId} 
 	    and 

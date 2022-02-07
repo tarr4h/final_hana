@@ -374,25 +374,15 @@ public class GroupController {
 		
 		return ResponseEntity.ok(map);
 	}
-	
-//    @GetMapping("/groupMemberList/{groupId}") 
-//    public ResponseEntity<List<Map<String, Object>>> groupMemberList(@PathVariable String groupId, @AuthenticationPrincipal Member member) {
-//    		log.info("groupId ={}", groupId);
-//    		
-//    		List<Map<String, Object>> groupMemberList = groupService.groupMemberList(groupId);
-//    		log.info("groupMemberList ={}", groupMemberList);
-//    		
-//    		return ResponseEntity.ok(groupMemberList);
-//    }
     
     @GetMapping("/groupMemberList/{groupId}")
-    public String groupMemberList(@PathVariable String groupId, Model model){
+    public String groupMemberList(@PathVariable String groupId, Model model, Group group){
     	log.info("groupId ={}", groupId);
     	
-    	List<Map<String, Object>> groupMemberList = groupService.groupMemberList2(groupId);
-    	log.info("groupMemberList = {}", groupMemberList);
+    	List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
+    	log.info("groupMembers = {}", groupMembers);
     	
-    	model.addAttribute("groupMemberList", groupMemberList);
+    	model.addAttribute("groupMembers", groupMembers);
     	return "/group/groupMemberList";
     }
     
@@ -497,7 +487,7 @@ public class GroupController {
 		
 		return "redirect:/group/groupMemberList/"+groupId;
 	}
-	
+
 	// 등급 수정
 		@PostMapping("/updateGroupGrade")
 		public String updateGroupGrade (
