@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContext;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -34,7 +36,7 @@ import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
-import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupCalendar;
 import com.kh.hana.member.model.vo.Member;
@@ -68,7 +70,7 @@ public class GroupController {
 	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
 		getGroupInfo(groupId,model);
 		
-		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
+		List<GroupBoard> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
 		model.addAttribute("groupBoardList", groupBoardList);
 		return "group/groupPage";
@@ -134,7 +136,7 @@ public class GroupController {
 	}
 	//이거
 	@PostMapping(value="/enrollGroupBoard")
-	public String enrollGroupBoard(GroupBoardEntity groupBoard,
+	public String enrollGroupBoard(GroupBoard groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
 			log.info("groupBoard = {}",groupBoard);
@@ -372,16 +374,6 @@ public class GroupController {
 		
 		return ResponseEntity.ok(map);
 	}
-	
-//    @GetMapping("/groupMemberList/{groupId}") 
-//    public ResponseEntity<List<Map<String, Object>>> groupMemberList(@PathVariable String groupId, @AuthenticationPrincipal Member member) {
-//    		log.info("groupId ={}", groupId);
-//    		
-//    		List<Map<String, Object>> groupMemberList = groupService.groupMemberList(groupId);
-//    		log.info("groupMemberList ={}", groupMemberList);
-//    		
-//    		return ResponseEntity.ok(groupMemberList);
-//    }
     
     @GetMapping("/groupMemberList/{groupId}")
     public String groupMemberList(@PathVariable String groupId, Model model){
@@ -498,7 +490,7 @@ public class GroupController {
 	
 	@GetMapping("/searchLocation")
 	public String searchLocation (GroupBoard groupBoard, Model model) {
-		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardListByLocation(groupBoard);
+		List<GroupBoard> groupBoardList = groupService.selectGroupBoardListByLocation(groupBoard);
 		log.info("groupBoardList = {}", groupBoardList);
 		model.addAttribute("groupBoardList", groupBoardList);
 		GroupBoard locaInfo = groupBoard;

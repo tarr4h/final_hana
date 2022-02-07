@@ -45,13 +45,18 @@
 		border-radius: 100%;
 	}
 	.profileBtn{
-		border: 1px solid black;
 		width: 50px;
 		height: 50px;
 		border-radius:100%;
 		transform: translateX(80px) translateY(-50px);
 		z-index: 1;
+	}
+	.extraSet{
+		border-radius:100%;
 		background-color: white;
+	}
+	.input-file-button:hover{
+		cursor: pointer;
 	}
 	.profileBtn img {
 		width: 100%;
@@ -108,7 +113,6 @@
 	.modal {
 		margin-top : 150px;
 	}
-
 </style>
 
 <!-- 우측 공간확보 -->
@@ -139,8 +143,17 @@
         		<img src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.picture}" alt=""/>
         	</div>
         	<div class="profileBtn">
+        		<c:if test="${loginMember.id.equals(member.id) }">
+        		<div class="extraSet">
         		<!-- (+)버튼을 -->
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png" alt="" />
+        		<form:form name="profileUpdateFrm" action="${pageContext.request.contextPath }/member/profileUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+	        		<label class="input-file-button" for="input-file">
+	        			<img src="${pageContext.request.contextPath }/resources/images/icons/plusIcon.png" alt="" />
+	        		</label>
+	        		<input type="file" name="upFile" id="input-file" style="display:none;"/>
+        		</form:form>
+        		</div>
+        		</c:if>
         	</div>
         </div>
 
@@ -203,15 +216,20 @@
 							<td><span class="tableKey">평점</span></td>
 							<td><span class="tableValue">4.9</span></td>
 						</tr>
+						
+						<!-- 본인인 경우 예약확인버튼 노출 -->
 						<c:if test="${loginMember.id.equals(member.id) }">
 						<tr>
 							<td>
-								<input type="button" value="예약확인" id="reservationCheckBtn"/>
+								<input type="button" value="예약확인" id="reservationListBtn"/>
 								
 								<!-- reservation check Modal -->
+								<jsp:include page="/WEB-INF/views/member/modal/shopReservationList.jsp"></jsp:include>
 							</td>
 						</tr>
 						</c:if>
+						
+						<!-- 본인이 아닌 경우 예약하기 버튼 노출 -->
 						<c:if test="${!loginMember.id.equals(member.id) }">
 						<tr>
 							<td>
@@ -268,6 +286,16 @@
 		$("#reviewTabBtn").removeClass("active");
 	});
 
+	/* profile 사진 업데이트 */
+	$(".input-file-button").click((e) => {
+		if(!confirm("파일을 등록하시겠습니까?")){
+			return false;
+		};
+	});
+	$("#input-file").change((e) => {
+		console.log("파일등록");
+		$(document.profileUpdateFrm).submit();
+	});
 </script>
 
   

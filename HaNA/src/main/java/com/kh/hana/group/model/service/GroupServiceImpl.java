@@ -17,7 +17,7 @@ import com.kh.hana.member.model.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 
 import com.kh.hana.group.model.vo.GroupMemberList;
-import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupCalendar;
 
 @Service
@@ -53,7 +53,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 	
   @Override
-	public int insertGroupBoard(GroupBoardEntity groupBoard) {
+	public int insertGroupBoard(GroupBoard groupBoard) {
 		return groupDao.insertGroupBoard(groupBoard);
 	}
 
@@ -63,7 +63,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<Member> selectTagMemberList(GroupBoardEntity groupBoard) {
+	public List<Member> selectTagMemberList(GroupBoard groupBoard) {
 		return groupDao.selectTagMemberList(groupBoard);
 	}
 
@@ -73,7 +73,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<GroupBoardEntity> selectGroupBoardList(String groupId) {
+	public List<GroupBoard> selectGroupBoardList(String groupId) {
 		return groupDao.selectGroupBoardList(groupId);
 	}
 
@@ -201,7 +201,7 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<GroupBoardEntity> selectGroupBoardListByLocation(GroupBoard groupBoard) {
+	public List<GroupBoard> selectGroupBoardListByLocation(GroupBoard groupBoard) {
 		return groupDao.selectGroupBoardListByLocation(groupBoard);
 	}
 

@@ -1,5 +1,6 @@
 package com.kh.hana.security.model.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +21,7 @@ public class SecurityService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails member = securityDao.loadUserByUsername(username);
-		log.info("member = {}", member);
+		log.info("load member = {}", member);
 		
 		if(member == null) {
 			throw new UsernameNotFoundException(username);
@@ -28,4 +29,5 @@ public class SecurityService implements UserDetailsService {
 
 		return member;
 	}
+
 }
