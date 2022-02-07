@@ -255,7 +255,7 @@ function scrollPage(){
 						 	}
 						}
 				}else if (tagName != null){ // 해시태그 있을때	
-					$("#shopList").empty(); //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
+					/* $("#shopList").empty(); */ //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<list.length; i++){
 								var htmlOut='';
@@ -390,6 +390,7 @@ function scrollPage(){
 var chkClick = false;
 function clickList(){
 	chkClick = true;
+	startNum = 0;
 	$("#shopList").empty();
 	scrollPage();
 	// 태그 버튼 내역 삭제 
@@ -398,8 +399,9 @@ function clickList(){
 
 $("[name=maxDistance]").change((e) => {
 	console.log($("[name=maxDistance]:checked").val());
+	startNum = 0;
 	$("#shopList").empty();
-	/* scrollPage(); */
+	scrollPage();
 });
 </script>
 

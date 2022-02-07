@@ -58,7 +58,7 @@
 		<level value="info" />
 	</logger>
 	<logger name="com.kh.hana.common">
-		<level value="info"/>
+		<level value="warn"/>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
