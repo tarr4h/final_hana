@@ -30,7 +30,7 @@
         	<ul class="list-group">
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">계정 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'memberSetting/accountPrivate'">계정 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">정보 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>

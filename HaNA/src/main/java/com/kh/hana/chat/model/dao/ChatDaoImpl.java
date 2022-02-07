@@ -166,6 +166,11 @@ public class ChatDaoImpl implements ChatDao {
 		return session.selectList("chat.groupRecommendList",memberId);
 	}
 
+	@Override
+	public int insertShareMessage(Map<String, Object> param) {
+		return session.insert("chat.insertShareMessage", param);
+	}
+
 
 
 

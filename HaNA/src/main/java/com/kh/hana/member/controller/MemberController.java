@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/member")
 @Slf4j
+@SessionAttributes({"accountCheck"})
 public class MemberController {
 	
 	@Autowired
@@ -99,7 +101,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/{view}/{id}")
-	public String memberView(@PathVariable String id, @PathVariable String view, Model model) {
+	public String memberView(@PathVariable String id, @PathVariable String view, Model model,Authentication authentication) {
 		//following 수 조회
 		int followingCount = memberService.countFollowing(id);
 		log.info("followingCount = {}", followingCount);
@@ -115,18 +117,37 @@ public class MemberController {
 		log.info("member={}", member);
 		model.addAttribute("member", member);
 		
-		if(member.getAccountType() == 0) {
-			Shop shopInfo = memberService.selectOneShopInfo(id);
-			log.info("shopInfo = {}", shopInfo);
-			model.addAttribute("shopInfo", shopInfo);
-			return "/member/"+"shopView";
-		}
 		
 		//게시글 목록 가져오기
 		List<Board> boardList = memberService.selectBoardList(id);
 		log.info("boardList = {}", boardList);
 		
 		model.addAttribute("boardList", boardList);
+		
+		if(member.getAccountType() == 0) {
+			Shop shopInfo = memberService.selectOneShopInfo(id);
+			log.info("shopInfo = {}", shopInfo);
+			model.addAttribute("shopInfo", shopInfo);
+			return "/member/"+"shopView";
+		};
+		
+		//친구라면 
+		 Member loginMember = (Member) authentication.getPrincipal();
+		 String loginMemberId = loginMember.getId();
+		 log.info("id={}",id);
+		 log.info("loginMemberId={}",loginMemberId);
+		 
+		 Map<String, Object> map = new HashMap<>();
+		 map.put("id", id);
+		 map.put("loginMemberId", loginMemberId);
+		 
+		 int isFriend = memberService.checkFriend(map);
+		 log.info("isFriend={}", isFriend);
+		 
+		 if(isFriend == 1)
+		 model.addAttribute("isFriend", isFriend);
+		 
+		
 		
 		return "/member/"+"memberView";
 	}
@@ -301,6 +322,40 @@ public class MemberController {
 			return "redirect:/member/memberView/"+member.getId();
 		}
 	}
+	
+	//게시글작성2
+	@PostMapping("/insertBoard")
+	public String insertBoard(Board board, @RequestParam(value="upFile") MultipartFile[] upFiles, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
+		String[] picArr = new String[upFiles.length];
+		String saveDirectory = application.getRealPath("/resources/upload/member/board");
+		
+		int i = 0;
+		for(MultipartFile file : upFiles) {
+			String ofn = file.getOriginalFilename();
+			String rfn = HanaUtils.rename(ofn);
+			File uploadImg = new File(saveDirectory, rfn);
+			try {
+				file.transferTo(uploadImg);
+			} catch (IllegalStateException | IOException e) {
+				log.error(e.getMessage(), e);
+			}
+			picArr[i] = rfn;
+			i++;
+		};
+		board.setPicture(picArr);
+		
+		int result = memberService.insertMemberBoard(board);
+		String msg = result > 0 ? "게시글이 등록되었습니다." : "등록 실패";
+		
+		redirectAttr.addFlashAttribute("msg", msg);
+		
+		if(member.getAccountType() == 1) {
+			return "redirect:/member/memberView/"+member.getId();			
+		} else {
+			return "redirect:/member/shopView/"+member.getId();
+		}
+		
+	};
 
 	@PostMapping("/profileUpdate")
 	public String profileUpdate(@RequestParam MultipartFile upFile, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
@@ -541,6 +596,41 @@ public class MemberController {
 		
 		return ResponseEntity.ok(map);
 	}
+	
+	
+	//계정 비공개
+	@PostMapping("/accountPrivate")
+	 public String checkAccountPrivate(@RequestParam String id, @RequestParam int accountCheck, Model model){
+    	
+    	try{
+    		log.info("checkAccountPrivate.member.id = {}",id);
+    		log.info("checkAccountPrivate.accountCheck = {}",accountCheck);
+    		
+    		Map<String,Object> map = new HashMap<>();
+    		map.put("id",id);
+    		map.put("accountCheck",accountCheck);
+    		
+    		int result = memberService.checkAccountPrivate(map);
+    		model.addAttribute("accountCheck",accountCheck);
+    		
+    	}catch(Exception e) {
+    		log.error(e.getMessage(),e);
+       	}
+    	return "redirect:/member/memberSetting/memberSetting";
+    	
+    }
+	
+	
+ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
