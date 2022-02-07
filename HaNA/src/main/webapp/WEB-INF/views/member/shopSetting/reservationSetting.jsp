@@ -311,7 +311,10 @@ function deleteTable(num){
 		error(xhr){
 			if(xhr.status == 404){
 				alert("등록된 예약이 있어 삭제할 수 없습니다.");
+			} else if(xhr.status == 406){
+				alert("삭제할 테이블 조회에 오류가 발생했습니다.\n관리자에게 문의하세요.");
 			}
+				
 		}
 	});
 	
