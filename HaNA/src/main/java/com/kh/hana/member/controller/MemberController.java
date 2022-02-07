@@ -119,6 +119,7 @@ public class MemberController {
 			Shop shopInfo = memberService.selectOneShopInfo(id);
 			log.info("shopInfo = {}", shopInfo);
 			model.addAttribute("shopInfo", shopInfo);
+			return "/member/"+"shopView";
 		}
 		
 		//게시글 목록 가져오기
@@ -127,7 +128,7 @@ public class MemberController {
 		
 		model.addAttribute("boardList", boardList);
 		
-		return "/member/"+view;
+		return "/member/"+"memberView";
 	}
 	
 	@GetMapping("/memberSetting/{param}")
