@@ -184,6 +184,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectLikeCount(param);
 	}
 
+	@Override
+	public int checkAccountPrivate(Map<String, Object> map) {
+		int accountCheck = (int)map.get("accountCheck"); 
+		log.info("accountCheck={}",accountCheck);
+		return memberDao.checkAccountPrivate(map);
+	 
+	}
+
+	@Override
+	public int checkFriend(Map<String, Object> map) {
+		return memberDao.checkFriend(map);
+	}
+
 	 
 	
 	
