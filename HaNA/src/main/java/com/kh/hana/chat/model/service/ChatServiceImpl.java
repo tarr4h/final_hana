@@ -73,8 +73,12 @@ public class ChatServiceImpl implements ChatService {
 					int roomNo = chatDao.findRoomNo(param);
 					param.put("roomNo", roomNo);
 					int insert1 = chatDao.insertEnterMessage(param);
-					if(insert1 > 0)
-						msg = "채팅방 생성 성공";
+					if(insert1 > 0) {
+						insert1 = chatDao.insertEnterMessage2(param);
+						if(insert1 >0)
+							msg = "채팅방 생성 성공";
+					}
+						
 				}
 				else
 					msg = "채팅방 생성 실패";
@@ -94,21 +98,31 @@ public class ChatServiceImpl implements ChatService {
 										
 					int roomNo = chatDao.findRoomNo(param);
 					param.put("roomNo", roomNo);
-					int insert1 = chatDao.insertShareMessage(param);
-					if(insert1 > 0)
+					//입장메세지 다 보내고
+					int insert1 = chatDao.insertEnterMessage(param);
+					if(insert1 > 0) {
+						insert1 = chatDao.insertEnterMessage2(param);
 						msg = String.valueOf(roomNo);
+						//공유메세지 보내기
+//						if(insert1 >0) {
+//							insert1 = chatDao.insertShareMessage(param);
+//							msg = String.valueOf(roomNo);
+//
+//						}
+					}
 				}
 				else
-						msg = "채팅방 생성 실패";
+						msg = null;
 					
 			}
 			//공유번호o, 채팅방 있을때
 			else {
 				int roomNo = chatDao.findRoomNo(param);
 				param.put("roomNo", roomNo);
-				int insert1 = chatDao.insertShareMessage(param);
-				if(insert1 > 0)
-					msg = String.valueOf(roomNo);
+				msg = String.valueOf(roomNo);
+//				int insert1 = chatDao.insertShareMessage(param);
+//				if(insert1 > 0)
+//					msg = String.valueOf(roomNo);
 			}
 		}
 		return msg;

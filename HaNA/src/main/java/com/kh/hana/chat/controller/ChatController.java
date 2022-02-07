@@ -240,7 +240,7 @@ public class ChatController {
     
     //태우님 예약공유
     @GetMapping("/shareReservation.do")
-    public ResponseEntity<?> shareReservation(int reservationNo, String id, String targetUser){
+    public ResponseEntity<?> shareReservation(String reservationNo, String id, String targetUser){
     	log.info("shareReservation reservationNo = {}",reservationNo);
     	log.info("shareReservation id = {}",id);
     	log.info("shareReservation targetUser = {}",targetUser);
@@ -250,8 +250,10 @@ public class ChatController {
     	param.put("loginId", id);
     	//targetUser
     	param.put("memberId", targetUser);
+    	param.put("members", id+","+targetUser);
     	
-    	//기존에 채팅방 있는지 체크
+    	//기존에 채팅방 있는지 체크 serviceImpl에서 작업
+    	//채팅방 번호 가져옴
     	String roomNo = chatService.chatRoomCheck(param);
     	
     	return ResponseEntity.ok(roomNo);

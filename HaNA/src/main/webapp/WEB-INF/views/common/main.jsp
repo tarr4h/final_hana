@@ -18,21 +18,6 @@
 <script>
 let today = Date.now()-(9 * 60 * 60 * 1000);
 //댓글리스트 가져오기
-const boardcommentList=(boardNo)=>{
-	console.log("boardNo = ", boardNo);
-	$.ajax({
-		url : `${pageContext.request.contextPath}/chat/boardcommentList.do`,
-		data : {
-			boardNo : boardNo
-		},
-		method: "GET",
-		success(resp){
-
-			console.log(resp);
-		},
-		error:console.log
-	});
-};
 //css넣어주기
 const forEachCss = (index)=>{
 	let css=``;
@@ -191,10 +176,10 @@ const slideindex${vss.index } = slideImg${vss.index }.length; // 슬라이드 �
 
 
 //전체 슬라이드 컨테이너 넓이 설정  (slideWidth + slideMargin) * slideindex + 'px';
-console.log("sdfsdf",${vss.index });
+/* console.log("sdfsdf",${vss.index });
 console.log("slides${vss.index } = ",slides${vss.index });
 console.log("slideImg${vss.index } = ",slideImg${vss.index });
-console.log("slideindex${vss.index } = ",slideindex${vss.index });
+console.log("slideindex${vss.index } = ",slideindex${vss.index }); */
 slides${vss.index }.style.width = (slideWidth + slideMargin) * slideindex${vss.index } + 'px';
 
 
@@ -226,7 +211,7 @@ $(`.next${vss.index }`).on('click', function () {
 		method: "GET",
 		success(resp){
 			
-			console.log("${vss.index } =",resp);
+			/* console.log("${vss.index } =",resp); */
 			let commentList =``;
 				$(resp).each((i, comment) => {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
@@ -249,7 +234,7 @@ $(`.next${vss.index }`).on('click', function () {
 	
 //forEach에서 일반 댓글쓰기
 const commetWrite${vss.index}=()=>{
-	console.log("vvsindex = ", ${vss.index});
+	/* console.log("vvsindex = ", ${vss.index}); */
 	let msg = $("input#input-comment${vss.index}").val();
 	if(msg == ''){
 		alert("메세지를 입력하세요");
@@ -375,10 +360,10 @@ const slideindex0${vss.index } = slideImg0${vss.index }.length; // 슬라이드 
 
 
 //전체 슬라이드 컨테이너 넓이 설정  (slideWidth + slideMargin) * slideindex + 'px';
-console.log("sdfsdf",'0'+${vss.index });
+/* console.log("sdfsdf",'0'+${vss.index });
 console.log("slides0${vss.index } = ",slides0${vss.index });
 console.log("slideImg0${vss.index } = ",slideImg0${vss.index });
-console.log("slideindex0${vss.index } = ",slideindex0${vss.index });
+console.log("slideindex0${vss.index } = ",slideindex0${vss.index }); */
 slides0${vss.index }.style.width = (slideWidth + slideMargin) * slideindex0${vss.index } + 'px';
 
 
@@ -410,7 +395,7 @@ $(`.next0${vss.index }`).on('click', function () {
 		method: "GET",
 		success(resp){
 			
-			console.log("0${vss.index } =",resp);
+			/* console.log("0${vss.index } =",resp); */
 			let commentList =``;
 				$(resp).each((i, comment) => {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
@@ -433,7 +418,7 @@ $(`.next0${vss.index }`).on('click', function () {
 	
 //forEach에서 일반 댓글쓰기
 const commetWrite0${vss.index}=()=>{
-	console.log("0vvsindex = ", '0'+${vss.index});
+	/* console.log("0vvsindex = ", '0'+${vss.index}); */
 	let msg = $("input#input-comment0${vss.index}").val();
 	if(msg == ''){
 		alert("메세지를 입력하세요");

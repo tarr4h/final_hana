@@ -385,7 +385,7 @@ function connect() {
     
 } */
 //웹 소켓에 연결되었을 때 호출될 함수
-function onOpen() {
+/* function onOpen() {
 	console.log("onOpen roomNo = ", roomNo);
      const data = {
             "roomNo" : roomNo,
@@ -395,7 +395,7 @@ function onOpen() {
     let jsonData = JSON.stringify(data);
     websocket.send(jsonData);
     console.log("opOpen");
-}
+} */
 <!-- 메세지 수신 -->
 /* function onMessage(e){
 	let eSplit = e.data.split(",");
@@ -442,7 +442,7 @@ const displaychat = (check, e) =>{
 
 	let chat = ``
 	
-	console.log("fileImg check =", e.fileImg);
+	/* console.log("fileImg check =", e.fileImg); */
 	
 	<!-- 파일전송시 (undefined) -->
 	if(e.fileImg !== undefined){
@@ -475,11 +475,7 @@ const displaychat = (check, e) =>{
 	}
 	<!-- 여기까지 파일전송 시 뿌려주는 코드 -->
 	
-	let messageSplit = e.message.split(",");
-	messageSplit[0] === 'share115'
-	messageSplit[1]
-	messageSplit[2]
-	
+	let messageSplit = e.message.split("@");
 	if(e.message === 'ROOMENTER'){
 		
 		chat += `<div class="d-flex justify-content-center mb-2">
@@ -494,7 +490,7 @@ const displaychat = (check, e) =>{
 		if(check === 'right'){
 		chat += `<div class="d-flex justify-content-end mb-4">
 		<div class="msg_cotainer_send">
-		messageSplit[1] messageSplit[2]
+		\${messageSplit[1]} \${messageSplit[2]}
 		<span class="msg_time_send">\${returnDate}</span>
 		</div>
 		<div class="img_cont_msg">
@@ -508,7 +504,7 @@ const displaychat = (check, e) =>{
 			<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
 		</div>
 		<div class="msg_cotainer">
-		messageSplit[1] messageSplit[2]
+		\${messageSplit[1]} \${messageSplit[2]}
 			<span class="msg_time">\${returnDate}</span>
 		</div>
 	</div>`;

@@ -47,36 +47,67 @@ function shareReservationModal(reservationNo){
 	console.log($("[name=shareReservationNo]").val());
 };
 
+function onOpenShare() {
+		console.log("onOpenShare");
+		console.log("123 =",ShareroomNo);
+		console.log("123 =",`${loginMember.id}`);
+		     const data = {
+	           "roomNo" : ShareroomNo,
+		         "memberId" : `${loginMember.id}`,
+		         "message" : "ENTER" 
+	    };
+	    let jsonData = JSON.stringify(data);
+	    websocket.send(jsonData);
+	}
 function shareReservation(reservationNo, targetUser){
 	/* 요청 필요 데이터 */
 	console.log(reservationNo);
 	console.log(targetUser);
 	console.log('${loginMember.id}');
 	console.log('${loginMember.picture}');
-	
-	$.ajax({
-		url:`${pageContext.request.contextPath}/chat/shareReservation.do`,
-		data:{
-			id : id,
-			reservationNo : reservationNo,
-			targetUser : targetUser
-		},
-		method: "GET",
-		success(resp){
-			ShareroomNo = resp;
-		},
-	});
-	
-    const data = {
-            "roomNo" : ShareroomNo,
-            "memberId" : ${loginMember.id},
-            "message"   : 'share115,'+${loginMember.id}+'님이 예약을 공유했습니다.,'+${reservationNo}
-            "picture" : ${loginMember.picture},
-            "messageRegDate" : Sharetoday
-        };
-    msgCheck(data);
-    let jsonData = JSON.stringify(data);
-    websocket.send(jsonData);
+	const testtest=()=>{
+		$.ajax({
+			url:`${pageContext.request.contextPath}/chat/shareReservation.do`,
+			data:{
+				id : `${loginMember.id}`,
+				reservationNo : reservationNo,
+				targetUser : targetUser
+			},
+			method: "GET",
+			success(resp){
+				console.log("resp =", resp);
+				//채팅방 번호를 전역변수에 넣음
+				ShareroomNo = resp;
+				connect(2);
+				//웹소켓 접속을 하고 websocket.send를 보내야하는데 비동기라 send가 먼저 작동돼서 1초뒤 send되게
+				 setTimeout(function() {
+					    const data = {
+					            "roomNo" : ShareroomNo,
+					            "memberId" : `${loginMember.id}`,
+					            "message"   : `share115@${loginMember.id}님이 예약을 공유했습니다.@\${reservationNo}`,
+					            "picture" : `${loginMember.picture}`,
+					            "messageRegDate" : Sharetoday
+					        }; 
+					    console.log("gdgd = ",data);
+					    console.log("data.message=",data.message);
+					    let messageSplit = data.message.split("@");
+					    console.log("messageSplit[0] = ",messageSplit[0]);
+					    console.log("messageSplit[1] = ",messageSplit[1]);
+					    console.log("messageSplit[2] = ",messageSplit[2]);
+					    
+					    let jsonData = JSON.stringify(data);
+					    websocket.send(jsonData);
+					    console.log(jsonData);
+					    $('#shareModal').modal('hide');
+					    alert("공유 완료");
+				 },1000);
+
+			},
+			error: console.log
+		}); 
+
+	};
+	testtest();
 	
 };
 
