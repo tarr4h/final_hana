@@ -231,16 +231,26 @@
 		where reservation_no = #{reservationNo}
 	</delete>
 	
-	<select id="selectRankingData" parameterType="map" resultType="map">
-		 select 
-		 	* 
-  		 from 
-  		 	ranking r left join hashtag h 
-  			on r.tag_id = h.tag_id
-  		where  
-  			h.tag_name in 
-  			<foreach collection="tags" item="tags" open="(" close =")" separator=",">
-            #{tags}
-            </foreach>	
-	</select>
+	
+	<update id ="selectRankingData" parameterType="map" >
+	  <selectKey order="BEFORE" resultType="map" keyProperty="tagId">
+            select
+                tag_id
+               from
+                   hashtag
+              where
+                  tag_name in 
+               <foreach collection="tags" item="tags" open="(" close =")" separator=",">
+            		#{tags}
+            </foreach> 
+        </selectKey>
+      	 merge into  ranking 
+    		using DUAL
+     		  on (tag_id = #{tagId} and tag_date = #{tagDate})
+   			when matched then
+       		  update set  count = +1 
+   		 when not matched then
+       		 	insert (tag_id, tag_date , count) 
+        		values (#{tagId},#{tagDate},#{count})
+	</update>
 </mapper>

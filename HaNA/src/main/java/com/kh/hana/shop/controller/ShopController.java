@@ -116,11 +116,11 @@ public class ShopController {
         log.info("tagDate = {}", tagDate);
         
         Map<String, Object> rankingMap = new HashMap<>();
-  //       	rankingMap.put("tagDate", tagDate);
+        	rankingMap.put("tagDate", tagDate);
         	rankingMap.put("tags", selectDataArr);
 			log.info("rankingMap = {}", rankingMap);
 
-         int result = shopService.insertRankingData(rankingMap,tagDate);
+         int result = shopService.insertRankingData(rankingMap);
         
         return ResponseEntity.ok(null);
     }

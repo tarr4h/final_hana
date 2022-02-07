@@ -131,6 +131,12 @@ public class ShopDaoImpl implements ShopDao {
 		return session.selectList("shop.selectRankingData",rankingMap);
 	}
 
+/*
+	@Override
+	public int insertRankingData(Map<String, Object> rankingMap) {
+		return session.insert("shop.insertRankingData",rankingMap);
+	}
+*/
 	
     
 }

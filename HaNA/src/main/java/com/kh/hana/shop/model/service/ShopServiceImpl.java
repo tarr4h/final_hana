@@ -93,15 +93,23 @@ public class ShopServiceImpl implements ShopService {
 	}
 	
 	@Override
-	public int insertRankingData(Map<String, Object> rankingMap ,String tagDate) {
+	public int insertRankingData(Map<String, Object> rankingMap) {
+		int count = 1;
+		rankingMap.put("count", count);
 		List<Object> selectData = shopDao.selectRankingData(rankingMap);
 		log.info("selectData = {}" ,selectData );
-		if(selectData.isEmpty()) {
+		
+		/*
+		if(selectData.isEmpty()) { // 데이터가 없을때 
 			log.info("없음");
-		}else {
-			log.info("있음");
+			rankingMap.put("count", count);
+			int insertData = shopDao.insertRankingData(rankingMap);
 			
+		}else { // 데이터가 있을때 
+			log.info("있음");
+	
 		}
+		*/
 		return 0;
 	}
 

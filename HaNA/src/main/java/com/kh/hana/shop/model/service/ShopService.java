@@ -12,7 +12,7 @@ public interface ShopService {
     
     List<HashTag> hashTagAutocomplete(String search);
     
-    int insertRankingData(Map<String, Object> rankingMap, String tagDate);
+    int insertRankingData(Map<String, Object> rankingMap);
 
 	int insertShopTable(Table table);
 

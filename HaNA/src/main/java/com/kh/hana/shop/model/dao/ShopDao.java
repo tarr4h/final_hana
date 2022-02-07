@@ -51,6 +51,8 @@ public interface ShopDao {
 
 	List<Object> selectRankingData(Map<String, Object> rankingMap);
 
+	// int insertRankingData(Map<String, Object> rankingMap);
+
 
 	
 	
