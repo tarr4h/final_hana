@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +18,13 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -31,13 +34,18 @@ import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.common.util.HanaUtils;
+import com.kh.hana.group.model.service.GroupService;
+import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
+import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-@RequestMapping("/chat")
+@RequestMapping(value= {"/chat","/common"})
 public class ChatController {
 	
 	@Autowired
@@ -48,6 +56,9 @@ public class ChatController {
 	
 	@Autowired
 	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private GroupService groupService;
 	
 	@GetMapping("/chat.do")
 	public void chat() {}
@@ -107,16 +118,15 @@ public class ChatController {
     	param.put("loginId", loginId);
     	param.put("members", loginId+","+memberId);
     	
-    	//단톡생성 하게되면 쿼리 바꾸거나 체크 삭제
-    	//너무 복잡한데;
-    	//나중에 room
+
     	List<ChatRoom> chatlist = chatService.chatRoomCheck(param);
     	log.info("채팅방 생성 or 보내기 chatlist= {}, size = {}", chatlist, chatlist);
     	if(chatlist.size() == 0) {
     		int result = chatService.createChatRoom(param);
     		log.info("createChatRoom result = {}", result);
     		if(result > 0) {
-    			//redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
+    			
+    			//나중에 selectKey로 바꾸기
     			int roomNo = chatService.findRoomNo(param);
     			param.put("roomNo", roomNo);
     			int insert1 = chatService.insertEnterMessage(param);
@@ -160,9 +170,6 @@ public class ChatController {
     	
     	return ResponseEntity.ok(member);
     }
-    
-    @GetMapping("/main.do")
-    public void main() {}
     
     @GetMapping("/exitRoom.do")
     public String exitRoom(int roomNo, RedirectAttributes redirectAttr) {
@@ -241,5 +248,60 @@ public class ChatController {
     	int roomUnreadChat = chatService.roomUnreadChat(chat);
     	return ResponseEntity.ok(roomUnreadChat);
     }
+    
+    
+    
+    
+    //main페이지
+    @RequestMapping(value="/main.do", method = RequestMethod.GET)
+    public void main(Authentication authentication, Model model) {
+    	//자기가 속한 소모임 최근게시글 3개
+    	String memberId = authentication.getName();
+    	List<GroupBoard> groupboard = chatService.selectListGroupBoard(memberId);
+    	//log.info("groupboard 몇개 나왔는지= {}", groupboard.size());
+    	
+    	//팔로잉한 친구 최근게시글 3개
+    	List<Board> board = chatService.selectListMemberBoard(memberId);
+    	
+    	//추천친구 (같은 그룹에 있지만 팔로잉 안된 친구 or 맞팔 안된 친구)
+    	List<Member> memberList = chatService.recommendMemberList(memberId);
+    	if(memberList.size() >0)
+    		model.addAttribute(memberList);
+    	
+    	
+    	model.addAttribute("groupboard", groupboard);
+    	model.addAttribute("board", board);
+    }
+    
+    @GetMapping("/boardcommentList.do")
+    public ResponseEntity<?> boardcommentList(int boardNo){
+    	log.info("boardcommentList boardNo = {}", boardNo);
+		List<GroupBoardComment> list = groupService.selectGroupBoardCommentList(boardNo);
+		log.info("list = {}",list);
+    	
+    	return ResponseEntity.ok(list);
+    };
+    
+//    @GetMapping("/memberboardcommentList.do")
+//    public ResponseEntity<?> memberboardcommentList(int boardNo){
+//    	log.info("boardcommentList boardNo = {}", boardNo);
+//		//List<BoardComment> list = chatService.selectMemberBoardCommentList(boardNo);
+//		log.info("list = {}",list);
+//    	
+//    	return ResponseEntity.ok(list);
+//    };
+    
+    @GetMapping("insertgroupBoardcomment.do")
+    public ResponseEntity<?> insertgroupBoardcomment(GroupBoardComment groupBoardComment){
+    	log.info("insertgroupBoardcomment groupBoardComment= {}", groupBoardComment);
+    	int result = groupService.insertGroupBoardComment(groupBoardComment);
+    	if(result > 0)
+    		log.info("main 그룹게시판 댓글작성 성공!");
+    	else
+    		log.info("main 그룹게시판 댓글작성 실패!");
+    		
+    	return ResponseEntity.ok(null);
+    }
+    
     		
 }

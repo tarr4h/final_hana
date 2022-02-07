@@ -12,7 +12,7 @@ import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Member;
-import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupCalendar;
 
 @Repository
@@ -37,7 +37,7 @@ public class GroupDaoImpl implements GroupDao {
 	}
   
     @Override
-	public int insertGroupBoard(GroupBoardEntity groupBoard) {
+	public int insertGroupBoard(GroupBoard groupBoard) {
 		return session.insert("group.insertGroupBoard", groupBoard);
 	}
 
@@ -47,63 +47,63 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<Member> selectTagMemberList(GroupBoardEntity groupBoard) {
-		return session.selectList("selectTagMemberList", groupBoard);
+	public List<Member> selectTagMemberList(GroupBoard groupBoard) {
+		return session.selectList("group.selectTagMemberList", groupBoard);
 	}
 
 	@Override
 	public List<Map<String,String>> selectGroupMemberList(String groupId) {
-		return session.selectList("selectGroupMemberList",groupId);
+		return session.selectList("group.selectGroupMemberList",groupId);
 	}
 
 	@Override
-	public List<GroupBoardEntity> selectGroupBoardList(String groupId) {
-		return session.selectList("selectGroupBoardList",groupId);
+	public List<GroupBoard> selectGroupBoardList(String groupId) {
+		return session.selectList("group.selectGroupBoardList",groupId);
 	}
 
 	@Override
 	public int insertEnrollGroupForm(Map<String, Object> map) {
-		return session.insert("insertEnrollGroupForm", map);
+		return session.insert("group.insertEnrollGroupForm", map);
 	}
 
 	@Override
 	public List<Map<String, Object>> selectGroupApplyList(String groupId) {
-		return session.selectList("selectGroupApplyList", groupId);
+		return session.selectList("group.selectGroupApplyList", groupId);
 	}
 	  
     @Override
     public int insertGroupBoardComment(GroupBoardComment groupBoardComment) {
-	 	return session.insert("insertGroupBoardComment",groupBoardComment);
+	 	return session.insert("group.insertGroupBoardComment",groupBoardComment);
 	}
 
 	@Override
 	public List<GroupBoardComment> selectGroupBoardCommentList(int boardNo) {
-		return session.selectList("selectGroupBoardCommentList",boardNo);
+		return session.selectList("group.selectGroupBoardCommentList",boardNo);
 	}
 	
 	@Override
 	public int deleteBoardComment(int no) {
-		return session.delete("deleteBoardComment",no);
+		return session.delete("group.deleteBoardComment",no);
 	}
 
 	@Override
 	public int insertGroupMember(Map<String, Object> map) {
-		return session.insert("insertGroupMember", map);
+		return session.insert("group.insertGroupMember", map);
 	}
 
 	@Override
 	public int updateApplyHandled(Map<String, Object> map) {
-		return session.update("updateApplyHandled", map);
+		return session.update("group.updateApplyHandled", map);
 	}
 
 	@Override
 	public int deleteGroupBoard(int no) {
-		return session.delete("deleteGroupBoard",no);
+		return session.delete("group.deleteGroupBoard",no);
 	}
 
 	@Override
 	public int updateBoardContent(Map<String, Object> param) {
-		return session.update("updateBoardContent",param);
+		return session.update("group.updateBoardContent",param);
 	}
 
 //	@Override
@@ -113,67 +113,72 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public Group selectGroupInfo(String groupId) {
-		return session.selectOne("selectGroupInfo", groupId);
+		return session.selectOne("group.selectGroupInfo", groupId);
 	}
 
 	@Override
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
-		return session.selectOne("selectOneLikeLog",param);
+		return session.selectOne("group.selectOneLikeLog",param);
 	}
 
 	@Override
 	public int deleteLikeLog(Map<String, Object> param) {
-		return session.delete("deleteLikeLog",param);
+		return session.delete("group.deleteLikeLog",param);
 	}
 
 	@Override
 	public int insertLikeLog(Map<String, Object> param) {
-		return session.insert("insertLikeLog",param);
+		return session.insert("group.insertLikeLog",param);
 	}
 
 	@Override
 	public int selectLikeCount(Map<String, Object> param) {
-		return session.selectOne("selectLikeCount",param);
+		return session.selectOne("group.selectLikeCount",param);
 	}
 
 	@Override
 	public int deleteGroupMember(String memberId) {
-		return session.delete("deleteGroupMember", memberId);
+		return session.delete("group.deleteGroupMember", memberId);
 	}
 
 	@Override
 	public int updateGroupGrade(Map<String, Object> map) {
-		return session.update("updateGroupGrade", map);
+		return session.update("group.updateGroupGrade", map);
 	}
 	
 	@Override
 	public int updateGroup(Group group) {
-		return session.update("updateGroup", group);
+		return session.update("group.updateGroup", group);
 	}
 		
 	@Override
 	public int deleteAllCalendar(String groupId) {
-		return session.delete("deleteAllCalendar",groupId);
+		return session.delete("group.deleteAllCalendar",groupId);
 	}
 
 	@Override
 	public int insertCalendarData(Map<String, Object> p) {
-		return session.insert("insertCalendarData",p);
+		return session.insert("group.insertCalendarData",p);
 	}
 
 	@Override
 	public List<GroupCalendar> selectCalendarData(String groupId) {
-		return session.selectList("selectCalendarData",groupId);
+		return session.selectList("group.selectCalendarData",groupId);
 	}
 
 	@Override
 	public int profileImage(Group group) {
-		return session.insert("profileImage", group);
+		return session.insert("group.profileImage", group);
 	}
 	
 	@Override
 	public int deleteCalendarData(Map<String, Object> param) {
-		return session.delete("deleteCalendarData",param);
+		return session.delete("group.deleteCalendarData",param);
+	}
+
+	@Override
+	public List<GroupBoard> selectGroupBoardListByLocation(GroupBoard groupBoard) {
+		return session.selectList("group.selectGroupBoardListByLocation",groupBoard);
 	}
 
 

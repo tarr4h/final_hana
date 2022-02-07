@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
@@ -14,15 +15,15 @@ public interface MemberDao {
 
 	int updateMember(Member member);
 
-	int updatePersonality(Member member);
+	//int updatePersonality(Member member);
 
-	int updateInterest(Member member);
+	//int updateInterest(Member member);
 
-	Member selectPersonality(String id);
+	//Member selectPersonality(String id);
 
-	int insertPersonality(Member member);
+	//int insertPersonality(Member member);
 
-	int insertInterest(Member member);
+	//int insertInterest(Member member);
 
 	int addFollowing(Map<String, Object> map);
 
@@ -34,8 +35,9 @@ public interface MemberDao {
 
 	List<Follower> followerList(String friendId);
 
- 
 	List<Follower> followingList(String friendId);
+	
+	List<Map<String, Object>> followingListById(Map<String, Object> map);
  
 	Shop selectOneShopInfo(String memberId);
 
@@ -44,6 +46,33 @@ public interface MemberDao {
 	int insertShopInfo(String id);
 
 	int insertMemberBoard(Board board);
+
+	int updateMemberProfile(Member member);
+
+	int updatePassword(Member updateMember);
+
+	Board selectOneBoard(int no);
+
+	Map<String, Object> selectOneLikeLog(Map<String, Object> param);
+
+	List<Board> selectBoardList(String id);
+
+	int enrollBoardComment(BoardComment boardComment);
+
+	int deleteBoard(int no);
+
+	List<BoardComment> selectBoardCommentList(int boardNo);
+
+	int deleteBoardComment(int no);
+
+	int updateBoardContent(Map<String, Object> param);
+
+	int insertLikeLog(Map<String, Object> param);
+
+	int deleteLikeLog(Map<String, Object> param);
+
+	int selectLikeCount(Map<String, Object> param);
+
 
  
 

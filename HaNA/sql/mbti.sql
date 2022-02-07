@@ -147,6 +147,7 @@ select
 select * from shophashtag;
 select * from hashtag;
 select * from shop_info;
+
 commit;
 select
     *
@@ -154,7 +155,7 @@ from
     shop_info i
     left join shophashtag s on i.id = s.member_id 
     left join hashtag h on s.tag_id = h.tag_id 
-where member_id = 'shop34';
+where member_id = 'shop111';
 
 
 

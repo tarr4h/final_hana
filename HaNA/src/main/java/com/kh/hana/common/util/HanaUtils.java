@@ -112,4 +112,66 @@ public class HanaUtils {
 		return pagebar.toString();
 	}
 
+	
+	public static String getPagebarAjax(int cPage, int numPerPage, int totalContent, String func) {
+		StringBuilder pagebar = new StringBuilder(); 
+		
+		final int pagebarSize = 5;
+		final int totalPage = (int) Math.ceil((double) totalContent / numPerPage);
+		final int pageStart = (cPage - 1) / pagebarSize * pagebarSize + 1;
+		int pageEnd = pageStart + pagebarSize - 1;
+		pageEnd = totalPage < pageEnd ? totalPage : pageEnd;
+		int pageNo = pageStart;
+		
+		pagebar.append("<nav aria-label=\"Page navigation example\">\n"
+				+ "  <ul class=\"pagination justify-content-center\">");
+		// [이전]
+		if(pageNo == 1) {
+			pagebar.append(" <li class=\"page-item disabled\">\n"
+					+ "      <a class=\"page-link\" href=\"#\" tabindex=\"-1\">Previous</a>\n"
+					+ "    </li>");
+			
+		}
+		else {
+			pagebar.append(" <li class=\"page-item \">\n"
+					+ "      <a class=\"page-link\" href=\"#\" onclick=\""+func+"("+(pageNo-1)+")\" tabindex=\"-1\">Previous</a>\n"
+					+ "    </li>");
+
+		}
+		
+		// pageNo
+		while(pageNo <= pageEnd) {
+			if(pageNo == cPage) {
+				pagebar.append("    <li class=\"page-item active\">\n"
+						+ "      <a class=\"page-link\" href=\"#\" onclick=\""+func+"("+pageNo+")\">"+pageNo+"<span class=\"sr-only\">(current)</span></a>\n"
+						+ "    </li>");
+			}
+			else {
+				pagebar.append("    <li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\""+func+"("+pageNo+")\">"+pageNo+"</a></li>\n"
+						);
+			}
+			
+			pageNo++;
+		}
+		
+		
+		// [다음]
+		if(pageNo > totalPage) {
+			pagebar.append(" <li class=\"page-item disabled\">\n"
+					+ "      <a class=\"page-link\" href=\"#\" tabindex=\"-1\">Next</a>\n"
+					+ "    </li>");
+			 
+		}
+
+		else {
+			pagebar.append(" <li class=\"page-item \">\n"
+					+ "      <a class=\"page-link\" href=\"\" onclick=\""+func+"("+pageNo+") tabindex=\"-1\">Next</a>\n"
+					+ "    </li>");
+
+		}
+		pagebar.append("  </ul>\n"
+				+ "</nav>");
+		
+		return pagebar.toString();
+	}
 }

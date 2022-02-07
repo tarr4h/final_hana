@@ -10,6 +10,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
     <jsp:param value="메인화면" name="main"/>
 </jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+
 <div>
     <form:form
         action="${pageContext.request.contextPath}/group/enrollGroupBoard"

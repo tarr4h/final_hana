@@ -8,12 +8,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hana.common.util.CreateCalendar;
+import com.kh.hana.common.util.HanaUtils;
+import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.service.ShopService;
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
@@ -44,31 +45,6 @@ public class ShopController {
     public void shopMain() {
         
     }
-    
-	/*
-	 * @GetMapping("/shopList") public ResponseEntity<?>
-	 * selectShopList(@RequestParam String id, @RequestParam String
-	 * locationX, @RequestParam String locationY) { Map<String, Object> data = new
-	 * HashMap<>(); data.put("id", id); data.put("locationX", locationX);
-	 * data.put("locationY", locationY);
-	 * 
-	 * // 8.23km내 double maxX = Double.parseDouble(locationX) + 0.0927; double maxY
-	 * = Double.parseDouble(locationY) + 0.074;
-	 * 
-	 * String maxLocationX = Double.toString(maxX); String maxLocationY =
-	 * Double.toString(maxY);
-	 * 
-	 * data.put("maxLocationX", maxLocationX); data.put("maxLocationY",
-	 * maxLocationY);
-	 * 
-	 * log.info("data = {}", data);
-	 * 
-	 * List<Map<String, Object>> shopList = shopService.selectShopList(data);
-	 * log.info("length = {}", shopList.size());
-	 * 
-	 * return ResponseEntity.ok(shopList); }
-	 */    
-    
     @GetMapping("/shopList")
     public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY) {
     	log.info("selectDataArr = {}", selectDataArr);
@@ -165,14 +141,11 @@ public class ShopController {
     @DeleteMapping(value="/deleteShopTable", produces="application/text;charset=utf8")
     @ResponseBody
     public ResponseEntity<?> deleteShopTable(@RequestBody Table table){
-    	
     	String tableId = table.getTableId();
-    	log.info("tableId = {}", tableId);
     	
     	int result = shopService.deleteShopTable(tableId);
-    	log.info("result = {}", result);
     	 
-    	return ResponseEntity.ok().build();
+    	return ResponseEntity.ok(result);
     }
     
     @PutMapping(value="/updateShopTable", produces="application/text;charset=utf8")
@@ -229,7 +202,7 @@ public class ShopController {
 		    			timeMap.put("status", res.getReservationStatus());
 		    		}
 		    	}
-				
+		    	
 				timeMapList.add(timeMap);
 			}
 		} catch (ParseException e) {
@@ -249,7 +222,6 @@ public class ShopController {
     	log.info("insertReservation REs = {}", reservation);
     	
     	int result = shopService.insertReservation(reservation);
-    	log.info("reservation result = {}", result);
     	
     	String msg = result > 0 ? "등록되었습니다." : "예약 실패, 다시 시도해주세요";
     	
@@ -258,13 +230,70 @@ public class ShopController {
     
     @GetMapping("/createCalendar")
     @ResponseBody
-    public ResponseEntity<?> createCalendar(@RequestParam int year, @RequestParam int month){
-    	log.info("year, month = {}, {}", year, month);
-    	
+    public ResponseEntity<?> createCalendar(@RequestParam int year, @RequestParam int month){    	
     	Map<String, Object> map = CreateCalendar.createCalendar(year, month);
-    	log.info("map = {}", map);
     	
     	return ResponseEntity.ok(map);
+    }
+    
+    @GetMapping("/shopReservationCount")
+    public ResponseEntity<?> shopReservationCount(@RequestParam String shopId){
+    	int count = shopService.shopReservationCount(shopId);
+    	return ResponseEntity.ok(count);
+    }
+    
+    @GetMapping("/selectShopReservationListByDate")
+    public ResponseEntity<?> selectShopReservationListByDate(@RequestParam String date, @RequestParam String id){    	
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("date", date);
+    	map.put("shopId", id);
+    	
+    	List<Reservation> reservationList = shopService.selectShopReservationListByDate(map);
+    	log.info("reservationList by Date = {}", reservationList);
+    	
+    	return ResponseEntity.ok(reservationList);
+    }
+    
+    @GetMapping("/myReservation")
+    public ResponseEntity<?> selectMyReservation(@RequestParam int state, @RequestParam(defaultValue="1") int cPage, @AuthenticationPrincipal Member member){
+    	int limit = 10;
+    	int offset = (cPage -1) * limit;
+    	
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("state", state);
+    	map.put("id", member.getId());
+    	map.put("limit", limit);
+    	map.put("offset", offset);
+    	
+    	 
+    	Map<String, Object> myList = shopService.selectMyReservationList(map);
+    	int totalBoardCount = (int) myList.get("totalBoard");
+    	log.info("totalBoardCount = {}", totalBoardCount);
+    	
+    	String func = "";
+    	if(state == 1) {
+    		func = "myPresentReservation";
+    	} else {
+    		func = "myPastReservation";
+    	}
+    	
+    	String pageBar = HanaUtils.getPagebarAjax(cPage, 10, totalBoardCount, func);
+    	
+    	Map<String, Object> result = new HashMap<>();
+    	result.put("myList", myList.get("rowBoundsReservation"));
+    	result.put("pageBar", pageBar);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+    @DeleteMapping(value="/cancleReservation")
+    public ResponseEntity<?> deleteReservation(@RequestBody String reservationNo) {
+    	
+    	log.info("resNo = {}", reservationNo);
+    	
+    	int result = shopService.deleteReservation(reservationNo);
+    	
+    	return ResponseEntity.ok(result);
     }
     
     @InitBinder

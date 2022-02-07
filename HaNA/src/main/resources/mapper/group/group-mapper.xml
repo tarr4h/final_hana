@@ -111,7 +111,8 @@
 	
 	<select id="selectGroupBoardList" resultType="groupBoard">
 	select
-		*
+		no,
+		image
 	from
 		group_board
 	where
@@ -367,5 +368,18 @@
 	 	and
 	 	end_=#{end}
 	 </delete>
+	 
+	 <select id="selectGroupBoardListByLocation" resultType="groupBoard">
+	 select
+	 	*
+	 from
+	 	group_board
+	 where
+	 	location_x = #{locationX}
+	 	and
+	 	location_Y = #{locationY}
+	 	and
+	 	place_name = #{placeName}
+	 </select>
 </mapper>
 
