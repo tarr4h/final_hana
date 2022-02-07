@@ -34,6 +34,15 @@
 		location.href = '${pageContext.request.contextPath}/member/login';
 	</script>
 </c:if>
+<script>
+//ajax POST 요청 csrf
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+	    if (options['type'].toLowerCase() === "post" || options['type'].toLowerCase() === "delete" || options['type'].toLowerCase() === "put") {
+	        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+	    }
+	  });
+</script>
 </head>
 <body>
 	<sec:authentication property="principal" var="loginMember"/>	

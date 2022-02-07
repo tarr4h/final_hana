@@ -43,7 +43,7 @@ function goMemberView(memberId){
 #loca-info {
 	width:100%;
 	height:40%;
-	margin-top:25%;
+	margin-top:33%;
 	padding-left:20%;
 }
 .group-board-container {
