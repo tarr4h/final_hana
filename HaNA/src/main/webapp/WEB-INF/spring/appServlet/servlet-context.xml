@@ -35,9 +35,8 @@
 			<mapping path="/mbti/mbti.do"/>
 			<beans:bean class="com.kh.hana.common.interceptor.MemberMbtiInterceptor" id="memberMbtiInterceptor"/>
 		</interceptor>
-	</interceptors>
-	
-	<interceptors>
+
+
 		<interceptor>
 			<mapping path="/shop/**/"/>
 			<beans:bean class="com.kh.hana.common.interceptor.ShopHashTagInterceptor" id="ShopHashTagInterceptor"/>
