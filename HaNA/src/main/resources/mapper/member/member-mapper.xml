@@ -91,11 +91,9 @@
 		select
 		 *
 		from
-			member m full outer join personality p
-		on m.id = p.member_id
-			full outer join interest i
-		on m.id = i.member_id
-			
+			member m  
+			left join account_private a
+			on m.id = a.member_id
 		where
 			id = #{id}
 	</select>
@@ -311,7 +309,7 @@
 			member_id = #{memberId}
 	</delete>
 
-		<select id="selectLikeCount" resultType="_int">
+	<select id="selectLikeCount" resultType="_int">
 	select
 		count(*)
 	from(
@@ -331,6 +329,16 @@
 	        (#{id}, #{accountCheck})
 	</insert>
 
+	<select id="checkFriend" resultType="_int">
+	 select 
+	 	count(*) 
+	 from
+	 	follower
+	 where
+	 	member_id = #{id}
+	 	and
+	 	following_id = #{loginMemberId}	
+	</select>
 
 
 

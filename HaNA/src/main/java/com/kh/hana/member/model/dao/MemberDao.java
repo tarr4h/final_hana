@@ -75,6 +75,8 @@ public interface MemberDao {
  
 	int checkAccountPrivate(Map<String, Object> map);
 
+	int checkFriend(Map<String, Object> map);
+
 
  
 

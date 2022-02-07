@@ -29,11 +29,7 @@
 	alert("${msg}");
 	</script>
 </c:if>
-		<c:choose>
-    		<c:when test="${accountCheck ==2}" >
-    	 	<span>비공개계정입니다.</span>
-    		</c:when>
-    	  <c:otherwise>
+
 <div class="container mt-2">
     <div class="row" id="myInfo">
     	
@@ -198,19 +194,25 @@ $("#btn-follower-list").on( "click", function() {
     <div class="row">   
     </div>
 	<!-- 게시물목록 -->        
-    <div class="row">    
-        <c:forEach items="${boardList}" var="board" varStatus="vs">
+ 	<c:choose>
+    		<c:when test="${member.accountCheck == 2  && loginMember.id != member.id && isFriend != 1}">
+    	 	<p style="font-weight: bold">비공개계정입니다.</p>
+    	 	<p>사진을 보려면 팔로우하세요.</p>
+    	 	</c:when>
+    	 	<c:otherwise>
+       <div class="row">    
+         <c:forEach items="${boardList}" var="board" varStatus="vs">
 	        <div class="thumbnail col-sm-4" >     
 	       	 	<input type="hidden" value="${board.no}" id="boardNo" name="no"/>
 	        	<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
 						alt=""  />
-		        </div>
-	        </c:forEach>
-	    </div>
+		      </div>
+	      </c:forEach>
+	   </div>
+	    </c:otherwise>
+ 	</c:choose> 
 	</div>
- 	</c:otherwise>
- 	</c:choose>	
 <script>
 let boardDetail;
 let newContent;

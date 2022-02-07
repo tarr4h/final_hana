@@ -178,6 +178,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.insert("member.checkAccountPrivate",map);
 	}
 
+	@Override
+	public int checkFriend(Map<String, Object> map) {
+		return session.selectOne("member.checkFriend",map);
+	}
+
  
 	
 

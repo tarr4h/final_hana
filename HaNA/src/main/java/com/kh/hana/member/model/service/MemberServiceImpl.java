@@ -192,6 +192,11 @@ public class MemberServiceImpl implements MemberService {
 	 
 	}
 
+	@Override
+	public int checkFriend(Map<String, Object> map) {
+		return memberDao.checkFriend(map);
+	}
+
 	 
 	
 	
