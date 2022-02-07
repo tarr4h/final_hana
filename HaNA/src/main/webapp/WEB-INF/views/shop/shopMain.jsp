@@ -434,9 +434,6 @@ $("[name=maxDistance]").change((e) => {
 		
 	}); 
 
-};
-
-
 }
 
 
