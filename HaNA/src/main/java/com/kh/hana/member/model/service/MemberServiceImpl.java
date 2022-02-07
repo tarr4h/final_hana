@@ -179,6 +179,13 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectLikeCount(param);
 	}
 
+	@Override
+	public int checkAccountPrivate(Map<String, Object> map) {
+		
+		 
+		return memberDao.checkAccountPrivate(map);
+	}
+
 	 
 	
 	

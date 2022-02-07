@@ -524,5 +524,41 @@ public class MemberController {
 	}
 	
 	
+	//계정 비공개
+	@PostMapping("/accountPrivate")
+	 public String checkAccountPrivate(@RequestParam String id, @RequestParam String accountCheck){
+    	
+    	try{
+    		log.info("checkAccountPrivate.member.id = {}",id);
+    		log.info("checkAccountPrivate.account = {}",accountCheck);
+    		
+    		Map<String,Object> map = new HashMap<>();
+    		map.put("id",id);
+    		map.put("accountCheck",accountCheck);
+    		
+    		int result = memberService.checkAccountPrivate(map);
+    		
+    		
+    	}catch(Exception e) {
+    		log.error(e.getMessage(),e);
+       	}
+    	return "redirect:/member/memberSetting/memberSetting";
+    	
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

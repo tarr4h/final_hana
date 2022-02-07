@@ -305,5 +305,23 @@ where
 		)	
 	</select>
 
+	<insert id="checkAccountPrivate">
+		insert into
+			account_private 
+	    values
+	        (#{id}, #{accountCheck})
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

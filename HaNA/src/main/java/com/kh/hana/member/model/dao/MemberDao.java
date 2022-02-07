@@ -71,6 +71,8 @@ public interface MemberDao {
 	int deleteLikeLog(Map<String, Object> param);
 
 	int selectLikeCount(Map<String, Object> param);
+ 
+	int checkAccountPrivate(Map<String, Object> map);
 
  
 
