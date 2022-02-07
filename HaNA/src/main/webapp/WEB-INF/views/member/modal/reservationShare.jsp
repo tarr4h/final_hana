@@ -7,7 +7,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <sec:authentication property="principal" var="loginMember"/>
-
+<script>
+let ShareroomNo;
+let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
+</script>
 
 <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -49,7 +52,31 @@ function shareReservation(reservationNo, targetUser){
 	console.log(reservationNo);
 	console.log(targetUser);
 	console.log('${loginMember.id}');
+	console.log('${loginMember.picture}');
 	
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/shareReservation.do`,
+		data:{
+			id : id,
+			reservationNo : reservationNo,
+			targetUser : targetUser
+		},
+		method: "GET",
+		success(resp){
+			ShareroomNo = resp;
+		},
+	});
+	
+    const data = {
+            "roomNo" : ShareroomNo,
+            "memberId" : ${loginMember.id},
+            "message"   : 'share115,'+${loginMember.id}+'님이 예약을 공유했습니다.,'+${reservationNo}
+            "picture" : ${loginMember.picture},
+            "messageRegDate" : Sharetoday
+        };
+    msgCheck(data);
+    let jsonData = JSON.stringify(data);
+    websocket.send(jsonData);
 	
 };
 

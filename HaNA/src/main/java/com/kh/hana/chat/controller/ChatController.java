@@ -123,26 +123,10 @@ public class ChatController {
     	param.put("members", loginId+","+memberId);
     	
 
-    	List<ChatRoom> chatlist = chatService.chatRoomCheck(param);
-    	log.info("채팅방 생성 or 보내기 chatlist= {}, size = {}", chatlist, chatlist);
-    	if(chatlist.size() == 0) {
-    		int result = chatService.createChatRoom(param);
-    		log.info("createChatRoom result = {}", result);
-    		if(result > 0) {
-    			
-    			//나중에 selectKey로 바꾸기
-    			int roomNo = chatService.findRoomNo(param);
-    			param.put("roomNo", roomNo);
-    			int insert1 = chatService.insertEnterMessage(param);
-    			if(insert1 > 0)
-    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
-    			}
-    			else
-    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 실패");
-    		}
-    		else
-    			redirectAttr.addFlashAttribute("msg", "채팅방이 있습니다");
-    			
+    	String msg = chatService.chatRoomCheck(param);
+    	
+    	redirectAttr.addFlashAttribute("msg", msg);
+
     	return "redirect:/chat/chat.do";
     	}
 
@@ -252,6 +236,31 @@ public class ChatController {
     	int roomUnreadChat = chatService.roomUnreadChat(chat);
     	return ResponseEntity.ok(roomUnreadChat);
     }
+    
+    
+    //태우님 예약공유
+    @GetMapping("/shareReservation.do")
+    public ResponseEntity<?> shareReservation(int reservationNo, String id, String targetUser){
+    	log.info("shareReservation reservationNo = {}",reservationNo);
+    	log.info("shareReservation id = {}",id);
+    	log.info("shareReservation targetUser = {}",targetUser);
+    	
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("reservationNo", reservationNo);
+    	param.put("loginId", id);
+    	//targetUser
+    	param.put("memberId", targetUser);
+    	
+    	//기존에 채팅방 있는지 체크
+    	String roomNo = chatService.chatRoomCheck(param);
+    	
+    	return ResponseEntity.ok(roomNo);
+    }
+    
+    
+    
+    
+    
     
     
     

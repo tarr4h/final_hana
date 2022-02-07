@@ -58,8 +58,60 @@ public class ChatServiceImpl implements ChatService {
 
 
 	@Override
-	public List<ChatRoom> chatRoomCheck(Map<String, Object> param) {
-		return chatDao.chatRoomCheck(param);
+	public String chatRoomCheck(Map<String, Object> param) {
+		String msg = "";
+		List<ChatRoom> chatlist = chatDao.chatRoomCheck(param);
+		//공유번호가 없으면 일반 채팅방생성 후 입력메세지
+		if(param.get("reservationNo") == null) {
+			
+			if(chatlist.size() == 0) {
+				int result = chatDao.createChatRoom(param);
+				log.info("createChatRoom result = {}", result);
+				if(result > 0) {
+					
+					//나중에 selectKey로 바꾸기
+					int roomNo = chatDao.findRoomNo(param);
+					param.put("roomNo", roomNo);
+					int insert1 = chatDao.insertEnterMessage(param);
+					if(insert1 > 0)
+						msg = "채팅방 생성 성공";
+				}
+				else
+					msg = "채팅방 생성 실패";
+			}
+			else
+				msg = "채팅방이 있습니다";
+		}
+		
+		//공유번호 있으면 채팅방에 공유메세지 뿌려주기
+		else {
+			//공유번호o, 채팅방 없을때
+			if(chatlist.size() == 0) {
+				//나중에 selectKey로 바꾸기
+				int result = chatDao.createChatRoom(param);
+				log.info("createChatRoom result = {}", result);
+				if(result > 0) {
+										
+					int roomNo = chatDao.findRoomNo(param);
+					param.put("roomNo", roomNo);
+					int insert1 = chatDao.insertShareMessage(param);
+					if(insert1 > 0)
+						msg = String.valueOf(roomNo);
+				}
+				else
+						msg = "채팅방 생성 실패";
+					
+			}
+			//공유번호o, 채팅방 있을때
+			else {
+				int roomNo = chatDao.findRoomNo(param);
+				param.put("roomNo", roomNo);
+				int insert1 = chatDao.insertShareMessage(param);
+				if(insert1 > 0)
+					msg = String.valueOf(roomNo);
+			}
+		}
+		return msg;
 	}
 
 	@Override

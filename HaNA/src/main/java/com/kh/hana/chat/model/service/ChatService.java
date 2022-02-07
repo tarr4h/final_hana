@@ -24,7 +24,7 @@ public interface ChatService {
 
 	List<Member> memberList();
 
-	List<ChatRoom> chatRoomCheck(Map<String, Object> param);
+	String chatRoomCheck(Map<String, Object> param);
 
 	int createChatRoom(Map<String, Object> param);
 
