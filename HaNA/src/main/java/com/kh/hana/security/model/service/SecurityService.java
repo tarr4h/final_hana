@@ -1,6 +1,5 @@
 package com.kh.hana.security.model.service;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.security.model.dao.SecurityDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +21,7 @@ public class SecurityService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails member = securityDao.loadUserByUsername(username);
-		log.info("member = {}", member);
+		log.info("load member = {}", member);
 		
 		if(member == null) {
 			throw new UsernameNotFoundException(username);

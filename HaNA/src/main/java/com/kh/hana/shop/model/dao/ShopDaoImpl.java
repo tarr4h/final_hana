@@ -1,9 +1,13 @@
 package com.kh.hana.shop.model.dao;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Table;
@@ -100,6 +104,26 @@ public class ShopDaoImpl implements ShopDao {
 	@Override
 	public List<Reservation> selectShopReservationListByDate(Map<String, Object> map) {
 		return session.selectList("shop.selectShopReservationListByDate", map);
+	}
+
+	@Override
+	public Map<String, Object> selecetMyReservationList(Map<String, Object> map) {
+		int offset = (int) map.get("offset");
+		int limit = (int) map.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		Map<String, Object> result = new HashMap<>();
+		List<Reservation> rowBoundsReservation = session.selectList("shop.selectMyReservationList", map, rowBounds);
+		List<Reservation> totalReservation = session.selectList("shop.selectMyReservationList", map);
+		int totalBoard = totalReservation.size();
+		result.put("rowBoundsReservation", rowBoundsReservation);
+		result.put("totalBoard", totalBoard);
+		return result;
+	}
+
+	@Override
+	public int deleteReservation(String reservationNo) {
+		return session.delete("shop.deleteReservation", reservationNo);
 	}
 
 	

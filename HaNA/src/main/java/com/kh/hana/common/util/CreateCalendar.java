@@ -21,17 +21,6 @@ public class CreateCalendar {
 		
 		int startDow = cal.get(cal.DAY_OF_WEEK);
 		
-//		String dow = "";
-//		switch(startDow){
-//		case 1: dow = "일"; break;
-//		case 2: dow = "월"; break;
-//		case 3: dow = "화"; break;
-//		case 4: dow = "수"; break;
-//		case 5: dow = "목"; break;
-//		case 6: dow = "금"; break;
-//		case 7: dow = "토"; break;
-//		};
-		
 		Date todayDate = new Date();
 		Calendar todayCal = Calendar.getInstance();
 		todayCal.setTime(todayDate);
@@ -39,7 +28,6 @@ public class CreateCalendar {
 		
 		Map<String, Object> dateMap = new HashMap<>();
 		dateMap.put("startDow", startDow);
-//		dateMap.put("dow", dow);
 		dateMap.put("today", today);
 		dateMap.put("lastDay", lastDay);
 		
