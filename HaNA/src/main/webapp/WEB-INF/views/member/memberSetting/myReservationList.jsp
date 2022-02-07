@@ -87,6 +87,7 @@
 					</thead>
 					<tbody></tbody>
 				</table>
+				<jsp:include page="/WEB-INF/views/member/modal/reservationShare.jsp"></jsp:include>
 				<div class="pageBar"></div>
 			</div>
         </div>
@@ -143,16 +144,17 @@
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
 							<td>\${e.visitorCount}명</td>
 							<td>
-								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}"/>
+								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}');"/>
 							</td>
 							<td>
-								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
+								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservationModal('\${e.reservationNo}');"/>
 							</td>
 						</tr>
 					`;
 					$("#myReservationTable tbody").append(tr);
 					if(e.reservationUser != '${loginMember.id}'){
 						$("#myReservationTable tbody").find(".cancleResBtn:last").prop('disabled', 'true');
+						$("#myReservationTable tbody").find(".shareResBtn:last").prop('disabled', 'true');
 					};
 				});
 				
@@ -199,6 +201,7 @@
 		});
 	};
 	
+	/* 예약 취소 : 본인에게만 취소 활성화 */
 	function cancleReservation(reservationNo){
 		console.log(reservationNo);
 		if(!confirm('해당 예약을 삭제하시겠습니까?')){
@@ -219,7 +222,9 @@
 			},
 			error: console.log
 		});
-	}
+	};
+	
+
 </script>
 
 </section>
