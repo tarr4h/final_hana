@@ -23,14 +23,16 @@
 	crossorigin="anonymous">
 </script>
 <sec:authentication property="principal" var="loginMember"/>
-
+ 
 <c:if test="${not empty msg}">
 	<script>
 	alert("${msg}");
 	</script>
 </c:if>
+
 <div class="container mt-2">
     <div class="row" id="myInfo">
+    	
     	<!-- 프로필이미지 영역 -->
         <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
         	<div class="profileImg d-flex">
@@ -59,7 +61,7 @@
         	&nbsp;&nbsp;&nbsp;&nbsp; 
         	<span class="followTitle">팔로워 : </span>
         	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button> 
- 					
+	
 <script>
 $("#btn-following-list").on( "click", function() {
     $("#test_modal").modal();
@@ -192,18 +194,25 @@ $("#btn-follower-list").on( "click", function() {
     <div class="row">   
     </div>
 	<!-- 게시물목록 -->        
-    <div class="row">    
-        <c:forEach items="${boardList}" var="board" varStatus="vs">
+ 	<c:choose>
+    		<c:when test="${member.accountCheck == 2  && loginMember.id != member.id && isFriend != 1}">
+    	 	<p style="font-weight: bold">비공개계정입니다.</p>
+    	 	<p>사진을 보려면 팔로우하세요.</p>
+    	 	</c:when>
+    	 	<c:otherwise>
+       <div class="row">    
+         <c:forEach items="${boardList}" var="board" varStatus="vs">
 	        <div class="thumbnail col-sm-4" >     
 	       	 	<input type="hidden" value="${board.no}" id="boardNo" name="no"/>
 	        	<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
 						alt=""  />
-		        </div>
-	        </c:forEach>
-	    </div>
+		      </div>
+	      </c:forEach>
+	   </div>
+	    </c:otherwise>
+ 	</c:choose> 
 	</div>
-
 <script>
 let boardDetail;
 let newContent;

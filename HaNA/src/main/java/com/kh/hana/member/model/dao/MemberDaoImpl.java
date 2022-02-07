@@ -173,6 +173,17 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.updateMemberProfile", member);
 	}
 
+	@Override
+	public int checkAccountPrivate(Map<String, Object> map) {
+		return session.insert("member.checkAccountPrivate",map);
+	}
+
+	@Override
+	public int checkFriend(Map<String, Object> map) {
+		return session.selectOne("member.checkFriend",map);
+	}
+
+ 
 	
 
  
