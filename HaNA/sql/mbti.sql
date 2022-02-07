@@ -171,10 +171,22 @@ create table ranking (
 
   select *from ranking;
   
+  insert  into ranking(tag_id , tag_date , count)
   select * 
   from ranking r left join hashtag h 
   on r.tag_id = h.tag_id
-  where  h.tag_name = '해물탕';
+  where  
+  h.tag_name = '해물탕';
 
-insert  into ranking 
+insert  into ranking(tag_id , tag_date , count)
 values ('shop-hashtag-26','2022-02-07',1);
+
+merge into  ranking 
+    using DUAL
+       on ('shop-hashtag-30' = tag_id and '22/02/08' = tag_date)
+    when matched then
+        update set  count = +1 
+    when not matched then
+        insert (tag_id, tag_date , count) 
+        values ('shop-hashtag-30','22/02/08',1);
+select * from ranking;
