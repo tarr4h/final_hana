@@ -23,7 +23,14 @@
 						<th id="member-id"></th>
 					</tr>
 					<tr>
-						<td><span id="reg-date"></span><a href="#" id="tag-place" style="color:black; text-decoration:none;"></a></td>
+						<td><span id="reg-date"></span><a href="javascript:void(0);" onclick="$(document.locationFrm).submit();" id="tag-place" style="color:black; text-decoration:none;"></a>
+						<form action="${pageContext.request.contextPath}/group/searchLocation" name="locationFrm">
+							<input type="hidden" value="" name="locationX"/>
+							<input type="hidden" value="" name="locationY"/>
+							<input type="hidden" value="" name="placeName"/>
+							<input type="hidden" value="" name="placeAddress"/>
+						</form>
+						</td>
 					</tr>
 				</table>
 				<div style="position:relative;margin-right:-665px; margin-bottom:5%;">
@@ -91,8 +98,6 @@ $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
 	console.log("alksjdflkajsdlf",boardNo);
 	getPageDetail(boardNo);
-	
-	$('#groupPageDetail').modal("show");
 });
 // 게시물 상세보기 페이지 불러오기 함수
 function getPageDetail(boardNo){
@@ -111,9 +116,16 @@ function getPageDetail(boardNo){
 		 			const date = moment(groupBoard.regDate).format("YYYY년 MM월 DD일");
 					let src = `<%=request.getContextPath()%>/resources/upload/member/profile/\${groupBoard.writerProfile}`;
 			 		$("#member-profile").children("img").attr("src",src); // 글쓴이 프로필 이미지
-		 	 		$("#member-id").html(`<a href="javascript:void(0);" onclick="goMemberView('\${groupBoard.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${groupBoard.writer}</a>`); // 글쓴이 아이디
+		 	 		$("#member-id").html(`&nbsp;&nbsp<a href="${pageContext.request.contextPath}/group/groupPage/\${groupBoard.groupId}" style="color:black; text-decoration:none; font-size:1.2em;">[\${groupBoard.groupId}]</a><a href="javascript:void(0);" onclick="goMemberView('\${groupBoard.writer}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;\${groupBoard.writer}</a>`); // 글쓴이 아이디
 			 		$("#reg-date").html(`&nbsp;&nbsp;\${date}`) // 날짜, 태그 장소
-			 		$("#tag-place").html(`,&nbsp;&nbsp;\${groupBoard.placeName}`) // 날짜, 태그 장소
+			 		
+			 		// 날짜 및 태그장소
+			 		$("#tag-place").html(`,&nbsp;&nbsp;\${groupBoard.placeName}`)
+			 		$("[name=locationX]").val(groupBoard.locationX);
+			 		$("[name=locationY]").val(groupBoard.locationY);
+			 		$("[name=placeName]").val(groupBoard.placeName);
+			 		$("[name=placeAddress]").val(groupBoard.placeAddress);
+			 		
 			 		
 			 		// 좋아요 버튼
 			 		if(isLiked){
@@ -169,6 +181,9 @@ function getPageDetail(boardNo){
 		 			
 		 			//댓글 입력창
 		 			$("#group-board-comment-submit #boardNo").val(groupBoard.no);
+		 				
+		 			//모달 노출
+		 			$('#groupPageDetail').modal("show");
 		 			
 		 		},
 		 		error(xhr, statusText, err){

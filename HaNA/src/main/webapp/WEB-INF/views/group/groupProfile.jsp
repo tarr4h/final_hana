@@ -86,7 +86,7 @@
  -->		<!-- 프로필 세부정보 영역 -->
 		<div class="col-sm-6" id="profileStatus">
 		<div class="profileTableAreaContainer">
-		<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
+		<!-- 설정버튼 -->
 			<button type="button" class="btn btn-outline-dark" id="settingBtn"
 				onclick="goGroupSetting();">
 				<img
@@ -176,13 +176,15 @@
 								<tr>
 				 					<td>
 				 						<a href="javascript:void(0);" onclick="goMemberView('${member.memberId}');" >
-				 						</a> 
 				 						<img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/${member.profile}" alt="" />
+				 						</a> 
 				 					</td>
 				 					<th>
 				 						<a href="javascript:void(0);" onclick="goMemberView('${member.memberId}');" style="color:black; text-decoration:none;">
 				 							&nbsp;&nbsp;&nbsp;&nbsp;${member.memberId}
 				 						</a>
+				 							<c:if test="${member.memberLevelCode eq 'ld'}"><span style="color:#ff5722">&nbsp;&nbsp;[Leader]</span></c:if>
+				 							<c:if test="${member.memberLevelCode eq 'mg'}"><span style="color:#ff9800">&nbsp;&nbsp;[Manager]</span></c:if>
 				 					</th> 
 				 				</tr>
 							</c:forEach>
