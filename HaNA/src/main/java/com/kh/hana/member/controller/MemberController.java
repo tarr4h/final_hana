@@ -119,6 +119,7 @@ public class MemberController {
 			Shop shopInfo = memberService.selectOneShopInfo(id);
 			log.info("shopInfo = {}", shopInfo);
 			model.addAttribute("shopInfo", shopInfo);
+			return "/member/"+"shopView";
 		}
 		
 		//게시글 목록 가져오기
@@ -127,7 +128,7 @@ public class MemberController {
 		
 		model.addAttribute("boardList", boardList);
 		
-		return "/member/"+view;
+		return "/member/"+"memberView";
 	}
 	
 	@GetMapping("/memberSetting/{param}")
@@ -214,6 +215,24 @@ public class MemberController {
 		model.addAttribute("followingList", followingList);
 		
 		return followingList;
+	}
+	
+	//이름과 일치하는 팔로잉 리스트
+	@GetMapping("/followingListById")
+	@ResponseBody
+	public ResponseEntity<?> followingListById(@RequestParam String inputText, @AuthenticationPrincipal Member member){
+		log.info("inputText = {}", inputText);
+		
+		String memberId = member.getId();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("inputText", inputText);
+		map.put("memberId", memberId);
+		
+		List<Map<String, Object>> followingListById = memberService.followingListById(map);
+		log.info("followingList By Id = {}", followingListById);
+		
+		return ResponseEntity.ok(followingListById);
 	}
 	
 	

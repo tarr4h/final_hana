@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.ServletContext;
 
-// import org.omg.CORBA.Request;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +36,7 @@ import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
-import com.kh.hana.group.model.vo.GroupBoardEntity;
+import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupCalendar;
 import com.kh.hana.member.model.vo.Member;
@@ -67,10 +67,10 @@ public class GroupController {
 	}
 	
 	@GetMapping("/groupPage/{groupId}")
-	public String groupPage(@PathVariable String groupId, Model model) {
+	public String groupPage(@PathVariable String groupId, Model model, @AuthenticationPrincipal Member member) {
 		getGroupInfo(groupId,model);
 		
-		List<GroupBoardEntity> groupBoardList = groupService.selectGroupBoardList(groupId);
+		List<GroupBoard> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
 		model.addAttribute("groupBoardList", groupBoardList);
 		return "group/groupPage";
@@ -136,7 +136,7 @@ public class GroupController {
 	}
 	//이거
 	@PostMapping(value="/enrollGroupBoard")
-	public String enrollGroupBoard(GroupBoardEntity groupBoard,
+	public String enrollGroupBoard(GroupBoard groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
 			log.info("groupBoard = {}",groupBoard);
@@ -488,7 +488,16 @@ public class GroupController {
 		return "redirect:/group/groupMemberList/"+groupId;
 	}
 	
-	// 등급 수정
+	@GetMapping("/searchLocation")
+	public String searchLocation (GroupBoard groupBoard, Model model) {
+		List<GroupBoard> groupBoardList = groupService.selectGroupBoardListByLocation(groupBoard);
+		log.info("groupBoardList = {}", groupBoardList);
+		model.addAttribute("groupBoardList", groupBoardList);
+		GroupBoard locaInfo = groupBoard;
+		model.addAttribute("locaInfo",locaInfo);
+		return "/group/locationBoardPage";
+	}
+// 등급 수정
 		@PostMapping("/updateGroupGrade")
 		public String updateGroupGrade (
 					@RequestParam(name="groupId") String groupId, 
@@ -521,7 +530,6 @@ public class GroupController {
     	model.addAttribute(group);
 	}
 	
-	// 프로필 수정
 	@PostMapping("/groupUpdate")
 	public String groupUpdate(Group group, @RequestParam MultipartFile upFile,
 								RedirectAttributes redirectAttr) {
@@ -581,6 +589,7 @@ public class GroupController {
 		log.info("groupId={}", group.getGroupId());
 		return "redirect:/group/groupPage/"+group.getGroupId();
 	}
+	
 
 }
 

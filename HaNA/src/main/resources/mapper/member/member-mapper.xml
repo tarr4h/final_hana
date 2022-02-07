@@ -109,15 +109,33 @@
 	</select>
 
 	<select id="followingList" resultMap="memberMap">
-select 
-    *
-from
-    member m left join follower f
-on 
-        m.id = f.member_id
-where 
-    f.following_id = #{friendId}
+		select 
+		    *
+		from
+		    member m left join follower f
+		on 
+		        m.id = f.member_id
+		where 
+		    f.following_id = #{friendId}
 	</select>
+	
+	<select id="followingListById" parameterType="string" resultMap="resFriendSearchMap">
+		select
+			f.member_id "id",
+			m.picture "pic"
+		from
+			follower f left join member m
+			on f.member_id = m.id
+		where
+			following_id = #{memberId}
+			and
+			member_id like '%' || #{inputText} || '%'
+	</select>
+	
+	<resultMap type="map" id="resFriendSearchMap">
+		<id column="id" property="id"/>
+		<result column="pic" property="pic"/>
+	</resultMap>
 
 
 <resultMap type="member" id="memberMap">

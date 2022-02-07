@@ -79,11 +79,15 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
- 
 	public List<Follower> followingList(String friendId) {
 		return session.selectList("member.followingList", friendId);
 	}
- 
+	
+	@Override
+	public List<Map<String, Object>> followingListById(Map<String, Object> map) {
+		return session.selectList("member.followingListById", map);
+	}
+
 	public Shop selectOneShopInfo(String memberId) {
 		return session.selectOne("member.selectOneShopInfo", memberId);
 	}

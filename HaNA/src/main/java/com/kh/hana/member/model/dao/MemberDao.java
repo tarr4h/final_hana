@@ -35,8 +35,9 @@ public interface MemberDao {
 
 	List<Follower> followerList(String friendId);
 
- 
 	List<Follower> followingList(String friendId);
+	
+	List<Map<String, Object>> followingListById(Map<String, Object> map);
  
 	Shop selectOneShopInfo(String memberId);
 
@@ -73,6 +74,7 @@ public interface MemberDao {
 	int selectLikeCount(Map<String, Object> param);
  
 	int checkAccountPrivate(Map<String, Object> map);
+
 
  
 

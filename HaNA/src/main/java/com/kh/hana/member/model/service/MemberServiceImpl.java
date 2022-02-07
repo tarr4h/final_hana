@@ -109,6 +109,11 @@ public class MemberServiceImpl implements MemberService {
 	public List<Follower> followingList(String friendId) {
 		return memberDao.followingList(friendId);
 	}
+	
+	@Override
+	public List<Map<String, Object>> followingListById(Map<String, Object> map) {
+		return memberDao.followingListById(map);
+	}
 
 	@Override
 	public int insertMemberBoard(Board board) {
