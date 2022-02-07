@@ -8,11 +8,14 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ShopHashTagInterceptor extends HandlerInterceptorAdapter{@Override
+public class ShopHashTagInterceptor extends HandlerInterceptorAdapter{
+	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		log.info("=========shopHashTagInterceptor===========");
-		return super.preHandle(request, response, handler);
+		log.debug("=========shopHashTagInterceptor===========");
+		 return super.preHandle(request, response, handler);
+	
 	}
 
 	
