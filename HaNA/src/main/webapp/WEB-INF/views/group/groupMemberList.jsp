@@ -33,22 +33,22 @@ table th, td {
 			</tr>
 			<c:forEach items="${groupMemberList}" var="list">
 				<tr>
-					<td>${list.GROUP_ID}</td>
+					<td>${list.groupId}</td>
 					<td><img
 						style="width: 100px; height: 100px; border-radius: 50%;"
-						src="${pageContext.request.contextPath}/resources/upload/member/profile/${list.PICTURE}"
+						src="${pageContext.request.contextPath}/resources/upload/member/profile/${list.profile}"
 						alt="" />
 					</td>
-					<td>${list.MEMBER_ID}</td>
+					<td>${list.memberId}</td>
 					<td>
-						<c:if test="${list.MEMBER_LEVEL_CODE eq 'ld'}">리더</c:if> 
-						<c:if test="${list.MEMBER_LEVEL_CODE eq 'mg'}">매니저</c:if> 
-						<c:if test="${list.MEMBER_LEVEL_CODE eq 'mb'}">멤버</c:if></td>
+						<c:if test="${list.memberLevelCode eq 'ld'}">리더</c:if> 
+						<c:if test="${list.memberLevelCode eq 'mg'}">매니저</c:if> 
+						<c:if test="${list.memberLevelCode eq 'mb'}">멤버</c:if></td>
 					<td>
 						<input type="button" class="btn btn-info" data-toggle="modal" data-target="#moaModal"
-						onclick="grade('${list.MEMBER_LEVEL_CODE}')" value="등급"/>
+						onclick="grade('${list.memberLevelCode}')" value="등급"/>
 						
-						<a href="<c:url value='/group/deleteGroupMember/${list.MEMBER_ID}/${list.GROUP_ID}' />"
+						<a href="<c:url value='/group/deleteGroupMember/${list.memberId}/${list.groupId}' />"
 						class="btn btn-danger"
 						onclick="return confirm('회원 탈퇴를 진행하시겠습니까?');">탈퇴</a>
 					</td>
