@@ -1,5 +1,8 @@
 package com.kh.hana.common.aspect;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,10 +31,13 @@ public class VisitLogAspect {
 	@AfterReturning(pointcut="groupPage()", returning="returnObj")
 	public void afterReturningAdvice(JoinPoint joinPoint, Object returnObj) throws Throwable{
 		Object args[] = joinPoint.getArgs();
-		for(Object a : args) {
-			log.info("args = {}",a);			
-		}
-
+		
+		Map<String,Object> param = new HashMap<>();
+		param.put("groupId",args[0]);
+		param.put("member",args[2]);
+		
+		int result = groupService.insertGroupVisitLog(param);
+		
 	
 	}
 	
