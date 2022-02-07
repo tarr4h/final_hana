@@ -10,35 +10,12 @@
     <c:forEach items="${boardList }" var="board">
 	    <div class="thumbnail col-sm-4 ">
 	    	${board.picture[0] }
-	    	<img src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0] }" alt=""/>
+	    	<img src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0] }" alt="" onclick="nomalBoardDetail(${board.no})"/>
 	    </div>
     </c:forEach>
-<%--     <!-- thumbnail 1st line -->
-    <div class="thumbnail col-sm-4 ">
-    	<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
-    </div>
-    <div class="thumbnail col-sm-4">
-    	<img src="${pageContext.request.contextPath}/resources/images/duck.png" alt=""/>
-    </div>
-    <div class="thumbnail col-sm-4">
-    </div>
-    
-    <!-- thumbnail 2nd line  -->
-    <div class="thumbnail col-sm-4">
-    </div>
-    <div class="thumbnail col-sm-4">
-    </div>
-    <div class="thumbnail col-sm-4">
-    </div>
-    
-    <!-- thumbnail 3rd line -->
-    <div class="thumbnail col-sm-4">
-    </div>
-    <div class="thumbnail col-sm-4">
-    </div>
-    <div class="thumbnail col-sm-4">
-    </div> --%>
     
 <script>
-	
+	function nomalBoardDetail(no){
+		console.log(no);
+	}
 </script>
