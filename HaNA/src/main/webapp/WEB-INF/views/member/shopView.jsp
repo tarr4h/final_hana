@@ -170,9 +170,14 @@
         	</button>
         	</c:if>
         	<c:if test="${!loginMember.id.equals(member.id) }">
-        	<button type="button" class="btn btn-outline-dark icon" id="addFriendBtn" onclick="">
+        	<button type="button" class="btn btn-outline-dark icon" id="addFriendBtn" onclick="addFollowing();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
+        	<!-- 친구추가frm -->
+  	        <form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
+        		<input type="hidden" name ="friendId" value="${member.id}" />
+        		<input type="hidden" name ="myId" value="${loginMember.id}" />
+        	</form:form>
         	</c:if>
 
             <br />
@@ -231,7 +236,8 @@
 			</div>
 			<!-- 글쓰기버튼 -->
 			<c:if test="${loginMember.id.equals(member.id) }">
-        	<button style="float:right;"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+        	<button style="float:right;" id="boardModalBtn"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+        	<jsp:include page="/WEB-INF/views/member/boardModal/boardModal.jsp"></jsp:include>
         	</c:if>
 		</div>
     </div>
@@ -282,6 +288,14 @@
 		console.log("파일등록");
 		$(document.profileUpdateFrm).submit();
 	});
+	
+	//친구추가하기
+	function addFollowing(){
+		if(confirm("친구추가를 하시겠습니까?")){
+			$(document.addFollowingFrm).submit();
+		}
+	};
+
 </script>
 
   
