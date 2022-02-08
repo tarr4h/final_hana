@@ -49,9 +49,9 @@ public interface ShopDao {
 
 	int cancleReservation(String reservationNo);
 
-	List<Object> selectRankingData(Map<String, Object> rankingMap);
+	int selectRankingData(Map<String, Object> rankingMap);
 
-	// int insertRankingData(Map<String, Object> rankingMap);
+	
 
 
 	

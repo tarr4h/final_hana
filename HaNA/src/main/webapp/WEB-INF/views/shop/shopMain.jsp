@@ -407,19 +407,12 @@ $("[name=maxDistance]").change((e) => {
 	
 	// 날짜
 	var today = new Date();
-	var year = today.getFullYear();
+	 var year = today.getFullYear();
 	var month = ('0' + (today.getMonth() + 1)).slice(-2);
 	var day = ('0' + today.getDate()).slice(-2);
-	var tagDate = year + '-' + month  + '-' + day;
+	var tagDate = year + '-' + month  + '-' + day; 
 	console.log(tagDate);
-	
-	// 시간 
-	/*var hours = ('0' + today.getHours()).slice(-2); 
-	var minutes = ('0' + today.getMinutes()).slice(-2);
-	var seconds = ('0' + today.getSeconds()).slice(-2); 
-	var tagTime = hours + ':' + minutes  + ':' + seconds;
-	console.log(tagTime);*/
-	
+
 	// 검색 버튼 클릭시 태그 , 해당 날짜 DB 저장
  	$.ajax({
 		url : "${pageContext.request.contextPath}/shop/insertRankingData",
