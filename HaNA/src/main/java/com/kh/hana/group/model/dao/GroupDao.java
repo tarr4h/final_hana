@@ -77,4 +77,14 @@ public interface GroupDao {
 
 	public List<GroupBoard> selectGroupBoardListByLocation(GroupBoard groupBoard);
 
+	public int insertGroupVisitLog(Map<String, Object> param);
+
+	public Map<String, Object> selectGroupVisitLog(Map<String, Object> param);
+
+	public List<Map<String, Object>> selectVisitCountList(Map<String, Object> param);
+
+	public List<Map<String, Object>> selectCommentCountList(Map<String, Object> param);
+
+	public List<Map<String, Object>> selectLikeCountList(Map<String, Object> param);
+
 }

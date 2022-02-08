@@ -15,7 +15,7 @@
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <sec:authentication property="principal" var="loginMember" />
 <script>
-
+/* 전역변수 생성 */
 let memberId2;
 let memberLevelCode2;
 
@@ -25,6 +25,7 @@ let memberLevelCode2;
 };  */
 
 </script>
+
 <style>
 table th, td {
 	text-align: center;
@@ -46,8 +47,7 @@ table th, td {
 					<td>${group.groupId}</td>
 					<td><img
 						style="width: 100px; height: 100px; border-radius: 50%;"
-						src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.profile}"
-						alt="" />
+						src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.profile}" />
 					</td>
 					<td>${member.memberId}</td>
 					<td>
@@ -58,7 +58,8 @@ table th, td {
 						<input type="button" class="btn btn-info" data-toggle="modal" data-target="#moaModal"
 						onclick="grade('${member.memberLevelCode}','${member.memberId}','${group.groupId}')" value="등급"/>
 						<%-- grade2(${member.memberLevelCode},${member.memberId},${group.groupId}); --%>
-						<a href="<c:url value='/group/deleteGroupMember/${member.memberId}/${member.groupId}' />"
+						
+						<a href="<c:url value='/group/deleteGroupMember/${list.memberId}/${list.groupId}' />"
 						class="btn btn-danger"
 						onclick="return confirm('회원 탈퇴를 진행하시겠습니까?');">탈퇴</a>
 					</td>

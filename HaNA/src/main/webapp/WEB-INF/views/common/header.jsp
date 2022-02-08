@@ -21,7 +21,7 @@
 
 <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
 <style>
-	.section-over-div {min-height : 100vw;}
+	.section-over-div {min-height : 100vh;}
 	.navbar-expand-lg { height : 10em;}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
@@ -113,6 +113,7 @@
 	<audio id="audio_play">
 		<source src="${pageContext.request.contextPath }/resources/upload/chat/mp3/kakao2.mp3">
 	</audio>
+
 	<sec:authorize access="isAuthenticated()">
 		<script>
 		$(document).ready( function() {
@@ -128,8 +129,6 @@
 		<sec:authorize access="isAuthenticated()">
 			memberId = '<sec:authentication property="principal.id"/>';
 		</sec:authorize>
-		console.log("memberId = ", memberId);
-		console.log("heaer roomNo chaech = ", roomNo);
 		let websocket;
 		//입장 버튼을 눌렀을 때 호출되는 함수
 
@@ -143,6 +142,9 @@
 		    if(type == 1){
 		    websocket.onopen = onOpenws;
 		    }
+		    else if(type ==2){
+		    	 websocket.onopen = onOpenShare;
+		    }	    	
 		    else{
 			websocket.onopen = onOpen;
 		    //websocket.onmessage = onMessage;
@@ -154,54 +156,96 @@
 		}
 		//웹 소켓에 연결되었을 때 호출될 함수
  		function onOpenws() {
-			console.log("headerdfasdfasdfafdafasfdasfd")
  		     const data = {
 		         "memberId" : memberId,
  		         "message" : "ENTER22" 
 		    };
+			
 		    let jsonData = JSON.stringify(data);
 		    websocket.send(jsonData);
-		    console.log("opOpen"); 
+		    console.log("opOpenws"); 
 		}
+		
+ 		function onOpen() {
+ 		     const data = {
+ 		            "roomNo" : roomNo,
+ 		            "memberId" : id,
+ 		         "message" : "ENTER"
+ 		    };
+ 		    let jsonData = JSON.stringify(data);
+ 		    websocket.send(jsonData);
+ 		    console.log("opOpen");
+ 		}
+ 		
+
+ 		
+		
 		<!-- 메세지 알림 -->
 		function onMessagews(e){
-			let eSplit = e.data.split(",");
-			console.log("onMessagews eSplit[4] = ",eSplit[4]);
-			console.log("onMessagews roomNo = ",roomNo);
-			console.log(eSplit[4] === roomNo);
-			/* console.log(eSplit[5].equals(roomNo)); */
- 			if(eSplit[4] === roomNo){
-				console.log("보낸 메세지 roomNo랑 입장한 roomNo가 같음");
- 
-				const data = {
-					"memberId" : eSplit[0],
-					"message" : eSplit[1],
-					"picture" : eSplit[2],
-					"messageRegDate" : today,
-					"fileImg" : eSplit[5]
-				};
-				console.log(data);
-				if(data.memberId != id){
-					msgCheck(data);
-				} 
+ 			let eSplit = e.data.split(",");
+			let ShareMessage = eSplit[1].split("@");
 				
-				unreadCheck(e);
+			if(ShareMessage[0] === 'share115'){
+				if(eSplit[0]!==memberId){
+					if(eSplit[4] !== roomNo){
+					 	beep();
+						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${ShareMessage[1]}</a>`);
+						$("div#headerAlert").css('display','block');
+						setTimeout(function(){
+							$("div#headerAlert").css('display','none');
+						},5000);
+					}
+					else{
+						const data = {
+								"memberId" : eSplit[0],
+								"message" : eSplit[1],
+								"picture" : eSplit[2],
+								"messageRegDate" : today,
+								"fileImg" : eSplit[5]
+							};
+							if(data.memberId != id){
+								msgCheck(data);
+							} 
+					}
+				};
+
+				websocket.close();
+				connect(1);
+				return
 			}
 			else{
 				
-		 	beep();
-			console.log("onMessagefasfdadfasdfasf = ",e.data);
-			let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
-			$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
-			$("div#headerAlert").css('display','block');
-			setTimeout(function(){
-				$("div#headerAlert").css('display','none');
-			},5000);
-			} 
-				
-			
+			if(eSplit[4] === roomNo){
+					console.log("보낸 메세지 roomNo랑 입장한 roomNo가 같음");
+	 
+					const data = {
+						"memberId" : eSplit[0],
+						"message" : eSplit[1],
+						"picture" : eSplit[2],
+						"messageRegDate" : today,
+						"fileImg" : eSplit[5]
+					};
+					console.log(data);
+					if(data.memberId != id){
+						msgCheck(data);
+					} 
+					
+					unreadCheck(e);
+				}
+				else{
+					
+			 	beep();
+				let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
+				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
+				$("div#headerAlert").css('display','block');
+				setTimeout(function(){
+					$("div#headerAlert").css('display','none');
+				},5000);
+				} 
+			}
 
-		}
+
+		};	
 		
 		<!-- 채팅 메세지 수신오면 확인 -->
 		const unreadCheck = (e) => {
@@ -227,8 +271,8 @@
 			var audio = document.getElementById('audio_play');
 			audio.play();
 			audio.loop = false;
-			} 
-		
+			}; 
+	
 		const dmAlarm = () => {
 			$.ajax({
 				url:`${pageContext.request.contextPath}/chat/dmalarm.do`,

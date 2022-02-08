@@ -46,14 +46,16 @@ public class ShopController {
         
     }
     @GetMapping("/shopList")
-    public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY) {
+    public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY, @RequestParam int maxDistance) {
+    	log.info("maxDistance = {}", maxDistance);
+    	
     	log.info("selectDataArr = {}", selectDataArr);
         Map<String, Object> data = new HashMap<>();
         data.put("id", id);
         data.put("locationX", locationX);
         data.put("locationY", locationY);
         
-//      8.23km내
+//      8.23km내 -> 11km 범위 내로 추려오기
         double maxX = Double.parseDouble(locationX) + 0.0927;
         double maxY = Double.parseDouble(locationY) + 0.074;
         
@@ -65,7 +67,7 @@ public class ShopController {
         
         log.info("data = {}", data);
    
-        List<Map<String, Object>> shopList = shopService.selectShopList(data,selectDataArr);
+        List<Map<String, Object>> shopList = shopService.selectShopList(data,selectDataArr, maxDistance);
         log.info("length = {}", shopList.size());
         
         return ResponseEntity.ok(shopList);
@@ -268,7 +270,7 @@ public class ShopController {
     	 
     	Map<String, Object> myList = shopService.selectMyReservationList(map);
     	int totalBoardCount = (int) myList.get("totalBoard");
-    	log.info("totalBoardCount = {}", totalBoardCount);
+    	log.info("myList = {}", myList);
     	
     	String func = "";
     	if(state == 1) {
@@ -286,12 +288,12 @@ public class ShopController {
     	return ResponseEntity.ok(result);
     }
     
-    @DeleteMapping(value="/cancleReservation")
-    public ResponseEntity<?> deleteReservation(@RequestBody String reservationNo) {
+    @PutMapping(value="/cancleReservation")
+    public ResponseEntity<?> cancleReservation(@RequestBody String reservationNo) {
     	
     	log.info("resNo = {}", reservationNo);
     	
-    	int result = shopService.deleteReservation(reservationNo);
+    	int result = shopService.cancleReservation(reservationNo);
     	
     	return ResponseEntity.ok(result);
     }

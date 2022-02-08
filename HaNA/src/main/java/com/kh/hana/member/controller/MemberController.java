@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/member")
 @Slf4j
+@SessionAttributes({"accountCheck"})
 public class MemberController {
 	
 	@Autowired
@@ -99,7 +101,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/{view}/{id}")
-	public String memberView(@PathVariable String id, @PathVariable String view, Model model) {
+	public String memberView(@PathVariable String id, @PathVariable String view, Model model,Authentication authentication) {
 		//following 수 조회
 		int followingCount = memberService.countFollowing(id);
 		log.info("followingCount = {}", followingCount);
@@ -128,6 +130,24 @@ public class MemberController {
 			model.addAttribute("shopInfo", shopInfo);
 			return "/member/"+"shopView";
 		};
+		
+		//친구라면 
+		 Member loginMember = (Member) authentication.getPrincipal();
+		 String loginMemberId = loginMember.getId();
+		 log.info("id={}",id);
+		 log.info("loginMemberId={}",loginMemberId);
+		 
+		 Map<String, Object> map = new HashMap<>();
+		 map.put("id", id);
+		 map.put("loginMemberId", loginMemberId);
+		 
+		 int isFriend = memberService.checkFriend(map);
+		 log.info("isFriend={}", isFriend);
+		 
+		 if(isFriend == 1)
+		 model.addAttribute("isFriend", isFriend);
+		 
+		
 		
 		return "/member/"+"memberView";
 	}
@@ -576,6 +596,41 @@ public class MemberController {
 		
 		return ResponseEntity.ok(map);
 	}
+	
+	
+	//계정 비공개
+	@PostMapping("/accountPrivate")
+	 public String checkAccountPrivate(@RequestParam String id, @RequestParam int accountCheck, Model model){
+    	
+    	try{
+    		log.info("checkAccountPrivate.member.id = {}",id);
+    		log.info("checkAccountPrivate.accountCheck = {}",accountCheck);
+    		
+    		Map<String,Object> map = new HashMap<>();
+    		map.put("id",id);
+    		map.put("accountCheck",accountCheck);
+    		
+    		int result = memberService.checkAccountPrivate(map);
+    		model.addAttribute("accountCheck",accountCheck);
+    		
+    	}catch(Exception e) {
+    		log.error(e.getMessage(),e);
+       	}
+    	return "redirect:/member/memberSetting/memberSetting";
+    	
+    }
+	
+	
+ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

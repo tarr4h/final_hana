@@ -28,18 +28,20 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 	private String personality;
 	private String interest;
 	private List<Follower> followers;
+	private int accountCheck;
 	
 	@Builder
 	public Member(String id, String name, String password, String picture, String personalId, int accountType,
 			String addressFull, String addressAll, String introduce, boolean enabled, String locationX,
 			String locationY, List<SimpleGrantedAuthority> authorities, String personality, String interest,
-			List<Follower> followers) {
+			List<Follower> followers, int accountCheck) {
 		super(id, name, password, picture, personalId, accountType, addressFull, addressAll, introduce, enabled,
 				locationX, locationY);
 		this.authorities = authorities;
 		this.personality = personality;
 		this.interest = interest;
 		this.followers = followers;
+		this.accountCheck = accountCheck;
 	}
  
 	

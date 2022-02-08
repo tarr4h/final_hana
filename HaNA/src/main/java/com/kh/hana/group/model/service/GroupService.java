@@ -79,4 +79,12 @@ public interface GroupService {
 	int deleteCalendarData(Map<String, Object> param);
 
 	List<GroupBoard> selectGroupBoardListByLocation(GroupBoard groupBoard);
+
+	int insertGroupVisitLog(Map<String, Object> param);
+
+	List<Map<String, Object>> selectVisitCountList(Map<String, Object> param);
+
+	List<Map<String, Object>> selectCommentCountList(Map<String, Object> param);
+
+	List<Map<String, Object>> selectLikeCountList(Map<String, Object> param);
 }

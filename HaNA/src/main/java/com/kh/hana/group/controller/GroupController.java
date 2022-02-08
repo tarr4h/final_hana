@@ -381,6 +381,8 @@ public class GroupController {
     	
     	List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
     	log.info("groupMembers = {}", groupMembers);
+    	List<Map<String, String>> groupMemberList = groupService.selectGroupMemberList(groupId);
+    	log.info("groupMemberList = {}", groupMemberList);
     	
     	model.addAttribute("groupMembers", groupMembers);
     	return "/group/groupMemberList";
@@ -591,7 +593,41 @@ public class GroupController {
 		return "redirect:/group/groupPage/"+group.getGroupId();
 	}
 	
-
+	@GetMapping("/groupStatistic/{groupId}")
+	public String groupStatistic(@PathVariable String groupId, Model model) {
+		model.addAttribute("groupId",groupId);
+		return "/group/groupStatistic";
+	}
+	
+	@GetMapping("/getVisitGraph/{groupId}")
+	public ResponseEntity<List<Map<String,Object>>> getVisitGraph(@PathVariable String groupId, @RequestParam int day){
+		Map<String,Object> param = new HashMap<>();
+		param.put("groupId",groupId);
+		param.put("day",day);
+		List<Map<String,Object>> list = groupService.selectVisitCountList(param);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/getCommentGraph/{groupId}")
+	public ResponseEntity<List<Map<String,Object>>> getCommentGraph(@PathVariable String groupId, @RequestParam int day){
+		Map<String,Object> param = new HashMap<>();
+		param.put("groupId",groupId);
+		param.put("day",day);
+		List<Map<String,Object>> list = groupService.selectCommentCountList(param);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/getLikeGraph/{groupId}")
+	public ResponseEntity<List<Map<String,Object>>> getLikeGraph(@PathVariable String groupId, @RequestParam int day){
+		Map<String,Object> param = new HashMap<>();
+		param.put("groupId",groupId);
+		param.put("day",day);
+		List<Map<String,Object>> list = groupService.selectLikeCountList(param);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
+	}
 }
 
 
