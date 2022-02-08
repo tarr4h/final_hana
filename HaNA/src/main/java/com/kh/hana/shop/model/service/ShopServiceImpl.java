@@ -1,6 +1,7 @@
 package com.kh.hana.shop.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -128,7 +129,20 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public int insertReservation(Reservation reservation) {
-		return shopDao.insertReservation(reservation);
+		int result = shopDao.insertReservation(reservation);
+		log.info("reservation = {}", reservation);
+		
+		if(result > 0) {
+			String tableId = reservation.getReservationTableId();
+			int originalPrice = shopDao.selectOneTablePrice(tableId);
+			log.info("originalPrice = {}", originalPrice);
+			Map<String, Object> map = new HashMap<>();
+			map.put("originalPrice", originalPrice);
+			map.put("reservationNo", reservation.getReservationNo());
+			result = shopDao.insertReservationPrice(map);
+		};
+		
+		return result;
 	}
 
 	@Override
@@ -176,6 +190,17 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.selectAcceptedFriends(reservationNo);
 	}
 
+	@Override
+	public List<Table> selectTablePrice(String id) {
+		return shopDao.selectTablePrice(id);
+	}
+
+	@Override
+	public int updateTablePrice(Table table) {
+		return shopDao.updateTablePrice(table);
+	}
+
+	
 
 
 

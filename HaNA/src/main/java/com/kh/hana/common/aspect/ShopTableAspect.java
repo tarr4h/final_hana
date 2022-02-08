@@ -43,13 +43,13 @@ public class ShopTableAspect {
 			
 			List<Reservation> resultTable = shopService.selectTableReservation(infoMap);
 			
-			if(!resultTable.isEmpty()) {
+			if(resultTable.isEmpty()) {
 				if(callMethod.contains("update")) {
 					table.setUpdatable("Y");
 					int result = shopService.updateTable(table);
 				}
-				
-				throw new Throwable();
+			} else {
+				throw new Throwable();				
 			}
 			
 			Object returnObj = joinPoint.proceed();

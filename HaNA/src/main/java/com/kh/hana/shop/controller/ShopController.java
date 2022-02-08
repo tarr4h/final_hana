@@ -327,12 +327,28 @@ public class ShopController {
     
     @GetMapping("/selectAcceptedFriends")
     public ResponseEntity<?> selectAcceptedFriends(@RequestParam String reservationNo){
-    	log.info("rsNo = {}", reservationNo);
-    	
     	List<Member> memberList = shopService.selectAcceptedFriends(reservationNo);
     	
     	return ResponseEntity.ok(memberList);
     }
+    
+    @GetMapping("/selectTablePrice")
+    public ResponseEntity<?> selectTablePrice(@RequestParam String memberId){
+    	log.info("id = {}", memberId);
+    	
+    	List<Table> list = shopService.selectTablePrice(memberId);
+    	log.info("list = {}", list);
+    	
+    	return ResponseEntity.ok(list);
+    }
+    
+    @PostMapping("/updateTablePrice")
+    public ResponseEntity<?> updateTablePrice(Table table){
+    	int result = shopService.updateTablePrice(table);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
     
     @InitBinder
     public void initBinder(WebDataBinder binder) {

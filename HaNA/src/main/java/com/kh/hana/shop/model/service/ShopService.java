@@ -46,6 +46,10 @@ public interface ShopService {
 
 	List<Member> selectAcceptedFriends(String reservationNo);
 
+	List<Table> selectTablePrice(String id);
+
+	int updateTablePrice(Table table);
+
 
 
 }

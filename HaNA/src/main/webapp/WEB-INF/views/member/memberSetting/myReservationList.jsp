@@ -153,6 +153,7 @@
 						<th>인원</th>
 						<th>상태</th>
 						<th>공유하기</th>
+						<th>결제하기</th>
 						<th>취소하기</th>
 					</tr>
 				`;
@@ -168,6 +169,9 @@
 							<td>\${e.reservationStatus}</td>
 							<td>
 								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}', '\${e.visitorCount}');"/>
+							</td>
+							<td>
+								<input type="button" value="결제하기" class="purchaseBtn" data-rs-no"\${e.reservationNo}" onclick="purchaseModal();"/>
 							</td>
 							<td>
 								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
@@ -262,6 +266,6 @@
 	
 
 </script>
-
+<jsp:include page="/WEB-INF/views/member/modal/reservationPurchase.jsp"></jsp:include>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

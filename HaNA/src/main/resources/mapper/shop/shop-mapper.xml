@@ -170,6 +170,12 @@
     		#{reqOrder},
     		default
     	)
+    	<selectKey order="AFTER" keyProperty="reservationNo" resultType="string">
+    		select
+    			concat(#{shopId}, seq_shop_table_reservation_res_no.currval)
+    		from
+    			dual
+    	</selectKey>
     </insert>
 
 	<select id="selectTableReservation" parameterType="map" resultType="reservation">
@@ -178,7 +184,9 @@
 		from
 			shop_table_reservation
 		where
-			reservation_table_id = #{tableId}			
+			reservation_table_id = #{tableId}
+			and
+			reservation_status != '예약취소'		
 			<if test="date != null">
 			and
 			to_date(reservation_date) = #{date}
@@ -272,4 +280,35 @@
 		    and
 		    req_accept = 'Y'
 	</select>
+	
+	<select id="selectTablePrice" parameterType="string" resultType="table">
+		select
+			*
+		from
+			shop_table_price p inner join shop_table_setting s
+			on p.table_id = s.table_id
+		where
+			p.shop_id = #{id}
+	</select>
+	
+	<update id="updateTablePrice" parameterType="table">
+		update shop_table_price
+		set price = #{price}
+		where table_id = #{tableId}
+	</update>
+	
+	<select id="selectOneTablePrice" parameterType="string" resultType="int">
+		select
+			price
+		from
+			shop_table_price
+		where
+			table_id = #{reservationTableId}
+	</select>
+	
+	<insert id="insertReservationPrice" parameterType="map">
+		insert into
+			reservation_req_price
+		values(#{reservationNo}, #{originalPrice}, #{originalPrice})
+	</insert>
 </mapper>

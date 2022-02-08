@@ -58,6 +58,15 @@ public interface ShopDao {
 
 	List<Member> selectAcceptedFriends(String reservationNo);
 
+	List<Table> selectTablePrice(String id);
+
+	int updateTablePrice(Table table);
+
+	int selectOneTablePrice(String reservationTableId);
+
+	int insertReservationPrice(Map<String, Object> map);
+
+
 
 	
 	
