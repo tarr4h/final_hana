@@ -417,6 +417,7 @@ $("[name=maxDistance]").change((e) => {
  	$.ajax({
 		url : "${pageContext.request.contextPath}/shop/insertRankingData",
 		data : {
+			id : "${loginMember.id}",
 			selectDataArr : selectDataArr,
 			tagDate : tagDate
 		},

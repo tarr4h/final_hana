@@ -248,13 +248,12 @@
         </selectKey>
       	 merge into  ranking 
     		using DUAL
-     		  on (tag_id = #{tagId} and tag_date = #{tagDate})
+     		  on (member_id = #{id} and tag_id = #{tagId} and tag_date = #{tagDate})
    			when matched then
        			update set count = count + #{count}
    			 when not matched then
-       		 	insert (tag_id, tag_date, count) 
-        		values (#{tagId},#{tagDate},#{count})
-
+       		 	insert (member_id , tag_id, tag_date, count) 
+        		values (#{id},#{tagId},#{tagDate},#{count})
 	</update>
 	
 	<select id="selectOneReservation" parameterType="string" resultType="reservation">

@@ -113,15 +113,16 @@ public class ShopController {
     }
     
     @GetMapping("/insertRankingData") 
-    public ResponseEntity<?> insertRankingData(@RequestParam(value="selectDataArr[]") List<String> selectDataArr , @RequestParam String tagDate) {
+    public ResponseEntity<?> insertRankingData(@RequestParam(value="selectDataArr[]") List<String> selectDataArr , @RequestParam String tagDate , @RequestParam String id) {
         log.info("selectDataArr = {}", selectDataArr);
         log.info("tagDate = {}", tagDate);
        
         int result = 0;
         Map<String, Object> rankingMap = new HashMap<>();
         	rankingMap.put("tagDate", tagDate);
+        	rankingMap.put("id", id);
 
-		for(String data : selectDataArr) {
+		for(String data : selectDataArr) {		
 			rankingMap.put("tags", data);
 			result = shopService.insertRankingData(rankingMap);	
 			
