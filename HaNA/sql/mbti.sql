@@ -190,3 +190,6 @@ merge into  ranking
         insert (tag_id, tag_date , count) 
         values ('shop-hashtag-30','22/02/08',1);
 select * from ranking;
+select * from hashtag;
+
+update ranking set count = +1;

@@ -223,6 +223,8 @@
 				and
 				r.reservation_date + 1 <![CDATA[<]]> sysdate
 			</if>
+			and
+			s.req_accept = 'Y'
 		order by
 			r.reservation_date, time_start
 	</select>
@@ -254,4 +256,42 @@
         		values (#{tagId},#{tagDate},#{count})
           
 	</update>
+	
+	<select id="selectOneReservation" parameterType="string" resultType="reservation">
+		select
+			*
+		from
+			shop_table_reservation
+		where
+			reservation_no = #{reservationNo}
+	</select>
+	
+	<insert id="insertReservationShare" parameterType="reservation">
+		insert into shop_table_reservation_share
+		values(#{reservationNo}, #{attendUser}, #{reqAccept}, 'N')
+	</insert>
+	
+	<select id="checkShareAccepted" parameterType="map" resultType="reservation">
+		select
+			*
+		from
+			shop_table_reservation_share
+		where
+			reservation_no = #{reservationNo}
+			and
+			attend_user = #{id}
+	</select>
+	
+	<select id="selectAcceptedFriends" parameterType="string" resultType="member">
+		select
+		    s.attend_user "id",
+		    m.picture "picture"
+		from
+		    shop_table_reservation_share s left join member m
+		    on s.attend_user = m.id
+		where
+		    reservation_no = #{reservationNo}
+		    and
+		    req_accept = 'Y'
+	</select>
 </mapper>

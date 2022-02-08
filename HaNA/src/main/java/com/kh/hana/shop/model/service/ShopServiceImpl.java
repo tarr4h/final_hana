@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.common.util.CalculateArea;
+import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.dao.ShopDao;
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
@@ -164,7 +165,28 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.cancleReservation(reservationNo);
 	}
 
-	
+	@Override
+	public Reservation selectOneReservation(String reservationNo) {
+		return shopDao.selectOneReservation(reservationNo);
+	}
+
+	@Override
+	public int insertReservationShare(Reservation reservation) {
+		return shopDao.insertReservationShare(reservation);
+	}
+
+	@Override
+	public Reservation checkShareAccepted(Map<String, String> map) {
+		return shopDao.checkShareAccepted(map);
+	}
+
+	@Override
+	public List<Member> selectAcceptedFriends(String reservationNo) {
+		return shopDao.selectAcceptedFriends(reservationNo);
+	}
+
+
+
 
 
 	
