@@ -60,7 +60,6 @@ function selectAcceptedFriends(reservationNo){
 			reservationNo
 		},
 		success(res){
-			console.log(res);
 			$("#acceptedFriendListTable tbody").empty();		
 			$.each(res, (i, e) => {
 				if(e.id != '${loginMember.id}'){
@@ -86,9 +85,6 @@ function selectAcceptedFriends(reservationNo){
 };
 
 function onOpenShare() {
-		console.log("onOpenShare");
-		console.log("123 =",ShareroomNo);
-		console.log("123 =",`${loginMember.id}`);
 	    const data = {
 	    	"roomNo" : ShareroomNo,
 	        "memberId" : `${loginMember.id}`,
@@ -99,10 +95,6 @@ function onOpenShare() {
 	}
 function shareReservation(reservationNo, targetUser){
 	/* 요청 필요 데이터 */
-	console.log(reservationNo);
-	console.log(targetUser);
-	console.log('${loginMember.id}');
-	console.log('${loginMember.picture}');
 	const testtest=()=>{
 		$.ajax({
 			url:`${pageContext.request.contextPath}/chat/shareReservation.do`,
@@ -113,7 +105,6 @@ function shareReservation(reservationNo, targetUser){
 			},
 			method: "GET",
 			success(resp){
-				console.log("resp =", resp);
 				//채팅방 번호를 전역변수에 넣음
 				ShareroomNo = resp;
 				connect(2);
@@ -126,16 +117,10 @@ function shareReservation(reservationNo, targetUser){
 					            "picture" : `${loginMember.picture}`,
 					            "messageRegDate" : Sharetoday
 					        }; 
-					    console.log("gdgd = ",data);
-					    console.log("data.message=",data.message);
 					    let messageSplit = data.message.split("@");
-					    console.log("messageSplit[0] = ",messageSplit[0]);
-					    console.log("messageSplit[1] = ",messageSplit[1]);
-					    console.log("messageSplit[2] = ",messageSplit[2]);
 					    
 					    let jsonData = JSON.stringify(data);
 					    websocket.send(jsonData);
-					    console.log(jsonData);
 					    $('#shareModal').modal('hide');
 					    alert("공유 완료");
 				 },1000);
@@ -149,7 +134,7 @@ function shareReservation(reservationNo, targetUser){
 };
 
 function selectAcceptedFriendsForCheck(reservationNo){
-	let testVal;
+	let returnVal;
 	$.ajax({
 		url: '${pageContext.request.contextPath}/shop/selectAcceptedFriends',
 		data:{
@@ -157,11 +142,11 @@ function selectAcceptedFriendsForCheck(reservationNo){
 		},
 		async: false,
 		success(res){
-			testVal = res;
+			returnVal = res;
 		},
 		error:console.log
 	});
-	return testVal;
+	return returnVal;
 }
 
 $("[name=friendId]").keyup((e) => {
