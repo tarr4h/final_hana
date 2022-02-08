@@ -379,7 +379,7 @@ public class GroupController {
     public String groupMemberList(@PathVariable String groupId, Model model){
     	log.info("groupId ={}", groupId);
     	
-    	List<Map<String, Object>> groupMemberList = groupService.groupMemberList2(groupId);
+    	List<Map<String, String>> groupMemberList = groupService.selectGroupMemberList(groupId);
     	log.info("groupMemberList = {}", groupMemberList);
     	
     	model.addAttribute("groupMemberList", groupMemberList);
@@ -590,7 +590,41 @@ public class GroupController {
 		return "redirect:/group/groupPage/"+group.getGroupId();
 	}
 	
-
+	@GetMapping("/groupStatistic/{groupId}")
+	public String groupStatistic(@PathVariable String groupId, Model model) {
+		model.addAttribute("groupId",groupId);
+		return "/group/groupStatistic";
+	}
+	
+	@GetMapping("/getVisitGraph/{groupId}")
+	public ResponseEntity<List<Map<String,Object>>> getVisitGraph(@PathVariable String groupId, @RequestParam int day){
+		Map<String,Object> param = new HashMap<>();
+		param.put("groupId",groupId);
+		param.put("day",day);
+		List<Map<String,Object>> list = groupService.selectVisitCountList(param);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/getCommentGraph/{groupId}")
+	public ResponseEntity<List<Map<String,Object>>> getCommentGraph(@PathVariable String groupId, @RequestParam int day){
+		Map<String,Object> param = new HashMap<>();
+		param.put("groupId",groupId);
+		param.put("day",day);
+		List<Map<String,Object>> list = groupService.selectCommentCountList(param);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/getLikeGraph/{groupId}")
+	public ResponseEntity<List<Map<String,Object>>> getLikeGraph(@PathVariable String groupId, @RequestParam int day){
+		Map<String,Object> param = new HashMap<>();
+		param.put("groupId",groupId);
+		param.put("day",day);
+		List<Map<String,Object>> list = groupService.selectLikeCountList(param);
+		log.info("list = {}",list);
+		return ResponseEntity.ok(list);
+	}
 }
 
 
