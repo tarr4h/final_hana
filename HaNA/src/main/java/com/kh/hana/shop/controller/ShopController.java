@@ -360,4 +360,16 @@ public class ShopController {
     	PropertyEditor editor = new CustomDateEditor(sdf, true);
     	binder.registerCustomEditor(Date.class, editor);
     }
+    
+    @GetMapping("/selectRankingdatas")
+    public ResponseEntity<?> selectRankingdatas(@RequestParam String tagDate){
+    	log.info("tagDate = {}", tagDate);
+    	
+    	List<Map<String, String>> rankingDatas  = shopService.selectRankingdatas(tagDate);
+    	
+    	return ResponseEntity.ok(rankingDatas);
+    }
+    
+    
+    
 }

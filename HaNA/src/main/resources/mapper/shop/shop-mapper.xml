@@ -293,4 +293,13 @@
 		    and
 		    req_accept = 'Y'
 	</select>
+	
+	<select  id="selectTodayRankingdatas" parameterType="string" resultType="map" >
+		select 
+			tag_name
+		from (select * from hashtag h left join ranking r  
+				on r.tag_id = h.tag_id)
+		where  tag_date = #{tagDate} and rownum <![CDATA[<]]>= 4
+			ORDER BY count desc 
+	</select>
 </mapper>

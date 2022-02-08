@@ -185,6 +185,11 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.selectAcceptedFriends(reservationNo);
 	}
 
+	@Override
+	public List<Map<String, String>> selectRankingdatas(String tagDate) {
+		return shopDao.selectTodayRankingdatas(tagDate);
+	}
+
 
 
 

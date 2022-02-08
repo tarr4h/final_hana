@@ -45,20 +45,20 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					 <tr>
 						<th scope="row">1</th>
 						<td>Mark ★</td>
 						<td>Otto ★</td>
 						<td>@mdo ★</td>
 						<td>@mdo ★</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Jacob</td>
+					</tr> 
+					 <tr>
+						<th scope="row" id="tagRanking">2</th>
+						<!-- <td>Jacob</td>
 						<td>Thornton</td>
 						<td>@fat</td>
-						<td>@fat</td>
-					</tr>
+						<td>@fat</td> -->
+					</tr> 
 					<tr>
 						<th scope="row">3</th>
 						<td>Larry</td>
@@ -186,6 +186,13 @@ function scrollPage(){
 			 selectDataArr.length = 0; // 태그 데이터 삭제 
 			 $("#hashTagResult").empty(); // 버튼 내역 삭제 
 		} 
+		
+		// km 라디오 박스 선택 후 태그 검색을 할때 데이터가 두번(해시태그 검색 + 스크롤page) 나오지 않도록 삭제 
+		if(kmChange = true){
+			startNum = 0;
+			$("#shopList").empty();
+			kmChange = false;
+		}
 
 		var Addr_val = "${loginMember.addressAll}";
 	
@@ -388,6 +395,15 @@ function scrollPage(){
 
 // 해시 태그 선택 후 검색 버튼 클릭시 
 var chkClick = false;
+var kmChange = false;
+
+// 날짜
+var today = new Date();
+var year = today.getFullYear();
+var month = ('0' + (today.getMonth() + 1)).slice(-2);
+var day = ('0' + today.getDate()).slice(-2);
+var tagDate = year + '-' + month  + '-' + day; 
+console.log(tagDate);
 
 function clickList(){
 	chkClick = true;
@@ -397,22 +413,12 @@ function clickList(){
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
 
-
 $("[name=maxDistance]").change((e) => {
+	kmChange = true;
 	console.log($("[name=maxDistance]:checked").val());
-	startNum = 0;
-	$("#shopList").empty();
 	scrollPage();
 });
 	
-	// 날짜
-	var today = new Date();
-	var year = today.getFullYear();
-	var month = ('0' + (today.getMonth() + 1)).slice(-2);
-	var day = ('0' + today.getDate()).slice(-2);
-	var tagDate = year + '-' + month  + '-' + day; 
-	console.log(tagDate);
-
 	// 검색 버튼 클릭시 태그 , 해당 날짜 DB 저장
  	$.ajax({
 		url : "${pageContext.request.contextPath}/shop/insertRankingData",
@@ -430,9 +436,36 @@ $("[name=maxDistance]").change((e) => {
 
 }
 
-// 페이지 로딩시 랭킹 불러오기 
+// 페이지 로딩시 랭킹 불러오기  오늘, 월간, 주간
 $(()=>{
      console.log("실행")
+     
+     $.ajax({
+ 		url : "${pageContext.request.contextPath}/shop/selectRankingdatas",
+ 		data : {
+ 			tagDate : tagDate
+ 		},
+ 		success(data) {
+ 			console.log(data)
+ 			
+ 	 		var str = [];
+ 			str = data; 
+ 			console.log(str)
+ 			
+ 			var htmlOut = '';
+ 			  htmlOut += '<td>'+'# '+str[0].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+str[1].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+str[2].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+str[3].TAG_NAME + '</td>';
+ 			
+ 			  $('#tagRanking').append(htmlOut);
+ 	
+
+ 		},
+ 		error: console.log
+ 		
+ 	});
+     
 });
 
 

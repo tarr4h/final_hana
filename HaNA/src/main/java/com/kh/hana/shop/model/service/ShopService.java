@@ -48,6 +48,8 @@ public interface ShopService {
 
 	List<Member> selectAcceptedFriends(String reservationNo);
 
+	List<Map<String, String>> selectRankingdatas(String tagDate);
+
 
 
 }

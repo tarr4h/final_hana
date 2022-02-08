@@ -194,3 +194,26 @@ select * from ranking;
 select * from hashtag;
 
 update ranking set count = count+1;
+
+select  h.*
+from 
+hashtag h left join (
+            SELECT ROW_NUMBER() OVER (ORDER BY r.count desc )  num--그룹별 순번
+                , r.tag_id
+            FROM 
+            ranking r
+            where tag_date = '22/02/09'; 
+        ) r
+        on r.tag_id = h.tag_id
+where   num <=4;  
+
+select rownum, a.* 
+from (select * from hashtag h left join   ranking r  
+on r.tag_id = h.tag_id 
+where  tag_date = '22/02/09' ORDER BY count desc) a
+ rownum<= 4;
+ 
+SELECT *  FROM   ranking WHERE tag_date = '22/02/09' and ROWNUM <= 4
+ORDER BY count desc;
+
+select * from ranking;

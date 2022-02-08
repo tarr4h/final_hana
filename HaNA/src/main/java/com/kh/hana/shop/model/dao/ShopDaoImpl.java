@@ -152,6 +152,11 @@ public class ShopDaoImpl implements ShopDao {
 		return session.selectList("shop.selectAcceptedFriends", reservationNo);
 	}
 
+	@Override
+	public List<Map<String, String>> selectTodayRankingdatas(String tagDate) {
+		return session.selectList("shop.selectTodayRankingdatas", tagDate);
+	}
+
 
 	
     
