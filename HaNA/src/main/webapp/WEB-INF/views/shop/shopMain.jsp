@@ -430,7 +430,10 @@ $("[name=maxDistance]").change((e) => {
 
 }
 
-
+// 페이지 로딩시 랭킹 불러오기 
+$(()=>{
+     console.log("실행")
+});
 
 
 
