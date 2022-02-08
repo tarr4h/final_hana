@@ -128,7 +128,6 @@ public class ShopController {
 			log.info("data = {}", data);
 			log.info("result = {}", result);	
 		}
-
         return ResponseEntity.ok(result);
     }
 
