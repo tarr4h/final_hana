@@ -162,6 +162,7 @@ where member_id = 'shop111';
 
 
 create table ranking ( 
+    member_id varchar2(50),
 	tag_id varchar2(50),   	 
 	tag_date date,	
     count number(4),
