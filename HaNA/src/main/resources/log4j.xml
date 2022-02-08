@@ -55,7 +55,7 @@
 	</logger>
 	
 	<logger name="com.kh.hana.chat">
-		<level value="warn" />
+		<level value="info" />
 	</logger>
 	<logger name="com.kh.hana.common">
 		<level value="warn"/>

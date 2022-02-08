@@ -124,6 +124,17 @@
 		values(#{roomNo},#{memberId},'ROOMENTER',default,default,default)
 	</insert>
 	
+	<insert id="insertShareMessage">
+	insert
+		into
+	chat
+		values(#{roomNo},#{loginId},
+		'share115@'||#{loginId}||'님이 예약을 공유했습니다.@'||#{reservationNo},
+		default,
+		default,
+		default)
+	</insert>
+	
 	<select id="selectGroupRoomNo" resultType="_int">
 	select
 		room_no

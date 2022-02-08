@@ -37,6 +37,7 @@ import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
+import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
@@ -59,6 +60,9 @@ public class ChatController {
 	
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping("/chat.do")
 	public void chat() {}
@@ -119,26 +123,10 @@ public class ChatController {
     	param.put("members", loginId+","+memberId);
     	
 
-    	List<ChatRoom> chatlist = chatService.chatRoomCheck(param);
-    	log.info("채팅방 생성 or 보내기 chatlist= {}, size = {}", chatlist, chatlist);
-    	if(chatlist.size() == 0) {
-    		int result = chatService.createChatRoom(param);
-    		log.info("createChatRoom result = {}", result);
-    		if(result > 0) {
-    			
-    			//나중에 selectKey로 바꾸기
-    			int roomNo = chatService.findRoomNo(param);
-    			param.put("roomNo", roomNo);
-    			int insert1 = chatService.insertEnterMessage(param);
-    			if(insert1 > 0)
-    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 성공");
-    			}
-    			else
-    				redirectAttr.addFlashAttribute("msg", "채팅방 생성 실패");
-    		}
-    		else
-    			redirectAttr.addFlashAttribute("msg", "채팅방이 있습니다");
-    			
+    	String msg = chatService.chatRoomCheck(param);
+    	
+    	redirectAttr.addFlashAttribute("msg", msg);
+
     	return "redirect:/chat/chat.do";
     	}
 
@@ -250,6 +238,33 @@ public class ChatController {
     }
     
     
+    //태우님 예약공유
+    @GetMapping("/shareReservation.do")
+    public ResponseEntity<?> shareReservation(String reservationNo, String id, String targetUser){
+    	log.info("shareReservation reservationNo = {}",reservationNo);
+    	log.info("shareReservation id = {}",id);
+    	log.info("shareReservation targetUser = {}",targetUser);
+    	
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("reservationNo", reservationNo);
+    	param.put("loginId", id);
+    	//targetUser
+    	param.put("memberId", targetUser);
+    	param.put("members", id+","+targetUser);
+    	
+    	//기존에 채팅방 있는지 체크 serviceImpl에서 작업
+    	//채팅방 번호 가져옴
+    	String roomNo = chatService.chatRoomCheck(param);
+    	
+    	return ResponseEntity.ok(roomNo);
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
     //main페이지
@@ -282,16 +297,16 @@ public class ChatController {
     	return ResponseEntity.ok(list);
     };
     
-//    @GetMapping("/memberboardcommentList.do")
-//    public ResponseEntity<?> memberboardcommentList(int boardNo){
-//    	log.info("boardcommentList boardNo = {}", boardNo);
-//		//List<BoardComment> list = chatService.selectMemberBoardCommentList(boardNo);
-//		log.info("list = {}",list);
-//    	
-//    	return ResponseEntity.ok(list);
-//    };
+    @GetMapping("/memberboardcommentList.do")
+    public ResponseEntity<?> memberboardcommentList(int boardNo){
+    	log.info("boardcommentList boardNo = {}", boardNo);
+    	List<BoardComment> list = memberService.selectBoardCommentList(boardNo);
+		log.info("list = {}",list);
+    	
+    	return ResponseEntity.ok(list);
+    };
     
-    @GetMapping("insertgroupBoardcomment.do")
+    @GetMapping("/insertgroupBoardcomment.do")
     public ResponseEntity<?> insertgroupBoardcomment(GroupBoardComment groupBoardComment){
     	log.info("insertgroupBoardcomment groupBoardComment= {}", groupBoardComment);
     	int result = groupService.insertGroupBoardComment(groupBoardComment);
@@ -299,7 +314,19 @@ public class ChatController {
     		log.info("main 그룹게시판 댓글작성 성공!");
     	else
     		log.info("main 그룹게시판 댓글작성 실패!");
-    		
+
+    	return ResponseEntity.ok(null);
+    }
+    
+    @GetMapping("/insertmemberBoardcomment.do")
+    public ResponseEntity<?> insertmemberBoardcomment(BoardComment boardComment){
+    	log.info("insertgroupBoardcomment groupBoardComment= {}", boardComment);
+    	int result = memberService.enrollBoardComment(boardComment);
+    	if(result > 0)
+    		log.info("main 일반게시판 댓글작성 성공!");
+    	else
+    		log.info("main 일반게시판 댓글작성 실패!");
+
     	return ResponseEntity.ok(null);
     }
     

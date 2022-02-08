@@ -186,6 +186,31 @@ public class GroupDaoImpl implements GroupDao {
 		return session.selectList("group.selectGroupBoardListByLocation",groupBoard);
 	}
 
+	@Override
+	public int insertGroupVisitLog(Map<String, Object> param) {
+		return session.insert("group.insertGroupVisitLog",param);
+	}
+
+	@Override
+	public Map<String, Object> selectGroupVisitLog(Map<String, Object> param) {
+		return session.selectOne("group.selectGroupVisitLog", param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectVisitCountList(Map<String, Object> param) {
+		return session.selectList("group.selectVisitCountList",param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectCommentCountList(Map<String, Object> param) {
+		return session.selectList("group.selectCommentCountList",param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectLikeCountList(Map<String, Object> param) {
+		return session.selectList("group.selectLikeCountList",param);
+	}
+	
 
 
 }

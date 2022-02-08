@@ -37,6 +37,18 @@
 	#settingBtn img {
 		width: 130%;
 	}
+	/* 친구추가 버튼 */
+	#addFriendBtn {
+		float: right;
+		height:50px;
+		width: 50px;
+		border-radius: 100%;
+		border: none;
+		margin-top: -60px;
+	}
+	#addFriendBtn img {
+		width: 130%;
+	}
 	
 	/* 프로필이미지 */
 	.profileImg.d-flex{
