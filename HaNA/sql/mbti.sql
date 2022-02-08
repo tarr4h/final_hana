@@ -192,4 +192,4 @@ merge into  ranking
 select * from ranking;
 select * from hashtag;
 
-update ranking set count = +1;
+update ranking set count = count+1;
