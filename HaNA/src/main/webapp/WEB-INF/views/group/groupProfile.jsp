@@ -121,7 +121,7 @@
 								</tr>
 								<tr class="memberCountTr" onclick="$('#groupMemberList').modal('show');">
 									<th><span class="tableKey" style="color:#673ab7c9;">멤버</span></th>
-									<td>${group.memberCount}명</td>
+									<td>${memberCount}명</td>
 								</tr>
 							</tbody>
 						</table>
@@ -134,6 +134,7 @@
 								class="enroll-button">가입신청</a>
 							</div>
 						</c:if>
+						<div>
 <% 
 	Member loginMember = (Member)pageContext.getAttribute("loginMember");
 	if(memberIdList.contains(loginMember.getId())){
@@ -141,18 +142,22 @@
 			if(m.get("memberId").equals(loginMember.getId())){
 				if(m.get("memberLevelCode").equals("ld") || m.get("memberLevelCode").equals("mg")){	
 %>
-						<div style="margin-top:10%;">
 							<div>
-								<a href="${pageContext.request.contextPath}/group/groupMemberList/${group.groupId}" class="enroll-button">회원관리</a>
-							</div>
-							<div style="margin-top:10px;">
 								<a href="${pageContext.request.contextPath}/group/groupStatistic/${group.groupId}" class="enroll-button">활동통계</a>
+							</div>
+
+<%  }if(m.get("memberLevelCode").equals("ld")){	%>
+							<div style="margin-top:10px;">
+								<a href="${pageContext.request.contextPath}/group/groupMemberList/${group.groupId}" class="enroll-button">회원관리</a>
 							</div>
 							<div style="margin-top:10px;">
 								<a href="javascript:void(0);" onclick="enrollList();" class="enroll-button">가입승인</a>
 							</div>
+							<div style="margin-top:10px;">
+								<a href="javascript:void(0);" onclick="location.href='${pageContext.request.contextPath}/group/groupSetting/${group.groupId}';" class="enroll-button">정보수정</a>
+							</div>
+<%}}}};%>
 						</div>
-<% }}}};%>
 			        </div>
 			    </div>
 			</div>

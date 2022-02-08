@@ -14,8 +14,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
 
 <div>
-    <form:form
-        action="${pageContext.request.contextPath}/group/enrollGroupBoard"
+    <form
+    	name="groupBoardFrm"
+        action="${pageContext.request.contextPath}/group/enrollGroupBoard?${_csrf.parameterName}=${_csrf.token}"
         method="POST"
         enctype="multipart/form-data">
         <table>
@@ -45,8 +46,8 @@
             <tr>
             <td><input id="placeName" name="placeName" type="text" value="" readonly/></td>
             <td><input id="placeAddress" name="placeAddress" type="text" value="" readonly/></td>
-            <td><input id="locationY" name="locationY" type="text" value="" readonly/></td>
-            <td><input id="locationX" name="locationX" type="text" value="" readonly/></td>
+            <td><input id="locationY" name="locationY" type="hidden" value="" readonly/></td>
+            <td><input id="locationX" name="locationX" type="hidden" value="" readonly/></td>
             </tr>
             <tr>
             <td><input type="text" name="content"/></td>
@@ -59,9 +60,9 @@
 	            <td><input type="text" value="${member.memberId}" name="tagMembers" readonly/></td>
 	            </tr>
             </c:forEach>
-            <tr><td><input type="submit" /></td></tr>
+            <tr><td><input type="button" value="제출" onclick="submitBoard();"/></td></tr>
         </table>
-    </form:form>
+    </form>
 </div>
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -324,8 +325,7 @@ function removeAllChildNods(el) {
     }
 
 } 
-</script>
-<script>
+
 //이미지 미리보기
 function setThumbnail(event){
 	var reader = new FileReader();
@@ -338,5 +338,13 @@ function setThumbnail(event){
 	reader.readAsDataURL(event.target.files[0]);
 }
 
+function submitBoard(){
+	if($("[name=locationX]").val() == ""){
+		alert("장소를 태그하세요.");
+	}
+	else {
+		$(document.groupBoardFrm).submit();
+	}
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 

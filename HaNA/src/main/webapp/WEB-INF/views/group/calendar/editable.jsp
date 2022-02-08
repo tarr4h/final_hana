@@ -22,7 +22,6 @@
 				  <div class="calendarSaveBtnContainer">
 				  	<span style="font-weight:bold; color:gray;">캘린더</span>
 				  	<button onclick="saveButton();" class="calendarSave">저장</button>
-				  	<button onclick="deleteEvent();" class="calendarSave">삭제</button>
 				</div>
 			</div>
 		</div>
