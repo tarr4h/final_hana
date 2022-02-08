@@ -15,7 +15,7 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 				<h4>추천 소모임 리스트</h4>
 			</div>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" style="height:800px; overflow:auto;">
 				<c:forEach items="${recommendedGroupList}" var="group" varStatus="vs">
 				<div class="recommended-group-list" style="width:50%; margin:auto; margin-top:15px; margin-bottom:15px;">
 					<div class="pointer row" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'">
