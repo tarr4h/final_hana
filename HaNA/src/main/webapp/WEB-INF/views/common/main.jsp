@@ -80,6 +80,90 @@ const forEachCss = (index)=>{
 		}`;
 	$("#mainCss").append(css);
 };
+const forEachLikeCss = (index)=>{
+	let css=``;
+	css=`.btn_like\${index} {
+		  position: relative;
+		  display: inline-block;
+		  width: 44px;
+		  height: 44px;
+		  border: 1px solid #e8e8e8;
+		  border-radius: 44px;
+		  font-family: notokr-bold,sans-serif;
+		  font-size: 14px;
+		  line-height: 16px;
+		  background-color: #fff;
+		  color: #DD5D54;
+		  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.03);
+		  transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
+		  cursor: pointer;
+		}
+
+		.btn_like\${index}:hover {
+		  border: 1px solid rgba(228,89,89,0.3);
+		  background-color: rgba(228,89,89,0.02);
+		  box-shadow: 0 2px 4px 0 rgba(228,89,89,0.2);
+		}
+
+		.btn_unlike\${index} .img_emoti\${index} {
+		    background-position: -30px -120px;
+		}
+
+		.img_emoti\${index} {
+		    display: inline-block;
+		    overflow: hidden;
+		    font-size: 0;
+		    line-height: 0;
+		    background: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/img_emoti.png?v=20180410) no-repeat;
+		    text-indent: -9999px;
+		    vertical-align: top;
+		    width: 20px;
+		    height: 17px;
+		    margin-top: 1px;
+		    background-position: 0px -120px;
+		    text-indent: 0;
+		}
+
+		.btn_like\${index} .ani_heart_m\${index} {
+		    margin: -63px 0 0 -63px;
+		}
+
+		.ani_heart_m\${index} {
+		    display: block;
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    width: 125px;
+		    height: 125px;
+		    margin: -63px 0 0 -63px;
+		    pointer-events: none;
+		}
+
+		.ani_heart_m.hi\${index} {
+		    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_on_m.png);
+		    -webkit-background-size: 9000px 125px;
+		    background-size: 9000px 125px;
+		    animation: on_m 1.06s steps(72);
+		}
+
+		.ani_heart_m.bye\${index} {
+		    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_off_m.png);
+		    -webkit-background-size: 8250px 125px;
+		    background-size: 8250px 125px;
+		    animation: off_m 1.06s steps(66);
+		}
+
+		@keyframes on_m {
+		  from { background-position: 0 }
+		  to { background-position: -9000px }
+		}
+
+		@keyframes off_m {
+		  from { background-position: 0 }
+		  to { background-position: -8250px }
+		}`;
+	$("#mainCss").append(css);
+};
 const slideWidth = 800; //한개의 슬라이드 넓이 
 const slideMargin = 0; //슬라이드간의 margin 값 
 </script>
@@ -121,14 +205,18 @@ const slideMargin = 0; //슬라이드간의 margin 값
     </tr>
     <tr>
     <td>
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart.svg" alt="하트"/>
+    
+<button type="button" class="btn_like${vss.index }">
+  <span class="img_emoti${vss.index }">좋아요</span>
+  <span class="ani_heart_m${vss.index }"></span>
+</button>
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
     </td>
     </tr>
     <tr>
-    <td>
-              <span>asdfsadfasf님 외 123123명이 좋아합니다.</span>
+    <td id="likeCount${vss.index }">
+              <span></span>
     </td>
     </tr>
     <tr>
@@ -170,6 +258,7 @@ const slideMargin = 0; //슬라이드간의 margin 값
         <script>
         <!-- mainCss에 append해주기 -->
        forEachCss(${vss.index });
+       forEachLikeCss(${vss.index });
 const slides${vss.index } = document.querySelector('.slides${vss.index }'); //전체 슬라이드 컨테이너 
 const slideImg${vss.index } = document.querySelectorAll('.slides${vss.index } li'); //모든 슬라이드들
 let currentIdx${vss.index } = 0; //현재 슬라이드 index 
@@ -229,6 +318,51 @@ $(`.next${vss.index }`).on('click', function () {
 				});
 				$(".commentTd${vss.index} .comments${vss.index }").html(commentList);
 
+		},
+		error:console.log
+	});
+//forEach에서 내가 좋아요 누른 여부 확인
+	$.ajax({
+		url : `${pageContext.request.contextPath}/chat/grouplikeCheck.do`,
+		data : {
+			boardNo : ${groupboard.no},
+			memberId : memberId,
+		},
+		method: "GET",
+		success(resp){
+			console.log(resp);
+			$('button.btn_like${vss.index }').click(function(){
+				  if($(this).hasClass('btn_unlike${vss.index }')){
+				    $(this).removeClass('btn_unlike${vss.index }');
+				    $('.ani_heart_m${vss.index }').removeClass('hi');
+				    $('.ani_heart_m${vss.index }').addClass('bye');
+				  }
+				  else{
+				    $(this).addClass('btn_unlike${vss.index }');
+				    $('.ani_heart_m${vss.index }').addClass('hi');
+				    $('.ani_heart_m${vss.index }').removeClass('bye');
+				  }
+				});
+/* 	 		if(resp){
+	 			$("#unlike${vss.index }").css("display","none");
+	 			$("#like${vss.index }").css("display","inline");
+	 		}else{
+	 			$("#like${vss.index }").css("display","none");			 			
+	 			$("#unlike${vss.index }").css("display","inline");			 			
+	 		} */
+		},
+		error:console.log
+	});
+//forEach에서 좋아요 불러오기
+	$.ajax({
+		url : `${pageContext.request.contextPath}/chat/groupboardLikeCount.do`,
+		data : {
+			boardNo : ${groupboard.no}
+		},
+		method: "GET",
+		success(resp){
+			console.log(resp);
+			$("#likeCount${vss.index } span").html(resp);
 		},
 		error:console.log
 	});
@@ -305,13 +439,14 @@ const commetWrite${vss.index}=()=>{
     <tr>
     <td>
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart.svg" alt="하트"/>
+              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart-fill.svg" alt="하트"/>
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
     </td>
     </tr>
     <tr>
     <td>
-              <span>asdfsadfasf님 외 123123명이 좋아합니다.</span>
+              <span></span>
     </td>
     </tr>
     <tr>

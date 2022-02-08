@@ -330,5 +330,25 @@ public class ChatController {
     	return ResponseEntity.ok(null);
     }
     
+    @GetMapping("/groupboardLikeCount.do")
+    public ResponseEntity<?> groupboardLikeCount(int boardNo){
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("no",boardNo);
+		int likeCount = groupService.selectLikeCount(param);
+		
+    	return ResponseEntity.ok(likeCount);
+    }
+    
+    @GetMapping("/grouplikeCheck.do")
+    public ResponseEntity<?> likeCheck(int boardNo, String memberId){
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberId",memberId);
+		param.put("boardNo", boardNo);
+		Map<String,Object> likeLog = groupService.selectOneLikeLog(param);
+		boolean isLiked = likeLog == null? false : true;
+    	return ResponseEntity.ok(isLiked);
+    }
+    
     		
 }
