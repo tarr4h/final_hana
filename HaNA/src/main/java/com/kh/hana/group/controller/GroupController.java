@@ -13,6 +13,7 @@ import javax.servlet.ServletContext;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -515,10 +516,11 @@ public class GroupController {
 			log.info("memberLevelCode = {}", memberLevelCode);
 			log.info("map = {}", map);
 			
-			int result = groupService.updateGroupGrade(map);
-			log.info("map ={}", map);
-			String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
-			log.info("msg ={}", msg);
+				int result = groupService.updateGroupGrade(map);
+				log.info("map ={}", map);
+				String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
+				log.info("msg ={}", msg);
+			
 			
 			return "redirect:/group/groupMemberList/"+groupId;
 		}

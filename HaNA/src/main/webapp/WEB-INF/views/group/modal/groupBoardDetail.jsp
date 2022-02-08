@@ -160,8 +160,6 @@ function getPageDetail(boardNo){
 		 				$("#group-board-img-container").append(img); // 이미지 추가
 		 			})
 		 			
-		 			
-		 			
 		 			$(".group-board-img").css("width","100%");
 		 			$(".group-board-img").css("position","absolute");
 		  			$(".group-board-img").css("left","0");

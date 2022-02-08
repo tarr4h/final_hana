@@ -533,5 +533,6 @@
 	 <result column="member" property="memberId"/>
 	 <result column="count" property="count"/>
 	 </resultMap>
+	 
 </mapper>
 

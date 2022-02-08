@@ -205,6 +205,7 @@ public class GroupDaoImpl implements GroupDao {
 	public List<Map<String, Object>> selectLikeCountList(Map<String, Object> param) {
 		return session.selectList("group.selectLikeCountList",param);
 	}
+
 	
 
 

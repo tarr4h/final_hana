@@ -87,4 +87,5 @@ public interface GroupService {
 	List<Map<String, Object>> selectCommentCountList(Map<String, Object> param);
 
 	List<Map<String, Object>> selectLikeCountList(Map<String, Object> param);
+
 }

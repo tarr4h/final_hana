@@ -226,4 +226,5 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectLikeCountList(param);
 	}
 
+
 }
