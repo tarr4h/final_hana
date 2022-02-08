@@ -27,6 +27,10 @@ let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
 				<h4>친구를 선택하세요</h4>
 				<input type="text" name="friendId" id="" />
 				<input type="button" value="검색" id="searchFriend"/>
+				<table id="acceptedFriendListTable">
+					<tbody>
+					</tbody>
+				</table>
 				<table id="friendListTable">
 					<tbody></tbody>
 				</table>
@@ -42,19 +46,53 @@ let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
 
 <script>
 function shareReservationModal(reservationNo){
-	$('#shareModal').modal({backdrop:'static', keyboard:false});
 	$("[name=shareReservationNo]").val(reservationNo);
-	console.log($("[name=shareReservationNo]").val());
+	$("[name=friendId]").val('');
+	$("#friendListTable tbody").empty();
+	selectAcceptedFriends(reservationNo);
+	$('#shareModal').modal({backdrop:'static', keyboard:false});
+};
+
+function selectAcceptedFriends(reservationNo){
+	$.ajax({
+		url: '${pageContext.request.contextPath}/shop/selectAcceptedFriends',
+		data:{
+			reservationNo
+		},
+		success(res){
+			console.log(res);
+			$("#acceptedFriendListTable tbody").empty();		
+			$.each(res, (i, e) => {
+				if(e.id != '${loginMember.id}'){
+					let tr = `
+						<tr>
+							<td>
+								<img src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt="" style="width:50px;height:50px;border-radius:100%"/>
+							</td>
+							<td>
+								<span class="sharedFr">\${e.id}</span>
+							</td>
+							<td>
+								공유완료
+							</td>
+						</tr>
+					`;					
+					$("#acceptedFriendListTable tbody").append(tr);				
+				}
+			});
+		},
+		error:console.log
+	});	
 };
 
 function onOpenShare() {
 		console.log("onOpenShare");
 		console.log("123 =",ShareroomNo);
 		console.log("123 =",`${loginMember.id}`);
-		     const data = {
-	           "roomNo" : ShareroomNo,
-		         "memberId" : `${loginMember.id}`,
-		         "message" : "ENTER" 
+	    const data = {
+	    	"roomNo" : ShareroomNo,
+	        "memberId" : `${loginMember.id}`,
+	        "message" : "ENTER" 
 	    };
 	    let jsonData = JSON.stringify(data);
 	    websocket.send(jsonData);
@@ -108,18 +146,31 @@ function shareReservation(reservationNo, targetUser){
 
 	};
 	testtest();
-	
 };
 
+function selectAcceptedFriendsForCheck(reservationNo){
+	let testVal;
+	$.ajax({
+		url: '${pageContext.request.contextPath}/shop/selectAcceptedFriends',
+		data:{
+			reservationNo
+		},
+		async: false,
+		success(res){
+			testVal = res;
+		},
+		error:console.log
+	});
+	return testVal;
+}
+
 $("[name=friendId]").keyup((e) => {
-	console.log($(e.target).val());
  	$.ajax({
 		url: '${pageContext.request.contextPath}/member/followingListById',
 		data:{
 			inputText: $(e.target).val()
 		},
 		success(res){
-			console.log(res);
 			let resNo = $("[name=shareReservationNo]").val();
 			$("#friendListTable tbody").empty();
 			$.each(res, (i, e) => {
@@ -134,7 +185,19 @@ $("[name=friendId]").keyup((e) => {
 						</td>
 					</tr>
 				`;
-				$("#friendListTable tbody").append(tr);
+				
+				let reservationNo = $("[name=shareReservationNo]").val();
+				
+				let frList = selectAcceptedFriendsForCheck(reservationNo);
+				let bool = true;
+				$.each(frList, (a, b) => {
+					if(e.id == b.id){
+						bool = false;
+					}
+				});
+				if(bool){
+					$("#friendListTable tbody").append(tr);
+				};
 			});
 			if($(e.target).val() == ''){
 				$("#friendListTable tbody").empty();

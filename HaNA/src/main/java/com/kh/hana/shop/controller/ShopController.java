@@ -298,6 +298,42 @@ public class ShopController {
     	return ResponseEntity.ok(result);
     }
     
+    @GetMapping("/selectOneReservation")
+    public ResponseEntity<?> selectOneReservation(@RequestParam String reservationNo, @RequestParam String id){    	
+    	Reservation reservation = shopService.selectOneReservation(reservationNo);
+    	log.info("reservation = {}", reservation);
+    	
+    	Map<String, String> map = new HashMap<>();
+    	map.put("reservationNo", reservationNo);
+    	map.put("id", id);
+    	Reservation checkRes = shopService.checkShareAccepted(map);
+    	log.info("check result = {}", checkRes);
+    	
+    	Map<String, Object> returnMap = new HashMap<>();
+    	returnMap.put("reservation", reservation);
+    	returnMap.put("checkRes", checkRes);
+    	
+    	return ResponseEntity.ok(returnMap);
+    }
+    
+    @PostMapping("/insertReservationShare")
+    public ResponseEntity<?> insertReservationShare(Reservation reservation){
+    	log.info("reservation = {}", reservation);
+    	
+    	int result = shopService.insertReservationShare(reservation);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/selectAcceptedFriends")
+    public ResponseEntity<?> selectAcceptedFriends(@RequestParam String reservationNo){
+    	log.info("rsNo = {}", reservationNo);
+    	
+    	List<Member> memberList = shopService.selectAcceptedFriends(reservationNo);
+    	
+    	return ResponseEntity.ok(memberList);
+    }
+    
     @InitBinder
     public void initBinder(WebDataBinder binder) {
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
