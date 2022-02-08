@@ -38,19 +38,26 @@ function goMemberView(memberId){
 	<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 		${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
 	        <div class="col-sm-4" >
+	        <div class="group-board-thumbnail-container">
 	        	<input type="hidden" value="${board.no}" id="group-board-no"/>
-				<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
+				<img class="board-main-image"
 					src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image[0]}"
 					alt="" />
+	        </div>
 	        </div>
 		${vs.index%3 == 2? "</div>" : ""}
 	</c:forEach>
 </div>
-
 <!-- 가입신청리스트 모달 -->
 <jsp:include page="/WEB-INF/views/group/modal/groupApplyList.jsp"/>
 
 <!-- 게시물 상세보기 모달 -->
 <jsp:include page="/WEB-INF/views/group/modal/groupBoardDetail.jsp"/>
+
+<!-- 게시글 작성 버튼 -->
+<div class="plusBoardButton-container" onclick="location.href='${pageContext.request.contextPath}/group/groupBoardForm/${group.groupId}'">
+	<img class="plusBoardButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""  />
+	<span class="plusButtonLabel">&nbsp;게시글 작성</span>
+</div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
