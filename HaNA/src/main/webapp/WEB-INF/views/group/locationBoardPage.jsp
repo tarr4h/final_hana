@@ -25,40 +25,6 @@ function goMemberView(memberId){
 	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
 }
 </script>
-<style>
-.location-container{
-	border-bottom:1px solid gray;
-	margin:auto;
-	width:75%;
-	height:500px;
-	padding-top:100px;
-	padding-bottom:100px;
-}
-.info-container {
-	width:80%;
-	height:100%;
-	margin:auto;
-}
-
-#loca-info {
-	width:100%;
-	height:40%;
-	margin-top:33%;
-	padding-left:20%;
-}
-.group-board-container {
-	padding-top:100px;
-}
-#locaInfo-placeName {
-	font-size:1.2em;
-	font-weight:bold;
-}
-#locaInfo-placeAddress {
-	font-size:1.2em;
-
-	color:gray;
-}
-</style>
 <!-- 지도 및 (상호명 + 주소) -->
 <section>
 	<div class="location-container">
@@ -83,10 +49,12 @@ function goMemberView(memberId){
 		<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 			${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
 		        <div class="col-sm-4" style="min-height:300px;">
+		        	<div class="group-board-thumbnail-container">
 		        	<input type="hidden" value="${board.no}" id="group-board-no"/>
-					<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
+					<img class="board-main-image"
 						src="${pageContext.request.contextPath}/resources/upload/group/board/${board.image[0]}"
 						alt="" />
+		        	</div>
 		        </div>
 			${vs.index%3 == 2? "</div>" : ""}
 		</c:forEach>

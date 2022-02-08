@@ -11,11 +11,16 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="프로필수정" name="title" />
 </jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
 <section>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
 <sec:authentication property="principal" var="loginMember" />
-
 <br />
+
+<%
+	List<String> list = Arrays.asList(((Group)request.getAttribute("group")).getHashtag());
+	pageContext.setAttribute("hashtag",list);
+%>
 
 <div class="container rounded bg-white mt-5 mb-5">
 	<form:form name="groupUpdateFrm" action="${pageContext.request.contextPath}/group/groupUpdate?${_csrf.parameterName}=${_csrf.token}" method="POST" enctype="multipart/form-data">
@@ -41,18 +46,35 @@
 	                    <div class="col-md-7"><label class="labels">소모임명</label><input type="text" class="form-control" placeholder="headline" name="groupName" value="${group.groupName}" required></div>
 	                </div>
 	                <div class="row mt-3">
-	                    <div class="col-md-12"><label class="labels">해시태그</label><br />
-	                    	<input type="checkbox" name="hashtag" id="hashtag-ex" value="운동" onclick="hash('운동');" ${group.hashtag[0].contains('운동') ? 'checked' : '' } ${group.hashtag[1].contains('운동') ? 'checked' : '' } ${group.hashtag[2].contains('운동') ? 'checked' : '' }/>
-	                        <label for="hashtag-ex">운동</label>
-	                        <input type="checkbox" name="hashtag" id="hashtag-re" value="독서" onclick="hash('독서');" ${group.hashtag[0].contains('독서') ? 'checked' : '' } ${group.hashtag[1].contains('독서') ? 'checked' : '' } ${group.hashtag[2].contains('독서') ? 'checked' : '' }/>
-	                        <label for="hashtag-re">독서</label>
-	                        <input type="checkbox" name="hashtag" id="hashtag-mu" value="등산" onclick="hash('등산');" ${group.hashtag[0].contains('등산') ? 'checked' : '' } ${group.hashtag[1].contains('등산') ? 'checked' : '' } ${group.hashtag[2].contains('등산') ? 'checked' : '' }/>
-	                        <label for="hashtag-mu">등산</label>
+	                    <div class="col-md-7"><label class="labels">프로필 사진</label><input type="file" class="form-control" placeholder="country" name="upFile" value="파일 선택">
+	                    <input type="hidden" name="image" value="${group.image}" />
 	                    </div>
 	                </div>
 	                <div class="row mt-3">
-	                    <div class="col-md-7"><label class="labels">프로필 사진</label><input type="file" class="form-control" placeholder="country" name="upFile" value="파일 선택">
-	                    <input type="hidden" name="image" value="${group.image}" />
+	                    <div class="col-md-12" onclick="$('#hashtagListModal').modal()"><span class="hashtag-modal-label">해시태그</span><br />
+	                    	<div class="modal fade" id="hashtagListModal" tabindex="-1" role="dialog"
+								aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" style="max-width: 20%; width: auto;">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title" id="myModalLabel">해시태그를 선택하세요</h4>
+										</div>
+										<div class="modal-body">
+											<div class="hashtag-list-container">
+												<c:forEach items="${hashtagList}" var="name" varStatus="vs">
+												<div class="hashtag-container">
+							                    	<input type="checkbox" name="hashtag" id="hashtag-${vs.index}" value="${name}" ${hashtag.contains(name) ? 'checked' : '' }/>
+							                        <label for="hashtag-${vs.index}">&nbsp;&nbsp;${name}</label>	                    	
+												</div>
+						                    	</c:forEach>										
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">완료</button>
+										</div>
+									</div>
+								</div>
+							</div>
 	                    </div>
 	                </div>
 	                <input type="hidden" name="leaderId" value="${group.leaderId}">
@@ -62,22 +84,6 @@
 	    </div>
     </form:form>
 </div>
-
-<script>
-function hash(tag){
-	console.log(tag);
-	if(tag == '운동'){
-		$("#hashtag-ex").prop('checked');	
-	}
-	if(tag == '독서'){
-		$("#hashtag-re").prop('checked');	
-	}
-	if(tag == '등산'){
-		$("#hashtag-mu").prop('checked');	
-	}
-}
-</script> 
-
 
 <style>
 .form-control:focus {

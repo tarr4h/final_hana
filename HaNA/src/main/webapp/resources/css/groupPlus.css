@@ -106,4 +106,139 @@ textarea::placeholder {color:gray; font-size: 1.1em;}
 	background-color:white;
 	border:none;
 }
+/* 그룹리스트 */
+.group-list-section {
+padding-top:100px; width: 30%; min-height: 500px; margin: auto; margin-bottom:200px;
+}
+.group-container:hover {
+	cursor:pointer;
 	
+}
+.group-container {
+width:100%;
+height:100px;
+}
+.group-container-section1 {
+text-align:center;width:40%; height:100%; display: inline-block;
+}
+.group-profile-container{
+margin-left:50%;width: 80px; height: 80px; position: relative;
+}
+#group-profile {
+position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;
+}
+.group-container-section2 {
+width:59%; height:100%; display: inline-block;
+}
+.group-list-info-container {
+margin-top:12px;
+}
+.group-list-groupId {
+font-size:1.1em;
+font-weight:700;
+}
+.group-list-groupName {
+font-size:1.1em;
+}
+.plusHashtagButton-container, .plusBoardButton-container {
+	width:250px;
+	position:fixed;
+	left:85vw;
+	top:300px;
+}
+.plusGroupButton-container {
+	width:250px;
+	position:fixed;
+	left:85vw;
+	top:390px;
+}
+.groupListModalButton-container {
+	width:250px;
+	position:fixed;
+	left:85vw;
+	bottom:100px;
+}
+.plusGroupButton, .plusHashtagButton, .plusBoardButton, .groupListModalButton{
+	width:55px;
+	height:55px;
+}
+.plusHashtagButton-container , .plusGroupButton-container, .plusBoardButton-container, .groupListModalButton-container:hover{
+	cursor:pointer;
+}
+.plusButtonLabel {
+	color:gray;
+	font-weight:500;
+}
+.group-board-thumbnail-container {
+	width:90%; height:90%;margin:auto;
+}
+.board-main-image {
+	width:100%; height:100%;margin-bottom: 10%
+	
+}
+
+/* 장소검색페이지 */
+.location-container{
+	border-bottom:1px solid gray;
+	margin:auto;
+	width:75%;
+	height:500px;
+	padding-top:100px;
+	padding-bottom:100px;
+}
+.info-container {
+	width:80%;
+	height:100%;
+	margin:auto;
+}
+
+#loca-info {
+	width:100%;
+	height:40%;
+	margin-top:33%;
+	padding-left:20%;
+}
+.group-board-container {
+	padding-top:100px;
+}
+#locaInfo-placeName {
+	font-size:1.2em;
+	font-weight:bold;
+}
+#locaInfo-placeAddress {
+	font-size:1.2em;
+
+	color:gray;
+}
+/* 해시태그 모달 */
+#image-container {
+	width:350px;
+	height:350px;
+	margin:auto;
+	margin-top:50px;
+}
+.first-container {
+margin-top:200px;
+padding-left:400px;
+}
+.hashtag-modal-label {
+font-size:1.1em;
+font-weight:500;
+color:#875bd5;
+}
+.hashtag-modal-label:hover {
+cursor:pointer;
+}
+
+.hashtag-container {
+font-size:1.3em;
+margin-top:10px;
+}
+.hashtag-list-container {
+	width: 30%;
+	margin:auto;
+	margin-bottom:20px;
+}
+.pointer:hover {
+	cursor:pointer;
+}

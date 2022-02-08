@@ -210,6 +210,31 @@ public class GroupDaoImpl implements GroupDao {
 	public List<Map<String, Object>> selectLikeCountList(Map<String, Object> param) {
 		return session.selectList("group.selectLikeCountList",param);
 	}
+
+	@Override
+	public List<String> selectHashtagList() {
+		return session.selectList("group.selectHashtagList");
+	}
+
+	@Override
+	public List<String> selectLikeHashtagList(Member member) {
+		return session.selectList("group.selectLikeHashtagList",member);
+	}
+
+	@Override
+	public int insertMemberLikeHashtag(Map<String, Object> param) {
+		return session.insert("group.insertMemberLikeHashtag",param);
+	}
+
+	@Override
+	public int deleteMemberLikeHashtag(Map<String, Object> param) {
+		return session.delete("group.deleteMemberLikeHashtag",param);
+	}
+
+	@Override
+	public List<Group> selectRecommendedGroupList(Member member) {
+		return session.selectList("group.selectRecommendedGroupList",member);
+	}
 	
 
 
