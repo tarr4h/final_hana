@@ -88,4 +88,14 @@ public interface GroupService {
 
 	List<Map<String, Object>> selectLikeCountList(Map<String, Object> param);
 
+	List<String> selectHashtagList();
+
+	List<String> selectLikeHashtagList(Member member);
+
+	int insertMemberLikeHashtag(Map<String, Object> param);
+
+	int deleteMemberLikeHashtag(Map<String, Object> param);
+
+	List<Group> selectRecommendedGroupList(Member member);
+
 }

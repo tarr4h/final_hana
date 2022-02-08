@@ -226,5 +226,29 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectLikeCountList(param);
 	}
 
+	@Override
+	public List<String> selectHashtagList() {
+		return groupDao.selectHashtagList();
+	}
+
+	@Override
+	public List<String> selectLikeHashtagList(Member member) {
+		return groupDao.selectLikeHashtagList(member);
+	}
+
+	@Override
+	public int insertMemberLikeHashtag(Map<String, Object> param) {
+		return groupDao.insertMemberLikeHashtag(param);
+	}
+
+	@Override
+	public int deleteMemberLikeHashtag(Map<String, Object> param) {
+		return groupDao.deleteMemberLikeHashtag(param);
+	}
+
+	@Override
+	public List<Group> selectRecommendedGroupList(Member member) {
+		return groupDao.selectRecommendedGroupList(member);
+	}
 
 }

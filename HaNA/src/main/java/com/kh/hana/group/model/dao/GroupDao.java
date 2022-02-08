@@ -87,4 +87,14 @@ public interface GroupDao {
 
 	public List<Map<String, Object>> selectLikeCountList(Map<String, Object> param);
 
+	public List<String> selectHashtagList();
+
+	public List<String> selectLikeHashtagList(Member member);
+
+	public int insertMemberLikeHashtag(Map<String, Object> param);
+
+	public int deleteMemberLikeHashtag(Map<String, Object> param);
+
+	public List<Group> selectRecommendedGroupList(Member member);
+
 }
