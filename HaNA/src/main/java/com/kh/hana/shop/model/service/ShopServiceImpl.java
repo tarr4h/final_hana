@@ -92,6 +92,15 @@ public class ShopServiceImpl implements ShopService {
 	@Override public List<HashTag> hashTagAutocomplete(String search) { 
 		  return shopDao.hashTagAutocomplete(search); 
 	}
+	
+	@Override
+	public int insertRankingData(Map<String, Object> rankingMap) {
+		int count = 1;
+		rankingMap.put("count", count);
+		int selectData = shopDao.selectRankingData(rankingMap);
+		log.info("selectData = {}" ,selectData );
+		return selectData;
+	}
 
 	@Override
 	public int insertShopTable(Table table) {
@@ -175,6 +184,7 @@ public class ShopServiceImpl implements ShopService {
 	public List<Member> selectAcceptedFriends(String reservationNo) {
 		return shopDao.selectAcceptedFriends(reservationNo);
 	}
+
 
 
 
