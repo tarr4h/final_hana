@@ -187,8 +187,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int checkAccountPrivate(Map<String, Object> map) {
 		int accountCheck = (int)map.get("accountCheck"); 
+		Member member = (Member)map.get("member");
 		log.info("accountCheck={}",accountCheck);
-		return memberDao.checkAccountPrivate(map);
+		int result = 0;
+		log.info("member.getAccountCheck() ={}", member.getAccountCheck());
+		  if (member.getAccountCheck() == 2) {
+			  result = memberDao.checkAccountPrivate(map);
+		  }else {
+			  result = memberDao.updateAccountPrivate(map);			
+		  }
+		
+		return result;
 	 
 	}
 
@@ -196,9 +205,9 @@ public class MemberServiceImpl implements MemberService {
 	public int checkFriend(Map<String, Object> map) {
 		return memberDao.checkFriend(map);
 	}
+ 
 
-	 
-	
+ 
 	
 }
               

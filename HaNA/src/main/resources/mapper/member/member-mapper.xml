@@ -326,7 +326,7 @@
 		insert into
 			account_private 
 	    values
-	        (#{id}, #{accountCheck})
+	        (#{id}, 2)
 	</insert>
 
 	<select id="checkFriend" resultType="_int">
@@ -340,9 +340,17 @@
 	 	following_id = #{loginMemberId}	
 	</select>
 
+	<!-- <update id="updateAccountPrivate">
+	update account_private
+     set
+     	account_check = #{accountCheck}
+     where
+     	member_id = #{id}
+	</update> -->
 
-
-
+	<delete id="updateAccountPrivate">
+	delete from account_private where member_id = #{id}
+	</delete>
 
 
 

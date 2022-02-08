@@ -67,6 +67,10 @@ public interface MemberService {
 	int checkAccountPrivate(Map<String, Object> map);
 
 	int checkFriend(Map<String, Object> map);
+
+	 
+
+ 
  
  
 

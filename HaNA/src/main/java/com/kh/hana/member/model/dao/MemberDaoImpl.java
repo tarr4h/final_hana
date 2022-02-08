@@ -183,6 +183,13 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.checkFriend",map);
 	}
 
+	@Override
+	public int updateAccountPrivate(Map<String, Object> map) {
+		return session.delete("member.updateAccountPrivate",map);
+	}
+
+	 
+ 
  
 	
 

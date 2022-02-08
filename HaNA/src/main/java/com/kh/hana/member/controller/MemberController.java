@@ -600,7 +600,7 @@ public class MemberController {
 	
 	//계정 비공개
 	@PostMapping("/accountPrivate")
-	 public String checkAccountPrivate(@RequestParam String id, @RequestParam int accountCheck, Model model){
+	 public String checkAccountPrivate(@RequestParam String id, @RequestParam (defaultValue ="1")int accountCheck, Model model, Member member){
     	
     	try{
     		log.info("checkAccountPrivate.member.id = {}",id);
@@ -609,23 +609,19 @@ public class MemberController {
     		Map<String,Object> map = new HashMap<>();
     		map.put("id",id);
     		map.put("accountCheck",accountCheck);
+    		map.put("member",member);
     		
     		int result = memberService.checkAccountPrivate(map);
+    	 
     		model.addAttribute("accountCheck",accountCheck);
     		
     	}catch(Exception e) {
     		log.error(e.getMessage(),e);
        	}
-    	return "redirect:/member/memberSetting/memberSetting";
+    	return "redirect:/member/memberSetting/accountPrivate";
     	
     }
-	
-	
- 
-	
-	
-	
-	
+	 
 	
 	
 	

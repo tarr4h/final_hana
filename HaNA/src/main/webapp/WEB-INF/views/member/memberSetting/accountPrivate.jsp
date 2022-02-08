@@ -34,16 +34,23 @@
         	enctype="multipart/form-data" 
         	method="POST">
        			<input type="hidden" name="id" value="${loginMember.id}" />
-        		<input type="checkbox" name="accountCheck" id="account" value="2"> 계정 비공개
-        		<input type="submit" class="btn btn-dark" value="확인">
+        		<input type="checkbox" name="accountCheck" id="account" <c:if test="${member.accountCheck eq '2'}"/>checked >계정 비공개
+        		 <!-- <input type="hidden" name="accountCheckYN" id="input_check_hidden" value='1' /> --> 
+        		<input type="submit" class="btn btn-dark" value="변경">
         	<br><br>     	 
         </form:form>
         </div>
-        
-        
-        
-        
-        
-        
-        
 </div>
+<script>
+$(accountPrivateFrm).submit((e) => {
+	if ($("input[name='accountCheck']").is(":checked")) {
+	$("input[name='accountCheck']").val(2);
+
+	} else {
+		$("input[name='accountCheck']").val(1);
+	}
+});
+//if(document.getElementById("account").checked) {
+ //   document.getElementById("input_check_hidden").disabled = true;
+//}
+</script>

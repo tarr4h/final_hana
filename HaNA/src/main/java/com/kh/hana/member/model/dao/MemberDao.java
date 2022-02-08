@@ -77,6 +77,11 @@ public interface MemberDao {
 
 	int checkFriend(Map<String, Object> map);
 
+	int updateAccountPrivate(Map<String, Object> map);
+
+ 
+
+	 
 
  
 
