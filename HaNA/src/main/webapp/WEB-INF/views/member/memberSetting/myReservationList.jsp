@@ -167,7 +167,7 @@
 							<td>\${e.visitorCount}명</td>
 							<td>\${e.reservationStatus}</td>
 							<td>
-								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}');"/>
+								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}', '\${e.visitorCount}');"/>
 							</td>
 							<td>
 								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
