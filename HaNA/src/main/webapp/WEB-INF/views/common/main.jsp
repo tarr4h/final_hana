@@ -171,12 +171,9 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
-    <span>맴버 그룹 좋아요 불러오기</span><br />
-    <span>맴버 그룹 좋아요 누르기</span><br />
     <span>그룹 게시판 대댓글 작성가능하게</span><br />
     <span>추천 친구 팔로우신청</span><br />
     <span>게시글에서 작성자한테 dm보내기</span><br />
-    <span>로그인맴버 프로필사진</span>
     <span></span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
@@ -259,6 +256,8 @@ const slideMargin = 0; //슬라이드간의 margin 값
         <!-- mainCss에 append해주기 -->
        forEachCss(${vss.index });
        forEachLikeCss(${vss.index });
+       let i${vss.index };
+       let likeBoolean${vss.index };
 const slides${vss.index } = document.querySelector('.slides${vss.index }'); //전체 슬라이드 컨테이너 
 const slideImg${vss.index } = document.querySelectorAll('.slides${vss.index } li'); //모든 슬라이드들
 let currentIdx${vss.index } = 0; //현재 슬라이드 index 
@@ -321,51 +320,6 @@ $(`.next${vss.index }`).on('click', function () {
 		},
 		error:console.log
 	});
-//forEach에서 내가 좋아요 누른 여부 확인
-	$.ajax({
-		url : `${pageContext.request.contextPath}/chat/grouplikeCheck.do`,
-		data : {
-			boardNo : ${groupboard.no},
-			memberId : memberId,
-		},
-		method: "GET",
-		success(resp){
-			console.log(resp);
-			$('button.btn_like${vss.index }').click(function(){
-				  if($(this).hasClass('btn_unlike${vss.index }')){
-				    $(this).removeClass('btn_unlike${vss.index }');
-				    $('.ani_heart_m${vss.index }').removeClass('hi');
-				    $('.ani_heart_m${vss.index }').addClass('bye');
-				  }
-				  else{
-				    $(this).addClass('btn_unlike${vss.index }');
-				    $('.ani_heart_m${vss.index }').addClass('hi');
-				    $('.ani_heart_m${vss.index }').removeClass('bye');
-				  }
-				});
-/* 	 		if(resp){
-	 			$("#unlike${vss.index }").css("display","none");
-	 			$("#like${vss.index }").css("display","inline");
-	 		}else{
-	 			$("#like${vss.index }").css("display","none");			 			
-	 			$("#unlike${vss.index }").css("display","inline");			 			
-	 		} */
-		},
-		error:console.log
-	});
-//forEach에서 좋아요 불러오기
-	$.ajax({
-		url : `${pageContext.request.contextPath}/chat/groupboardLikeCount.do`,
-		data : {
-			boardNo : ${groupboard.no}
-		},
-		method: "GET",
-		success(resp){
-			console.log(resp);
-			$("#likeCount${vss.index } span").html(resp);
-		},
-		error:console.log
-	});
 	
 //forEach에서 일반 댓글쓰기
 const commetWrite${vss.index}=()=>{
@@ -404,6 +358,110 @@ const commetWrite${vss.index}=()=>{
 	$(".commentTd${vss.index} .comments${vss.index }").append(commentList);
 	$("input#input-comment${vss.index}").val('');
 };
+
+//forEach에서 좋아요 불러오기
+$.ajax({
+	url : `${pageContext.request.contextPath}/chat/groupboardLikeCount.do`,
+	data : {
+		boardNo : ${groupboard.no}
+	},
+	method: "GET",
+	success(resp){
+		/* console.log(resp); */
+		i${vss.index } = resp;
+		/* console.log("${vss.index }=",i${vss.index }); */
+		$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
+	},
+	error:console.log
+});
+
+//forEach에서 내가 좋아요 누른 여부 확인
+$.ajax({
+	url : `${pageContext.request.contextPath}/chat/grouplikeCheck.do`,
+	data : {
+		boardNo : ${groupboard.no},
+		memberId : memberId,
+	},
+	method: "GET",
+	success(resp){
+		/* console.log("${vss.index }=",resp); */
+		likeBoolean${vss.index } = resp;
+		if(resp){
+		    $('button.btn_like${vss.index }').addClass('btn_unlike${vss.index }');
+		    $('.ani_heart_m${vss.index }').addClass('hi');
+		    $('.ani_heart_m${vss.index }').removeClass('bye');	
+ 		}else{
+		    $('button.btn_like${vss.index }').removeClass('btn_unlike${vss.index }');
+		    $('.ani_heart_m${vss.index }').removeClass('hi');
+		    $('.ani_heart_m${vss.index }').addClass('bye');	 				 			
+ 		};
+
+	},
+	error:console.log
+});
+
+//좋아요 누를때
+$('button.btn_like${vss.index }').click(function(){
+	  if($(this).hasClass('btn_unlike${vss.index }')){
+	    $(this).removeClass('btn_unlike${vss.index }');
+	    $('.ani_heart_m${vss.index }').removeClass('hi');
+	    $('.ani_heart_m${vss.index }').addClass('bye');
+	    /* console.log("11111111111111delete"); */
+	    deleteLike${vss.index }();
+	  }
+	  else{
+	    $(this).addClass('btn_unlike${vss.index }');
+	    $('.ani_heart_m${vss.index }').addClass('hi');
+	    $('.ani_heart_m${vss.index }').removeClass('bye');
+	    /* console.log("222222222222222222insert"); */
+	    insertLike${vss.index }();
+	  }
+	});
+
+const insertLike${vss.index }=()=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/insertLike.do`,
+		method:"GET",
+		data:{
+			memberId : memberId,
+			no : ${groupboard.no},
+		},
+		success(resp){
+			/* console.log(resp); */
+			if(resp != null){
+				likeBoolean${vss.index } = true;
+				i${vss.index } = i${vss.index }+1;
+				/* console.log("${vss.index }=",i${vss.index }); */
+				$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
+			}
+			else
+				console.log("441번째 줄");
+		},
+		error:console.log		
+	});
+};
+const deleteLike${vss.index }=()=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/deleteLike.do`,
+		method:"GET",
+		data:{
+			memberId : memberId,
+			no : ${groupboard.no},
+		},
+		success(resp){
+			/* console.log(resp); */
+			if(resp != null){
+				likeBoolean${vss.index } = false;
+				i${vss.index } = i${vss.index }-1;
+				/* console.log("${vss.index }=",i${vss.index }); */
+				$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));				
+			}
+			else
+				console.log("436번째 줄");
+		},
+		error:console.log		
+	});
+};
 </script>
 
         </c:forEach>
@@ -438,14 +496,16 @@ const commetWrite${vss.index}=()=>{
     </tr>
     <tr>
     <td>
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart.svg" alt="하트"/>
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart-fill.svg" alt="하트"/>
+<button type="button" class="btn_like0${vss.index }">
+  <span class="img_emoti0${vss.index }">좋아요</span>
+  <span class="ani_heart_m0${vss.index }"></span>
+</button>
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
     </td>
     </tr>
     <tr>
-    <td>
+    <td id="likeCount0${vss.index }">
               <span></span>
     </td>
     </tr>
@@ -489,6 +549,9 @@ const commetWrite${vss.index}=()=>{
         <script>
         <!-- mainCss에 append해주기 -->
        forEachCss('0'+${vss.index });
+       forEachLikeCss('0'+${vss.index });
+       let i0${vss.index };
+       let likeBoolean0${vss.index };
 const slides0${vss.index } = document.querySelector('.slides0${vss.index }'); //전체 슬라이드 컨테이너 
 const slideImg0${vss.index } = document.querySelectorAll('.slides0${vss.index } li'); //모든 슬라이드들
 let currentIdx0${vss.index } = 0; //현재 슬라이드 index 
@@ -589,6 +652,111 @@ const commetWrite0${vss.index}=()=>{
 	$(".commentTd0${vss.index} .comments0${vss.index }").append(commentList);
 	$("input#input-comment0${vss.index}").val('');
 };
+
+//멤버 게시글
+
+//forEach에서 좋아요 불러오기
+$.ajax({
+	url : `${pageContext.request.contextPath}/chat/memberboardLikeCount.do`,
+	data : {
+		boardNo : ${board.no}
+	},
+	method: "GET",
+	success(resp){
+		console.log(resp);
+		i0${vss.index } = resp;
+		console.log("0${vss.index }=",i0${vss.index });
+		$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
+	},
+	error:console.log
+});
+
+//forEach에서 내가 좋아요 누른 여부 확인
+$.ajax({
+	url : `${pageContext.request.contextPath}/chat/MemberlikeCheck.do`,
+	data : {
+		boardNo : ${board.no},
+		memberId : memberId,
+	},
+	method: "GET",
+	success(resp){
+
+		likeBoolean0${vss.index } = resp;
+		if(resp){
+		    $('button.btn_like0${vss.index }').addClass('btn_unlike0${vss.index }');
+		    $('.ani_heart_m0${vss.index }').addClass('hi');
+		    $('.ani_heart_m0${vss.index }').removeClass('bye');	
+		}else{
+		    $('button.btn_like0${vss.index }').removeClass('btn_unlike0${vss.index }');
+		    $('.ani_heart_m0${vss.index }').removeClass('hi');
+		    $('.ani_heart_m0${vss.index }').addClass('bye');	 				 			
+		};
+
+	},
+	error:console.log
+});
+
+//좋아요 누를때
+$('button.btn_like0${vss.index }').click(function(){
+	  if($(this).hasClass('btn_unlike0${vss.index }')){
+	    $(this).removeClass('btn_unlike0${vss.index }');
+	    $('.ani_heart_m0${vss.index }').removeClass('hi');
+	    $('.ani_heart_m0${vss.index }').addClass('bye');
+	    deleteLike0${vss.index }();
+	  }
+	  else{
+	    $(this).addClass('btn_unlike0${vss.index }');
+	    $('.ani_heart_m0${vss.index }').addClass('hi');
+	    $('.ani_heart_m0${vss.index }').removeClass('bye');
+	    insertLike0${vss.index }();
+	  }
+	});
+
+
+//멤버 그룹
+const insertLike0${vss.index }=()=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/MemberBoardinsertLike.do`,
+		method:"GET",
+		data:{
+			memberId : memberId,
+			no : ${board.no},
+		},
+		success(resp){
+			if(resp != null){
+				likeBoolean0${vss.index } = true;
+				i0${vss.index } = i0${vss.index }+1;
+				$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
+			}
+			else
+				console.log("736번째 줄");
+		},
+		error:console.log		
+	});
+};
+const deleteLike0${vss.index }=()=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/MemberBoarddeleteLike.do`,
+		method:"GET",
+		data:{
+			memberId : memberId,
+			no : ${board.no},
+		},
+		success(resp){
+			/* console.log(resp); */
+			if(resp != null){
+				likeBoolean0${vss.index } = false;
+				i0${vss.index } = i0${vss.index }-1;
+				/* console.log("0${vss.index }=",i0${vss.index }); */
+				$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));				
+			}
+			else
+				console.log("758번째 줄");
+		},
+		error:console.log		
+	});
+};
+
 </script>
         </c:forEach>
         </c:if>
@@ -601,7 +769,7 @@ const commetWrite0${vss.index}=()=>{
           <!-- main-right -->
       <div class="main-right">
         <div class="myProfile">
-          <img class="pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="thisisyourhyung님의 프로필 사진">
+          <img class="pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}">
           <div>
             <span class="userID point-span">${loginMember.id}</span>
             <span class="sub-span">${loginMember.name}</span>  

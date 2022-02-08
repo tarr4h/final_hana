@@ -164,7 +164,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int selectLikeCount(Map<String, Object> param) {
-		return session.selectOne("selectLikeCount",param);
+		return session.selectOne("member.selectLikeCount",param);
 	}
 			 
 

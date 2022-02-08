@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -330,6 +331,7 @@ public class ChatController {
     	return ResponseEntity.ok(null);
     }
     
+    //그룹 게시판 좋아요 불러오기
     @GetMapping("/groupboardLikeCount.do")
     public ResponseEntity<?> groupboardLikeCount(int boardNo){
 		Map<String,Object> param = new HashMap<>();
@@ -339,7 +341,7 @@ public class ChatController {
 		
     	return ResponseEntity.ok(likeCount);
     }
-    
+  //그룹 게시판 좋아요 체크
     @GetMapping("/grouplikeCheck.do")
     public ResponseEntity<?> likeCheck(int boardNo, String memberId){
 		Map<String,Object> param = new HashMap<>();
@@ -348,6 +350,109 @@ public class ChatController {
 		Map<String,Object> likeLog = groupService.selectOneLikeLog(param);
 		boolean isLiked = likeLog == null? false : true;
     	return ResponseEntity.ok(isLiked);
+    }
+  //그룹 게시판 좋아요 누르기
+    @GetMapping("/insertLike.do")
+    public ResponseEntity<?> insertLike(int no, String memberId){
+    	int result = 0;
+		
+		try {
+
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("boardNo",no);
+			result = groupService.insertLikeLog(param);
+			if(result > 0)
+				return ResponseEntity.ok(result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return ResponseEntity.ok(null);
+
+		}	
+		return ResponseEntity.ok(null);
+    }
+  //그룹 게시판 좋아요 지우기
+    @GetMapping("/deleteLike.do")
+    public ResponseEntity<?> deleteLike(int no, String memberId){	
+    	int result = 0;
+		try {
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("boardNo",no);
+		
+			result = groupService.deleteLikeLog(param);
+
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return ResponseEntity.ok(null);
+		}
+
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+  //멤버 게시판 좋아요 불러오기
+	@GetMapping("/memberboardLikeCount.do")
+	public ResponseEntity<?> memberboardLikeCount(int boardNo){
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("no",boardNo);
+		int likeCount2 = memberService.selectLikeCount(param);
+		log.info("ssssssssssssssssssssssssssssssssssssssss");
+		return ResponseEntity.ok(likeCount2);
+	}    
+
+
+	//멤버 게시판 좋아요 체크
+	@GetMapping("/MemberlikeCheck.do")
+    public ResponseEntity<?> MemberlikeCheck(int boardNo, String memberId){
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberId",memberId);
+		param.put("boardNo", boardNo);
+		Map<String,Object> likeLog = memberService.selectOneLikeLog(param);
+		boolean isLiked = likeLog == null? false : true;
+    	return ResponseEntity.ok(isLiked);
+    } 
+	
+	  //그룹 게시판 좋아요 누르기
+    @GetMapping("/MemberBoardinsertLike.do")
+    public ResponseEntity<?> MemberBoardinsertLike(int no, String memberId){
+    	int result = 0;
+		
+		try {
+
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("boardNo",no);
+			result = memberService.insertLikeLog(param);
+			if(result > 0)
+				return ResponseEntity.ok(result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return ResponseEntity.ok(null);
+
+		}	
+		return ResponseEntity.ok(null);
+    }
+
+    //멤버 게시판 좋아요 지우기
+    @GetMapping("/MemberBoarddeleteLike.do")
+    public ResponseEntity<?> MemberBoarddeleteLike(int no, String memberId){	
+    	int result = 0;
+		try {
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("boardNo",no);
+		
+			result = memberService.deleteLikeLog(param);
+
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return ResponseEntity.ok(null);
+		}
+
+    	
+    	return ResponseEntity.ok(result);
     }
     
     		
