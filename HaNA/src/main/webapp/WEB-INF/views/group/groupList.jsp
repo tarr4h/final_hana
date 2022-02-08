@@ -7,50 +7,118 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <fmt:requestEncoding value="utf-8" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="그룹메인" name="title" />
 </jsp:include>
-
-<section
-	style="position: relative; width: 30%; height: 120px; margin: auto;">
+<section class="group-list-section">
 	<c:forEach items="${groupList}" var="group" varStatus="vs">
-	<div class="group-container" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'">
-		<div
-			style="border-radius: 50%; background-color: gainsboro; width: 100px; height: 100px; position: relative; top: 10%; left: 10%; display: inline-block;">
-			<c:if test="${empty group.image}">
-				<img
-					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
-					src="${pageContext.request.contextPath}/resources/images/user.png"
-					alt=""
-					 />
-			</c:if>
-			<c:if test="${not empty group.image}">
-				<img
-					style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;"
-					src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-					alt=""/>
-			</c:if>
+	<div class="group-container row" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'">
+		<div class="group-container-section1 col-sm-5">
+			<div class="group-profile-container">
+				<c:if test="${empty group.image}">
+					<img
+						id="group-profile"
+						src="${pageContext.request.contextPath}/resources/images/user.png"
+						alt=""
+						 />
+				</c:if>
+				<c:if test="${not empty group.image}">
+					<img
+						id="group-profile"
+						src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
+						alt=""/>
+				</c:if>
+			</div>
 		</div>
-	<div
-		style="position: relative; margin-bottom:25px;left: 20%; display: inline-block;">
-		<table>
-			<tr>
-				<td>${group.groupName}</td>
-			</tr>
-			<tr>
-				<td>${group.memberCount}</td>
-			</tr>
-		</table>
+	<div class="group-container-section2 col-sm-7">
+		<div class="group-list-info-container">
+			<div>
+				<span class="group-list-groupId">${group.groupId}</span>
+			</div>
+			<div>
+				<span class="group-list-groupName">${group.groupName}</span>
+			</div>		
+		</div>
 	</div>
 	</div>
 	<br />
 	</c:forEach>
 </section>
-<style>
-.group-container:hover {
-	cursor:pointer;
-}
 
-</style>
+<div class="plusGroupButton-container" onclick="location.href='${pageContext.request.contextPath}/group/createGroupForm'" >
+	<img class="plusGroupButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt="" />
+	<span class="plusButtonLabel">&nbsp;그룹생성</span>
+</div>
+<div class="plusHashtagButton-container" onclick="$('#hashtagListModal').modal();">
+	<img class="plusHashtagButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""/>
+	<span class="plusButtonLabel">&nbsp;관심 해시태그 등록</span>
+</div>
+<div class="groupListModalButton-container" onclick="$('#recommendedGroupListModal').modal();">
+	<img class="groupListModalButton"src="${pageContext.request.contextPath}/resources/images/icons/thumbs-up.png" alt=""/>
+	<span class="plusButtonLabel">&nbsp;추천 소그룹</span>
+</div>
+<!-- 해시태그 목록 모달 -->
+<div class="modal fade" id="hashtagListModal" tabindex="-1" role="dialog"
+aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 20%; width: auto;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">해시태그를 선택하세요</h4>
+			</div>
+			<div class="modal-body">
+				<div class="hashtag-list-container">
+					<c:forEach items="${hashtagList}" var="name" varStatus="vs">
+					<div class="hashtag-container">
+                    	<input type="checkbox" name="hashtag" id="hashtag-${vs.index}" value="${name}" ${likeHashtagList.contains(name)?'checked':''}/>
+                        <label for="hashtag-${vs.index}">&nbsp;&nbsp;${name}</label>	                    	
+					</div>
+                   	</c:forEach>										
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">완료</button>
+			</div>
+		</div>
+	</div>
+</div>
 
+<script>
+	$("[name=hashtag]").change((e)=>{
+		if($(e.target).is(":checked")){
+			addHashtag($(e.target).val());
+		}else{
+			deleteHashtag($(e.target).val());
+        }
+	})
+	function addHashtag(name){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/group/addHashtag",
+			method:"POST",
+			data:{
+				'name':name	
+			},
+			success(data){
+				console.log(data);
+			},
+			error:console.log
+		})
+	}
+	function deleteHashtag(name){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/group/deleteHashtag",
+			method:"POST",
+			data:{
+				'name':name	
+			},
+			success(data){
+				console.log(data);
+			},
+			error:console.log
+		})
+	}
+
+</script>
+ <jsp:include page="/WEB-INF/views/group/modal/groupRecommend.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
