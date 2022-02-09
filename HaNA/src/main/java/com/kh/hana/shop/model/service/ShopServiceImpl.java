@@ -186,8 +186,18 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectRankingdatas(String tagDate) {
-		return shopDao.selectTodayRankingdatas(tagDate);
+	public List<String> selectTodayRankingdatas() {
+		return shopDao.selectTodayRankingdatas();
+	}
+
+	@Override
+	public List<String> selectThisMonthRankingdatas() {
+		return shopDao.selectThisMonthRankingdatas();
+	}
+
+	@Override
+	public List<String> selectThisWeekRankingdatas() {
+		return shopDao.selectThisWeekRankingdatas();
 	}
 
 

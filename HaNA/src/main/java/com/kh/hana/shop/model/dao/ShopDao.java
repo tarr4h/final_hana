@@ -60,7 +60,11 @@ public interface ShopDao {
 
 	List<Member> selectAcceptedFriends(String reservationNo);
 
-	List<Map<String, String>> selectTodayRankingdatas(String tagDate);
+	List<String> selectTodayRankingdatas();
+
+	List<String> selectThisMonthRankingdatas();
+
+	List<String> selectThisWeekRankingdatas();
 
 
 

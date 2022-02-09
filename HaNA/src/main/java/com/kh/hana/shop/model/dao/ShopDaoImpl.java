@@ -153,8 +153,18 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public List<Map<String, String>> selectTodayRankingdatas(String tagDate) {
-		return session.selectList("shop.selectTodayRankingdatas", tagDate);
+	public List<String> selectTodayRankingdatas() {
+		return session.selectList("shop.selectTodayRankingdatas");
+	}
+
+	@Override
+	public List<String> selectThisMonthRankingdatas() {
+		return session.selectList("shop.selectThisMonthRankingdatas");
+	}
+
+	@Override
+	public List<String> selectThisWeekRankingdatas() {
+		return session.selectList("shop.selectThisWeekRankingdatas");
 	}
 
 

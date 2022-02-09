@@ -361,13 +361,22 @@ public class ShopController {
     	binder.registerCustomEditor(Date.class, editor);
     }
     
-    @GetMapping("/selectRankingdatas")
-    public ResponseEntity<?> selectRankingdatas(@RequestParam String tagDate){
-    	log.info("tagDate = {}", tagDate);
-    	
-    	List<Map<String, String>> rankingDatas  = shopService.selectRankingdatas(tagDate);
-    	
-    	return ResponseEntity.ok(rankingDatas);
+    @GetMapping("/selectTodayRankingdatas")
+    public ResponseEntity<?> selectTodayRankingdatas(){
+    	List<String> rankingTodayDatas  = shopService.selectTodayRankingdatas();
+    	return ResponseEntity.ok(rankingTodayDatas);
+    }
+    
+    @GetMapping("/selectThisMonthRankingdatas")
+    public ResponseEntity<?> selectThisMonthRankingdatas(){
+    	List<String> rankingMonthDatas  = shopService.selectThisMonthRankingdatas();
+    	return ResponseEntity.ok(rankingMonthDatas);
+    }
+    
+    @GetMapping("/selectThisWeekRankingdatas")
+    public ResponseEntity<?> selectThisWeekRankingdatas(){
+    	List<String> rankingWeekDatas  = shopService.selectThisWeekRankingdatas();
+    	return ResponseEntity.ok(rankingWeekDatas);
     }
     
     

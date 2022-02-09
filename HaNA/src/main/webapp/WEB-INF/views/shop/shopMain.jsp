@@ -53,25 +53,25 @@
 						<td>@mdo ★</td>
 					</tr> 
 					 <tr>
-						<th scope="row" id="tagRanking">2</th>
+						<th scope="row" id="todayTagRanking">2</th>
 						<!-- <td>Jacob</td>
 						<td>Thornton</td>
 						<td>@fat</td>
 						<td>@fat</td> -->
 					</tr> 
 					<tr>
-						<th scope="row">3</th>
-						<td>Larry</td>
+						<th scope="row" id="monthTagRanking">3</th>
+						<!-- <td>Larry</td>
 						<td>the Bird</td>
 						<td>@twitter</td>
-						<td>@twitter</td>
+						<td>@twitter</td> -->
 					</tr>
 					<tr>
-						<th scope="row">4</th>
-						<td>Larry</td>
+						<th scope="row" id="weekTagRanking">4</th>
+						<!-- <td>Larry</td>
 						<td>the Bird</td>
 						<td>@twitter</td>
-						<td>@twitter</td>
+						<td>@twitter</td> -->
 					</tr>
 				</tbody>
 			</table>
@@ -397,13 +397,6 @@ function scrollPage(){
 var chkClick = false;
 var kmChange = false;
 
-// 날짜
-var today = new Date();
-var year = today.getFullYear();
-var month = ('0' + (today.getMonth() + 1)).slice(-2);
-var day = ('0' + today.getDate()).slice(-2);
-var tagDate = year + '-' + month  + '-' + day; 
-console.log(tagDate);
 
 function clickList(){
 	chkClick = true;
@@ -440,33 +433,70 @@ $("[name=maxDistance]").change((e) => {
 $(()=>{
      console.log("실행")
      
+     // 오늘 데이터 구하기 
      $.ajax({
- 		url : "${pageContext.request.contextPath}/shop/selectRankingdatas",
- 		data : {
- 			tagDate : tagDate
- 		},
+ 		url : "${pageContext.request.contextPath}/shop/selectTodayRankingdatas",
  		success(data) {
- 			console.log(data)
- 			
- 	 		var str = [];
- 			str = data; 
- 			console.log(str)
+ 			console.log(data)	
+ 	 		var toDay = [];
+ 			toDay = data; 
+ 			console.log(toDay)
  			
  			var htmlOut = '';
- 			  htmlOut += '<td>'+'# '+str[0].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+str[1].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+str[2].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+str[3].TAG_NAME + '</td>';
- 			
- 			  $('#tagRanking').append(htmlOut);
- 	
-
+ 			  htmlOut += '<td>'+'# '+toDay[0].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+toDay[1].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+toDay[2].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+toDay[3].TAG_NAME + '</td>';
+ 			  $('#todayTagRanking').append(htmlOut);
  		},
  		error: console.log
  		
  	});
      
+     // 이번달 데이터 구하기 
+     $.ajax({
+ 		url : "${pageContext.request.contextPath}/shop/selectThisMonthRankingdatas",
+ 		success(data) {
+ 			console.log(data)	
+ 	 		var month = [];
+ 			month = data; 
+ 			console.log(month)
+ 			
+ 			var htmlOut = '';
+ 			  htmlOut += '<td>'+'# '+month[0].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+month[1].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+month[2].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+month[3].TAG_NAME + '</td>';
+ 			  $('#monthTagRanking').append(htmlOut);
+ 		},
+ 		error: console.log
+ 		
+ 	});
+     
+     // 이번주 데이터 구하기 
+     $.ajax({
+ 		url : "${pageContext.request.contextPath}/shop/selectThisWeekRankingdatas",
+ 		success(data) {
+ 			console.log(data)	
+ 	 		var week = [];
+ 			week = data; 
+ 			console.log(week)
+ 			
+ 			var htmlOut = '';
+ 			  htmlOut += '<td>'+'# '+week[0].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+week[1].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+week[2].TAG_NAME + '</td>';
+ 			  htmlOut += '<td>'+'# '+week[3].TAG_NAME + '</td>';
+ 			  $('#weekTagRanking').append(htmlOut);
+ 		},
+ 		error: console.log
+ 		
+ 	});
+     
+     
+     
 });
+
 
 
 

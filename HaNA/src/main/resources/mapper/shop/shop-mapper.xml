@@ -294,12 +294,41 @@
 		    req_accept = 'Y'
 	</select>
 	
-	<select  id="selectTodayRankingdatas" parameterType="string" resultType="map" >
+	<select  id="selectTodayRankingdatas" resultType="map" >	
 		select 
 			tag_name
-		from (select * from hashtag h left join ranking r  
-				on r.tag_id = h.tag_id)
-		where  tag_date = #{tagDate} and rownum <![CDATA[<]]>= 4
-			ORDER BY count desc 
+		from hashtag h left join   ranking r  
+			on r.tag_id = h.tag_id
+		WHERE 
+			TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd') 
+			and rownum <![CDATA[<]]>=5
+		ORDER BY r.count  desc
+	</select>
+	
+	<select  id="selectThisMonthRankingdatas" resultType="map">
+		select
+			 * 
+		from 
+			hashtag h left join   ranking r  
+			on r.tag_id = h.tag_id
+		WHERE 
+			tag_date BETWEEN TRUNC(SYSDATE, 'MM') and LAST_DAY(SYSDATE)
+		ORDER BY r.count  desc
+			
+	</select>
+	
+	<select  id="selectThisWeekRankingdatas" resultType="map">
+		select
+			 *
+		from  hashtag h left join   ranking r  
+			on r.tag_id = h.tag_id
+		where tag_date between
+			(SELECT TRUNC(sysdate, 'iw') dt_date
+			FROM dual)
+			and
+			(SELECT TRUNC(sysdate, 'iw') + 6 dt_date
+			FROM dual)
+		ORDER BY r.count desc
+			
 	</select>
 </mapper>
