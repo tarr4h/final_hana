@@ -140,7 +140,9 @@
 	<audio id="audio_play">
 		<source src="${pageContext.request.contextPath }/resources/upload/chat/mp3/kakao2.mp3">
 	</audio>
-
+	<audio id="audio_play2">
+		<source src="${pageContext.request.contextPath }/resources/upload/chat/mp3/kakao3.mp3">
+	</audio>
 	<sec:authorize access="isAuthenticated()">
 		<script>
 		$(document).ready( function() {
@@ -215,7 +217,7 @@
 			if(ShareMessage[0] === 'share115'){
 				if(eSplit[0]!==memberId){
 					if(eSplit[4] !== roomNo){
-					 	beep();
+					 	beep2();
 						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${ShareMessage[1]}</a>`);
 						$("div#headerAlert").css('display','block');
 						setTimeout(function(){
@@ -299,7 +301,11 @@
 			audio.play();
 			audio.loop = false;
 			}; 
-	
+			function beep2() { 
+				var audio = document.getElementById('audio_play2');
+				audio.play();
+				audio.loop = false;
+				}; 	
 		const dmAlarm = () => {
 			$.ajax({
 				url:`${pageContext.request.contextPath}/chat/dmalarm.do`,

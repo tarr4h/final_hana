@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -306,28 +307,227 @@ public class ChatController {
     	return ResponseEntity.ok(list);
     };
     
+
     @GetMapping("/insertgroupBoardcomment.do")
     public ResponseEntity<?> insertgroupBoardcomment(GroupBoardComment groupBoardComment){
     	log.info("insertgroupBoardcomment groupBoardComment= {}", groupBoardComment);
     	int result = groupService.insertGroupBoardComment(groupBoardComment);
-    	if(result > 0)
+    	if(result > 0) {
     		log.info("main 그룹게시판 댓글작성 성공!");
+    		//selectKey 나중에 바꾸기 지금은 이상함 max(reg_date)
+    		GroupBoardComment comment = chatService.selectOnegroupBoardComment();
+    		return ResponseEntity.ok(comment);
+    	}
     	else
     		log.info("main 그룹게시판 댓글작성 실패!");
 
     	return ResponseEntity.ok(null);
     }
     
+    @GetMapping("/insertgroupBoardcommentLevel2.do")
+    public ResponseEntity<?> insertgroupBoardcommentLevel2(GroupBoardComment groupBoardComment){
+    	log.info("insertgroupBoardcomment groupBoardComment= {}", groupBoardComment);
+    	int result = groupService.insertGroupBoardComment(groupBoardComment);
+    	if(result > 0)
+    		log.info("main 그룹게시판 댓글작성 성공!");
+    	else
+    		log.info("main 그룹게시판 댓글작성 실패!");
+    	
+    	return ResponseEntity.ok(null);
+    }
+    
+    
     @GetMapping("/insertmemberBoardcomment.do")
     public ResponseEntity<?> insertmemberBoardcomment(BoardComment boardComment){
+    	log.info("insertgroupBoardcomment groupBoardComment= {}", boardComment);
+    	int result = memberService.enrollBoardComment(boardComment);
+    	if(result > 0) {
+    		log.info("main 일반게시판 댓글작성 성공!");
+    		//selectKey 나중에 바꾸기 지금은 이상함 max(reg_date)
+    		BoardComment comment = chatService.selectOneMemberBoardComment();
+    		return ResponseEntity.ok(comment);
+    	}
+    	else
+    		log.info("main 일반게시판 댓글작성 실패!");
+
+    	return ResponseEntity.ok(null);
+    }
+    
+    @GetMapping("/insertmemberBoardcommentLevel2.do")
+    public ResponseEntity<?> insertmemberBoardcommentLevel2(BoardComment boardComment){
     	log.info("insertgroupBoardcomment groupBoardComment= {}", boardComment);
     	int result = memberService.enrollBoardComment(boardComment);
     	if(result > 0)
     		log.info("main 일반게시판 댓글작성 성공!");
     	else
     		log.info("main 일반게시판 댓글작성 실패!");
-
+    	
     	return ResponseEntity.ok(null);
+    }
+    
+    //그룹 게시판 좋아요 불러오기
+    @GetMapping("/groupboardLikeCount.do")
+    public ResponseEntity<?> groupboardLikeCount(int boardNo){
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("no",boardNo);
+		int likeCount = groupService.selectLikeCount(param);
+		
+    	return ResponseEntity.ok(likeCount);
+    }
+  //그룹 게시판 좋아요 체크
+    @GetMapping("/grouplikeCheck.do")
+    public ResponseEntity<?> likeCheck(int boardNo, String memberId){
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberId",memberId);
+		param.put("boardNo", boardNo);
+		Map<String,Object> likeLog = groupService.selectOneLikeLog(param);
+		boolean isLiked = likeLog == null? false : true;
+    	return ResponseEntity.ok(isLiked);
+    }
+  //그룹 게시판 좋아요 누르기
+    @GetMapping("/insertLike.do")
+    public ResponseEntity<?> insertLike(int no, String memberId){
+    	int result = 0;
+		
+		try {
+
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("boardNo",no);
+			result = groupService.insertLikeLog(param);
+			if(result > 0)
+				return ResponseEntity.ok(result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return ResponseEntity.ok(null);
+
+		}	
+		return ResponseEntity.ok(null);
+    }
+  //그룹 게시판 좋아요 지우기
+    @GetMapping("/deleteLike.do")
+    public ResponseEntity<?> deleteLike(int no, String memberId){	
+    	int result = 0;
+		try {
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("boardNo",no);
+		
+			result = groupService.deleteLikeLog(param);
+
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return ResponseEntity.ok(null);
+		}
+
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+  //멤버 게시판 좋아요 불러오기
+	@GetMapping("/memberboardLikeCount.do")
+	public ResponseEntity<?> memberboardLikeCount(int boardNo){
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("no",boardNo);
+		int likeCount2 = memberService.selectLikeCount(param);
+		log.info("ssssssssssssssssssssssssssssssssssssssss");
+		return ResponseEntity.ok(likeCount2);
+	}    
+
+
+	//멤버 게시판 좋아요 체크
+	@GetMapping("/MemberlikeCheck.do")
+    public ResponseEntity<?> MemberlikeCheck(int boardNo, String memberId){
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberId",memberId);
+		param.put("boardNo", boardNo);
+		Map<String,Object> likeLog = memberService.selectOneLikeLog(param);
+		boolean isLiked = likeLog == null? false : true;
+    	return ResponseEntity.ok(isLiked);
+    } 
+	
+	  //그룹 게시판 좋아요 누르기
+    @GetMapping("/MemberBoardinsertLike.do")
+    public ResponseEntity<?> MemberBoardinsertLike(int no, String memberId){
+    	int result = 0;
+		
+		try {
+
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("boardNo",no);
+			result = memberService.insertLikeLog(param);
+			if(result > 0)
+				return ResponseEntity.ok(result);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return ResponseEntity.ok(null);
+
+		}	
+		return ResponseEntity.ok(null);
+    }
+
+    //멤버 게시판 좋아요 지우기
+    @GetMapping("/MemberBoarddeleteLike.do")
+    public ResponseEntity<?> MemberBoarddeleteLike(int no, String memberId){	
+    	int result = 0;
+		try {
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("boardNo",no);
+		
+			result = memberService.deleteLikeLog(param);
+
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			return ResponseEntity.ok(null);
+		}
+
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/mainPageDmSend.do")
+    public ResponseEntity<?> mainPageDmSend(String memberId, String loginId){
+    	log.info("mainPageDmSend memberId = {}", memberId);
+    	log.info("mainPageDmSend loginId = {}", loginId);
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("loginId", loginId);
+    	param.put("memberId", memberId);
+    	param.put("members", loginId+","+memberId);
+    	String msg = chatService.chatRoomCheck(param);
+    	String[] msgSplit = msg.split(",");
+    	int roomNo = 0;
+    	log.info("msg = {}",msg);
+    	if(msgSplit[0].contains("성공") || msgSplit[0].contains("있습니다")) {
+    		log.info("{}",msgSplit[0].contains("성공"));
+    		log.info("{}",msgSplit[0].contains("있습니다"));
+    		roomNo = Integer.parseInt(msgSplit[1]);
+    	}
+    	else
+    		roomNo = 0;
+    	
+    	return ResponseEntity.ok(roomNo);
+    }
+    
+    @GetMapping("/following.do")
+    public ResponseEntity<?> following(String id, String loginId){
+    	log.info("following id = {}",id);
+    	log.info("following loginId = {}",loginId);
+		Map<String, Object> map = new HashMap<>();
+		//follow 테이블 member_id 랑 following_id 물어보기
+		map.put("myId", loginId);
+		map.put("friendId", id);
+		log.info("map ={}", map);
+		
+		int result = memberService.addFollowing(map);   
+		if(result > 0)
+			result = 1;
+		else
+			result =0;
+    	return ResponseEntity.ok(result);
     }
     
     		
