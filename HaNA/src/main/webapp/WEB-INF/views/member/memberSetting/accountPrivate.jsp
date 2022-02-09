@@ -21,7 +21,7 @@
         	<ul class="list-group">
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'memberSetting/accountPrivate'">계정 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/accountPrivate'">계정 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">정보 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
@@ -34,9 +34,16 @@
         	enctype="multipart/form-data" 
         	method="POST">
        			<input type="hidden" name="id" value="${loginMember.id}" />
-        		<input type="checkbox" name="publicProfile" id="publicProfile" <c:if test="${member.publicProfile eq '2'}"/>checked >계정 비공개
+       			<c:choose>
+       			<c:when test="${publicProfile eq 2}">
+        		<input type="checkbox" name="publicProfile" id="publicProfile" checked>계정 비공개
+        		</c:when>
+        		<c:otherwise>
+        		<input type="checkbox" name="publicProfile" id="publicProfile" >계정 비공개
+        		</c:otherwise>
+        		</c:choose>
         		 <!-- <input type="hidden" name="accountCheckYN" id="input_check_hidden" value='1' /> --> 
-        		<input type="submit" class="btn btn-dark" value="변경">
+        		<input type="submit" class="changeButton" value="변경">
         	<br><br>     	 
         </form:form>
         </div>
@@ -54,3 +61,35 @@ $(accountPrivateFrm).submit((e) => {
  //   document.getElementById("input_check_hidden").disabled = true;
 //}
 </script>
+<style>
+.changeButton{
+	border: none;
+	border-radius: 5px;
+	width: 80px;
+    height: 30px;
+    margin-top: 10px;
+}
+.col-sm-8 {
+    flex: 0 0 auto;
+    width: 250px;
+    font-size:20px;
+}
+.col-sm-4{
+	width : 350px;
+	margin-right: 100px;
+	}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+    text-align: center;
+}
+ #command {
+    margin-left: 100px;
+}
+</style>

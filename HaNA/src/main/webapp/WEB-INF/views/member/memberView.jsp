@@ -279,7 +279,8 @@ $("#requestButton").click((e) => {
 				let tr= `
 				<tr>
 					<td>
-					\${resp[i].reqId}  				
+					<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
+					<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${resp[i].reqId}">\${resp[i].reqId}</a>			
 					 <form:form name="followingApplyFrm" action="${pageContext.request.contextPath}/member/applyFollowing">
 	                     <input type="hidden" name="myId" value="\${resp[i].memberId}"/>
 	                     <input type="hidden" name="reqId" value="\${resp[i].reqId}"/>

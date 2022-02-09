@@ -367,14 +367,23 @@
 	 	member_id = #{loginMemberId}
 	</select>
 
-	<select id="requestFollowingList" resultType="FollowingRequest">
+	<select id="requestFollowingList" resultMap="FollowingRequest">
 	select
-		*
+		f.*,
+		m.picture
 	from
-		following_request
+		following_request f left join member m
+	on f.member_id = m.id
 	where
-		member_id = #{myId}		
+		f.member_id = #{myId}		
 	</select>
+	
+	<resultMap id="FollowingRequest" type="map">
+		<id column="member_id" property="memberId"/>
+		<result column="req_id" property="reqId"/>
+		<result column="status" property="status"/>
+		<result column="picture" property="picture"/>
+	</resultMap>
 	
 	<delete id="applyFollowing">
 		delete
