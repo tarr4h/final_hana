@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="title"/>
@@ -58,12 +59,13 @@ const forEachCss = (index)=>{
 		top: 50%; 
 		font-size: 1.3em; 
 		cursor: pointer; 
+	background-color: rgba(128, 128, 128, 0.41);
 		} 
 		
 
 	/* 이전, 다음 화살표에 마우스 커서가 올라가 있을때 */ 
 	.controller\${index} span:hover{ 
-		background-color: rgba(128, 128, 128, 0.11); } 
+		background-color: rgba(128, 128, 128, 0.41); } 
 		.prev{ left: 10px; 
 		} 
 	/* 이전 화살표에 마우스 커서가 올라가 있을때 이전 화살표가 살짝 왼쪽으로 이동하는 효과*/ 
@@ -79,6 +81,90 @@ const forEachCss = (index)=>{
 		}`;
 	$("#mainCss").append(css);
 };
+const forEachLikeCss = (index)=>{
+	let css=``;
+	css=`.btn_like\${index} {
+		  position: relative;
+		  display: inline-block;
+		  width: 44px;
+		  height: 44px;
+		  border: 1px solid #e8e8e8;
+		  border-radius: 44px;
+		  font-family: notokr-bold,sans-serif;
+		  font-size: 14px;
+		  line-height: 16px;
+		  background-color: #fff;
+		  color: #DD5D54;
+		  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.03);
+		  transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
+		  cursor: pointer;
+		}
+
+		.btn_like\${index}:hover {
+		  border: 1px solid rgba(228,89,89,0.3);
+		  background-color: rgba(228,89,89,0.02);
+		  box-shadow: 0 2px 4px 0 rgba(228,89,89,0.2);
+		}
+
+		.btn_unlike\${index} .img_emoti\${index} {
+		    background-position: -30px -120px;
+		}
+
+		.img_emoti\${index} {
+		    display: inline-block;
+		    overflow: hidden;
+		    font-size: 0;
+		    line-height: 0;
+		    background: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/img_emoti.png?v=20180410) no-repeat;
+		    text-indent: -9999px;
+		    vertical-align: top;
+		    width: 20px;
+		    height: 17px;
+		    margin-top: 1px;
+		    background-position: 0px -120px;
+		    text-indent: 0;
+		}
+
+		.btn_like\${index} .ani_heart_m\${index} {
+		    margin: -63px 0 0 -63px;
+		}
+
+		.ani_heart_m\${index} {
+		    display: block;
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    width: 125px;
+		    height: 125px;
+		    margin: -63px 0 0 -63px;
+		    pointer-events: none;
+		}
+
+		.ani_heart_m.hi\${index} {
+		    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_on_m.png);
+		    -webkit-background-size: 9000px 125px;
+		    background-size: 9000px 125px;
+		    animation: on_m 1.06s steps(72);
+		}
+
+		.ani_heart_m.bye\${index} {
+		    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_off_m.png);
+		    -webkit-background-size: 8250px 125px;
+		    background-size: 8250px 125px;
+		    animation: off_m 1.06s steps(66);
+		}
+
+		@keyframes on_m {
+		  from { background-position: 0 }
+		  to { background-position: -9000px }
+		}
+
+		@keyframes off_m {
+		  from { background-position: 0 }
+		  to { background-position: -8250px }
+		}`;
+	$("#mainCss").append(css);
+};
 const slideWidth = 800; //한개의 슬라이드 넓이 
 const slideMargin = 0; //슬라이드간의 margin 값 
 </script>
@@ -86,21 +172,21 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
-    <span>맴버 그룹 좋아요 불러오기</span><br />
-    <span>맴버 그룹 좋아요 누르기</span><br />
-    <span>그룹 게시판 대댓글 작성가능하게</span><br />
-    <span>추천 친구 팔로우신청</span><br />
-    <span>게시글에서 작성자한테 dm보내기</span><br />
-    <span>로그인맴버 프로필사진</span>
     <span></span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
     <table>
     <tr>
-    <td>
+    <td >
+    <div  style="width: 110px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${groupboard.writer}'">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}">
               <span class="userID main-id point-span">${groupboard.writer}</span>
+    </div>
+    		<div style="display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${groupboard.groupId}'">
+    		<img style="width:32px;height:32px;margin-left: 330px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
+    		<span>${groupboard.groupName} 바로가기</span>
+    		</div>
     </td>
     </tr>
     <tr>
@@ -120,14 +206,18 @@ const slideMargin = 0; //슬라이드간의 margin 값
     </tr>
     <tr>
     <td>
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart.svg" alt="하트"/>
+    
+<button type="button" class="btn_like${vss.index }">
+  <span class="img_emoti${vss.index }">좋아요</span>
+  <span class="ani_heart_m${vss.index }"></span>
+</button>
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
+              <a onclick="DMsend('${groupboard.writer}');" style="cursor: pointer"><img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM"></a>  
     </td>
     </tr>
     <tr>
-    <td>
-              <span>asdfsadfasf님 외 123123명이 좋아합니다.</span>
+    <td id="likeCount${vss.index }">
+              <span></span>
     </td>
     </tr>
     <tr>
@@ -169,6 +259,9 @@ const slideMargin = 0; //슬라이드간의 margin 값
         <script>
         <!-- mainCss에 append해주기 -->
        forEachCss(${vss.index });
+       forEachLikeCss(${vss.index });
+       let i${vss.index };
+       let likeBoolean${vss.index };
 const slides${vss.index } = document.querySelector('.slides${vss.index }'); //전체 슬라이드 컨테이너 
 const slideImg${vss.index } = document.querySelectorAll('.slides${vss.index } li'); //모든 슬라이드들
 let currentIdx${vss.index } = 0; //현재 슬라이드 index 
@@ -217,15 +310,16 @@ $(`.next${vss.index }`).on('click', function () {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
 					const date = moment(regDate).format("YYYY년 MM월 DD일");
 					commentList += `<li>
-		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}</span>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+');">답글</button>' : ''}</span>
 		                </li>
-		                <li>
+		                <li id='\${commentLevel === 1 ?  'Level2Comment'+no+'' : 'Level2Comment'+commentRef+''}'>
 			              <div class="time-log">
 			                <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}">\${date}</span>
 			              </div>
 		                </li>  `;
 					
 				});
+							
 				$(".commentTd${vss.index} .comments${vss.index }").html(commentList);
 
 		},
@@ -252,22 +346,126 @@ const commetWrite${vss.index}=()=>{
 			commentRef : 0,
 		},
 		success(resp){
-			console.log('댓글작성');
+			console.log("msg = ",msg);
+			const date = moment(today).format("YYYY년 MM월 DD일");
+			const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = resp;
+			let commentList =`<li>
+		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+');">답글</button>' : ''}</span>
+		        </li>
+		        <li id='\${commentLevel === 1 ?  'Level2Comment'+no+'' : 'Level2Comment'+commentRef+''}'>
+		          <div class="time-log">
+		            <span>\${date}</span>
+		          </div>
+		        </li>  `;
+			$(".commentTd${vss.index} .comments${vss.index }").append(commentList);
+			$("input#input-comment${vss.index}").val('');
 		},
 		error:console.log
 	});
-	console.log("msg = ",msg);
-	const date = moment(today).format("YYYY년 MM월 DD일");
-	let commentList =`<li>
-        <span><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
-        </li>
-        <li>
-          <div class="time-log">
-            <span>\${date}</span>
-          </div>
-        </li>  `;
-	$(".commentTd${vss.index} .comments${vss.index }").append(commentList);
-	$("input#input-comment${vss.index}").val('');
+};
+
+//forEach에서 좋아요 불러오기
+$.ajax({
+	url : `${pageContext.request.contextPath}/chat/groupboardLikeCount.do`,
+	data : {
+		boardNo : ${groupboard.no}
+	},
+	method: "GET",
+	success(resp){
+		/* console.log(resp); */
+		i${vss.index } = resp;
+		/* console.log("${vss.index }=",i${vss.index }); */
+		$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
+	},
+	error:console.log
+});
+
+//forEach에서 내가 좋아요 누른 여부 확인
+$.ajax({
+	url : `${pageContext.request.contextPath}/chat/grouplikeCheck.do`,
+	data : {
+		boardNo : ${groupboard.no},
+		memberId : memberId,
+	},
+	method: "GET",
+	success(resp){
+		/* console.log("${vss.index }=",resp); */
+		likeBoolean${vss.index } = resp;
+		if(resp){
+		    $('button.btn_like${vss.index }').addClass('btn_unlike${vss.index }');
+		    $('.ani_heart_m${vss.index }').addClass('hi');
+		    $('.ani_heart_m${vss.index }').removeClass('bye');	
+ 		}else{
+		    $('button.btn_like${vss.index }').removeClass('btn_unlike${vss.index }');
+		    $('.ani_heart_m${vss.index }').removeClass('hi');
+		    $('.ani_heart_m${vss.index }').addClass('bye');	 				 			
+ 		};
+
+	},
+	error:console.log
+});
+
+//좋아요 누를때
+$('button.btn_like${vss.index }').click(function(){
+	  if($(this).hasClass('btn_unlike${vss.index }')){
+	    $(this).removeClass('btn_unlike${vss.index }');
+	    $('.ani_heart_m${vss.index }').removeClass('hi');
+	    $('.ani_heart_m${vss.index }').addClass('bye');
+	    /* console.log("11111111111111delete"); */
+	    deleteLike${vss.index }();
+	  }
+	  else{
+	    $(this).addClass('btn_unlike${vss.index }');
+	    $('.ani_heart_m${vss.index }').addClass('hi');
+	    $('.ani_heart_m${vss.index }').removeClass('bye');
+	    /* console.log("222222222222222222insert"); */
+	    insertLike${vss.index }();
+	  }
+	});
+
+const insertLike${vss.index }=()=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/insertLike.do`,
+		method:"GET",
+		data:{
+			memberId : memberId,
+			no : ${groupboard.no},
+		},
+		success(resp){
+			/* console.log(resp); */
+			if(resp != null){
+				likeBoolean${vss.index } = true;
+				i${vss.index } = i${vss.index }+1;
+				/* console.log("${vss.index }=",i${vss.index }); */
+				$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
+			}
+			else
+				console.log("441번째 줄");
+		},
+		error:console.log		
+	});
+};
+const deleteLike${vss.index }=()=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/deleteLike.do`,
+		method:"GET",
+		data:{
+			memberId : memberId,
+			no : ${groupboard.no},
+		},
+		success(resp){
+			/* console.log(resp); */
+			if(resp != null){
+				likeBoolean${vss.index } = false;
+				i${vss.index } = i${vss.index }-1;
+				/* console.log("${vss.index }=",i${vss.index }); */
+				$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));				
+			}
+			else
+				console.log("436번째 줄");
+		},
+		error:console.log		
+	});
 };
 </script>
 
@@ -282,8 +480,10 @@ const commetWrite${vss.index}=()=>{
     <table>
     <tr>
     <td>
+    <div  style="width: 200px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${board.writer}'">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${board.writerProfile}">
               <span class="userID main-id point-span">${board.writer}</span>
+    </div>
     </td>
     </tr>
     <tr>
@@ -303,14 +503,17 @@ const commetWrite${vss.index}=()=>{
     </tr>
     <tr>
     <td>
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/heart.svg" alt="하트"/>
+<button type="button" class="btn_like0${vss.index }">
+  <span class="img_emoti0${vss.index }">좋아요</span>
+  <span class="ani_heart_m0${vss.index }"></span>
+</button>
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
+              <a onclick="DMsend('${board.writer}');" style="cursor: pointer"><img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM"></a>  
     </td>
     </tr>
     <tr>
-    <td>
-              <span>asdfsadfasf님 외 123123명이 좋아합니다.</span>
+    <td id="likeCount0${vss.index }">
+              <span></span>
     </td>
     </tr>
     <tr>
@@ -353,6 +556,9 @@ const commetWrite${vss.index}=()=>{
         <script>
         <!-- mainCss에 append해주기 -->
        forEachCss('0'+${vss.index });
+       forEachLikeCss('0'+${vss.index });
+       let i0${vss.index };
+       let likeBoolean0${vss.index };
 const slides0${vss.index } = document.querySelector('.slides0${vss.index }'); //전체 슬라이드 컨테이너 
 const slideImg0${vss.index } = document.querySelectorAll('.slides0${vss.index } li'); //모든 슬라이드들
 let currentIdx0${vss.index } = 0; //현재 슬라이드 index 
@@ -401,9 +607,10 @@ $(`.next0${vss.index }`).on('click', function () {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
 					const date = moment(regDate).format("YYYY년 MM월 DD일");
 					commentList += `<li>
-		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}</span>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+');">답글</button>' : ''}</span>
 		                </li>
-		                <li>
+		                
+		                <li id='\${commentLevel === 1 ?  'Level2Comment0'+no+'' : 'Level2Comment0'+commentRef+''}'>
 			              <div class="time-log">
 			                <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}">\${date}</span>
 			              </div>
@@ -436,23 +643,129 @@ const commetWrite0${vss.index}=()=>{
 			commentRef : 0,
 		},
 		success(resp){
-			console.log('댓글작성');
+			console.log("msg = ",msg);
+			const date = moment(today).format("YYYY년 MM월 DD일");
+			const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = resp;
+			let commentList =`<li>
+		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+');">답글</button>' : ''}</span>
+		        </li>
+		        <li id='\${commentLevel === 1 ?  'Level2Comment0'+no+'' : 'Level2Comment0'+commentRef+''}'>
+		          <div class="time-log">
+		            <span>\${date}</span>
+		          </div>
+		        </li>  `;
+			$(".commentTd0${vss.index} .comments0${vss.index }").append(commentList);
+			$("input#input-comment0${vss.index}").val('');
 		},
 		error:console.log
 	});
-	console.log("msg = ",msg);
-	const date = moment(today).format("YYYY년 MM월 DD일");
-	let commentList =`<li>
-        <span><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
-        </li>
-        <li>
-          <div class="time-log">
-            <span>\${date}</span>
-          </div>
-        </li>  `;
-	$(".commentTd0${vss.index} .comments0${vss.index }").append(commentList);
-	$("input#input-comment0${vss.index}").val('');
+
 };
+
+//멤버 게시글
+
+//forEach에서 좋아요 불러오기
+$.ajax({
+	url : `${pageContext.request.contextPath}/chat/memberboardLikeCount.do`,
+	data : {
+		boardNo : ${board.no}
+	},
+	method: "GET",
+	success(resp){
+		console.log(resp);
+		i0${vss.index } = resp;
+		console.log("0${vss.index }=",i0${vss.index });
+		$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
+	},
+	error:console.log
+});
+
+//forEach에서 내가 좋아요 누른 여부 확인
+$.ajax({
+	url : `${pageContext.request.contextPath}/chat/MemberlikeCheck.do`,
+	data : {
+		boardNo : ${board.no},
+		memberId : memberId,
+	},
+	method: "GET",
+	success(resp){
+
+		likeBoolean0${vss.index } = resp;
+		if(resp){
+		    $('button.btn_like0${vss.index }').addClass('btn_unlike0${vss.index }');
+		    $('.ani_heart_m0${vss.index }').addClass('hi');
+		    $('.ani_heart_m0${vss.index }').removeClass('bye');	
+		}else{
+		    $('button.btn_like0${vss.index }').removeClass('btn_unlike0${vss.index }');
+		    $('.ani_heart_m0${vss.index }').removeClass('hi');
+		    $('.ani_heart_m0${vss.index }').addClass('bye');	 				 			
+		};
+
+	},
+	error:console.log
+});
+
+//좋아요 누를때
+$('button.btn_like0${vss.index }').click(function(){
+	  if($(this).hasClass('btn_unlike0${vss.index }')){
+	    $(this).removeClass('btn_unlike0${vss.index }');
+	    $('.ani_heart_m0${vss.index }').removeClass('hi');
+	    $('.ani_heart_m0${vss.index }').addClass('bye');
+	    deleteLike0${vss.index }();
+	  }
+	  else{
+	    $(this).addClass('btn_unlike0${vss.index }');
+	    $('.ani_heart_m0${vss.index }').addClass('hi');
+	    $('.ani_heart_m0${vss.index }').removeClass('bye');
+	    insertLike0${vss.index }();
+	  }
+	});
+
+
+//멤버 그룹
+const insertLike0${vss.index }=()=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/MemberBoardinsertLike.do`,
+		method:"GET",
+		data:{
+			memberId : memberId,
+			no : ${board.no},
+		},
+		success(resp){
+			if(resp != null){
+				likeBoolean0${vss.index } = true;
+				i0${vss.index } = i0${vss.index }+1;
+				$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
+			}
+			else
+				console.log("736번째 줄");
+		},
+		error:console.log		
+	});
+};
+const deleteLike0${vss.index }=()=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/MemberBoarddeleteLike.do`,
+		method:"GET",
+		data:{
+			memberId : memberId,
+			no : ${board.no},
+		},
+		success(resp){
+			/* console.log(resp); */
+			if(resp != null){
+				likeBoolean0${vss.index } = false;
+				i0${vss.index } = i0${vss.index }-1;
+				/* console.log("0${vss.index }=",i0${vss.index }); */
+				$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));				
+			}
+			else
+				console.log("758번째 줄");
+		},
+		error:console.log		
+	});
+};
+
 </script>
         </c:forEach>
         </c:if>
@@ -465,8 +778,8 @@ const commetWrite0${vss.index}=()=>{
           <!-- main-right -->
       <div class="main-right">
         <div class="myProfile">
-          <img class="pic" src="${pageContext.request.contextPath }/resources/images/icons/eb13.jpg" alt="thisisyourhyung님의 프로필 사진">
-          <div>
+          <img class="pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}">
+          <div style="cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${loginMember.id}'">
             <span class="userID point-span">${loginMember.id}</span>
             <span class="sub-span">${loginMember.name}</span>  
           </div>
@@ -481,8 +794,8 @@ const commetWrite0${vss.index}=()=>{
           </div>
 <ul class="recommend-list">
           <c:if test="${not empty memberList}">
-          <c:forEach items="${memberList}" var="member">
-            <li>
+          <c:forEach items="${memberList}" var="member" varStatus="vs">
+            <li id="li${vs.index}${member.id}">
               <div class="recommend-friend-profile">
                 <img class="img-profile" src="${pageContext.request.contextPath }/resources/upload/member/profile/${member.picture}">
                 <div class="profile-text">
@@ -490,7 +803,7 @@ const commetWrite0${vss.index}=()=>{
                   <span class="sub-span">${member.name != null ? '나를 팔로잉한 친구' : '같은 소모임에 있는 친구'}</span>
                 </div>
               </div>
-              <span class="btn-follow">팔로우</span>
+              <span class="btn-follow" onclick="insertFollow('${member.id}','${vs.index}');" style="cursor: pointer">팔로우</span>
             </li>
           </c:forEach>
           </c:if>
@@ -502,7 +815,158 @@ const commetWrite0${vss.index}=()=>{
     </main>
 	
 
+<script>
+const insertFollow =(id,index)=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/following.do`,
+		method:"GET",
+		data:{
+			id : id,
+			loginId : memberId,
+		},
+		success(resp){
+			if(resp !== 0)
+				$("#li"+index+id).remove();
+			else
+				console.log("팔로우 실패");
+		},
+		error:console.log			
+	})
+};
+const DMsend=(writer)=>{
+	console.log(writer);
+	console.log(memberId);
+	if(confirm("디엠을 보내시겠습니까?")){
+		$.ajax({
+			url:`${pageContext.request.contextPath}/chat/mainPageDmSend.do`,
+			method:"GET",
+			data:{
+				memberId : writer,
+				loginId : memberId,
+			},
+			success(resp){
+				console.log(resp);
+				if(resp !== 0){
+					location.href = '${pageContext.request.contextPath}/chat/chat.do';
+					<!-- 나중에 바로 채팅방 접속까지 고려 -->
+				}
+				else
+					alert("메세지 전송 실패");
+			},
+			error:console.log		
+		});
+	}
+}
+//답글버튼 클릭
+const commentLev20=(index,boardNo)=>{
+	console.log(index);
+	console.log(boardNo);
+	$(".commentLevel2Message").empty();
 
+	let message =`    		<div class="commentLevel2Message"><div class="hl"></div>
+        <div class="comment">
+        <input id="input-commentLevel2" class="input-comment" type="text" placeholder="대댓글 달기..." >
+        <button type="button" class="submit-comment" onclick="commetLevel2Write0('\${index}','\${boardNo}');">게시</button>
+      </div><div class="hl"></div></div>`;
+	$("#Level2Comment"+0+index).append(message);
+}
+//답글-> 게시 클릭
+const commetLevel2Write0=(index,boardNo)=>{
+	console.log("sdfsdf",index);
+	console.log("sdfsdf",boardNo);
+	
+ 	let msg = $("#input-commentLevel2").val();
+	console.log(msg); 
+	$("#input-commentLevel2").val('');
+	if(msg == ''){
+		alert("메세지를 입력하세요");
+		return;		
+	}
+	
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/insertmemberBoardcommentLevel2.do`,
+		method:"GET",
+		data:{
+			writer : memberId,
+			boardNo : boardNo,
+			content : msg,
+			commentLevel : 2,
+			commentRef : index,
+		},
+		success(resp){
+			console.log('댓글작성');
+		},
+		error:console.log
+	});
+
+	const date = moment(today).format("YYYY년 MM월 DD일");
+	let comment =`<li>
+	    <span class="commentLevel2"><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
+		  </li>
+		  <li id="Level2Comment0${index}">
+		    <div class="time-log">
+		      <span class="commentLevel2">\${date}</span>
+		    </div>
+		  </li>`;
+	$(".commentLevel2Message").empty();
+ 	$("li#Level2Comment"+0+index+":last").append(comment);
+}
+
+//그룹게시판 답글버튼 클릭
+const commentLev2=(index,boardNo)=>{
+	console.log(index);
+	console.log(boardNo);
+	$(".commentLevel2Message").empty();
+
+	let message =`    		<div class="commentLevel2Message"><div class="hl"></div>
+        <div class="comment">
+        <input id="input-commentLevel2" class="input-comment" type="text" placeholder="대댓글 달기..." >
+        <button type="button" class="submit-comment" onclick="commetLevel2Write('\${index}','\${boardNo}');">게시</button>
+      </div><div class="hl"></div></div>`;
+	$("#Level2Comment"+index).append(message);
+}
+//그룹게시판 답글-> 게시 클릭
+const commetLevel2Write=(index,boardNo)=>{
+	console.log("sdfsdf",index);
+	console.log("sdfsdf",boardNo);
+	
+ 	let msg = $("#input-commentLevel2").val();
+	console.log(msg); 
+	$("#input-commentLevel2").val('');
+	if(msg == ''){
+		alert("메세지를 입력하세요");
+		return;		
+	}
+	
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/insertgroupBoardcommentLevel2.do`,
+		method:"GET",
+		data:{
+			writer : memberId,
+			boardNo : boardNo,
+			content : msg,
+			commentLevel : 2,
+			commentRef : index,
+		},
+		success(resp){
+			console.log('댓글작성');
+		},
+		error:console.log
+	});
+
+	const date = moment(today).format("YYYY년 MM월 DD일");
+	let comment =`<li>
+	    <span class="commentLevel2"><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
+		  </li>
+		  <li id="Level2Comment${index}">
+		    <div class="time-log">
+		      <span class="commentLevel2">\${date}</span>
+		    </div>
+		  </li>`;
+	$(".commentLevel2Message").empty();
+ 	$("li#Level2Comment"+index+":last").append(comment);
+}
+</script>
     <style>
     .commentLevel2{margin-left: 50px}
     </style>
