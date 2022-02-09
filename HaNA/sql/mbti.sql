@@ -172,15 +172,14 @@ create table ranking (
 
   select *from ranking;
   
-  insert  into ranking(tag_id , tag_date , count)
+  insert  into ranking(tag_id , tag_date , count);
+  
   select * 
   from ranking r left join hashtag h 
-  on r.tag_id = h.tag_id
-  where  
-  h.tag_name = '해물탕';
+  on r.tag_id = h.tag_id;
 
 insert  into ranking(tag_id , tag_date , count)
-values ('shop-hashtag-26','2022-02-07',1);
+values ('shop-hashtag-25','2022-02-12',25);
 
 merge into  ranking 
     using DUAL
@@ -189,31 +188,45 @@ merge into  ranking
         update set  count = +1 
     when not matched then
         insert (tag_id, tag_date , count) 
-        values ('shop-hashtag-30','22/02/08',1);
+        values ('shop-hashtag-25','22/02/12',28);
 select * from ranking;
 select * from hashtag;
 
 update ranking set count = count+1;
 
-select  h.*
-from 
-hashtag h left join (
-            SELECT ROW_NUMBER() OVER (ORDER BY r.count desc )  num--그룹별 순번
-                , r.tag_id
-            FROM 
-            ranking r
-            where tag_date = '22/02/09'; 
-        ) r
-        on r.tag_id = h.tag_id
-where   num <=4;  
 
+
+------------오늘 날짜 데이터 구하기 --------------------
+select * from hashtag h left join   ranking r  
+on r.tag_id = h.tag_id
+WHERE TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd') 
+and rownum <=5
+ORDER BY r.count  desc;
+----------------------------------------------------
+-----------------이번달 데이터 구하기 ----------------------
+select * 
+from hashtag h left join   ranking r  
+on r.tag_id = h.tag_id
+WHERE tag_date BETWEEN TRUNC(SYSDATE, 'MM')  and LAST_DAY(SYSDATE)
+ORDER BY r.count  desc;
+--------------------------------------------------------
+-----------------이번주 데이터 구하기 ----------------------
 select *
-from (select * from hashtag h left join   ranking r  
-on r.tag_id = h.tag_id)
-where  tag_date = '22/02/09' and rownum<= 4
-ORDER BY count desc ;
- 
-SELECT *  FROM   ranking WHERE tag_date = '22/02/09' and ROWNUM <= 4
-ORDER BY count desc;
+from  hashtag h left join   ranking r  
+on r.tag_id = h.tag_id
+where tag_date between
+(SELECT TRUNC(sysdate, 'iw') dt_date
+FROM dual)
+and
+(SELECT TRUNC(sysdate, 'iw') + 6 dt_date
+FROM dual)
+ORDER BY r.count  desc;
+
+------------------------------------------------------
 
 select * from ranking;
+
+
+
+select SYSDATE FROM DUAL;
+
