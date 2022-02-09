@@ -664,6 +664,9 @@ public class GroupController {
 		map.put("result",result);
 		return ResponseEntity.ok(map);
 	}
+	
+	@GetMapping("/test")
+	public void test() {}
 }
 
 

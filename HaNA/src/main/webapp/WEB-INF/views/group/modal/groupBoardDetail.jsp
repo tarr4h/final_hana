@@ -45,6 +45,7 @@
 					<div class="container">
 					    <div class="row">
 					        <div class="col-sm-7" id="group-board-img-container" style="background-color:black; display: flex; align-items: center; position:relative;">
+					        
  					        </div>
 					        <div class="col-sm-5" style="">
 					        	<div class="container">
@@ -91,7 +92,8 @@
 	</div>
 	
 <script>
-
+let maxIndex;
+let currentIndex;
 let newContent;
 // 게시물 목록 이미지 클릭
 $('.board-main-image').click((e)=>{
@@ -151,15 +153,22 @@ function getPageDetail(boardNo){
 		 	 		
 			 		// 이미지
 			 		$("#group-board-img-container").empty();
-		 			$.each(groupBoard.image, (i,e)=>{
+			 		const button = `<div class="img-move-button-container">
+				        <img class="board-img-move left-button" src="<%=request.getContextPath()%>/resources/images/icons/left1.png" alt="" />
+				        <img class="board-img-move right-button" src="<%=request.getContextPath()%>/resources/images/icons/right1.png" alt="" />
+				        </div>`
+			 		$("#group-board-img-container").append(button);
+				        
+			 		$.each(groupBoard.image, (i,e)=>{
 		 				
-		 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
+		 				let img = `<img id='img\${i}' src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
 		 				$("#group-board-img-container").append(img); // 이미지 추가
-		 				
+		 				maxIndex = i;
 		 			})
 		 			$(".group-board-img").css("width","100%");
 		 			$(".group-board-img").css("position","absolute");
 		  			$(".group-board-img").css("left","0");
+		  			$("#img0").css("z-index","2");
 					
 		 			//modal의 body부분
 		 			//태그 멤버 목록
