@@ -242,3 +242,53 @@ margin-top:10px;
 .pointer:hover {
 	cursor:pointer;
 }
+.no-group-msg{
+	font-size:1.5em;
+	text-align:center;
+	
+}
+
+.no-recommended-msg {
+	margin-top:50px;
+	font-size:1.2em;
+	text-align:center;
+}
+
+/* 게시물 상세보기 옆으로 넘기기 */
+.board-img-move {
+	width:50px;
+	height:50px;
+}
+.img-move-button-container {
+	position:absolute;z-index:3; width:100%; left:0px;
+}
+.right-button {
+	float:right;
+}
+.right-button:hover, .left-button:hover {
+	cursor:pointer;
+}
+
+
+/* 그룹 정보 수정 */
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}

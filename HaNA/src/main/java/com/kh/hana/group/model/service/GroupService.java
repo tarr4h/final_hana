@@ -54,8 +54,6 @@ public interface GroupService {
 
 	Group selectGroupInfo(String groupId);
 
-	List<Map<String, Object>> groupMemberList2(String groupId);
-
 	Map<String, Object> selectOneLikeLog(Map<String, Object> param);
 
 	int deleteLikeLog(Map<String, Object> param);
@@ -64,9 +62,9 @@ public interface GroupService {
 
 	int selectLikeCount(Map<String, Object> param);
 
-	int deleteGroupMember(String memberId);
+	int deleteGroupMember(Map<String,Object> param);
 
-	int updateGroupGrade(Map<String, Object> map);
+	int updateGroupGrade(Map<String, Object> param);
 
 	int updateGroup(Group group);
 
@@ -99,4 +97,6 @@ public interface GroupService {
 	int deleteMemberLikeHashtag(Map<String, Object> param);
 
 	List<Group> selectRecommendedGroupList(Member member);
+
+	
 }

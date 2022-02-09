@@ -117,11 +117,6 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> groupMemberList2(String groupId) {
-		return session.selectList("group.groupMemberList2", groupId);
-	}
-
-	@Override
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
 		return session.selectOne("group.selectOneLikeLog",param);
 	}
@@ -142,13 +137,13 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public int deleteGroupMember(String memberId) {
-		return session.delete("group.deleteGroupMember", memberId);
+	public int deleteGroupMember(Map<String,Object> param) {
+		return session.delete("group.deleteGroupMember", param);
 	}
 
 	@Override
-	public int updateGroupGrade(Map<String, Object> map) {
-		return session.update("group.updateGroupGrade", map);
+	public int updateGroupGrade(Map<String, Object> param) {
+		return session.update("group.updateGroupGrade", param);
 	}
 	
 	@Override
@@ -234,6 +229,11 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public List<Group> selectRecommendedGroupList(Member member) {
 		return session.selectList("group.selectRecommendedGroupList",member);
+	}
+
+	@Override
+	public int updateGroupLeader(Map<String, Object> param) {
+		return session.update("group.updateGroupLeader", param);
 	}
 	
 

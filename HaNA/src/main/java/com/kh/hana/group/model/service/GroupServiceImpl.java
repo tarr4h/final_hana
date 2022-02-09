@@ -137,11 +137,6 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectGroupInfo(groupId);
 	}
 
-	@Override
-	public List<Map<String, Object>> groupMemberList2(String groupId) {
-		return groupDao.groupMemberList2(groupId);
-	}
-
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param) {
 		return groupDao.selectOneLikeLog(param);
 	}
@@ -162,13 +157,26 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public int deleteGroupMember(String memberId) {
-		return groupDao.deleteGroupMember(memberId);
+	public int deleteGroupMember(Map<String,Object> param) {
+		return groupDao.deleteGroupMember(param);
 	}
 
 	@Override
-	public int updateGroupGrade(Map<String, Object> map) {
-		return groupDao.updateGroupGrade(map);
+	public int updateGroupGrade(Map<String, Object> param) {
+		int result = 0;
+		//바꿀 레벨이 ld면
+		log.info("updateGroupGrade param.get(\"level\") = {}",param.get("level"));
+		if(param.get("level").equals("ld")) {
+			result = groupDao.updateGroupLeader(param);
+			if(result > 0) {
+				result = groupDao.updateGroupGrade(param);
+			}
+		}
+		else {
+			result = groupDao.updateGroupGrade(param);
+		}
+
+		return result;
 	}
 
 	@Override
