@@ -98,9 +98,10 @@ let newContent;
 // 게시물 목록 이미지 클릭
 $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
-	console.log("alksjdflkajsdlf",boardNo);
 	getPageDetail(boardNo);
 });
+
+
 // 게시물 상세보기 페이지 불러오기 함수
 function getPageDetail(boardNo){
 	console.log("aaa",boardNo);
@@ -170,6 +171,24 @@ function getPageDetail(boardNo){
 		  			$(".group-board-img").css("left","0");
 		  			$("#img0").css("z-index","2");
 					
+		  			currentIndex = 0;
+		  			
+		  			//이미지 옆으로 넘기기
+		  			$(".right-button").click((e)=>{
+						if(currentIndex<maxIndex){
+			  				$(`#img\${currentIndex+1}`).css("z-index",2);
+			  				$(`#img\${currentIndex}`).css("z-index",1);
+			  				currentIndex += 1;							
+						}
+		  			})
+		  			$(".left-button").click((e)=>{
+						if(currentIndex>0){
+			  				$(`#img\${currentIndex-1}`).css("z-index",2);
+			  				$(`#img\${currentIndex}`).css("z-index",1);
+			  				currentIndex -= 1;							
+						}
+		  			})
+		  			
 		 			//modal의 body부분
 		 			//태그 멤버 목록
 		 			
@@ -476,4 +495,6 @@ function submitCommentFunc(e){
 		}
 	})
 };
+
+
 </script>
