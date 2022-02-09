@@ -51,8 +51,6 @@ public interface GroupDao {
 
 	public Group selectGroupInfo(String groupId);
 
-	public List<Map<String, Object>> groupMemberList2(String groupId);
-
 	public Map<String, Object> selectOneLikeLog(Map<String, Object> param);
 
 	public int deleteLikeLog(Map<String, Object> param);
@@ -63,7 +61,7 @@ public interface GroupDao {
 
 	public int deleteGroupMember(String memberId);
 
-	public int updateGroupGrade(Map<String, Object> map);
+	public int updateGroupGrade(Map<String, Object> param);
 
 	public int updateGroup(Group group);
 
@@ -98,5 +96,7 @@ public interface GroupDao {
 	public int deleteMemberLikeHashtag(Map<String, Object> param);
 
 	public List<Group> selectRecommendedGroupList(Member member);
+
+	public int updateGroupLeader(Map<String, Object> param);
 
 }

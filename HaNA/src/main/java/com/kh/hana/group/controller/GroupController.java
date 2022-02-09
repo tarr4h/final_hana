@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.ServletContext;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,15 +29,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
-import com.kh.hana.group.model.vo.GroupBoard;
-import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.group.model.vo.GroupCalendar;
+import com.kh.hana.group.model.vo.GroupMemberList;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -388,13 +385,15 @@ public class GroupController {
 	}
     
     @GetMapping("/groupMemberList/{groupId}")
-    public String groupMemberList(@PathVariable String groupId, Model model){
+    public String groupMemberList(@PathVariable String groupId, Model model, Group group){
     	log.info("groupId ={}", groupId);
     	
+    	List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
+    	log.info("groupMembers = {}", groupMembers);
     	List<Map<String, String>> groupMemberList = groupService.selectGroupMemberList(groupId);
     	log.info("groupMemberList = {}", groupMemberList);
     	
-    	model.addAttribute("groupMemberList", groupMemberList);
+    	model.addAttribute("groupMembers", groupMembers);
     	return "/group/groupMemberList";
     }
     
@@ -509,25 +508,31 @@ public class GroupController {
 		model.addAttribute("locaInfo",locaInfo);
 		return "/group/locationBoardPage";
 	}
-// 등급 수정
+	
+	// 등급 수정
 		@PostMapping("/updateGroupGrade")
-		public String updateGroupGrade (
-					@RequestParam(name="groupId") String groupId, 
-					@RequestParam(name="memberId") String memberId, 
-					@RequestParam(name="memberLevelCode") String memberLevelCode,
-					@RequestParam Map<String, Object> map,
-					@AuthenticationPrincipal GroupMemberList groupMemberList
-					) {
+		public String updateGroupGrade (String groupId, String memberId, String level, String memberLevelCode,@AuthenticationPrincipal Member member) {
 			
-			log.info("groupId = {}", groupId);
-			log.info("memberId = {}", memberId);
-			log.info("memberLevelCode = {}", memberLevelCode);
-			log.info("map = {}", map);
+			String id = member.getId(); // 로그인한 유저
 			
-			int result = groupService.updateGroupGrade(map);
-			log.info("map ={}", map);
-			String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
-			log.info("msg ={}", msg);
+			log.info("updateGroupGrade groupId = {}", groupId);
+			log.info("updateGroupGrade memberId = {}", memberId);
+			log.info("updateGroupGrade memberLevelCode = {}", memberLevelCode);
+			log.info("updateGroupGrade level = {}", level);
+			log.info("updateGroupGrade id = {}", id);
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("groupId", groupId);
+			param.put("memberId", memberId);
+			param.put("memberLevelCode", memberLevelCode); //현재 레벨
+			param.put("level", level);// 바꿀 레벨 
+			
+			
+				int result = groupService.updateGroupGrade(param);
+
+				String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
+				log.info("msg ={}", msg);
+
+			
 			
 			return "redirect:/group/groupMemberList/"+groupId;
 		}
@@ -664,9 +669,6 @@ public class GroupController {
 		map.put("result",result);
 		return ResponseEntity.ok(map);
 	}
-	
-	@GetMapping("/test")
-	public void test() {}
 }
 
 

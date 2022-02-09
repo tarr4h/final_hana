@@ -14,6 +14,17 @@
 <section>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <sec:authentication property="principal" var="loginMember" />
+<script>
+/* 전역변수 생성 */
+let memberId2;
+let memberLevelCode2;
+
+/* 현재 등급 체크 함수 */
+/* const grade2=(code)=>{
+	console.log("asdfadf1",code);
+};  */
+
+</script>
 
 <style>
 table th, td {
@@ -31,22 +42,22 @@ table th, td {
 				<th>회원등급</th>
 				<th>조정</th>
 			</tr>
-			<c:forEach items="${groupMemberList}" var="list">
+			<c:forEach items="${groupMembers}" var="member">
 				<tr>
-					<td>${list.groupId}</td>
+					<td>${group.groupId}</td>
 					<td><img
-						style="width: 100px; height: 100px; border-radius: 50%;"
-						src="${pageContext.request.contextPath}/resources/upload/member/profile/${list.profile}"
-						alt="" />
+						style="width: 100px; height: 100px; border-radius: 50%;cursor: pointer;"
+						src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.profile}" />
 					</td>
-					<td>${list.memberId}</td>
+					<td>${member.memberId}</td>
 					<td>
-						<c:if test="${list.memberLevelCode eq 'ld'}">리더</c:if> 
-						<c:if test="${list.memberLevelCode eq 'mg'}">매니저</c:if> 
-						<c:if test="${list.memberLevelCode eq 'mb'}">멤버</c:if></td>
+						<c:if test="${member.memberLevelCode eq 'ld'}">리더</c:if> 
+						<c:if test="${member.memberLevelCode eq 'mg'}">매니저</c:if> 
+						<c:if test="${member.memberLevelCode eq 'mb'}">멤버</c:if></td>
 					<td>
 						<input type="button" class="btn btn-info" data-toggle="modal" data-target="#moaModal"
-						onclick="grade('${list.memberLevelCode}')" value="등급"/>
+						onclick="grade('${member.memberLevelCode}','${member.memberId}','${group.groupId}')" value="등급"/>
+						<%-- grade2(${member.memberLevelCode},${member.memberId},${group.groupId}); --%>
 						
 						<a href="<c:url value='/group/deleteGroupMember/${list.memberId}/${list.groupId}' />"
 						class="btn btn-danger"
@@ -73,13 +84,16 @@ table th, td {
 				<div class="modal-body">
 					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" method="POST" 
 						class="customRadio customCheckbox m-0 p-0">
-						<input type="hidden" name="groupId" id="groupId" value="${groupId}"/>
-						<input type="hidden" name="memberId" id="memberId" value="${memberId}"/>
-						<input type="hidden" name="memberLevelCode" id="memberLevelCode" value="${memberLevelCode}"/>
 						<div class="row mb-0">
 							<div class="row justify-content-start">
 								<div class="col-12">
 									<div class="row">
+										<%-- <form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" 
+										class="customRadio customCheckbox m-0 p-0"> ${memberLevelCode2}--%>
+											<input type="hidden" name="groupId" value="${groupId}"/>
+											<input type="hidden" name="memberId" />
+											<input type="hidden" name="memberLevelCode" />
+										<%-- </form:form> --%>
 										<input type="radio" name="level" id="ld" value="ld" >
 										<label for="ld" class="form-check-label">리더</label>
 									</div>
@@ -105,9 +119,18 @@ table th, td {
 	</div>
 
 <script>
-/* 현재 등급 체크 함수 */
-function grade(code){
-	console.log(code);
+
+function grade(code,memberId,groupId){
+	/* console.log("asdfadf1",code);
+	console.log("asdfadf1",memberId);
+	console.log("asdfadf1",groupId); */
+	<!-- memberId2는 제가 header에 memberId에다가 로그인id넣어둔거 가져와서 쓴거같아요-->
+	memberId2 = memberId;
+	memberLevelCode2 = code;
+	console.log(memberId2);
+	console.log(memberLevelCode2);
+
+ 	console.log(code);
 	console.log(code == 'ld');
 	if(code == 'ld'){
 		$("#ld").prop('checked', true);	
@@ -123,6 +146,11 @@ function grade(code){
 /* 회원 등급 변경 함수 */
 function updateGroupGradeFunc(){
 	if(confirm("회원 등급을 변경하시겠습니까?")){
+		<!--  -->
+		console.log("updateGroupGradeFunc = ",memberId2);
+		console.log("updateGroupGradeFunc = ",memberLevelCode2);
+		$("[name=groupGradeUpdateFrm] input[name=memberId]").val(memberId2);
+		$("[name=groupGradeUpdateFrm] input[name=memberLevelCode]").val(memberLevelCode2);
 		$(document.groupGradeUpdateFrm).submit();
 	}
 }; 
@@ -331,6 +359,7 @@ function updateGroupGradeFunc(){
      padding-right: 35px;
      padding-left: 35px
  }
+ 
 </style>
 
 

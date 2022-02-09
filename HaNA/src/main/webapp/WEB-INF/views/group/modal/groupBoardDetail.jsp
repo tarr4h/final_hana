@@ -99,6 +99,9 @@ let newContent;
 $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
 	getPageDetail(boardNo);
+	
+	$('#groupPageDetail').modal("show");
+
 });
 
 
@@ -164,8 +167,12 @@ function getPageDetail(boardNo){
 		 				
 		 				let img = `<img id='img\${i}' src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
 		 				$("#group-board-img-container").append(img); // 이미지 추가
+<<<<<<< HEAD
 		 				maxIndex = i;
+=======
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 		 			})
+		 			
 		 			$(".group-board-img").css("width","100%");
 		 			$(".group-board-img").css("position","absolute");
 		  			$(".group-board-img").css("left","0");
