@@ -111,6 +111,26 @@ public class ShopController {
         
         return ResponseEntity.ok(tagList);
     }
+    
+    @GetMapping("/insertRankingData") 
+    public ResponseEntity<?> insertRankingData(@RequestParam(value="selectDataArr[]") List<String> selectDataArr , @RequestParam String tagDate , @RequestParam String id) {
+        log.info("selectDataArr = {}", selectDataArr);
+        log.info("tagDate = {}", tagDate);
+       
+        int result = 0;
+        Map<String, Object> rankingMap = new HashMap<>();
+        	rankingMap.put("tagDate", tagDate);
+        	rankingMap.put("id", id);
+
+		for(String data : selectDataArr) {		
+			rankingMap.put("tags", data);
+			result = shopService.insertRankingData(rankingMap);	
+			
+			log.info("data = {}", data);
+			log.info("result = {}", result);	
+		}
+        return ResponseEntity.ok(result);
+    }
 
     @PostMapping("/insertShopTable")
     public ResponseEntity<?> insertShopTable(@RequestBody Table table){
@@ -296,6 +316,42 @@ public class ShopController {
     	int result = shopService.cancleReservation(reservationNo);
     	
     	return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/selectOneReservation")
+    public ResponseEntity<?> selectOneReservation(@RequestParam String reservationNo, @RequestParam String id){    	
+    	Reservation reservation = shopService.selectOneReservation(reservationNo);
+    	log.info("reservation = {}", reservation);
+    	
+    	Map<String, String> map = new HashMap<>();
+    	map.put("reservationNo", reservationNo);
+    	map.put("id", id);
+    	Reservation checkRes = shopService.checkShareAccepted(map);
+    	log.info("check result = {}", checkRes);
+    	
+    	Map<String, Object> returnMap = new HashMap<>();
+    	returnMap.put("reservation", reservation);
+    	returnMap.put("checkRes", checkRes);
+    	
+    	return ResponseEntity.ok(returnMap);
+    }
+    
+    @PostMapping("/insertReservationShare")
+    public ResponseEntity<?> insertReservationShare(Reservation reservation){
+    	log.info("reservation = {}", reservation);
+    	
+    	int result = shopService.insertReservationShare(reservation);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/selectAcceptedFriends")
+    public ResponseEntity<?> selectAcceptedFriends(@RequestParam String reservationNo){
+    	log.info("rsNo = {}", reservationNo);
+    	
+    	List<Member> memberList = shopService.selectAcceptedFriends(reservationNo);
+    	
+    	return ResponseEntity.ok(memberList);
     }
     
     @InitBinder

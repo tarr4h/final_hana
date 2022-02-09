@@ -555,5 +555,55 @@
 	 <result column="member" property="memberId"/>
 	 <result column="count" property="count"/>
 	 </resultMap>
+	 
+	 <select id="selectHashtagList" resultType="string">
+	 select
+	 	name
+	 from
+	 	group_hashtag
+	 order by
+	 	name
+	 </select>
+	 <select id="selectLikeHashtagList" resultType="string">
+	 select
+	 	name
+	 from
+	 	member_like_group_hashtag
+	 where
+	 	member_id = #{id}
+	 </select>
+	 
+	 <insert id="insertMemberLikeHashtag">
+	 insert into
+	 	member_like_group_hashtag
+	 values(
+	 	#{member.id},
+	 	#{name}
+	 )
+	 </insert>
+	 
+	 <delete id="deleteMemberLikeHashtag">
+	 delete from
+	 	member_like_group_hashtag
+	 where
+	 	member_id = #{member.id}
+	 	and
+	 	name = #{name}
+	 </delete>
+	 <select id="selectRecommendedGroupList" resultType="group">
+	 select distinct
+	    group_id, group_name, image 
+	 from
+	    (SELECT group_id, image, group_name
+	         , REGEXP_SUBSTR(g.hashtag,'[^,]+', 1, b.lv) AS hashtag
+	      FROM group_ g
+	         , (SELECT LEVEL AS lv 
+	              FROM dual 
+	           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+	     WHERE REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL) g
+	    join
+	    (select * from member_like_group_hashtag  where member_id = #{id}) m
+	    on g.hashtag = m.name
+	 </select>
 </mapper>
 

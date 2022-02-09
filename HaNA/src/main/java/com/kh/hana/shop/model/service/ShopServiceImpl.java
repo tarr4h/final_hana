@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.common.util.CalculateArea;
+import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.dao.ShopDao;
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
@@ -91,6 +92,15 @@ public class ShopServiceImpl implements ShopService {
 	@Override public List<HashTag> hashTagAutocomplete(String search) { 
 		  return shopDao.hashTagAutocomplete(search); 
 	}
+	
+	@Override
+	public int insertRankingData(Map<String, Object> rankingMap) {
+		int count = 1;
+		rankingMap.put("count", count);
+		int selectData = shopDao.selectRankingData(rankingMap);
+		log.info("selectData = {}" ,selectData );
+		return selectData;
+	}
 
 	@Override
 	public int insertShopTable(Table table) {
@@ -154,6 +164,29 @@ public class ShopServiceImpl implements ShopService {
 	public int cancleReservation(String reservationNo) {
 		return shopDao.cancleReservation(reservationNo);
 	}
+
+	@Override
+	public Reservation selectOneReservation(String reservationNo) {
+		return shopDao.selectOneReservation(reservationNo);
+	}
+
+	@Override
+	public int insertReservationShare(Reservation reservation) {
+		return shopDao.insertReservationShare(reservation);
+	}
+
+	@Override
+	public Reservation checkShareAccepted(Map<String, String> map) {
+		return shopDao.checkShareAccepted(map);
+	}
+
+	@Override
+	public List<Member> selectAcceptedFriends(String reservationNo) {
+		return shopDao.selectAcceptedFriends(reservationNo);
+	}
+
+
+
 
 
 	

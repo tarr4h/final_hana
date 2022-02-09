@@ -64,6 +64,7 @@ public class GroupController {
 		List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
 		log.info("groupMembers = {}",groupMembers);
 		model.addAttribute("groupMembers",groupMembers);
+		model.addAttribute("memberCount",groupMembers.size());
 	}
 	
 	@GetMapping("/groupPage/{groupId}")
@@ -73,31 +74,42 @@ public class GroupController {
 		List<GroupBoard> groupBoardList = groupService.selectGroupBoardList(groupId);
 		log.info("groupBoardList = {}", groupBoardList);
 		model.addAttribute("groupBoardList", groupBoardList);
+		
 		return "group/groupPage";
 	}
 
 	@GetMapping("/groupList")
 	public void groupList(@AuthenticationPrincipal Member member, Model model) {
 		List<Group> groupList = groupService.selectGroupList(member);
-		model.addAttribute("groupList",groupList);
+		model.addAttribute("groupList",groupList); // 가입된 소모임 리스트
 		log.info("loginMember = {}",member);
 		log.info("groupList = {}", groupList);
 		
-	
+    	List<String> list = groupService.selectHashtagList(); // 해시태그 목록
+		model.addAttribute("hashtagList",list);
+		log.info("list = {}",list);
+		
+		List<String> likeHashtagList = groupService.selectLikeHashtagList(member);//내가 좋아하는 해시태그 목록
+		model.addAttribute("likeHashtagList",likeHashtagList);
+		
+		List<Group> recommendedGroupList = groupService.selectRecommendedGroupList(member);
+		model.addAttribute("recommendedGroupList",recommendedGroupList);
+		log.info("recommendedGroupList = {}",recommendedGroupList);
 	}
 	
 	@GetMapping("/createGroupForm")
-	public void createGroupForm() {}
+	public void createGroupForm(Model model) {
+		List<String> list = groupService.selectHashtagList();
+		model.addAttribute("hashtag",list);
+		log.info("list = {}",list);
+	}
 	
 	@PostMapping("/createGroup")
 	public String insertGroup(Group group,
 		@RequestParam(name="profileImage",required=false)MultipartFile[] profileImage,
 		RedirectAttributes redirectAttr) throws IllegalStateException, IOException {
 		try{
-			log.info("multipartFile.isEmpty() = {}",profileImage[0].isEmpty());
-			log.info("group.getHashtag = {}",group.getHashtag());
-			log.info("group.getHashtag().isEmpty() = {}",group.getHashtag() == null);
-			log.info("multipartFile.isEmpty() = {}",profileImage[0].isEmpty());
+			log.info("leaderId = {}",group.getLeaderId());
 			String saveDirectory = application.getRealPath("/resources/upload/group/profile");
 			MultipartFile image = profileImage[0];
 			if(!image.isEmpty()) {
@@ -521,13 +533,16 @@ public class GroupController {
 		}
 		
 		
-	@GetMapping("/groupSetting")
-	public void groupSetting(@RequestParam String groupId, Model model) {
+	@GetMapping("/groupSetting/{groupId}")
+	public String groupSetting(@PathVariable String groupId, Model model) {
 		log.info("groupSetting groupId = {}", groupId);
 		Group group = groupService.selectGroupInfo(groupId);
     	log.info("groupInfo ={}", group);
-    	
     	model.addAttribute(group);
+    	List<String> list = groupService.selectHashtagList();
+		model.addAttribute("hashtagList",list);
+		log.info("list = {}",list);
+    	return "/group/groupSetting";
 	}
 	
 	@PostMapping("/groupUpdate")
@@ -558,7 +573,7 @@ public class GroupController {
 		
 		log.info("msg ={}", msg);
 		
-		return "redirect:/group/groupSetting?groupId="+group.getGroupId();
+		return "redirect:/group/groupSetting/"+group.getGroupId();
 	}
 	
 	// 프로필 이미지만 수정 (+버튼)
@@ -624,6 +639,30 @@ public class GroupController {
 		List<Map<String,Object>> list = groupService.selectLikeCountList(param);
 		log.info("list = {}",list);
 		return ResponseEntity.ok(list);
+	}
+	
+	@PostMapping("/addHashtag")
+	public ResponseEntity<Map<String,Object>> addHashtag(@RequestParam String name, @AuthenticationPrincipal Member member){
+		Map<String,Object> param = new HashMap<>();
+		param.put("member",member);
+		param.put("name", name);
+		int result = groupService.insertMemberLikeHashtag(param);
+		Map<String,Object> map = new HashMap<>();
+		map.put("msg","데이터베이스 처리 완료");
+		map.put("result",result);
+		return ResponseEntity.ok(map);
+	}
+	
+	@PostMapping("/deleteHashtag")
+	public ResponseEntity<Map<String,Object>> deleteHashtag(@RequestParam String name, @AuthenticationPrincipal Member member){
+		Map<String,Object> param = new HashMap<>();
+		param.put("member",member);
+		param.put("name", name);
+		int result = groupService.deleteMemberLikeHashtag(param);
+		Map<String,Object> map = new HashMap<>();
+		map.put("msg","데이터베이스 처리 완료");
+		map.put("result",result);
+		return ResponseEntity.ok(map);
 	}
 }
 

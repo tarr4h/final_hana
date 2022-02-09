@@ -1,6 +1,8 @@
 package com.kh.hana.shop.model.service;
 import java.util.List;
 import java.util.Map;
+
+import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Table;
@@ -11,6 +13,8 @@ public interface ShopService {
     int insertHashTag(HashTag hashTag);
     
     List<HashTag> hashTagAutocomplete(String search);
+    
+    int insertRankingData(Map<String, Object> rankingMap);
 
 	int insertShopTable(Table table);
 
@@ -35,5 +39,15 @@ public interface ShopService {
 	Map<String, Object> selectMyReservationList(Map<String, Object> map);
 
 	int cancleReservation(String reservationNo);
+
+	Reservation selectOneReservation(String reservationNo);
+
+	int insertReservationShare(Reservation reservation);
+
+	Reservation checkShareAccepted(Map<String, String> map);
+
+	List<Member> selectAcceptedFriends(String reservationNo);
+
+
 
 }

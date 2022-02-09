@@ -504,7 +504,7 @@ const displaychat = (check, e) =>{
 			<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
 		</div>
 		<div class="msg_cotainer">
-		\${messageSplit[1]} \${messageSplit[2]}
+		\${messageSplit[1]} <button class="reservationModalBtn" onclick="reservationSet('\${messageSplit[2]}')">상세보기</button>
 			<span class="msg_time">\${returnDate}</span>
 		</div>
 	</div>`;
@@ -676,8 +676,12 @@ const closeChatRoom = (roomType)=>{
 		
 };
 	
-	
+
+
+
 </script>
 
+<!-- 예약 상세보기 모달 -->
+<jsp:include page="/WEB-INF/views/member/modal/reservationAccept.jsp"></jsp:include>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

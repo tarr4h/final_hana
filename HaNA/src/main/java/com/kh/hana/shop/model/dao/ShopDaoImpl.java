@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.HashTag;
 import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Table;
@@ -125,6 +126,32 @@ public class ShopDaoImpl implements ShopDao {
 	public int cancleReservation(String reservationNo) {
 		return session.update("shop.cancleReservation", reservationNo);
 	}
+
+	@Override
+	public int selectRankingData(Map<String, Object> rankingMap) {
+		return session.update("shop.selectRankingData",rankingMap);
+	}
+
+	@Override
+	public Reservation selectOneReservation(String reservationNo) {
+		return session.selectOne("shop.selectOneReservation", reservationNo);
+	}
+
+	@Override
+	public int insertReservationShare(Reservation reservation) {
+		return session.insert("shop.insertReservationShare", reservation);
+	}
+
+	@Override
+	public Reservation checkShareAccepted(Map<String, String> map) {
+		return session.selectOne("shop.checkShareAccepted", map);
+	}
+
+	@Override
+	public List<Member> selectAcceptedFriends(String reservationNo) {
+		return session.selectList("shop.selectAcceptedFriends", reservationNo);
+	}
+
 
 	
     
