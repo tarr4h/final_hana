@@ -10,6 +10,7 @@ import com.kh.hana.member.model.dao.MemberDao;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
+import com.kh.hana.member.model.vo.FollowingRequest;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
 
@@ -186,16 +187,15 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int checkAccountPrivate(Map<String, Object> map) {
-		int accountCheck = (int)map.get("accountCheck"); 
+		int publicProfile = (int)map.get("publicProfile"); 
 		Member member = (Member)map.get("member");
-		log.info("accountCheck={}",accountCheck);
+		log.info("publicProfile={}",publicProfile);
 		int result = 0;
-		log.info("member.getAccountCheck() ={}", member.getAccountCheck());
-		  if (member.getAccountCheck() == 2) {
-			  result = memberDao.checkAccountPrivate(map);
-		  }else {
-			  result = memberDao.updateAccountPrivate(map);			
-		  }
+		//	 if (member.getPublicProfile() == 2) {
+		 	  result = memberDao.checkAccountPrivate(map);
+		//  }else {
+		//	  result = memberDao.updateAccountPrivate(map);			
+	//	  }
 		
 		return result;
 	 
@@ -204,6 +204,31 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int checkFriend(Map<String, Object> map) {
 		return memberDao.checkFriend(map);
+	}
+
+	@Override
+	public int requestFollowing(Map<String, Object> map) {
+		return memberDao.requestFollowing(map);
+	}
+
+	@Override
+	public int followingRequest(Map<String, Object> map) {
+		return memberDao.followingRequest(map);
+	}
+
+	@Override
+	public List<FollowingRequest> requestFollowingList(String myId) {
+		log.info("Service.myIddddddddddd={}", myId);
+		return memberDao.requestFollowingList(myId);
+	}
+
+	@Override
+	public int applyFollowing(Map<String, Object> map) {
+		int result = 0;
+		if(result == 1) {
+			addFollowing(map);
+		}
+		return memberDao.applyFollowing(map);
 	}
  
 

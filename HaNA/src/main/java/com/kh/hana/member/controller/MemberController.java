@@ -36,6 +36,7 @@ import com.kh.hana.member.model.service.MemberService;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
+import com.kh.hana.member.model.vo.FollowingRequest;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
 
@@ -44,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/member")
 @Slf4j
-@SessionAttributes({"accountCheck"})
+@SessionAttributes({"publicProfile"})
 public class MemberController {
 	
 	@Autowired
@@ -147,7 +148,10 @@ public class MemberController {
 		 if(isFriend == 1)
 		 model.addAttribute("isFriend", isFriend);
 		 
-		
+		//친구요청 유무 확인
+		 int request = memberService.followingRequest(map);
+		 log.info("request={}", request);
+		 model.addAttribute("request", request);
 		
 		return "/member/"+"memberView";
 	}
@@ -237,6 +241,36 @@ public class MemberController {
 		
 		return followingList;
 	}
+	
+	///요청팔로잉리스트 가져오기
+	@GetMapping("/requestFollowingList")
+	@ResponseBody
+	public List<FollowingRequest> requestFollowingList(@RequestParam String myId, Model model){
+		log.info("controller.myIddddddddddd={}", myId);
+		List<FollowingRequest> requestFollowingList = memberService.requestFollowingList(myId);
+		log.info("requestFollowingList.requestFollowingList={}", requestFollowingList);
+		model.addAttribute("requestFollowingList", requestFollowingList);
+		
+		return requestFollowingList;
+	}
+	
+	//친구요청 수락하기
+		@PostMapping("/applyFollowing")
+		public String applyFollowing(@AuthenticationPrincipal Member member, @RequestParam String reqId, String myId, String status, RedirectAttributes redirectAttr) {
+			log.info("applyFollowing.reqId={}", reqId);
+			log.info("applyFollowing.myId={}", myId);
+			log.info("applyFollowing.status={}", status);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("reqId", reqId);
+			map.put("myId", myId);
+			map.put("status", status);
+			
+			int result = memberService.applyFollowing(map);
+			log.info("result ={}", result);
+			redirectAttr.addFlashAttribute("msg", result > 0? "수락 성공" : "수락 실패");
+			return "redirect:/member/memberView/"+myId;
+		}
 	
 	//이름과 일치하는 팔로잉 리스트
 	@GetMapping("/followingListById")
@@ -600,20 +634,20 @@ public class MemberController {
 	
 	//계정 비공개
 	@PostMapping("/accountPrivate")
-	 public String checkAccountPrivate(@RequestParam String id, @RequestParam (defaultValue ="1")int accountCheck, Model model, Member member){
+	 public String checkAccountPrivate(@RequestParam String id, @RequestParam (defaultValue ="1")int publicProfile, Model model, Member member){
     	
     	try{
     		log.info("checkAccountPrivate.member.id = {}",id);
-    		log.info("checkAccountPrivate.accountCheck = {}",accountCheck);
+    		log.info("checkAccountPrivate.publicProfile = {}",publicProfile);
     		
     		Map<String,Object> map = new HashMap<>();
     		map.put("id",id);
-    		map.put("accountCheck",accountCheck);
+    		map.put("publicProfile",publicProfile);
     		map.put("member",member);
     		
     		int result = memberService.checkAccountPrivate(map);
     	 
-    		model.addAttribute("accountCheck",accountCheck);
+    		model.addAttribute("publicProfile",publicProfile);
     		
     	}catch(Exception e) {
     		log.error(e.getMessage(),e);
@@ -623,7 +657,30 @@ public class MemberController {
     }
 	 
 	
-	
+	//팔로잉 요청
+		@PostMapping("/requestFollowing")
+		 public String requestFollowing(@RequestParam String myId, @RequestParam String friendId, @RequestParam String status){
+	    	
+	    	try{
+	    		log.info("requestFollowing.myId = {}",myId);
+	    		log.info("requestFollowing.friendId = {}",friendId);
+	    		log.info("requestFollowing.status = {}",status);
+	    		
+	    		Map<String,Object> map = new HashMap<>();
+	    		map.put("myId",myId);
+	    		map.put("friendId",friendId);
+	    		map.put("status",status);
+	    		
+	    		int result = memberService.requestFollowing(map);
+	    		String msg = result > 0 ? "팔로잉을 요청했습니다." : "팔로잉 요청에 실패했습니다.";
+	    		 
+	    		
+	    	}catch(Exception e) {
+	    		log.error(e.getMessage(),e);
+	       	}
+	    	return "redirect:/member/memberView/" + friendId;
+	    	
+	    }
 	
 	
 	

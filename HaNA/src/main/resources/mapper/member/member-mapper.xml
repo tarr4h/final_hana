@@ -92,8 +92,8 @@
 		 *
 		from
 			member m  
-			left join account_private a
-			on m.id = a.member_id
+			left join public_check p
+			on m.id = p.member_id
 		where
 			id = #{id}
 	</select>
@@ -322,12 +322,12 @@
 		)	
 	</select>
 
-	<insert id="checkAccountPrivate">
+<!-- 	<insert id="checkAccountPrivate">
 		insert into
-			account_private 
+			public_check (member_id, public_profile)
 	    values
-	        (#{id}, 2)
-	</insert>
+	        (#{id}, #{publicProfile})
+	</insert> -->
 
 	<select id="checkFriend" resultType="_int">
 	 select 
@@ -340,23 +340,59 @@
 	 	following_id = #{loginMemberId}	
 	</select>
 
-	<!-- <update id="updateAccountPrivate">
-	update account_private
+	 <update id="updateAccountPrivate">
+	update public_check
      set
-     	account_check = #{accountCheck}
+     	public_profile = #{publicProfile}
      where
      	member_id = #{id}
-	</update> -->
+	</update> 
 
-	<delete id="updateAccountPrivate">
-	delete from account_private where member_id = #{id}
+<!--	<delete id="updateAccountPrivate">
+	delete from public_check where member_id = #{id}
+	</delete>-->
+
+	<insert id="requestFollowing">
+		insert into following_request 
+		values(#{friendId}, #{myId}, #{status})
+	</insert>
+
+
+	<select id="followingRequest" resultType="_int">
+	 select 
+	 	count(*) 
+	 from
+	 	following_request
+	 where
+	 	member_id = #{loginMemberId}
+	</select>
+
+	<select id="requestFollowingList" resultType="FollowingRequest">
+	select
+		*
+	from
+		following_request
+	where
+		member_id = #{myId}		
+	</select>
+	
+	<delete id="applyFollowing">
+		delete
+		 following_request
+		where
+			req_id=#{reqId}
+			and
+			member_id =#{myId}
 	</delete>
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
+import com.kh.hana.member.model.vo.FollowingRequest;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
 
@@ -175,7 +176,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int checkAccountPrivate(Map<String, Object> map) {
-		return session.insert("member.checkAccountPrivate",map);
+		return session.update("member.updateAccountPrivate",map);
 	}
 
 	@Override
@@ -184,9 +185,31 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int updateAccountPrivate(Map<String, Object> map) {
-		return session.delete("member.updateAccountPrivate",map);
+	public int requestFollowing(Map<String, Object> map) {
+		return session.insert("member.requestFollowing", map);
 	}
+
+	@Override
+	public int followingRequest(Map<String, Object> map) {
+		return session.selectOne("member.followingRequest", map);
+	}
+
+	@Override
+	public List<FollowingRequest> requestFollowingList(String myId) {
+		return session.selectList("member.requestFollowingList",myId);
+	
+	}
+
+	@Override
+	public int applyFollowing(Map<String, Object> map) {
+		return session.delete("member.applyFollowing",map);
+	}
+
+ 
+//	@Override
+//	public int updateAccountPrivate(Map<String, Object> map) {
+//		return session.update("member.updateAccountPrivate",map);
+//	}
 
 	 
  
