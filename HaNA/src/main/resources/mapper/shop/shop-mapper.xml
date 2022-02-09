@@ -296,7 +296,7 @@
 		    req_accept = 'Y'
 	</select>
 	
-<<<<<<< HEAD
+
 	<select  id="selectTodayRankingdatas" resultType="map" >	
 			select 
 				 count(*)as count,h.tag_name
@@ -340,7 +340,7 @@
 		order by count desc
 					
 	</select>
-=======
+
 	<select id="selectTablePrice" parameterType="string" resultType="table">
 		select
 			*
@@ -430,5 +430,4 @@
 		where
 			reservation_no = #{reservationNo}
 	</update>
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 </mapper>
