@@ -152,7 +152,51 @@ public class ShopDaoImpl implements ShopDao {
 		return session.selectList("shop.selectAcceptedFriends", reservationNo);
 	}
 
+	@Override
+	public List<Table> selectTablePrice(String id) {
+		return session.selectList("shop.selectTablePrice", id);
+	}
 
+	@Override
+	public int updateTablePrice(Table table) {
+		return session.update("shop.updateTablePrice", table);
+	}
+
+	@Override
+	public int selectOneTablePrice(String reservationTableId) {
+		return session.selectOne("shop.selectOneTablePrice", reservationTableId);
+	}
+
+	@Override
+	public int insertReservationPrice(Map<String, Object> map) {
+		return session.insert("shop.insertReservationPrice", map);
+	}
+
+	@Override
+	public int updateReqDutchpay(Map<String, Object> map) {
+		return session.update("shop.updateReqDutchpay", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectPriceAndVisitors(String reservationNo) {
+		return session.selectList("shop.selectPriceAndVisitors", reservationNo);
+	}
 	
-    
+	@Override
+	public Map<String, Object> selectPriceAndMember(Map<String, Object> map) {
+		return session.selectOne("shop.selectPriceAndMember", map);
+	}
+
+	@Override
+	public int insertPurchaseHistory(Map<String, Object> reqMap) {
+		return session.insert("shop.insertPurchaseHistory", reqMap);
+	}
+
+	@Override
+	public int updateRestPrice(Map<String, Object> reqMap) {
+		return session.update("shop.updateRestPrice", reqMap);
+	}
+	
+	
+
 }

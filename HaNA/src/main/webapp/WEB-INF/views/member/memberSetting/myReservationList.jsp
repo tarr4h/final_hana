@@ -153,6 +153,7 @@
 						<th>인원</th>
 						<th>상태</th>
 						<th>공유하기</th>
+						<th>결제하기</th>
 						<th>취소하기</th>
 					</tr>
 				`;
@@ -167,7 +168,10 @@
 							<td>\${e.visitorCount}명</td>
 							<td>\${e.reservationStatus}</td>
 							<td>
-								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}');"/>
+								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}', '\${e.visitorCount}');"/>
+							</td>
+							<td>
+								<input type="button" value="결제하기" class="purchaseResBtn" data-rs-no"\${e.reservationNo}" onclick="purchaseModal('\${e.reservationNo}', '\${e.reservationUser}', '\${e.reqDutchpay}')"/>
 							</td>
 							<td>
 								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
@@ -178,9 +182,37 @@
 					let userBool = e.reservationUser != '${loginMember.id}';
 					let statusBool = e.reservationStatus == '예약취소';
 					let timeBool = dateSet >= e.timeStart && month == resDate.getMonth()+1 && date_ == resDate.getDate();
-					if(userBool || statusBool || timeBool){
-						$("#myReservationTable tbody").find(".cancleResBtn:last").prop('disabled', 'true');
+					if(userBool || timeBool || statusBool){
 						$("#myReservationTable tbody").find(".shareResBtn:last").prop('disabled', 'true');
+					};
+					if(userBool || timeBool && statusBool){
+						$("#myReservationTable tbody").find(".cancleResBtn:last").prop('disabled', 'true');
+					};
+					if(statusBool){
+						$("#myReservationTable tbody").find(".cancleResBtn:last").prop('disabled', 'true');
+					}
+					let dutchBool = e.reqDutchpay == 'Y';
+					let myResBool = e.reservationUser == e.attendUser;
+					
+					let lastBool = !dutchBool && !myResBool;
+					if(lastBool || timeBool || statusBool){
+						$("#myReservationTable tbody").find(".purchaseResBtn:last").prop('disabled', 'true');
+					}
+					
+					/* 더치페이 본인몫 결제완료 시(S), 결제 비활성화 */
+					if(e.reqDutchpay == 'S'){
+						$("#myReservationTable tbody").find(".purchaseResBtn:last").prop('disabled', 'true');
+					}
+					
+					/* 더치페이 요청 후 공유버튼 비활성화 */
+					if(e.reqDutchpay == 'Y'){
+						$("#myReservationTable tbody").find(".shareResBtn:last").prop('disabled', 'true');
+					}
+					
+					/* 예약완료인 경우 공유, 결제 비활성화 */
+					if(e.reservationStatus == '예약완료'){
+						$("#myReservationTable tbody").find(".shareResBtn:last").prop('disabled', 'true');
+						$("#myReservationTable tbody").find(".purchaseResBtn:last").prop('disabled', 'true');
 					}
 				});
 				
@@ -262,6 +294,6 @@
 	
 
 </script>
-
+<jsp:include page="/WEB-INF/views/member/modal/reservationPurchase.jsp"></jsp:include>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
