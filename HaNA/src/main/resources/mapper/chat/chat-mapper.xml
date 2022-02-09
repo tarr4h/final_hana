@@ -250,7 +250,7 @@
 				group_board g join member m
 				on g.writer = m.id
 			where
-				g.group_id in ( select group_id from group_member_list where member_id = #{memberId})
+				g.group_id in ( select group_id from group_member_list where member_id = #{memberId}) and g.writer != #{memberId}
 	) where rnum <![CDATA[<=]]> 3
 	</select>
 	

@@ -208,7 +208,7 @@ const slideMargin = 0; //슬라이드간의 margin 값
   <span class="ani_heart_m${vss.index }"></span>
 </button>
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
+              <a onclick="DMsend('${groupboard.writer}');" style="cursor: pointer"><img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM"></a>  
     </td>
     </tr>
     <tr>
@@ -501,7 +501,7 @@ const deleteLike${vss.index }=()=>{
   <span class="ani_heart_m0${vss.index }"></span>
 </button>
               <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/chat.svg" alt="말풍선">
-              <img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM">  
+              <a onclick="DMsend('${board.writer}');" style="cursor: pointer"><img class="icon-react" src="${pageContext.request.contextPath }/resources/images/icons/send.svg" alt="DM"></a>  
     </td>
     </tr>
     <tr>
@@ -785,8 +785,8 @@ const deleteLike0${vss.index }=()=>{
           </div>
 <ul class="recommend-list">
           <c:if test="${not empty memberList}">
-          <c:forEach items="${memberList}" var="member">
-            <li>
+          <c:forEach items="${memberList}" var="member" varStatus="vs">
+            <li id="li${vs.index}${member.id}">
               <div class="recommend-friend-profile">
                 <img class="img-profile" src="${pageContext.request.contextPath }/resources/upload/member/profile/${member.picture}">
                 <div class="profile-text">
@@ -794,7 +794,7 @@ const deleteLike0${vss.index }=()=>{
                   <span class="sub-span">${member.name != null ? '나를 팔로잉한 친구' : '같은 소모임에 있는 친구'}</span>
                 </div>
               </div>
-              <span class="btn-follow">팔로우</span>
+              <span class="btn-follow" onclick="insertFollow('${member.id}','${vs.index}');" style="cursor: pointer">팔로우</span>
             </li>
           </c:forEach>
           </c:if>
@@ -806,7 +806,49 @@ const deleteLike0${vss.index }=()=>{
     </main>
 	
 
-
+<script>
+const insertFollow =(id,index)=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/following.do`,
+		method:"GET",
+		data:{
+			id : id,
+			loginId : memberId,
+		},
+		success(resp){
+			if(resp !== 0)
+				$("#li"+index+id).remove();
+			else
+				console.log("팔로우 실패");
+		},
+		error:console.log			
+	})
+};
+const DMsend=(writer)=>{
+	console.log(writer);
+	console.log(memberId);
+	if(confirm("디엠을 보내시겠습니까?")){
+		$.ajax({
+			url:`${pageContext.request.contextPath}/chat/mainPageDmSend.do`,
+			method:"GET",
+			data:{
+				memberId : writer,
+				loginId : memberId,
+			},
+			success(resp){
+				console.log(resp);
+				if(resp !== 0){
+					location.href = '${pageContext.request.contextPath}/chat/chat.do';
+					<!-- 나중에 바로 채팅방 접속까지 고려 -->
+				}
+				else
+					alert("메세지 전송 실패");
+			},
+			error:console.log		
+		});
+	}
+}
+</script>
     <style>
     .commentLevel2{margin-left: 50px}
     </style>

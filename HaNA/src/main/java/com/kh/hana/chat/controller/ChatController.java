@@ -455,5 +455,46 @@ public class ChatController {
     	return ResponseEntity.ok(result);
     }
     
+    @GetMapping("/mainPageDmSend.do")
+    public ResponseEntity<?> mainPageDmSend(String memberId, String loginId){
+    	log.info("mainPageDmSend memberId = {}", memberId);
+    	log.info("mainPageDmSend loginId = {}", loginId);
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("loginId", loginId);
+    	param.put("memberId", memberId);
+    	param.put("members", loginId+","+memberId);
+    	String msg = chatService.chatRoomCheck(param);
+    	String[] msgSplit = msg.split(",");
+    	int roomNo = 0;
+    	log.info("msg = {}",msg);
+    	if(msgSplit[0].contains("성공") || msgSplit[0].contains("있습니다")) {
+    		log.info("{}",msgSplit[0].contains("성공"));
+    		log.info("{}",msgSplit[0].contains("있습니다"));
+    		roomNo = Integer.parseInt(msgSplit[1]);
+    	}
+    	else
+    		roomNo = 0;
+    	
+    	return ResponseEntity.ok(roomNo);
+    }
+    
+    @GetMapping("/following.do")
+    public ResponseEntity<?> following(String id, String loginId){
+    	log.info("following id = {}",id);
+    	log.info("following loginId = {}",loginId);
+		Map<String, Object> map = new HashMap<>();
+		//follow 테이블 member_id 랑 following_id 물어보기
+		map.put("myId", id);
+		map.put("friendId", loginId);
+		log.info("map ={}", map);
+		
+		int result = memberService.addFollowing(map);   
+		if(result > 0)
+			result = 1;
+		else
+			result =0;
+    	return ResponseEntity.ok(result);
+    }
+    
     		
 }
