@@ -7,7 +7,9 @@ import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 public interface ChatDao {
@@ -71,6 +73,10 @@ public interface ChatDao {
 	List<Member> groupRecommendList(String memberId);
 
 	int insertShareMessage(Map<String, Object> param);
+
+	GroupBoardComment selectOnegroupBoardComment();
+
+	BoardComment selectOneMemberBoardComment();
 
 
 }

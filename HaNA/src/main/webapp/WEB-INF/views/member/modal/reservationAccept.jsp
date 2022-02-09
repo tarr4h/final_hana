@@ -108,8 +108,10 @@ function reservationAccept(resNo, id, reqAccept){
 		},
 		success(res){
 			if(reqAccept == 'Y'){
-				if(res == 1){
-					alert("수락되었습니다.");
+				if(res == 1){				
+					if(confirm("수락되었습니다.\n등록한 예약을 확인하시겠어요?")){
+						location.href = '${pageContext.request.contextPath}/member/memberSetting/myReservationList';
+					}
 					$("#resAcceptModal").modal('hide');
 				}				
 			} else {
