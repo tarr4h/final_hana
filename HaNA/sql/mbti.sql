@@ -177,8 +177,8 @@ create table ranking (
   from ranking r left join hashtag h 
   on r.tag_id = h.tag_id;
 
-insert  into ranking(tag_id , tag_date , count)
-values ('shop-hashtag-25','2022-02-12',25);
+insert  into ranking(member_id,tag_id , tag_date)
+values ('k333','shop-hashtag-30','2022-02-09');
 
 merge into  ranking 
     using DUAL
@@ -198,9 +198,7 @@ update ranking set count = count+1;
 ------------오늘 날짜 데이터 구하기 --------------------
 select * from hashtag h left join   ranking r  
 on r.tag_id = h.tag_id
-WHERE TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd') 
-and rownum <=5
-ORDER BY r.count  desc;
+WHERE TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd') ;
 ----------------------------------------------------
 -----------------이번달 데이터 구하기 ----------------------
 select * 
@@ -225,21 +223,23 @@ ORDER BY r.count  desc;
 
 
 ------------------------이번달 --------------------------
-select count(*),h.tag_name
+select count(*)as count ,h.tag_name
 from ranking r left join   hashtag h  
 on r.tag_id = h.tag_id
 WHERE tag_date BETWEEN TRUNC(SYSDATE, 'MM')  and LAST_DAY(SYSDATE)
-group by h.tag_name;
+group by h.tag_name
+order by count desc;
 --------------------------------------------------------
 --------------오늘 ---------------------------------
-select count(*),h.tag_name
+select count(*)as count,h.tag_name
 from ranking r left join   hashtag h  
 on r.tag_id = h.tag_id
-WHERE TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd') 
-group by h.tag_name;
+WHERE TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd')
+group by h.tag_name
+order by count desc;
 -----------------------------------------------------
 ----------------이번주-------------------------
-select count(*),h.tag_name
+select count(*)as count,h.tag_name
 from ranking r left join   hashtag h    
 on r.tag_id = h.tag_id
 where tag_date between
@@ -248,7 +248,8 @@ FROM dual)
 and
 (SELECT TRUNC(sysdate, 'iw') + 6 dt_date
 FROM dual)
-group by h.tag_name;
+group by h.tag_name
+order by count desc;
 
 
 
