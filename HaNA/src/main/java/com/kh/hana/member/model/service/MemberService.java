@@ -77,6 +77,12 @@ public interface MemberService {
 
 	int applyFollowing(Map<String, Object> map);
 
+	int addRequestFollowing(Map<String, Object> map);
+
+	int refuseFollowing(Map<String, Object> map);
+
+	//int checkRefuse(Map<String, Object> map);
+
 	 
 
  

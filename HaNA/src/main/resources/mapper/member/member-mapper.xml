@@ -385,11 +385,34 @@
 			member_id =#{myId}
 	</delete>
 	
+	<insert id="addRequestFollowing" >
+		insert into
+		follower 
+		values
+		(#{myId}, #{reqId})
 	
+	</insert>
 	
+	<update id="refuseFollowing">
+		delete 
+			following_request
+		set 
+		where 
+			req_id=#{reqId}
+			and
+			member_id =#{myId}
+	</update>
 	
-	
-	
+<!-- 		<select id="checkRefuse" resultType="_int">
+	 select 
+	 	count(*) 
+	 from
+	 	following_request
+	 where
+	 	status = '거절'
+	 and
+	 	req_id = #{loginMemberId}
+	</select> -->
 	
 	
 	

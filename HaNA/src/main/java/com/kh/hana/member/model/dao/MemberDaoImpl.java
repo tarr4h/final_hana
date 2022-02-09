@@ -205,6 +205,21 @@ public class MemberDaoImpl implements MemberDao {
 		return session.delete("member.applyFollowing",map);
 	}
 
+	@Override
+	public int addRequestFollowing(Map<String, Object> map) {
+		return session.insert("member.addRequestFollowing",map);
+	}
+
+	@Override
+	public int refuseFollowing(Map<String, Object> map) {
+		return session.delete("member.refuseFollowing", map);
+	}
+
+//	@Override
+//	public int checkRefuse(Map<String, Object> map) {
+//		return session.selectOne("member.checkRefuse", map);
+//	}
+
  
 //	@Override
 //	public int updateAccountPrivate(Map<String, Object> map) {

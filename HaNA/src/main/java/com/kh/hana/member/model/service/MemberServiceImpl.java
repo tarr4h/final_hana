@@ -224,12 +224,25 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int applyFollowing(Map<String, Object> map) {
-		int result = 0;
-		if(result == 1) {
-			addFollowing(map);
-		}
 		return memberDao.applyFollowing(map);
 	}
+
+	@Override
+	public int addRequestFollowing(Map<String, Object> map) {
+		return memberDao.addRequestFollowing(map);
+	}
+
+	@Override
+	public int refuseFollowing(Map<String, Object> map) {
+		return memberDao.refuseFollowing(map);
+	}
+
+//	@Override
+//	public int checkRefuse(Map<String, Object> map) {
+//		return memberDao.checkRefuse(map);
+//	}
+
+ 
  
 
  

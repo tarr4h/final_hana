@@ -29,7 +29,7 @@
 	alert("${msg}");
 	</script>
 </c:if>
-
+ 
 <div class="container mt-2">
     <div class="row" id="myInfo">   	
     	<!-- 프로필이미지 영역 -->
@@ -89,7 +89,7 @@
         	</c:if>
         	 <c:choose>
     		<c:when test="${member.publicProfile == 2  && loginMember.id != member.id && isFriend != 1}">
-    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing()">
+    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
         	</c:when>
@@ -285,14 +285,19 @@ $("#requestButton").click((e) => {
 				<tr>
 					<td>
 					 <form:form name="followingApplyFrm" action="${pageContext.request.contextPath}/member/applyFollowing">
-                     <input type="hidden" name="myId" value="\${resp[i].memberId}"/>
-                     <input type="hidden" name="reqId" value="\${resp[i].reqId}"/>
-                     <input type="hidden" name="status" value="\${resp[i].status}"/>
-                 </form:form>
-                 <button type="button" onclick="followingApplyFunc(this,'수락');"
+	                     <input type="hidden" name="myId" value="\${resp[i].memberId}"/>
+	                     <input type="hidden" name="reqId" value="\${resp[i].reqId}"/>
+	                     <input type="hidden" name="status" value="\${resp[i].status}"/>
+                 	</form:form>
+                 <button type="button" onclick="followingApplyFunc();"
                      class="btn btn-default btn-sm btn-success"
                      style="margin-right: 1%;" value="수락">수락</button>
-                 <button type="button" onclick="followinfApplyFunc(this,'거절');" class="btn btn-default btn-sm btn-danger" value="거절">거절</button>
+					 <form:form name="followingRefuseFrm" action="${pageContext.request.contextPath}/member/refuseFollowing">
+	                     <input type="hidden" name="myId" value="\${resp[i].memberId}"/>
+	                     <input type="hidden" name="reqId" value="\${resp[i].reqId}"/>
+	                     <input type="hidden" name="status" value="거절"/>
+             	</form:form>
+                 <button type="button" onclick="followingRefuseFunc();" class="btn btn-default btn-sm btn-danger" value="거절">거절</button>
 					</td>
 				</tr>
 			`;
@@ -361,12 +366,16 @@ $("#btn-follower-list").click((e) => {
 	error: console.log
 	})
 });
+//요청 팔로잉 거절하기
+function followingRefuseFunc(){
+	$(document.followingRefuseFrm).submit();	
+}
 //요청 팔로잉 수락하기
 function followingApplyFunc(){
 	$(document.followingApplyFrm).submit();	
 }
 //비공개계정에 친구 추가 클릭
-function requestFollowing(){
+function requestFollowing1(){
 	$(document.requestFollowingFrm).submit();	
 }
 //친구추가하기

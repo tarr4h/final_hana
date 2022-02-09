@@ -152,9 +152,10 @@ public class MemberController {
 		 int request = memberService.followingRequest(map);
 		 log.info("request={}", request);
 		 model.addAttribute("request", request);
-		
-		return "/member/"+"memberView";
-	}
+  
+			return "/member/"+"memberView";
+		}
+	 
 	
 	@GetMapping("/memberSetting/{param}")
 	public void memberSetting(@PathVariable String param) {
@@ -269,8 +270,37 @@ public class MemberController {
 			int result = memberService.applyFollowing(map);
 			log.info("result ={}", result);
 			redirectAttr.addFlashAttribute("msg", result > 0? "수락 성공" : "수락 실패");
+			
+			
+    		if(result == 1) {
+    			int addResult = 0;
+    			addResult = memberService.addRequestFollowing(map);
+    		}
+    		
+		
 			return "redirect:/member/memberView/"+myId;
 		}
+		
+		//친구요청 거절하기
+		@PostMapping("/refuseFollowing")
+		public String refuseFollowing(@AuthenticationPrincipal Member member, @RequestParam String reqId, String myId, String status, RedirectAttributes redirectAttr) {
+			log.info("refuseFollowing.reqId={}", reqId);
+			log.info("refuseFollowing.myId={}", myId);
+			log.info("refuseFollowing.status={}", status);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("reqId", reqId);
+			map.put("myId", myId);
+			map.put("status", status);
+			
+			int refuseResult = memberService.refuseFollowing(map);
+			log.info("refuseResult  ={}", refuseResult) ;
+			redirectAttr.addFlashAttribute("msg", refuseResult  > 0? "거절하셨습니다." : "거절에 실패했습니다.");
+			//redirectAttr.addFlashAttribute("refuseResult", refuseResult);
+			return "redirect:/member/memberView/"+myId;
+		}
+
+		
 	
 	//이름과 일치하는 팔로잉 리스트
 	@GetMapping("/followingListById")
@@ -659,7 +689,7 @@ public class MemberController {
 	
 	//팔로잉 요청
 		@PostMapping("/requestFollowing")
-		 public String requestFollowing(@RequestParam String myId, @RequestParam String friendId, @RequestParam String status){
+		 public String requestFollowing(@RequestParam String myId, @RequestParam String friendId, @RequestParam String status,RedirectAttributes redirectAttr){
 	    	
 	    	try{
 	    		log.info("requestFollowing.myId = {}",myId);
@@ -672,9 +702,9 @@ public class MemberController {
 	    		map.put("status",status);
 	    		
 	    		int result = memberService.requestFollowing(map);
-	    		String msg = result > 0 ? "팔로잉을 요청했습니다." : "팔로잉 요청에 실패했습니다.";
-	    		 
-	    		
+	    	 
+	    		redirectAttr.addFlashAttribute("msg", result > 0 ? "팔로잉을 요청했습니다." : "팔로잉 요청에 실패했습니다.");
+	    	
 	    	}catch(Exception e) {
 	    		log.error(e.getMessage(),e);
 	       	}
