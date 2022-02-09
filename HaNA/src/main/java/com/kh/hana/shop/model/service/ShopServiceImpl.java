@@ -209,6 +209,41 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.updateTablePrice(table);
 	}
 
+	@Override
+	public int updateReqDutchpay(Map<String, Object> map) {
+		return shopDao.updateReqDutchpay(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectPriceAndVisitors(String reservationNo) {
+		return shopDao.selectPriceAndVisitors(reservationNo);
+	}
+
+	
+	@Override
+	public Map<String, Object> selectPriceAndMember(Map<String, Object> map) {
+		return shopDao.selectPriceAndMember(map);
+	}
+
+	@Override
+	public int insertPurchaseHistory(Map<String, Object> reqMap) {
+		return shopDao.insertPurchaseHistory(reqMap);
+	}
+
+	@Override
+	public int purchaseAsDutchpay(Map<String, Object> reqMap) {
+		reqMap.put("status", "S");
+		int result = shopDao.updateReqDutchpay(reqMap);
+		result = shopDao.updateRestPrice(reqMap);
+		
+		return result;
+	}
+
+	@Override
+	public int purchaseAll(Map<String, Object> reqMap) {
+		return shopDao.updateRestPrice(reqMap);
+	}
+
 	
 
 

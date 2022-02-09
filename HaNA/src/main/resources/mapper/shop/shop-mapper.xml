@@ -159,7 +159,7 @@
     <insert id="insertReservation" parameterType="reservation">
     	insert into shop_table_reservation
     	values(
-    		concat(#{shopId}, seq_shop_table_reservation_res_no.nextval),
+    		concat(#{shopId} || '-', seq_shop_table_reservation_res_no.nextval),
     		#{reservationTableId},
     		#{reservationUser},
     		#{shopId},
@@ -172,7 +172,7 @@
     	)
     	<selectKey order="AFTER" keyProperty="reservationNo" resultType="string">
     		select
-    			concat(#{shopId}, seq_shop_table_reservation_res_no.currval)
+    			concat(#{shopId}||'-', seq_shop_table_reservation_res_no.currval)
     		from
     			dual
     	</selectKey>
@@ -275,7 +275,7 @@
 	
 	<insert id="insertReservationShare" parameterType="reservation">
 		insert into shop_table_reservation_share
-		values(#{reservationNo}, #{attendUser}, #{reqAccept}, 'N')
+		values(#{reservationNo}, #{attendUser}, #{reqAccept}, default, 'N')
 	</insert>
 	
 	<select id="checkShareAccepted" parameterType="map" resultType="reservation">
@@ -332,4 +332,63 @@
 			reservation_req_price
 		values(#{reservationNo}, #{originalPrice}, #{originalPrice})
 	</insert>
+	
+	<update id="updateReqDutchpay" parameterType="map">
+		update shop_table_reservation_share
+			set req_dutchpay = #{status}
+		where
+			reservation_no = #{reservationNo}
+			<if test="id != null">
+			and
+			attend_user = #{id}
+			</if>
+	</update>
+	
+	<select id="selectPriceAndVisitors" parameterType="string" resultType="map">
+		select
+		    s.reservation_no,
+		    s.attend_user,
+		    p.originalprice,
+		    m.name,
+		    m.id,
+		    m.address_all
+		from
+		    shop_table_reservation_share s inner join reservation_req_price p
+		    on s.reservation_no = p.reservation_no
+		    inner join member m
+		    on s.attend_user = m.id
+		where
+		    s.reservation_no = #{reservationNo}
+	</select>
+	
+	<select id="selectPriceAndMember" parameterType="map" resultType="map">
+	select
+	    s.reservation_no,
+	    s.attend_user,
+	    p.originalprice,
+	    m.name,
+	    m.id,
+	    m.address_all
+	from
+	    shop_table_reservation_share s inner join reservation_req_price p
+	    on s.reservation_no = p.reservation_no
+	    inner join member m
+	    on s.attend_user = m.id
+	where
+	    s.reservation_no = #{reservationNo}
+	    and
+	    s.attend_user = #{id}
+	</select>
+	
+	<insert id="insertPurchaseHistory" parameterType="map">
+		insert into purchase_history
+		values(#{id}, #{uid}, #{merchantUid}, #{amount}, default, default)
+	</insert>
+	
+	<update id="updateRestPrice" parameterType="map">
+		update reservation_req_price
+		set restprice = restprice - #{amount}
+		where
+			reservation_no = #{reservationNo}
+	</update>
 </mapper>

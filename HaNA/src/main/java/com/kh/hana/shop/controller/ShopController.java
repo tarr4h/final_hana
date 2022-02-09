@@ -369,6 +369,61 @@ public class ShopController {
     	return ResponseEntity.ok(result);
     }
     
+    @PostMapping("/updateReqDutchpay")
+    public ResponseEntity<?> updateReqDutchpay(@RequestParam String reservationNo, @RequestParam String status){
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("reservationNo", reservationNo);
+    	map.put("status", status);
+    	
+    	int result = shopService.updateReqDutchpay(map);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/selectPriceAndVisitors")
+    public ResponseEntity<?> selectPriceAndVisitors(@RequestParam String reservationNo){
+    	List<Map<String, Object>> list = shopService.selectPriceAndVisitors(reservationNo);
+    	log.info("list = {}", list);
+    	
+    	return ResponseEntity.ok(list);
+	}
+    
+    @GetMapping("/selectPriceAndMember")
+    public ResponseEntity<?> selectPriceAndMember(@RequestParam String reservationNo, @RequestParam String id){
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("reservationNo", reservationNo);
+    	map.put("id", id);
+    	Map<String, Object> resultMap = shopService.selectPriceAndMember(map);
+    	log.info("resultMap = {}", resultMap);
+    	
+    	return ResponseEntity.ok(resultMap);
+	}
+    
+    @PostMapping("/insertPurchaseHistory")
+    public ResponseEntity<?> insertPurchaseHistory(@RequestBody Map<String, Object> reqMap){
+    	log.info("reqMap = {}", reqMap);
+    	
+    	int result = shopService.insertPurchaseHistory(reqMap);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+    @PostMapping("/purchaseAsDutchpay")
+    public ResponseEntity<?> purchaseAsDutchpay(@RequestBody Map<String, Object> reqMap){
+    	
+    	int result = shopService.purchaseAsDutchpay(reqMap);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
+    @PostMapping("/purchaseAll")
+    public ResponseEntity<?> purchaseAll(@RequestBody Map<String, Object> reqMap){
+    	
+    	int result = shopService.purchaseAll(reqMap);
+    	
+    	return ResponseEntity.ok(result);
+    }
+    
     
     @InitBinder
     public void initBinder(WebDataBinder binder) {

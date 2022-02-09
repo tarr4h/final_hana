@@ -52,6 +52,18 @@ public interface ShopService {
 
 	int updateTablePrice(Table table);
 
+	int updateReqDutchpay(Map<String, Object> map);
+
+	List<Map<String, Object>> selectPriceAndVisitors(String reservationNo);
+
+	int insertPurchaseHistory(Map<String, Object> reqMap);
+
+	int purchaseAsDutchpay(Map<String, Object> reqMap);
+
+	int purchaseAll(Map<String, Object> reqMap);
+
+	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
+
 
 
 }

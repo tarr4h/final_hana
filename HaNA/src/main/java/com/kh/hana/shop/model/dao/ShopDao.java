@@ -68,6 +68,16 @@ public interface ShopDao {
 
 	int insertReservationPrice(Map<String, Object> map);
 
+	int updateReqDutchpay(Map<String, Object> map);
+
+	List<Map<String, Object>> selectPriceAndVisitors(String reservationNo);
+
+	int insertPurchaseHistory(Map<String, Object> reqMap);
+
+	int updateRestPrice(Map<String, Object> reqMap);
+
+	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
+
 
 
 
