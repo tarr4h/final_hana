@@ -78,7 +78,13 @@
     
     <div class="font-weight-bold head pb-1">작성할 글과 함께 첨부할 파일을 선택해주세요.</div> 
     	<textarea id="desc" cols="50" rows="5" placeholder="Post" name="content"></textarea> <br />
-		<div class="font-weight-bold head pb-1" name="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"><button type="button">추가</button></div>
+    <div id="abc">
+		<div class="font-weight-bold head pb-2">
+		    <label class="labels"></label>
+		    <input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택" style="width: 93%; float: left;">
+		    <button type="button" id="addFile" class="btn btn-primary" onclick="addFileBtn();" style="margin-left: 2%;">+</button>
+		</div>
+	</div>
 	<br />
 	
     <div>with</div>
@@ -121,12 +127,20 @@
     </div>
 </div>
 	    <div class="d-flex justify-content-end pt-2">
-	        <div class="btn btn-primary" onclick="submitBoard();">Submit</div>
+	        <div class="btn btn-primary" onclick="submitBoard();">등록하기</div>
 	    </div>
 </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4df2cda826ac2a53225fb7dea2a307&libraries=services"></script>
 <script>
+function addFileBtn(){
+	var rowItem = '<div class=font-weight-bold head pb-2>'
+		rowItem += '<label class=labels></label>'
+        rowItem += '<input type=file class=form-control placeholder=File name=file id=file1 value=파일 선택>'
+		rowItem += '</div>';
+
+	$('#abc').append(rowItem); 
+}
 
 // 카카오 지도 API
 
@@ -412,7 +426,7 @@ input {
 }
 
 .wrapper {
-    max-width: 80%;
+    max-width: 70%;
     margin: 40px auto;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -491,7 +505,7 @@ input:focus::placeholder {
 }
 
 .alert {
-    padding: 0.4rem 1.0rem 0.4rem 1.0rem;
+    padding: 0.4rem 1.5rem 0.4rem 1.5rem;
     outline: none
 }
 
