@@ -385,15 +385,14 @@ public class GroupController {
 	}
     
     @GetMapping("/groupMemberList/{groupId}")
-    public String groupMemberList(@PathVariable String groupId, Model model, Group group){
+    public String groupMemberList(@PathVariable String groupId, Model model){
     	log.info("groupId ={}", groupId);
     	
-    	List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(group.getGroupId());
+    	List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(groupId);
     	log.info("groupMembers = {}", groupMembers);
-    	List<Map<String, String>> groupMemberList = groupService.selectGroupMemberList(groupId);
-    	log.info("groupMemberList = {}", groupMemberList);
     	
     	model.addAttribute("groupMembers", groupMembers);
+    	model.addAttribute("groupId",groupId);
     	return "/group/groupMemberList";
     }
     
@@ -485,16 +484,24 @@ public class GroupController {
 	}
 	
 	
-	@RequestMapping(value = "/deleteGroupMember/{memberId}", method = RequestMethod.GET)
+	@PostMapping(value = "/deleteGroupMember")
 	public String deleteGroupMember (
-			@PathVariable String memberId,
-			@PathVariable String groupId) {
-		
-		log.info("memberId ={}", memberId);
-		log.info("groupId ={}", groupId);
-		int result = groupService.deleteGroupMember(memberId);
-		String msg = result > 0 ? "회원 탈퇴 성공" : "회원 탈퇴 실패";
-		log.info("msg ={}", msg);
+			@RequestParam String memberId,
+			@RequestParam String groupId) {
+		int result = 0;
+		try {			
+			log.info("memberId ={}", memberId);
+			log.info("groupId ={}", groupId);
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId",memberId);
+			param.put("groupId",groupId);
+			result = groupService.deleteGroupMember(param);
+			String msg = result > 0 ? "회원 탈퇴 성공" : "회원 탈퇴 실패";
+			log.info("msg ={}", msg);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			throw e;
+		}
 		
 		return "redirect:/group/groupMemberList/"+groupId;
 	}
@@ -511,28 +518,22 @@ public class GroupController {
 	
 	// 등급 수정
 		@PostMapping("/updateGroupGrade")
-		public String updateGroupGrade (String groupId, String memberId, String level, String memberLevelCode,@AuthenticationPrincipal Member member) {
-			
-			String id = member.getId(); // 로그인한 유저
+		public String updateGroupGrade (String groupId, String memberId, String level, String memberLevelCode) {
 			
 			log.info("updateGroupGrade groupId = {}", groupId);
 			log.info("updateGroupGrade memberId = {}", memberId);
 			log.info("updateGroupGrade memberLevelCode = {}", memberLevelCode);
 			log.info("updateGroupGrade level = {}", level);
-			log.info("updateGroupGrade id = {}", id);
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("groupId", groupId);
 			param.put("memberId", memberId);
 			param.put("memberLevelCode", memberLevelCode); //현재 레벨
 			param.put("level", level);// 바꿀 레벨 
 			
-			
-				int result = groupService.updateGroupGrade(param);
+			int result = groupService.updateGroupGrade(param);
 
-				String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
-				log.info("msg ={}", msg);
-
-			
+			String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
+			log.info("msg ={}", msg);
 			
 			return "redirect:/group/groupMemberList/"+groupId;
 		}
@@ -575,7 +576,7 @@ public class GroupController {
 		int result = groupService.updateGroup(group);
 		
 		String msg = result > 0 ? "프로필 편집 성공" : "프로필 편집 실패";
-		
+		redirectAttr.addFlashAttribute("msg",msg);
 		log.info("msg ={}", msg);
 		
 		return "redirect:/group/groupSetting/"+group.getGroupId();
@@ -669,8 +670,6 @@ public class GroupController {
 		map.put("result",result);
 		return ResponseEntity.ok(map);
 	}
-
-	
 }
 
 

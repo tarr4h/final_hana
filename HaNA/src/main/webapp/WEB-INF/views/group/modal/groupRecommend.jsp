@@ -16,6 +16,9 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 			</div>
 			</div>
 			<div class="modal-body" style="height:800px; overflow:auto;">
+				<c:if test="${recommendedGroupList.size() eq 0}">
+					<div class="no-recommended-msg">관심 해시태그를 등록하세요.</div>
+				</c:if>
 				<c:forEach items="${recommendedGroupList}" var="group" varStatus="vs">
 				<div class="recommended-group-list" style="width:50%; margin:auto; margin-top:15px; margin-bottom:15px;">
 					<div class="pointer row" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'">
@@ -54,3 +57,4 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 		</div>
 	</div>
 </div>
+

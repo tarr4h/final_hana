@@ -298,6 +298,8 @@
 		group_member_list 
 	where 
 		member_id = #{memberId}
+		and
+		group_id = #{groupId}
 	</delete>
 	
 	<update id="updateGroupGrade">
@@ -315,11 +317,9 @@
 	update 
 		group_
 	set
-		group_id = #{groupId},
 		group_name = #{groupName},
 		hashtag = #{hashtag},
-		image = #{image},
-		leader_id = #{leaderId}
+		image = #{image}
 	where
 		group_id = #{groupId}
 	</update>

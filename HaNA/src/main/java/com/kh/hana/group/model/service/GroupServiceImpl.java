@@ -157,8 +157,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public int deleteGroupMember(String memberId) {
-		return groupDao.deleteGroupMember(memberId);
+	public int deleteGroupMember(Map<String,Object> param) {
+		return groupDao.deleteGroupMember(param);
 	}
 
 	@Override
@@ -170,13 +170,7 @@ public class GroupServiceImpl implements GroupService{
 			result = groupDao.updateGroupLeader(param);
 			if(result > 0) {
 				result = groupDao.updateGroupGrade(param);
-				if(result > 0)
-					result = 1;
-				else
-					result = 0;
 			}
-			else
-				result = 0;
 		}
 		else {
 			result = groupDao.updateGroupGrade(param);

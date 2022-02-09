@@ -13,6 +13,11 @@
 	<jsp:param value="그룹메인" name="title" />
 </jsp:include>
 <section class="group-list-section">
+	<c:if test="${groupList.size() eq 0}">
+	<div class="no-group-msg">
+		가입한 소모임이 없습니다.
+	</div>
+	</c:if>	
 	<c:forEach items="${groupList}" var="group" varStatus="vs">
 	<div class="group-container row" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'">
 		<div class="group-container-section1 col-sm-5">
@@ -118,6 +123,10 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 			error:console.log
 		})
 	}
+
+	$('#hashtagListModal').on('hidden.bs.modal', function () {
+	    location.reload();
+	});
 
 </script>
  <jsp:include page="/WEB-INF/views/group/modal/groupRecommend.jsp"></jsp:include>

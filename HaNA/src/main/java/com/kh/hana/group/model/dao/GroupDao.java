@@ -59,7 +59,7 @@ public interface GroupDao {
 
 	public int selectLikeCount(Map<String, Object> param);
 
-	public int deleteGroupMember(String memberId);
+	public int deleteGroupMember(Map<String,Object> param);
 
 	public int updateGroupGrade(Map<String, Object> param);
 
