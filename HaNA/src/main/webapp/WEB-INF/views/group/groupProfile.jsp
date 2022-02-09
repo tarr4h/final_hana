@@ -169,7 +169,6 @@
 <div>
 <div class="icon">
 	<a href="${pageContext.request.contextPath}/group/groupPage/${group.groupId}"><i class="fas fa-pencil-alt"></i></a>
-	<a href="#"><i class="fa-solid fa-user-tag"></i></a>
 	<a href="${pageContext.request.contextPath}/group/groupCalendar/${group.groupId}"><i class="fas fa-calendar-alt"></i></a>
 	<a href="#"><i class="far fa-comments"></i></a>
 </div>
