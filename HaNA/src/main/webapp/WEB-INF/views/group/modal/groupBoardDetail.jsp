@@ -98,6 +98,9 @@ $('.board-main-image').click((e)=>{
 	let boardNo = $(e.target).siblings("#group-board-no").val();
 	console.log("alksjdflkajsdlf",boardNo);
 	getPageDetail(boardNo);
+	
+	$('#groupPageDetail').modal("show");
+
 });
 // 게시물 상세보기 페이지 불러오기 함수
 function getPageDetail(boardNo){
@@ -155,8 +158,8 @@ function getPageDetail(boardNo){
 		 				
 		 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
 		 				$("#group-board-img-container").append(img); // 이미지 추가
-		 				
 		 			})
+		 			
 		 			$(".group-board-img").css("width","100%");
 		 			$(".group-board-img").css("position","absolute");
 		  			$(".group-board-img").css("left","0");

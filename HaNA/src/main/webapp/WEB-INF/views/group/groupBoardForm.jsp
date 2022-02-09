@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
 
-<div>
+<%-- <div>
     <form
     	name="groupBoardFrm"
         action="${pageContext.request.contextPath}/group/enrollGroupBoard?${_csrf.parameterName}=${_csrf.token}"
@@ -63,7 +63,46 @@
             <tr><td><input type="button" value="제출" onclick="submitBoard();"/></td></tr>
         </table>
     </form>
-</div>
+</div> --%>
+<div class="wrapper bg-white">
+    <div class="h6 font-weight-bold"> 게시글 포스팅 </div>
+    <form
+    	name="groupBoardFrm"
+        action="${pageContext.request.contextPath}/group/enrollGroupBoard?${_csrf.parameterName}=${_csrf.token}"
+        method="POST"
+        enctype="multipart/form-data">
+	    <input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/>
+	    <input type="hidden" value="${groupId}" name="groupId"/>
+    
+    <div class="font-weight-bold head pb-1">작성할 글과 함께 첨부할 파일을 선택해주세요.</div> 
+    	<textarea id="desc" cols="50" rows="5" placeholder="Post" name="content"></textarea>    
+		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"></div>
+		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file2" value="파일 선택"></div>
+		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file3" value="파일 선택"></div>
+	<br />
+	
+    <div class="font-weight-bold head">with</div>
+    <div class="btn-group d-flex justify-conten-between flex-wrap py-1 pt-2"> 
+    	<c:forEach items="${members}" var="member">
+    	<label class="btn btn-primary form-check-label alert alert-dismissible fade show mx-2" style="text-align: center;" value="${member.memberId}" name="tagMembers">${member.memberId}</label>
+    	</c:forEach>
+    </div>
+        <div class="row"> <span>Location</span>
+            <div class="col-6"> 
+                <div class="form-group"> <input id="placeName" class="form-control" name="placeName" type="text" value="" readonly/>
+                    <div class="label" id="tel"></div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group"> <input id="placeAddress" class="form-control" name="placeAddress" type="text" value="" readonly/>
+                    <div class="label" id="email"></div>
+                </div>
+            </div>
+            <input id="locationY" name="locationY" type="hidden" value="" readonly/>
+            <input id="locationX" name="locationX" type="hidden" value="" readonly/>
+        </div>
+        </form>
+        <br />
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
@@ -80,6 +119,10 @@
         <ul id="placesList"></ul>
         <div id="pagination"></div>
     </div>
+</div>
+	    <div class="d-flex justify-content-end pt-2">
+	        <div class="btn btn-primary" onclick="submitBoard();">Submit</div>
+	    </div>
 </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4df2cda826ac2a53225fb7dea2a307&libraries=services"></script>
@@ -347,4 +390,152 @@ function submitBoard(){
 	}
 }
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif
+}
+
+body {
+    background-color: #EEE;
+    font-size: 0.9rem
+}
+
+input {
+    font-size: 0.85rem
+}
+
+.wrapper {
+    max-width: 80%;
+    margin: 40px auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px
+}
+
+.form-control {
+    height: 35px
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 1px solid rgb(50, 147, 238);
+    outline-color: rgb(50, 147, 238)
+}
+
+.head {
+    font-size: 0.8rem;
+    color: #555
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 2px;
+    outline-color: rgb(50, 147, 238)
+}
+
+.btn {
+    font-size: 0.8rem
+}
+
+.btn-cancel {
+    background-color: #eee
+}
+
+.btn-cancel:hover {
+    background-color: rgb(236, 59, 59);
+    color: #fff
+}
+
+.btn-group .btn-primary {
+    background-color: rgb(223, 238, 255);
+    color: rgb(50, 147, 238);
+    border: none;
+    box-shadow: none
+}
+
+.btn-group .btn {
+    border-radius: 12px
+}
+
+label {
+    margin-bottom: 0
+}
+
+.btn-group>.btn-group:not(:last-child)>.btn,
+.btn-group>.btn:not(:last-child):not(.dropdown-toggle),
+.btn-group>.btn-group:not(:first-child)>.btn,
+.btn-group>.btn:not(:first-child) {
+    border-radius: 50px
+}
+
+input::placeholder {
+    font-size: 0.8rem
+}
+
+input:focus::placeholder {
+    color: transparent
+}
+
+.alert-dismissible {
+    padding-right: 4rem
+}
+
+.alert {
+    padding: 0.4rem 1.0rem 0.4rem 1.0rem;
+    outline: none
+}
+
+
+.form-group {
+    position: relative
+}
+
+.close {
+    outline: none
+}
+
+.label::after {
+    position: absolute;
+    background-color: #fff;
+    top: 15px;
+    left: 10px;
+    font-size: 0.8rem;
+    padding: 0rem .1rem;
+    margin: 0rem 0.4rem;
+    color: rgb(50, 147, 238);
+    transition: all .2s ease-in-out;
+    transform: scale(0)
+}
+
+.label#name::after {
+    content: 'Name'
+}
+
+.label#tel::after {
+    content: 'Phone'
+}
+
+.label#email::after {
+    content: 'Email'
+}
+
+input:focus~.label::after {
+    top: -10px;
+    left: 0;
+    transform: scale(1)
+}
+
+button.close {
+    outline: none
+}
+</style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
