@@ -81,12 +81,37 @@
 		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file3" value="파일 선택"></div>
 	<br />
 	
-    <div class="font-weight-bold head">with</div>
-    <div class="btn-group d-flex justify-conten-between flex-wrap py-1 pt-2"> 
-    	<c:forEach items="${members}" var="member">
-    	<label class="btn btn-primary form-check-label alert alert-dismissible fade show mx-2" style="text-align: center;" value="${member.memberId}" name="tagMembers">${member.memberId}</label>
-    	</c:forEach>
-    </div>
+    <div class="group-board-form tag-member-btn" style="color:red; font-size:1.1em;" onclick="$('#groupMemberList').modal('show');">멤버 태그</div>
+	    <!-- 회원목록보기 modal -->
+			<div class="modal fade" id="groupMemberList" tabindex="-1">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div id="groupMemberListTableContainer">
+								<table id="groupMemberListTable">
+									<c:forEach items="${members}" var="member" varStatus="vs">
+										<tr>
+						 					<td>
+						 						<a href="javascript:void(0);" onclick="clickMember('tagMember${vs.index}');" >
+						 						<img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/${member.profile}" alt="" />
+						 						</a> 
+						 					</td>
+						 					<th>
+						 						<a href="javascript:void(0);" onclick="clickMember('tagMember${vs.index}');" style="color:black; text-decoration:none;">
+						 							&nbsp;&nbsp;&nbsp;&nbsp;${member.memberId}
+						 						</a>
+						 							<c:if test="${member.memberLevelCode eq 'ld'}"><span style="color:#ff5722">&nbsp;&nbsp;[Leader]</span></c:if>
+						 							<c:if test="${member.memberLevelCode eq 'mg'}"><span style="color:#ff9800">&nbsp;&nbsp;[Manager]</span></c:if>
+						 					</th> 
+						 					<td>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="tagMembers" value="${member.memberId}" id="tagMember${vs.index}"/></td>
+						 				</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
         <div class="row"> <span>Location</span>
             <div class="col-6"> 
                 <div class="form-group"> <input id="placeName" class="form-control" name="placeName" type="text" value="" readonly/>
@@ -127,6 +152,13 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4df2cda826ac2a53225fb7dea2a307&libraries=services"></script>
 <script>
+// 태그멤버 클릭시 체크박스 on/off
+function clickMember(id){
+	console.log(id);
+	var checked = $(`#\${id}`).is(':checked');
+	$(`#\${id}`).prop('checked',!checked);
+}
+
 // 카카오 지도 API
 
 // 마커를 담을 배열입니다
