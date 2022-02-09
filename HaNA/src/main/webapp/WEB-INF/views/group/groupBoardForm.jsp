@@ -87,7 +87,7 @@
 	</div>
 	<br />
 	
-    <div class="group-board-form tag-member-btn" style="color:red; font-size:1.1em;" onclick="$('#groupMemberList').modal('show');">멤버 태그</div>
+    <div class="group-board-form tag-member-btn" style="color:#3f51b5; font-size:1.1em; font-weight:bold;" onclick="$('#groupMemberList').modal('show');">멤버 태그</div>
 	    <!-- 회원목록보기 modal -->
 			<div class="modal fade" id="groupMemberList" tabindex="-1">
 				<div class="modal-dialog modal-dialog-centered">
@@ -118,8 +118,26 @@
 					</div>
 				</div>
 			</div>
-
-        <div class="row"> <span>Location</span>
+		<br />
+  		<div style="margin-bottom:10px;"><span style="font-size:1.1em; font-weight:bold;">Location Tag</span></div>
+		<div class="map_wrap">
+		    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+		
+		    <div id="menu_wrap" class="bg_white">
+		        <div class="option">
+		            <div>
+		                <form onsubmit="searchPlaces(); return false;">
+		                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
+		                    <button type="submit">검색하기</button> 
+		                </form>
+		            </div>
+		        </div>
+		        <hr>
+		        <ul id="placesList"></ul>
+		        <div id="pagination"></div>
+		    </div>
+		</div>
+		<div class="row" style="margin-top:20px;">
             <div class="col-6"> 
                 <div class="form-group"> <input id="placeName" class="form-control" name="placeName" type="text" value="" readonly/>
                     <div class="label" id="tel"></div>
@@ -135,23 +153,6 @@
         </div>
         </form>
         <br />
-<div class="map_wrap">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-
-    <div id="menu_wrap" class="bg_white">
-        <div class="option">
-            <div>
-                <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
-                    <button type="submit">검색하기</button> 
-                </form>
-            </div>
-        </div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
-    </div>
-</div>
 	    <div class="d-flex justify-content-end pt-2">
 	        <div class="btn btn-primary" onclick="submitBoard();">등록하기</div>
 	    </div>
@@ -459,11 +460,13 @@ input {
 }
 
 .wrapper {
-    max-width: 70%;
+    max-width: 50%;
+    height:80%;
     margin: 40px auto;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 20px
+    padding: 20px;
+    padding-top:2%;
 }
 
 .form-control {
@@ -584,6 +587,10 @@ input:focus~.label::after {
 
 button.close {
     outline: none
+}
+.tag-member-btn:hover {
+cursor:pointer;}
+.group-board-form .tag-member-bt {
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
