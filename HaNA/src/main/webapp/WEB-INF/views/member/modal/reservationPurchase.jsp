@@ -86,9 +86,14 @@ function requestDutchpay(){
 			status: 'Y'
 		},
 		success(res){
-			console.log(res);			
+			if(res == 1){
+				alert("요청이 전송되었습니다.");			
+			};
 		},
-		error: console.log
+		error: console.log,
+		complete(){
+			location.reload();
+		}
 	});
 };
 
