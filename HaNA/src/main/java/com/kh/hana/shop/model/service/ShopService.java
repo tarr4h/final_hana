@@ -13,6 +13,8 @@ public interface ShopService {
     int insertHashTag(HashTag hashTag);
     
     List<HashTag> hashTagAutocomplete(String search);
+    
+    int insertRankingData(Map<String, Object> rankingMap);
 
 	int insertShopTable(Table table);
 
