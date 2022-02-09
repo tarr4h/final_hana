@@ -30,13 +30,17 @@ let memberLevelCode2;
 table th, td {
 	text-align: center;
 	vertical-align: middle;
+	border:none;
+}
+tr {
+border-top:1px solid #8080803b;
 }
 </style>
 
 	<div class="groupMemberListTableArea">
-		<table class="table table-bordered">
+	<div class="page-label"> [${groupId}] 소그룹 회원 관리 </div>
+		<table class="table">
 			<tr>
-				<th>그룹 아이디</th>
 				<th>프로필</th>
 				<th>멤버 아이디</th>
 				<th>회원등급</th>
@@ -44,24 +48,23 @@ table th, td {
 			</tr>
 			<c:forEach items="${groupMembers}" var="member">
 				<tr>
-					<td>${group.groupId}</td>
 					<td><img
 						style="width: 100px; height: 100px; border-radius: 50%;cursor: pointer;"
 						src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.profile}" />
 					</td>
 					<td>${member.memberId}</td>
 					<td>
-						<c:if test="${member.memberLevelCode eq 'ld'}">리더</c:if> 
-						<c:if test="${member.memberLevelCode eq 'mg'}">매니저</c:if> 
+						<c:if test="${member.memberLevelCode eq 'ld'}"><span style="color:#ff5722;">리더</span></c:if> 
+						<c:if test="${member.memberLevelCode eq 'mg'}"><span style="color:orange">매니저</span></c:if> 
 						<c:if test="${member.memberLevelCode eq 'mb'}">멤버</c:if></td>
 					<td>
-						<input type="button" class="btn btn-info" data-toggle="modal" data-target="#moaModal"
+						<input type="button" class="btn btn-secondary" data-toggle="modal" data-target="#moaModal"
 						onclick="grade('${member.memberLevelCode}','${member.memberId}','${group.groupId}')" value="등급"/>
 						<%-- grade2(${member.memberLevelCode},${member.memberId},${group.groupId}); --%>
 						
-						<a href="<c:url value='/group/deleteGroupMember/${list.memberId}/${list.groupId}' />"
+						<button
 						class="btn btn-danger"
-						onclick="return confirm('회원 탈퇴를 진행하시겠습니까?');">탈퇴</a>
+						onclick="deleteMember('${member.memberId}');">탈퇴</button>
 					</td>
 				</tr>
 			</c:forEach>
@@ -71,14 +74,12 @@ table th, td {
 	<!-- 회원 조정 모달 -->
 	<div class="modal fade" id="moaModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">등급조정</h5>
-					<button class="close" type="button" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">x</span>
-					</button>
+					<div class="head-label">
+						등급조정
+					</div>
 				</div>
 				
 				<div class="modal-body">
@@ -88,12 +89,10 @@ table th, td {
 							<div class="row justify-content-start">
 								<div class="col-12">
 									<div class="row">
-										<%-- <form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" 
-										class="customRadio customCheckbox m-0 p-0"> ${memberLevelCode2}--%>
-											<input type="hidden" name="groupId" value="${groupId}"/>
-											<input type="hidden" name="memberId" />
-											<input type="hidden" name="memberLevelCode" />
-										<%-- </form:form> --%>
+										<input type="hidden" name="groupId" value="${groupId}"/>
+										<input type="hidden" name="memberId" />
+										<input type="hidden" name="memberLevelCode" />
+										
 										<input type="radio" name="level" id="ld" value="ld" >
 										<label for="ld" class="form-check-label">리더</label>
 									</div>
@@ -119,6 +118,23 @@ table th, td {
 	</div>
 
 <script>
+function deleteMember(memberId){
+	if(confirm("회원을 방출하시겠습니까?")){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/group/deleteGroupMember",
+			method:"POST",
+			data:{
+				"memberId":memberId,
+				"groupId":'${groupId}'
+			},
+			success(data){
+				console.log(data);
+				location.reload();
+			},
+			error:console.log
+		})
+	}
+}
 
 function grade(code,memberId,groupId){
 	/* console.log("asdfadf1",code);
@@ -145,7 +161,7 @@ function grade(code,memberId,groupId){
 
 /* 회원 등급 변경 함수 */
 function updateGroupGradeFunc(){
-	if(confirm("회원 등급을 변경하시겠습니까?")){
+	if(confirm("회원 등급을 변경하시겠습니까? (리더직을 위임할 경우 '나의 등급'은 일반 멤버로 전환됩니다.)")){
 		<!--  -->
 		console.log("updateGroupGradeFunc = ",memberId2);
 		console.log("updateGroupGradeFunc = ",memberLevelCode2);
@@ -157,6 +173,28 @@ function updateGroupGradeFunc(){
 </script>
 
 <style>
+.head-label {
+	margin:auto;
+	font-weight:bold;
+	font-size:1.1em;
+}
+.page-label {
+	font-size:1.5em;
+	font-weight:600;
+	text-align:center;
+	margin-bottom:50px;
+	border-top:1px solid gray;
+	border-bottom:1px solid gray;
+	padding:20px 0px;
+}
+
+.groupMemberListTableArea {
+	width:60vw;
+	margin:auto;
+	margin-top:100px;
+	margin-bottom:100px;
+}
+
  html,
  body,
  div,
@@ -200,8 +238,7 @@ function updateGroupGradeFunc(){
 
  body {
      line-height: 1;
-     font: 300 18px/1.5 'Roboto', sans-serif;
-     color: #311B92;
+     font: 500 18px/1.5 'Roboto', sans-serif;
  }
 
  #Modal_button {
@@ -240,7 +277,7 @@ function updateGroupGradeFunc(){
  .customRadio input[type="radio"]+label:before {
      content: '';
      background: #fff;
-     border: 2px solid #311B92;
+     border: 2px solid black;
      height: 25px;
      width: 25px;
      border-radius: 50%;
@@ -251,7 +288,7 @@ function updateGroupGradeFunc(){
 
  .customRadio input[type="radio"]+label:after {
      content: '';
-     background: #311B92;
+     background: black;
      width: 15px;
      height: 15px;
      border-radius: 50%;

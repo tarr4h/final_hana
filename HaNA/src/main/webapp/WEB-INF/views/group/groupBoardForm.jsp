@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <fmt:requestEncoding value="utf-8"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -12,6 +13,7 @@
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+
 
 <%-- <div>
     <form
@@ -75,16 +77,14 @@
 	    <input type="hidden" value="${groupId}" name="groupId"/>
     
     <div class="font-weight-bold head pb-1">작성할 글과 함께 첨부할 파일을 선택해주세요.</div> 
-    	<textarea id="desc" cols="50" rows="5" placeholder="Post" name="content"></textarea>    
-		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"></div>
-		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file2" value="파일 선택"></div>
-		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file3" value="파일 선택"></div>
+    	<textarea id="desc" cols="50" rows="5" placeholder="Post" name="content"></textarea> <br />
+		<div class="font-weight-bold head pb-1" name="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"><button type="button">추가</button></div>
 	<br />
 	
-    <div class="font-weight-bold head">with</div>
+    <div>with</div>
     <div class="btn-group d-flex justify-conten-between flex-wrap py-1 pt-2"> 
     	<c:forEach items="${members}" var="member">
-    	<label class="btn btn-primary form-check-label alert alert-dismissible fade show mx-2" style="text-align: center;" value="${member.memberId}" name="tagMembers">${member.memberId}</label>
+    	<label class="btn btn-primary form-check-label alert alert-dismissible fade show mx-2" style="text-align: center;" value="${member.memberId}" name="tagMembers">@${member.memberId}</label>
     	</c:forEach>
     </div>
         <div class="row"> <span>Location</span>
@@ -127,6 +127,7 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4df2cda826ac2a53225fb7dea2a307&libraries=services"></script>
 <script>
+
 // 카카오 지도 API
 
 // 마커를 담을 배열입니다

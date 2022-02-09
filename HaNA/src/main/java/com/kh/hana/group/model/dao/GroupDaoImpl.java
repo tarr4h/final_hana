@@ -137,8 +137,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public int deleteGroupMember(String memberId) {
-		return session.delete("group.deleteGroupMember", memberId);
+	public int deleteGroupMember(Map<String,Object> param) {
+		return session.delete("group.deleteGroupMember", param);
 	}
 
 	@Override
