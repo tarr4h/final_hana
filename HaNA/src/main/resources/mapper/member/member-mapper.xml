@@ -393,15 +393,14 @@
 	
 	</insert>
 	
-	<update id="refuseFollowing">
+	<delete id="refuseFollowing">
 		delete 
 			following_request
-		set 
 		where 
 			req_id=#{reqId}
 			and
 			member_id =#{myId}
-	</update>
+	</delete>
 	
 <!-- 		<select id="checkRefuse" resultType="_int">
 	 select 

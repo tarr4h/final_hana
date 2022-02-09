@@ -133,7 +133,7 @@
         	<button id="btn-add" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 	</c:if>
 	    <c:if test="${request > 0}">
-    	<button type="button" class="btn btn-secondary" id="requestButton">친구요청이 있습니다.</button>
+    	<button type="button" class="btn btn-secondary" id="requestButton">팔로잉 요청이 있습니다.</button>
     </c:if>
 		</div>
    </div>
@@ -280,18 +280,13 @@ $("#requestButton").click((e) => {
 				<tr>
 					<td>
 					\${resp[i].reqId}  				
-					</td>
-				</tr>
-				<tr>
-					<td>
 					 <form:form name="followingApplyFrm" action="${pageContext.request.contextPath}/member/applyFollowing">
 	                     <input type="hidden" name="myId" value="\${resp[i].memberId}"/>
 	                     <input type="hidden" name="reqId" value="\${resp[i].reqId}"/>
 	                     <input type="hidden" name="status" value="\${resp[i].status}"/>
                  	</form:form>
                  <button type="button" onclick="followingApplyFunc();"
-                     class="btn btn-default btn-sm btn-success"
-                     style="margin-right: 1%;" value="수락">수락</button>
+                     class="btn btn-default btn-sm btn-success" value="수락">수락</button>
 					 <form:form name="followingRefuseFrm" action="${pageContext.request.contextPath}/member/refuseFollowing">
 	                     <input type="hidden" name="myId" value="\${resp[i].memberId}"/>
 	                     <input type="hidden" name="reqId" value="\${resp[i].reqId}"/>
@@ -417,6 +412,21 @@ $("#input-file").change((e) => {
     margin-left: 450px;
     margin-top: 30px;
     margin-bottom: -13;
+ }
+#requestButton {
+    width: 200px;
+    background: dimgrey;
+    margin-top: 60px;
+}
+.btn-danger {
+    color: #fff;
+    background-color: black;
+    border-color: black;
+   }
+.btn-success {
+    color: #fff;
+    background-color: blue;
+    border-color: black;
 }
 </style>
 <!-- 게시글 작성 모달 -->
