@@ -307,27 +307,61 @@ public class ChatController {
     	return ResponseEntity.ok(list);
     };
     
+
     @GetMapping("/insertgroupBoardcomment.do")
     public ResponseEntity<?> insertgroupBoardcomment(GroupBoardComment groupBoardComment){
     	log.info("insertgroupBoardcomment groupBoardComment= {}", groupBoardComment);
     	int result = groupService.insertGroupBoardComment(groupBoardComment);
-    	if(result > 0)
+    	if(result > 0) {
     		log.info("main 그룹게시판 댓글작성 성공!");
+    		//selectKey 나중에 바꾸기 지금은 이상함 max(reg_date)
+    		GroupBoardComment comment = chatService.selectOnegroupBoardComment();
+    		return ResponseEntity.ok(comment);
+    	}
     	else
     		log.info("main 그룹게시판 댓글작성 실패!");
 
     	return ResponseEntity.ok(null);
     }
     
+    @GetMapping("/insertgroupBoardcommentLevel2.do")
+    public ResponseEntity<?> insertgroupBoardcommentLevel2(GroupBoardComment groupBoardComment){
+    	log.info("insertgroupBoardcomment groupBoardComment= {}", groupBoardComment);
+    	int result = groupService.insertGroupBoardComment(groupBoardComment);
+    	if(result > 0)
+    		log.info("main 그룹게시판 댓글작성 성공!");
+    	else
+    		log.info("main 그룹게시판 댓글작성 실패!");
+    	
+    	return ResponseEntity.ok(null);
+    }
+    
+    
     @GetMapping("/insertmemberBoardcomment.do")
     public ResponseEntity<?> insertmemberBoardcomment(BoardComment boardComment){
+    	log.info("insertgroupBoardcomment groupBoardComment= {}", boardComment);
+    	int result = memberService.enrollBoardComment(boardComment);
+    	if(result > 0) {
+    		log.info("main 일반게시판 댓글작성 성공!");
+    		//selectKey 나중에 바꾸기 지금은 이상함 max(reg_date)
+    		BoardComment comment = chatService.selectOneMemberBoardComment();
+    		return ResponseEntity.ok(comment);
+    	}
+    	else
+    		log.info("main 일반게시판 댓글작성 실패!");
+
+    	return ResponseEntity.ok(null);
+    }
+    
+    @GetMapping("/insertmemberBoardcommentLevel2.do")
+    public ResponseEntity<?> insertmemberBoardcommentLevel2(BoardComment boardComment){
     	log.info("insertgroupBoardcomment groupBoardComment= {}", boardComment);
     	int result = memberService.enrollBoardComment(boardComment);
     	if(result > 0)
     		log.info("main 일반게시판 댓글작성 성공!");
     	else
     		log.info("main 일반게시판 댓글작성 실패!");
-
+    	
     	return ResponseEntity.ok(null);
     }
     
@@ -484,8 +518,8 @@ public class ChatController {
     	log.info("following loginId = {}",loginId);
 		Map<String, Object> map = new HashMap<>();
 		//follow 테이블 member_id 랑 following_id 물어보기
-		map.put("myId", id);
-		map.put("friendId", loginId);
+		map.put("myId", loginId);
+		map.put("friendId", id);
 		log.info("map ={}", map);
 		
 		int result = memberService.addFollowing(map);   

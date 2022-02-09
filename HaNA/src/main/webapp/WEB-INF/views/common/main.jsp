@@ -59,12 +59,13 @@ const forEachCss = (index)=>{
 		top: 50%; 
 		font-size: 1.3em; 
 		cursor: pointer; 
+	background-color: rgba(128, 128, 128, 0.41);
 		} 
 		
 
 	/* 이전, 다음 화살표에 마우스 커서가 올라가 있을때 */ 
 	.controller\${index} span:hover{ 
-		background-color: rgba(128, 128, 128, 0.11); } 
+		background-color: rgba(128, 128, 128, 0.41); } 
 		.prev{ left: 10px; 
 		} 
 	/* 이전 화살표에 마우스 커서가 올라가 있을때 이전 화살표가 살짝 왼쪽으로 이동하는 효과*/ 
@@ -171,18 +172,21 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
-    <span>그룹 게시판 대댓글 작성가능하게</span><br />
-    <span>추천 친구 팔로우신청</span><br />
-    <span>게시글에서 작성자한테 dm보내기</span><br />
     <span></span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
     <table>
     <tr>
-    <td>
+    <td >
+    <div  style="width: 110px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${groupboard.writer}'">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}">
               <span class="userID main-id point-span">${groupboard.writer}</span>
+    </div>
+    		<div style="display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${groupboard.groupId}'">
+    		<img style="width:32px;height:32px;margin-left: 330px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
+    		<span>${groupboard.groupName} 바로가기</span>
+    		</div>
     </td>
     </tr>
     <tr>
@@ -306,15 +310,16 @@ $(`.next${vss.index }`).on('click', function () {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
 					const date = moment(regDate).format("YYYY년 MM월 DD일");
 					commentList += `<li>
-		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}</span>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+');">답글</button>' : ''}</span>
 		                </li>
-		                <li>
+		                <li id='\${commentLevel === 1 ?  'Level2Comment'+no+'' : 'Level2Comment'+commentRef+''}'>
 			              <div class="time-log">
 			                <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}">\${date}</span>
 			              </div>
 		                </li>  `;
 					
 				});
+							
 				$(".commentTd${vss.index} .comments${vss.index }").html(commentList);
 
 		},
@@ -341,22 +346,22 @@ const commetWrite${vss.index}=()=>{
 			commentRef : 0,
 		},
 		success(resp){
-			console.log('댓글작성');
+			console.log("msg = ",msg);
+			const date = moment(today).format("YYYY년 MM월 DD일");
+			const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = resp;
+			let commentList =`<li>
+		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+');">답글</button>' : ''}</span>
+		        </li>
+		        <li id='\${commentLevel === 1 ?  'Level2Comment'+no+'' : 'Level2Comment'+commentRef+''}'>
+		          <div class="time-log">
+		            <span>\${date}</span>
+		          </div>
+		        </li>  `;
+			$(".commentTd${vss.index} .comments${vss.index }").append(commentList);
+			$("input#input-comment${vss.index}").val('');
 		},
 		error:console.log
 	});
-	console.log("msg = ",msg);
-	const date = moment(today).format("YYYY년 MM월 DD일");
-	let commentList =`<li>
-        <span><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
-        </li>
-        <li>
-          <div class="time-log">
-            <span>\${date}</span>
-          </div>
-        </li>  `;
-	$(".commentTd${vss.index} .comments${vss.index }").append(commentList);
-	$("input#input-comment${vss.index}").val('');
 };
 
 //forEach에서 좋아요 불러오기
@@ -475,8 +480,10 @@ const deleteLike${vss.index }=()=>{
     <table>
     <tr>
     <td>
+    <div  style="width: 200px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${board.writer}'">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${board.writerProfile}">
               <span class="userID main-id point-span">${board.writer}</span>
+    </div>
     </td>
     </tr>
     <tr>
@@ -600,9 +607,10 @@ $(`.next0${vss.index }`).on('click', function () {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
 					const date = moment(regDate).format("YYYY년 MM월 DD일");
 					commentList += `<li>
-		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}</span>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+');">답글</button>' : ''}</span>
 		                </li>
-		                <li>
+		                
+		                <li id='\${commentLevel === 1 ?  'Level2Comment0'+no+'' : 'Level2Comment0'+commentRef+''}'>
 			              <div class="time-log">
 			                <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}">\${date}</span>
 			              </div>
@@ -635,22 +643,23 @@ const commetWrite0${vss.index}=()=>{
 			commentRef : 0,
 		},
 		success(resp){
-			console.log('댓글작성');
+			console.log("msg = ",msg);
+			const date = moment(today).format("YYYY년 MM월 DD일");
+			const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = resp;
+			let commentList =`<li>
+		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+');">답글</button>' : ''}</span>
+		        </li>
+		        <li id='\${commentLevel === 1 ?  'Level2Comment0'+no+'' : 'Level2Comment0'+commentRef+''}'>
+		          <div class="time-log">
+		            <span>\${date}</span>
+		          </div>
+		        </li>  `;
+			$(".commentTd0${vss.index} .comments0${vss.index }").append(commentList);
+			$("input#input-comment0${vss.index}").val('');
 		},
 		error:console.log
 	});
-	console.log("msg = ",msg);
-	const date = moment(today).format("YYYY년 MM월 DD일");
-	let commentList =`<li>
-        <span><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
-        </li>
-        <li>
-          <div class="time-log">
-            <span>\${date}</span>
-          </div>
-        </li>  `;
-	$(".commentTd0${vss.index} .comments0${vss.index }").append(commentList);
-	$("input#input-comment0${vss.index}").val('');
+
 };
 
 //멤버 게시글
@@ -770,7 +779,7 @@ const deleteLike0${vss.index }=()=>{
       <div class="main-right">
         <div class="myProfile">
           <img class="pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${loginMember.picture}">
-          <div>
+          <div style="cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${loginMember.id}'">
             <span class="userID point-span">${loginMember.id}</span>
             <span class="sub-span">${loginMember.name}</span>  
           </div>
@@ -847,6 +856,115 @@ const DMsend=(writer)=>{
 			error:console.log		
 		});
 	}
+}
+//답글버튼 클릭
+const commentLev20=(index,boardNo)=>{
+	console.log(index);
+	console.log(boardNo);
+	$(".commentLevel2Message").empty();
+
+	let message =`    		<div class="commentLevel2Message"><div class="hl"></div>
+        <div class="comment">
+        <input id="input-commentLevel2" class="input-comment" type="text" placeholder="대댓글 달기..." >
+        <button type="button" class="submit-comment" onclick="commetLevel2Write0('\${index}','\${boardNo}');">게시</button>
+      </div><div class="hl"></div></div>`;
+	$("#Level2Comment"+0+index).append(message);
+}
+//답글-> 게시 클릭
+const commetLevel2Write0=(index,boardNo)=>{
+	console.log("sdfsdf",index);
+	console.log("sdfsdf",boardNo);
+	
+ 	let msg = $("#input-commentLevel2").val();
+	console.log(msg); 
+	$("#input-commentLevel2").val('');
+	if(msg == ''){
+		alert("메세지를 입력하세요");
+		return;		
+	}
+	
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/insertmemberBoardcommentLevel2.do`,
+		method:"GET",
+		data:{
+			writer : memberId,
+			boardNo : boardNo,
+			content : msg,
+			commentLevel : 2,
+			commentRef : index,
+		},
+		success(resp){
+			console.log('댓글작성');
+		},
+		error:console.log
+	});
+
+	const date = moment(today).format("YYYY년 MM월 DD일");
+	let comment =`<li>
+	    <span class="commentLevel2"><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
+		  </li>
+		  <li id="Level2Comment0${index}">
+		    <div class="time-log">
+		      <span class="commentLevel2">\${date}</span>
+		    </div>
+		  </li>`;
+	$(".commentLevel2Message").empty();
+ 	$("li#Level2Comment"+0+index+":last").append(comment);
+}
+
+//그룹게시판 답글버튼 클릭
+const commentLev2=(index,boardNo)=>{
+	console.log(index);
+	console.log(boardNo);
+	$(".commentLevel2Message").empty();
+
+	let message =`    		<div class="commentLevel2Message"><div class="hl"></div>
+        <div class="comment">
+        <input id="input-commentLevel2" class="input-comment" type="text" placeholder="대댓글 달기..." >
+        <button type="button" class="submit-comment" onclick="commetLevel2Write('\${index}','\${boardNo}');">게시</button>
+      </div><div class="hl"></div></div>`;
+	$("#Level2Comment"+index).append(message);
+}
+//그룹게시판 답글-> 게시 클릭
+const commetLevel2Write=(index,boardNo)=>{
+	console.log("sdfsdf",index);
+	console.log("sdfsdf",boardNo);
+	
+ 	let msg = $("#input-commentLevel2").val();
+	console.log(msg); 
+	$("#input-commentLevel2").val('');
+	if(msg == ''){
+		alert("메세지를 입력하세요");
+		return;		
+	}
+	
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/insertgroupBoardcommentLevel2.do`,
+		method:"GET",
+		data:{
+			writer : memberId,
+			boardNo : boardNo,
+			content : msg,
+			commentLevel : 2,
+			commentRef : index,
+		},
+		success(resp){
+			console.log('댓글작성');
+		},
+		error:console.log
+	});
+
+	const date = moment(today).format("YYYY년 MM월 DD일");
+	let comment =`<li>
+	    <span class="commentLevel2"><span class="point-span userID">${loginMember.id}</span>\${msg}</span>
+		  </li>
+		  <li id="Level2Comment${index}">
+		    <div class="time-log">
+		      <span class="commentLevel2">\${date}</span>
+		    </div>
+		  </li>`;
+	$(".commentLevel2Message").empty();
+ 	$("li#Level2Comment"+index+":last").append(comment);
 }
 </script>
     <style>

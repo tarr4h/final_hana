@@ -245,7 +245,9 @@
 	 		select
 	         row_number() over(order by g.reg_date desc) rnum,
 				g.*,
-				m.picture writer_profile
+				m.picture writer_profile,
+				(select group_name from group_ where group_id = g.group_id) group_name,
+            	(select image from group_ where group_id = g.group_id) group_image
 			from
 				group_board g join member m
 				on g.writer = m.id
@@ -266,24 +268,20 @@
 				board b join member m
 				on b.writer = m.id
 			where 
-				b.writer in (select following_id from follower where member_id = #{memberId})
+				b.writer in (select member_id from follower where following_id = #{memberId})
 	) where rnum <![CDATA[<=]]> 3
 	</select>
 	
 	<select id="followingRecommendList" resultType="member">
-	select
-		id, picture, name
-	from
+	 select
+	 	id, picture, name
+	 from
 		member
 	where
-		id in (
-		select
-		distinct member_id
-		from
-		follower
-		where following_id = #{memberId} and
-		member_id not in(
-		select following_id from follower where member_id = #{memberId} and following_id in (select member_id from follower where following_id = #{memberId})))
+		id in(
+	select distinct following_id from follower where member_id = #{memberId}) 
+	and 
+		id not in (select distinct member_id from follower where following_id = #{memberId})
 	</select>
 	
 	<select id="groupRecommendList" resultType="member">
@@ -293,7 +291,27 @@
 	 member
 	 where
 	 id in (
-	 select distinct member_id from group_member_list where group_id in (select group_id from group_member_list where member_id =#{memberId}) and member_id != #{memberId} and member_id not in (select following_id from follower where member_id = #{memberId}))	
+	 select distinct member_id from group_member_list where group_id in (select group_id from group_member_list where member_id =#{memberId}) and member_id != #{memberId} and member_id not in (select member_id from follower where following_id = #{memberId}))	
+	</select>
+	
+	<!-- 바꾸기 -->
+	<select id="selectOnegroupBoardComment" resultType="GroupBoardComment">
+	select 
+		* 
+	from 
+		board_comment
+	where 
+		reg_date = (select max(reg_date) from board_comment)
+	</select>
+	
+	<!-- 바꾸기 -->
+	<select id="selectOneMemberBoardComment" resultType="BoardComment">
+	select 
+		* 
+	from 
+		board_comment 
+	where 
+		reg_date = (select max(reg_date) from board_comment)
 	</select>
 	
 

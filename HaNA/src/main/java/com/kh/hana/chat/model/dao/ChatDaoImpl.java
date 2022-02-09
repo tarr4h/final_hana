@@ -11,7 +11,9 @@ import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 @Repository
@@ -169,6 +171,16 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public int insertShareMessage(Map<String, Object> param) {
 		return session.insert("chat.insertShareMessage", param);
+	}
+
+	@Override
+	public GroupBoardComment selectOnegroupBoardComment() {
+		return session.selectOne("chat.selectOnegroupBoardComment");
+	}
+
+	@Override
+	public BoardComment selectOneMemberBoardComment() {
+		return session.selectOne("chat.selectOneMemberBoardComment");
 	}
 
 
