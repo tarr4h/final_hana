@@ -48,11 +48,29 @@ public interface ShopService {
 
 	List<Member> selectAcceptedFriends(String reservationNo);
 
+
 	List<String> selectTodayRankingdatas();
 
 	List<String> selectThisMonthRankingdatas();
 
 	List<String> selectThisWeekRankingdatas();
+
+	List<Table> selectTablePrice(String id);
+
+	int updateTablePrice(Table table);
+
+	int updateReqDutchpay(Map<String, Object> map);
+
+	List<Map<String, Object>> selectPriceAndVisitors(String reservationNo);
+
+	int insertPurchaseHistory(Map<String, Object> reqMap);
+
+	int purchaseAsDutchpay(Map<String, Object> reqMap);
+
+	int purchaseAll(Map<String, Object> reqMap);
+
+	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
+
 
 
 

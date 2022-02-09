@@ -58,6 +58,32 @@
 		  </button>
 		  <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
 		    <ul class="navbar-nav">
+		      <li class="nav-item">
+					<button id="notifyBtn">noti</button>
+					<div id="notiArea">
+				    	<table id="notiTable">
+				    		<thead>
+				    			<tr>
+				    				<th>알림목록</th>
+				    			</tr>
+				    		</thead>
+				    		<tbody>
+				    			<tr>
+				    				<td><a href="#">누구누구가 좋아요를 눌렀습니다.</a></td>
+				    			</tr>
+				    			<tr>
+				    				<td><a href="#">누구누구가 댓글을 달았습니다.</a></td>
+				    			</tr>
+				    			<tr>
+				    				<td>누구누구가 DM을 보냈습니다.</td>
+				    			</tr>
+				    			<tr>
+				    				<td>누구누구가 예약 공유를 요청했습니다.</td>
+				    			</tr>
+				    		</tbody>
+				    	</table>
+				    </div>
+			  </li>
 		      <li class="nav-item active">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/">Home</a>
 		      </li>
@@ -92,6 +118,7 @@
 				          <span><sec:authentication property="principal.username"/></span>
 				        </a>				    	
 				    	</c:if>
+				   
 				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 				          <a class="dropdown-item" href="#">게시글 작성</a>
 				          <a class="dropdown-item" href="#">예약 목록</a>
@@ -113,7 +140,9 @@
 	<audio id="audio_play">
 		<source src="${pageContext.request.contextPath }/resources/upload/chat/mp3/kakao2.mp3">
 	</audio>
-
+	<audio id="audio_play2">
+		<source src="${pageContext.request.contextPath }/resources/upload/chat/mp3/kakao3.mp3">
+	</audio>
 	<sec:authorize access="isAuthenticated()">
 		<script>
 		$(document).ready( function() {
@@ -188,7 +217,7 @@
 			if(ShareMessage[0] === 'share115'){
 				if(eSplit[0]!==memberId){
 					if(eSplit[4] !== roomNo){
-					 	beep();
+					 	beep2();
 						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${ShareMessage[1]}</a>`);
 						$("div#headerAlert").css('display','block');
 						setTimeout(function(){
@@ -272,7 +301,11 @@
 			audio.play();
 			audio.loop = false;
 			}; 
-	
+			function beep2() { 
+				var audio = document.getElementById('audio_play2');
+				audio.play();
+				audio.loop = false;
+				}; 	
 		const dmAlarm = () => {
 			$.ajax({
 				url:`${pageContext.request.contextPath}/chat/dmalarm.do`,
@@ -295,5 +328,9 @@
 			
 		</script>
 	</sec:authorize>
-
+<script>
+	$("#notifyBtn").click((e) => {
+		$("#notiArea").toggle();
+	})
+</script>
 	<div class="section-over-div">

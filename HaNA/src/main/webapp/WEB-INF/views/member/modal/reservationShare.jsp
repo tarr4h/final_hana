@@ -35,6 +35,7 @@ let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
 					<tbody></tbody>
 				</table>
 				<input type="hidden" name="shareReservationNo" />
+				<input type="hidden" name="shareVisitorCount" />
 			</div>
 			<!-- footer -->
 			<div class="modal-footer">
@@ -45,7 +46,8 @@ let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
 </div>
 
 <script>
-function shareReservationModal(reservationNo){
+function shareReservationModal(reservationNo, visitorCount){
+	$("[name=shareVisitorCount]").val(visitorCount);
 	$("[name=shareReservationNo]").val(reservationNo);
 	$("[name=friendId]").val('');
 	$("#friendListTable tbody").empty();
@@ -94,6 +96,17 @@ function onOpenShare() {
 	    websocket.send(jsonData);
 	}
 function shareReservation(reservationNo, targetUser){
+	let maxUser = $("[name=shareVisitorCount]").val();
+	let countFr = selectAcceptedFriendsForCheck(reservationNo);
+	let countNum = 0;
+	$.each(countFr, (a, b) => {
+		countNum += 1;
+	});
+	if(countNum >= maxUser){
+		alert("예약 인원만큼 공유됨");
+		return false;
+	};
+	
 	/* 요청 필요 데이터 */
 	const testtest=()=>{
 		$.ajax({

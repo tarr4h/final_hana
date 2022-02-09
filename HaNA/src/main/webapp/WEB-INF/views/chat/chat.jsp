@@ -204,6 +204,7 @@ const displayRoom = (selector, data) => {
 	method="GET">
 	<input type="hidden" name="roomNo"/>
 </form>
+
 <script>
 /* <!-- roomNo 전역변수 -->
 let roomNo; */

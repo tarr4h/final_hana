@@ -13,7 +13,9 @@ import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
+import com.kh.hana.group.model.vo.GroupBoardComment;
 import com.kh.hana.member.model.vo.Board;
+import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +62,7 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public String chatRoomCheck(Map<String, Object> param) {
 		String msg = "";
+		int roomNo = 0;
 		List<ChatRoom> chatlist = chatDao.chatRoomCheck(param);
 		//공유번호가 없으면 일반 채팅방생성 후 입력메세지
 		if(param.get("reservationNo") == null) {
@@ -70,7 +73,7 @@ public class ChatServiceImpl implements ChatService {
 				if(result > 0) {
 					
 					//나중에 selectKey로 바꾸기
-					int roomNo = chatDao.findRoomNo(param);
+					roomNo = chatDao.findRoomNo(param);
 					param.put("roomNo", roomNo);
 					int insert1 = chatDao.insertEnterMessage(param);
 					if(insert1 > 0) {
@@ -81,10 +84,12 @@ public class ChatServiceImpl implements ChatService {
 						
 				}
 				else
-					msg = "채팅방 생성 실패";
+					msg = "채팅방 생성 실패,"+roomNo;
 			}
-			else
-				msg = "채팅방이 있습니다";
+			else {
+				roomNo = chatDao.findRoomNo(param);
+				msg = "채팅방이 있습니다,"+roomNo;
+			}
 		}
 		
 		//공유번호 있으면 채팅방에 공유메세지 뿌려주기
@@ -96,7 +101,7 @@ public class ChatServiceImpl implements ChatService {
 				log.info("createChatRoom result = {}", result);
 				if(result > 0) {
 										
-					int roomNo = chatDao.findRoomNo(param);
+					roomNo = chatDao.findRoomNo(param);
 					param.put("roomNo", roomNo);
 					//입장메세지 다 보내고
 					int insert1 = chatDao.insertEnterMessage(param);
@@ -117,7 +122,7 @@ public class ChatServiceImpl implements ChatService {
 			}
 			//공유번호o, 채팅방 있을때
 			else {
-				int roomNo = chatDao.findRoomNo(param);
+				roomNo = chatDao.findRoomNo(param);
 				param.put("roomNo", roomNo);
 				msg = String.valueOf(roomNo);
 //				int insert1 = chatDao.insertShareMessage(param);
@@ -156,7 +161,6 @@ public class ChatServiceImpl implements ChatService {
 	public int CreateGroupChat(Group group) {
 		int result = chatDao.CreateGroupChat(group);
 		int roomNo = chatDao.selectGroupRoomNo(group);
-		group.setMemberCount(roomNo);
 		int result2 = 0;
 		log.info("CreateGroupChat serviceImpl roomNo넣음= {}", group);
 		if(result > 0)
@@ -241,6 +245,16 @@ public class ChatServiceImpl implements ChatService {
 		}
 			
 		return member;
+	}
+
+	@Override
+	public GroupBoardComment selectOnegroupBoardComment() {
+		return chatDao.selectOnegroupBoardComment();
+	}
+
+	@Override
+	public BoardComment selectOneMemberBoardComment() {
+		return chatDao.selectOneMemberBoardComment();
 	}
 
 

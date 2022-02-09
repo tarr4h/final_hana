@@ -25,6 +25,9 @@ public class Reservation implements Serializable {
 	private String reservationStatus;
 	private String attendUser;
 	private String reqAccept;
+	private String reqDutchpay;
 	private String reviewStatus;
+	private int originalprice;
+	private int restprice;
 	
 }
