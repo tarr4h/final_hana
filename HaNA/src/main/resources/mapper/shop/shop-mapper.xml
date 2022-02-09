@@ -241,6 +241,27 @@
 		update shop_table_reservation
 		set reservation_status = '예약취소'
 		where reservation_no = #{reservationNo}
+
+	</update>
+	
+	
+	<update id ="selectRankingData" parameterType="map" >
+	  <selectKey order="BEFORE" resultType="string" keyProperty="tagId">
+            select
+                tag_id as tagId
+               from
+                   hashtag
+              where
+                  tag_name = #{tags} 
+        </selectKey>
+      	 merge into  ranking 
+    		using DUAL
+     		  on (member_id = #{id} and tag_id = #{tagId} and tag_date = #{tagDate})
+   			when matched then
+       			update set count = count + #{count}
+   			 when not matched then
+       		 	insert (member_id , tag_id, tag_date, count) 
+        		values (#{id},#{tagId},#{tagDate},#{count})
 	</update>
 	
 	<select id="selectOneReservation" parameterType="string" resultType="reservation">

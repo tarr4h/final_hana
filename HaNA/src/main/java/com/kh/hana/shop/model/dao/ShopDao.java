@@ -49,6 +49,8 @@ public interface ShopDao {
 	Map<String, Object> selecetMyReservationList(Map<String, Object> map);
 
 	int cancleReservation(String reservationNo);
+	
+	int selectRankingData(Map<String, Object> rankingMap);
 
 	Reservation selectOneReservation(String reservationNo);
 
@@ -65,6 +67,7 @@ public interface ShopDao {
 	int selectOneTablePrice(String reservationTableId);
 
 	int insertReservationPrice(Map<String, Object> map);
+
 
 
 

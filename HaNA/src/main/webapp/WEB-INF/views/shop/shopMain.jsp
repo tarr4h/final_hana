@@ -366,7 +366,7 @@ function scrollPage(){
         	// input에 있는 text  사라지게
         	$("#searchInput").val('');
         	selectDataArr.push(hashTagData);
-        	console.log("selectDataArr" + selectDataArr)
+        	
         	
         }
         
@@ -388,6 +388,7 @@ function scrollPage(){
 
 // 해시 태그 선택 후 검색 버튼 클릭시 
 var chkClick = false;
+
 function clickList(){
 	chkClick = true;
 	startNum = 0;
@@ -395,7 +396,7 @@ function clickList(){
 	scrollPage();
 	// 태그 버튼 내역 삭제 
 	$("#hashTagResult").empty();
-};
+
 
 $("[name=maxDistance]").change((e) => {
 	console.log($("[name=maxDistance]:checked").val());
@@ -403,6 +404,37 @@ $("[name=maxDistance]").change((e) => {
 	$("#shopList").empty();
 	scrollPage();
 });
+	
+	// 날짜
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+	var tagDate = year + '-' + month  + '-' + day; 
+	console.log(tagDate);
+
+	// 검색 버튼 클릭시 태그 , 해당 날짜 DB 저장
+ 	$.ajax({
+		url : "${pageContext.request.contextPath}/shop/insertRankingData",
+		data : {
+			id : "${loginMember.id}",
+			selectDataArr : selectDataArr,
+			tagDate : tagDate
+		},
+		success(data) {
+			console.log(data)
+		},
+		error: console.log
+		
+	}); 
+
+}
+
+
+
+
+
+
 </script>
 
 </section>
