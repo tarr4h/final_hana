@@ -116,10 +116,13 @@ create table mbti_data(
 select * from mbti_data  where member_id ='k33';
 commit;
 
+constraint fk_code foreign key(tag_id)
+         references hashtag(tag_id) on delete cascade
 
 
-select * from hashtag;
 
+select *
+ from hashtag;
 
 -- 조인 쿼리 -- 
 select *
@@ -158,7 +161,36 @@ from
 where member_id = 'shop111';
 
 
+create table ranking ( 
+    member_id varchar2(50),
+	tag_id varchar2(50),   	 
+	tag_date date,	
+    count number(4),
+	constraint tag_ranking_fk foreign key(tag_id)
+        references hashtag(tag_id) on delete cascade
+);
 
+  select *from ranking;
   
+  insert  into ranking(tag_id , tag_date , count)
+  select * 
+  from ranking r left join hashtag h 
+  on r.tag_id = h.tag_id
+  where  
+  h.tag_name = '해물탕';
 
+insert  into ranking(tag_id , tag_date , count)
+values ('shop-hashtag-26','2022-02-07',1);
 
+merge into  ranking 
+    using DUAL
+       on ('shop-hashtag-30' = tag_id and '22/02/08' = tag_date)
+    when matched then
+        update set  count = +1 
+    when not matched then
+        insert (tag_id, tag_date , count) 
+        values ('shop-hashtag-30','22/02/08',1);
+select * from ranking;
+select * from hashtag;
+
+update ranking set count = count+1;
