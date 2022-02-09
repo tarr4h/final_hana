@@ -207,11 +207,11 @@ hashtag h left join (
         on r.tag_id = h.tag_id
 where   num <=4;  
 
-select rownum, a.* 
+select *
 from (select * from hashtag h left join   ranking r  
-on r.tag_id = h.tag_id 
-where  tag_date = '22/02/09' ORDER BY count desc) a
- rownum<= 4;
+on r.tag_id = h.tag_id)
+where  tag_date = '22/02/09' and rownum<= 4
+ORDER BY count desc ;
  
 SELECT *  FROM   ranking WHERE tag_date = '22/02/09' and ROWNUM <= 4
 ORDER BY count desc;
