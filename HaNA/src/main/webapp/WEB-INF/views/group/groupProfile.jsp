@@ -10,6 +10,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <script>
 	$(function () {
 		$('#target-image').click(function (e) {

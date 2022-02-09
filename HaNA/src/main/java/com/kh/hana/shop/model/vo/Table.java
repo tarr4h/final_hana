@@ -27,5 +27,6 @@ public class Table implements Serializable {
 	private String memo;
 	private String enable;
 	private String updatable;
+	private String price;
 	
 }

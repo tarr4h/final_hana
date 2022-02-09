@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <fmt:requestEncoding value="utf-8"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -12,6 +13,7 @@
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+
 
 <%-- <div>
     <form
@@ -75,10 +77,14 @@
 	    <input type="hidden" value="${groupId}" name="groupId"/>
     
     <div class="font-weight-bold head pb-1">작성할 글과 함께 첨부할 파일을 선택해주세요.</div> 
-    	<textarea id="desc" cols="50" rows="5" placeholder="Post" name="content"></textarea>    
-		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"></div>
-		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file2" value="파일 선택"></div>
-		<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file3" value="파일 선택"></div>
+    	<textarea id="desc" cols="50" rows="5" placeholder="Post" name="content"></textarea> <br />
+    <div id="abc">
+		<div class="font-weight-bold head pb-2">
+		    <label class="labels"></label>
+		    <input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택" style="width: 93%; float: left;">
+		    <button type="button" id="addFile" class="btn btn-primary" onclick="addFileBtn();" style="margin-left: 2%;">+</button>
+		</div>
+	</div>
 	<br />
 	
     <div class="group-board-form tag-member-btn" style="color:red; font-size:1.1em;" onclick="$('#groupMemberList').modal('show');">멤버 태그</div>
@@ -112,6 +118,7 @@
 					</div>
 				</div>
 			</div>
+
         <div class="row"> <span>Location</span>
             <div class="col-6"> 
                 <div class="form-group"> <input id="placeName" class="form-control" name="placeName" type="text" value="" readonly/>
@@ -146,7 +153,7 @@
     </div>
 </div>
 	    <div class="d-flex justify-content-end pt-2">
-	        <div class="btn btn-primary" onclick="submitBoard();">Submit</div>
+	        <div class="btn btn-primary" onclick="submitBoard();">등록하기</div>
 	    </div>
 </div>
 
@@ -157,6 +164,15 @@ function clickMember(id){
 	console.log(id);
 	var checked = $(`#\${id}`).is(':checked');
 	$(`#\${id}`).prop('checked',!checked);
+}
+
+function addFileBtn(){
+	var rowItem = '<div class=font-weight-bold head pb-2>'
+		rowItem += '<label class=labels></label>'
+        rowItem += '<input type=file class=form-control placeholder=File name=file id=file1 value=파일 선택>'
+		rowItem += '</div>';
+
+	$('#abc').append(rowItem); 
 }
 
 // 카카오 지도 API
@@ -443,7 +459,7 @@ input {
 }
 
 .wrapper {
-    max-width: 80%;
+    max-width: 70%;
     margin: 40px auto;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -522,7 +538,7 @@ input:focus::placeholder {
 }
 
 .alert {
-    padding: 0.4rem 1.0rem 0.4rem 1.0rem;
+    padding: 0.4rem 1.5rem 0.4rem 1.5rem;
     outline: none
 }
 

@@ -92,8 +92,8 @@
 		 *
 		from
 			member m  
-			left join account_private a
-			on m.id = a.member_id
+			left join public_check p
+			on m.id = p.member_id
 		where
 			id = #{id}
 	</select>
@@ -322,12 +322,12 @@
 		)	
 	</select>
 
-	<insert id="checkAccountPrivate">
+<!-- 	<insert id="checkAccountPrivate">
 		insert into
-			account_private 
+			public_check (member_id, public_profile)
 	    values
-	        (#{id}, #{accountCheck})
-	</insert>
+	        (#{id}, #{publicProfile})
+	</insert> -->
 
 	<select id="checkFriend" resultType="_int">
 	 select 
@@ -340,15 +340,90 @@
 	 	following_id = #{loginMemberId}	
 	</select>
 
+	 <update id="updateAccountPrivate">
+	update public_check
+     set
+     	public_profile = #{publicProfile}
+     where
+     	member_id = #{id}
+	</update> 
+
+<!--	<delete id="updateAccountPrivate">
+	delete from public_check where member_id = #{id}
+	</delete>-->
+
+	<insert id="requestFollowing">
+		insert into following_request 
+		values(#{friendId}, #{myId}, #{status})
+	</insert>
 
 
+	<select id="followingRequest" resultType="_int">
+	 select 
+	 	count(*) 
+	 from
+	 	following_request
+	 where
+	 	member_id = #{loginMemberId}
+	</select>
 
-
-
-
-
-
-
-
+	<select id="requestFollowingList" resultMap="FollowingRequest">
+	select
+		f.*,
+		m.picture
+	from
+		following_request f left join member m
+	on f.member_id = m.id
+	where
+		f.member_id = #{myId}		
+	</select>
+	
+	<resultMap id="FollowingRequest" type="map">
+		<id column="member_id" property="memberId"/>
+		<result column="req_id" property="reqId"/>
+		<result column="status" property="status"/>
+		<result column="picture" property="picture"/>
+	</resultMap>
+	
+	<delete id="applyFollowing">
+		delete
+		 following_request
+		where
+			req_id=#{reqId}
+			and
+			member_id =#{myId}
+	</delete>
+	
+	<insert id="addRequestFollowing" >
+		insert into
+		follower 
+		values
+		(#{myId}, #{reqId})
+	
+	</insert>
+	
+	<delete id="refuseFollowing">
+		delete 
+			following_request
+		where 
+			req_id=#{reqId}
+			and
+			member_id =#{myId}
+	</delete>
+	
+<!-- 		<select id="checkRefuse" resultType="_int">
+	 select 
+	 	count(*) 
+	 from
+	 	following_request
+	 where
+	 	status = '거절'
+	 and
+	 	req_id = #{loginMemberId}
+	</select> -->
+	
+	
+	
+	
 
 </mapper>

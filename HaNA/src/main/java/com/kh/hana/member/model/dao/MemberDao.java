@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kh.hana.member.model.vo.Board;
 import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
+import com.kh.hana.member.model.vo.FollowingRequest;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.vo.Shop;
 
@@ -77,6 +78,23 @@ public interface MemberDao {
 
 	int checkFriend(Map<String, Object> map);
 
+	int requestFollowing(Map<String, Object> map);
+
+	int followingRequest(Map<String, Object> map);
+
+	List<FollowingRequest> requestFollowingList(String myId);
+
+	int applyFollowing(Map<String, Object> map);
+
+	int addRequestFollowing(Map<String, Object> map);
+
+	int refuseFollowing(Map<String, Object> map);
+
+	//int checkRefuse(Map<String, Object> map);
+
+ 
+
+	 
 
  
 

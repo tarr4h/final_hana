@@ -30,7 +30,7 @@
         	<ul class="list-group">
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'memberSetting/accountPrivate'">계정 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/accountPrivate'">계정 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">정보 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
@@ -68,45 +68,6 @@
 					<input type="hidden" name="locationY" />
 				</td>
 			</tr>  
-	<!-- <tr>
-				<th>내 성격</th>
-				<td>	
-					<select name="personality" id="personality" class="custom-select" required>
-					  <option value="" disabled selected>선택해주세요</option>
-					  <option value="차분한" ${loginMember.personality  eq '차분한'? 'selected' : ''}>차분한</option>
-					  <option value="활발한" ${loginMember.personality  eq '활발한'? 'selected' : ''}>활발한</option>
-					  <option value="내향적인" ${loginMember.personality  eq '내향적인'? 'selected' : ''}>내향적인</option>
-					  <option value="외향적인" ${loginMember.personality  eq '외향적인'? 'selected' : ''}>외향적인</option>
-					  <option value="열정적인" ${loginMember.personality  eq '열정적인'? 'selected' : ''}>열정적인</option>
-					  <option value="느긋한" ${loginMember.personality  eq '느긋한'? 'selected' : ''}>느긋한</option>
-					  <option value="다정한" ${loginMember.personality  eq '다정한'? 'selected' : ''}>다정한</option>
-					  <option value="헌신적인" ${loginMember.personality  eq '헌신적인'? 'selected' : ''}>헌신적인</option>
-					  <option value="솔직한" ${loginMember.personality  eq '솔직한'? 'selected' : ''}>솔직한</option>
-					  <option value="낙천적인" ${loginMember.personality  eq '낙천적인'? 'selected' : ''}>낙천적인</option>
-					   <option value="호기심많은" ${loginMember.personality  eq '호기심많은'? 'selected' : ''}>호기심많은</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<th>내 관심사</th>
-				<td>	
-				<select name="interest" class="custom-select" required>
-				  <option value="" disabled selected>선택해주세요</option>
-				  <option value="책" ${loginMember.interest  eq '책'? 'selected' : ''}>책</option>
-				   <option value="패션" ${loginMember.interest  eq '패션'? 'selected' : ''}>패션</option>
-				   <option value="음식" ${loginMember.interest  eq '음식'? 'selected' : ''}>음식</option>
-				    <option value="동물" ${loginMember.interest  eq '동물'? 'selected' : ''}>동물</option>
-				    <option value="여행" ${loginMember.interest  eq '여행'? 'selected' : ''}>여행</option>
-				  <option value="게임" ${loginMember.interest  eq '게임'? 'selected' : ''}>게임</option>
-				  <option value="영화" ${loginMember.interest  eq '영화'? 'selected' : ''}>영화</option>
-				    <option value="건강" ${loginMember.interest  eq '건강'? 'selected' : ''}>건강</option>
-				     <option value="음악" ${loginMember.interest  eq '음악'? 'selected' : ''}>음악</option>
-				      <option value="패션" ${loginMember.interest  eq '패션'? 'selected' : ''}>패션</option>
-				   <option value="스포츠" ${loginMember.interest  eq '스포츠'? 'selected' : ''}>스포츠</option>
-				</select>
-				</td>
-			</tr> 
-			 -->		
 		</table>
 		<input type="submit" class="btn btn-dark">
 		<input type="reset" class="btn btn-dark">
