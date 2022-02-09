@@ -93,6 +93,14 @@
 			on m.id = gml.member_id
 		where
 			gml.group_id = #{groupId}
+		order by 
+            (
+            CASE member_level_code
+            WHEN 'ld' THEN 0
+            WHEN 'mg' THEN 1
+            ELSE 2
+            END
+                )
 	</select>
  	<resultMap type="map" id="groupMemberListMap">
         <result column="id" property="memberId"/>
@@ -229,17 +237,6 @@
 		where
 			no=#{no}
 	</update>
-
-	<select id="groupMemberList" resultType="map">
-		select 
-		    m.picture,
-		    gml.*
-		from 
-		    member m join group_member_list gml
-		        on m.id = gml.member_id
-		where
-		    group_id = #{groupId}
-	</select>
 	
 	<select id="selectGroupInfo" resultType="group">
 		select
@@ -248,25 +245,6 @@
 			group_
 		where
 			group_id = #{groupId}
-	</select>
-	
-	<select id="groupMemberList2" resultType="map">
-		select 
-		    m.picture,
-		    gml.*
-		from 
-		    member m join group_member_list gml
-		        on m.id = gml.member_id
-		where
-		    group_id = #{groupId}
-		order by 
-            (
-            CASE member_level_code
-            WHEN 'ld' THEN 0
-            WHEN 'mg' THEN 1
-            ELSE 2
-            END
-                ) 
 	</select>
 
 	<select id="selectOneLikeLog" resultMap="likeLog">
@@ -320,13 +298,15 @@
 		group_member_list 
 	where 
 		member_id = #{memberId}
+		and
+		group_id = #{groupId}
 	</delete>
 	
 	<update id="updateGroupGrade">
 	update 
 	    group_member_list 
 	set 
-	    member_level_code = #{memberLevelCode} 
+	    member_level_code = #{level} 
 	where 
 	    member_id = #{memberId} 
 	    and 
@@ -337,11 +317,9 @@
 	update 
 		group_
 	set
-		group_id = #{groupId},
 		group_name = #{groupName},
 		hashtag = #{hashtag},
-		image = #{image},
-		leader_id = #{leaderId}
+		image = #{image}
 	where
 		group_id = #{groupId}
 	</update>
@@ -605,5 +583,17 @@
 	    (select * from member_like_group_hashtag  where member_id = #{id}) m
 	    on g.hashtag = m.name
 	 </select>
+	 
+	 <update id="updateGroupLeader">
+	 update 
+	    group_member_list 
+	set 
+	    member_level_code = 'mb'
+	where 
+	    group_id = #{groupId}
+	    and
+	    member_level_code = 'ld' 
+	 	
+	 </update> 
 </mapper>
 

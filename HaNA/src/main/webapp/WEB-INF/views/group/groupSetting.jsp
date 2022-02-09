@@ -40,13 +40,13 @@
 	                    <h5 class="text-right">Edit your profile</h5>
 	                </div>
 	                <div class="row mt-2">
-	                    <div class="col-md-7"><label class="labels">소모임 아이디</label><input type="text" class="form-control" placeholder="first name" name="groupId" value="${group.groupId}" required readonly></div>
+	                    <div class="col-md-7"><label class="labels">소모임 아이디</label><input type="text" class="form-control" placeholder="GroupId" name="groupId" value="${group.groupId}" required readonly></div>
 	                </div>
 	                <div class="row mt-3">
-	                    <div class="col-md-7"><label class="labels">소모임명</label><input type="text" class="form-control" placeholder="headline" name="groupName" value="${group.groupName}" required></div>
+	                    <div class="col-md-7"><label class="labels">소모임명</label><input type="text" class="form-control" placeholder="GroupName" name="groupName" value="${group.groupName}" required></div>
 	                </div>
 	                <div class="row mt-3">
-	                    <div class="col-md-7"><label class="labels">프로필 사진</label><input type="file" class="form-control" placeholder="country" name="upFile" value="파일 선택">
+	                    <div class="col-md-7"><label class="labels">프로필 사진</label><input type="file" class="form-control" placeholder=File" name="upFile" value="파일 선택">
 	                    <input type="hidden" name="image" value="${group.image}" />
 	                    </div>
 	                </div>
@@ -85,28 +85,6 @@
     </form:form>
 </div>
 
-<style>
-.form-control:focus {
-    box-shadow: none;
-    border-color: #BA68C8
-}
-
-.back:hover {
-    color: #682773;
-    cursor: pointer
-}
-
-.labels {
-    font-size: 11px
-}
-
-.add-experience:hover {
-    background: #BA68C8;
-    color: #fff;
-    cursor: pointer;
-    border: solid 1px #BA68C8
-}
-</style>
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
