@@ -162,8 +162,27 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public int updateGroupGrade(Map<String, Object> map) {
-		return groupDao.updateGroupGrade(map);
+	public int updateGroupGrade(Map<String, Object> param) {
+		int result = 0;
+		//바꿀 레벨이 ld면
+		log.info("updateGroupGrade param.get(\"level\") = {}",param.get("level"));
+		if(param.get("level").equals("ld")) {
+			result = groupDao.updateGroupLeader(param);
+			if(result > 0) {
+				result = groupDao.updateGroupGrade(param);
+				if(result > 0)
+					result = 1;
+				else
+					result = 0;
+			}
+			else
+				result = 0;
+		}
+		else {
+			result = groupDao.updateGroupGrade(param);
+		}
+
+		return result;
 	}
 
 	@Override

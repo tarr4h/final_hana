@@ -46,7 +46,7 @@ table th, td {
 				<tr>
 					<td>${group.groupId}</td>
 					<td><img
-						style="width: 100px; height: 100px; border-radius: 50%;"
+						style="width: 100px; height: 100px; border-radius: 50%;cursor: pointer;"
 						src="${pageContext.request.contextPath}/resources/upload/member/profile/${member.profile}" />
 					</td>
 					<td>${member.memberId}</td>
@@ -124,7 +124,7 @@ function grade(code,memberId,groupId){
 	/* console.log("asdfadf1",code);
 	console.log("asdfadf1",memberId);
 	console.log("asdfadf1",groupId); */
-	
+	<!-- memberId2는 제가 header에 memberId에다가 로그인id넣어둔거 가져와서 쓴거같아요-->
 	memberId2 = memberId;
 	memberLevelCode2 = code;
 	console.log(memberId2);
@@ -146,6 +146,7 @@ function grade(code,memberId,groupId){
 /* 회원 등급 변경 함수 */
 function updateGroupGradeFunc(){
 	if(confirm("회원 등급을 변경하시겠습니까?")){
+		<!--  -->
 		console.log("updateGroupGradeFunc = ",memberId2);
 		console.log("updateGroupGradeFunc = ",memberLevelCode2);
 		$("[name=groupGradeUpdateFrm] input[name=memberId]").val(memberId2);
@@ -358,6 +359,7 @@ function updateGroupGradeFunc(){
      padding-right: 35px;
      padding-left: 35px
  }
+ 
 </style>
 
 

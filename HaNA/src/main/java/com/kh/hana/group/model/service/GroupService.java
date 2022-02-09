@@ -64,7 +64,7 @@ public interface GroupService {
 
 	int deleteGroupMember(String memberId);
 
-	int updateGroupGrade(Map<String, Object> map);
+	int updateGroupGrade(Map<String, Object> param);
 
 	int updateGroup(Group group);
 
@@ -98,4 +98,5 @@ public interface GroupService {
 
 	List<Group> selectRecommendedGroupList(Member member);
 
+	
 }

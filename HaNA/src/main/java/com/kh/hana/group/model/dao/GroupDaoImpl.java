@@ -142,8 +142,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public int updateGroupGrade(Map<String, Object> map) {
-		return session.update("group.updateGroupGrade", map);
+	public int updateGroupGrade(Map<String, Object> param) {
+		return session.update("group.updateGroupGrade", param);
 	}
 	
 	@Override
@@ -229,6 +229,11 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public List<Group> selectRecommendedGroupList(Member member) {
 		return session.selectList("group.selectRecommendedGroupList",member);
+	}
+
+	@Override
+	public int updateGroupLeader(Map<String, Object> param) {
+		return session.update("group.updateGroupLeader", param);
 	}
 	
 

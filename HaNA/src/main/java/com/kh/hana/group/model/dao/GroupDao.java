@@ -61,7 +61,7 @@ public interface GroupDao {
 
 	public int deleteGroupMember(String memberId);
 
-	public int updateGroupGrade(Map<String, Object> map);
+	public int updateGroupGrade(Map<String, Object> param);
 
 	public int updateGroup(Group group);
 
@@ -96,5 +96,7 @@ public interface GroupDao {
 	public int deleteMemberLikeHashtag(Map<String, Object> param);
 
 	public List<Group> selectRecommendedGroupList(Member member);
+
+	public int updateGroupLeader(Map<String, Object> param);
 
 }
