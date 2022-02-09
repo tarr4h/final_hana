@@ -132,7 +132,7 @@
     <c:if test="${loginMember.id.equals(member.id) }">
         	<button id="btn-add" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 	</c:if>
-	    <c:if test="${request > 0}">
+	    <c:if test="${request > 0} && ${loginMember.id.equals(member.id)}">
     	<button type="button" class="btn btn-secondary" id="requestButton">팔로잉 요청이 있습니다.</button>
     </c:if>
 		</div>
@@ -315,6 +315,13 @@ $("#btn-following-list").click((e) => {
 
 			$("#modalTbody").empty();
 			
+		     if(resp.length===0){
+                 tr = `<tr>
+                     <th colspan="5">팔로잉이 없습니다.</th>
+                 </tr>`;
+                 $("#modalTbody").append(tr);
+             }
+		     
 			const {memberId} = resp;
 			$.each(resp, (i, e) => {
 				console.log(e.followers[0].memberId);
@@ -343,6 +350,13 @@ $("#btn-follower-list").click((e) => {
 			console.log(resp);
 			
 			$("#modalTbody1").empty();
+			
+			if(resp.length===0){
+                tr = `<tr>
+                    <th colspan="5">팔로워가 없습니다.</th>
+                </tr>`;
+                $("#modalTbody1").append(tr);
+            }
 			
 			const {followingId} = resp;
 			$.each(resp, (i, e) => {

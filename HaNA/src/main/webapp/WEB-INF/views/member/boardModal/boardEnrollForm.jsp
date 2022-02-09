@@ -25,49 +25,28 @@
 					<thead class="table-light">
 					</thead>
 					<tbody id="modalTbody">
-						 <form:form
+	<form:form
         action="${pageContext.request.contextPath}/member/memberBoardEnroll?${_csrf.parameterName}=${_csrf.token}"
         method="POST"
         enctype="multipart/form-data">
-        <table>
-            <tr>
-            <td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/></td>
-            <td><input type="hidden" value="${id}" name="id"/></td>
-            </tr>
-            <tr>
-            <td>
-                <label for="file1">첨부파일 1</label>
-                <input type="file" name="file" id="file1" onchange="setThumbnail(event);"/>
-                <div id="image_container"></div>
-            </td>
-            </tr>
-            <tr>
-            <td>
-                <label for="file1">첨부파일 2</label>
-                <input type="file" name="file" id="file2"/>
-            </td>
-            </tr> 
-            <tr>
-            <td>
-                <label for="file1">첨부파일 3</label>
-                <input type="file" name="file" id="file3"/>
-            </td>
-            </tr> 
-            <tr>
-            <td><textarea  name="content" id="summernote"/></textarea></td>
-            </tr>
- 
-            <tr><td><input type="submit" /></td></tr>
-        </table>
+	            <input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/></td>
+	            <input type="hidden" value="${id}" name="id"/></td>
+		        <div class="font-weight-bold head pb-1"> </div> 
+		    	<textarea id="desc" cols="120" rows="5" placeholder="작성하기" name="content"></textarea>  
+		    	<br/><br/>  
+				<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"></div>
+				<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file2" value="파일 선택"></div>
+				<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file3" value="파일 선택"></div> 
+				<br/>
+           <input type="submit" value="게시"/>
     </form:form>
 					</tbody>
 				</table>
 			</div>
 			<div class="modal-footer">
-			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
 			</div>
 		</div>      
-        </div>
+    </div>
 </div>
 <script>
 //글쓰기
@@ -135,3 +114,14 @@ $(document).ready(function() {
 	});
 });
 </script>
+<style>
+textarea {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 2px;
+    outline-color: rgb(50, 147, 238);
+    height: 400px;
+}
+</style>
