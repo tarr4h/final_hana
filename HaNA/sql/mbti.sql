@@ -165,7 +165,6 @@ create table ranking (
     member_id varchar2(50),
 	tag_id varchar2(50),   	 
 	tag_date date,	
-    count number(4),
 	constraint tag_ranking_fk foreign key(tag_id)
         references hashtag(tag_id) on delete cascade
 );
@@ -224,9 +223,43 @@ ORDER BY r.count  desc;
 
 ------------------------------------------------------
 
+
+------------------------이번달 --------------------------
+select count(*),h.tag_name
+from ranking r left join   hashtag h  
+on r.tag_id = h.tag_id
+WHERE tag_date BETWEEN TRUNC(SYSDATE, 'MM')  and LAST_DAY(SYSDATE)
+group by h.tag_name;
+--------------------------------------------------------
+--------------오늘 ---------------------------------
+select count(*),h.tag_name
+from ranking r left join   hashtag h  
+on r.tag_id = h.tag_id
+WHERE TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd') 
+group by h.tag_name;
+-----------------------------------------------------
+----------------이번주-------------------------
+select count(*),h.tag_name
+from ranking r left join   hashtag h    
+on r.tag_id = h.tag_id
+where tag_date between
+(SELECT TRUNC(sysdate, 'iw') dt_date
+FROM dual)
+and
+(SELECT TRUNC(sysdate, 'iw') + 6 dt_date
+FROM dual)
+group by h.tag_name;
+
+
+
+
+
+WHERE tag_date BETWEEN TRUNC(SYSDATE, 'MM')  and LAST_DAY(SYSDATE)
+ORDER BY r.count  desc;
+
 select * from ranking;
 
-
-
-select SYSDATE FROM DUAL;
+select count(*),tag_id
+from     ranking 
+group by tag_id;
 

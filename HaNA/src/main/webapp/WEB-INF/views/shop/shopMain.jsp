@@ -33,45 +33,44 @@
 			<table class="table table-striped table-dark my-0">
 				<thead>
 					<tr>
-						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle">HashTag
-							Ranking</th>
+						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle">HashTag Ranking</th>
 					</tr>
 					<tr>
-						<th scope="col">Rank</th>
-						<th scope="col">음식점</th>
-						<th scope="col">카페</th>
-						<th scope="col">헤어샵</th>
-						<th scope="col">노래방</th>
+						<th scope="col">no</th>  
+						<th scope="col">일간</th>  
+						<th scope="col">주간</th>  
+						<th scope="col">월간</th>
+						<th scope="col">실시간</th>
 					</tr>
 				</thead>
 				<tbody>
 					 <tr>
-						<th scope="row">1</th>
-						<td>Mark ★</td>
-						<td>Otto ★</td>
-						<td>@mdo ★</td>
-						<td>@mdo ★</td>
+						<th scope="row" >1</th>
+						<td id="toDayFirstRanking">Mark ★</td>
+						<td id="weekFirstRanking">@mdo ★</td>
+						<td id="monthFirstRanking">Otto ★</td>
+						<td >@mdo ★</td> 
 					</tr> 
 					 <tr>
-						<th scope="row" id="todayTagRanking">2</th>
-						<!-- <td>Jacob</td>
-						<td>Thornton</td>
-						<td>@fat</td>
-						<td>@fat</td> -->
+						<th scope="row">2</th>
+						<td id="toDaySecondRanking">Jacob</td>
+						<td id="weekSecondRanking">@fat</td>
+						<td id="monthSecondRanking">Thornton</td>
+						<td>@fat</td> 
 					</tr> 
 					<tr>
-						<th scope="row" id="monthTagRanking">3</th>
-						<!-- <td>Larry</td>
-						<td>the Bird</td>
-						<td>@twitter</td>
-						<td>@twitter</td> -->
+						<th scope="row">3</th>
+						 <td id="toDayThirdTagRanking">Larry</td>
+						<td id="weekThirdRanking">@test!!</td>
+						<td id="monthThirdRanking">the Bird</td>
+						<td>@twitter</td> 
 					</tr>
 					<tr>
-						<th scope="row" id="weekTagRanking">4</th>
-						<!-- <td>Larry</td>
-						<td>the Bird</td>
-						<td>@twitter</td>
-						<td>@twitter</td> -->
+						<th scope="row">4</th>
+						<td id="toDayFourthTagRanking">Larry</td>
+						<td id="weekFourthRanking">@twitter</td>
+						<td id="monthFourthRanking">the Bird</td>
+						<td>@twitter</td> 
 					</tr>
 				</tbody>
 			</table>
@@ -412,6 +411,14 @@ $("[name=maxDistance]").change((e) => {
 	scrollPage();
 });
 	
+	
+	// 날짜 
+	var today = new Date();   
+	var year = today.getFullYear(); // 년도
+	var month = today.getMonth() + 1;  // 월
+	var date = today.getDate();  // 날짜
+	var tagDate = year + '-' + month  + '-' + date;
+	
 	// 검색 버튼 클릭시 태그 , 해당 날짜 DB 저장
  	$.ajax({
 		url : "${pageContext.request.contextPath}/shop/insertRankingData",
@@ -431,45 +438,23 @@ $("[name=maxDistance]").change((e) => {
 
 // 페이지 로딩시 랭킹 불러오기  오늘, 월간, 주간
 $(()=>{
-     console.log("실행")
-     
+
      // 오늘 데이터 구하기 
-     $.ajax({
+      $.ajax({
  		url : "${pageContext.request.contextPath}/shop/selectTodayRankingdatas",
  		success(data) {
+
  			console.log(data)	
- 	 		var toDay = [];
+			var toDay = []; 
  			toDay = data; 
  			console.log(toDay)
  			
- 			var htmlOut = '';
- 			  htmlOut += '<td>'+'# '+toDay[0].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+toDay[1].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+toDay[2].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+toDay[3].TAG_NAME + '</td>';
- 			  $('#todayTagRanking').append(htmlOut);
+ 			 $('#toDayFirstRanking').text('# '+toDay[0].TAG_NAME);
+ 			 $('#toDaySecondRanking').text('# '+toDay[1].TAG_NAME);
+ 			 $('#toDayThirdTagRanking').text('# '+toDay[2].TAG_NAME);
+ 			 $('#toDayFourthTagRanking').text('# '+toDay[3].TAG_NAME);
  		},
- 		error: console.log
- 		
- 	});
-     
-     // 이번달 데이터 구하기 
-     $.ajax({
- 		url : "${pageContext.request.contextPath}/shop/selectThisMonthRankingdatas",
- 		success(data) {
- 			console.log(data)	
- 	 		var month = [];
- 			month = data; 
- 			console.log(month)
- 			
- 			var htmlOut = '';
- 			  htmlOut += '<td>'+'# '+month[0].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+month[1].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+month[2].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+month[3].TAG_NAME + '</td>';
- 			  $('#monthTagRanking').append(htmlOut);
- 		},
- 		error: console.log
+		error: console.log
  		
  	});
      
@@ -481,13 +466,31 @@ $(()=>{
  	 		var week = [];
  			week = data; 
  			console.log(week)
+ 		
+ 			 $('#weekFirstRanking').text('# '+week[0].TAG_NAME);
+			 $('#weekSecondRanking').text('# '+week[1].TAG_NAME);
+			 $('#weekThirdRanking').text('# '+week[2].TAG_NAME);
+			 $('#weekFourthRanking').text('# '+week[3].TAG_NAME);
+ 		},
+ 		error: console.log
+ 		
+ 	}); 
+     
+      // 이번달 데이터 구하기 
+     $.ajax({
+ 		url : "${pageContext.request.contextPath}/shop/selectThisMonthRankingdatas",
+ 		success(data) {
  			
- 			var htmlOut = '';
- 			  htmlOut += '<td>'+'# '+week[0].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+week[1].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+week[2].TAG_NAME + '</td>';
- 			  htmlOut += '<td>'+'# '+week[3].TAG_NAME + '</td>';
- 			  $('#weekTagRanking').append(htmlOut);
+ 			console.log(data)
+ 			var month = [];// 이번달
+ 			month = data; 
+ 			console.log(month)
+ 			
+ 			 $('#monthFirstRanking').text('# '+month[0].TAG_NAME);
+			 $('#monthSecondRanking').text('# '+month[1].TAG_NAME);
+			 $('#monthThirdRanking').text('# '+month[2].TAG_NAME);
+			 $('#monthFourthRanking').text('# '+month[3].TAG_NAME);
+ 			
  		},
  		error: console.log
  		
@@ -495,8 +498,8 @@ $(()=>{
      
      
      
+     
 });
-
 
 
 
