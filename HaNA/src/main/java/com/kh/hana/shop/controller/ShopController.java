@@ -431,4 +431,25 @@ public class ShopController {
     	PropertyEditor editor = new CustomDateEditor(sdf, true);
     	binder.registerCustomEditor(Date.class, editor);
     }
+    
+    @GetMapping("/selectTodayRankingdatas")
+    public ResponseEntity<?> selectTodayRankingdatas(){
+    	List<String> rankingTodayDatas  = shopService.selectTodayRankingdatas();
+    	return ResponseEntity.ok(rankingTodayDatas);
+    }
+    
+    @GetMapping("/selectThisMonthRankingdatas")
+    public ResponseEntity<?> selectThisMonthRankingdatas(){
+    	List<String> rankingMonthDatas  = shopService.selectThisMonthRankingdatas();
+    	return ResponseEntity.ok(rankingMonthDatas);
+    }
+    
+    @GetMapping("/selectThisWeekRankingdatas")
+    public ResponseEntity<?> selectThisWeekRankingdatas(){
+    	List<String> rankingWeekDatas  = shopService.selectThisWeekRankingdatas();
+    	return ResponseEntity.ok(rankingWeekDatas);
+    }
+    
+    
+    
 }
