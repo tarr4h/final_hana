@@ -245,7 +245,7 @@
 	</update>
 	
 	
-	<update id ="selectRankingData" parameterType="map" >
+	<insert id ="selectRankingData" parameterType="map" >
 	  <selectKey order="BEFORE" resultType="string" keyProperty="tagId">
             select
                 tag_id as tagId
@@ -254,15 +254,9 @@
               where
                   tag_name = #{tags} 
         </selectKey>
-      	 merge into  ranking 
-    		using DUAL
-     		  on (member_id = #{id} and tag_id = #{tagId} and tag_date = #{tagDate})
-   			when matched then
-       			update set count = count + #{count}
-   			 when not matched then
-       		 	insert (member_id , tag_id, tag_date, count) 
-        		values (#{id},#{tagId},#{tagDate},#{count})
-	</update>
+       		 	insert into ranking
+        		values (#{id},#{tagId},#{tagDate})
+	</insert>
 	
 	<select id="selectOneReservation" parameterType="string" resultType="reservation">
 		select
@@ -302,6 +296,51 @@
 		    req_accept = 'Y'
 	</select>
 	
+
+	<select  id="selectTodayRankingdatas" resultType="map" >	
+			select 
+				 count(*)as count,h.tag_name
+			from 
+				ranking r left join   hashtag h  
+				on r.tag_id = h.tag_id
+			WHERE 
+				TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd') 
+			group by h.tag_name
+			order by count desc
+
+	</select>
+	
+	<select  id="selectThisMonthRankingdatas" resultType="map">
+		select 
+			count(*)as count,h.tag_name
+		from 
+			ranking r left join   hashtag h  
+			on r.tag_id = h.tag_id
+		WHERE 
+			tag_date BETWEEN TRUNC(SYSDATE, 'MM') and LAST_DAY(SYSDATE)
+		group by h.tag_name
+		order by count desc
+			
+	</select>
+	
+	<select  id="selectThisWeekRankingdatas" resultType="map">
+		select 
+			count(*)as count,h.tag_name
+		from 
+			ranking r left join   hashtag h    
+			on r.tag_id = h.tag_id
+		where 
+			tag_date between
+			(SELECT TRUNC(sysdate, 'iw') dt_date
+			FROM dual)
+			and
+			(SELECT TRUNC(sysdate, 'iw') + 6 dt_date
+			FROM dual)
+		group by h.tag_name
+		order by count desc
+					
+	</select>
+
 	<select id="selectTablePrice" parameterType="string" resultType="table">
 		select
 			*

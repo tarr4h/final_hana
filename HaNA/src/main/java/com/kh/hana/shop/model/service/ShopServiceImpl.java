@@ -96,8 +96,8 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Override
 	public int insertRankingData(Map<String, Object> rankingMap) {
-		int count = 1;
-		rankingMap.put("count", count);
+	//	int count = 1;
+	//	rankingMap.put("count", count);
 		int selectData = shopDao.selectRankingData(rankingMap);
 		log.info("selectData = {}" ,selectData );
 		return selectData;
@@ -200,6 +200,21 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
+	public List<String> selectTodayRankingdatas() {
+		return shopDao.selectTodayRankingdatas();
+	}
+
+	@Override
+	public List<String> selectThisMonthRankingdatas() {
+		return shopDao.selectThisMonthRankingdatas();
+	}
+
+	@Override
+	public List<String> selectThisWeekRankingdatas() {
+		return shopDao.selectThisWeekRankingdatas();
+	}
+
+
 	public List<Table> selectTablePrice(String id) {
 		return shopDao.selectTablePrice(id);
 	}
@@ -245,6 +260,7 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	
+
 
 
 

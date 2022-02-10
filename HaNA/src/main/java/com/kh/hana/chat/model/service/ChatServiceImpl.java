@@ -161,7 +161,6 @@ public class ChatServiceImpl implements ChatService {
 	public int CreateGroupChat(Group group) {
 		int result = chatDao.CreateGroupChat(group);
 		int roomNo = chatDao.selectGroupRoomNo(group);
-		group.setMemberCount(roomNo);
 		int result2 = 0;
 		log.info("CreateGroupChat serviceImpl roomNo넣음= {}", group);
 		if(result > 0)

@@ -60,6 +60,13 @@ public interface ShopDao {
 
 	List<Member> selectAcceptedFriends(String reservationNo);
 
+
+	List<String> selectTodayRankingdatas();
+
+	List<String> selectThisMonthRankingdatas();
+
+	List<String> selectThisWeekRankingdatas();
+
 	List<Table> selectTablePrice(String id);
 
 	int updateTablePrice(Table table);
@@ -77,6 +84,7 @@ public interface ShopDao {
 	int updateRestPrice(Map<String, Object> reqMap);
 
 	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
+
 
 
 

@@ -23,7 +23,6 @@ public class GroupBoardEntity implements Serializable{
 	private String writer;
 	private String content;
 	private Date regDate;
-	private int likeCount;
 	private String placeName;
 	private String placeAddress;
 	private double locationY;
