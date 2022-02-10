@@ -329,7 +329,9 @@ $(`.next${vss.index }`).on('click', function () {
 				$(".commentTd${vss.index} .comments${vss.index }").html(commentList);
 
 		},
-		error:console.log
+        error:function(request,status,error){}
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	}
 	});
 	
 //forEach에서 일반 댓글쓰기
@@ -368,7 +370,9 @@ const commetWrite${vss.index}=()=>{
 				
 			
 		},
-		error:console.log
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 };
 
@@ -385,7 +389,9 @@ $.ajax({
 		/* console.log("${vss.index }=",i${vss.index }); */
 		$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
 	},
-	error:console.log
+    error:function(request,status,error){
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    }
 });
 
 //forEach에서 내가 좋아요 누른 여부 확인
@@ -410,7 +416,9 @@ $.ajax({
  		};
 
 	},
-	error:console.log
+    error:function(request,status,error){
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    }
 });
 
 //좋아요 누를때
@@ -450,7 +458,9 @@ const insertLike${vss.index }=()=>{
 			else
 				console.log("441번째 줄");
 		},
-		error:console.log		
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 };
 const deleteLike${vss.index }=()=>{
@@ -472,7 +482,9 @@ const deleteLike${vss.index }=()=>{
 			else
 				console.log("436번째 줄");
 		},
-		error:console.log		
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 };
 </script>
@@ -628,7 +640,9 @@ $(`.next0${vss.index }`).on('click', function () {
 				$(".commentTd0${vss.index} .comments0${vss.index }").html(commentList);
 
 		},
-		error:console.log
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 	
 //forEach에서 일반 댓글쓰기
@@ -673,22 +687,13 @@ const commetWrite0${vss.index}=()=>{
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
-		    let messageSplit = data.message.split("@");
-		    console.log(messageSplit);
-		    console.log(messageSplit[0]);
-		    console.log(messageSplit[1]);
-		    console.log(messageSplit[2]);
 		    let jsonData = JSON.stringify(data);
 		    websocket.send(jsonData);
-			
-			
-			
-			
-			
-			
-			
+	
 		},
-		error:console.log
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 
 };
@@ -708,7 +713,9 @@ $.ajax({
 		console.log("0${vss.index }=",i0${vss.index });
 		$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
 	},
-	error:console.log
+    error:function(request,status,error){
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    }
 });
 
 //forEach에서 내가 좋아요 누른 여부 확인
@@ -733,7 +740,9 @@ $.ajax({
 		};
 
 	},
-	error:console.log
+    error:function(request,status,error){
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    }
 });
 
 //좋아요 누를때
@@ -771,7 +780,9 @@ const insertLike0${vss.index }=()=>{
 			else
 				console.log("736번째 줄");
 		},
-		error:console.log		
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 };
 const deleteLike0${vss.index }=()=>{
@@ -793,7 +804,9 @@ const deleteLike0${vss.index }=()=>{
 			else
 				console.log("758번째 줄");
 		},
-		error:console.log		
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 };
 
@@ -861,8 +874,10 @@ const insertFollow =(id,index)=>{
 			else
 				console.log("팔로우 실패");
 		},
-		error:console.log			
-	})
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+	});
 };
 const DMsend=(writer)=>{
 	console.log(writer);
@@ -884,7 +899,9 @@ const DMsend=(writer)=>{
 				else
 					alert("메세지 전송 실패");
 			},
-			error:console.log		
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        }
 		});
 	}
 }
@@ -927,7 +944,9 @@ const commetLevel2Write0=(index,boardNo)=>{
 		success(resp){
 			console.log('댓글작성');
 		},
-		error:console.log
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 
 	const date = moment(today).format("YYYY년 MM월 DD일");
@@ -982,7 +1001,9 @@ const commetLevel2Write=(index,boardNo)=>{
 		success(resp){
 			console.log('댓글작성');
 		},
-		error:console.log
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
 	});
 
 	const date = moment(today).format("YYYY년 MM월 DD일");
