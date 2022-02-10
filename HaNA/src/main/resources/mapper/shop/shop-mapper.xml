@@ -446,4 +446,14 @@
 			and
 			reservation_no = #{reservationNo}
 	</update>
+	
+	<select id="selectShopGrade" parameterType="string" resultType="map">
+		select
+		    *
+		from
+		    board_review b inner join shop_table_reservation s
+		    on b.reservation_no = s.reservation_no
+		where
+		    s.shop_id = #{shopId}
+	</select>
 </mapper>

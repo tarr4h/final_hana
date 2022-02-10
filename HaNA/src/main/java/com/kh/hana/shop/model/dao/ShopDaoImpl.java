@@ -222,6 +222,11 @@ public class ShopDaoImpl implements ShopDao {
 	public int updateReviewStatus(Map<String, Object> map) {
 		return session.update("shop.updateReviewStatus", map);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectShopGrade(String shopId) {
+		return session.selectList("shop.selectShopGrade", shopId);
+	}
 	
 	
 

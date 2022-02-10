@@ -450,6 +450,24 @@ public class ShopController {
     	return ResponseEntity.ok(rankingWeekDatas);
     }
     
-    
+    @GetMapping("/getShopGrade")
+    public ResponseEntity<?> selectShopGrade(@RequestParam String shopId){
+    	log.info("shopId = {}", shopId);
+    	
+    	List<Map<String, Object>> reviewList = shopService.selectShopGrade(shopId);
+    	log.info("reviewList = {}", reviewList);
+    	
+    	// 리뷰 개수 구하기
+    	int reviewCount = reviewList.size();
+    	
+    	// 평점 평균 구하기
+    	int totalGrade = 0;
+    	for(Map<String, Object> list : reviewList) {
+    		int grade = (int) list.get("GRADE");
+    		totalGrade += grade;
+    	}
+    	
+    	return ResponseEntity.ok(null);
+    }
     
 }

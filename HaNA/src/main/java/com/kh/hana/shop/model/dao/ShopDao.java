@@ -89,6 +89,8 @@ public interface ShopDao {
 
 	int updateReviewStatus(Map<String, Object> map);
 
+	List<Map<String, Object>> selectShopGrade(String shopId);
+
 
 
 

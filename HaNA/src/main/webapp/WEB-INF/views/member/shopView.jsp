@@ -89,12 +89,12 @@
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>${member.addressAll}</td>
+							<td>${shopInfo.address}</td>
 						</tr>
 						<tr>
 							<td rowspan=2><span class="tableKey">소개</span></td>
 							<td class="tableValue" rowspan=2>
-								 ${member.introduce} 
+								 ${shopInfo.shopIntroduce} 
 							</td>
 						</tr>
 						<tr>
@@ -207,8 +207,22 @@
 	
 	/* 업체 평점 구하기 */
 	function getShopGrade(shopId){
-		
-	}
+		$.ajax({
+			url: '${pageContext.request.contextPath}/shop/getShopGrade',
+			data:{
+				shopId
+			},
+			success(res){
+				console.log(res);
+			},
+			error: console.log
+		});
+	};
+	
+	$(() => {
+		let shopId = '${shopInfo.id}';
+		getShopGrade(shopId);
+	})
 
 </script>
 
