@@ -150,7 +150,7 @@ select
 select * from shophashtag;
 select * from hashtag;
 select * from shop_info;
-
+select * from member;
 commit;
 select
     *
@@ -285,8 +285,20 @@ select sysdate from dual;
  
 
 select * from member;
+select * from shop_info;
 
-
-
-
+select
+            *
+        from
+            shop_info i	
+            left join member m
+            on i.id = m.id
+            left join shophashtag s 
+            on m.id = s.member_id 
+    		left join hashtag h 
+            on s.tag_id = h.tag_id
+        where
+            tag_name = '삼겹살'
+;
+select * from member;
 

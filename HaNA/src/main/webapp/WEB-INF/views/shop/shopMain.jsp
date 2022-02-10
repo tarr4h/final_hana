@@ -238,7 +238,8 @@ function scrollPage(){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
-							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/20220210_172303329_730.jpg"/>';
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
 							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
@@ -254,7 +255,8 @@ function scrollPage(){
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
-								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+								  //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/'+ list[i].PICTURE +'"/>';
 								    htmlOut += '</div>';
 								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
 								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
@@ -274,7 +276,8 @@ function scrollPage(){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
-							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/'+ list[i].PICTURE +'"/>';
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
 							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
@@ -291,7 +294,8 @@ function scrollPage(){
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
-								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+									 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/'+ list[i].PICTURE +'"/>';
 								    htmlOut += '</div>';
 								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
 								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
@@ -536,7 +540,8 @@ $(".tagClick").click(function(){
 						var htmlOut='';
 						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 						htmlOut += '<div class="shopProfile d-flex">';
-					    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+						 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+						htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/'+ list[i].PICTURE +'"/>';
 					    htmlOut += '</div>';
 					    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
 					    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
