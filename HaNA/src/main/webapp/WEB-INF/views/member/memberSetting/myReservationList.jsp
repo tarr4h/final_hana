@@ -76,7 +76,7 @@
 					</thead>
 					<tbody></tbody>
 				</table>
-				<jsp:include page="/WEB-INF/views/member/modal/reservationShare.jsp"></jsp:include>
+
 				<div class="pageBar"></div>
 			</div>
         </div>
@@ -163,10 +163,12 @@
 						<tr>
 							<td>\${resDate.getFullYear()}-\${resDate.getMonth()+1}-\${resDate.getDate()}</td>
 							<td>
-								\${e.shopName}(\${e.shopId})
+								<a href="${pageContext.request.contextPath}/member/shopView/\${e.shopId}">\${e.shopName}(\${e.shopId})</a>
 							</td>
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
-							<td>\${e.visitorCount}명</td>
+							<td>
+								<a href="#" onclick="showShareUserModal('\${e.reservationNo}')">\${e.visitorCount}명</a>
+							</td>
 							<td>\${e.reservationStatus}</td>
 							<td>
 								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}', '\${e.visitorCount}');"/>
@@ -253,9 +255,13 @@
 					let tr = `
 						<tr>
 							<td>\${resDate.getFullYear()}-\${resDate.getMonth()+1}-\${resDate.getDate()}</td>
-							<td>\${e.shopId}</td>
+							<td>
+								<a href="${pageContext.request.contextPath}/member/shopView/\${e.shopId}">\${e.shopName}(\${e.shopId})</a>
+							</td>
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
-							<td>\${e.visitorCount}명</td>
+							<td>
+								<a href="#" onclick="showShareUserModal('\${e.reservationNo}')">\${e.visitorCount}명</a>
+							</td>
 							<td>
 								<input type="button" value="후기 작성" class="reviewBtn" data-rs-no="\${e.reservationNo}" onclick="enrollReview('\${e.reservationNo}')"/>
 							</td>
@@ -304,8 +310,11 @@
 		});
 	};
 </script>
+<jsp:include page="/WEB-INF/views/member/modal/reservationShare.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/member/modal/reservationPurchase.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/member/boardModal/reviewModal.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/member/modal/shareUserModal.jsp"></jsp:include>
+
 </section>
 <style>
 .list-group-item {

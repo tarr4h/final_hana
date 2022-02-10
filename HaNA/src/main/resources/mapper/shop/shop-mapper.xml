@@ -201,7 +201,9 @@
 		where
 			shop_id = #{shopId}
 			and
-			reservation_date > sysdate-1	
+			reservation_date > sysdate-1
+			and
+			reservation_status = '예약완료'	
 	</select>
 	
 	<select id="selectShopReservationListByDate" parameterType="map" resultType="reservation">
@@ -390,6 +392,7 @@
 		    s.reservation_no,
 		    s.attend_user,
 		    p.originalprice,
+		    p.restprice,
 		    m.name,
 		    m.id,
 		    m.address_all
@@ -432,6 +435,18 @@
 		where
 			reservation_no = #{reservationNo}
 	</update>
+
+	<select id="selectHashTagClickShopList" resultType="map">
+		 select
+            *
+        from
+            shop_info i
+  		  	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id
+        where
+            tag_name = #{tagName}
+	</select>
+
 	
 	<insert id="insertBoardReview" parameterType="map">
 		insert into board_review
@@ -455,5 +470,6 @@
 		    on b.reservation_no = s.reservation_no
 		where
 		    s.shop_id = #{shopId}
+
 	</select>
 </mapper>

@@ -589,5 +589,12 @@
 	    member_level_code = 'ld' 
 	 	
 	 </update> 
+	 
+	 <delete id="deleteGroup">
+	 delete from
+	 	group_
+	 where
+	 	group_id = #{groupId}
+	 </delete>
 </mapper>
 

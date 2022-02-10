@@ -113,7 +113,7 @@ create table mbti_data(
     result  number ,
     constraint fk_mbti_data foreign key(member_id) references member(id) on delete cascade
 );
-select * from mbti_data  where member_id ='k33';
+select * from mbti_data;  where member_id ='k33';
 commit;
 
 constraint fk_code foreign key(tag_id)
@@ -170,6 +170,9 @@ create table ranking (
 );
 
   select *from ranking;
+  select * from hashtag;
+  
+update ranking set tag_date = '22/02/19' where member_id = 'k666';
   
   insert  into ranking(tag_id , tag_date , count);
   
@@ -260,7 +263,30 @@ ORDER BY r.count  desc;
 
 select * from ranking;
 
+
 select count(*),tag_id
 from     ranking 
 group by tag_id;
+
+select sysdate from dual;
+
+
+ select *from mbti_data;
+ 
+ 
+  select
+            *
+        from
+            shop_info ;
+  		  	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id
+        where
+            tag_name = '감자탕';
+ 
+
+select * from member;
+
+
+
+
 

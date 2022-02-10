@@ -132,7 +132,7 @@
 							 <input type="radio" name="rating" id="r5" value="1">
 							 <label for="r5"></label>
 						</div>
-						<input type="text" name="checkedVal" id="" />
+						<input type="hidden" name="checkedVal" id="" />
 					</div>
 					<br /><br />
 			</div>
