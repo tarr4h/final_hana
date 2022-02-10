@@ -29,5 +29,5 @@ public class Reservation implements Serializable {
 	private String reviewStatus;
 	private int originalprice;
 	private int restprice;
-	
+	private String shopName;
 }

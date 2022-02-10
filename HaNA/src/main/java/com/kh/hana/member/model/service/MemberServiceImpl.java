@@ -12,6 +12,8 @@ import com.kh.hana.member.model.vo.BoardComment;
 import com.kh.hana.member.model.vo.Follower;
 import com.kh.hana.member.model.vo.FollowingRequest;
 import com.kh.hana.member.model.vo.Member;
+import com.kh.hana.shop.model.dao.ShopDao;
+import com.kh.hana.shop.model.vo.Reservation;
 import com.kh.hana.shop.model.vo.Shop;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private ShopDao shopDao;
 
 	@Override
 	public int memberEnroll(Member member) {
@@ -36,35 +41,8 @@ public class MemberServiceImpl implements MemberService {
 	public int updateMember(Member member, Member oldMember) {
 		int result = memberDao.updateMember(member);
 		log.info("result ={}", result);
-//		int result2 = 0;
-//		int result3 = 0;
-//  	log.info("memberPersonality ={}", member.getPersonality());
-//		if(oldMember.getPersonality() != null) {
-//			result2 = memberDao.updatePersonality(member);
-//		}else {
-//			result2 = memberDao.insertPersonality(member);
-//		}
-//		
-//		if(oldMember.getInterest() != null) {
-//			result3 = memberDao.updateInterest(member);
-//		}else {
-//			result3 = memberDao.insertInterest(member);
-//		}		
-//		if(result1 == 1) {
-//			return 1;
-//		}
-//		else {
-//			return 0;
-//		}
 		return result;		
 	}
-
-//	@Override
-//	public Member selectPersonality(String id) {
-//		Member member = memberDao.selectPersonality(id);
-//		log.info("id={}", id);
-//		return member;
-//	}
 
 	@Override
 	public int updateShopInfo(Shop shop) {
@@ -235,6 +213,37 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int refuseFollowing(Map<String, Object> map) {
 		return memberDao.refuseFollowing(map);
+	}
+
+	@Override
+	public int insertReview(Map<String, Object> map) {
+		Board board = (Board) map.get("board");
+		String reservationNo = (String) map.get("reservationNo");
+		log.info("reservationNo = {}", reservationNo);
+		
+		// board table에 review insert		
+		int result = memberDao.insertReview(board);
+		log.info("reviewInsert result = {}", result);
+		int boardNo = board.getNo();
+		log.info("return boardNo = {}", boardNo);
+		
+		// board review table insert
+		map.put("boardNo", boardNo);
+		int reviewInsert = shopDao.insertBoardReview(map);
+		log.info("board_review table insert result = {}", reviewInsert);
+		
+		// shop_table_reservaton_share 상태 변경
+		String attendUser = board.getWriter();
+		map.put("attendUser", attendUser);
+		int reviewStatusUpdateResult = shopDao.updateReviewStatus(map);
+		log.info("reviewStatus update result = {}", reviewStatusUpdateResult);
+		
+		if(result > 0 && reviewInsert > 0 && reviewStatusUpdateResult > 0) {
+			return 1;
+		} else {
+			return 0;			
+		}
+		
 	}
 
 //	@Override

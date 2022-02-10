@@ -90,6 +90,9 @@ public interface MemberDao {
 
 	int refuseFollowing(Map<String, Object> map);
 
+	int insertReview(Board board);
+
+
 	//int checkRefuse(Map<String, Object> map);
 
  

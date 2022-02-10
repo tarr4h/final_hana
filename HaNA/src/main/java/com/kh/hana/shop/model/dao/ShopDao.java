@@ -85,6 +85,10 @@ public interface ShopDao {
 
 	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
 
+	int insertBoardReview(Map<String, Object> map);
+
+	int updateReviewStatus(Map<String, Object> map);
+
 
 
 

@@ -103,7 +103,9 @@
 						</tr>
 						<tr>
 							<td><span class="tableKey">평점</span></td>
-							<td><span class="tableValue">4.9</span></td>
+							<td>
+								<span class="tableValue grade">4.9</span>
+							</td>
 						</tr>
 						
 						<!-- 본인인 경우 예약확인버튼 노출 -->
@@ -202,6 +204,11 @@
 		
 		$('#pageDetail').modal("show");
 	});
+	
+	/* 업체 평점 구하기 */
+	function getShopGrade(shopId){
+		
+	}
 
 </script>
 

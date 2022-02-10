@@ -221,6 +221,8 @@
 		from
 			shop_table_reservation_share s left join shop_table_reservation r
 			on s.reservation_no = r.reservation_no
+			left join shop_info i
+			on r.shop_id = i.id
 		where
 			s.attend_user = #{id}
 			<if test="state == 1">
@@ -428,6 +430,20 @@
 		update reservation_req_price
 		set restprice = restprice - #{amount}
 		where
+			reservation_no = #{reservationNo}
+	</update>
+	
+	<insert id="insertBoardReview" parameterType="map">
+		insert into board_review
+		values(#{boardNo}, #{reservationNo}, #{checkedVal})
+	</insert>
+	
+	<update id="updateReviewStatus" parameterType="map">
+		update shop_table_reservation_share
+		set review_status = 'S'
+		where
+			attend_user = #{attendUser}
+			and
 			reservation_no = #{reservationNo}
 	</update>
 </mapper>
