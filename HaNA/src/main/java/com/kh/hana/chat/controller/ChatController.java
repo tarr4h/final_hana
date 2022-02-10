@@ -530,5 +530,9 @@ public class ChatController {
     	return ResponseEntity.ok(result);
     }
     
+    @PostMapping("/testtest2.do")
+    public String testtest2(String id) {
+    	return null;
+    }
     		
 }

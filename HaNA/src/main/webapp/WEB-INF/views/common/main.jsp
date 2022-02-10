@@ -172,6 +172,10 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
+    <span>회원추천 몇개 더</span>
+    <span>좋아요 ,댓글 알림</span>
+    <span>공유 메세지</span>
+    <span>웹소켓 예외처리</span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
@@ -361,6 +365,8 @@ const commetWrite${vss.index}=()=>{
 		        </li>  `;
 			$(".commentTd${vss.index} .comments${vss.index }").append(commentList);
 			$("input#input-comment${vss.index}").val('');
+				
+			
 		},
 		error:console.log
 	});
@@ -658,6 +664,29 @@ const commetWrite0${vss.index}=()=>{
 		        </li>  `;
 			$(".commentTd0${vss.index} .comments0${vss.index }").append(commentList);
 			$("input#input-comment0${vss.index}").val('');
+			
+			
+		    const data = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `${groupboard.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${boardNo}`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let messageSplit = data.message.split("@");
+		    console.log(messageSplit);
+		    console.log(messageSplit[0]);
+		    console.log(messageSplit[1]);
+		    console.log(messageSplit[2]);
+		    let jsonData = JSON.stringify(data);
+		    websocket.send(jsonData);
+			
+			
+			
+			
+			
+			
+			
 		},
 		error:console.log
 	});

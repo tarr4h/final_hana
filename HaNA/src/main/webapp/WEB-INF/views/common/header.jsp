@@ -242,6 +242,19 @@
 				connect(1);
 				return
 			}
+			
+			else if(eSplit[4] === 226){
+				let message226Split = eSplit[1].split("@");
+				
+			 	beep2();
+				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${message226Split[1]} \${message226Split[2]}</a>`);
+				$("div#headerAlert").css('display','block');
+				setTimeout(function(){
+					$("div#headerAlert").css('display','none');
+				},5000);
+				
+				
+			}
 			else{
 				
 			if(eSplit[4] === roomNo){
@@ -260,6 +273,7 @@
 					} 
 					
 					unreadCheck(e);
+
 				}
 				else{
 					
@@ -270,6 +284,11 @@
 				setTimeout(function(){
 					$("div#headerAlert").css('display','none');
 				},5000);
+				headerdmAlarm = headerdmAlarm+1;
+				window[memberId+eSplit[4]] = window[memberId+eSplit[4]]+1;
+				$(`#roomAlarm`+eSplit[4]).text(window[memberId+eSplit[4]]);
+				$("#dmAlarm").text(headerdmAlarm);
+				
 				} 
 			}
 
@@ -313,10 +332,12 @@
 				data:{id : memberId},
 				success(resp){
 					if(resp != null){
-						window['dmAlarmvar'] = 10;
-						$("#dmAlarm").text(dmAlarmvar);
+						window['headerdmAlarm'] = resp;
+
+						$("#dmAlarm").text(headerdmAlarm);
 						
 					}
+						
 				},
 				/* error:console.log */
 			});

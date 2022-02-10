@@ -73,12 +73,37 @@ public class WebSocketHandler extends TextWebSocketHandler{
         List<String> loginusers = chatService.selectListReceiver(chat);
         log.info("loginusers = {}", loginusers);
         
+        
         if(chat.getMessage() != null && chat.getMessage().equals("ENTER22")) {
         	
         	userSessions.put(chat.getMemberId(), session);
         	
         	sessionsuser.put(session, chat.getMemberId());
         	log.info("userSession에 id값 넣음 ={}", userSessions);
+        	
+        	
+        	if(chat.getRoomNo() == 226) {
+        		String[] messageSplit = chat.getMessage().split("@");
+
+        		chat.getMemberId();
+    			TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage()+ ","  + chat.getPicture()+ ","  +chat.getMessageRegDate()+","+chat.getRoomNo());
+
+    				//log.info("로그인한 유저 확인 반복문 session = {}", userSessions.get(user));
+    				if(userSessions.get(messageSplit[0]) != null) {
+    	            try {
+    	            	userSessions.get(messageSplit[0]).sendMessage(textMessage);
+    	            } catch( Exception ex ) {
+    	                log.info("handleTextMessage roomno226일때= {}",ex );
+    	                synchronized( userSessions ) {
+    	                    userSessions.remove(sessionsuser.get(userSessions.get(messageSplit[0])));
+    	                    sessionsuser.remove(userSessions.get(messageSplit[0]));
+    	                }
+    	            }
+    				}
+        		
+    			
+        	}
+        	   	
         	
         }
         else {
@@ -154,7 +179,15 @@ public class WebSocketHandler extends TextWebSocketHandler{
         			
         			for(WebSocketSession sess : RoomList2.get(chat.getRoomNo()).keySet()) {
         				loginusers222.remove(RoomList2.get(chat.getRoomNo()).get(sess));
-        				sess.sendMessage(textMessage);
+        	            try {
+        	            	sess.sendMessage(textMessage);
+        	            } catch( Exception ex ) {
+        	                log.info("handleTextMessage = {}",ex );
+        	                synchronized( RoomList2 ) {
+            	    			RoomList2.get(sessionList.get(sess)).remove(sess);
+            	    			sessionList.remove(sess);
+        	                }
+        	            }
         				
         			}
         			log.info("로그인유저 채팅 맴버 제거 후 = {}", loginusers222);
@@ -165,8 +198,18 @@ public class WebSocketHandler extends TextWebSocketHandler{
 
         					//없으면 null나옴
         					//log.info("로그인한 유저 확인 반복문 session = {}", userSessions.get(user));
-        					if(userSessions.get(user) != null)
-        						userSessions.get(user).sendMessage(textMessage);
+        					if(userSessions.get(user) != null) {
+                	            try {
+                	            	userSessions.get(user).sendMessage(textMessage);
+                	            } catch( Exception ex ) {
+                	                log.info("handleTextMessage = {}",ex );
+                	                synchronized( userSessions ) {
+                	                    userSessions.remove(sessionsuser.get(userSessions.get(user)));
+                	                    sessionsuser.remove(userSessions.get(user));
+                	                }
+                	            }
+        					}
+        						
         				}
 
         				log.info("로그인유저 채팅 맴버 제거 후 = {}", loginusers222);
@@ -197,8 +240,16 @@ public class WebSocketHandler extends TextWebSocketHandler{
     			
     			for(WebSocketSession sess : RoomList2.get(chat.getRoomNo()).keySet()) {
     				loginusers222.remove(RoomList2.get(chat.getRoomNo()).get(sess));
-    				sess.sendMessage(textMessage);
-    				
+
+    	            try {
+    	            	sess.sendMessage(textMessage);
+    	            } catch( Exception ex ) {
+    	                log.info("handleTextMessage = {}",ex );
+    	                synchronized( RoomList2 ) {
+        	    			RoomList2.get(sessionList.get(sess)).remove(sess);
+        	    			sessionList.remove(sess);
+    	                }
+    	            }    				
     			}
     			
     			//같은 채팅방에 없구 로그인한 유저가 있으면 뿌려주기
@@ -206,9 +257,21 @@ public class WebSocketHandler extends TextWebSocketHandler{
     				
     				//없으면 null나옴
     				//log.info("로그인한 유저 확인 반복문 session = {}", userSessions.get(user));
-    				if(userSessions.get(user) != null)
-    					userSessions.get(user).sendMessage(textMessage);
+    				if(userSessions.get(user) != null) {
+    	            try {
+    	            	userSessions.get(user).sendMessage(textMessage);
+    	            } catch( Exception ex ) {
+    	                log.info("handleTextMessage = {}",ex );
+    	                synchronized( userSessions ) {
+    	                    userSessions.remove(sessionsuser.get(userSessions.get(user)));
+    	                    sessionsuser.remove(userSessions.get(user));
+    	                }
+    	            }
+    	            
+    				}
+    				
     			}
+    			
         		
         		//timerupdate(chat);
         		//DB에 저장한다.
