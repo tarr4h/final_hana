@@ -52,7 +52,8 @@
 			<div class="title-image-box" style="margin-left:20px;">
 			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:130px;height:130px;border-radius:100%;"></a>
 			</div>
-			<span class="navbar-brand text-white" style="font-size:40px;">DNHBQ</span>			 
+			<span class="navbar-brand text-white" style="font-size:40px;">DNHBQ</span>	
+			<jsp:include page="/WEB-INF/views/common/modal/searchResult.jsp"/>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
@@ -145,6 +146,8 @@
 	</audio>
 	<sec:authorize access="isAuthenticated()">
 		<script>
+
+		
 		$(document).ready( function() {
 			connect(1);
 			dmAlarm();

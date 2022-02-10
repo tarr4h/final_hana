@@ -88,6 +88,8 @@
 	</div>
 	
 <script>
+let maxIndex;
+let currentIndex;
 //게시물 상세보기
 function getPageDetail(boardNo){
 	console.log("boardNo2",boardNo);
@@ -131,17 +133,43 @@ function getPageDetail(boardNo){
 		 		}
 				
 		 		
-		 		// 이미지
+	 	 	// 이미지
 		 		$("#board-img-container").empty();
-	 			$.each(boardDetail.picture, (i,e)=>{
-	 				console.log("e", e);
-	 				let img = `<img src='<%=request.getContextPath()%>/resources/upload/member/board/\${e}' alt="" class="board-img"/>`
-	 				$("#board-img-container").append(img); // 이미지 추가
+		 		const button = `<div class="img-move-button-container">
+			        <img class="board-img-move left-button" src="<%=request.getContextPath()%>/resources/images/icons/left1.png" alt="" />
+			        <img class="board-img-move right-button" src="<%=request.getContextPath()%>/resources/images/icons/right1.png" alt="" />
+			        </div>`
+		 		$("#board-img-container").append(button);
+			        
+		 		$.each(boardDetail.picture, (i,e)=>{
 	 				
+	 				let img = `<img id='img\${i}' src='<%=request.getContextPath()%>/resources/upload/member/board/\${e}' alt="" class="board-img"/>`
+	 				$("#board-img-container").append(img); // 이미지 추가
+	 				maxIndex = i;
 	 			})
+	 			
 	 			$(".board-img").css("width","100%");
 	 			$(".board-img").css("position","absolute");
 	  			$(".board-img").css("left","0");
+	  			$("#img0").css("z-index","2");
+				
+	  			currentIndex = 0;
+	  			
+	  			//이미지 옆으로 넘기기
+	  			$(".right-button").click((e)=>{
+					if(currentIndex<maxIndex){
+		  				$(`#img\${currentIndex+1}`).css("z-index",2);
+		  				$(`#img\${currentIndex}`).css("z-index",1);
+		  				currentIndex += 1;							
+					}
+	  			})
+	  			$(".left-button").click((e)=>{
+					if(currentIndex>0){
+		  				$(`#img\${currentIndex-1}`).css("z-index",2);
+		  				$(`#img\${currentIndex}`).css("z-index",1);
+		  				currentIndex -= 1;							
+					}
+	  			})
 		 		
 	 			//내용
 	 			let content = `\${boardDetail.content}</br>`
