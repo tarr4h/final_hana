@@ -42,8 +42,7 @@
         	<ul class="list-group">
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member// '">계정 공개</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member// ">정보 공개</li>
+			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/accountPrivate'">계정 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
         </div>
@@ -291,9 +290,29 @@
 			error: console.log
 		});
 	};
-	
-
 </script>
 <jsp:include page="/WEB-INF/views/member/modal/reservationPurchase.jsp"></jsp:include>
 </section>
+<style>
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+    text-align: center;
+}
+.col-sm-4{
+	width : 350px;
+	margin-right: 100px;
+	}
+.col-sm-8 {
+    flex: 0 0 auto;
+    width: 850px;
+    font-size:20px;
+}
+</style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
