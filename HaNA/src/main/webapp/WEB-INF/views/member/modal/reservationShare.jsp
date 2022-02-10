@@ -94,7 +94,7 @@ function onOpenShare() {
 	    };
 	    let jsonData = JSON.stringify(data);
 	    websocket.send(jsonData);
-	}
+}
 function shareReservation(reservationNo, targetUser){
 	let maxUser = $("[name=shareVisitorCount]").val();
 	let countFr = selectAcceptedFriendsForCheck(reservationNo);
