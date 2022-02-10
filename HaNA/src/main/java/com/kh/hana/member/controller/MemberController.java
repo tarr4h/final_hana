@@ -125,10 +125,16 @@ public class MemberController {
 		
 		model.addAttribute("boardList", boardList);
 		
+		// 업체인 경우 shop 정보 + 리뷰 게시글 가져오기
 		if(member.getAccountType() == 0) {
 			Shop shopInfo = memberService.selectOneShopInfo(id);
 			log.info("shopInfo = {}", shopInfo);
 			model.addAttribute("shopInfo", shopInfo);
+			
+			List<Board> reviewList = memberService.selectShopReviewList(shopInfo.getId());
+			model.addAttribute("reviewList", reviewList);
+			log.info("reviewLIst = {}", reviewList);
+			
 			return "/member/"+"shopView";
 		};
 		

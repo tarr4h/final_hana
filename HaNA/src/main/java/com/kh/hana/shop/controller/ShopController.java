@@ -463,11 +463,18 @@ public class ShopController {
     	// 평점 평균 구하기
     	int totalGrade = 0;
     	for(Map<String, Object> list : reviewList) {
-    		int grade = (int) list.get("GRADE");
+    		int grade = Integer.parseInt(String.valueOf(list.get("GRADE")));
     		totalGrade += grade;
     	}
     	
-    	return ResponseEntity.ok(null);
+    	double average = (double) Math.round((double) totalGrade / (double) reviewCount * 10) / 10;
+    	
+    	Map<String, Object> returnMap = new HashMap<>();
+    	returnMap.put("reviewCount", reviewCount);
+    	returnMap.put("average", average);
+    	
+    	
+    	return ResponseEntity.ok(returnMap);
     }
     
 }

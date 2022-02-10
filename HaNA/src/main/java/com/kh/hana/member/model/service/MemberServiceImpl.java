@@ -249,6 +249,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.isRequestFriend(map);
 	}
 
+	@Override
+	public List<Board> selectShopReviewList(String id) {
+		return memberDao.selectShopReviewList(id);
+	}
+
 //	@Override
 //	public int checkRefuse(Map<String, Object> map) {
 //		return memberDao.checkRefuse(map);

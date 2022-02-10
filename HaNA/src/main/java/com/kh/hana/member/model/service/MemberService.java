@@ -85,6 +85,8 @@ public interface MemberService {
 
 	int isRequestFriend(Map<String, Object> map);
 
+	List<Board> selectShopReviewList(String id);
+
 	//int checkRefuse(Map<String, Object> map);
 
 	 

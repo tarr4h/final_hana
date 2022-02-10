@@ -200,6 +200,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.isRequestFriend",map);
 	}
 
+	@Override
+	public List<Board> selectShopReviewList(String id) {
+		return session.selectList("member.selectShopReviewList", id);
+	}
+
 //	@Override
 //	public int checkRefuse(Map<String, Object> map) {
 //		return session.selectOne("member.checkRefuse", map);

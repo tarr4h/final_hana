@@ -84,8 +84,12 @@
 				<table id="profileTable">
 					<tbody>
 						<tr>
-							<td class="tableKey">아이디</td>
-							<td class="tableValue">${member.id}</td>
+							<td>
+								<span class="tableKey">아이디</span>
+							</td>
+							<td>
+								<span class="tableValue">${member.id}</span>
+							</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
@@ -102,7 +106,7 @@
 							<td></td>
 						</tr>
 						<tr>
-							<td><span class="tableKey">평점</span></td>
+							<td><span class="tableKey">평점(리뷰 수)</span></td>
 							<td>
 								<span class="tableValue grade">4.9</span>
 							</td>
@@ -162,6 +166,7 @@
     <div class="row" id="reviewArea" style="display:none;">
     	<jsp:include page="/WEB-INF/views/member/shopViewBoardArea/reviewBoard.jsp"></jsp:include>
     </div>
+    <jsp:include page="/WEB-INF/views/member/boardModal/boardDetail.jsp"/>
 </div>
 
 <script>
@@ -213,16 +218,18 @@
 				shopId
 			},
 			success(res){
-				console.log(res);
+				let str = `\${res.average}(\${res.reviewCount})`;
+				$(".grade").text(str);
 			},
 			error: console.log
 		});
 	};
 	
+	/* onload 시 평점/리뷰 수 반영 */
 	$(() => {
 		let shopId = '${shopInfo.id}';
 		getShopGrade(shopId);
-	})
+	});
 
 	//팔로잉, 팔로워리스트 모달
 	$("#btn-following-list").on( "click", function() {

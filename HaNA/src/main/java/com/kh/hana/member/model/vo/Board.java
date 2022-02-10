@@ -21,10 +21,12 @@ public class Board extends BoardEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String writerProfile;
+	private String shopId;
 	public Board(int no, String writer, String content, Date regDate, String boardType, String[] picture,
-			String writerProfile) {
+			String writerProfile, String shopId) {
 		super(no, writer, content, regDate, boardType, picture);
 		this.writerProfile = writerProfile;
+		this.shopId = shopId;
 	}
  
 	
