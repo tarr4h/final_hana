@@ -276,4 +276,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectRecommendedGroupList(member);
 	}
 
+	@Override
+	public int deleteGroup(String groupId) {
+		return groupDao.deleteGroup(groupId);
+	}
+
 }
