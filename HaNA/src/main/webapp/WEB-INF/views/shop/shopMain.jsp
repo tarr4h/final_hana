@@ -222,6 +222,7 @@ function scrollPage(){
 				success(res){	
 					var  list = res;
 					const max = list.length;
+					console.log("list" , list);	
 					// list.TAG_NAME 값 비교가 안되서 어차피 tag_name은 있거나 없거나 이니까 변수로 옮겨서 null 체크 
 				 	var  tagName ="";				 	
 					for(var i =0; i<list.length; i++){
@@ -237,7 +238,7 @@ function scrollPage(){
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>'
+							    htmlOut += '<span class = "shopScroll">'+ list[i].SHOP_NAME + '</span>'
 								$('#shopList').append(htmlOut);
 								// list[i].ID가 마지막이라면 return
 								if(i == max -1){
@@ -251,7 +252,7 @@ function scrollPage(){
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';	
+								    htmlOut += '<span class = "shopScroll">'+ list[i].SHOP_NAME + '</span>';	
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
@@ -269,7 +270,7 @@ function scrollPage(){
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+ list[i].SHOP_NAME + '</span>';
 								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';	
 								$('#shopList').append(htmlOut); 
 								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
@@ -285,7 +286,7 @@ function scrollPage(){
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+ list[i].SHOP_NAME + '</span>';
 									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';		
 									$('#shopList').append(htmlOut);
 									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
@@ -437,6 +438,7 @@ $("[name=maxDistance]").change((e) => {
 }
 
 // 페이지 로딩시 랭킹 불러오기  오늘, 월간, 주간
+
 $(()=>{
 
      // 오늘 데이터 구하기 
@@ -494,14 +496,10 @@ $(()=>{
  		},
  		error: console.log
  		
- 	});
-     
-     
-     
-     
-});
+ 	});  
+}); 
 
-
+// 랭킹 태그 클릭시 
 
 
 </script>

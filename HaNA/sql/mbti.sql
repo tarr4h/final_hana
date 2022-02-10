@@ -113,7 +113,7 @@ create table mbti_data(
     result  number ,
     constraint fk_mbti_data foreign key(member_id) references member(id) on delete cascade
 );
-select * from mbti_data  where member_id ='k33';
+select * from mbti_data;  where member_id ='k33';
 commit;
 
 constraint fk_code foreign key(tag_id)
@@ -263,4 +263,12 @@ select * from ranking;
 select count(*),tag_id
 from     ranking 
 group by tag_id;
+
+select sysdate from dual;
+
+
+ select *from mbti_data;
+
+DELETE FROM mbti_data WHERE member_ID = 'k333';
+
 
