@@ -91,7 +91,7 @@
 let maxIndex;
 let currentIndex;
 //게시물 상세보기
-function getPageDetail(boardNo){
+function getMemberPageDetail(boardNo){
 	console.log("boardNo2",boardNo);
 	 $.ajax({
 			url : "${pageContext.request.contextPath}/member/memberBoardDetail/"+boardNo,
@@ -245,7 +245,7 @@ function submitModifiedContent(e){
 		},
 		success(data){
 			console.log(data);
-			getPageDetail(boardDetail.no);
+			getMemberPageDetail(boardDetail.no);
 		},
 		error(xhr, statusText, err){
 			switch(xhr.status){
