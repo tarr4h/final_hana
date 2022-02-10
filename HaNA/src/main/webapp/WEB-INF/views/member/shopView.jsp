@@ -205,7 +205,7 @@
 	$('.board-main-image').click((e)=>{
 		let boardNo = $(e.target).siblings("#boardNo").val();
 		console.log("boardNo1",boardNo);
-		getPageDetail(boardNo);
+		getMemberPageDetail(boardNo);
 		
 		$('#pageDetail').modal("show");
 	});
