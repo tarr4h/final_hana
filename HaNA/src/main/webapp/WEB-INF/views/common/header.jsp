@@ -216,7 +216,7 @@
 		function onMessagews(e){
  			let eSplit = e.data.split(",");
 			let ShareMessage = eSplit[1].split("@");
-				
+			console.log("eSplit[4] = ",eSplit[4]);
 			if(ShareMessage[0] === 'share115'){
 				if(eSplit[0]!==memberId){
 					if(eSplit[4] !== roomNo){
@@ -246,9 +246,10 @@
 				return
 			}
 			
-			else if(eSplit[4] === 226){
+			else if(eSplit[4] === '226'){
+				console.log("eSplit[4] === 226 입장");
 				let message226Split = eSplit[1].split("@");
-				
+				console.log(message226Split);
 			 	beep2();
 				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${message226Split[1]} \${message226Split[2]}</a>`);
 				$("div#headerAlert").css('display','block');
@@ -279,7 +280,7 @@
 
 				}
 				else{
-					
+				console.log("eSplit[4] === 226 아닌 곳 입장");
 			 	beep();
 				let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
 				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);

@@ -80,12 +80,23 @@ public class WebSocketHandler extends TextWebSocketHandler{
         	
         	sessionsuser.put(session, chat.getMemberId());
         	log.info("userSession에 id값 넣음 ={}", userSessions);
+        	   	
         	
+        }
+        else {
+        	userSessions.put(chat.getMemberId(), session);
         	
-        	if(chat.getRoomNo() == 226) {
+        	sessionsuser.put(session, chat.getMemberId());
+        	log.info("userSession에 id값 넣음 ={}", userSessions);
+        	
+        	if(chat.getRoomNo() == 226 && chat.getMessage() != null) {
+        		log.info("chat.getRoomNo() == 226 들어옴");
+        		log.info("chat.getMessage() = {}",chat.getMessage());
         		String[] messageSplit = chat.getMessage().split("@");
+        		log.info("messageSplit = {}",messageSplit[0]);
+        		log.info("messageSplit = {}",messageSplit[1]);
+        		log.info("messageSplit = {}",messageSplit[2]);
 
-        		chat.getMemberId();
     			TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage()+ ","  + chat.getPicture()+ ","  +chat.getMessageRegDate()+","+chat.getRoomNo());
 
     				//log.info("로그인한 유저 확인 반복문 session = {}", userSessions.get(user));
@@ -100,19 +111,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
     	                }
     	            }
     				}
-        		
-    			
+        	
         	}
-        	   	
-        	
-        }
-        else {
-        	userSessions.put(chat.getMemberId(), session);
-        	
-        	sessionsuser.put(session, chat.getMemberId());
-        	log.info("userSession에 id값 넣음 ={}", userSessions);
-        	
-        	if(chat.getMessage() != null) {
+        	else if(chat.getRoomNo() != 226 && chat.getMessage() != null) {
         		
         		// 받은 메세지에 담긴 roomId로 해당 채팅방을 찾아온다.
         		ChatRoom chatRoom = chatService.selectChatRoom(chat.getRoomNo());
@@ -230,7 +231,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
         			
         		}
         	}
-        	else if(chat.getMessage() == null && chat.getFileImg() != null) {
+        	else if(chat.getRoomNo() != 226 && chat.getMessage() == null && chat.getFileImg() != null) {
         		//log.info("파일보내기파일보내기파일보내기파일보내기파일보내기파일보내기파일보내기");
         		TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage()+ ","  + chat.getPicture()+ ","  +chat.getMessageRegDate()+","+chat.getRoomNo()+","+chat.getFileImg());
         		//log.info("메세지 보내기 testMessage = {}", textMessage);

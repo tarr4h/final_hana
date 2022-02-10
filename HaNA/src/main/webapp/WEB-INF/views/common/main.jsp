@@ -669,7 +669,7 @@ const commetWrite0${vss.index}=()=>{
 		    const data = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `${groupboard.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${boardNo}`,
+		            "message"   : `${board.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${board.no}`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
