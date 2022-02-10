@@ -260,6 +260,7 @@ ORDER BY r.count  desc;
 
 select * from ranking;
 
+
 select count(*),tag_id
 from     ranking 
 group by tag_id;
@@ -268,7 +269,11 @@ select sysdate from dual;
 
 
  select *from mbti_data;
+ 
+ 
+ 
 
-DELETE FROM mbti_data WHERE member_ID = 'k333';
+
+
 
 
