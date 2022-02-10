@@ -281,7 +281,7 @@ select sysdate from dual;
             tag_name = '감자탕';
  
 
-
+select * from member;
 
 
 
