@@ -20,21 +20,22 @@
 
 <div id="searchResultBox">
 	<div id="content-box">
-		<table></table>
 	</div>
 </div>
 
 <script>
 	// 검색창 활성시 결과창 on
-	$("#search-box").focus((e)=>{
+	$("#search-box, #content-box").focus((e)=>{
 		$("#searchResultBox").css('display','inline');
 	})
 	
 	// 검색창 비활성시 결과창 off
 	$("#search-box").blur((e)=>{
-		$("#searchResultBox").css('display','none');
+		setTimeout(function() {
+			$("#searchResultBox").css('display','none');
+		}, 150);
 	})
-	
+	 
 	$("#search-box").keyup((e)=>{
 		let category = $("#select-box").val();
 		let keyword = $(e.target).val();
@@ -46,6 +47,7 @@
 				keyword
 			},
 			success(data){
+				console.log(data);
 				if(category == 'member'){
 					getMemberList(data);			
 				}
@@ -64,25 +66,57 @@
 	})
 	
 	function getMemberList(data){
-		let tr = `<tr>
-			<td rowspan=2>aksldf</td>
-			<td>alksdjf</td>
-		</tr>
-		<tr>
-			<td>alskdjf</td>
-		</tr>`
-		$("#content-box table").append(tr);
+		$("#content-box").empty();
+		$.each(data,function(i,member){
+			let row = `<div class="row row-box" onclick="location.href='${pageContext.request.contextPath}/member/memberView/\${member.id}'">
+				<div class="col-sm-5">
+					<img src='${pageContext.request.contextPath}/resources/upload/member/profile/\${member.picture}' alt='' />
+				</div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-6">
+					<div class="row memberId">\${member.id}</div>
+					<div class="row memberName">\${member.name}</div>
+				</div>
+			</div>`
+			$("#content-box").append(row);	
+		})
 	}
 	function getGroupList(data){
-		
+		$("#content-box").empty();
+		$.each(data,function(i,group){
+			let row = `<div class="row row-box" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/\${group.groupId}'">
+				<div class="col-sm-5">
+					<img src='${pageContext.request.contextPath}/resources/upload/member/profile/\${group.image}' alt='' />
+				</div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-6">
+					<div class="row groupId">\${group.groupId}</div>
+					<div class="row groupName">\${group.groupName}</div>
+				</div>
+			</div>`
+			$("#content-box").append(row);	
+		})
 	}
 	function getLocationList(data){
-		
+		$("#content-box").empty();
+		$.each(data,function(i,location){
+			let row = `<div class="row row-box" onclick="$(document.locationFrm\${i}).submit();">
+				<div class="col-sm-3">
+				</div>
+				<div class="col-sm-9">
+					<div class="row locationName">\${location.placeName}</div>
+					<div class="row locationAddress">\${location.placeAddress}</div>
+				</div>
+			</div>`
+			let form = `<form action="${pageContext.request.contextPath}/group/searchLocation" name="locationFrm\${i}">
+				<input type="hidden" value="\${location.placeName}" name="placeName"/>
+				<input type="hidden" value="\${location.placeAddress}" name="placeAddress"/>
+				<input type="hidden" value="\${location.locationY}" name="locationY"/>
+				<input type="hidden" value="\${location.locationX}" name="locationX"/>
+			</form>`
+			$("#content-box").append(row);	
+			$("#content-box").append(form);	
+		})
 	}
-	
-	
-	
-	
-		
 	
 </script>

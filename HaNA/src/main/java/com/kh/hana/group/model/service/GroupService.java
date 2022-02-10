@@ -98,5 +98,7 @@ public interface GroupService {
 
 	List<Group> selectRecommendedGroupList(Member member);
 
+	int deleteGroup(String groupId);
+
 	
 }

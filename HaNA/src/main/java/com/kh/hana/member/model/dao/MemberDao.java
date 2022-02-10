@@ -90,7 +90,11 @@ public interface MemberDao {
 
 	int refuseFollowing(Map<String, Object> map);
 
+	int insertReview(Board board);
+
 	int isRequestFriend(Map<String, Object> map);
+
+	List<Board> selectShopReviewList(String id);
 
 	//int checkRefuse(Map<String, Object> map);
 

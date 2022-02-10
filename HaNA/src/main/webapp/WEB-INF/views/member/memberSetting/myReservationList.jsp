@@ -162,7 +162,9 @@
 					let tr = `
 						<tr>
 							<td>\${resDate.getFullYear()}-\${resDate.getMonth()+1}-\${resDate.getDate()}</td>
-							<td>\${e.shopId}</td>
+							<td>
+								\${e.shopName}(\${e.shopId})
+							</td>
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
 							<td>\${e.visitorCount}명</td>
 							<td>\${e.reservationStatus}</td>
@@ -183,6 +185,7 @@
 					let timeBool = dateSet >= e.timeStart && month == resDate.getMonth()+1 && date_ == resDate.getDate();
 					if(userBool || timeBool || statusBool){
 						$("#myReservationTable tbody").find(".shareResBtn:last").prop('disabled', 'true');
+						$("#myReservationTable tbody").find(".cancleResBtn:last").prop('disabled', 'true');
 					};
 					if(userBool || timeBool && statusBool){
 						$("#myReservationTable tbody").find(".cancleResBtn:last").prop('disabled', 'true');
@@ -254,13 +257,23 @@
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
 							<td>\${e.visitorCount}명</td>
 							<td>
-								<input type="button" value="후기 작성" class="reviewBtn" data-rs-no="\${e.reservationNo}"/>
+								<input type="button" value="후기 작성" class="reviewBtn" data-rs-no="\${e.reservationNo}" onclick="enrollReview('\${e.reservationNo}')"/>
 							</td>
 						</tr>
 					`;
 					$("#myReservationTable tbody").append(tr);
 					if(e.reviewStatus == 'Y'){
 						$("#myReservationTable tbody").find(".reviewBtn:last").prop('disabled', 'true');
+					};
+					/* 후기 작성완료 시 상태 변경 */
+					if(e.reviewStatus == 'S'){
+						$("#myReservationTable tbody").find(".reviewBtn:last").prop('disabled', 'true');
+						$("#myReservationTable tbody").find(".reviewBtn:last").val('작성완료');
+					};
+					/* 예약 완료가 아닌 경우 상태 변경 */
+					if(e.reservationStatus == '예약취소' || e.reservationStatus == '예약대기'){
+						$("#myReservationTable tbody").find(".reviewBtn:last").prop('disabled', 'true');
+						$("#myReservationTable tbody").find(".reviewBtn:last").val('작성불가');
 					}
 				});
 				$(".pageBar").append(res.pageBar);
@@ -292,6 +305,7 @@
 	};
 </script>
 <jsp:include page="/WEB-INF/views/member/modal/reservationPurchase.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/member/boardModal/reviewModal.jsp"></jsp:include>
 </section>
 <style>
 .list-group-item {

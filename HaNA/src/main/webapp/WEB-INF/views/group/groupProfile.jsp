@@ -24,7 +24,7 @@
 		document.getElementById('upFileForm').submit();
         return false;
 	}
-
+	
 // 리더만 수정할 수 있는 버튼 (만 있음)
 	function goGroupSetting() {
 		location.href = "${pageContext.request.contextPath}/group/groupSetting";
@@ -36,6 +36,7 @@
 	        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 	    }
 	  });
+
 
 </script>
 <sec:authentication property="principal" var="loginMember"/>
@@ -156,6 +157,21 @@
 							</div>
 							<div style="margin-top:10px;">
 								<a href="javascript:void(0);" onclick="location.href='${pageContext.request.contextPath}/group/groupSetting/${group.groupId}';" class="enroll-button">정보수정</a>
+							</div>
+							<div style="margin-top:10px;">
+							<form:form action="${pageContext.request.contextPath}/group/deleteGroup?${_csrf.parameterName}=${_csrf.token}" method="post">
+							<input type="hidden" name=groupId value="${group.groupId}"/>
+								<button type="submit" id="de1" onclick="deleteGroup(return confirm('그룹을 삭제하시겠습니까?'));" class="enroll-button" style="color: red;">그룹삭제</button>
+							</form:form>
+							</div>
+							
+<%  }if(m.get("memberLevelCode").equals("mb")){	%>	
+							<div style="margin-top:10px;">
+							<form:form action="${pageContext.request.contextPath}/group/leaveGroup?${_csrf.parameterName}=${_csrf.token}" method="post">
+							<input type="hidden" name=memberId value="${loginMember.id}"/>
+							<input type="hidden" name=groupId value="${group.groupId}"/>
+								<button type="submit" onclick="deleteGroupMember(return confirm('그룹을 탈퇴하시겠습니까?'));" class="enroll-button" style="color: red;">그룹탈퇴</button>
+							</form:form>
 							</div>
 <%}}}};%>
 						</div>
