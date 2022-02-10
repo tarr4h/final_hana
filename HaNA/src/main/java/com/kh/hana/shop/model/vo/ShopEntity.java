@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class ShopEntity {
 
 	private String id;
+	private String shopName;
 	private String bussinessHourStart;
 	private String bussinessHourEnd;
 	private String locationX;
