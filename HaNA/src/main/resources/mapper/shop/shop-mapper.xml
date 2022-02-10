@@ -435,6 +435,18 @@
 		where
 			reservation_no = #{reservationNo}
 	</update>
+
+	<select id="selectHashTagClickShopList" resultType="map">
+		 select
+            *
+        from
+            shop_info i
+  		  	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id
+        where
+            tag_name = #{tagName}
+	</select>
+
 	
 	<insert id="insertBoardReview" parameterType="map">
 		insert into board_review
@@ -458,5 +470,6 @@
 		    on b.reservation_no = s.reservation_no
 		where
 		    s.shop_id = #{shopId}
+
 	</select>
 </mapper>

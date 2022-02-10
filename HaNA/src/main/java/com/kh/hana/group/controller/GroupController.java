@@ -673,6 +673,40 @@ public class GroupController {
 		map.put("result",result);
 		return ResponseEntity.ok(map);
 	}
+	
+	@PostMapping(value = "/deleteGroup")
+	public String deleteGroup (@RequestParam String groupId) {
+		
+		log.info("groupId ={}", groupId);
+		int result = 0;
+		result = groupService.deleteGroup(groupId);
+		String msg = result > 0 ? "그룹 삭제 성공" : "그룹 삭제 실패";
+		
+		return "redirect:/group/groupList";
+	}
+	
+	@PostMapping(value = "/leaveGroup")
+	public String leaveGroup (@RequestParam String memberId, @RequestParam String groupId) {
+		
+	int result = 0;
+	
+	try {			
+		log.info("memberId ={}", memberId);
+		log.info("groupId ={}", groupId);
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberId",memberId);
+		param.put("groupId",groupId);
+		result = groupService.deleteGroupMember(param);
+		String msg = result > 0 ? "회원 탈퇴 성공" : "회원 탈퇴 실패";
+		log.info("msg ={}", msg);
+		
+	}catch(Exception e) {
+		log.error(e.getMessage(),e);
+		throw e;
+	}
+		
+		return "redirect:/group/groupList";
+	}
 }
 
 

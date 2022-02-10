@@ -99,4 +99,6 @@ public interface GroupDao {
 
 	public int updateGroupLeader(Map<String, Object> param);
 
+	public int deleteGroup(String groupId);
+
 }
