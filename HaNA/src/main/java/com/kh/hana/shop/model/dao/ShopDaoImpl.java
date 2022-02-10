@@ -214,6 +214,11 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
+	public List<String> selectHashTagClickShopList(String tagName) {
+		return session.selectList("shop.selectHashTagClickShopList", tagName);
+	}
+	
+	@Override
 	public int insertBoardReview(Map<String, Object> map) {
 		return session.insert("shop.insertBoardReview", map);
 	}

@@ -46,30 +46,30 @@
 				<tbody>
 					 <tr>
 						<th scope="row" >1</th>
-						<td id="toDayFirstRanking">Mark ★</td>
-						<td id="weekFirstRanking">@mdo ★</td>
-						<td id="monthFirstRanking">Otto ★</td>
+						<td id="toDayFirstRanking" class="tagClick" onClick="hashTagClick()">Mark ★</td>
+						<td id="weekFirstRanking" class="tagClick" onClick="hashTagClick()" >@mdo ★</td>
+						<td id="monthFirstRanking" class="tagClick" onClick="hashTagClick()">Otto ★</td>
 						<td >@mdo ★</td> 
 					</tr> 
 					 <tr>
 						<th scope="row">2</th>
-						<td id="toDaySecondRanking">Jacob</td>
-						<td id="weekSecondRanking">@fat</td>
-						<td id="monthSecondRanking">Thornton</td>
+						<td id="toDaySecondRanking" class="tagClick" onClick="hashTagClick()">Jacob</td>
+						<td id="weekSecondRanking" class="tagClick" onClick="hashTagClick()">@fat</td>
+						<td id="monthSecondRanking" class="tagClick" onClick="hashTagClick()">Thornton</td>
 						<td>@fat</td> 
 					</tr> 
 					<tr>
 						<th scope="row">3</th>
-						 <td id="toDayThirdTagRanking">Larry</td>
-						<td id="weekThirdRanking">@test!!</td>
-						<td id="monthThirdRanking">the Bird</td>
+						 <td id="toDayThirdTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
+						<td id="weekThirdRanking" class="tagClick" onClick="hashTagClick()">@test!!</td>
+						<td id="monthThirdRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
 						<td>@twitter</td> 
 					</tr>
 					<tr>
 						<th scope="row">4</th>
-						<td id="toDayFourthTagRanking">Larry</td>
-						<td id="weekFourthRanking">@twitter</td>
-						<td id="monthFourthRanking">the Bird</td>
+						<td id="toDayFourthTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
+						<td id="weekFourthRanking" class="tagClick" onClick="hashTagClick()">@twitter</td>
+						<td id="monthFourthRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
 						<td>@twitter</td> 
 					</tr>
 				</tbody>
@@ -180,6 +180,8 @@ var hashTagData = ""; // 검색 데이터 잠시 담을 변수
 
 function scrollPage(){	
 	
+	
+
 		//  페이지 들어 왔을때 (태그 선택 후 검색 버튼을 클릭 하지 않았을 경우) 스크롤을 하면 거리기반 매장만 뜨게 
 		if(chkClick == false) {
 			 selectDataArr.length = 0; // 태그 데이터 삭제 
@@ -222,6 +224,7 @@ function scrollPage(){
 				success(res){	
 					var  list = res;
 					const max = list.length;
+					console.log("list" , list);	
 					// list.TAG_NAME 값 비교가 안되서 어차피 tag_name은 있거나 없거나 이니까 변수로 옮겨서 null 체크 
 				 	var  tagName ="";				 	
 					for(var i =0; i<list.length; i++){
@@ -237,12 +240,14 @@ function scrollPage(){
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>'
+							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
+							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
 								$('#shopList').append(htmlOut);
 								// list[i].ID가 마지막이라면 return
 								if(i == max -1){
 									return;
 							}
+							
 						}  
 					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
@@ -251,7 +256,9 @@ function scrollPage(){
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';	
+								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
+								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
+								    
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
@@ -269,8 +276,9 @@ function scrollPage(){
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-								htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';	
+							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
+							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
+								htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
 								$('#shopList').append(htmlOut); 
 								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
@@ -285,8 +293,9 @@ function scrollPage(){
 									htmlOut += '<div class="shopProfile d-flex">';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+ list[i].ID + '</span>';
-									htmlOut += '<span class = "shopScroll">'+'#'+ list[i].TAG_NAME + '</span>';		
+								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
+								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
+								    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';		
 									$('#shopList').append(htmlOut);
 									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
 									// list[i].ID가 마지막이라면 return
@@ -318,6 +327,7 @@ function scrollPage(){
 				scrollPage();
 			}
 		}
+		
 	});
 
 	
@@ -437,6 +447,7 @@ $("[name=maxDistance]").change((e) => {
 }
 
 // 페이지 로딩시 랭킹 불러오기  오늘, 월간, 주간
+
 $(()=>{
 
      // 오늘 데이터 구하기 
@@ -494,15 +505,53 @@ $(()=>{
  		},
  		error: console.log
  		
- 	});
-     
-     
-     
-     
+ 	});  
+}); 
+
+// 랭킹 태그 클릭시 
+$(".tagClick").click(function(){
+
+	$("#shopList").empty();
+	
+	
+	// td 안에 값 가져와서 # 는 잘라서 저장 
+	var tr = $(this);
+	var td = tr.children();
+	var name = tr.text();
+
+	console.log("클릭한 Row의 모든 데이터 : "+name);
+	tagName = name.substring(2);
+	console.log("문자열자르기  : "+ tagName);
+
+	  $.ajax({
+	 		url : "${pageContext.request.contextPath}/shop/selectHashTagClickShopList",
+	 		data: {
+	 			tagName : tagName
+			},
+	 		success(data) {
+	 			console.log(data)
+	 			var  list = data;
+	 			console.log(list)
+	 			   for(var i=0; i<list.length; i++){
+						var htmlOut='';
+						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
+						htmlOut += '<div class="shopProfile d-flex">';
+					    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+					    htmlOut += '</div>';
+					    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
+					    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
+					    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
+						$('#shopList').append(htmlOut);
+	 			   }
+	 			
+	 		},
+	 		error: console.log
+	 		
+	 	});
+			
+	
+	
 });
-
-
-
 
 </script>
 
