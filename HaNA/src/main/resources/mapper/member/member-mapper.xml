@@ -22,30 +22,6 @@
 		 	id = #{id}	
 	</update>
 
-     <update id= "updatePersonality">
-     update personality
-     set
-     	personality = #{personality}
-     where
-     	member_id = #{id}
-     </update>
-	
-	<update id="updateInterest">
-	update interest
-     set
-     	interest = #{interest}
-     where
-     	member_id = #{id}
-	</update>
-
-	<select id="selectPersonality" parameterType="string" resultType="member">
-		select *
-		from
-			personality
-		where
-			member_id = #{id}
-	</select>
-
 	<insert id="addFollowing" parameterType ="map">
 		insert into
 		follower 
@@ -155,7 +131,7 @@
 	
 	<update id="updateShopInfo" parameterType="shop">
 		update shop_info
-		set bussiness_hour_start = #{bussinessHourStart}, bussiness_hour_end = #{bussinessHourEnd}, location_x = #{locationX}, location_y = #{locationY}, address = #{address}, address_detail = #{addressDetail},
+		set shop_name = #{shopName}, bussiness_hour_start = #{bussinessHourStart}, bussiness_hour_end = #{bussinessHourEnd}, location_x = #{locationX}, location_y = #{locationY}, address = #{address}, address_detail = #{addressDetail},
 		shop_introduce = #{shopIntroduce}
 		where id = #{id}
 	</update>
