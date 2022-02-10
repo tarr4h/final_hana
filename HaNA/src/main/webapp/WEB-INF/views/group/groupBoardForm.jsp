@@ -14,58 +14,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
 
-
-<%-- <div>
-    <form
-    	name="groupBoardFrm"
-        action="${pageContext.request.contextPath}/group/enrollGroupBoard?${_csrf.parameterName}=${_csrf.token}"
-        method="POST"
-        enctype="multipart/form-data">
-        <table>
-            <tr>
-            <td><input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/></td>
-            <td><input type="hidden" value="${groupId}" name="groupId"/></td>
-            </tr>
-            <tr>
-            <td>
-                <label for="file1">첨부파일 1</label>
-                <input type="file" name="file" id="file1" onchange="setThumbnail(event);"/>
-                <div id="image_container"></div>
-            </td>
-            </tr>
-            <tr>
-            <td>
-                <label for="file1">첨부파일 2</label>
-                <input type="file" name="file" id="file2"/>
-            </td>
-            </tr> 
-            <tr>
-            <td>
-                <label for="file1">첨부파일 3</label>
-                <input type="file" name="file" id="file3"/>
-            </td>
-            </tr> 
-            <tr>
-            <td><input id="placeName" name="placeName" type="text" value="" readonly/></td>
-            <td><input id="placeAddress" name="placeAddress" type="text" value="" readonly/></td>
-            <td><input id="locationY" name="locationY" type="hidden" value="" readonly/></td>
-            <td><input id="locationX" name="locationX" type="hidden" value="" readonly/></td>
-            </tr>
-            <tr>
-            <td><input type="text" name="content"/></td>
-            </tr>
-            <tr>
-            <td>회원목록</td>
-            </tr>
-            <c:forEach items="${members}" var="member">
-	            <tr>
-	            <td><input type="text" value="${member.memberId}" name="tagMembers" readonly/></td>
-	            </tr>
-            </c:forEach>
-            <tr><td><input type="button" value="제출" onclick="submitBoard();"/></td></tr>
-        </table>
-    </form>
-</div> --%>
 <div class="wrapper bg-white">
     <div class="h6 font-weight-bold"> 게시글 포스팅 </div>
     <form
