@@ -161,7 +161,7 @@
 							<div style="margin-top:10px;">
 							<form:form action="${pageContext.request.contextPath}/group/deleteGroup?${_csrf.parameterName}=${_csrf.token}" method="post">
 							<input type="hidden" name=groupId value="${group.groupId}"/>
-								<button type="submit" id="de1" onclick="deleteGroup(return confirm('그룹을 삭제하시겠습니까?'));" class="enroll-button" style="color: red;">그룹삭제</button>
+								<button type="submit" id="de1" onclick="return confirm('그룹을 삭제하시겠습니까?')" class="enroll-button" style="color: red;">그룹삭제</button>
 							</form:form>
 							</div>
 							
@@ -170,7 +170,7 @@
 							<form:form action="${pageContext.request.contextPath}/group/leaveGroup?${_csrf.parameterName}=${_csrf.token}" method="post">
 							<input type="hidden" name=memberId value="${loginMember.id}"/>
 							<input type="hidden" name=groupId value="${group.groupId}"/>
-								<button type="submit" onclick="deleteGroupMember(return confirm('그룹을 탈퇴하시겠습니까?'));" class="enroll-button" style="color: red;">그룹탈퇴</button>
+								<button type="submit" onclick="return confirm('그룹을 탈퇴하시겠습니까?')" class="enroll-button" style="color: red;">그룹탈퇴</button>
 							</form:form>
 							</div>
 <%}}}};%>
