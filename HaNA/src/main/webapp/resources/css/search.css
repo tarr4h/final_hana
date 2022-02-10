@@ -35,3 +35,22 @@
 #content-box table{
 	width:100%;
 }
+#content-box img {
+	width:70px;
+	height:70px;
+	float:right;
+}
+.row-box {
+	margin-bottom:20px;
+}
+.row-box:hover {
+	cursor:pointer;
+}
+.memberId, .groupId, .locationName{
+	margin-top:7px;
+	font-size:1.15em;
+	font-weight:600;
+}
+.memberName, .groupName, .locationAddress{
+	font-size:1.15em;
+}
