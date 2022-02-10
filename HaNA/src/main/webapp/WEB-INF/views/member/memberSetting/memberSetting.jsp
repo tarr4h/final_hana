@@ -182,7 +182,7 @@ function execDaumPostcode() {
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     margin-bottom : 15px;
-    margin-left: 20px;
+    margin-left: 30px;
 } 
 .custom-select{
 	width : 450px;

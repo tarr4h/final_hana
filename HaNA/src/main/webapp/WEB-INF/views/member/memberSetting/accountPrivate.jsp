@@ -89,7 +89,8 @@ $(accountPrivateFrm).submit((e) => {
     cursor: pointer;
     text-align: center;
 }
- #command {
-    margin-left: 100px;
+#publicProfile{
+margin-right : 10px;
 }
+
 </style>

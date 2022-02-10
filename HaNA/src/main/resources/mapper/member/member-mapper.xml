@@ -422,6 +422,18 @@
 	 	req_id = #{loginMemberId}
 	</select> -->
 	
+	<select id="checkApplyFriend" resultType="_int">
+	 select 
+	 	count(*) 
+	 from
+	 	following_request
+	 where
+	 	req_id = #{loginMemberId}
+	 	and
+	 	member_id = #{id}
+	 	and
+	 	status = '요청'
+	</select>
 	
 	
 	

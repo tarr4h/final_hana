@@ -132,7 +132,7 @@
     <c:if test="${loginMember.id.equals(member.id) }">
         	<button id="btn-add" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 	</c:if>
-	    <c:if test="${request > 0} && ${loginMember.id.equals(member.id)}">
+	    <c:if test="${request > 0 && loginMember.id.equals(member.id)}">
     	<button type="button" class="btn btn-secondary" id="requestButton">팔로잉 요청이 있습니다.</button>
     </c:if>
 		</div>
@@ -160,11 +160,15 @@
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
 						alt=""  />
 		      </div>
+	      <c:if test="${board.first eq null}">
+	      	<div>게시물 없음 </div>
+	      </c:if>
 	      </c:forEach>
 	   </div>
 	    </c:otherwise>
  	</c:choose> 
 	</div>
+  <br/><br/> <br/><br/> <br/><br/> <br/><br/>
 <script>
 $("#requestButton").on( "click", function() {
     $("#requestModal").modal();
@@ -188,7 +192,7 @@ $("#btn-follower-list").on( "click", function() {
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
-							<th>팔로잉 요청</th>
+							<th colspan="3">팔로잉 요청</th>
 						</tr>
 					</thead>
 					<tbody id="RequestModalTbody">
@@ -285,6 +289,8 @@ $("#requestButton").click((e) => {
 	                     <input type="hidden" name="reqId" value="\${resp[i].reqId}"/>
 	                     <input type="hidden" name="status" value="\${resp[i].status}"/>
                  	</form:form>
+                 	</td>
+                 	<td>
                  <button type="button" onclick="followingApplyFunc();"
                      class="btn btn-default btn-sm btn-success" value="수락">수락</button>
 					 <form:form name="followingRefuseFrm" action="${pageContext.request.contextPath}/member/refuseFollowing">
@@ -292,8 +298,10 @@ $("#requestButton").click((e) => {
 	                     <input type="hidden" name="reqId" value="\${resp[i].reqId}"/>
 	                     <input type="hidden" name="status" value="거절"/>
              	</form:form>
-                 <button type="button" onclick="followingRefuseFunc();" class="btn btn-default btn-sm btn-danger" value="거절">거절</button>
-					</td>
+             	</td>
+             	<td>
+                 <button type="button" onclick="followingRefuseFunc();" class="btn btn-default btn-sm btn-danger" value="거절">거절</button>	
+                 </td>
 				</tr>
 			`;
 			console.log(tr);
@@ -434,12 +442,18 @@ $("#input-file").change((e) => {
     color: #fff;
     background-color: black;
     border-color: black;
+    margin-left: -40px;
+    margin-top: 10px;
    }
 .btn-success {
     color: #fff;
-    background-color: blue;
+    background-color: #198754;
     border-color: black;
+    margin-top: 10px;
 }
+.section-over-div {
+    min-height: 160vh;
+
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 

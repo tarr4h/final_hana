@@ -152,7 +152,7 @@ public class MemberController {
 		 int request = memberService.followingRequest(map);
 		 log.info("request={}", request);
 		 model.addAttribute("request", request);
-  
+ 
 			return "/member/"+"memberView";
 		}
 	 

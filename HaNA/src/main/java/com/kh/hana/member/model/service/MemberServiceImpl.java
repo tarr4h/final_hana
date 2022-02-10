@@ -237,6 +237,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.refuseFollowing(map);
 	}
 
+	@Override
+	public int checkApplyFriend(Map<String, Object> map) {
+		return memberDao.checkApplyFriend(map);
+	}
+
 //	@Override
 //	public int checkRefuse(Map<String, Object> map) {
 //		return memberDao.checkRefuse(map);

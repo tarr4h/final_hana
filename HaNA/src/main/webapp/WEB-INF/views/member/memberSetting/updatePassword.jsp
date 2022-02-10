@@ -102,8 +102,6 @@ function passwordValidate(){
     border-color: #212529;
     margin-left: 100px;
 }
- #command {
-    margin-left: 100px;
-}
+
 </style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>>
