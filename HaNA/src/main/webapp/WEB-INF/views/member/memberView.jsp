@@ -283,11 +283,12 @@ $("#requestButton").click((e) => {
 				console.log("eeeeeee",e);
 				console.log("iiiiii",i)
 				console.log("요청아이디!!!!!!",resp[i].reqId);	
+				console.log("resp[i].reqPicture",resp[i].reqPicture);
 				 
 				let tr= `
 				<tr>
 					<td>
-					<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
+					<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${resp[i].REQPICTURE}" alt=""/>
 					<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${resp[i].reqId}">\${resp[i].reqId}</a>			
 					 <form:form name="followingApplyFrm" action="${pageContext.request.contextPath}/member/applyFollowing">
 	                     <input type="hidden" name="myId" value="\${resp[i].memberId}"/>
@@ -358,7 +359,7 @@ $("#btn-follower-list").click((e) => {
 		url : "${pageContext.request.contextPath}/member/followerList",
 		data :  {"friendId":"${member.id}"},
 		success(resp){
-			console.log(resp);
+			console.log("팔로워결과",resp);
 			
 			$("#modalTbody1").empty();
 			
@@ -371,13 +372,13 @@ $("#btn-follower-list").click((e) => {
 			
 			const {followingId} = resp;
 			$.each(resp, (i, e) => {
-				console.log(e.followers[0].followingId);
-				console.log("e.pictureeeeeee",e.picture);
+				console.log("팔로워eeeee", e);
+				console.log(e.followingId);
 				let tr= `
 					<tr>
 					<td>
 						<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
-						<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].followingId}">\${e.followers[0].followingId}</a>
+						<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followingId}">\${e.followingId}</a>
 					</td>
 				</tr>
 			`;

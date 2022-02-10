@@ -60,13 +60,11 @@
 			id = #{id}
 	</select>
 
-	<select id="followerList" resultMap="memberMap">
+	<select id="followerList" resultType="follower">
 	select
 		*
 	from
-		 member m left join follower f
-	on 
-		        m.id = f.member_id
+		  follower f
 	where
 		f.member_id = #{friendId}
 	</select>
@@ -344,13 +342,16 @@
 
 	<select id="requestFollowingList" resultMap="FollowingRequest">
 	select
-		f.*,
-		m.picture
+	    f.*,
+	    m.*,
+	    k.picture reqPicture
 	from
-		following_request f left join member m
-	on f.member_id = m.id
+	    following_request f left join member m
+	    on f.member_id = m.id
+	    left join member k
+	    on f.req_id = k.id
 	where
-		f.member_id = #{myId}		
+	    f.member_id = #{myId}	
 	</select>
 	
 	<resultMap id="FollowingRequest" type="map">
