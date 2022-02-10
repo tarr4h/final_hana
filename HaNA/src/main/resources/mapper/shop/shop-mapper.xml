@@ -207,7 +207,9 @@
 		where
 			shop_id = #{shopId}
 			and
-			reservation_date > sysdate-1	
+			reservation_date > sysdate-1
+			and
+			reservation_status = '예약완료'	
 	</select>
 	
 	<select id="selectShopReservationListByDate" parameterType="map" resultType="reservation">
@@ -396,6 +398,7 @@
 		    s.reservation_no,
 		    s.attend_user,
 		    p.originalprice,
+		    p.restprice,
 		    m.name,
 		    m.id,
 		    m.address_all
