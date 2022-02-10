@@ -25,13 +25,15 @@
 
 <script>
 	// 검색창 활성시 결과창 on
-	$("#search-box").focus((e)=>{
+	$("#search-box, #content-box").focus((e)=>{
 		$("#searchResultBox").css('display','inline');
 	})
 	
 	// 검색창 비활성시 결과창 off
 	$("#search-box").blur((e)=>{
-		$("#searchResultBox").css('display','none');
+		setTimeout(function() {
+			$("#searchResultBox").css('display','none');
+		}, 150);
 	})
 	 
 	$("#search-box").keyup((e)=>{
