@@ -4,13 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chat">
 	<select id="roomList" resultType="chatroom">
-	select 
-		* 
+	select distinct * from chat_room where room_no in (select 
+		room_no
 	from 
 		chat_room 
 	where (members like '%' || #{id} || '%' and room_type = 0) 
 		or 
 	group_room_id in ( select group_id from group_member_list where member_id = #{id})
+    ) and room_no not in(select room_no from chat where member_id = #{id} and message='ROOMOUT')
 	</select>
 		
 		<select id="roomchat2" resultMap="chatMap">
@@ -148,7 +149,7 @@
 	insert
 		into
 	chat
-		values(#{memberCount},#{leaderId},'ROOMENTER',default,default,default)
+		values(#{roomNo},#{group.leaderId},'ROOMENTER',default,default,default)
 	</insert>
 	
 	<!-- 소모임 가입 회원 입장메세지 -->
@@ -177,6 +178,20 @@
 		#{groupId},
 		null,
 		#{image}
+		)
+	</insert>
+	
+	<insert id="GroupRoomOutMessage">
+	insert 
+		into 
+	chat 
+		values(
+		(select room_no from chat_room where group_room_id = #{groupId}),
+		#{memberId},
+		'ROOMOUT',
+		default,
+		default,
+		default
 		)
 	</insert>
 	
@@ -211,6 +226,8 @@
 	room_no = #{roomNo} 
 		and 
 	member_id != #{memberId}
+	and
+	member_id not in (select member_id from chat where room_no = #{roomNo} and message = 'ROOMOUT')
 	</select>
 	
 	<select id="dmalarm" resultType="_int">

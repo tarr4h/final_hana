@@ -165,22 +165,20 @@ create table ranking (
     member_id varchar2(50),
 	tag_id varchar2(50),   	 
 	tag_date date,	
-    count number(4),
 	constraint tag_ranking_fk foreign key(tag_id)
         references hashtag(tag_id) on delete cascade
 );
 
   select *from ranking;
   
-  insert  into ranking(tag_id , tag_date , count)
+  insert  into ranking(tag_id , tag_date , count);
+  
   select * 
   from ranking r left join hashtag h 
-  on r.tag_id = h.tag_id
-  where  
-  h.tag_name = '해물탕';
+  on r.tag_id = h.tag_id;
 
-insert  into ranking(tag_id , tag_date , count)
-values ('shop-hashtag-26','2022-02-07',1);
+insert  into ranking(member_id,tag_id , tag_date)
+values ('k333','shop-hashtag-30','2022-02-09');
 
 merge into  ranking 
     using DUAL
@@ -189,8 +187,80 @@ merge into  ranking
         update set  count = +1 
     when not matched then
         insert (tag_id, tag_date , count) 
-        values ('shop-hashtag-30','22/02/08',1);
+        values ('shop-hashtag-25','22/02/12',28);
 select * from ranking;
 select * from hashtag;
 
 update ranking set count = count+1;
+
+
+
+------------오늘 날짜 데이터 구하기 --------------------
+select * from hashtag h left join   ranking r  
+on r.tag_id = h.tag_id
+WHERE TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd') ;
+----------------------------------------------------
+-----------------이번달 데이터 구하기 ----------------------
+select * 
+from hashtag h left join   ranking r  
+on r.tag_id = h.tag_id
+WHERE tag_date BETWEEN TRUNC(SYSDATE, 'MM')  and LAST_DAY(SYSDATE)
+ORDER BY r.count  desc;
+--------------------------------------------------------
+-----------------이번주 데이터 구하기 ----------------------
+select *
+from  hashtag h left join   ranking r  
+on r.tag_id = h.tag_id
+where tag_date between
+(SELECT TRUNC(sysdate, 'iw') dt_date
+FROM dual)
+and
+(SELECT TRUNC(sysdate, 'iw') + 6 dt_date
+FROM dual)
+ORDER BY r.count  desc;
+
+------------------------------------------------------
+
+
+------------------------이번달 --------------------------
+select count(*)as count ,h.tag_name
+from ranking r left join   hashtag h  
+on r.tag_id = h.tag_id
+WHERE tag_date BETWEEN TRUNC(SYSDATE, 'MM')  and LAST_DAY(SYSDATE)
+group by h.tag_name
+order by count desc;
+--------------------------------------------------------
+--------------오늘 ---------------------------------
+select count(*)as count,h.tag_name
+from ranking r left join   hashtag h  
+on r.tag_id = h.tag_id
+WHERE TO_CHAR(SYSDATE, 'MM/dd') = TO_CHAR(r.tag_date, 'MM/dd')
+group by h.tag_name
+order by count desc;
+-----------------------------------------------------
+----------------이번주-------------------------
+select count(*)as count,h.tag_name
+from ranking r left join   hashtag h    
+on r.tag_id = h.tag_id
+where tag_date between
+(SELECT TRUNC(sysdate, 'iw') dt_date
+FROM dual)
+and
+(SELECT TRUNC(sysdate, 'iw') + 6 dt_date
+FROM dual)
+group by h.tag_name
+order by count desc;
+
+
+
+
+
+WHERE tag_date BETWEEN TRUNC(SYSDATE, 'MM')  and LAST_DAY(SYSDATE)
+ORDER BY r.count  desc;
+
+select * from ranking;
+
+select count(*),tag_id
+from     ranking 
+group by tag_id;
+

@@ -4,19 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="security">
 
-	<select id="loadUserByUsername" resultMap="memberMap">
+	<select id="loadUserByUsername" resultType="member">
 		select
 		    *
 		from
-		    member m left join personality p
-		    on m.id = p.member_id
-		    left join interest i
-		    on p.member_id = i.member_id
+		    member
 		where
 			id = #{username}
 	</select>
 	
-	<resultMap type="member" id="memberMap">
+<!-- 	<resultMap type="member" id="memberMap">
 		<id column="id" property="id"/>
 		<result column="password" property="password"/>
 		<result column="name" property="name"/>
@@ -30,5 +27,5 @@
 		<result column="enabled" property="enabled"/>
 		<result column="personality" property="personality"/>
 		<result column="interest" property="interest"/>
-	</resultMap>
+	</resultMap> -->
 </mapper>

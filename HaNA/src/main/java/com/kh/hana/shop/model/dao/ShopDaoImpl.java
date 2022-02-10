@@ -153,9 +153,25 @@ public class ShopDaoImpl implements ShopDao {
 	}
 
 	@Override
+	public List<String> selectTodayRankingdatas() {
+		return session.selectList("shop.selectTodayRankingdatas");
+	}
+
+	@Override
+	public List<String> selectThisMonthRankingdatas() {
+		return session.selectList("shop.selectThisMonthRankingdatas");
+	}
+
+	@Override
+	public List<String> selectThisWeekRankingdatas() {
+		return session.selectList("shop.selectThisWeekRankingdatas");
+	}
+
+
 	public List<Table> selectTablePrice(String id) {
 		return session.selectList("shop.selectTablePrice", id);
 	}
+
 
 	@Override
 	public int updateTablePrice(Table table) {
