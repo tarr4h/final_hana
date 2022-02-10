@@ -263,6 +263,12 @@ public class ShopServiceImpl implements ShopService {
 	public List<String> selectHashTagClickShopList(String tagName) {
 		return shopDao.selectHashTagClickShopList(tagName);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectShopGrade(String shopId) {
+		return shopDao.selectShopGrade(shopId);
+
+	}
 
 	
 

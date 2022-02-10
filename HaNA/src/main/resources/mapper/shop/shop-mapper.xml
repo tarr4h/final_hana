@@ -221,6 +221,8 @@
 		from
 			shop_table_reservation_share s left join shop_table_reservation r
 			on s.reservation_no = r.reservation_no
+			left join shop_info i
+			on r.shop_id = i.id
 		where
 			s.attend_user = #{id}
 			<if test="state == 1">
@@ -430,6 +432,7 @@
 		where
 			reservation_no = #{reservationNo}
 	</update>
+<<<<<<< HEAD
 	<select id="selectHashTagClickShopList" resultType="map">
 		 select
             *
@@ -440,5 +443,30 @@
         where
             tag_name = #{tagName}
 	
+=======
+	
+	<insert id="insertBoardReview" parameterType="map">
+		insert into board_review
+		values(#{boardNo}, #{reservationNo}, #{checkedVal})
+	</insert>
+	
+	<update id="updateReviewStatus" parameterType="map">
+		update shop_table_reservation_share
+		set review_status = 'S'
+		where
+			attend_user = #{attendUser}
+			and
+			reservation_no = #{reservationNo}
+	</update>
+	
+	<select id="selectShopGrade" parameterType="string" resultType="map">
+		select
+		    *
+		from
+		    board_review b inner join shop_table_reservation s
+		    on b.reservation_no = s.reservation_no
+		where
+		    s.shop_id = #{shopId}
+>>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
 	</select>
 </mapper>

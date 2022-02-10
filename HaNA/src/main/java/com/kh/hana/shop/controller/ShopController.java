@@ -450,6 +450,7 @@ public class ShopController {
     	return ResponseEntity.ok(rankingWeekDatas);
     }
     
+
     @GetMapping("/selectHashTagClickShopList")
     public ResponseEntity<?> selectHashTagClickShopList(@RequestParam String tagName){
     	log.info("tagName = {}", tagName);
@@ -460,5 +461,32 @@ public class ShopController {
     }
     
     
+    @GetMapping("/getShopGrade")
+    public ResponseEntity<?> selectShopGrade(@RequestParam String shopId){
+    	log.info("shopId = {}", shopId);
+    	
+    	List<Map<String, Object>> reviewList = shopService.selectShopGrade(shopId);
+    	log.info("reviewList = {}", reviewList);
+    	
+    	// 리뷰 개수 구하기
+    	int reviewCount = reviewList.size();
+    	
+    	// 평점 평균 구하기
+    	int totalGrade = 0;
+    	for(Map<String, Object> list : reviewList) {
+    		int grade = Integer.parseInt(String.valueOf(list.get("GRADE")));
+    		totalGrade += grade;
+    	}
+    	
+    	double average = (double) Math.round((double) totalGrade / (double) reviewCount * 10) / 10;
+    	
+    	Map<String, Object> returnMap = new HashMap<>();
+    	returnMap.put("reviewCount", reviewCount);
+    	returnMap.put("average", average);
+    	
+    	
+    	return ResponseEntity.ok(returnMap);
+    }
+
     
 }
