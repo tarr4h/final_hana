@@ -312,10 +312,11 @@
 				method:'GET',
 				data:{id : memberId},
 				success(resp){
-					if(resp != 0)
-						window['dmAlarmvar'] = resp;
-					console.log("dmAlarmvar =",dmAlarmvar);
+					if(resp != null){
+						window['dmAlarmvar'] = 10;
 						$("#dmAlarm").text(dmAlarmvar);
+						
+					}
 				},
 				/* error:console.log */
 			});

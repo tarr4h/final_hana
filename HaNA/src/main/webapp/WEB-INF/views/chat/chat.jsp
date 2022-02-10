@@ -82,8 +82,16 @@ const displayRoom = (selector, data) => {
 						memberId : memberId,
 					},
 					success(data){
-						if(data != 0)
-							$(`#roomAlarm\${i}`).text(data);
+						if(data != null){
+							console.log("dmAlarmvar =",dmAlarmvar);
+							console.log("roomNo=",roomNo);
+							console.log("data=",data);
+							window['memberId'+'roomNo'] = 3;
+							console.log(memberIdroomNo);
+							$(`#roomAlarm`+roomNo).text(memberIdroomNo);
+							
+						}
+							
 					},
 					error:console.log
 				});
@@ -102,7 +110,7 @@ const displayRoom = (selector, data) => {
 							<div class="user_info">
 								<span>\${roomType != 1 ? members : roomName}방</span>
 								<button onclick="roomchat(this.value)" value="\${roomNo}">버튼</button>
-								<span class="badge" id="roomAlarm\${i}"></span>
+								<span class="badge" id="roomAlarm\${roomNo}"></span>
 							</div>
 						</div>
 					</li>
@@ -273,10 +281,19 @@ if(websocket !== undefined){
 		},
 		error:console.log
 	});
+	console.log("dmAlarmvar11 =",dmAlarmvar);
+	console.log("roomNo=",roomNo);
+	console.log("no=",no);
+	console.log("memberIdno=",memberIdroomNo);
+	dmAlarmvar = dmAlarmvar-memberIdno;
+	memberIdno = 0;
+	$(`#roomAlarm`+no).text(memberIdno);
+	$("#dmAlarm").text(dmAlarmvar);
 		
 	sendBtn();
 	//connect(1);
 	connect();
+	
 };
 
 <!-- enter키 -->
@@ -560,7 +577,7 @@ $("#findMember").on("click", function(e){
 });
 //친구목록
 $("#allMember").on("click", function(e){
-	
+	console.log(dmAlarmvar);
 	console.log("회원목록");
 	console.log("내 아이디 = " , id);
 	
