@@ -418,7 +418,9 @@
 		    inner join shop_table_reservation s
 		    on r.reservation_no = s.reservation_no
 		where
-			s.shop_id = #{id}	
+			s.shop_id = #{id}
+		order by
+			reg_date desc	
 	</select>
 	
 

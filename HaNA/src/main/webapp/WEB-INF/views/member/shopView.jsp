@@ -218,7 +218,7 @@
 				shopId
 			},
 			success(res){
-				let str = `\${res.average}(\${res.reviewCount})`;
+				let str = `\${res.average}점(\${res.reviewCount}개)`;
 				$(".grade").text(str);
 			},
 			error: console.log
