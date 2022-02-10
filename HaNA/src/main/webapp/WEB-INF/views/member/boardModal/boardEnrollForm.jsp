@@ -55,51 +55,7 @@ $("#btn-add").click(()=> {
   $("#boardFormModal").modal();
 });
 
-//글 작성시 이미지 바로 나오게
-function readMultipleImage(input) {
-    const multipleContainer = document.getElementById("multiple-container")
-    
-    // 인풋 태그에 파일들이 있는 경우
-    if(input.files) {
-        console.log(input.files)
-        // 유사배열을 배열로 변환 -forEach문으로 처리
-        const fileArr = Array.from(input.files)
-        const $colDiv1 = document.createElement("div")
-        const $colDiv2 = document.createElement("div")
-        $colDiv1.classList.add("column")
-        $colDiv2.classList.add("column")
-        fileArr.forEach((file, index) => {
-            const reader = new FileReader()
-            const $imgDiv = document.createElement("div")   
-            const $img = document.createElement("img")
-            $img.classList.add("image")
-            $imgDiv.appendChild($img)
-          
-            reader.onload = e => {
-                $img.src = e.target.result
-            }
-            
-            console.log(file.name)
-            if(index % 2 == 0) {
-                $colDiv1.appendChild($imgDiv)
-            } else {
-                $colDiv2.appendChild($imgDiv)
-            }
-            
-            reader.readAsDataURL(file)
-        })
-        multipleContainer.appendChild($colDiv1)
-        multipleContainer.appendChild($colDiv2)
-    }
-}
-const inputMultipleImage = document.getElementById("input-multiple-image")
-inputMultipleImage.addEventListener("change", e => {
-    readMultipleImage(e.target)
-    $imgDiv.style.width = ($img.naturalWidth)  * 0.3 + "px"
-    $imgDiv.style.height = ($img.naturalHeight) * 0.3 + "px"
  
-})
-
  
 $(document).ready(function() {
 	//여기 아래 부분

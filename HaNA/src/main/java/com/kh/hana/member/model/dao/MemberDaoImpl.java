@@ -196,6 +196,9 @@ public class MemberDaoImpl implements MemberDao {
 		return session.insert("member.insertReview", board);
 	}
 
+	public int isRequestFriend(Map<String, Object> map) {
+		return session.selectOne("member.isRequestFriend",map);
+	}
 
 //	@Override
 //	public int checkRefuse(Map<String, Object> map) {

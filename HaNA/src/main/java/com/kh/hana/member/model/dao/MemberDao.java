@@ -92,6 +92,7 @@ public interface MemberDao {
 
 	int insertReview(Board board);
 
+	int isRequestFriend(Map<String, Object> map);
 
 	//int checkRefuse(Map<String, Object> map);
 

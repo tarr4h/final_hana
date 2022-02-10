@@ -243,7 +243,10 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return 0;			
 		}
-		
+	}	
+
+	public int isRequestFriend(Map<String, Object> map) {
+		return memberDao.isRequestFriend(map);
 	}
 
 //	@Override
