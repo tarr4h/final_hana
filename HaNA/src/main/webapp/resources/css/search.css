@@ -23,5 +23,15 @@
 	width:500px; 
 	height:700px;
 	overflow:auto;
+	z-index:3;
 	
+}
+#content-box {
+	width:70%;
+	height:100%;
+	padding:50px 0px;
+	margin:auto;
+}
+#content-box table{
+	width:100%;
 }

@@ -9,7 +9,6 @@
 				<option value="member" >계정</option>
 				<option value="group" >소모임</option>
 				<option value="shop" >비즈니스</option>
-				<option value="board" >게시물</option>
 				<option value="location" >장소</option>
 			</select>
 		</div>
@@ -20,7 +19,9 @@
 </div>
 
 <div id="searchResultBox">
-
+	<div id="content-box">
+		<table></table>
+	</div>
 </div>
 
 <script>
@@ -45,28 +46,43 @@
 				keyword
 			},
 			success(data){
+				if(category == 'member'){
+					getMemberList(data);			
+				}
+				else if(category == 'group'){
+					getGroupList(data);						
+				}
+				else if(category == 'shop'){
+					getMemberList(data);						
+				}
+				else if(category == 'location'){
+					getLocationList(data);						
+				} 
 			},
 			error:console.log
 		})
 	})
 	
+	function getMemberList(data){
+		let tr = `<tr>
+			<td rowspan=2>aksldf</td>
+			<td>alksdjf</td>
+		</tr>
+		<tr>
+			<td>alskdjf</td>
+		</tr>`
+		$("#content-box table").append(tr);
+	}
+	function getGroupList(data){
+		
+	}
+	function getLocationList(data){
+		
+	}
 	
 	
 	
-	/* if(category == 'member'){
-			getMemberList($(e.target).val());			
-		}
-		else if(category == 'group'){
-			getGroupList($(e.target).val());						
-		}
-		else if(category == 'shop'){
-			getShopList($(e.target).val());						
-		}
-		else if(category == 'board'){
-			getBoardList($(e.target).val());						
-		}
-		else if(category == 'location'){
-			getLocationBoardList($(e.target).val());						
-		} */
+	
+		
 	
 </script>

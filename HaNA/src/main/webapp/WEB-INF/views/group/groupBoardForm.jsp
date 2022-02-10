@@ -67,8 +67,23 @@
 				</div>
 			</div>
 		<br />
-  		<div style="margin-bottom:10px;"><span style="font-size:1.1em; font-weight:bold;">Location Tag</span></div>
-		<div class="map_wrap">
+  		<div><span style="font-size:1.1em; font-weight:bold;">Location Tag</span></div>
+		<div class="row" style="margin-top:10px; margin-bottom:10px;">
+            <div class="col-6"> 
+                <div class="form-group"> <input id="placeName" class="form-control" name="placeName" type="text" value="" readonly/>
+                    <div class="label" id="tel"></div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group"> <input id="placeAddress" class="form-control" name="placeAddress" type="text" value="" readonly/>
+                    <div class="label" id="email"></div>
+                </div>
+            </div>
+            <input id="locationY" name="locationY" type="hidden" value="" readonly/>
+            <input id="locationX" name="locationX" type="hidden" value="" readonly/>
+        </div>
+           </form>
+        <div class="map_wrap">
 		    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 		
 		    <div id="menu_wrap" class="bg_white">
@@ -85,21 +100,6 @@
 		        <div id="pagination"></div>
 		    </div>
 		</div>
-		<div class="row" style="margin-top:20px;">
-            <div class="col-6"> 
-                <div class="form-group"> <input id="placeName" class="form-control" name="placeName" type="text" value="" readonly/>
-                    <div class="label" id="tel"></div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="form-group"> <input id="placeAddress" class="form-control" name="placeAddress" type="text" value="" readonly/>
-                    <div class="label" id="email"></div>
-                </div>
-            </div>
-            <input id="locationY" name="locationY" type="hidden" value="" readonly/>
-            <input id="locationX" name="locationX" type="hidden" value="" readonly/>
-        </div>
-        </form>
         <br />
 	    <div class="d-flex justify-content-end pt-2">
 	        <div class="btn btn-primary" onclick="submitBoard();">등록하기</div>
