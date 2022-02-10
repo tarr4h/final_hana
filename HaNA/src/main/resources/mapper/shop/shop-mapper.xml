@@ -432,7 +432,7 @@
 		where
 			reservation_no = #{reservationNo}
 	</update>
-<<<<<<< HEAD
+
 	<select id="selectHashTagClickShopList" resultType="map">
 		 select
             *
@@ -442,8 +442,8 @@
     		left join hashtag h on s.tag_id = h.tag_id
         where
             tag_name = #{tagName}
-	
-=======
+	</select>
+
 	
 	<insert id="insertBoardReview" parameterType="map">
 		insert into board_review
@@ -467,6 +467,6 @@
 		    on b.reservation_no = s.reservation_no
 		where
 		    s.shop_id = #{shopId}
->>>>>>> branch 'master' of https://github.com/tarr4h/final_hana.git
+
 	</select>
 </mapper>
