@@ -30,12 +30,12 @@
 	})
 	
 	// 검색창 비활성시 결과창 off
-	$("#search-box").blur((e)=>{
+ 	$("#search-box").blur((e)=>{
 		setTimeout(function() {
 			$("#searchResultBox").css('display','none');
 		}, 150);
 	})
-	 
+	  
 	$("#search-box").keyup((e)=>{
 		let category = $("#select-box").val();
 		let keyword = $(e.target).val();

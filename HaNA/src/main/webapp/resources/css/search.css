@@ -21,19 +21,16 @@
 	border:2px solid gray; 
 	border-radius:20px;
 	width:500px; 
-	height:700px;
+	height:600px;
 	overflow:auto;
 	z-index:3;
 	
 }
 #content-box {
 	width:70%;
-	height:100%;
+	min-height:100%;
 	padding:50px 0px;
 	margin:auto;
-}
-#content-box table{
-	width:100%;
 }
 #content-box img {
 	width:70px;
