@@ -259,6 +259,11 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.updateRestPrice(reqMap);
 	}
 
+	@Override
+	public List<String> selectHashTagClickShopList(String tagName) {
+		return shopDao.selectHashTagClickShopList(tagName);
+	}
+
 	
 
 

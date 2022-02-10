@@ -450,6 +450,15 @@ public class ShopController {
     	return ResponseEntity.ok(rankingWeekDatas);
     }
     
+    @GetMapping("/selectHashTagClickShopList")
+    public ResponseEntity<?> selectHashTagClickShopList(@RequestParam String tagName){
+    	log.info("tagName = {}", tagName);
+    	List<String> HashTagClickShopList = new ArrayList<>();
+    	 HashTagClickShopList  = shopService.selectHashTagClickShopList(tagName);
+    	log.info("tagName = {}", HashTagClickShopList);
+    	return ResponseEntity.ok(HashTagClickShopList);
+    }
+    
     
     
 }

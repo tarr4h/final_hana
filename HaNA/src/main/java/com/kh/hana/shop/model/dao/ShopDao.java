@@ -85,6 +85,8 @@ public interface ShopDao {
 
 	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
 
+	List<String> selectHashTagClickShopList(String tagName);
+
 
 
 

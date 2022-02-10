@@ -212,6 +212,11 @@ public class ShopDaoImpl implements ShopDao {
 	public int updateRestPrice(Map<String, Object> reqMap) {
 		return session.update("shop.updateRestPrice", reqMap);
 	}
+
+	@Override
+	public List<String> selectHashTagClickShopList(String tagName) {
+		return session.selectList("shop.selectHashTagClickShopList", tagName);
+	}
 	
 	
 

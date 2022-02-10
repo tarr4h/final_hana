@@ -71,6 +71,8 @@ public interface ShopService {
 
 	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
 
+	List<String> selectHashTagClickShopList(String tagName);
+
 
 
 
