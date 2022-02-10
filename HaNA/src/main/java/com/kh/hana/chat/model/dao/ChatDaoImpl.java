@@ -134,8 +134,8 @@ public class ChatDaoImpl implements ChatDao {
 	}
 
 	@Override
-	public int insertGroupMessage(Group group) {
-		return session.insert("chat.insertGroupMessage",group);
+	public int insertGroupMessage(Map<String, Object> param) {
+		return session.insert("chat.insertGroupMessage",param);
 	}
 
 	@Override
@@ -181,6 +181,11 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public BoardComment selectOneMemberBoardComment() {
 		return session.selectOne("chat.selectOneMemberBoardComment");
+	}
+
+	@Override
+	public int GroupRoomOutMessage(Map<String, Object> param) {
+		return session.insert("chat.GroupRoomOutMessage", param);
 	}
 
 

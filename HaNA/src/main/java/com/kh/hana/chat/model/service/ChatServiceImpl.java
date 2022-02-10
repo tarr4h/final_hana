@@ -1,6 +1,7 @@
 package com.kh.hana.chat.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -159,12 +160,15 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public int CreateGroupChat(Group group) {
+		Map<String, Object> param = new HashMap<String, Object>();
 		int result = chatDao.CreateGroupChat(group);
 		int roomNo = chatDao.selectGroupRoomNo(group);
+		param.put("group", group);
+		param.put("roomNo", roomNo);
 		int result2 = 0;
-		log.info("CreateGroupChat serviceImpl roomNo넣음= {}", group);
+		log.info("CreateGroupChat serviceImpl roomNo넣음= {}", param);
 		if(result > 0)
-			result2 = chatDao.insertGroupMessage(group);
+			result2 = chatDao.insertGroupMessage(param);
 		return result2;
 	}
 

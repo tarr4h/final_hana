@@ -147,7 +147,7 @@
 		<script>
 		$(document).ready( function() {
 			connect(1);
-			//dmAlarm();
+			dmAlarm();
 		});
 		let memberId;
 		let websocketws;
@@ -312,16 +312,19 @@
 				method:'GET',
 				data:{id : memberId},
 				success(resp){
-					if(resp != 0)
-						$("#dmAlarm").text(resp);
+					if(resp != null){
+						window['dmAlarmvar'] = 10;
+						$("#dmAlarm").text(dmAlarmvar);
+						
+					}
 				},
 				/* error:console.log */
 			});
 			
-			<!-- 3초마다 -->
+/* 			<!-- 3초마다 -->
 			setTimeout(function() {
 				dmAlarm();	
-			}, 3000);
+			}, 3000); */
 		};
 		
 

@@ -58,7 +58,7 @@ public interface ChatDao {
 
 	int roomUnreadChat(Chat chat);
 
-	int insertGroupMessage(Group group);
+	int insertGroupMessage(Map<String, Object> param);
 
 	int selectGroupRoomNo(Group group);
 
@@ -77,6 +77,8 @@ public interface ChatDao {
 	GroupBoardComment selectOnegroupBoardComment();
 
 	BoardComment selectOneMemberBoardComment();
+
+	int GroupRoomOutMessage(Map<String, Object> param);
 
 
 }
