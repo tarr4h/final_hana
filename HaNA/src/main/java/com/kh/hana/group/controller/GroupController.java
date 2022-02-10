@@ -184,12 +184,17 @@ public class GroupController {
 	//이거
 	@GetMapping("/groupBoardDetail/{no}")
 	public ResponseEntity<Map<String,Object>> groupBoardDetail(@AuthenticationPrincipal Member loginMember, @PathVariable int no, Model model) {
+		Map<String, Object> map = new HashMap<>();
+
 		//게시물 정보
 		GroupBoard groupBoard = groupService.selectOneBoard(no);
 		log.info("groupBoard = {}",groupBoard);
 		//태그멤버
-		List<Member> tagMembers = groupService.selectTagMemberList(groupBoard);
-		log.info("tagMembers = {}",tagMembers);
+		if(groupBoard.getTagMembers()!=null) {
+			List<Member> tagMembers = groupService.selectTagMemberList(groupBoard);
+			log.info("tagMembers = {}",tagMembers);
+			map.put("tagMembers",tagMembers);
+		}
 		//좋아요여부
 		Map<String,Object> param = new HashMap<>();
 		param.put("memberId",loginMember.getId());
@@ -198,9 +203,7 @@ public class GroupController {
 		boolean isLiked = likeLog == null? false : true;
 		log.info("isLiked = {}",isLiked);
 		
-		Map<String, Object> map = new HashMap<>();
 		map.put("groupBoard",groupBoard);
-		map.put("tagMembers",tagMembers);
 		map.put("isLiked",isLiked);
 		
 		return ResponseEntity.ok(map);

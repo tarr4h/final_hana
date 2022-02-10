@@ -194,13 +194,13 @@ function getPageDetail(boardNo){
 		 			//modal의 body부분
 		 			//태그 멤버 목록
 		 			
-		  			$("#group-board-tag-member-list table").empty();
+		  			$("#tagMemberListTable").empty();
 		 			$.each(tagMembers, (i,e)=>{
 		 				let tr = `<tr>
 		 					<td><a href="javascript:void(0);" onclick="goMemberView('\${e.id}');" ><img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/\${e.picture}" alt="" /></a></td>
 		 					<th><a href="javascript:void(0);" onclick="goMemberView('\${e.id}');" style="color:black; text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;\${e.id}</a></th>
 		 				</tr>`;	
-		  				$("#group-board-tag-member-list table").append(tr);
+		  				$("#tagMemberListTable").append(tr);
 		 			})
 					
 		 			//content

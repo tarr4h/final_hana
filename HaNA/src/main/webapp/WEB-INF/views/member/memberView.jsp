@@ -82,7 +82,7 @@
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
         	</c:if>
-        	<c:if test="${!loginMember.id.equals(member.id) }">
+        	<c:if test="${!loginMember.id.equals(member.id) && isFriend == 0}">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
@@ -172,7 +172,6 @@ $("#requestButton").on( "click", function() {
 $("#btn-following-list").on( "click", function() {
     $("#test_modal").modal();
 });
-
 $("#btn-follower-list").on( "click", function() {
     $("#test_modal1").modal();
 });
@@ -312,7 +311,6 @@ $("#btn-following-list").click((e) => {
 		success(resp){
 			console.log("결과 :", resp);
 			
-
 			$("#modalTbody").empty();
 			
 		     if(resp.length===0){
@@ -402,7 +400,6 @@ $('.board-main-image').click((e)=>{
 	
 	$('#pageDetail').modal("show");
 });
-
 //계정페이지로 이동
 function goMemberView(memberId){
 	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
