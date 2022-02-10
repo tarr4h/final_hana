@@ -176,14 +176,11 @@ var endNum = 6;
 var startNum = 0;
 var selectDataArr = []; //hashTag 담을 배열
 var hashTagData = ""; // 검색 데이터 잠시 담을 변수 
-var tagClick = false;
+
 
 function scrollPage(){	
 	
-		// 이부분 해시태그 클릭시 스크롤 막는거 해야하는데 테스트 중 !!!!!!!!!!!!!!!!!!!!!!!! 
-		if(tagClick = false){
-			return;
-		}
+	
 
 		//  페이지 들어 왔을때 (태그 선택 후 검색 버튼을 클릭 하지 않았을 경우) 스크롤을 하면 거리기반 매장만 뜨게 
 		if(chkClick == false) {
@@ -513,7 +510,7 @@ $(()=>{
 
 // 랭킹 태그 클릭시 
 $(".tagClick").click(function(){
-	 tagClick = true;
+
 	$("#shopList").empty();
 	
 	
@@ -545,9 +542,7 @@ $(".tagClick").click(function(){
 					    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
 					    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
 						$('#shopList').append(htmlOut);
-						// list[i].ID가 마지막이라면 return
 	 			   }
-	 			
 	 			
 	 		},
 	 		error: console.log
