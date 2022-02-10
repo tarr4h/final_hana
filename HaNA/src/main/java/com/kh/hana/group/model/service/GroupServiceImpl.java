@@ -1,5 +1,6 @@
 package com.kh.hana.group.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,10 +38,18 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public int insertOneGroup(Group group) {
+		Map<String, Object> param = new HashMap<String, Object>();
 		int result = 0;
+		int roomNo = 0;
 		try {
 			result = groupDao.insertOneGroup(group);
-			result = chatDao.CreateGroupChat(group);
+			if(result>0) result = chatDao.CreateGroupChat(group);
+			if(result>0) roomNo = chatDao.selectGroupRoomNo(group);			
+			param.put("group", group);
+			param.put("roomNo", roomNo);
+			log.info("CreateGroupChat serviceImpl roomNo넣음= {}", param);
+			if(result > 0)
+				result = chatDao.insertGroupMessage(param);
 		}catch(Exception e) {
 			throw e;
 		}
@@ -158,7 +167,10 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public int deleteGroupMember(Map<String,Object> param) {
-		return groupDao.deleteGroupMember(param);
+		int result = 0;
+		result = groupDao.deleteGroupMember(param);
+		if(result>0) result = chatDao.GroupRoomOutMessage(param);
+		return result;
 	}
 
 	@Override
