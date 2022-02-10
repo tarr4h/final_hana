@@ -271,7 +271,17 @@ select sysdate from dual;
  select *from mbti_data;
  
  
+  select
+            *
+        from
+            shop_info ;
+  		  	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id
+        where
+            tag_name = '감자탕';
  
+
+
 
 
 
