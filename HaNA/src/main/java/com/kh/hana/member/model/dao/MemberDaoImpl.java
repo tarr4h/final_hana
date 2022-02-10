@@ -30,30 +30,6 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.updateMember", member);
 	}
 
-//	@Override
-//	public int updatePersonality(Member member) {
-//		return session.update("member.updatePersonality", member);
-//	}
-//
-//	@Override
-//	public int updateInterest(Member member) {
-//		return session.update("member.updateInterest", member);
-//	}
-
-//	@Override
-//	public Member selectPersonality(String id) {
-//		return session.selectOne("member.selectPersonality", id);
-//	}
-
-//	public int insertPersonality(Member member) {
-//		return session.insert("member.insertPersonality", member);
-//	}
-//
-//	@Override
-//	public int insertInterest(Member member) {
-//		return session.insert("member.insertInterest", member);
-//	}
-
 	@Override
 	public int addFollowing(Map<String, Object> map) {
 		return session.insert("member.addFollowing", map);
@@ -216,8 +192,17 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int insertReview(Board board) {
+		return session.insert("member.insertReview", board);
+	}
+
 	public int isRequestFriend(Map<String, Object> map) {
 		return session.selectOne("member.isRequestFriend",map);
+	}
+
+	@Override
+	public List<Board> selectShopReviewList(String id) {
+		return session.selectList("member.selectShopReviewList", id);
 	}
 
 //	@Override

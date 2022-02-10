@@ -84,17 +84,21 @@
 				<table id="profileTable">
 					<tbody>
 						<tr>
-							<td class="tableKey">아이디</td>
-							<td class="tableValue">${member.id}</td>
+							<td>
+								<span class="tableKey">아이디</span>
+							</td>
+							<td>
+								<span class="tableValue">${member.id}</span>
+							</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>${member.addressAll}</td>
+							<td>${shopInfo.address}</td>
 						</tr>
 						<tr>
 							<td rowspan=2><span class="tableKey">소개</span></td>
 							<td class="tableValue" rowspan=2>
-								 ${member.introduce} 
+								 ${shopInfo.shopIntroduce} 
 							</td>
 						</tr>
 						<tr>
@@ -102,8 +106,10 @@
 							<td></td>
 						</tr>
 						<tr>
-							<td><span class="tableKey">평점</span></td>
-							<td><span class="tableValue">4.9</span></td>
+							<td><span class="tableKey">평점(리뷰 수)</span></td>
+							<td>
+								<span class="tableValue grade">4.9</span>
+							</td>
 						</tr>
 						
 						<!-- 본인인 경우 예약확인버튼 노출 -->
@@ -160,6 +166,7 @@
     <div class="row" id="reviewArea" style="display:none;">
     	<jsp:include page="/WEB-INF/views/member/shopViewBoardArea/reviewBoard.jsp"></jsp:include>
     </div>
+    <jsp:include page="/WEB-INF/views/member/boardModal/boardDetail.jsp"/>
 </div>
 
 <script>
@@ -198,9 +205,30 @@
 	$('.board-main-image').click((e)=>{
 		let boardNo = $(e.target).siblings("#boardNo").val();
 		console.log("boardNo1",boardNo);
-		getPageDetail(boardNo);
+		getMemberPageDetail(boardNo);
 		
 		$('#pageDetail').modal("show");
+	});
+	
+	/* 업체 평점 구하기 */
+	function getShopGrade(shopId){
+		$.ajax({
+			url: '${pageContext.request.contextPath}/shop/getShopGrade',
+			data:{
+				shopId
+			},
+			success(res){
+				let str = `\${res.average}(\${res.reviewCount})`;
+				$(".grade").text(str);
+			},
+			error: console.log
+		});
+	};
+	
+	/* onload 시 평점/리뷰 수 반영 */
+	$(() => {
+		let shopId = '${shopInfo.id}';
+		getShopGrade(shopId);
 	});
 
 	//팔로잉, 팔로워리스트 모달

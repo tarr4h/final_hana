@@ -19,5 +19,4 @@
 	    	style="width:100%; height:100%; margin-bottom: 10%"/>
 	    </div>
     </c:forEach>
-  
-<jsp:include page="/WEB-INF/views/member/boardModal/boardDetail.jsp"/>
+ 
