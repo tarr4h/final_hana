@@ -235,6 +235,11 @@ public class GroupDaoImpl implements GroupDao {
 	public int updateGroupLeader(Map<String, Object> param) {
 		return session.update("group.updateGroupLeader", param);
 	}
+
+	@Override
+	public int deleteGroup(String groupId) {
+		return session.delete("group.deleteGroup", groupId);
+	}
 	
 
 
