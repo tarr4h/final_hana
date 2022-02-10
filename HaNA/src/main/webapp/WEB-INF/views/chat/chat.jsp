@@ -485,6 +485,13 @@ const displaychat = (check, e) =>{
 			</div>
 			</div>`
 	}
+	else if(e.message === 'ROOMOUT'){
+		chat += `<div class="d-flex justify-content-center mb-2">
+			<div class="msg_cotainer_send">
+			\${e.memberId}가 퇴장하셨습니다.
+			</div>
+			</div>`
+	}
 	
 	//messageSplit[0]가 share115이라면 공유메세지
 	else if(messageSplit[0] === 'share115'){
