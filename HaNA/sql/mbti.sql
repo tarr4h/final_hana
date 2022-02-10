@@ -170,6 +170,9 @@ create table ranking (
 );
 
   select *from ranking;
+  select * from hashtag;
+  
+update ranking set tag_date = '22/02/19' where member_id = 'k666';
   
   insert  into ranking(tag_id , tag_date , count);
   
