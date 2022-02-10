@@ -16,9 +16,9 @@ public class Shop extends ShopEntity implements Serializable {
 	private List<Reservation> manageTables;
 
 	@Builder
-	public Shop(String id, String bussinessHourStart, String bussinessHourEnd, String locationX, String locationY,
+	public Shop(String id, String shopName, String bussinessHourStart, String bussinessHourEnd, String locationX, String locationY,
 			String address, String addressDetail, String shopIntroduce, List<Reservation> manageTables) {
-		super(id, bussinessHourStart, bussinessHourEnd, locationX, locationY, address, addressDetail, shopIntroduce);
+		super(id, shopName, bussinessHourStart, bussinessHourEnd, locationX, locationY, address, addressDetail, shopIntroduce);
 		this.manageTables = manageTables;
 	}
 
