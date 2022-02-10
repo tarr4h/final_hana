@@ -60,13 +60,15 @@
 			id = #{id}
 	</select>
 
-	<select id="followerList" resultType="follower">
+	<select id="followerList" resultMap="memberMap">
 	select
 		*
 	from
-		follower
+		 member m left join follower f
+	on 
+		        m.id = f.member_id
 	where
-		member_id = #{friendId}
+		f.member_id = #{friendId}
 	</select>
 
 	<select id="followingList" resultMap="memberMap">

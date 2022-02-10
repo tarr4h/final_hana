@@ -311,8 +311,8 @@
 	}
 .col-sm-8 {
     flex: 0 0 auto;
-    width: 850px;
-    font-size:20px;
+    width: 550px;
+    font-size:14px;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

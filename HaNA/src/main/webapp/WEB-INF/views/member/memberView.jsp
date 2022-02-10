@@ -372,6 +372,7 @@ $("#btn-follower-list").click((e) => {
 			const {followingId} = resp;
 			$.each(resp, (i, e) => {
 				console.log(e.followingId);
+				console.log("e.pictureeeeeee",e.picture);
 				let tr= `
 					<tr>
 					<td>
