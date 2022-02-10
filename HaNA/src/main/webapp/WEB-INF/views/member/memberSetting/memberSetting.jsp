@@ -31,7 +31,6 @@
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/accountPrivate'">계정 공개</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/'">정보 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
         </div>
@@ -182,7 +181,7 @@ function execDaumPostcode() {
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     margin-bottom : 15px;
-    margin-left: 20px;
+    margin-left: 30px;
 } 
 .custom-select{
 	width : 450px;
