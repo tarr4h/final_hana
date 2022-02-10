@@ -81,6 +81,12 @@ public interface MemberService {
 
 	int refuseFollowing(Map<String, Object> map);
 
+	int insertReview(Map<String, Object> map);
+
+	int isRequestFriend(Map<String, Object> map);
+
+	List<Board> selectShopReviewList(String id);
+
 	//int checkRefuse(Map<String, Object> map);
 
 	 

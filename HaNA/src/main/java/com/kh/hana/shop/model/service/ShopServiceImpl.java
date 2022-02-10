@@ -259,6 +259,11 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.updateRestPrice(reqMap);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectShopGrade(String shopId) {
+		return shopDao.selectShopGrade(shopId);
+	}
+
 	
 
 

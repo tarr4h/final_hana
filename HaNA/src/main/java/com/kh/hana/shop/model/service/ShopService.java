@@ -71,6 +71,8 @@ public interface ShopService {
 
 	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
 
+	List<Map<String, Object>> selectShopGrade(String shopId);
+
 
 
 

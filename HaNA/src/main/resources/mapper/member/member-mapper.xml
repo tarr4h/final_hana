@@ -142,8 +142,19 @@
 	</insert>
 
 	<insert id= "insertMemberBoard" parameterType="board">
-		insert into board (no,writer, content,picture)
+		insert into board (no,writer, content, picture)
 		values (seq_board_no.nextval, #{writer}, #{content}, #{picture})
+	</insert>
+	
+	<insert id="insertReview" parameterType="board">
+		insert into board (no, writer, content, board_type, picture)
+		values(seq_board_no.nextval, #{writer}, #{content}, 'S', #{picture})
+		<selectKey order="AFTER" keyProperty="no" resultType="int">
+			select
+				seq_board_no.currval
+			from
+				dual
+		</selectKey>
 	</insert>
 
 	<update id="updateMemberProfile" parameterType="member">
@@ -384,8 +395,31 @@
 	 	req_id = #{loginMemberId}
 	</select> -->
 	
+	<select id="isRequestFriend" resultType="_int">
+	 select 
+	 	count(*) 
+	 from
+	 	following_request
+	 where
+	 	req_id = #{loginMemberId}
+	 	and
+	 	member_id = #{id}
+	 	and
+	 	status = '요청'
+	</select>
 	
-	
+	<select id="selectShopReviewList" parameterType="string" resultType="board">
+		select
+		    b.*,
+		    s.shop_id "shopId"
+		from
+		    board_review r inner join board b
+		    on r.no = b.no
+		    inner join shop_table_reservation s
+		    on r.reservation_no = s.reservation_no
+		where
+			s.shop_id = #{id}	
+	</select>
 	
 
 </mapper>

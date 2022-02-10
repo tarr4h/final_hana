@@ -125,10 +125,16 @@ public class MemberController {
 		
 		model.addAttribute("boardList", boardList);
 		
+		// 업체인 경우 shop 정보 + 리뷰 게시글 가져오기
 		if(member.getAccountType() == 0) {
 			Shop shopInfo = memberService.selectOneShopInfo(id);
 			log.info("shopInfo = {}", shopInfo);
 			model.addAttribute("shopInfo", shopInfo);
+			
+			List<Board> reviewList = memberService.selectShopReviewList(shopInfo.getId());
+			model.addAttribute("reviewList", reviewList);
+			log.info("reviewLIst = {}", reviewList);
+			
 			return "/member/"+"shopView";
 		};
 		
@@ -144,15 +150,18 @@ public class MemberController {
 		 
 		 int isFriend = memberService.checkFriend(map);
 		 log.info("isFriend={}", isFriend);
-		 
-		 if(isFriend == 1)
 		 model.addAttribute("isFriend", isFriend);
+		 
+		 //비공개계정에 요청중인지
+		 int isRequest = memberService.isRequestFriend(map);
+		 log.info("isRequest = {}", isRequest);
+		 model.addAttribute("isRequest", isRequest);
 		 
 		//친구요청 유무 확인
 		 int request = memberService.followingRequest(map);
 		 log.info("request={}", request);
 		 model.addAttribute("request", request);
-  
+ 
 			return "/member/"+"memberView";
 		}
 	 
@@ -419,6 +428,44 @@ public class MemberController {
 		}
 		
 	};
+	
+	@PostMapping("/insertReview")
+	public String insertReview(Board board, @RequestParam String reservationNo, @RequestParam int checkedVal,
+			@RequestParam(value="upFile") MultipartFile[] upFiles, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
+		log.info("reservationNo = {}", reservationNo);
+		log.info("checkedVal = {}", checkedVal);
+
+		String[] picArr = new String[upFiles.length];
+		String saveDirectory = application.getRealPath("/resources/upload/member/board");
+		
+		int i = 0;
+		for(MultipartFile file : upFiles) {
+			String ofn = file.getOriginalFilename();
+			String rfn = HanaUtils.rename(ofn);
+			File uploadImg = new File(saveDirectory, rfn);
+			try {
+				file.transferTo(uploadImg);
+			} catch (IllegalStateException | IOException e) {
+				log.error(e.getMessage(), e);
+			}
+			picArr[i] = rfn;
+			i++;
+		};
+		board.setPicture(picArr);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("board", board);
+		map.put("reservationNo", reservationNo);
+		map.put("checkedVal", checkedVal);
+		
+		int result = memberService.insertReview(map);
+		String msg = result > 0 ? "게시글이 등록되었습니다." : "등록 실패";
+		
+		redirectAttr.addFlashAttribute("msg", msg);
+		
+		return "redirect:/member/memberSetting/myReservationList";		
+	}
+	
 
 	@PostMapping("/profileUpdate")
 	public String profileUpdate(@RequestParam MultipartFile upFile, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
@@ -446,9 +493,9 @@ public class MemberController {
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "프로필사진이 업데이트 되었습니다." : "프로필 사진 업데이트 실패");
 		
 		if(member.getAccountType() == 1) {
-			return "redirect:/member/memberView/"+memberId;
+			return "redirect:/member/memberView/"+memberId;			
 		} else {
-			return "redirect:/member/shopView/"+memberId;			
+			return "redirect:/member/shopView/"+memberId;
 		}
 	}
 	

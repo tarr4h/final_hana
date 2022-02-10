@@ -67,7 +67,7 @@
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
         	</c:if>
-        	<c:if test="${!loginMember.id.equals(member.id) }">
+        	<c:if test="${!loginMember.id.equals(member.id) && isFriend == 0 }">
         	<button type="button" class="btn btn-outline-dark icon" id="addFriendBtn" onclick="addFollowing();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
@@ -84,17 +84,21 @@
 				<table id="profileTable">
 					<tbody>
 						<tr>
-							<td class="tableKey">아이디</td>
-							<td class="tableValue">${member.id}</td>
+							<td>
+								<span class="tableKey">아이디</span>
+							</td>
+							<td>
+								<span class="tableValue">${member.id}</span>
+							</td>
 						</tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>${member.addressAll}</td>
+							<td>${shopInfo.address}</td>
 						</tr>
 						<tr>
 							<td rowspan=2><span class="tableKey">소개</span></td>
 							<td class="tableValue" rowspan=2>
-								 ${member.introduce} 
+								 ${shopInfo.shopIntroduce} 
 							</td>
 						</tr>
 						<tr>
@@ -102,8 +106,10 @@
 							<td></td>
 						</tr>
 						<tr>
-							<td><span class="tableKey">평점</span></td>
-							<td><span class="tableValue">4.9</span></td>
+							<td><span class="tableKey">평점(리뷰 수)</span></td>
+							<td>
+								<span class="tableValue grade">4.9</span>
+							</td>
 						</tr>
 						
 						<!-- 본인인 경우 예약확인버튼 노출 -->
@@ -160,6 +166,7 @@
     <div class="row" id="reviewArea" style="display:none;">
     	<jsp:include page="/WEB-INF/views/member/shopViewBoardArea/reviewBoard.jsp"></jsp:include>
     </div>
+    <jsp:include page="/WEB-INF/views/member/boardModal/boardDetail.jsp"/>
 </div>
 
 <script>
@@ -198,15 +205,167 @@
 	$('.board-main-image').click((e)=>{
 		let boardNo = $(e.target).siblings("#boardNo").val();
 		console.log("boardNo1",boardNo);
-		getPageDetail(boardNo);
+		getMemberPageDetail(boardNo);
 		
 		$('#pageDetail').modal("show");
 	});
+	
+	/* 업체 평점 구하기 */
+	function getShopGrade(shopId){
+		$.ajax({
+			url: '${pageContext.request.contextPath}/shop/getShopGrade',
+			data:{
+				shopId
+			},
+			success(res){
+				let str = `\${res.average}(\${res.reviewCount})`;
+				$(".grade").text(str);
+			},
+			error: console.log
+		});
+	};
+	
+	/* onload 시 평점/리뷰 수 반영 */
+	$(() => {
+		let shopId = '${shopInfo.id}';
+		getShopGrade(shopId);
+	});
 
+	//팔로잉, 팔로워리스트 모달
+	$("#btn-following-list").on( "click", function() {
+	    $("#test_modal").modal();
+		});
+	$("#btn-follower-list").on( "click", function() {
+		$("#test_modal1").modal();
+	});
+	//팔로잉 리스트 가져오기
+	$("#btn-following-list").click((e) => {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/member/followingList",
+			data : {"friendId":"${member.id}"},
+			success(resp){
+				console.log("결과 :", resp);
+				
+				$("#modalTbody").empty();
+				
+			     if(resp.length===0){
+	                 tr = `<tr>
+	                     <th colspan="5">팔로잉이 없습니다.</th>
+	                 </tr>`;
+	                 $("#modalTbody").append(tr);
+	             }
+			     
+				const {memberId} = resp;
+				$.each(resp, (i, e) => {
+					console.log(e.followers[0].memberId);
+					console.log(e.picture);
+					let tr= `
+					<tr>
+						<td>
+							<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
+							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].memberId}">\${e.followers[0].memberId}</a>
+						</td>
+					</tr>
+				`;
+				console.log(tr);
+				$("#modalTbody").append(tr);
+			})
+		},
+		error: console.log
+		})
+	});
+	//팔로워 리스트 가져오기 
+	$("#btn-follower-list").click((e) => {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/member/followerList",
+			data :  {"friendId":"${member.id}"},
+			success(resp){
+				console.log(resp);
+				
+				$("#modalTbody1").empty();
+				
+				if(resp.length===0){
+	                tr = `<tr>
+	                    <th colspan="5">팔로워가 없습니다.</th>
+	                </tr>`;
+	                $("#modalTbody1").append(tr);
+	            }
+				
+				const {followingId} = resp;
+				$.each(resp, (i, e) => {
+					console.log(e.followingId);
+					let tr= `
+						<tr>
+						<td>
+							<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
+							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followingId}">\${e.followingId}</a>
+						</td>
+					</tr>
+				`;
+				$("#modalTbody1").append(tr);
+				
+			})
+		},
+		error: console.log
+		})
+	});
 </script>
-
-  
+<!-- 팔로잉리스트 모달창 -->
+       <div class="modal fade" id="test_modal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>팔로잉</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody">
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 팔로워리스트 모달창 -->
+       <div class="modal fade" id="test_modal1" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="text-align: center;" name="modalTable">
+					<thead class="table-light">
+						<tr>
+							<th>팔로워</th>
+						</tr>
+					</thead>
+					<tbody id="modalTbody1">
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+ 
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
+ 
+ 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
