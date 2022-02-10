@@ -216,8 +216,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int checkApplyFriend(Map<String, Object> map) {
-		return session.selectOne("member.checkApplyFriend",map);
+	public int isRequestFriend(Map<String, Object> map) {
+		return session.selectOne("member.isRequestFriend",map);
 	}
 
 //	@Override

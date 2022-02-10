@@ -408,7 +408,7 @@
 	 	req_id = #{loginMemberId}
 	</select> -->
 	
-	<select id="checkApplyFriend" resultType="_int">
+	<select id="isRequestFriend" resultType="_int">
 	 select 
 	 	count(*) 
 	 from

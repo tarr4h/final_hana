@@ -81,7 +81,7 @@ public interface MemberService {
 
 	int refuseFollowing(Map<String, Object> map);
 
-	int checkApplyFriend(Map<String, Object> map);
+	int isRequestFriend(Map<String, Object> map);
 
 	//int checkRefuse(Map<String, Object> map);
 

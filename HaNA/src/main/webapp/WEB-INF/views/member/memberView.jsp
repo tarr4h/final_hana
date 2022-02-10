@@ -82,13 +82,18 @@
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
         	</c:if>
-        	<c:if test="${!loginMember.id.equals(member.id) && isFriend == 0}">
+        	<c:if test="${member.publicProfile == 1 && !loginMember.id.equals(member.id) && isFriend == 0}">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
         	</c:if>
         	 <c:choose>
-    		<c:when test="${member.publicProfile == 2  && loginMember.id != member.id && isFriend != 1}">
+    		<c:when test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) && isRequest != 1}">
+    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
+        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
+        	</button>
+        	</c:when>
+        	 <c:when test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) &&  isFriend != 1}">
     		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
@@ -160,7 +165,7 @@
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
 						alt=""  />
 		      </div>
-	      <c:if test="${board.first eq null}">
+	      <c:if test="${board eq null}">
 	      	<div>게시물 없음 </div>
 	      </c:if>
 	      </c:forEach>

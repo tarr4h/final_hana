@@ -144,9 +144,12 @@ public class MemberController {
 		 
 		 int isFriend = memberService.checkFriend(map);
 		 log.info("isFriend={}", isFriend);
-		 
-		 if(isFriend == 1)
 		 model.addAttribute("isFriend", isFriend);
+		 
+		 //비공개계정에 요청중인지
+		 int isRequest = memberService.isRequestFriend(map);
+		 log.info("isRequest = {}", isRequest);
+		 model.addAttribute("isRequest", isRequest);
 		 
 		//친구요청 유무 확인
 		 int request = memberService.followingRequest(map);

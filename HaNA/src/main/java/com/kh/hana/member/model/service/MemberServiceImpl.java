@@ -238,8 +238,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int checkApplyFriend(Map<String, Object> map) {
-		return memberDao.checkApplyFriend(map);
+	public int isRequestFriend(Map<String, Object> map) {
+		return memberDao.isRequestFriend(map);
 	}
 
 //	@Override
