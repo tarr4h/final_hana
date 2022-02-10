@@ -46,20 +46,6 @@
 			member_id = #{id}
 	</select>
 
-	<insert id="insertPersonality">
-		insert into
-			personality
-		(member_id, personality)
-		values (#{id}, #{personality}) 
-	</insert>
-
-	<insert id="insertInterest">
-		insert into
-			interest 
-			(member_id, interest)
-		values (#{id}, #{interest})
-	</insert>
-
 	<insert id="addFollowing" parameterType ="map">
 		insert into
 		follower 

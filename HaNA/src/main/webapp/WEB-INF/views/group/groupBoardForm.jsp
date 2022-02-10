@@ -78,16 +78,66 @@
     
     <div class="font-weight-bold head pb-1">작성할 글과 함께 첨부할 파일을 선택해주세요.</div> 
     	<textarea id="desc" cols="50" rows="5" placeholder="Post" name="content"></textarea> <br />
-		<div class="font-weight-bold head pb-1" name="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"><button type="button">추가</button></div>
+    <div id="abc">
+		<div class="font-weight-bold head pb-2">
+		    <label class="labels"></label>
+		    <input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택" style="width: 93%; float: left;">
+		    <button type="button" id="addFile" class="btn btn-primary" onclick="addFileBtn();" style="margin-left: 2%;">+</button>
+		</div>
+	</div>
 	<br />
 	
-    <div>with</div>
-    <div class="btn-group d-flex justify-conten-between flex-wrap py-1 pt-2"> 
-    	<c:forEach items="${members}" var="member">
-    	<label class="btn btn-primary form-check-label alert alert-dismissible fade show mx-2" style="text-align: center;" value="${member.memberId}" name="tagMembers">@${member.memberId}</label>
-    	</c:forEach>
-    </div>
-        <div class="row"> <span>Location</span>
+    <div class="group-board-form tag-member-btn" style="color:#3f51b5; font-size:1.1em; font-weight:bold;" onclick="$('#groupMemberList').modal('show');">멤버 태그</div>
+	    <!-- 회원목록보기 modal -->
+			<div class="modal fade" id="groupMemberList" tabindex="-1">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div id="groupMemberListTableContainer">
+								<table id="groupMemberListTable">
+									<c:forEach items="${members}" var="member" varStatus="vs">
+										<tr>
+						 					<td>
+						 						<a href="javascript:void(0);" onclick="clickMember('tagMember${vs.index}');" >
+						 						<img style="width:50px; height:50px; border-radius:50%" src="<%=request.getContextPath()%>/resources/upload/member/profile/${member.profile}" alt="" />
+						 						</a> 
+						 					</td>
+						 					<th>
+						 						<a href="javascript:void(0);" onclick="clickMember('tagMember${vs.index}');" style="color:black; text-decoration:none;">
+						 							&nbsp;&nbsp;&nbsp;&nbsp;${member.memberId}
+						 						</a>
+						 							<c:if test="${member.memberLevelCode eq 'ld'}"><span style="color:#ff5722">&nbsp;&nbsp;[Leader]</span></c:if>
+						 							<c:if test="${member.memberLevelCode eq 'mg'}"><span style="color:#ff9800">&nbsp;&nbsp;[Manager]</span></c:if>
+						 					</th> 
+						 					<td>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="tagMembers" value="${member.memberId}" id="tagMember${vs.index}"/></td>
+						 				</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<br />
+  		<div style="margin-bottom:10px;"><span style="font-size:1.1em; font-weight:bold;">Location Tag</span></div>
+		<div class="map_wrap">
+		    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+		
+		    <div id="menu_wrap" class="bg_white">
+		        <div class="option">
+		            <div>
+		                <form onsubmit="searchPlaces(); return false;">
+		                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
+		                    <button type="submit">검색하기</button> 
+		                </form>
+		            </div>
+		        </div>
+		        <hr>
+		        <ul id="placesList"></ul>
+		        <div id="pagination"></div>
+		    </div>
+		</div>
+		<div class="row" style="margin-top:20px;">
             <div class="col-6"> 
                 <div class="form-group"> <input id="placeName" class="form-control" name="placeName" type="text" value="" readonly/>
                     <div class="label" id="tel"></div>
@@ -103,30 +153,28 @@
         </div>
         </form>
         <br />
-<div class="map_wrap">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-
-    <div id="menu_wrap" class="bg_white">
-        <div class="option">
-            <div>
-                <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
-                    <button type="submit">검색하기</button> 
-                </form>
-            </div>
-        </div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
-    </div>
-</div>
 	    <div class="d-flex justify-content-end pt-2">
-	        <div class="btn btn-primary" onclick="submitBoard();">Submit</div>
+	        <div class="btn btn-primary" onclick="submitBoard();">등록하기</div>
 	    </div>
 </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fe4df2cda826ac2a53225fb7dea2a307&libraries=services"></script>
 <script>
+// 태그멤버 클릭시 체크박스 on/off
+function clickMember(id){
+	console.log(id);
+	var checked = $(`#\${id}`).is(':checked');
+	$(`#\${id}`).prop('checked',!checked);
+}
+
+function addFileBtn(){
+	var rowItem = '<div class=font-weight-bold head pb-2>'
+		rowItem += '<label class=labels></label>'
+        rowItem += '<input type=file class=form-control placeholder=File name=file id=file1 value=파일 선택>'
+		rowItem += '</div>';
+
+	$('#abc').append(rowItem); 
+}
 
 // 카카오 지도 API
 
@@ -412,11 +460,13 @@ input {
 }
 
 .wrapper {
-    max-width: 80%;
+    max-width: 50%;
+    height:80%;
     margin: 40px auto;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 20px
+    padding: 20px;
+    padding-top:2%;
 }
 
 .form-control {
@@ -491,7 +541,7 @@ input:focus::placeholder {
 }
 
 .alert {
-    padding: 0.4rem 1.0rem 0.4rem 1.0rem;
+    padding: 0.4rem 1.5rem 0.4rem 1.5rem;
     outline: none
 }
 
@@ -537,6 +587,10 @@ input:focus~.label::after {
 
 button.close {
     outline: none
+}
+.tag-member-btn:hover {
+cursor:pointer;}
+.group-board-form .tag-member-bt {
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
