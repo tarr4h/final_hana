@@ -172,7 +172,6 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
-    <span></span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
@@ -186,6 +185,9 @@ const slideMargin = 0; //슬라이드간의 margin 값
     		<div style="display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${groupboard.groupId}'">
     		<img style="width:32px;height:32px;margin-left: 330px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
     		<span>${groupboard.groupName} 바로가기</span>
+    		</div>
+    		<div>
+    		<button onclick="getPageDetail('${groupboard.no}');">상세게시글</button>
     		</div>
     </td>
     </tr>
@@ -970,4 +972,7 @@ const commetLevel2Write=(index,boardNo)=>{
     <style>
     .commentLevel2{margin-left: 50px}
     </style>
+    
+<!-- 게시물 상세보기 모달 -->
+<jsp:include page="/WEB-INF/views/group/modal/groupBoardDetail.jsp"/>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
