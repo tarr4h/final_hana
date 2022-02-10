@@ -35,7 +35,11 @@
         </div>
         <!-- 설정 영역 -->
         <div class="col-sm-8">
-        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo" method="post" name="updateFrm">    	
+        	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo" method="post" name="updateFrm">  
+        		<label for="shopName">매장명</label>
+        		<br />
+        		<input type="text" name="shopName" id="" value="${shop.shopName }"/> 
+        		<br /> 	
 	        	<label for="bussiness-hour-start">영업시간</label>
 	        	<br />
 	        	<input type="time" name="bussinessHourStart" value="${shop.bussinessHourStart }" step="1800"/>~<input type="time" name="bussinessHourEnd" value="${shop.bussinessHourEnd }" step="1800"/>        	

@@ -172,7 +172,6 @@ public class MemberController {
 			if(param.equals("shopInfo")) {
 				Shop shop = memberService.selectOneShopInfo(memberId);
 				log.info("shop Setting ={}", shop);
-				log.info("shopSetting null ? = {}", shop);
 				model.addAttribute(shop);
 			}
 		} catch (Exception e) {
