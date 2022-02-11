@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
+import com.kh.hana.chat.model.vo.Noti;
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.GroupBoard;
@@ -530,9 +531,19 @@ public class ChatController {
     	return ResponseEntity.ok(result);
     }
     
-    @PostMapping("/testtest2.do")
-    public String testtest2(String id) {
-    	return null;
+    @GetMapping("/notiAlarm.do")
+    public ResponseEntity<?> notiAlarm(String id) {
+    	
+    	List<Noti> noti = chatService.notiAlarm(id);
+    	
+    	return ResponseEntity.ok(noti);
+    }
+    
+    @GetMapping("/notiReadCheck.do")
+    public ResponseEntity<?> notiReadCheck(String id){
+    	int result = chatService.notiReadCheck(id);
+    	if(result>0) log.info("noti readcheck");
+    	return ResponseEntity.ok("readcheck");
     }
     		
 }

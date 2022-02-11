@@ -90,16 +90,15 @@ public class WebSocketHandler extends TextWebSocketHandler{
         	log.info("userSession에 id값 넣음 ={}", userSessions);
         	
         	if(chat.getRoomNo() == 226 && chat.getMessage() != null) {
-        		log.info("chat.getRoomNo() == 226 들어옴");
         		log.info("chat.getMessage() = {}",chat.getMessage());
         		String[] messageSplit = chat.getMessage().split("@");
-        		log.info("messageSplit = {}",messageSplit[0]);
+        		log.info("messageSplit memberId= {}",messageSplit[0]);
         		log.info("messageSplit = {}",messageSplit[1]);
         		log.info("messageSplit = {}",messageSplit[2]);
 
     			TextMessage textMessage = new TextMessage(chat.getMemberId() + ","  + chat.getMessage()+ ","  + chat.getPicture()+ ","  +chat.getMessageRegDate()+","+chat.getRoomNo());
 
-    				//log.info("로그인한 유저 확인 반복문 session = {}", userSessions.get(user));
+    				//messageSplit[0](받는 사람) id의 session이 없을때 웹소켓 전송
     				if(userSessions.get(messageSplit[0]) != null) {
     	            try {
     	            	userSessions.get(messageSplit[0]).sendMessage(textMessage);
@@ -111,6 +110,22 @@ public class WebSocketHandler extends TextWebSocketHandler{
     	                }
     	            }
     				}
+    				Map<String,Object> param = new HashMap<String, Object>();
+    				param.put("memberId", chat.getMemberId());
+    				param.put("ReceiverId", messageSplit[0]);
+    				param.put("msg", messageSplit[1]);
+    				param.put("boardNo", messageSplit[2]);
+    				//null이 아니면 그룹게시판 null이면 일반게시판
+    				if("일반".equals(messageSplit[3])) {
+    					param.put("boardType", 0);
+    				}
+    				else if("그룹".equals(messageSplit[3])){
+    					param.put("boardType", 1);
+    				}
+    				int result = chatService.insertNoti(param);
+    				if(result>0) log.info("insertNoti 성공!");
+    				else log.info("insertNoti 실패!");
+    				
         	
         	}
         	else if(chat.getRoomNo() != 226 && chat.getMessage() != null) {

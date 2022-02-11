@@ -31,14 +31,10 @@
 </c:if>
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
-<span>안읽은 메세지 표시는 log.info 쿼리 나오는거 막고 주석해제</span><br />
-<span>소모임 탈퇴시 나가기 메세지 하기</span><br />
-<span>알림오는 페이지에서 아무것도안하면 audio 오류(자동재생금지)</span><br />
 
 <script>
 let id;
 let picture;
-let today = Date.now()-(9 * 60 * 60 * 1000);
 <sec:authorize access="isAuthenticated()">
 	id = '<sec:authentication property="principal.id"/>';
 	picture = '<sec:authentication property="principal.picture"/>';

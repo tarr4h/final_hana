@@ -10,14 +10,13 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="title"/>
 </jsp:include>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main.css" />
 <sec:authentication property="principal" var="loginMember" />
 <style id="mainCss"></style>
 <script>
-let today = Date.now()-(9 * 60 * 60 * 1000);
 //댓글리스트 가져오기
 //css넣어주기
 const forEachCss = (index)=>{
@@ -329,9 +328,7 @@ $(`.next${vss.index }`).on('click', function () {
 				$(".commentTd${vss.index} .comments${vss.index }").html(commentList);
 
 		},
-        error:function(request,status,error){}
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	}
+        error:console.log
 	});
 	
 //forEach에서 일반 댓글쓰기
@@ -371,7 +368,7 @@ const commetWrite${vss.index}=()=>{
 		    const data = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `${groupboard.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${groupboard.no}`,
+		            "message"   : `${groupboard.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${groupboard.no}@그룹`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
@@ -380,9 +377,7 @@ const commetWrite${vss.index}=()=>{
 				
 			
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 };
 
@@ -399,9 +394,7 @@ $.ajax({
 		/* console.log("${vss.index }=",i${vss.index }); */
 		$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
 	},
-    error:function(request,status,error){
-        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    }
+    error:console.log
 });
 
 //forEach에서 내가 좋아요 누른 여부 확인
@@ -426,9 +419,7 @@ $.ajax({
  		};
 
 	},
-    error:function(request,status,error){
-        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    }
+    error:console.log
 });
 
 //좋아요 누를때
@@ -468,7 +459,7 @@ const insertLike${vss.index }=()=>{
 			    const data = {
 			            "roomNo" : 226,
 			            "memberId" : `${loginMember.id}`,
-			            "message"   : `${groupboard.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@${groupboard.no}`,
+			            "message"   : `${groupboard.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@${groupboard.no}@그룹`,
 			            "picture" : `${loginMember.picture}`,
 			            "messageRegDate" : today
 			        }; 
@@ -478,9 +469,7 @@ const insertLike${vss.index }=()=>{
 			else
 				console.log("441번째 줄");
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 };
 const deleteLike${vss.index }=()=>{
@@ -502,9 +491,7 @@ const deleteLike${vss.index }=()=>{
 			else
 				console.log("436번째 줄");
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 };
 </script>
@@ -660,9 +647,7 @@ $(`.next0${vss.index }`).on('click', function () {
 				$(".commentTd0${vss.index} .comments0${vss.index }").html(commentList);
 
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 	
 //forEach에서 일반 댓글쓰기
@@ -703,7 +688,7 @@ const commetWrite0${vss.index}=()=>{
 		    const data = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `${board.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${board.no}`,
+		            "message"   : `${board.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${board.no}@일반`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
@@ -711,9 +696,7 @@ const commetWrite0${vss.index}=()=>{
 		    websocket.send(jsonData);
 	
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 
 };
@@ -733,9 +716,7 @@ $.ajax({
 		console.log("0${vss.index }=",i0${vss.index });
 		$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
 	},
-    error:function(request,status,error){
-        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    }
+    error:console.log
 });
 
 //forEach에서 내가 좋아요 누른 여부 확인
@@ -760,9 +741,7 @@ $.ajax({
 		};
 
 	},
-    error:function(request,status,error){
-        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    }
+    error:console.log
 });
 
 //좋아요 누를때
@@ -800,7 +779,7 @@ const insertLike0${vss.index }=()=>{
 			    const data = {
 			            "roomNo" : 226,
 			            "memberId" : `${loginMember.id}`,
-			            "message"   : `${board.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@${board.no}`,
+			            "message"   : `${board.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@${board.no}@일반`,
 			            "picture" : `${loginMember.picture}`,
 			            "messageRegDate" : today
 			        }; 
@@ -810,9 +789,7 @@ const insertLike0${vss.index }=()=>{
 			else
 				console.log("736번째 줄");
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 };
 const deleteLike0${vss.index }=()=>{
@@ -834,9 +811,7 @@ const deleteLike0${vss.index }=()=>{
 			else
 				console.log("758번째 줄");
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 };
 
@@ -904,9 +879,7 @@ const insertFollow =(id,index)=>{
 			else
 				console.log("팔로우 실패");
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 };
 const DMsend=(writer)=>{
@@ -929,9 +902,7 @@ const DMsend=(writer)=>{
 				else
 					alert("메세지 전송 실패");
 			},
-	        error:function(request,status,error){
-	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	        }
+	        error:console.log
 		});
 	}
 }
@@ -978,16 +949,14 @@ const commetLevel2Write0=(index,boardNo,commentwriter)=>{
 		    const data = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `\${commentwriter}@${loginMember.id}님이 대댓글을 등록했습니다.@\${boardNo}`,
+		            "message"   : `\${commentwriter}@${loginMember.id}님이 대댓글을 등록했습니다.@\${boardNo}@일반`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
 		    let jsonData = JSON.stringify(data);
 		    websocket.send(jsonData);
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 
 	const date = moment(today).format("YYYY년 MM월 DD일");
@@ -1045,16 +1014,14 @@ const commetLevel2Write=(index,boardNo,commentwriter)=>{
 		    const data = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `\${commentwriter}@${loginMember.id}님이 대댓글을 등록했습니다.@\${boardNo}`,
+		            "message"   : `\${commentwriter}@${loginMember.id}님이 대댓글을 등록했습니다.@\${boardNo}@그룹`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
 		    let jsonData = JSON.stringify(data);
 		    websocket.send(jsonData);
 		},
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
+        error:console.log
 	});
 
 	const date = moment(today).format("YYYY년 MM월 DD일");
@@ -1074,6 +1041,5 @@ const commetLevel2Write=(index,boardNo,commentwriter)=>{
     .commentLevel2{margin-left: 50px}
     </style>
     
-<!-- 게시물 상세보기 모달 -->
-<jsp:include page="/WEB-INF/views/group/modal/groupBoardDetail.jsp"/>
+
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

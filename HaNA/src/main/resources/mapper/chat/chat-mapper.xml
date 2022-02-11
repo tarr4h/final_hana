@@ -331,5 +331,39 @@
 		reg_date = (select max(reg_date) from board_comment)
 	</select>
 	
+	<insert id="insertNoti">
+	insert 
+		into
+	noti
+	values(#{ReceiverId},
+	#{msg},
+			<choose>
+				<when test="boardNo eq 0">
+					null,
+				</when>
+				<otherwise>
+					#{boardNo},
+				</otherwise>
+			</choose>
+	#{boardType},
+	default)
+	</insert>
+	
+	<select id="notiAlarm" resultType="noti">
+	select 
+		* 
+	from 
+		noti 
+	where
+		member_id =#{id}
+	</select>
+
+	<delete id="notiReadCheck">
+	delete
+		from
+	noti
+		where member_id = #{id}
+	</delete>
+	
 
 </mapper>
