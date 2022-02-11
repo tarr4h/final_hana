@@ -45,7 +45,7 @@ function goMemberView(memberId){
 
 <!-- 게시물 목록 -->
 <section>
-	<div class="group-board-container">
+	<div class="location-group-board-container">
 		<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 			${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
 		        <div class="col-sm-4" style="min-height:300px;">
