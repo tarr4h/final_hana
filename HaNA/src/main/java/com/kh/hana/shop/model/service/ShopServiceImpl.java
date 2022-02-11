@@ -270,6 +270,41 @@ public class ShopServiceImpl implements ShopService {
 
 	}
 
+	@Override
+	public Map<String, Object> reservationStatistics(String shopId) {
+		// 연령 및 성별 통계 구해오기
+		List<Map<String, Object>> userList = shopDao.selectShopReservationUserList(shopId);
+		log.info("userList = {}", userList);
+		
+		// 전체 예약 인원
+		int visitorAll = userList.size();
+		
+		// 시간대별 예약 불러오기
+		// 새벽
+		int dawnList = shopDao.selectShopReservationDawnList(shopId);
+		// 주간
+		int dayList = shopDao.selectShopReservationDayList(shopId);
+		// 야간
+		int nightList = shopDao.selectShopReservationNightList(shopId);
+		Map<String, Integer> timeMap = new HashMap<>();
+		timeMap.put("dawnList", dawnList);
+		timeMap.put("dayList", dayList);
+		timeMap.put("nightList", nightList);
+		
+		// 테이블별 예약 수 불러오기
+		List<Map<String, Object>> tableList = shopDao.selectShopReservationTableList(shopId);
+		
+		// return할 data Map에 담아서 보내기
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("userList", userList);
+		returnMap.put("visitorAll", visitorAll);
+		returnMap.put("timeMap", timeMap);
+		returnMap.put("tableList", tableList);
+		
+		
+		return returnMap;
+	}
+
 	
 
 

@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -487,6 +489,80 @@ public class ShopController {
     	
     	return ResponseEntity.ok(returnMap);
     }
-
     
+    @GetMapping("/reservationStatistics")
+    public String reservationStatistics(@AuthenticationPrincipal Member member, Model model) {
+    	String shopId = member.getId();
+    	log.info("shopId = {}", shopId);
+    	
+    	// 통계 구해서 오기
+    	Map<String, Object> map = shopService.reservationStatistics(shopId);
+    	
+    	// 연령대별 예약인원 수    	
+    	Map<String, Object> ageGroup =  ageGroupStatistics((List) map.get("userList"));
+    	log.info("ageGroup = {}", ageGroup);
+    	model.addAttribute("ageGroup", ageGroup);
+    	
+    	// 전체 예약인원 수
+    	int visitorAll = Integer.parseInt(String.valueOf(map.get("visitorAll")));
+    	model.addAttribute("visitorAll", visitorAll);
+    	
+    	// 시간대별 예약 수
+    	Map<String, Integer> timeMap = (Map) map.get("timeMap");
+    	model.addAttribute("timeMap", timeMap);
+    	
+    	// 테이블별 예약 리스트
+    	List<Map<String, Object>> tableList = (List) map.get("tableList");
+
+    	log.info("tableList = {}", tableList);
+    	model.addAttribute("tableList", tableList);
+    	
+    	
+    	return "forward:/member/shopSetting/reservationStatistics";
+    }
+    
+    // 연령대 통계 구하기    
+    public Map<String, Object> ageGroupStatistics(List<Map<String, Object>> list){
+    	Map<String, Object> returnMap = new HashMap<>();
+    	
+    	// 10대
+    	int groupOne = 0;
+    	// 20대
+    	int groupTwo = 0;
+    	// 30대
+    	int groupThr = 0;
+    	// 40대
+    	int groupFou = 0;
+    	// 50대
+    	int groupFiv = 0;
+    	// 60대 이상
+    	int groupSix = 0;
+    	
+    	for(Map<String, Object> user : list) {
+    		int age = Integer.parseInt(String.valueOf(user.get("age")));
+    		if(0< age && age < 20) {
+    			groupOne++;
+    		} else if(19 < age && age < 30) {
+    			groupTwo++;
+    		} else if(29 < age && age < 40){
+    			groupThr++;
+    		} else if(39 < age && age < 50) {
+    			groupFou++;
+    		} else if(49 < age && age < 60) {
+    			groupFiv++;
+    		} else if(59 < age) {
+    			groupSix++;
+    		}
+    	};
+    	
+    	returnMap.put("groupOne", groupOne);
+    	returnMap.put("groupTwo", groupTwo);
+    	returnMap.put("groupThr", groupThr);
+    	returnMap.put("groupFou", groupFou);
+    	returnMap.put("groupFiv", groupFiv);
+    	returnMap.put("groupSix", groupSix);
+    	
+    	return returnMap;
+    }
+
 }

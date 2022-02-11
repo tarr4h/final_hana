@@ -470,6 +470,87 @@
 		    on b.reservation_no = s.reservation_no
 		where
 		    s.shop_id = #{shopId}
-
+	</select>
+	
+	<select id="selectShopReservationUserList" parameterType="string" resultType="map">
+		select
+		    s.reservation_no,
+		    s.attend_user,
+		    r.shop_id,
+		    r.reservation_status,
+		    extract(year from sysdate) - (decode(substr(m.personal_id, 8, 1), '1', '1900', '2', '1900', '2000')+substr(m.personal_id, 1, 2))+1 "age",
+		    decode(substr(m.personal_id, 8, 1), '1', '남', '3', '남', '여') "gender"
+		from
+		    shop_table_reservation_share s left join shop_table_reservation r
+		    on s.reservation_no = r.reservation_no
+		    left join member m
+		    on s.attend_user = m.id
+		    left join public_check p
+		    on s.attend_user = p.member_id
+		where
+		    r.reservation_status = '예약완료'
+		    and
+		    p.public_profile = 1
+		    and
+		    r.shop_id = #{shopId}
+	</select>
+	
+	<select id="selectShopReservationDawnList" parameterType="string" resultType="int">
+		select
+		    count(*)
+		from
+		    shop_table_reservation
+		where
+		    time_start >= '00:00'
+		    and
+		    time_start <![CDATA[<]]> '08:00'
+		  	and
+		  	shop_id = #{shopId}
+		  	and
+		  	reservation_status = '예약완료'
+	</select>
+	<select id="selectShopReservationDayList" parameterType="string" resultType="int">
+		select
+		    count(*)
+		from
+		    shop_table_reservation
+		where
+		    time_start >= '08:00'
+		    and
+		    time_start <![CDATA[<]]> '16:00'
+		  	and
+		  	shop_id = #{shopId}
+		  	and
+		  	reservation_status = '예약완료'
+	</select>
+	<select id="selectShopReservationNightList" parameterType="string" resultType="int">
+		select
+		    count(*)
+		from
+		    shop_table_reservation
+		where
+		    time_start >= '16:00'
+		    and
+		    time_start <![CDATA[<]]> '24:00'
+		  	and
+		  	shop_id = #{shopId}
+		  	and
+		  	reservation_status = '예약완료'
+	</select>
+	
+	<select id="selectShopReservationTableList" parameterType="string" resultType="map">
+	select
+	    r.reservation_table_id,
+	    (select table_name from shop_table_setting where table_id = r.reservation_table_id) "tableName",
+	    count(*) "count"
+	from
+	    shop_table_reservation r left join shop_table_setting s
+	    on r.reservation_table_id = s.table_id
+	where
+	    r.reservation_status = '예약완료'
+	    and
+	    r.shop_id = #{shopId}
+	group by
+	    r.reservation_table_id
 	</select>
 </mapper>
