@@ -603,5 +603,16 @@
 	 from
 	 	(select * from group_ where group_id = #{id})
 	 </select>
+	 
+	 <select id="selectGroupMemberLevel" resultType="string">
+	 select
+	 	member_level_code
+	 from
+	 	group_member_list
+	 where
+	 	member_id = #{memberId}
+	 	and
+	 	group_id = #{groupId}
+	 </select>
 </mapper>
 
