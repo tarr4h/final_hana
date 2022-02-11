@@ -136,7 +136,7 @@ public class GroupController {
 	}
 
 	@GetMapping("/groupBoardForm/{groupId}")
-	public String groupBoardForm(@PathVariable String groupId, Model model){
+	public String adminGroupBoardForm(@AuthenticationPrincipal Member member, @PathVariable String groupId, Model model){
 		List<Map<String,String>> members = groupService.selectGroupMemberList(groupId);
 		log.info("members = {}",members);
 		model.addAttribute("groupId",groupId);
@@ -266,7 +266,7 @@ public class GroupController {
 		return ResponseEntity.ok(map);
 	}
     @GetMapping("/getGroupApplyRequest")
-    public ResponseEntity<List<Map<String, Object>>> getGroupApplyRequest(@RequestParam String groupId) {
+    public ResponseEntity<List<Map<String, Object>>> leaderGetGroupApplyRequest(@AuthenticationPrincipal Member member, @RequestParam String groupId) {
         log.info("groupId ={}", groupId);
         
         List<Map<String, Object>> groupApplyList = groupService.selectGroupApplyList(groupId);
@@ -388,7 +388,7 @@ public class GroupController {
 	}
     
     @GetMapping("/groupMemberList/{groupId}")
-    public String groupMemberList(@PathVariable String groupId, Model model){
+    public String leaderGroupMemberList(@AuthenticationPrincipal Member member, @PathVariable String groupId, Model model){
     	log.info("groupId ={}", groupId);
     	
     	List<Map<String,String>> groupMembers = groupService.selectGroupMemberList(groupId);
@@ -543,7 +543,7 @@ public class GroupController {
 		
 		
 	@GetMapping("/groupSetting/{groupId}")
-	public String groupSetting(@PathVariable String groupId, Model model) {
+	public String leaderGroupSetting(@AuthenticationPrincipal Member member, @PathVariable String groupId, Model model) {
 		log.info("groupSetting groupId = {}", groupId);
 		Group group = groupService.selectGroupInfo(groupId);
     	log.info("groupInfo ={}", group);
@@ -615,7 +615,7 @@ public class GroupController {
 	}
 	
 	@GetMapping("/groupStatistic/{groupId}")
-	public String groupStatistic(@PathVariable String groupId, Model model) {
+	public String adminGroupStatistic(@AuthenticationPrincipal Member member, @PathVariable String groupId, Model model) {
 		model.addAttribute("groupId",groupId);
 		return "/group/groupStatistic";
 	}
