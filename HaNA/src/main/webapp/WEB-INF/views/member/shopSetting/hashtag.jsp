@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="프로필 설정" name="title"/>
 </jsp:include>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
 <sec:authentication property="principal" var="loginMember"/>
 
 <c:if test="${not empty msg}">
@@ -18,7 +18,7 @@
 	</script>
 </c:if>
 
-<h1>shop프로필설정</h1>
+<br/><br/><br/><br/>
 <div class="container">
     <div class="row">
     	<!-- 메뉴 영역 -->

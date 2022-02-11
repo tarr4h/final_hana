@@ -64,11 +64,12 @@ tbody td:hover {
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="예약 설정" name="title"/>
 </jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
 <section>
 <sec:authentication property="principal" var="loginMember"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
 
-
-<h1>shop프로필설정</h1>
+<br/><br/><br/><br/>
 <div class="container">
     <div class="row">
     	<!-- 메뉴 영역 -->

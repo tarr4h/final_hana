@@ -317,7 +317,7 @@ function getCommentList(boardNo){
 	  			let tr = `
 	  				<tr class="level\${e.commentLevel}">
 	  				<td style="width:50px;">
-	  					<img style="height:40px; border-radius:50%;" src="/hana/resources/upload/member/profile/${member.picture}" alt="" />
+	  				<img style="height:40px; border-radius:50%;" src="/hana/resources/upload/member/profile/${e.picture}" alt="" />
 	  				</td>
 					<td >
 						<sub class="comment-writer"><a href="javascript:void(0);" onclick="goMemberView('\${e.writer}');" style="color:black; text-decoration:none; font-weight:bold;">\${e.writer}</a></sub>
@@ -489,3 +489,19 @@ function like(){
 }
 
 </script>
+<style>
+/* 게시물 상세보기 옆으로 넘기기 */
+.board-img-move {
+	width:50px;
+	height:50px;
+}
+.img-move-button-container {
+	position:absolute;z-index:3; width:100%; left:0px;
+}
+.right-button {
+	float:right;
+}
+.right-button:hover, .left-button:hover {
+	cursor:pointer;
+}
+</style>
