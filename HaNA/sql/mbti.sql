@@ -302,3 +302,10 @@ select
 ;
 select * from member;
 
+select
+            *
+        from
+            shop_info i	
+            left join member m
+            on i.id = m.id
+        where i.id = 'k333'; 
