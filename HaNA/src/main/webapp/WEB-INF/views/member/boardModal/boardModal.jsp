@@ -48,7 +48,6 @@
 $("#boardModalBtn").click((e) => {
 	$('#boardModal').modal({backdrop:'static', keyboard:false});
 });
-
 /* 이미지업로드영역 추가 */
 $(".appendAttachArea").click((e) => {
 	let inputFile = `
@@ -56,7 +55,6 @@ $(".appendAttachArea").click((e) => {
 	`;
 	$(".boardAttachArea").append(inputFile);
 });
-
 $(document).ready(function() {
 	//여기 아래 부분
 	$('#summernote').summernote({
