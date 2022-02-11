@@ -188,6 +188,7 @@ font-size:1.1em;
 
 /* 장소검색페이지 */
 .location-container{
+	padding-left:100px;
 	border-bottom:1px solid gray;
 	margin:auto;
 	width:75%;
