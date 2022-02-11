@@ -165,28 +165,29 @@ function getPageDetail(boardNo){
 		 				
 		 				let img = `<img id='img\${i}' src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
 		 				$("#group-board-img-container").append(img); // 이미지 추가
+			  			$(`#img\${i}`).css("display","none");
 		 				maxIndex = i;
 		 			})
 		 			
 		 			$(".group-board-img").css("width","100%");
 		 			$(".group-board-img").css("position","absolute");
 		  			$(".group-board-img").css("left","0");
-		  			$("#img0").css("z-index","2");
+		  			$("#img0").css("display","inline");
 					
 		  			currentIndex = 0;
 		  			
 		  			//이미지 옆으로 넘기기
 		  			$(".right-button").click((e)=>{
 						if(currentIndex<maxIndex){
-			  				$(`#img\${currentIndex+1}`).css("z-index",2);
-			  				$(`#img\${currentIndex}`).css("z-index",1);
+			  				$(`#img\${currentIndex+1}`).css("display","inline");
+			  				$(`#img\${currentIndex}`).css("display","none");
 			  				currentIndex += 1;							
 						}
 		  			})
 		  			$(".left-button").click((e)=>{
 						if(currentIndex>0){
-			  				$(`#img\${currentIndex-1}`).css("z-index",2);
-			  				$(`#img\${currentIndex}`).css("z-index",1);
+			  				$(`#img\${currentIndex-1}`).css("display","inline");
+			  				$(`#img\${currentIndex}`).css("display","none");
 			  				currentIndex -= 1;							
 						}
 		  			})

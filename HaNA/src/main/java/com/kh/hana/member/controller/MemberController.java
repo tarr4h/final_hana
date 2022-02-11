@@ -190,6 +190,7 @@ public class MemberController {
 	@PostMapping("/memberUpdate")
     public String memberUpdate(Member member, @AuthenticationPrincipal Member oldMember, RedirectAttributes redirectAttr) {
 		log.info("memberUpdate member = {}", member);
+		log.info("authentication = {}", oldMember);
         
         int result = memberService.updateMember(member, oldMember);
 
