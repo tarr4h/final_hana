@@ -30,12 +30,12 @@
 	})
 	
 	// 검색창 비활성시 결과창 off
-	$("#search-box").blur((e)=>{
+ 	$("#search-box").blur((e)=>{
 		setTimeout(function() {
 			$("#searchResultBox").css('display','none');
 		}, 150);
 	})
-	 
+	  
 	$("#search-box").keyup((e)=>{
 		let category = $("#select-box").val();
 		let keyword = $(e.target).val();
@@ -86,7 +86,7 @@
 		$.each(data,function(i,group){
 			let row = `<div class="row row-box" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/\${group.groupId}'">
 				<div class="col-sm-5">
-					<img src='${pageContext.request.contextPath}/resources/upload/member/profile/\${group.image}' alt='' />
+					<img src='${pageContext.request.contextPath}/resources/upload/group/profile/\${group.image}' alt='' />
 				</div>
 				<div class="col-sm-1"></div>
 				<div class="col-sm-6">
