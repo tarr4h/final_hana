@@ -409,7 +409,7 @@ input {
 
 .wrapper {
     max-width: 50%;
-    height:80%;
+    min-height: 80%; 
     margin: 40px auto;
     border: 1px solid #ddd;
     border-radius: 6px;
