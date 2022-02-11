@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="업체정보 수정" name="title"/>
 </jsp:include>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
 <sec:authentication property="principal" var="loginMember"/>
 
 <c:if test="${not empty msg}">
@@ -20,7 +20,7 @@
 	</script>
 </c:if>
 
-<h1>shop프로필설정</h1>
+<br/><br/><br/><br/>
 <div class="container">
     <div class="row">
     	<!-- 메뉴 영역 -->
@@ -35,36 +35,41 @@
 			</ul>
         </div>
         <!-- 설정 영역 -->
-        <div class="col-sm-8">
+          <div id="enroll-container" class="mx-auto text-center">
         	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo" method="post" name="updateFrm">  
-        		<label for="shopName">매장명</label>
-        		<br />
-        		<input type="text" name="shopName" id="" value="${shop.shopName }"/> 
-        		<br /> 	
-	        	<label for="bussiness-hour-start">영업시간</label>
-	        	<br />
-	        	<input type="time" name="bussinessHourStart" value="${shop.bussinessHourStart }" step="1800"/>~<input type="time" name="bussinessHourEnd" value="${shop.bussinessHourEnd }" step="1800"/>        	
-	        	<br />
-	        	<br />
-	        	<label for="introduce">매장소개</label>
-	        	<br />
-	        	<input type="text" name="shopIntroduce" value="${shop.shopIntroduce }"/>
-	        	<br />
-	        	<br />
-	        	<label for="address">주소</label>
-	        	<br />
-	        	<input type="text" name="address" style="width:300px;" value="${shop.address }"/>
-	        	<input type="button" value="검색" onclick="execDaumPostcode();" />
-	        	<br />
-	        	<label for="addressDetail">상세주소</label>
-	        	<br />
-	        	<input type="text" name="addressDetail" value="${shop.addressDetail }" required/>
-	        	<input type="hidden" name="locationX" value="${shop.locationX }"/>
-	        	<input type="hidden" name="locationY" value="${shop.locationY }"/>
-	        	<input type="hidden" name="id" value="${loginMember.id }"/>
-	        	<br />
-	        	<br />
-	        	<input type="submit" value="저장하기" id="formBtn"/>
+        		<table class="mx-auto">
+        		<tr>
+	        		<th><label for="shopName">매장명</label></th>
+	        		<td>
+	        		<input type="text" class="form-control" name="shopName" id="" value="${shop.shopName }"/> 
+	        		</td> 
+	        	</tr>
+	        	<tr>
+	        		<th><label for="bussiness-hour-start">영업시간</label></th>
+		        	<td>
+		        	<input type="time" class="form-control" name="bussinessHourStart" value="${shop.bussinessHourStart }" step="1800"/>~<input type="time" class="form-control" name="bussinessHourEnd" value="${shop.bussinessHourEnd }" step="1800"/>        	
+		        	</td>
+		        </tr>
+		        <tr>
+		        	<th><label for="introduce">매장소개</label></th>
+		        	<td>
+		        	<textarea class="form-control" name="shopIntroduce" cols="55" rows="40"> ${shop.shopIntroduce}</textarea>
+		        	</td>
+		        <tr>
+		        	<th><label for="address">주소</label></th>
+		        	<td>
+		        	<input type="text" class="form-control" name="address" value="${shop.address }"/>
+		        	<input type="button" class="form-control" value="검색" onclick="execDaumPostcode();" />
+		        	<input type="text" class="form-control" name="addressDetail" value="${shop.addressDetail }" required/>
+		        	</td>
+				</tr>
+				</table>		        	
+		        	<input type="hidden" name="locationX" value="${shop.locationX }"/>
+		        	<input type="hidden" name="locationY" value="${shop.locationY }"/>
+		        	<input type="hidden" name="id" value="${loginMember.id }"/>
+		        	<br />
+		        	<br />
+		        	<input type="submit" value="저장하기" id="formBtn"/>
         	</form:form>
         	
         </div>
@@ -126,7 +131,50 @@ function execDaumPostcode() {
     }).open();
 }
 </script>
-
+<style>
+ .col-sm-4{
+	width : 328px;
+	margin-right: -100px;
+	margin-left : -120px;
+	}
+.form-control {
+    display: block;
+    width: 460px;
+    height : 50px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom : 15px;
+    margin-left: 30px;
+} 
+.custom-select{
+	width : 450px;
+	height : 38px;
+	margin-bottom : 15px;
+}
+.mx-auto{
+	width : 430px;
+	padding-left:50px;
+	}
+.mx-auto text-center{
+	margin-left : 10px;}
+.row {
+   --bs-gutter-x: -15rem;
+   }
+textarea.form-control {
+    min-height: 150px;
+}
+</style>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

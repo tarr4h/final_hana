@@ -9,6 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="설정화면" name="memberSetting/"/>
 </jsp:include>
+ 
 <section>
 <sec:authentication property="principal" var="loginMember"/>
 
@@ -28,7 +29,7 @@
     	<!-- 메뉴 영역 -->
         <div class="col-sm-4">
         	<ul class="list-group">
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
+			  <li class="list-group-item active" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/accountPrivate'">계정 공개</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
@@ -52,23 +53,25 @@
 				<th class="title">소개</th>
 				<td>
 				<!-- <input type="text" class="form-control" name="introduce" id="introduce" value="${loginMember.introduce}" required> -->	
-				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="80" >  ${loginMember.introduce} </textarea>
+				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="85" >  ${loginMember.introduce} </textarea>
 				</td>
 			</tr>
 			<tr>
-				<th class="title">지역</th>
+				<th class="title" rowspan="2">주소</th>
 	  		  	<td>	
-					<input type="text" class="form-control" id="postcode" placeholder="우편번호">
-					<input type="button" class="form-control" onclick="execDaumPostcode()" value="우편번호 찾기">
-					<input type="text" class="form-control" id="roadAddress" placeholder="도로명주소" value="${loginMember.addressAll }">
-					<input type="text" class="form-control" id="detailAddress" name="addressFull" placeholder="상세주소" value="${loginMember.addressFull }" required>
-					<input type="hidden" name="addressAll" />
-					<input type="hidden" name="locationX" />
-					<input type="hidden" name="locationY" />
-				</td>
+	        	<input type="text" class="form-control" name="addressAll" value="${loginMember.addressAll }"/>
+	        	<input type="button" class="form-control" value="검색" onclick="execDaumPostcode();" />
+	        </tr>
+	        <tr>
+	        	<td>
+	        	<input type="text" class="form-control" name="addressFull" placeholder="상세주소" value="${loginMember.addressFull }" required/>
+	        	<input type="hidden" name="locationX" value="${loginMember.locationX }"/>
+	        	<input type="hidden" name="locationY" value="${loginMember.locationY }"/>
+				<td>
 			</tr>  
 		</table>
-		<input type="submit" class="btn btn-dark">
+		<br/><br/>
+		<input type="submit" class="btn btn-dark" value="저장">
 		<input type="reset" class="btn btn-dark">
 	</form:form>
 		</div>
@@ -136,26 +139,24 @@ function execDaumPostcode() {
         }
     }).open();
 }
+</section>
 </script>
 
 <style>
 .col-sm-4{
-	width : 328px;
-	margin-right: -100px;
-	margin-left : -120px;
+	width : 350px;
+	margin-right: -290px;
 	}
- .settingBar{
-    height: 60px;
-    text-align: center;
-    margin-top: 80px;
-    margin-bottom: 60px;
-    border-bottom-style: ridge;
-    }
-.settingList {
-	font-size: 16px;
-    margin-left: 34px;
-      color: black;
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
     text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+    text-align: center;
 }
 .list-group-item.active {
     z-index: 2;
@@ -191,27 +192,12 @@ function execDaumPostcode() {
 .mx-auto{
 	width : 430px;
 	padding-left:50px;
-	}
+}
 .mx-auto text-center{
-	margin-left : 10px;}
-.row {
-   --bs-gutter-x: -15rem;
-   }
+	margin-left : 10px;
+}
 textarea.form-control {
     min-height: 150px;
 }
-.list-group-item {
-    position: relative;
-    display: block;
-    padding: 0.5rem 1rem;
-    color: #212529;
-    text-decoration: none;
-    background-color: #fff;
-    border: 1px solid rgba(0,0,0,.125);
-    cursor: pointer;
-    text-align: center;
-}
- 
 </style>
-</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
