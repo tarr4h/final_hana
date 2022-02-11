@@ -51,7 +51,7 @@ public class GroupMemberLevelCheckAspect {
 		String memberLevel = groupService.selectGroupMemberLevel(map);
 		
 		if(memberLevel == null || !memberLevel.equals("ld")) {
-			return "/group/groupList";
+			return "/common/error/forbidden";
 		}
 		
 		return joinPoint.proceed();
@@ -74,7 +74,7 @@ public class GroupMemberLevelCheckAspect {
 		String memberLevel = groupService.selectGroupMemberLevel(map);
 		
 		if(memberLevel == null || memberLevel.equals("mb")) {
-			return "/group/groupList";
+			return "/common/error/forbidden";
 		}
 		
 		return joinPoint.proceed();
