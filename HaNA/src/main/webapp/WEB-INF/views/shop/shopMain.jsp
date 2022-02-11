@@ -239,10 +239,11 @@ function scrollPage(){
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/20220210_172303329_730.jpg"/>';
+							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
-							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
+							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';
 								$('#shopList').append(htmlOut);
 								// list[i].ID가 마지막이라면 return
 								if(i == max -1){
@@ -256,10 +257,11 @@ function scrollPage(){
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
 								  //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/'+ list[i].PICTURE +'"/>';
+								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
-								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
+								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
 								    
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
@@ -277,10 +279,10 @@ function scrollPage(){
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/'+ list[i].PICTURE +'"/>';
+								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
-							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
+							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
 								htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
 								$('#shopList').append(htmlOut); 
 								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
@@ -295,10 +297,10 @@ function scrollPage(){
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
 									 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/'+ list[i].PICTURE +'"/>';
+									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
-								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
+								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
 								    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';		
 									$('#shopList').append(htmlOut);
 									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
@@ -541,7 +543,7 @@ $(".tagClick").click(function(){
 						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 						htmlOut += '<div class="shopProfile d-flex">';
 						 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-						htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/'+ list[i].PICTURE +'"/>';
+						htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 					    htmlOut += '</div>';
 					    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
 					    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
