@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.hana.chat.model.dao.ChatDao;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
+import com.kh.hana.chat.model.vo.Noti;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
@@ -260,6 +261,22 @@ public class ChatServiceImpl implements ChatService {
 	public BoardComment selectOneMemberBoardComment() {
 		return chatDao.selectOneMemberBoardComment();
 	}
+
+	@Override
+	public int insertNoti(Map<String, Object> param) {
+		return chatDao.insertNoti(param);
+	}
+
+	@Override
+	public List<Noti> notiAlarm(String id) {
+		return chatDao.notiAlarm(id);
+	}
+
+	@Override
+	public int notiReadCheck(String id) {
+		return chatDao.notiReadCheck(id);
+	}
+
 
 
 

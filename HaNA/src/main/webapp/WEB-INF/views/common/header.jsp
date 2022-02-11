@@ -12,6 +12,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <title>${param.title }</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -60,7 +61,7 @@
 		  <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
 		    <ul class="navbar-nav">
 		      <li class="nav-item">
-					<button id="notifyBtn">noti</button>
+					<button id="notifyBtn">noti <span class="badge" id="notiAlarm"></span></button>
 					<div id="notiArea">
 				    	<table id="notiTable">
 				    		<thead>
@@ -68,19 +69,7 @@
 				    				<th>알림목록</th>
 				    			</tr>
 				    		</thead>
-				    		<tbody>
-				    			<tr>
-				    				<td><a href="#">누구누구가 좋아요를 눌렀습니다.</a></td>
-				    			</tr>
-				    			<tr>
-				    				<td><a href="#">누구누구가 댓글을 달았습니다.</a></td>
-				    			</tr>
-				    			<tr>
-				    				<td>누구누구가 DM을 보냈습니다.</td>
-				    			</tr>
-				    			<tr>
-				    				<td>누구누구가 예약 공유를 요청했습니다.</td>
-				    			</tr>
+				    		<tbody id="notiTbody">
 				    		</tbody>
 				    	</table>
 				    </div>
@@ -154,7 +143,7 @@
 	</audio>
 	<sec:authorize access="isAuthenticated()">
 		<script>
-
+		let today = Date.now()-(9 * 60 * 60 * 1000);
 		
 		$(document).ready( function() {
 			connect(1);
@@ -224,7 +213,7 @@
 		function onMessagews(e){
  			let eSplit = e.data.split(",");
 			let ShareMessage = eSplit[1].split("@");
-				
+			console.log("eSplit[4] = ",eSplit[4]);
 			if(ShareMessage[0] === 'share115'){
 				if(eSplit[0]!==memberId){
 					if(eSplit[4] !== roomNo){
@@ -253,6 +242,29 @@
 				connect(1);
 				return
 			}
+			
+			else if(eSplit[4] === '226'){
+				console.log("eSplit[4] === 226 입장");
+				let message226Split = eSplit[1].split("@");
+				console.log("message226Split[3] = ",message226Split[3]);
+			 	beep2();
+				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${message226Split[1]} \${message226Split[2]}</a>`);
+				const date = moment(today).format("YYYY년 MM월 DD일");
+				let tbodyNoti =`<tr>
+    				<td>\${message226Split[1]} \${message226Split[2]} \${message226Split[2]} \${date}</td>
+	    			</tr>`;
+				$("tbody#notiTbody").append(tbodyNoti);
+				
+				$("div#headerAlert").css('display','block');
+				setTimeout(function(){
+					$("div#headerAlert").css('display','none');
+				},5000);
+				
+				headerNotiAlarm = headerNotiAlarm + 1;
+				$("#notiAlarm").text(headerNotiAlarm);
+				
+				
+			}
 			else{
 				
 			if(eSplit[4] === roomNo){
@@ -271,9 +283,10 @@
 					} 
 					
 					unreadCheck(e);
+
 				}
 				else{
-					
+				console.log("eSplit[4] === 226 아닌 곳 입장");
 			 	beep();
 				let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
 				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
@@ -281,6 +294,11 @@
 				setTimeout(function(){
 					$("div#headerAlert").css('display','none');
 				},5000);
+				headerdmAlarm = headerdmAlarm+1;
+				window[memberId+eSplit[4]] = window[memberId+eSplit[4]]+1;
+				$(`#roomAlarm`+eSplit[4]).text(window[memberId+eSplit[4]]);
+				$("#dmAlarm").text(headerdmAlarm);
+				
 				} 
 			}
 
@@ -324,18 +342,41 @@
 				data:{id : memberId},
 				success(resp){
 					if(resp != null){
-						window['dmAlarmvar'] = 10;
-						$("#dmAlarm").text(dmAlarmvar);
+						window['headerdmAlarm'] = resp;
+
+						$("#dmAlarm").text(headerdmAlarm);
 						
 					}
+						
 				},
 				/* error:console.log */
 			});
 			
-/* 			<!-- 3초마다 -->
-			setTimeout(function() {
-				dmAlarm();	
-			}, 3000); */
+			$.ajax({
+				url:`${pageContext.request.contextPath}/chat/notiAlarm.do`,
+				method:'GET',
+				data:{id : memberId},
+				success(resp){
+					console.log("resp",resp);
+					console.log("resp.size",resp.length);
+						window['headerNotiAlarm'] = resp.length;
+						$("#notiAlarm").text(headerNotiAlarm);
+					if(resp.length !== '0'){
+						let tbodyNoti =``;
+							$(resp).each((i, noti) => {
+								const {memberId, message, boardNo,regDate} = noti;
+								const date = moment(regDate).format("YYYY년 MM월 DD일");
+								tbodyNoti += `<tr>
+				    				<td>\${message} \${boardNo} \${date}</td>
+					    			</tr>`;
+							});
+							$("tbody#notiTbody").html(tbodyNoti);
+					}
+						
+				},
+				/* error:console.log */
+			});
+			
 		};
 		
 
@@ -345,6 +386,18 @@
 <script>
 	$("#notifyBtn").click((e) => {
 		$("#notiArea").toggle();
+		headerNotiAlarm = 0;
+		$("#notiAlarm").text(headerNotiAlarm);
+		$.ajax({
+			url:`${pageContext.request.contextPath}/chat/notiReadCheck.do`,
+			method:'GET',
+			data:{id : memberId},
+			success(resp){
+					
+			},
+			/* error:console.log */
+		});
 	})
 </script>
+
 	<div class="section-over-div">

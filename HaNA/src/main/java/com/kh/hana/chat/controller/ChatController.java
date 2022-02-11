@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.hana.chat.model.service.ChatService;
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
+import com.kh.hana.chat.model.vo.Noti;
 import com.kh.hana.common.util.HanaUtils;
 import com.kh.hana.group.model.service.GroupService;
 import com.kh.hana.group.model.vo.GroupBoard;
@@ -273,11 +274,20 @@ public class ChatController {
     public void main(Authentication authentication, Model model) {
     	//자기가 속한 소모임 최근게시글 3개
     	String memberId = authentication.getName();
+    	
     	List<GroupBoard> groupboard = chatService.selectListGroupBoard(memberId);
+    	for(int i = 0 ; i < groupboard.size(); i++) {
+    		String content = groupboard.get(i).getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    		groupboard.get(i).setContent(content);
+    	};
     	//log.info("groupboard 몇개 나왔는지= {}", groupboard.size());
     	
     	//팔로잉한 친구 최근게시글 3개
     	List<Board> board = chatService.selectListMemberBoard(memberId);
+    	for(int i = 0 ; i < board.size(); i++) {
+    		String content = board.get(i).getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    		board.get(i).setContent(content);
+    	};
     	
     	//추천친구 (같은 그룹에 있지만 팔로잉 안된 친구 or 맞팔 안된 친구)
     	List<Member> memberList = chatService.recommendMemberList(memberId);
@@ -293,6 +303,10 @@ public class ChatController {
     public ResponseEntity<?> boardcommentList(int boardNo){
     	log.info("boardcommentList boardNo = {}", boardNo);
 		List<GroupBoardComment> list = groupService.selectGroupBoardCommentList(boardNo);
+    	for(int i = 0 ; i < list.size(); i++) {
+    		String content = list.get(i).getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    		list.get(i).setContent(content);
+    	};
 		log.info("list = {}",list);
     	
     	return ResponseEntity.ok(list);
@@ -302,6 +316,10 @@ public class ChatController {
     public ResponseEntity<?> memberboardcommentList(int boardNo){
     	log.info("boardcommentList boardNo = {}", boardNo);
     	List<BoardComment> list = memberService.selectBoardCommentList(boardNo);
+    	for(int i = 0 ; i < list.size(); i++) {
+    		String content = list.get(i).getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    		list.get(i).setContent(content);
+    	};
 		log.info("list = {}",list);
     	
     	return ResponseEntity.ok(list);
@@ -316,7 +334,10 @@ public class ChatController {
     		log.info("main 그룹게시판 댓글작성 성공!");
     		//selectKey 나중에 바꾸기 지금은 이상함 max(reg_date)
     		GroupBoardComment comment = chatService.selectOnegroupBoardComment();
-    		return ResponseEntity.ok(comment);
+
+        	String content = comment.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    		comment.setContent(content);
+        	return ResponseEntity.ok(comment);
     	}
     	else
     		log.info("main 그룹게시판 댓글작성 실패!");
@@ -345,6 +366,8 @@ public class ChatController {
     		log.info("main 일반게시판 댓글작성 성공!");
     		//selectKey 나중에 바꾸기 지금은 이상함 max(reg_date)
     		BoardComment comment = chatService.selectOneMemberBoardComment();
+        	String content = comment.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    		comment.setContent(content);
     		return ResponseEntity.ok(comment);
     	}
     	else
@@ -530,5 +553,19 @@ public class ChatController {
     	return ResponseEntity.ok(result);
     }
     
+    @GetMapping("/notiAlarm.do")
+    public ResponseEntity<?> notiAlarm(String id) {
+    	
+    	List<Noti> noti = chatService.notiAlarm(id);
+    	
+    	return ResponseEntity.ok(noti);
+    }
+    
+    @GetMapping("/notiReadCheck.do")
+    public ResponseEntity<?> notiReadCheck(String id){
+    	int result = chatService.notiReadCheck(id);
+    	if(result>0) log.info("noti readcheck");
+    	return ResponseEntity.ok("readcheck");
+    }
     		
 }
