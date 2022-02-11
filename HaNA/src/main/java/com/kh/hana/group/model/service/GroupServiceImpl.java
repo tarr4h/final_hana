@@ -291,4 +291,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectGroupMemberLevel(map);
 	}
 
+	@Override
+	public int selectGroupApplyLog(Map<String, Object> map) {
+		return groupDao.selectGroupApplyLog(map);
+	}
+
 }

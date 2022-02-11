@@ -151,6 +151,10 @@
 							<div>
 								<a href="${pageContext.request.contextPath}/group/groupStatistic/${group.groupId}" class="enroll-button">활동통계</a>
 							</div>
+							<div class="plusBoardButton-container" onclick="location.href='${pageContext.request.contextPath}/group/groupBoardForm/${group.groupId}'">
+								<img class="plusBoardButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""  />
+								<span class="plusButtonLabel">&nbsp;게시글 작성</span>
+							</div>
 
 <%  }if(m.get("memberLevelCode").equals("ld")){	%>
 							<div style="margin-top:10px;">
@@ -169,7 +173,7 @@
 							</form:form>
 							</div>
 							
-<%  }if(m.get("memberLevelCode").equals("mb")){	%>	
+<%  }if(m.get("memberLevelCode").equals("mb") || m.get("memberLevelCode").equals("mg")){	%>	
 							<div style="margin-top:10px;">
 							<form:form action="${pageContext.request.contextPath}/group/leaveGroup?${_csrf.parameterName}=${_csrf.token}" method="post">
 							<input type="hidden" name=memberId value="${loginMember.id}"/>
@@ -223,3 +227,4 @@
 			</div>
 		</div>
 	</div>
+<!-- 게시글 작성 버튼 -->
