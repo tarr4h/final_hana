@@ -85,6 +85,7 @@
 				    	</table>
 				    </div>
 			  </li>
+		      
 		      <li class="nav-item active">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/">Home</a>
 		      </li>
@@ -126,14 +127,21 @@
 				          <a class="dropdown-item" href="#">계정 설정</a>
 				        </div>
 				    </li>
-			    <li class="nav-item">
-		      		<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
-						<input type="submit" value="로그아웃" />
-					</form:form>
+						      
+				<!-- 관리자메뉴 -->
+				<sec:authorize access="hasRole('ADMIN')">
+					<li class="nav-item">
+						<a class="nav-link text-light" href="#">관리자</a>
+					</li>
+				</sec:authorize>
+				    
+				<li class="nav-item">
+		      	<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
+					<input type="submit" value="로그아웃" />
+				</form:form>
 				</li>
-		      </sec:authorize>
-		   			
-		    </ul>
+			</sec:authorize>
+		  	</ul>
 		  </div>
 		</nav>
 		<div id="headerAlert" class="alert alert-success" role="alert"></div>

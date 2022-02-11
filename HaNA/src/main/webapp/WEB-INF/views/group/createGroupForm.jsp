@@ -13,6 +13,7 @@
 <div class="first-container">
 <div class="container rounded bg-white mt-5 mb-5">
 	<form
+		name="createGroupFrm"
 		action="${pageContext.request.contextPath}/group/createGroup?${_csrf.parameterName}=${_csrf.token}"
 		method="post"
 		enctype="multipart/form-data">
@@ -29,6 +30,11 @@
 	                    <input type="text" class="form-control" placeholder="Group Id" name="groupId" value="${group.groupId}" required>
 	                    </div>
 	                </div>
+	                <div>
+	                	<span class="idDupl-msg">사용중인 아이디입니다.</span>
+	                	<input type="hidden" id="flag" value="0"/>
+	                </div>
+	                
 	                <div class="row mt-3">
 	                    <div class="col-md-7">
 	                    <label class="labels">소모임명</label>
@@ -68,7 +74,7 @@
 	                    </div>
 	                </div>
 	                <div class="mt-5 text-left">
-	                <button class="btn btn-primary profile-button" type="submit" onclick="return confirm('그룹을 생성하시겠습니까?')">Create</button>
+	                <button class="btn btn-primary profile-button" type="button" onclick="submitFrm();">Create</button>
 	                </div>
 	            </div>
 	        </div>
@@ -81,6 +87,30 @@
 </div>
 
 <script>
+//아이디 중복검사
+$("[name=groupId]").keyup((e)=>{
+	let id = $(e.target).val();
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/group/checkIdDuple",
+		data:{
+			id
+		},
+		success(data){
+			console.log(data);
+			if(data.result!=0){
+				$(".idDupl-msg").css("display","inline");
+				$("#flag").val(1);
+			}
+			else{
+				$(".idDupl-msg").css("display","none");								
+				$("#flag").val(0);
+			}
+		},
+		error:console.log
+	})
+	
+})
 //이미지 미리보기
 function setThumbnail(event){
 	var reader = new FileReader();
@@ -91,6 +121,21 @@ function setThumbnail(event){
 		document.querySelector("div#image-container").appendChild(img);
 		};
 	reader.readAsDataURL(event.target.files[0]);
+}
+
+//폼제출
+function submitFrm(){
+    let idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
+    if( !idReg.test( $("input[name=groupId]").val())) {
+        alert("아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
+        return;
+    }
+    else if($("#flag").val()!=0){
+		alert("다른 아이디를 사용하세요.");
+	}
+	else{
+		$(document.createGroupFrm).submit();
+	}
 }
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

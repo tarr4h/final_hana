@@ -53,7 +53,6 @@ public class Member extends MemberEntity implements Serializable, UserDetails{
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return authorities;
 	}
 

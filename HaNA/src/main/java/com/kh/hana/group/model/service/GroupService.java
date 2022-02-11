@@ -100,5 +100,7 @@ public interface GroupService {
 
 	int deleteGroup(String groupId);
 
+	int selectOneId(String id);
+
 	
 }

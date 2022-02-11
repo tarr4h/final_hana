@@ -3,6 +3,8 @@ package com.kh.hana.search.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,7 @@ public class SearchController {
 	private SearchService searchService;
 	
 	@GetMapping("/member")
-	public ResponseEntity<List<Member>> selectMemberListBySearch(@RequestParam String keyword){
+	public ResponseEntity<List<Member>> selectMemberListBySearch(@RequestParam String keyword, HttpServletRequest request){
 		try{
 			List<Member> list = searchService.selectMemberListBySearch(keyword);
 			log.info("list = {}",list);
@@ -39,7 +41,7 @@ public class SearchController {
 		}
 	}
 	@GetMapping("/group")
-	public ResponseEntity<List<Group>> selectGroupListBySearch(@RequestParam String keyword){
+	public ResponseEntity<List<Group>> selectGroupListBySearch(@RequestParam String keyword,HttpServletRequest request){
 		try{
 			List<Group> list = searchService.selectGroupListBySearch(keyword);
 			log.info("list = {}",list);
@@ -50,7 +52,7 @@ public class SearchController {
 		}
 	}
 	@GetMapping("/shop")
-	public ResponseEntity<List<Member>> selectShopListBySearch(@RequestParam String keyword){
+	public ResponseEntity<List<Member>> selectShopListBySearch(@RequestParam String keyword,HttpServletRequest request){
 		try{
 			List<Member> list = searchService.selectShopListBySearch(keyword);
 			log.info("list = {}",list);
@@ -62,7 +64,7 @@ public class SearchController {
 	}
 
 	@GetMapping("/location")
-	public ResponseEntity<List<Map<String,Object>>> selectLocationListBySearch(@RequestParam String keyword){
+	public ResponseEntity<List<Map<String,Object>>> selectLocationListBySearch(@RequestParam String keyword,HttpServletRequest request){
 		try{
 			List<Map<String,Object>> list = searchService.selectLocationListBySearch(keyword);
 			log.info("list = {}",list);

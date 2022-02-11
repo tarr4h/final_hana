@@ -281,4 +281,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.deleteGroup(groupId);
 	}
 
+	@Override
+	public int selectOneId(String id) {
+		return groupDao.selectOneId(id);
+	}
+
 }

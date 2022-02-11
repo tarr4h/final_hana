@@ -144,7 +144,7 @@ public class GroupController {
 		return "/group/groupBoardForm";
 	}
 	//이거
-	@PostMapping(value="/enrollGroupBoard")
+	@PostMapping("/enrollGroupBoard")
 	public String enrollGroupBoard(GroupBoard groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
 		try {
@@ -674,7 +674,7 @@ public class GroupController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@PostMapping(value = "/deleteGroup")
+	@PostMapping("/deleteGroup")
 	public String deleteGroup (@RequestParam String groupId) {
 		
 		log.info("groupId ={}", groupId);
@@ -685,7 +685,7 @@ public class GroupController {
 		return "redirect:/group/groupList";
 	}
 	
-	@PostMapping(value = "/leaveGroup")
+	@PostMapping("/leaveGroup")
 	public String leaveGroup (@RequestParam String memberId, @RequestParam String groupId) {
 		
 	int result = 0;
@@ -704,8 +704,20 @@ public class GroupController {
 		log.error(e.getMessage(),e);
 		throw e;
 	}
-		
 		return "redirect:/group/groupList";
+	}
+	
+	@GetMapping("/checkIdDuple")
+	public ResponseEntity<Map<String,Object>> checkIdDuple(@RequestParam String id){
+		Map<String,Object> map = new HashMap<>();
+		try {
+			int result = groupService.selectOneId(id);
+			map.put("result", result);
+			return ResponseEntity.ok(map);
+		}catch(Exception e) {
+			log.error(e.getMessage(),e);
+			throw e;
+		}
 	}
 }
 
