@@ -123,19 +123,18 @@
 						<div>
 <% 
 	Member loginMember = (Member)pageContext.getAttribute("loginMember");
-	if(memberIdList.contains(loginMember.getId())){
-		for(Map<String,String> m : memberList){
+	if(memberIdList.contains(loginMember.getId())){%>
+		<div class="plusBoardButton-container" onclick="location.href='${pageContext.request.contextPath}/group/groupBoardForm/${group.groupId}'">
+			<img class="plusBoardButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""  />
+			<span class="plusButtonLabel">&nbsp;게시글 작성</span>
+		</div>
+		<%for(Map<String,String> m : memberList){
 			if(m.get("memberId").equals(loginMember.getId())){
 				if(m.get("memberLevelCode").equals("ld") || m.get("memberLevelCode").equals("mg")){	
 %>
 							<div>
 								<a href="${pageContext.request.contextPath}/group/groupStatistic/${group.groupId}" class="enroll-button">활동통계</a>
 							</div>
-							<div class="plusBoardButton-container" onclick="location.href='${pageContext.request.contextPath}/group/groupBoardForm/${group.groupId}'">
-								<img class="plusBoardButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""  />
-								<span class="plusButtonLabel">&nbsp;게시글 작성</span>
-							</div>
-
 <%  }if(m.get("memberLevelCode").equals("ld")){	%>
 							<div style="margin-top:10px;">
 								<a href="${pageContext.request.contextPath}/group/groupMemberList/${group.groupId}" class="enroll-button">회원관리</a>
@@ -207,4 +206,3 @@
 			</div>
 		</div>
 	</div>
-<!-- 게시글 작성 버튼 -->
