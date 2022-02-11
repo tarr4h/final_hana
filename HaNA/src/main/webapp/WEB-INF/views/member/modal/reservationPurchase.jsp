@@ -113,12 +113,22 @@ function resDutchpay(){
 			let address;
 			let reservationNo = $("[name=req-pay-rs-no]").val();
 			let purchaseType = 'dutch';
+			
 			$.each(res, (i, e) => {
 				if('${loginMember.id}' == e.ATTEND_USER){
 					name = e.NAME;
 					id = e.ID;
 					address = e.ADDRESS_ALL;
-					myPrice = e.ORIGINALPRICE / res.length;
+					
+					let attendCount = res.length;
+					let eachPrice = Math.floor(e.ORIGINALPRICE / attendCount);
+					
+					/* 금액 계산, 마지막사람이 잔액몰빵하기 */
+					if(e.RESTPRICE - eachPrice <= 10 && e.RESTPRICE > eachPrice){
+						myPrice = e.RESTPRICE;
+					} else {
+						myPrice = eachPrice;
+					}
 				};
 			});
 			requestPay(myPrice, name, id, address, reservationNo, purchaseType);
