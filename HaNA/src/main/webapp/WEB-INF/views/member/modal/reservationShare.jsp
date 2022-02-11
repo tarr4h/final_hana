@@ -26,7 +26,6 @@ let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
 			<div class="modal-body">
 				<h4>친구를 선택하세요</h4>
 				<input type="text" name="friendId" id="" />
-				<input type="button" value="검색" id="searchFriend"/>
 				<table id="acceptedFriendListTable">
 					<tbody>
 					</tbody>
@@ -38,9 +37,6 @@ let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
 				<input type="hidden" name="shareVisitorCount" />
 			</div>
 			<!-- footer -->
-			<div class="modal-footer">
-				<a class="btn nextBtn" data-num="1" href="#">완료</a>
-			</div>
 		</div>
 	</div>
 </div>
@@ -135,7 +131,7 @@ function shareReservation(reservationNo, targetUser){
 					    let jsonData = JSON.stringify(data);
 					    websocket.send(jsonData);
 					    $('#shareModal').modal('hide');
-					    alert("공유 완료");
+					    alert("공유 완료\n공유 요청 메시지가 전송되었습니다.");
 				 },1000);
 
 			},
@@ -205,7 +201,4 @@ $("[name=friendId]").keyup((e) => {
 	});
 })
 
-$("#searchFriend").click((e) => {
-	console.log($("[name=friendId]").val());
-})
 </script>

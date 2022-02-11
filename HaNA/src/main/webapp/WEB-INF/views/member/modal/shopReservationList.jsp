@@ -36,7 +36,7 @@
 				<div class="modal-body">
 					<!-- 총 예약건수 -->
 					<div id="reservation-count-all">
-						<span>총 예약 건 수 : </span>
+						<span>미래 예약완료 건 수 : </span>
 						<span id="resCount"></span>
 						<br />
 						<span>해당일의 예약 건 수 : </span>
@@ -88,16 +88,16 @@
 	$(() => {
 		shopReservationCount();
 		setDate();
-		console.log($("#res-today").text());
-		
-		let rYear = $("#res-year").val();
-		let rMonth = $("#res-month").val();
-		let rDate = $("#res-date").val();
-		shopReservationListByDate(`\${rYear}-\${rMonth}-\${rDate}`);
 	});
 	
 	/* 예약확인 클릭 시 modal 노출 */
 	$("#reservationListBtn").click((e) => {
+		setDate();
+		$("#reservationTable tbody").empty();
+		let rYear = $("#res-year").val();
+		let rMonth = $("#res-month").val();
+		let rDate = $("#res-date").val();
+		shopReservationListByDate(`\${rYear}-\${rMonth}-\${rDate}`);
 		$("#listModal1").modal({backdrop:'static', keyboard:false});
 	});
 	
@@ -138,7 +138,6 @@
 		let pDate = $("#res-date").val()*1;
 		
 		let calDate = new Date(pYear, pMonth-1, 0);
-		console.log(calDate.getDate())
 		
 		let targetDate;
 		
@@ -149,14 +148,12 @@
 			$("#res-year").val(pYear-1);
 			$("#res-month").val(12);
 			$("#res-date").val(31);
-			console.log($("#res-date").val());
 		} else if(pDate - 1 < 1){
 			targetDate = `\${pYear}-\${pMonth-1}-\${calDate.getDate()}`;
 			shopReservationListByDate(targetDate);
 			$("#res-today").text(`\${pYear}년 \${pMonth-1}월 \${calDate.getDate()}일`);
 			$("#res-month").val(pMonth-1);
 			$("#res-date").val(calDate.getDate());
-			console.log($("#res-date").val());
 		} else{
 			targetDate = `\${pYear}-\${pMonth}-\${pDate-1}`;
 			shopReservationListByDate(targetDate);
@@ -193,6 +190,7 @@
 	};
 	
 	function shopReservationListByDate(date){
+
 		$.ajax({
 			url: '${pageContext.request.contextPath}/shop/selectShopReservationListByDate',
 			data:{

@@ -70,8 +70,11 @@ public interface ShopService {
 	int purchaseAll(Map<String, Object> reqMap);
 
 	Map<String, Object> selectPriceAndMember(Map<String, Object> map);
+	
+	List<String> selectHashTagClickShopList(String tagName);
 
 	List<Map<String, Object>> selectShopGrade(String shopId);
+
 
 
 
