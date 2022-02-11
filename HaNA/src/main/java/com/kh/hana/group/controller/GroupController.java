@@ -136,7 +136,7 @@ public class GroupController {
 	}
 
 	@GetMapping("/groupBoardForm/{groupId}")
-	public String adminGroupBoardForm(@AuthenticationPrincipal Member member, @PathVariable String groupId, Model model){
+	public String groupBoardForm(@AuthenticationPrincipal Member member, @PathVariable String groupId, Model model){
 		List<Map<String,String>> members = groupService.selectGroupMemberList(groupId);
 		log.info("members = {}",members);
 		model.addAttribute("groupId",groupId);
@@ -222,9 +222,19 @@ public class GroupController {
 	}
 	
 	@GetMapping("/enrollGroupForm")
-	public void enrollGroupForm(@RequestParam String groupId, Model model) {
-		log.info("groupId = {}", groupId);
+	public String enrollGroupForm(@RequestParam String groupId, @AuthenticationPrincipal Member member, Model model, RedirectAttributes redirectAttr) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("groupId", groupId);
+		map.put("memberId", member.getId());
+		int count = groupService.selectGroupApplyLog(map); // 이미 제출한 가입신청이 있는지 확인
+		
+		if(count > 0) {
+			redirectAttr.addFlashAttribute("msg","이미 가입신청서를 제출한 그룹입니다.");
+			return "redirect:/group/groupPage/"+groupId;
+		}
+		
 		model.addAttribute("groupId", groupId);
+		return "/group/enrollGroupForm";
 	}
 	
 	@PostMapping("/enrollGroupForm")

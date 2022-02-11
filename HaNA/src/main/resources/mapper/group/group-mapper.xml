@@ -277,14 +277,11 @@
 	<select id="selectLikeCount" resultType="_int">
 	select
 		count(*)
-	from(
-		select
-			*
-		from
-			group_board_like
-		where
-			board_no = #{no}
-		)	
+	from
+		group_board_like
+	where
+		board_no = #{no}
+		
 	</select>
 	
 	<delete id="deleteGroupMember">
@@ -603,7 +600,9 @@
 	 select
 	 	count(*)
 	 from
-	 	(select * from group_ where group_id = #{id})
+	 	group_
+	 where
+	 	group_id = #{id}
 	 </select>
 	 
 	 <select id="selectGroupMemberLevel" resultType="string">
@@ -615,6 +614,18 @@
 	 	member_id = #{memberId}
 	 	and
 	 	group_id = #{groupId}
+	 </select>
+	 <select id="selectGroupApplyLog" resultType="_int">
+	 	select
+	 		count(*)
+	 	from
+	 		group_apply_list
+	 	where
+	 		member_id = #{memberId}
+	 		and
+	 		group_id = #{groupId}
+	 		and
+	 		handled_yn = 'N'
 	 </select>
 </mapper>
 

@@ -24,11 +24,7 @@
 		document.getElementById('upFileForm').submit();
         return false;
 	}
-	
-// 리더만 수정할 수 있는 버튼 (만 있음)
-	function goGroupSetting() {
-		location.href = "${pageContext.request.contextPath}/group/groupSetting";
-	}
+
 //ajax POST 요청 csrf
     var csrfToken = $("meta[name='_csrf']").attr("content");
     $.ajaxPrefilter(function(options, originalOptions, jqXHR){
@@ -88,22 +84,6 @@
  -->		<!-- 프로필 세부정보 영역 -->
 		<div class="col-sm-6" id="profileStatus">
 		<div class="profileTableAreaContainer">
-		<!-- 설정버튼 -->
-			<button type="button" class="btn btn-outline-dark" id="settingBtn"
-				onclick="goGroupSetting();">
-				<img
-					src="${pageContext.request.contextPath }/resources/images/icons/setting.png"
-					alt="" />
-			</button>
-			<button type="button" class="btn btn-outline-dark" id="settingBtn"
-				onclick="">
-				<img
-					src="${pageContext.request.contextPath }/resources/images/icons/man.png"
-					alt="" />
-			</button>
-
-			<br />
-
 			<div class="profileTableArea">
 			    <div class="row">
 			        <div class="col-sm-8">
@@ -143,15 +123,18 @@
 						<div>
 <% 
 	Member loginMember = (Member)pageContext.getAttribute("loginMember");
-	if(memberIdList.contains(loginMember.getId())){
-		for(Map<String,String> m : memberList){
+	if(memberIdList.contains(loginMember.getId())){%>
+		<div class="plusBoardButton-container" onclick="location.href='${pageContext.request.contextPath}/group/groupBoardForm/${group.groupId}'">
+			<img class="plusBoardButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""  />
+			<span class="plusButtonLabel">&nbsp;게시글 작성</span>
+		</div>
+		<%for(Map<String,String> m : memberList){
 			if(m.get("memberId").equals(loginMember.getId())){
 				if(m.get("memberLevelCode").equals("ld") || m.get("memberLevelCode").equals("mg")){	
 %>
 							<div>
 								<a href="${pageContext.request.contextPath}/group/groupStatistic/${group.groupId}" class="enroll-button">활동통계</a>
 							</div>
-
 <%  }if(m.get("memberLevelCode").equals("ld")){	%>
 							<div style="margin-top:10px;">
 								<a href="${pageContext.request.contextPath}/group/groupMemberList/${group.groupId}" class="enroll-button">회원관리</a>
@@ -169,7 +152,7 @@
 							</form:form>
 							</div>
 							
-<%  }if(m.get("memberLevelCode").equals("mb")){	%>	
+<%  }if(m.get("memberLevelCode").equals("mb") || m.get("memberLevelCode").equals("mg")){	%>	
 							<div style="margin-top:10px;">
 							<form:form action="${pageContext.request.contextPath}/group/leaveGroup?${_csrf.parameterName}=${_csrf.token}" method="post">
 							<input type="hidden" name=memberId value="${loginMember.id}"/>
