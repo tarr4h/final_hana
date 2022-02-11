@@ -172,6 +172,7 @@ create table ranking (
   select *from ranking;
   select * from hashtag;
   
+  
 update ranking set tag_date = '22/02/19' where member_id = 'k666';
   
   insert  into ranking(tag_id , tag_date , count);
@@ -293,8 +294,12 @@ select
             shop_info i	
             left join member m
             on i.id = m.id
-            left join shophashtag s 
-            on m.id = s.member_id 
+           	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id;
+
+            
+            
+
     		left join hashtag h 
             on s.tag_id = h.tag_id
         where
@@ -309,3 +314,25 @@ select
             left join member m
             on i.id = m.id
         where i.id = 'k333'; 
+        
+select *from shop_info;
+ select * from hashtag;
+ 
+            
+
+         select  
+        m.location_x, i.id,  regexp_replace(LISTAGG(  h.tag_name ,',' ) WITHIN GROUP ( ORDER BY  h.tag_name ), '([^,]+)(,\1)+', '\1')as name 
+        from
+            shop_info i	
+            left join member m
+            on i.id = m.id
+           	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id 
+             where
+            i.location_x  <  127.1257064
+            and
+            i.location_y  <  37.5612273
+            GROUP BY i.id;
+            
+           
+     
