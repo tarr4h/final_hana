@@ -390,6 +390,17 @@ function submitCommentFunc(e){
 		success(data){
 			console.log("넘어온 값!!",data);
 			$("[name=content]",e.target).val("");
+			console.log("commentLevel 값은? =", $("[name=commentLevel]",e.target).val());
+		    const data = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${boardDetail.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data);
+		    websocket.send(jsonData);	
+			
 			getCommentList(boardNo);
 		},
 		error(xhr, statusText, err){
