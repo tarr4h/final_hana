@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
+import com.kh.hana.chat.model.vo.Noti;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
@@ -79,6 +80,12 @@ public interface ChatDao {
 	BoardComment selectOneMemberBoardComment();
 
 	int GroupRoomOutMessage(Map<String, Object> param);
+
+	int insertNoti(Map<String, Object> param);
+
+	List<Noti> notiAlarm(String id);
+
+	int notiReadCheck(String id);
 
 
 }

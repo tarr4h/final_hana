@@ -371,7 +371,7 @@ function submitCommentFunc(e){
 	console.log("boardDetail", boardDetail);
  	let boardNo = boardDetail.no;
  	console.log("boardNo = ",boardDetail.no);
- 	 
+ 	let commentwriter = $("[name=writer]",e.target).val();
 	let o = {
 		boardNo:boardNo,
 		commentLevel:$("[name=commentLevel]",e.target).val(),			
@@ -391,6 +391,32 @@ function submitCommentFunc(e){
 		success(data){
 			console.log("넘어온 값!!",data);
 			$("[name=content]",e.target).val("");
+			
+			<!-- 게시글 작성자한테 -->
+			if($("[name=commentLevel]",e.target).val() === '1'){			
+		    const data1 = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${boardDetail.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data1);
+		    websocket.send(jsonData);	
+			}
+			<!-- 댓글 작성자한테 -->
+			else{
+			    const data1 = {
+			            "roomNo" : 226,
+			            "memberId" : `${loginMember.id}`,
+			            "message"   : `\${commentwriter}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}`,
+			            "picture" : `${loginMember.picture}`,
+			            "messageRegDate" : today
+			        }; 
+			    let jsonData = JSON.stringify(data1);
+			    websocket.send(jsonData);	
+			}
+			
 			getCommentList(boardNo);
 		},
 		error(xhr, statusText, err){
@@ -468,6 +494,16 @@ function like(){
 			$(".like").css("display","inline");			 			
  			$(".unlike").css("display","none");
  			getLikeCount();
+ 			
+		    const data1 = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${boardDetail.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardDetail.no}`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data1);
+		    websocket.send(jsonData);	
 		},
 		error(xhr, statusText, err){
 			switch(xhr.status){

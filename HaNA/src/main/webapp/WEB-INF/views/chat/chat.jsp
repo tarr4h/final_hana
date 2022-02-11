@@ -31,13 +31,10 @@
 </c:if>
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
-<span>안읽은 메세지 표시는 log.info 쿼리 나오는거 막고 주석해제</span><br />
-<span>소모임 탈퇴시 나가기 메세지 하기</span><br />
-<span>알림오는 페이지에서 아무것도안하면 audio 오류(자동재생금지)</span><br />
+
 <script>
 let id;
 let picture;
-let today = Date.now()-(9 * 60 * 60 * 1000);
 <sec:authorize access="isAuthenticated()">
 	id = '<sec:authentication property="principal.id"/>';
 	picture = '<sec:authentication property="principal.picture"/>';
@@ -45,7 +42,6 @@ let today = Date.now()-(9 * 60 * 60 * 1000);
 $(()=>{
 	roomList();
 });
-
 
 const roomList = () => {
 	console.log(id);
@@ -83,12 +79,11 @@ const displayRoom = (selector, data) => {
 					},
 					success(data){
 						if(data != null){
-							console.log("dmAlarmvar =",dmAlarmvar);
+							console.log("dmAlarmvar =",headerdmAlarm);
 							console.log("roomNo=",roomNo);
 							console.log("data=",data);
-							window['memberId'+'roomNo'] = 3;
-							console.log(memberIdroomNo);
-							$(`#roomAlarm`+roomNo).text(memberIdroomNo);
+ 							window[memberId+roomNo] = data;
+							$(`#roomAlarm`+roomNo).text(window[memberId+roomNo]);
 							
 						}
 							
@@ -281,14 +276,13 @@ if(websocket !== undefined){
 		},
 		error:console.log
 	});
-	console.log("dmAlarmvar11 =",dmAlarmvar);
-	console.log("roomNo=",roomNo);
+  	console.log("roomNo=",roomNo);
 	console.log("no=",no);
-	console.log("memberIdno=",memberIdroomNo);
-	dmAlarmvar = dmAlarmvar-memberIdno;
-	memberIdno = 0;
-	$(`#roomAlarm`+no).text(memberIdno);
-	$("#dmAlarm").text(dmAlarmvar);
+	console.log("memberIdroomNo=",window[memberId+no]);
+	headerdmAlarm = headerdmAlarm-window[memberId+roomNo];
+	window[memberId+roomNo] = 0;
+	$(`#roomAlarm`+no).text(window[memberId+roomNo]);
+	$("#dmAlarm").text(headerdmAlarm);
 		
 	sendBtn();
 	//connect(1);
@@ -577,7 +571,6 @@ $("#findMember").on("click", function(e){
 });
 //친구목록
 $("#allMember").on("click", function(e){
-	console.log(dmAlarmvar);
 	console.log("회원목록");
 	console.log("내 아이디 = " , id);
 	
