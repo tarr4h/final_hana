@@ -16,4 +16,6 @@ public interface SearchDao {
 	
 	List<Map<String,Object>> selectLocationListBySearch(String keyword);
 
+	int insertSearchKeywordLog(Map<String, Object> param);
+
 }

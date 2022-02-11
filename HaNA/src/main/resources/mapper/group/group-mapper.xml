@@ -562,20 +562,22 @@
 	 	and
 	 	name = #{name}
 	 </delete>
-	 <select id="selectRecommendedGroupList" resultType="group">
-	         select distinct
-    group_id, group_name, image 
- from
-    (SELECT group_id, image, group_name
-         , REGEXP_SUBSTR(g.hashtag,'[^,]+', 1, b.lv) AS hashtag
-      FROM (select * from group_ where group_id not in (select group_id from group_member_list where member_id = #{id})) g -- 내가 가입한 그룹 제외
-         , (SELECT LEVEL AS lv 
-              FROM dual 
-           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
-     WHERE REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL) g
-    join
-    (select * from member_like_group_hashtag  where member_id = #{id}) m
-    on g.hashtag = m.name
+	 <select id="selectRecommendedGroupList" resultType="group">    
+		select
+		    group_id, group_name, image, LISTAGG(hashtag,',') WITHIN GROUP (ORDER BY hashtag ) AS hashtag
+		from
+		    (SELECT group_id, image, group_name
+		         , REGEXP_SUBSTR(g.hashtag,'[^,]+', 1, b.lv) AS hashtag
+		      FROM (select * from group_ where group_id not in (select group_id from group_member_list where member_id = #{id})) g -- 내가 가입한 그룹 제외
+		         , (SELECT LEVEL AS lv 
+		              FROM dual 
+		           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+		     WHERE REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL) g
+		    join
+		    (select * from member_like_group_hashtag  where member_id = #{id}) m
+		    on g.hashtag = m.name
+		group by 
+		    group_id, group_name, image
 	 </select>
 	 
 	 <update id="updateGroupLeader">
