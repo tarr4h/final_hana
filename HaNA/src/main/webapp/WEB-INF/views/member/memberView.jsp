@@ -75,8 +75,12 @@
         	  </c:otherwise>
         	 </c:choose> 
 	
-
+    		<!-- 신고버튼 -->
+        	<c:if test="${!loginMember.id.equals(member.id) }">
+ 			 <input type="button" id="reportBtn" class="btn btn-danger" value="신고">
+        	</c:if>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 --> 
+        	
 			<c:if test="${loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
@@ -103,13 +107,12 @@
         		<input type="hidden" name ="friendId" value="${member.id}" />
         		<input type="hidden" name ="myId" value="${loginMember.id}" />
         	</form:form>
-        	
         	 <form:form name="requestFollowingFrm" action="${pageContext.request.contextPath}/member/requestFollowing" method = "POST">
         		<input type="hidden" name ="friendId" value="${member.id}" />
         		<input type="hidden" name ="myId" value="${loginMember.id}" />
         		<input type="hidden" name ="status" value="요청" />
         	</form:form>
- 
+
 
             <br /><br/>
             
@@ -135,20 +138,21 @@
 				</table>
 			</div>
     <c:if test="${loginMember.id.equals(member.id) }">
-        	<button id="btn-add" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+        	<button id="btn-add" class="writeBtn" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 	</c:if>
 	    <c:if test="${request > 0 && loginMember.id.equals(member.id)}">
     	<button type="button" class="btn btn-secondary" id="requestButton">팔로잉 요청이 있습니다.</button>
     </c:if>
+
 		</div>
    </div>
    
 </div> 
 <br>
 
-<div class="container mt-2">       
-    <div class="row">   
-    </div>
+<div class="board-container mt-2">       
+    <div class="boardRow">   
+    
 
 	<!-- 게시물목록 -->        
  	<c:choose>
@@ -173,6 +177,7 @@
 	    </c:otherwise>
  	</c:choose> 
 	</div>
+</div>
   <br/><br/> <br/><br/> <br/><br/> <br/><br/>
 <script>
 $("#requestButton").on( "click", function() {
@@ -224,7 +229,7 @@ $("#btn-follower-list").on( "click", function() {
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
-							<th>팔로잉</th>
+							<th style ="font-size : 14px;">팔로잉</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody">
@@ -247,10 +252,10 @@ $("#btn-follower-list").on( "click", function() {
 				<h4 class="modal-title" id="myModalLabel"></h4>
 			</div>
 			<div class="modal-body">
-				<table class="table" style="text-align: center;" name="modalTable">
+				<table class="ListTable" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
-							<th>팔로워</th>
+							<th style ="font-size : 14px;" colspan="3">팔로워</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody1">
@@ -258,7 +263,6 @@ $("#btn-follower-list").on( "click", function() {
 				</table>
 			</div>
 			<div class="modal-footer">
-			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -460,7 +464,53 @@ $("#input-file").change((e) => {
 }
 .section-over-div {
     min-height: 160vh;
+ }
+#reportBtn {
+    color: white;
+    border-color: black;
+    background-color:#ff000078;
+    margin-top: -100px;
+    margin-left: 153px;
+}
+#myInfo {
+    border: none;
+    border-bottom: solid;
+    border-color: gray;
+    border-bottom-width: unset;
+    margin: auto;
+    width: 810px;
+    height : 380px;
+}
+.tableKey {
+    width: 17%;
+    font-size: 15px;
+    padding-bottom: 1px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+.tableValue {
+    width: 80%;
+    font-size: 15px;
+    padding-bottom: 6px;
+}
+ 
 
+.writeBtn{
+	border-radius : 20px;
+} 
+.boardRow {
+    width: 900px;
+   margin : auto;
+}
+.thumbnail {
+    height: 300px;
+    border: 1px solid white;
+    padding: 5px;
+    width: 265px;
+}
+.ListTable{
+	border-collapse:collapse;
+}
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 

@@ -60,14 +60,17 @@
         	<button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
         	<span class="followTitle">팔로워 : </span>
         	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button>
-        	 
+        	 <!-- 신고버튼 -->
+        	<c:if test="${!loginMember.id.equals(member.id) }">
+ 			 <input type="button" id="reportBtn" class="btn btn-danger" value="신고">
+        	</c:if>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
         	<c:if test="${loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark icon" id="settingBtn" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/personal'">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
         	</c:if>
-        	<c:if test="${!loginMember.id.equals(member.id) && isFriend == 0 }">
+        	<c:if test="${member.publicProfile == 1 && !loginMember.id.equals(member.id) && isFriend eq 0 }">
         	<button type="button" class="btn btn-outline-dark icon" id="addFriendBtn" onclick="addFollowing();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
@@ -140,7 +143,7 @@
 			</div>
 			<!-- 글쓰기버튼 -->
 			<c:if test="${loginMember.id.equals(member.id) }">
-        	<button id="boardModalBtn" style="float:right; margin-top:30px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+        	<button id="boardModalBtn" style="float:right; margin-top:30px"><i style="font-size: 30px;" class="fas fa-pencil-alt" aria-hidden="true"></i></button>
         	<jsp:include page="/WEB-INF/views/member/boardModal/boardModal.jsp"></jsp:include>
         	</c:if>
 		</div>
@@ -366,6 +369,15 @@
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
+<style>
+#reportBtn {
+    color: white;
+    border-color: black;
+    background-color:#ff000078;
+    margin-top: -100px;
+    margin-left: 153px;
+}
  
+</style> 
  
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -145,7 +145,7 @@ function getMemberPageDetail(boardNo){
 	 				
 	 				let img = `<img id='img\${i}' src='<%=request.getContextPath()%>/resources/upload/member/board/\${e}' alt="" class="board-img"/>`
 	 				$("#board-img-container").append(img); // 이미지 추가
-		  			$(`#img0\${i}`).css("display","none");
+		  			$(`#img\${i}`).css("display","none");
 	 				maxIndex = i;
 	 			})
 	 			
