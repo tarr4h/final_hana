@@ -520,11 +520,11 @@ input:focus::placeholder {
 }
 
 .label#tel::after {
-    content: 'Phone'
+    content: 'Shop'
 }
 
 .label#email::after {
-    content: 'Email'
+    content: 'Address'
 }
 
 input:focus~.label::after {
