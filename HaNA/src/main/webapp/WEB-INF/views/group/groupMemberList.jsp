@@ -38,7 +38,7 @@ border-top:1px solid #8080803b;
 </style>
 
 	<div class="groupMemberListTableArea">
-	<div class="page-label"> [${groupId}] 소그룹 회원 관리 </div>
+	<div class="page-label"> [${groupId}] 소모임 회원 관리 </div>
 		<table class="table">
 			<tr>
 				<th>프로필</th>
