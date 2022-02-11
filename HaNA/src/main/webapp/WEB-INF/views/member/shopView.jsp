@@ -293,12 +293,12 @@
 				
 				const {followingId} = resp;
 				$.each(resp, (i, e) => {
-					console.log(e.followingId);
+					console.log(e.followers[0].followingId);
 					let tr= `
 						<tr>
 						<td>
 							<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
-							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followingId}">\${e.followingId}</a>
+							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followingId}">\${e.followers[0].followingId}</a>
 						</td>
 					</tr>
 				`;
