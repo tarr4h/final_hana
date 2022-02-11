@@ -49,11 +49,11 @@
                         </div>
                         <div class="form-group"> 
                         	<label for="exampleFormControlTextarea1" style="color: #fff;">가입하고 싶은 이유를 자유롭게 작성해주세요.</label> 
-                        	<textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="content" ></textarea> 
+                        	<textarea  class="form-control" id="exampleFormControlTextarea1" rows="2" name="content" ></textarea> 
                         	<input type="hidden" name="groupId" value="${groupId}" /> 
                         	<input type="hidden" name="memberId" value="<sec:authentication property='principal.username'/>" />
                         </div>
-                		<div class="modal-footer"> <button type="submit" id="submitBtn" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px; width:100%;" data-dismiss="modal" aria-label="Close">Submit</button> </div>
+                		<div class="modal-footer"> <button type="button" id="submitBtn" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px; width:100%;" data-dismiss="modal" aria-label="Close">Submit</button> </div>
                     </form:form>
                 </div>
                 
@@ -64,8 +64,11 @@
 
 <script>
 	$("#submitBtn").click((e) => {
-		console.log("test");
-		$(document.enrollGroupForm).submit();
+		if($("[name=content]").val()==''){
+			alert("내용을 작성하세요");
+			return false;
+		}
+		else {$(document.enrollGroupForm).submit();}
 	})
 </script>
 
