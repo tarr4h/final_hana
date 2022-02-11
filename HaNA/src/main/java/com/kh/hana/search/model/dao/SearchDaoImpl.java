@@ -36,4 +36,9 @@ public class SearchDaoImpl implements SearchDao{
 		return session.selectList("search.selectLocationListBySearch",keyword);
 	}
 
+	@Override
+	public int insertSearchKeywordLog(Map<String, Object> param) {
+		return session.insert("search.insertSearchKeywordLog",param);
+	}
+
 }

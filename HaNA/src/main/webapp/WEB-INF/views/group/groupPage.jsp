@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@page import="com.kh.hana.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,6 +10,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <fmt:requestEncoding value="utf-8" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소그룹페이지" name="title" />
@@ -27,7 +32,17 @@ let gb; // 스크립트에서 사용할 게시물 정보
 function goMemberView(memberId){
 	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
 }
+
+<% 
+String msg = (String)request.getAttribute("msg");
+if(msg != null){
+%>
+	
+	alert("<%=msg%>");
+
+<%}%>
 </script>
+
 
 <!-- 그룹 프로필 -->
 <jsp:include page="/WEB-INF/views/group/groupProfile.jsp"/>
@@ -54,10 +69,5 @@ function goMemberView(memberId){
 <!-- 게시물 상세보기 모달 -->
 <jsp:include page="/WEB-INF/views/group/modal/groupBoardDetail.jsp"/>
 
-<!-- 게시글 작성 버튼 -->
-<div class="plusBoardButton-container" onclick="location.href='${pageContext.request.contextPath}/group/groupBoardForm/${group.groupId}'">
-	<img class="plusBoardButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""  />
-	<span class="plusButtonLabel">&nbsp;게시글 작성</span>
-</div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

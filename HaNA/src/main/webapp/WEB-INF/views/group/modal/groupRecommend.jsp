@@ -40,13 +40,18 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 							</div>
 						</div>
 						<div class="group-container-section2 col-sm-7">
-							<div class="group-list-info-container">
+							<div class="recommend-group-list-info-container">
 								<div>
 									<span class="group-list-groupId">${group.groupId}</span>
 								</div>
 								<div>
 									<span class="group-list-groupName">${group.groupName}</span>
 								</div>		
+								<div>
+									<c:forEach items="${group.hashtag}" var="hashtag">
+										<span class="group-list-hashtag">#${hashtag}&nbsp;</span>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
 					</div>
