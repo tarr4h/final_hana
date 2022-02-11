@@ -101,4 +101,6 @@ public interface GroupDao {
 
 	public int deleteGroup(String groupId);
 
+	public int selectOneId(String id);
+
 }
