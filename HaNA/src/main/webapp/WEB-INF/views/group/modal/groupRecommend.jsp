@@ -23,7 +23,7 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="recommended-group-list" style="width:50%; margin:auto; margin-top:15px; margin-bottom:15px;">
 					<div class="pointer row" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'">
 						<div class="group-container-section1 col-sm-5">
-							<div class="group-profile-container">
+							<div class="group-modal-profile-container">
 								<c:if test="${empty group.image}">
 									<img
 										id="group-profile"

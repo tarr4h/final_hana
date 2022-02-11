@@ -86,7 +86,7 @@
 		$.each(data,function(i,group){
 			let row = `<div class="row row-box" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/\${group.groupId}'">
 				<div class="col-sm-5">
-					<img src='${pageContext.request.contextPath}/resources/upload/member/profile/\${group.image}' alt='' />
+					<img src='${pageContext.request.contextPath}/resources/upload/group/profile/\${group.image}' alt='' />
 				</div>
 				<div class="col-sm-1"></div>
 				<div class="col-sm-6">

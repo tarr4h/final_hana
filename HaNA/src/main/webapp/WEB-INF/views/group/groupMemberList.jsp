@@ -88,7 +88,7 @@ border-top:1px solid #8080803b;
 						<div class="row mb-0">
 							<div class="row justify-content-start">
 								<div class="col-12">
-									<div class="row">
+									<div class="row_">
 										<input type="hidden" name="groupId" value="${groupId}"/>
 										<input type="hidden" name="memberId" />
 										<input type="hidden" name="memberLevelCode" />
@@ -96,11 +96,11 @@ border-top:1px solid #8080803b;
 										<input type="radio" name="level" id="ld" value="ld" >
 										<label for="ld" class="form-check-label">리더</label>
 									</div>
-									<div class="row">
+									<div class="row_">
 										<input type="radio" name="level" id="mg" value="mg"> 
 										<label for="mg" class="form-check-label">매니저</label>
 									</div>
-									<div class="row">
+									<div class="row_">
 										<input type="radio" name="level" id="mb" value="mb">
 										<label for="mb" class="form-check-label">멤버</label>
 									</div>
@@ -195,51 +195,7 @@ function updateGroupGradeFunc(){
 	margin-bottom:100px;
 }
 
- html,
- body,
- div,
- span,
- h1,
- h2,
- h3,
- h4,
- h5,
- h6,
- a,
- b,
- u,
- i,
- center,
- form,
- label {
-     margin: 0;
-     padding: 0;
-     border: 0;
-     font-size: 100%;
-     font: inherit;
-     vertical-align: baseline
- }
-
- html {
-     box-sizing: border-box
- }
-
- *,
- *:before,
- *:after {
-     box-sizing: inherit
- }
-
- * {
-     max-height: 1000000px;
-     margin: 0;
-     padding: 0
- }
-
- body {
-     line-height: 1;
-     font: 500 18px/1.5 'Roboto', sans-serif;
- }
+ 
 
  #Modal_button {
      margin-top: 200px;
@@ -253,8 +209,10 @@ function updateGroupGradeFunc(){
      margin: 0 0 30px
  }
 
- .row {
-     margin: 0 0 10px
+ .row_ {
+ width:30%;
+     margin: 0 100px 10px 150px;
+     
  }
 
  h2 {
@@ -314,10 +272,12 @@ function updateGroupGradeFunc(){
  .modal-footer {
      border-bottom: 0;
      border-top: 0;
-     max-width: 500px !important;
+     max-width: 300px !important;
      position: relative
  }
-
+ .modal-header {
+ margin:auto;
+ }
  .model-content {
      width: 500px;
      width: 30% !important

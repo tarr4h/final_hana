@@ -99,7 +99,7 @@ function enrollList(){
 	                        <td>
 	                            \${e.memberId}
 	                        </td>
-	                        <td style="width:600px; padding-left:50px;padding-right:50px;">
+	                        <td style="width:300px; padding-left:50px;padding-right:50px;">
 	                            \${e.content}
 	                        </td>
 	                        <td>
