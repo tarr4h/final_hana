@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.hana.chat.model.vo.Chat;
 import com.kh.hana.chat.model.vo.ChatRoom;
+import com.kh.hana.chat.model.vo.Noti;
 import com.kh.hana.group.model.vo.Group;
 import com.kh.hana.group.model.vo.GroupBoard;
 import com.kh.hana.group.model.vo.GroupBoardComment;
@@ -186,6 +187,21 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public int GroupRoomOutMessage(Map<String, Object> param) {
 		return session.insert("chat.GroupRoomOutMessage", param);
+	}
+
+	@Override
+	public int insertNoti(Map<String, Object> param) {
+		return session.insert("chat.insertNoti", param);
+	}
+
+	@Override
+	public List<Noti> notiAlarm(String id) {
+		return session.selectList("chat.notiAlarm",id);
+	}
+
+	@Override
+	public int notiReadCheck(String id) {
+		return session.delete("chat.notiReadCheck",id);
 	}
 
 

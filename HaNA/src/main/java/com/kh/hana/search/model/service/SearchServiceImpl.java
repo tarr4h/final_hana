@@ -37,5 +37,10 @@ public class SearchServiceImpl implements SearchService{
 	public List<Map<String, Object>> selectLocationListBySearch(String keyword) {
 		return searchDao.selectLocationListBySearch(keyword);
 	}
+
+	@Override
+	public int insertSearchKeywordLog(Map<String, Object> param) {
+		return searchDao.insertSearchKeywordLog(param);
+	}
 	
 }

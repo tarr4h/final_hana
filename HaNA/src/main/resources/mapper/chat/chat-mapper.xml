@@ -115,14 +115,14 @@
 	insert
 		into
 	chat
-		values(#{roomNo},#{loginId},'ROOMENTER',default,default,default)
+		values(#{roomNo},#{loginId},'ROOMENTER',default,0,default)
 	</insert>
 	
 	<insert id="insertEnterMessage2">
 	insert
 		into
 	chat
-		values(#{roomNo},#{memberId},'ROOMENTER',default,default,default)
+		values(#{roomNo},#{memberId},'ROOMENTER',default,0,default)
 	</insert>
 	
 	<insert id="insertShareMessage">
@@ -149,7 +149,7 @@
 	insert
 		into
 	chat
-		values(#{roomNo},#{group.leaderId},'ROOMENTER',default,default,default)
+		values(#{roomNo},#{group.leaderId},'ROOMENTER',default,0,default)
 	</insert>
 	
 	<!-- 소모임 가입 회원 입장메세지 -->
@@ -162,7 +162,7 @@
 		#{memberId},
 		'ROOMENTER',
 		default,
-		default,
+		0,
 		default
 		)
 	</insert>
@@ -330,6 +330,40 @@
 	where 
 		reg_date = (select max(reg_date) from board_comment)
 	</select>
+	
+	<insert id="insertNoti">
+	insert 
+		into
+	noti
+	values(#{ReceiverId},
+	#{msg},
+			<choose>
+				<when test="boardNo eq 0">
+					null,
+				</when>
+				<otherwise>
+					#{boardNo},
+				</otherwise>
+			</choose>
+	#{boardType},
+	default)
+	</insert>
+	
+	<select id="notiAlarm" resultType="noti">
+	select 
+		* 
+	from 
+		noti 
+	where
+		member_id =#{id}
+	</select>
+
+	<delete id="notiReadCheck">
+	delete
+		from
+	noti
+		where member_id = #{id}
+	</delete>
 	
 
 </mapper>

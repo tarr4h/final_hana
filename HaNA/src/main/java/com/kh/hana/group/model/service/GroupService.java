@@ -102,5 +102,9 @@ public interface GroupService {
 
 	int selectOneId(String id);
 
+	String selectGroupMemberLevel(Map<String, Object> map);
+
+	int selectGroupApplyLog(Map<String, Object> map);
+
 	
 }

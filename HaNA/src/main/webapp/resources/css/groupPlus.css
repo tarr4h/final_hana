@@ -136,12 +136,18 @@ width:59%; height:100%; display: inline-block;
 .group-list-info-container {
 margin-top:12px;
 }
+.recommend-group-list-info-container {
+margin-top:0;
+}
 .group-list-groupId {
 font-size:1.1em;
 font-weight:700;
 }
 .group-list-groupName {
 font-size:1.1em;
+}
+.group-list-hashtag {
+	color:#6262d0;
 }
 .plusHashtagButton-container, .plusBoardButton-container {
 	width:250px;
@@ -182,6 +188,7 @@ font-size:1.1em;
 
 /* 장소검색페이지 */
 .location-container{
+	padding-left:100px;
 	border-bottom:1px solid gray;
 	margin:auto;
 	width:75%;
