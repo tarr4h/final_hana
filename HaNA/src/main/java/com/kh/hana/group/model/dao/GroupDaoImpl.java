@@ -240,6 +240,11 @@ public class GroupDaoImpl implements GroupDao {
 	public int deleteGroup(String groupId) {
 		return session.delete("group.deleteGroup", groupId);
 	}
+
+	@Override
+	public int selectOneId(String id) {
+		return session.selectOne("group.selectOneId",id);
+	}
 	
 
 

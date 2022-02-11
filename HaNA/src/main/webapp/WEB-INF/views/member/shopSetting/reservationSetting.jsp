@@ -65,9 +65,9 @@ tbody td:hover {
 </jsp:include>
 <section>
 <sec:authentication property="principal" var="loginMember"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
 
-
-<h1>shop프로필설정</h1>
+<br/><br/><br/><br/>
 <div class="container">
     <div class="row">
     	<!-- 메뉴 영역 -->
