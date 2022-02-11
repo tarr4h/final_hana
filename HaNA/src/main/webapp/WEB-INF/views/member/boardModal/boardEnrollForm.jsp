@@ -34,9 +34,14 @@
 		        <div class="font-weight-bold head pb-1"> </div> 
 		    	<textarea id="desc" cols="120" rows="5" placeholder="작성하기" name="content"></textarea>  
 		    	<br/><br/>  
-				<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"></div>
+		    	<div class="boardAttachArea">
+						<input type="button" value="이미지 추가" class="appendAttachArea"/>
+						<input type="file" name="upFile" required/>
+				</div>
+				<!--<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"></div>
 				<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file2" value="파일 선택"></div>
 				<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file3" value="파일 선택"></div> 
+				-->
 				<br/>
            <input type="submit" value="게시"/>
     </form:form>
@@ -54,20 +59,12 @@ $("#btn-add").click(()=> {
 	console.log("ddd");
   $("#boardFormModal").modal();
 });
-
- 
- 
-$(document).ready(function() {
-	//여기 아래 부분
-	$('#summernote').summernote({
-		  height: 300,                 // 에디터 높이
-		  minHeight: null,             // 최소 높이
-		  maxHeight: null,             // 최대 높이
-		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-          
-	});
+/* 이미지업로드영역 추가 */
+$(".appendAttachArea").click((e) => {
+	let inputFile = `
+		<input type="file" name="upFile" required/>
+	`;
+	$(".boardAttachArea").append(inputFile);
 });
 </script>
 <style>
