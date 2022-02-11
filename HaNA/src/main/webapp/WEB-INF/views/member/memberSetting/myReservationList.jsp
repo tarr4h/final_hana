@@ -43,7 +43,7 @@
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/accountPrivate'">계정 공개</li>
-			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
+			  <li class="list-group-item active" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
         </div>
         <div class="col-sm-8">
@@ -336,6 +336,12 @@
     flex: 0 0 auto;
     width: 550px;
     font-size:14px;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: gray;
+    border-color: gray;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

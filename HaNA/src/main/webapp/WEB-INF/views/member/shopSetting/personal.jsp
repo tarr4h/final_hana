@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="프로필 설정" name="title"/>
 </jsp:include>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
 <sec:authentication property="principal" var="loginMember"/>
 
 <c:if test="${not empty msg}">
@@ -33,34 +33,46 @@
 			</ul>
         </div>
         
-        <div class="col-sm-8">
-        	<form:form name="personalUpdateFrm" method="POST" action="${pageContext.request.contextPath }/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
-	        	<label for="username">이름</label>
-	        	<input type="text" name="name" id="name" value="${loginMember.name }"/>
-	        	<br />
-	        	<br />
-	        	<label for="introduce">소개</label>
-	        	<br />
-	        	<input type="text" name="introduce" value="${loginMember.introduce }"/>
-	        	<br />
-	        	<label for="addressAll">주소</label>
-	        	<br />
-	        	<input type="text" name="addressAll" style="width:300px;" value="${loginMember.addressAll }"/>
-	        	<input type="button" value="검색" onclick="execDaumPostcode();" />
-	        	<br />
-	        	<label for="addressFull">상세주소</label>
-	        	<br />
-	        	<input type="text" name="addressFull" value="${loginMember.addressFull }" required/>
+        <div id="enroll-container" class="mx-auto text-center">
+	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" method="POST">
+		<table class="mx-auto">
+		 <input type="hidden" name="id" value="${loginMember.id}" />
+			<tr>
+				<th class="title">이름</th>
+				<td>
+					<div id="memberId-container">
+						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >
+					 				
+					</div>
+				</td>
+			</tr>		
+			<tr>
+				<th class="title">소개</th>
+				<td>
+				<!-- <input type="text" class="form-control" name="introduce" id="introduce" value="${loginMember.introduce}" required> -->	
+				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="45" >  ${loginMember.introduce} </textarea>
+				</td>
+			</tr>
+			<tr>
+				<th class="title" rowspan="2">주소</th>
+	  		  	<td>	
+	        	<input type="text" class="form-control" name="addressAll" value="${loginMember.addressAll }"/>
+	        	<input type="button" class="form-control" value="검색" onclick="execDaumPostcode();" />
+	        </tr>
+	        <tr>
+	        	<td>
+	        	<input type="text" class="form-control" name="addressFull" placeholder="상세주소" value="${loginMember.addressFull }" required/>
 	        	<input type="hidden" name="locationX" value="${loginMember.locationX }"/>
 	        	<input type="hidden" name="locationY" value="${loginMember.locationY }"/>
-	        	<input type="hidden" name="id" value="${loginMember.username }"/>
-	        	<br />
-				<br />
-	        	<input type="submit" value="저장하기" id="formBtn"/>	
-        	</form:form>
-        </div>
-        
-    </div>
+				<td>
+			</tr>  
+		</table>
+		<br/><br/>
+		<input type="submit" class="btn btn-dark" value="저장">
+		<input type="reset" class="btn btn-dark">
+	</form:form>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript" 
@@ -123,4 +135,48 @@ function execDaumPostcode() {
     }).open();
 }
 </script>
+<style>
+.col-sm-4{
+	width : 328px;
+	margin-right: -100px;
+	margin-left : -120px;
+	}
+.form-control {
+    display: block;
+    width: 460px;
+    height : 50px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom : 15px;
+    margin-left: 30px;
+} 
+.custom-select{
+	width : 450px;
+	height : 38px;
+	margin-bottom : 15px;
+}
+.mx-auto{
+	width : 430px;
+	padding-left:50px;
+	}
+.mx-auto text-center{
+	margin-left : 10px;}
+.row {
+   --bs-gutter-x: -15rem;
+   }
+textarea.form-control {
+    min-height: 150px;
+}
+</style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
