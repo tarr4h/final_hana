@@ -219,6 +219,15 @@
 					if(eSplit[4] !== roomNo){
 					 	beep2();
 						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${ShareMessage[1]}</a>`);
+						
+						const date = moment(today).format("YYYY년 MM월 DD일");
+						let tbodyNoti =`<tr>
+		    				<td>\${message226Split[1]} \${date}</td>
+			    			</tr>`;
+						$("tbody#notiTbody").append(tbodyNoti);
+						headerNotiAlarm = headerNotiAlarm + 1;
+						$("#notiAlarm").text(headerNotiAlarm);
+						
 						$("div#headerAlert").css('display','block');
 						setTimeout(function(){
 							$("div#headerAlert").css('display','none');
@@ -235,6 +244,7 @@
 							if(data.memberId != id){
 								msgCheck(data);
 							} 
+						unreadCheck(e);
 					}
 				};
 
@@ -286,7 +296,6 @@
 
 				}
 				else{
-				console.log("eSplit[4] === 226 아닌 곳 입장");
 			 	beep();
 				let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
 				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);

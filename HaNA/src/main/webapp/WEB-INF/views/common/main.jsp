@@ -171,10 +171,6 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
-    <span>회원추천 몇개 더</span>
-    <span>좋아요 ,댓글 알림</span>
-    <span>공유 메세지</span>
-    <span>웹소켓 예외처리</span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
@@ -189,9 +185,9 @@ const slideMargin = 0; //슬라이드간의 margin 값
     		<img style="width:32px;height:32px;margin-left: 250px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
     		<span>${groupboard.groupName} 바로가기</span>
     		</div>
-<%--     		<div>
-    		<button onclick="getPageDetail('${groupboard.no}');">상세게시글</button>
-    		</div> --%>
+     		<div>
+    		<button onclick="boardDetailVeiw('${groupboard.no}','1')">상세게시글</button>
+    		</div>
     </td>
     </tr>
     <tr>
@@ -1036,10 +1032,23 @@ const commetLevel2Write=(index,boardNo,commentwriter)=>{
 	$(".commentLevel2Message").empty();
  	$("li#Level2Comment"+index+":last").append(comment);
 }
+const boardDetailVeiw=(boardNo, type) =>{
+	console.log(boardNo);
+	console.log(type);
+	//1 소모임
+	if(type === '1'){
+		console.log("11");
+		getPageDetail(boardNo);
+
+	}
+	else{
+		console.log("else");
+		getMemberPageDetail(boardNo);
+	}
+};
 </script>
     <style>
     .commentLevel2{margin-left: 50px}
     </style>
-    
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

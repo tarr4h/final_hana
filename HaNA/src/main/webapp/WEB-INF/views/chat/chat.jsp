@@ -31,6 +31,8 @@
 </c:if>
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
+<span>채팅방 입장시 읽음처리</span><br />
+<span>채팅방 입장 후 채팅하다가 답장안하면 안읽씹됨</span><br />
 
 <script>
 let id;
