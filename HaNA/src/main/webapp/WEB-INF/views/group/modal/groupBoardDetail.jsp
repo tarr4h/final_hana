@@ -33,11 +33,13 @@
 						</td>
 					</tr>
 				</table>
-				<div style="position:relative;margin-right:-665px; margin-bottom:5%;">
-				<img src="https://img.icons8.com/plasticine/100/000000/like--v2.png" class="heart unlike" onclick="like();" style="position:absolute; width:50px;"/>
-				<img src="https://img.icons8.com/plasticine/100/000000/like--v1.png" class="heart like" onclick="unlike();" style="position:absolute; width:50px;"/>
-				</div>
+				<!-- <div style="position:relative;margin-right:-665px; margin-bottom:5%;">
+				</div> -->
 				<div style="color:gray; margin-right:1%;">
+					<div style="display:inline;">
+						<img src="https://img.icons8.com/plasticine/100/000000/like--v2.png" class="heart unlike" onclick="like();" style="width:50px;"/>
+						<img src="https://img.icons8.com/plasticine/100/000000/like--v1.png" class="heart like" onclick="unlike();" style="width:50px;"/>
+					</div>					
 					<span class="like_count"></span>
 				</div>
 				</div>
