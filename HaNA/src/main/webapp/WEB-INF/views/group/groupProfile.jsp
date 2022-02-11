@@ -125,6 +125,10 @@
 									<th><span class="tableKey" style="color:#673ab7c9;">멤버</span></th>
 									<td>${memberCount}명</td>
 								</tr>
+								<tr>
+									<th><span class="tableKey">해시태그</span></th>
+									<td></td>
+								</tr>
 							</tbody>
 						</table>
 			        </div>

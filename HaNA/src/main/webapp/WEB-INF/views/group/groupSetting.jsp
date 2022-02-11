@@ -18,7 +18,10 @@
 <br />
 
 <%
-	List<String> list = Arrays.asList(((Group)request.getAttribute("group")).getHashtag());
+	List<String> list = new ArrayList<>();
+	if(((Group)request.getAttribute("group")).getHashtag() != null){
+		list = Arrays.asList(((Group)request.getAttribute("group")).getHashtag());	
+	}
 	pageContext.setAttribute("hashtag",list);
 %>
 

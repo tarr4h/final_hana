@@ -66,5 +66,15 @@
 	<result column="location_x" property="locationX"/>
 </resultMap>
 
+<insert id="insertSearchKeywordLog">
+	insert into
+		search_log
+	values(
+		#{category},
+		#{keyword},
+		#{member.id},
+		default
+	)
+</insert>
 
 </mapper>
