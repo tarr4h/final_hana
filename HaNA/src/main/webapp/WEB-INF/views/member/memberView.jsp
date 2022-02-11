@@ -30,7 +30,7 @@
 	</script>
 </c:if>
  
-<div class="container mt-2">
+<div class="profile-container mt-2">
     <div class="row" id="myInfo">   	
     	<!-- 프로필이미지 영역 -->
         <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
@@ -152,8 +152,6 @@
 
 <div class="board-container mt-2">       
     <div class="boardRow">   
-    
-
 	<!-- 게시물목록 -->        
  	<c:choose>
     		<c:when test="${member.publicProfile == 2  && loginMember.id != member.id && isFriend != 1}">
@@ -165,7 +163,7 @@
          <c:forEach items="${boardList}" var="board" varStatus="vs">
 	        <div class="thumbnail col-sm-4" >     
 	       	 	<input type="hidden" value="${board.no}" id="boardNo" name="no"/>
-	        	<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
+	        	<img class="board-main-image" style="width:95%; height:90%; margin-left:21px; "
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
 						alt=""  />
 		      </div>
@@ -252,10 +250,10 @@ $("#btn-follower-list").on( "click", function() {
 				<h4 class="modal-title" id="myModalLabel"></h4>
 			</div>
 			<div class="modal-body">
-				<table class="ListTable" style="text-align: center;" name="modalTable">
+				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
-							<th style ="font-size : 14px;" colspan="3">팔로워</th>
+							<th style ="font-size : 14px;">팔로워</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody1">
@@ -263,6 +261,7 @@ $("#btn-follower-list").on( "click", function() {
 				</table>
 			</div>
 			<div class="modal-footer">
+		 
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -472,14 +471,22 @@ $("#input-file").change((e) => {
     margin-top: -100px;
     margin-left: 153px;
 }
+.profile-container mt-2{
+
+ 	border: none;
+    border-bottom: solid; 
+    border-bottom-width: unset;  
+
+}
 #myInfo {
+	margin-top: 45px;
+	margin-bottom :100px;
     border: none;
     border-bottom: solid;
     border-color: gray;
-    border-bottom-width: unset;
-    margin: auto;
-    width: 810px;
-    height : 380px;
+    border-bottom-width: 2px;  
+    height : 400px;
+    margin-left:280px;   
 }
 .tableKey {
     width: 17%;
@@ -493,24 +500,18 @@ $("#input-file").change((e) => {
     font-size: 15px;
     padding-bottom: 6px;
 }
- 
-
 .writeBtn{
-	border-radius : 20px;
+	border-radius : 50px;
+	background-color : white;
+	border : none;
 } 
 .boardRow {
     width: 900px;
    margin : auto;
 }
-.thumbnail {
-    height: 300px;
-    border: 1px solid white;
-    padding: 5px;
-    width: 265px;
-}
-.ListTable{
-	border-collapse:collapse;
-}
+.board-main-image{
+cursor: pointer;
+ }
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 
