@@ -115,14 +115,14 @@
 	insert
 		into
 	chat
-		values(#{roomNo},#{loginId},'ROOMENTER',default,default,default)
+		values(#{roomNo},#{loginId},'ROOMENTER',default,0,default)
 	</insert>
 	
 	<insert id="insertEnterMessage2">
 	insert
 		into
 	chat
-		values(#{roomNo},#{memberId},'ROOMENTER',default,default,default)
+		values(#{roomNo},#{memberId},'ROOMENTER',default,0,default)
 	</insert>
 	
 	<insert id="insertShareMessage">
@@ -149,7 +149,7 @@
 	insert
 		into
 	chat
-		values(#{roomNo},#{group.leaderId},'ROOMENTER',default,default,default)
+		values(#{roomNo},#{group.leaderId},'ROOMENTER',default,0,default)
 	</insert>
 	
 	<!-- 소모임 가입 회원 입장메세지 -->
@@ -162,7 +162,7 @@
 		#{memberId},
 		'ROOMENTER',
 		default,
-		default,
+		0,
 		default
 		)
 	</insert>

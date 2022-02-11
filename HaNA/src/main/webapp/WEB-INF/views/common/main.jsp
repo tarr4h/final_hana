@@ -181,17 +181,17 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <table>
     <tr>
     <td >
-    <div  style="width: 110px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${groupboard.writer}'">
+    <div  style="width: 200px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${groupboard.writer}'">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}">
               <span class="userID main-id point-span">${groupboard.writer}</span>
     </div>
     		<div style="display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${groupboard.groupId}'">
-    		<img style="width:32px;height:32px;margin-left: 330px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
+    		<img style="width:32px;height:32px;margin-left: 250px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
     		<span>${groupboard.groupName} 바로가기</span>
     		</div>
-    		<div>
+<%--     		<div>
     		<button onclick="getPageDetail('${groupboard.no}');">상세게시글</button>
-    		</div>
+    		</div> --%>
     </td>
     </tr>
     <tr>

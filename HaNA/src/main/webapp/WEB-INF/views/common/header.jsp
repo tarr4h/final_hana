@@ -399,6 +399,5 @@
 		});
 	})
 </script>
-<!-- 게시물 상세보기 모달 -->
-<%-- <jsp:include page="/WEB-INF/views/group/modal/groupBoardDetail.jsp"/> --%>
+
 	<div class="section-over-div">
