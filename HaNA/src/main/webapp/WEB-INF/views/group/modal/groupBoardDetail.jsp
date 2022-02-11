@@ -272,6 +272,17 @@ function like(){
 			$(".like").css("display","inline");			 			
  			$(".unlike").css("display","none");
  			getLikeCount();
+ 			
+		    const data1 = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${gb.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${gb.no}@그룹`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data1);
+		    websocket.send(jsonData);	
+		    
 		},
 		error(xhr, statusText, err){
 			switch(xhr.status){
@@ -469,6 +480,7 @@ $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 //댓글 제출 함수
 function submitCommentFunc(e){
 	let boardNo = $("[name=boardNo]",e.target).val(); 
+	let commentwriter = $("[name=writer]",e.target).val();
 	let o = {
 		boardNo:boardNo,
 		writer:$("[name=writer]",e.target).val(),
@@ -488,6 +500,32 @@ function submitCommentFunc(e){
 		success(data){
 			console.log(data);
 			$("[name=content]",e.target).val("");
+				
+			<!-- 게시글 작성자한테 -->
+			if($("[name=commentLevel]",e.target).val() === '1'){			
+		    const data1 = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${gb.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}@그룹`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data1);
+		    websocket.send(jsonData);	
+			}
+			<!-- 댓글 작성자한테 -->
+			else{
+			    const data1 = {
+			            "roomNo" : 226,
+			            "memberId" : `${loginMember.id}`,
+			            "message"   : `\${commentwriter}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}@그룹`,
+			            "picture" : `${loginMember.picture}`,
+			            "messageRegDate" : today
+			        }; 
+			    let jsonData = JSON.stringify(data1);
+			    websocket.send(jsonData);	
+			}			
+			
 			getCommentList(boardNo);
 		},
 		error(xhr, statusText, err){

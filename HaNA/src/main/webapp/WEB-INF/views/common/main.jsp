@@ -10,14 +10,13 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="메인화면" name="title"/>
 </jsp:include>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <!-- 사용자작성 css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main.css" />
 <sec:authentication property="principal" var="loginMember" />
 <style id="mainCss"></style>
 <script>
-let today = Date.now()-(9 * 60 * 60 * 1000);
 //댓글리스트 가져오기
 //css넣어주기
 const forEachCss = (index)=>{
@@ -172,23 +171,27 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
+    <span>회원추천 몇개 더</span>
+    <span>좋아요 ,댓글 알림</span>
+    <span>공유 메세지</span>
+    <span>웹소켓 예외처리</span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
     <table>
     <tr>
     <td >
-    <div  style="width: 110px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${groupboard.writer}'">
+    <div  style="width: 200px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${groupboard.writer}'">
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}">
               <span class="userID main-id point-span">${groupboard.writer}</span>
     </div>
     		<div style="display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${groupboard.groupId}'">
-    		<img style="width:32px;height:32px;margin-left: 330px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
+    		<img style="width:32px;height:32px;margin-left: 250px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
     		<span>${groupboard.groupName} 바로가기</span>
     		</div>
-    		<div>
+<%--     		<div>
     		<button onclick="getPageDetail('${groupboard.no}');">상세게시글</button>
-    		</div>
+    		</div> --%>
     </td>
     </tr>
     <tr>
@@ -312,7 +315,7 @@ $(`.next${vss.index }`).on('click', function () {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
 					const date = moment(regDate).format("YYYY년 MM월 DD일");
 					commentList += `<li>
-		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+');">답글</button>' : ''}</span>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+',\'' + writer + '\');">답글</button>' : ''}</span>
 		                </li>
 		                <li id='\${commentLevel === 1 ?  'Level2Comment'+no+'' : 'Level2Comment'+commentRef+''}'>
 			              <div class="time-log">
@@ -325,7 +328,7 @@ $(`.next${vss.index }`).on('click', function () {
 				$(".commentTd${vss.index} .comments${vss.index }").html(commentList);
 
 		},
-		error:console.log
+        error:console.log
 	});
 	
 //forEach에서 일반 댓글쓰기
@@ -352,7 +355,7 @@ const commetWrite${vss.index}=()=>{
 			const date = moment(today).format("YYYY년 MM월 DD일");
 			const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = resp;
 			let commentList =`<li>
-		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+');">답글</button>' : ''}</span>
+		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+',\'' + writer + '\');">답글</button>' : ''}</span>
 		        </li>
 		        <li id='\${commentLevel === 1 ?  'Level2Comment'+no+'' : 'Level2Comment'+commentRef+''}'>
 		          <div class="time-log">
@@ -361,8 +364,20 @@ const commetWrite${vss.index}=()=>{
 		        </li>  `;
 			$(".commentTd${vss.index} .comments${vss.index }").append(commentList);
 			$("input#input-comment${vss.index}").val('');
+			
+		    const data = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `${groupboard.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${groupboard.no}@그룹`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data);
+		    websocket.send(jsonData);
+				
+			
 		},
-		error:console.log
+        error:console.log
 	});
 };
 
@@ -379,7 +394,7 @@ $.ajax({
 		/* console.log("${vss.index }=",i${vss.index }); */
 		$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
 	},
-	error:console.log
+    error:console.log
 });
 
 //forEach에서 내가 좋아요 누른 여부 확인
@@ -404,7 +419,7 @@ $.ajax({
  		};
 
 	},
-	error:console.log
+    error:console.log
 });
 
 //좋아요 누를때
@@ -440,11 +455,21 @@ const insertLike${vss.index }=()=>{
 				i${vss.index } = i${vss.index }+1;
 				/* console.log("${vss.index }=",i${vss.index }); */
 				$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
+				<!-- 좋아요 메세지 -->
+			    const data = {
+			            "roomNo" : 226,
+			            "memberId" : `${loginMember.id}`,
+			            "message"   : `${groupboard.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@${groupboard.no}@그룹`,
+			            "picture" : `${loginMember.picture}`,
+			            "messageRegDate" : today
+			        }; 
+			    let jsonData = JSON.stringify(data);
+			    websocket.send(jsonData);
 			}
 			else
 				console.log("441번째 줄");
 		},
-		error:console.log		
+        error:console.log
 	});
 };
 const deleteLike${vss.index }=()=>{
@@ -461,12 +486,12 @@ const deleteLike${vss.index }=()=>{
 				likeBoolean${vss.index } = false;
 				i${vss.index } = i${vss.index }-1;
 				/* console.log("${vss.index }=",i${vss.index }); */
-				$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));				
+				$("#likeCount${vss.index } span").html((i${vss.index } >0 ? i${vss.index }+`명이 좋아합니다` : ''));
 			}
 			else
 				console.log("436번째 줄");
 		},
-		error:console.log		
+        error:console.log
 	});
 };
 </script>
@@ -609,7 +634,7 @@ $(`.next0${vss.index }`).on('click', function () {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
 					const date = moment(regDate).format("YYYY년 MM월 DD일");
 					commentList += `<li>
-		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+');">답글</button>' : ''}</span>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+',\'' + writer + '\');">답글</button>' : ''}</span>
 		                </li>
 		                
 		                <li id='\${commentLevel === 1 ?  'Level2Comment0'+no+'' : 'Level2Comment0'+commentRef+''}'>
@@ -622,7 +647,7 @@ $(`.next0${vss.index }`).on('click', function () {
 				$(".commentTd0${vss.index} .comments0${vss.index }").html(commentList);
 
 		},
-		error:console.log
+        error:console.log
 	});
 	
 //forEach에서 일반 댓글쓰기
@@ -649,7 +674,7 @@ const commetWrite0${vss.index}=()=>{
 			const date = moment(today).format("YYYY년 MM월 DD일");
 			const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = resp;
 			let commentList =`<li>
-		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+');">답글</button>' : ''}</span>
+		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+',\'' + writer + '\');">답글</button>' : ''}</span>
 		        </li>
 		        <li id='\${commentLevel === 1 ?  'Level2Comment0'+no+'' : 'Level2Comment0'+commentRef+''}'>
 		          <div class="time-log">
@@ -658,8 +683,20 @@ const commetWrite0${vss.index}=()=>{
 		        </li>  `;
 			$(".commentTd0${vss.index} .comments0${vss.index }").append(commentList);
 			$("input#input-comment0${vss.index}").val('');
+			
+			
+		    const data = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `${board.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${board.no}@일반`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data);
+		    websocket.send(jsonData);
+	
 		},
-		error:console.log
+        error:console.log
 	});
 
 };
@@ -679,7 +716,7 @@ $.ajax({
 		console.log("0${vss.index }=",i0${vss.index });
 		$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
 	},
-	error:console.log
+    error:console.log
 });
 
 //forEach에서 내가 좋아요 누른 여부 확인
@@ -704,7 +741,7 @@ $.ajax({
 		};
 
 	},
-	error:console.log
+    error:console.log
 });
 
 //좋아요 누를때
@@ -738,11 +775,21 @@ const insertLike0${vss.index }=()=>{
 				likeBoolean0${vss.index } = true;
 				i0${vss.index } = i0${vss.index }+1;
 				$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
+				<!-- 좋아요 메세지 -->
+			    const data = {
+			            "roomNo" : 226,
+			            "memberId" : `${loginMember.id}`,
+			            "message"   : `${board.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@${board.no}@일반`,
+			            "picture" : `${loginMember.picture}`,
+			            "messageRegDate" : today
+			        }; 
+			    let jsonData = JSON.stringify(data);
+			    websocket.send(jsonData);
 			}
 			else
 				console.log("736번째 줄");
 		},
-		error:console.log		
+        error:console.log
 	});
 };
 const deleteLike0${vss.index }=()=>{
@@ -764,7 +811,7 @@ const deleteLike0${vss.index }=()=>{
 			else
 				console.log("758번째 줄");
 		},
-		error:console.log		
+        error:console.log
 	});
 };
 
@@ -832,8 +879,8 @@ const insertFollow =(id,index)=>{
 			else
 				console.log("팔로우 실패");
 		},
-		error:console.log			
-	})
+        error:console.log
+	});
 };
 const DMsend=(writer)=>{
 	console.log(writer);
@@ -855,27 +902,29 @@ const DMsend=(writer)=>{
 				else
 					alert("메세지 전송 실패");
 			},
-			error:console.log		
+	        error:console.log
 		});
 	}
 }
 //답글버튼 클릭
-const commentLev20=(index,boardNo)=>{
+const commentLev20=(index,boardNo,commentwriter)=>{
 	console.log(index);
 	console.log(boardNo);
+	console.log(commentwriter);
 	$(".commentLevel2Message").empty();
 
 	let message =`    		<div class="commentLevel2Message"><div class="hl"></div>
         <div class="comment">
         <input id="input-commentLevel2" class="input-comment" type="text" placeholder="대댓글 달기..." >
-        <button type="button" class="submit-comment" onclick="commetLevel2Write0('\${index}','\${boardNo}');">게시</button>
+        <button type="button" class="submit-comment" onclick="commetLevel2Write0('\${index}','\${boardNo}','\${commentwriter}');">게시</button>
       </div><div class="hl"></div></div>`;
 	$("#Level2Comment"+0+index).append(message);
 }
 //답글-> 게시 클릭
-const commetLevel2Write0=(index,boardNo)=>{
+const commetLevel2Write0=(index,boardNo,commentwriter)=>{
 	console.log("sdfsdf",index);
 	console.log("sdfsdf",boardNo);
+	console.log("sdfsdf",commentwriter);
 	
  	let msg = $("#input-commentLevel2").val();
 	console.log(msg); 
@@ -897,8 +946,17 @@ const commetLevel2Write0=(index,boardNo)=>{
 		},
 		success(resp){
 			console.log('댓글작성');
+		    const data = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${commentwriter}@${loginMember.id}님이 대댓글을 등록했습니다.@\${boardNo}@일반`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data);
+		    websocket.send(jsonData);
 		},
-		error:console.log
+        error:console.log
 	});
 
 	const date = moment(today).format("YYYY년 MM월 DD일");
@@ -915,7 +973,7 @@ const commetLevel2Write0=(index,boardNo)=>{
 }
 
 //그룹게시판 답글버튼 클릭
-const commentLev2=(index,boardNo)=>{
+const commentLev2=(index,boardNo,commentwriter)=>{
 	console.log(index);
 	console.log(boardNo);
 	$(".commentLevel2Message").empty();
@@ -923,14 +981,15 @@ const commentLev2=(index,boardNo)=>{
 	let message =`    		<div class="commentLevel2Message"><div class="hl"></div>
         <div class="comment">
         <input id="input-commentLevel2" class="input-comment" type="text" placeholder="대댓글 달기..." >
-        <button type="button" class="submit-comment" onclick="commetLevel2Write('\${index}','\${boardNo}');">게시</button>
+        <button type="button" class="submit-comment" onclick="commetLevel2Write('\${index}','\${boardNo}','\${commentwriter}');">게시</button>
       </div><div class="hl"></div></div>`;
 	$("#Level2Comment"+index).append(message);
 }
 //그룹게시판 답글-> 게시 클릭
-const commetLevel2Write=(index,boardNo)=>{
+const commetLevel2Write=(index,boardNo,commentwriter)=>{
 	console.log("sdfsdf",index);
 	console.log("sdfsdf",boardNo);
+	console.log("sdfsdf",commentwriter);
 	
  	let msg = $("#input-commentLevel2").val();
 	console.log(msg); 
@@ -952,8 +1011,17 @@ const commetLevel2Write=(index,boardNo)=>{
 		},
 		success(resp){
 			console.log('댓글작성');
+		    const data = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${commentwriter}@${loginMember.id}님이 대댓글을 등록했습니다.@\${boardNo}@그룹`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data);
+		    websocket.send(jsonData);
 		},
-		error:console.log
+        error:console.log
 	});
 
 	const date = moment(today).format("YYYY년 MM월 DD일");
@@ -973,6 +1041,5 @@ const commetLevel2Write=(index,boardNo)=>{
     .commentLevel2{margin-left: 50px}
     </style>
     
-<!-- 게시물 상세보기 모달 -->
-<jsp:include page="/WEB-INF/views/group/modal/groupBoardDetail.jsp"/>
+
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
