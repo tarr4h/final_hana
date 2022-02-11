@@ -35,8 +35,17 @@
 			$("#searchResultBox").css('display','none');
 		}, 150);
 	})
+	
+function syncDelay(milliseconds){
+ let start = new Date().getTime();
+ let end=0;
+ while( (end-start) < milliseconds){
+     end = new Date().getTime();
+ }
+}
 	  
 	$("#search-box").keyup((e)=>{
+		
 		let category = $("#select-box").val();
 		let keyword = $(e.target).val();
 		console.log(category);
@@ -63,6 +72,7 @@
 			},
 			error:console.log
 		})
+		
 	})
 	
 	function getMemberList(data){
