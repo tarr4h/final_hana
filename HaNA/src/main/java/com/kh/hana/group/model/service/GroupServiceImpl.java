@@ -286,4 +286,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectOneId(id);
 	}
 
+	@Override
+	public String selectGroupMemberLevel(Map<String, Object> map) {
+		return groupDao.selectGroupMemberLevel(map);
+	}
+
 }
