@@ -19,7 +19,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
 <!-- 우측 공간확보 -->
 <section class="body-section"
 	style="width: 200px; height: 100%; float: right; display: block;">
@@ -33,7 +32,8 @@
 			<table class="table table-striped table-dark my-0">
 				<thead>
 					<tr>
-						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle">HashTag Ranking</th>
+					
+						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><i class="fa-solid fa-crown"></i>HashTag Ranking<i class="fa-solid fa-crown"></i></th>
 					</tr>
 					<tr>
 						<th scope="col">no</th>  
