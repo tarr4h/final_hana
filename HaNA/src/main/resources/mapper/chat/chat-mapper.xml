@@ -167,6 +167,15 @@
 		)
 	</insert>
 	
+	<update id="updateROOMOUTmessage">
+	update 
+		chat
+	set message = 'ROOMOUT333'
+	where room_no = (select room_no from chat_room where group_room_id = #{groupId})
+	and
+	member_id = #{memberId}
+	</update>
+	
 		<insert id="CreateGroupChat">
 	insert
 		into
@@ -367,7 +376,7 @@
 	
 	<select id="checkMemberGroup" resultType="Integer">
 	select 
-		room_no
+		distinct room_no
 	from 
 		chat 
 	where 
@@ -375,5 +384,15 @@
 		and 
 		member_id = #{loginId}
 	</select>
+	
+	<update id="roomChatUpdateImage">
+	update
+		chat_room
+	set 
+		group_img = #{image}
+	where 
+		group_room_id = #{groupId}
+	</update>
+	
 
 </mapper>

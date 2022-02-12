@@ -209,6 +209,16 @@ public class ChatDaoImpl implements ChatDao {
 		return session.selectOne("chat.checkMemberGroup",param);
 	}
 
+	@Override
+	public int updateROOMOUTmessage(Map<String, Object> map) {
+		return session.update("chat.updateROOMOUTmessage",map);
+	}
+
+	@Override
+	public int roomChatUpdateImage(Group group) {
+		return session.update("chat.roomChatUpdateImage",group);
+	}
+
 
 
 

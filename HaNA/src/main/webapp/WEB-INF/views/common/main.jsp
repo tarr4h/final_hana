@@ -708,9 +708,9 @@ $.ajax({
 	},
 	method: "GET",
 	success(resp){
-		console.log(resp);
+/* 		console.log(resp);
+		console.log("0${vss.index }=",i0${vss.index }); */
 		i0${vss.index } = resp;
-		console.log("0${vss.index }=",i0${vss.index });
 		$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
 	},
     error:console.log

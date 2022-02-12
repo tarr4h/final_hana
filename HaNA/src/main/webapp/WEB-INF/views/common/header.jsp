@@ -364,8 +364,6 @@
 				method:'GET',
 				data:{id : memberId},
 				success(resp){
-					console.log("resp",resp);
-					console.log("resp.size",resp.length);
 						window['headerNotiAlarm'] = resp.length;
 						$("#notiAlarm").text(headerNotiAlarm);
 					if(resp.length !== '0'){
