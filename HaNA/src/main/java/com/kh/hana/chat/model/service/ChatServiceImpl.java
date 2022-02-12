@@ -277,6 +277,20 @@ public class ChatServiceImpl implements ChatService {
 		return chatDao.notiReadCheck(id);
 	}
 
+	@Override
+	public Map<String, Object> groupDMcheckMember(Map<String, Object> param) {
+		Integer roomNo = chatDao.checkMemberGroup(param);
+		Map<String, Object> resp = new HashMap<String, Object>();
+		if(roomNo != null) {
+			resp.put("check", true);
+			resp.put("roomNo", roomNo);
+		}
+		else{
+			resp.put("check", false);
+		}
+		return resp;
+	}
+
 
 
 

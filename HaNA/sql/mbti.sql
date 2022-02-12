@@ -150,7 +150,7 @@ select
 select * from shophashtag;
 select * from hashtag;
 select * from shop_info;
-
+select * from member;
 commit;
 select
     *
@@ -171,6 +171,7 @@ create table ranking (
 
   select *from ranking;
   select * from hashtag;
+  
   
 update ranking set tag_date = '22/02/19' where member_id = 'k666';
   
@@ -285,8 +286,52 @@ select sysdate from dual;
  
 
 select * from member;
+select * from shop_info;
 
+select
+            *
+        from
+            shop_info i	
+            left join member m
+            on i.id = m.id
+           	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id;
 
+            
+            
 
+    		left join hashtag h 
+            on s.tag_id = h.tag_id
+        where
+            tag_name = '삼겹살'
+;
+select * from member;
 
+select
+            *
+        from
+            shop_info i	
+            left join member m
+            on i.id = m.id
+        where i.id = 'k333'; 
+        
+select *from shop_info;
+ select * from hashtag;
+ 
+            
 
+         select  
+            i.id,i.SHOP_NAME, i.ADDRESS , h.TAG_NAME , m.PICTURE
+        from
+            shop_info i	
+            left join member m
+            on i.id = m.id
+           	left join shophashtag s on i.id = s.member_id 
+    		left join hashtag h on s.tag_id = h.tag_id 
+             where
+            i.location_x  <  127.1257064
+            and
+            i.location_y  <  37.5612273;
+            
+           
+     

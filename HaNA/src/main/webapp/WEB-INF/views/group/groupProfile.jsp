@@ -33,7 +33,28 @@
 	    }
 	  });
 
-
+const groupDM=(groupId, loginId)=>{
+	console.log(groupId);
+	console.log(loginId);
+ 	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/groupDM.do`,
+		method:"GET",
+		data:{
+			groupId : groupId,
+			loginId : loginId
+		},
+		success(resp){
+			console.log("map =",resp);
+ 			if(resp.check === true){
+				location.href = `${pageContext.request.contextPath}/chat/chat.do?\${resp.roomNo}`;
+			}
+			else
+				alert("소모임 회원이 아닙니다.");
+		},
+        error:console.log
+	});
+	
+};
 </script>
 <sec:authentication property="principal" var="loginMember"/>
 <%
@@ -107,7 +128,9 @@
 								</tr>
 								<tr>
 									<th><span class="tableKey">해시태그</span></th>
-									<td></td>
+									<td>
+										<c:forEach items="${group.hashtag}" var="name"><span class="hashtag">#${name}&nbsp;</span></c:forEach>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -173,7 +196,7 @@
 <div class="icon">
 	<a href="${pageContext.request.contextPath}/group/groupPage/${group.groupId}"><i class="fas fa-pencil-alt"></i></a>
 	<a href="${pageContext.request.contextPath}/group/groupCalendar/${group.groupId}"><i class="fas fa-calendar-alt"></i></a>
-	<a href="#"><i class="far fa-comments"></i></a>
+	<a href="javascript:void(0)" onclick="groupDM('${group.groupId}','${loginMember.id}');"><i class="far fa-comments"></i></a>
 </div>
 </div>
 

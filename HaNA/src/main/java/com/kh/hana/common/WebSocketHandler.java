@@ -192,7 +192,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
         			List<String> loginusers222 = new ArrayList<>(loginusers);
         			
         			log.info("로그인유저 제거 전 = {}", loginusers222);
-        			
+        			log.info("chat.getMessage() = {}",chat.getMessage());
         			for(WebSocketSession sess : RoomList2.get(chat.getRoomNo()).keySet()) {
         				loginusers222.remove(RoomList2.get(chat.getRoomNo()).get(sess));
         	            try {

@@ -10,10 +10,22 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소모임멤버리스트" name="title" />
 </jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupBoardForm.css" />
+<style>
+table th, td {
+	text-align: center;
+	vertical-align: middle;
+	border:none;
+}
+tr {
+border-top:1px solid #8080803b;
+}
+</style>
 
 <section>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"></script>
 <sec:authentication property="principal" var="loginMember" />
+
 <script>
 /* 전역변수 생성 */
 let memberId2;
@@ -25,17 +37,6 @@ let memberLevelCode2;
 };  */
 
 </script>
-
-<style>
-table th, td {
-	text-align: center;
-	vertical-align: middle;
-	border:none;
-}
-tr {
-border-top:1px solid #8080803b;
-}
-</style>
 
 	<div class="groupMemberListTableArea">
 	<div class="page-label"> [${groupId}] 소모임 회원 관리 </div>
@@ -172,192 +173,6 @@ function updateGroupGradeFunc(){
 }; 
 </script>
 
-<style>
-.head-label {
-	margin:auto;
-	font-weight:bold;
-	font-size:1.1em;
-}
-.page-label {
-	font-size:1.5em;
-	font-weight:600;
-	text-align:center;
-	margin-bottom:50px;
-	border-top:1px solid gray;
-	border-bottom:1px solid gray;
-	padding:20px 0px;
-}
-
-.groupMemberListTableArea {
-	width:60vw;
-	margin:auto;
-	margin-top:100px;
-	margin-bottom:100px;
-}
-
- 
-
- #Modal_button {
-     margin-top: 200px;
-     position: relative;
-     width: 20%;
-     border: none
- }
-
- .holder {
-     padding: 0 0 30px;
-     margin: 0 0 30px
- }
-
- .row_ {
- width:30%;
-     margin: 0 100px 10px 150px;
-     
- }
-
- h2 {
-     font-weight: 500;
-     font-size: 30px;
-     margin: 0 0 20px
- }
-
- .customRadio input[type="radio"] {
-     position: absolute;
-     left: -9999px
- }
-
- .customRadio input[type="radio"]+label {
-     position: relative;
-     padding: 3px 0 0 40px;
-     cursor: pointer
- }
-
- .customRadio input[type="radio"]+label:before {
-     content: '';
-     background: #fff;
-     border: 2px solid black;
-     height: 25px;
-     width: 25px;
-     border-radius: 50%;
-     position: absolute;
-     top: 0;
-     left: 0
- }
-
- .customRadio input[type="radio"]+label:after {
-     content: '';
-     background: black;
-     width: 15px;
-     height: 15px;
-     border-radius: 50%;
-     position: absolute;
-     top: 5px;
-     left: 5px;
-     opacity: 0;
-     transform: scale(2);
-     transition: transform 0.3s linear, opacity 0.3s linear
- }
-
- .customRadio input[type="radio"]:checked+label:after {
-     opacity: 1;
-     transform: scale(1)
- }
-
-
- .modal-title {
-     font-weight: bold !important
- }
-
- .modal-header,
- .modal-footer {
-     border-bottom: 0;
-     border-top: 0;
-     max-width: 300px !important;
-     position: relative
- }
- .modal-header {
- margin:auto;
- }
- .model-content {
-     width: 500px;
-     width: 30% !important
- }
-
- .modal-footer {
-     max-width: 500px !important;
-     position: relative
- }
-
- .modal-footer>:not(:last-child) {
-     margin-right: 2rem
- }
-
- .modal-footer>:not(:first-child) {
-     margin-left: 0.5rem
- }
-
- .modal-dialog {
-     position: relative;
-     width: auto;
-     margin: 0 auto;
-     max-width: 500px
- }
-
- .box-shadow--16dp {
-     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2)
- }
-
- @media only screen and (max-width: 780px) {
-     .my_checkbox {
-         margin-left: 7%
-     }
-
-     .modal-dialog {
-         position: relative
-     }
- }
-
- .container button focus {
-     -moz-box-shadow: none !important;
-     -webkit-box-shadow: none !important;
-     box-shadow: none !important;
-     border: none;
-     outline-width: 0
- }
-
- @media only screen and (max-width: 580px) {
-     .modal-dialog {
-         position: relative
-     }
-
-     .my_checkbox {
-         margin-left: 6%
-     }
- }
-
- .btn-outline-light {
-     color: #BDBDBD
- }
-
- #modal_footer {
-     color: #BDBDBD;
-     cursor: pointer;
-     background: #fff
- }
-
- #modal_footer_support {
-     color: #BDBDBD;
-     width: 100%
- }
-
- .btn-success {
-     background-color: #311B92 !important;
-     border-radius: 8px;
-     padding-right: 35px;
-     padding-left: 35px
- }
- 
-</style>
 
 
 

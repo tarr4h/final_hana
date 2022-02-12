@@ -261,6 +261,14 @@ $("#btn-follower-list").on( "click", function() {
 	</div>
 </div>
 <script>
+//게시글 상세보기 시 페이지 이동 후 게시글 출력
+$(document).ready( function() {
+	let temp = location.href.split("?");
+ 	if(temp[1] !== undefined){		
+	getMemberPageDetail(temp[1]);
+	$('#pageDetail').modal("show");
+	}
+});
 let boardDetail;
 let newContent;
 let isLiked;

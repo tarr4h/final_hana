@@ -11,8 +11,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
     <jsp:param value="소모임포스팅" name="title" />
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/group.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupBoardForm.css" />
 
 <div class="wrapper bg-white">
     <div class="h6 font-weight-bold"> 게시글 포스팅 </div>
@@ -24,12 +25,11 @@
 	    <input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/>
 	    <input type="hidden" value="${groupId}" name="groupId"/>
     
-    <div class="font-weight-bold head pb-1">작성할 글과 함께 첨부할 파일을 선택해주세요.</div> 
+    <div>작성할 글과 함께 첨부할 파일을 선택해주세요.</div> 
     	<textarea id="desc" cols="50" rows="5" placeholder="Post" name="content"></textarea> <br />
-    <div id="abc">
-		<div class="font-weight-bold head pb-2">
-		    <label class="labels"></label>
-		    <input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택" style="width: 93%; float: left;">
+    <div id="image-file-container">
+		<div>
+		    <input type="file" class="form-control" placeholder=File name="file" value="파일 선택" style="width: 93%; float: left;">
 		    <button type="button" id="addFile" class="btn btn-primary" onclick="addFileBtn();" style="margin-left: 2%;">+</button>
 		</div>
 	</div>
@@ -116,12 +116,11 @@ function clickMember(id){
 }
 
 function addFileBtn(){
-	var rowItem = '<div class=font-weight-bold head pb-2>'
-		rowItem += '<label class=labels></label>'
-        rowItem += '<input type=file class=form-control placeholder=File name=file id=file1 value=파일 선택>'
+	var rowItem = '<div>'
+        rowItem += "<input type='file' class='form-control' placeholder='File' name='file' value='파일 선택'>"
 		rowItem += '</div>';
 
-	$('#abc').append(rowItem); 
+	$('#image-file-container').append(rowItem); 
 }
 
 // 카카오 지도 API
@@ -379,7 +378,23 @@ function setThumbnail(event){
 }
 
 function submitBoard(){
-	if($("[name=locationX]").val() == ""){
+	
+	let flag = 0;
+	let fileArr = $("[name=file]").get();
+	
+	$.each(fileArr,(i,e)=>{
+		if($(e).val() != ''){
+			flag = 1;
+		}
+	})
+	
+	if(flag == 0){
+		alert("이미지 파일을 첨부하세요.")
+	}
+	else if($("[name=content]").val() == ''){
+		alert("글을 입력하세요.")
+	}
+	else if($("[name=locationX]").val() == ""){
 		alert("장소를 태그하세요.");
 	}
 	else {
@@ -387,158 +402,10 @@ function submitBoard(){
 	}
 }
 </script>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif
-}
-
 body {
-    background-color: #EEE;
-    font-size: 0.9rem
+ background:#eee;
 }
 
-input {
-    font-size: 0.85rem
-}
-
-.wrapper {
-    max-width: 50%;
-    min-height: 80%; 
-    margin: 40px auto;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 20px;
-    padding-top:2%;
-}
-
-.form-control {
-    height: 35px
-}
-
-.form-control:focus {
-    box-shadow: none;
-    border: 1px solid rgb(50, 147, 238);
-    outline-color: rgb(50, 147, 238)
-}
-
-.head {
-    font-size: 0.8rem;
-    color: #555
-}
-
-textarea {
-    display: block;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 2px;
-    outline-color: rgb(50, 147, 238)
-}
-
-.btn {
-    font-size: 0.8rem
-}
-
-.btn-cancel {
-    background-color: #eee
-}
-
-.btn-cancel:hover {
-    background-color: rgb(236, 59, 59);
-    color: #fff
-}
-
-.btn-group .btn-primary {
-    background-color: rgb(223, 238, 255);
-    color: rgb(50, 147, 238);
-    border: none;
-    box-shadow: none
-}
-
-.btn-group .btn {
-    border-radius: 12px
-}
-
-label {
-    margin-bottom: 0
-}
-
-.btn-group>.btn-group:not(:last-child)>.btn,
-.btn-group>.btn:not(:last-child):not(.dropdown-toggle),
-.btn-group>.btn-group:not(:first-child)>.btn,
-.btn-group>.btn:not(:first-child) {
-    border-radius: 50px
-}
-
-input::placeholder {
-    font-size: 0.8rem
-}
-
-input:focus::placeholder {
-    color: transparent
-}
-
-.alert-dismissible {
-    padding-right: 4rem
-}
-
-.alert {
-    padding: 0.4rem 1.5rem 0.4rem 1.5rem;
-    outline: none
-}
-
-
-.form-group {
-    position: relative
-}
-
-.close {
-    outline: none
-}
-
-.label::after {
-    position: absolute;
-    background-color: #fff;
-    top: 15px;
-    left: 10px;
-    font-size: 0.8rem;
-    padding: 0rem .1rem;
-    margin: 0rem 0.4rem;
-    color: rgb(50, 147, 238);
-    transition: all .2s ease-in-out;
-    transform: scale(0)
-}
-
-.label#name::after {
-    content: 'Name'
-}
-
-.label#tel::after {
-    content: 'Shop'
-}
-
-.label#email::after {
-    content: 'Address'
-}
-
-input:focus~.label::after {
-    top: -10px;
-    left: 0;
-    transform: scale(1)
-}
-
-button.close {
-    outline: none
-}
-.tag-member-btn:hover {
-cursor:pointer;}
-.group-board-form .tag-member-bt {
-}
 </style>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 

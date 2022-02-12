@@ -70,7 +70,7 @@
     position: relative;
     z-index: 1;
     bottom: 580px;
- 	left:280px;
+ 	left: 360px
 }
 .cb1,
 .cb2 {
@@ -161,7 +161,7 @@ input {
     position: relative;
     z-index: 1;
      bottom: 580px;
- 	left:280px;
+ 	left: 360px;
  
 }
 #hoomButton{
