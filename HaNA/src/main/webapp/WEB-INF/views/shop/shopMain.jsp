@@ -226,20 +226,20 @@ function scrollPage(){
 					const max = list.length;
 					console.log("list" , list);	
 					// list.TAG_NAME 값 비교가 안되서 어차피 tag_name은 있거나 없거나 이니까 변수로 옮겨서 null 체크 
-				 	var  tagName ="";				 	
+				 	var  tagName = 0;				 	
 					for(var i =0; i<list.length; i++){
-						 tagName = list[i].TAG_NAME;
+						 tagName = list[i].hashTags.length;
 					}
 					 
 					
-				if(tagName == null){ // 해시태그 없을때
+				if(tagName == 0){ // 해시태그 없을때
 					if(startNum == 0 ){
 							  for(var i=0; i<endNum; i++){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
+							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
 							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
@@ -286,7 +286,7 @@ function scrollPage(){
 								
 						 	}
 						}
-				}else if (tagName != null){ // 해시태그 있을때	
+				}else if (tagName != 0){ // 해시태그 있을때	
 					/* $("#shopList").empty(); */ //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<list.length; i++){
@@ -294,7 +294,7 @@ function scrollPage(){
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
+								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
 							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
 							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
