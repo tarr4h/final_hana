@@ -11,7 +11,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="프로필수정" name="title" />
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 <section>
 <script src="https://kit.fontawesome.com/0748f32490.js" crossorigin="anonymous"> </script>
 <sec:authentication property="principal" var="loginMember" />

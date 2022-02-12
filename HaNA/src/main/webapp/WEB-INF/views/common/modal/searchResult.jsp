@@ -36,13 +36,7 @@
 		}, 150);
 	})
 	
-function syncDelay(milliseconds){
- let start = new Date().getTime();
- let end=0;
- while( (end-start) < milliseconds){
-     end = new Date().getTime();
- }
-}
+
 	
 	let timer;
 	
@@ -50,20 +44,20 @@ function syncDelay(milliseconds){
 		timer = setTimeout(function(){
 		    let keyword = $("#search-box").val()
 			let category = $("#select-box").val();
-
-		    $.ajax({
-		    	url:"${pageContext.request.contextPath}/search/searchKeywordLog",
-		    	method:"POST",
-		    	data:{
-		    		keyword,
-		    		category
-		    	},
-		    	success(data){
-		    		console.log(data)
-		    	},
-		    	error:console.log
-		    })
-		
+			if(keyword != ''){
+			    $.ajax({
+			    	url:"${pageContext.request.contextPath}/search/searchKeywordLog",
+			    	method:"POST",
+			    	data:{
+			    		keyword,
+			    		category
+			    	},
+			    	success(data){
+			    		console.log(data)
+			    	},
+			    	error:console.log
+			    })				
+			}
 		},1000)
 	}
 	  

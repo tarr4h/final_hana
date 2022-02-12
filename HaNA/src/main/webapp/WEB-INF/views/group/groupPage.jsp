@@ -15,8 +15,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소그룹페이지" name="title" />
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/group.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 
 <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">

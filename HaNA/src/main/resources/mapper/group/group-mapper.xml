@@ -178,11 +178,13 @@
 	</insert>
 	<select id="selectGroupBoardCommentList" resultType="groupBoardComment">
 		select
-			*
+			gbc.*,
+			m.picture as writer_profile
 		from
-			group_board_comment
+			group_board_comment gbc join member m
+			on gbc.writer = m.id
 		where
-				board_no = #{boardNo}
+				gbc.board_no = #{boardNo}
 		start with
 			comment_level = 1
 		connect by prior
