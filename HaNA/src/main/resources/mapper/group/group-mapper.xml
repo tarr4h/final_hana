@@ -629,5 +629,186 @@
 	 		and
 	 		handled_yn = 'N'
 	 </select>
+	 
+	 <select id="selectGroupBoardListByHashtag" resultType="groupBoard">
+	 	select
+		    *
+		from 
+		    group_board
+		where
+		    group_id in (SELECT
+		        group_id
+		FROM group_ g -- 내가 가입한 그룹 제외
+		         , (SELECT LEVEL AS lv 
+		              FROM dual 
+				           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+				WHERE REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL
+				and REGEXP_SUBSTR(g.hashtag,'[^,]+', 1, b.lv) = #{hashtag})
+		order by
+			reg_date
+	 </select> 
+	 
+	 <select id="selectAllGroupCount" resultType="_int">
+	 select
+	 	count(*)
+	 from
+	 	group_
+	 </select>
+	 
+	 <select id="selectAllGroupCountByHashtag" resultType="_int">
+	 select count(*) from (
+		SELECT distinct
+		        group_id
+		FROM group_ g 
+		         , (SELECT
+		                LEVEL AS lv 
+		            FROM
+		                dual 
+		           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+		WHERE
+			REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL
+		    and
+		    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) in
+		    	<foreach collection="hashtag" item="name" open="(" separator="," close=")">
+					#{name}
+				</foreach>	
+		    )
+	 </select>
+	 
+	 <select id="selectGroupListByVisitCount" resultMap="groupRanking">  
+		    select
+			    rownum,
+			    b.*
+			from(
+			select
+			    g.group_id, group_name, image, nvl(category,0) as category
+			from
+			    group_ g join
+			(select
+			    group_id,
+			    count(*) as category
+			from
+			    (select
+			    group_id
+			from
+			    group_visit_log
+			where
+			    group_id in (SELECT distinct
+			        group_id
+			FROM group_ g 
+			         , (SELECT
+			                LEVEL AS lv 
+			            FROM
+			                dual 
+			           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+			WHERE
+			    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL
+			    <if test="hashtag != null">
+				    and
+				    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) in
+				    	<foreach collection="hashtag" item="name" open="(" separator="," close=")">
+							#{name}
+						</foreach>	
+				</if>
+				)
+			    and
+			    trunc(visit_date) = trunc(sysdate))-- 오늘 방문
+			group by
+			    group_id) a
+			on g.group_id = a.group_id
+			order by
+			    category desc) b
+	 </select>
+	 	 <select id="selectGroupListByMemberCount" resultMap="groupRanking">  
+		    select
+			    rownum,
+			    b.*
+			from(
+			select
+			    g.group_id, group_name, image, nvl(category,0) as category
+			from
+			    group_ g join
+			(select
+			    group_id,
+			    count(*) as category
+			from
+			    (select
+			    group_id
+			from
+			    group_member_list
+			where
+			    group_id in (SELECT distinct
+			        group_id
+			FROM group_ g 
+			         , (SELECT
+			                LEVEL AS lv 
+			            FROM
+			                dual 
+			           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+			WHERE
+			    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL
+			    <if test="hashtag != null">
+				    and
+				    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) in
+				    	<foreach collection="hashtag" item="name" open="(" separator="," close=")">
+							#{name}
+						</foreach>	
+				</if>
+				))
+			group by
+			    group_id) a
+			on g.group_id = a.group_id
+			order by
+			    category desc) b
+	 </select>
+	 	 <select id="selectGroupListByApplyCount" resultMap="groupRanking">  
+		    select
+			    rownum,
+			    b.*
+			from(
+			select
+			    g.group_id, group_name, image, nvl(category,0) as category
+			from
+			    group_ g join
+			(select
+			    group_id,
+			    count(*) as category
+			from
+			    (select
+			    group_id
+			from
+			    group_apply_list
+			where
+			    group_id in (SELECT distinct
+			        group_id
+			FROM group_ g 
+			         , (SELECT
+			                LEVEL AS lv 
+			            FROM
+			                dual 
+			           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+			WHERE
+			    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL
+			    <if test="hashtag != null">
+				    and
+				    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) in
+				    	<foreach collection="hashtag" item="name" open="(" separator="," close=")">
+							#{name}
+						</foreach>	
+				</if>
+				))
+			group by
+			    group_id) a
+			on g.group_id = a.group_id
+			order by
+			    category desc) b
+	 </select>
+	 <resultMap type="map" id="groupRanking">
+	 	<result column="rownum" property="rowNum"/>
+	 	<result column="group_id" property="groupId"/>
+	 	<result column="group_name" property="groupName"/>
+	 	<result column="image" property="image"/>
+	 	<result column="category" property="category"/>
+	 </resultMap>
 </mapper>
 

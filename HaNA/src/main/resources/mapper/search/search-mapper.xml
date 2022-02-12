@@ -49,7 +49,7 @@
 </select>
 
 <select id="selectLocationListBySearch" resultMap="location">
-	select
+	select distinct
 		place_address,place_name,location_y,location_x
 	from
 		group_board

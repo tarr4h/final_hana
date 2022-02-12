@@ -167,17 +167,23 @@ font-size:1.1em;
 	left:85vw;
 	top:390px;
 }
+.groupRankingButton-container {
+	width:250px;
+	position:fixed;
+	left:85vw;
+	bottom:190px;
+}
 .groupListModalButton-container {
 	width:250px;
 	position:fixed;
 	left:85vw;
 	bottom:100px;
 }
-.plusGroupButton, .plusHashtagButton, .plusBoardButton, .groupListModalButton{
+.plusGroupButton, .plusHashtagButton, .plusBoardButton, .groupListModalButton, .groupRankingButton{
 	width:55px;
 	height:55px;
 }
-.plusHashtagButton-container , .plusGroupButton-container, .plusBoardButton-container, .groupListModalButton-container:hover{
+.plusHashtagButton-container , .plusGroupButton-container, .plusBoardButton-container, .groupListModalButton-container, .groupRankingButton-container:hover{
 	cursor:pointer;
 }
 .plusButtonLabel {
@@ -263,7 +269,7 @@ margin-top:10px;
 	
 }
 
-.no-recommended-msg {
+.no-recommended-msg, .no-ranking-msg {
 	margin-top:50px;
 	font-size:1.2em;
 	text-align:center;
@@ -319,6 +325,9 @@ margin-top:10px;
 .hashtag {
 	color:#6262d0;
 }
+.hashtag:hover {
+	cursor:pointer;
+}
 
 /*그룹통계*/
 .statistic-page-label{
@@ -352,4 +361,40 @@ margin-top:10px;display:inline-block; background-color:#607d8b; height:50%;
 width:80%; height:40px; color:gray; font-weight:400;
 }
 
+.group-profile.leader-id:hover{
+	cursor:pointer;
+}
 
+/* 그룹 랭킹 */
+.group-ranking-select-container {
+	display:block;
+	margin-bottom:20px;
+	padding:0px 10px;
+}
+.group-ranking-select-container select{
+	border:none;
+	float:right;
+	color:gray;
+	font-size:1.1em;
+	font-weight:500;
+}
+.group-ranking-select-container select:focus{
+	outline:none;
+}
+.group-ranking-select-container .select-category.container span{
+	color:gray; font-weight:500; font-size:1.1em;
+}
+.group-ranking-select-container .select-category.container span:hover{
+	cursor:pointer;
+}
+
+#pagebar-box a {
+	text-decoration: none;
+	color:black;
+}
+.cpage {
+	color:red;
+}
+#pagebar-box:hover {
+	cursor:pointer;
+}
