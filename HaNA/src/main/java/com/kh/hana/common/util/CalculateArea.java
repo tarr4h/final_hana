@@ -19,9 +19,6 @@ public class CalculateArea {
 			return true;
 		}
 		
-		log.info("X, Y = {}, {}", X, Y);
-		log.info("A, B = {}, {}", A, B);
-		
 		BigDecimal aX1 = BigDecimal.valueOf(Double.parseDouble(lo1X));
 		BigDecimal aY1 = BigDecimal.valueOf(Double.parseDouble(lo1Y));
 		BigDecimal bX1 = BigDecimal.valueOf(Double.parseDouble(lo2X));
