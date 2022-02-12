@@ -312,13 +312,13 @@ function getCommentList(boardNo){
   		success(data){
   			$("#board-comment-list>table").empty();
   			$.each(data,(i,e)=>{
-  				
+  				console.log("e.writerProfile",e.writerProfile);
  				const date = moment(e.regDate).format("YYYY년 MM월 DD일");
  				
 	  			let tr = `
 	  				<tr class="level\${e.commentLevel}">
 	  				<td style="width:50px;">
-	  				<img style="height:40px; border-radius:50%;" alt="" />
+	  				<img style="height:40px; border-radius:50%;" alt=""src= "${pageContext.request.contextPath}/resources/upload/member/profile/\${e.writerProfile}" />
 	  				</td>
 					<td >
 						<sub class="comment-writer"><a href="javascript:void(0);" onclick="goMemberView('\${e.writer}');" style="color:black; text-decoration:none; font-weight:bold;">\${e.writer}</a></sub>

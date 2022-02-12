@@ -160,10 +160,10 @@
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
 						alt=""  />
 		      </div>
-	      <c:if test="${board eq null}">
-	      	<div>게시물 없음 </div>
-	      </c:if>
 	      </c:forEach>
+	      <c:if test="${boardList.isEmpty()}">
+	      	<div><span style="font-size:16px; margin-left:370px; font-weight: bold;">등록된 게시물이 없습니다. 글을 작성해보세요!</span></div>
+	      </c:if>
 	   </div>
 	    </c:otherwise>
  	</c:choose> 
