@@ -32,9 +32,13 @@
 			<table class="table table-striped table-dark my-0">
 				<thead>
 					<tr>
-						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle">HashTag Ranking</th>
+						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><img src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png" style= "width:30px;  margin:5px;
+   						 position :relative; bottom :3px;"/>HashTag Ranking<img src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png" style= "width:30px;  margin:5px;
+   						 position :relative; bottom :3px;"/></th>
+   						 
 					</tr>
 					<tr>
+					
 						<th scope="col">no</th>  
 						<th scope="col">일간</th>  
 						<th scope="col">주간</th>  
@@ -280,9 +284,12 @@ function scrollPage(){
 								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-								htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
+							    //htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].SHOP_NAME + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 5px;"/>'+ list[i].ADDRESS + '</span>';
+								htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag.png" style="width: 18px; height: 17px; margin: 3px; position: relative; bottom: 3px;"/>'+ list[i].TAG_NAME + '</span>';	
+							    //htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
+								//htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
 								$('#shopList').append(htmlOut); 
 								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
