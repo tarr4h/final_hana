@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="그룹가입폼" name="title"/>
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 <div class="first-container">
 <div class="container rounded bg-white mt-5 mb-5">
 	<form
@@ -126,7 +126,7 @@ function setThumbnail(event){
 //폼제출
 function submitFrm(){
     let idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
-    let nameReg = /^.{1,20}$/;
+    let nameReg = /^.{1,30}$/;
     if( !idReg.test( $("input[name=groupId]").val())) {
         alert("아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
         return;
@@ -134,8 +134,8 @@ function submitFrm(){
     else if($("#flag").val()!=0){
 		alert("다른 아이디를 사용하세요.");
 	}
-    else if( !nameReg.test( $("input[name=groupName]").val())) {
-        alert("그룹명은 30자 이하로 작성해주세요.");
+    else if(!nameReg.test( $("input[name=groupName]").val())) {
+        alert("소모임명은 30자 이하로 작성해주세요.");
     }
 	else{
 		$(document.createGroupFrm).submit();

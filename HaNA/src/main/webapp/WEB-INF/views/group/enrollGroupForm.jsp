@@ -10,15 +10,12 @@
 	uri="http://www.springframework.org/security/tags"%>
 <fmt:requestEncoding value="utf-8" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="가입신청화면" name="title" />
 </jsp:include>
 <sec:authentication property="principal" var="loginMember" />
 
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -73,13 +70,6 @@
 </script>
 
 <style>
-        .mdi {
-    font-size: 50px
-}
-
-.padding {
-    padding: 8rem !important
-} 
     </style>
 </body>
 </html>

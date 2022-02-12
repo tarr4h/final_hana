@@ -11,44 +11,13 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="소모임 회원 통계" name="title" />
 </jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 
-<style>
-.statistic-page-label{
-text-align:center;
-margin-top:7vh;
-height:10vh;
-}
-.statistic-container {
-border-top:1px solid gray;
-width:55%;
-min-height:1000px;
-margin:auto;
-margin-bottom:10%;
-}
-.select-box-container {
-padding:50px;
-}
-.statistic-select-box {
-	width:100px;
-	height:35px;
-	text-align:center;
-}
-.graph-memberId {
-text-align:right;
-font-weight:bold;
-}
-.graph-bar {
-margin-top:10px;display:inline-block; background-color:#607d8b; height:50%;
-}
-.graph-bar-container {
-width:80%; height:40px; color:gray; font-weight:400;
-}
-</style>
 <div class="statistic-page-label">
 	<h3>[${groupId}] &nbsp;멤버 활동 통계</h3>
 </div>
 <div class="statistic-container">
-	<div class="select-box-container">
+	<div class="select-graph-box-container">
 		<select class="statistic-select-box" name="category" id="category">
 			<option value="visit">방문 수</option>
 			<option value="comment">댓글 수</option>

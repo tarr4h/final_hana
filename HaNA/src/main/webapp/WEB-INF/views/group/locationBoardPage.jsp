@@ -9,8 +9,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/group.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <sec:authentication property="principal" var="loginMember" />
@@ -45,7 +45,7 @@ function goMemberView(memberId){
 
 <!-- 게시물 목록 -->
 <section>
-	<div class="group-board-container">
+	<div class="location-group-board-container">
 		<c:forEach items="${groupBoardList}" var="board" varStatus="vs">
 			${vs.index%3 == 0? "<div style='margin-bottom:30px;' class='row'>" : ""}
 		        <div class="col-sm-4" style="min-height:300px;">
