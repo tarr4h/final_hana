@@ -11,29 +11,28 @@
 <script src="${pageContext.request.contextPath }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/summernote/summernote-lite.css" />
 
-<div class="modal fade" id="boardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+ <div class="modal fade" id="boardFormModal" tabindex="-1"  >
+	  <div class="modal-dialog modal-xl modal-dialog-centered">
 		<div class="modal-content">
 			<form:form name="boardEnrollFrm" action="${pageContext.request.contextPath }/member/insertBoard?${_csrf.parameterName}=${_csrf.token}" method="POST" enctype="multipart/form-data">
 			<!-- header -->
 			<div class="modal-header">
-				<h3 class="modal-title">게시글 등록</h3>
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						닫기
-					</button>
+				<h4 class="modal-title" id="myModalLabel">게시글 작성</h4>
 			</div>
 			<!-- 내용 -->
 			<div class="modal-body">
 					<input type="hidden" name="writer" value="${loginMember.id }" />
 					<label for="boardTitle">제목</label>
-					<input type="text" name="title" />
+					<input type="text" name="title" class="form-control"/>
 					<br />
 					<div class="boardAttachArea">
-						<input type="button" value="이미지 추가" class="appendAttachArea"/>
-						<input type="file" name="upFile" required/>
+						<input type="button" value="파일 추가"  id="appendAttachArea" class="btn btn-outline-dark"/>
+						 <input type="file" name="upFile" class="form-control" required/>
 					</div>
-					<textarea name="content" id="summernote"></textarea>
-			</div>
+					<br />
+						<div class="font-weight-bold head pb-1"> </div> 
+				    	<textarea id="desc" cols="120" rows="5" placeholder="작성하기" name="content"></textarea>  
+					</div>
 			<!-- footer -->
 			<div class="modal-footer">
 				<input type="submit" class="btn" value="등록하기" />
@@ -46,27 +45,24 @@
 <script>
 // boardModal
 $("#boardModalBtn").click((e) => {
-	$('#boardModal').modal({backdrop:'static', keyboard:false});
+	$('#boardFormModal').modal();
 });
 /* 이미지업로드영역 추가 */
-$(".appendAttachArea").click((e) => {
+$("#appendAttachArea").click((e) => {
 	let inputFile = `
 		<input type="file" name="upFile" required/>
 	`;
 	$(".boardAttachArea").append(inputFile);
 });
-$(document).ready(function() {
-	//여기 아래 부분
-	$('#summernote').summernote({
-		  height: 150,                 // 에디터 높이
-		  minHeight: 150,             // 최소 높이
-		  maxHeight: 300,             // 최대 높이
-		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
-		  toolbar: [],
-		  disableResizeEditor: true
-	});
-	$(".note-resizebar").css('display', 'none');
-});
 </script>
+<style>
+textarea {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 2px;
+    outline-color: rgb(50, 147, 238);
+    height: 400px;
+}
+</style>

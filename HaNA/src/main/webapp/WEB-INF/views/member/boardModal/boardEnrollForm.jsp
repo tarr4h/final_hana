@@ -15,7 +15,7 @@
 
 <!-- 글쓰기모달 -->
     <div class="modal fade" id="boardFormModal" tabindex="-1"  >
-	<div class="modal-dialog modal-xl modal-dialog-centered">
+	  <div class="modal-dialog modal-xl modal-dialog-centered">
 		<div class="modal-content">
 			<form:form
         action="${pageContext.request.contextPath}/member/memberBoardEnroll?${_csrf.parameterName}=${_csrf.token}"
@@ -24,9 +24,7 @@
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">게시글 작성</h4>
 			</div>
-			<div class="modal-body">
-				 
-
+			<div class="modal-body"> 
 					<div class="modal-body">
 	            <input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/></td>
 	            <input type="hidden" value="${id}" name="id"/></td>

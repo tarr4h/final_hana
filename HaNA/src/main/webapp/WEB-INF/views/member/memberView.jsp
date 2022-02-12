@@ -434,7 +434,7 @@ $("#input-file").change((e) => {
 </script>
 <style>
 .private{
-    margin-left: 450px;
+    margin-left: 350px;
     margin-top: 30px;
     margin-bottom: -13;
  }
@@ -481,7 +481,7 @@ $("#input-file").change((e) => {
     border-color: gray;
     border-bottom-width: 1px;  
     height : 375px;
-    margin-left:280px;   
+    margin-left:280px;  
 }
 .tableKey {
     width: 17%;

@@ -147,13 +147,13 @@
 			</div>
 			<!-- 글쓰기버튼 -->
 			<c:if test="${loginMember.id.equals(member.id) }">
-        	<button id="boardModalBtn" class="writeBtn" style="float:right; margin-top:30px"><i style="font-size: 30px;" class="fas fa-pencil-alt" aria-hidden="true"></i></button>
+        	<button id="boardModalBtn" class="writeBtn" style="float:right; margin-top:-40px"><i style="font-size: 30px;" class="fas fa-pencil-alt" aria-hidden="true"></i></button>
         	<jsp:include page="/WEB-INF/views/member/boardModal/boardModal.jsp"></jsp:include>
         	</c:if>
 		</div>
     </div>
 </div> 
-<div style="width:75%; border: none; border-bottom: 1px solid; margin:30px auto"></div>
+<div style="width:75%; border: none; border-bottom: 1px solid; margin:5px auto 80px"></div>
 <div class="container mt-2">       
     <div class="boardRow">   
         <!-- 탭 영역 -->
@@ -161,7 +161,7 @@
 		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center">
 		    <a class="nav-link active" href="#" id="normalTabBtn">게시물</a>
 		  </div>
-		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center">
+		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center" >
 		    <a class="nav-link" href="#" id="reviewTabBtn">후기</a>
 		  </div>
         </div>
@@ -397,8 +397,8 @@
     padding-bottom: 6px;
 }
 .boardRow {
-   width: 75%;
-   margin : auto;
+   width: 35%;
+   margin :auto;
 }
 .board-main-image{
 cursor: pointer;
@@ -434,6 +434,7 @@ cursor: pointer;
     border-color: black;
     background-color:#ff000078;
 }
+
 </style> 
  
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
