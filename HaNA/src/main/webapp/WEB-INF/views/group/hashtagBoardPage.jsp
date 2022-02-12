@@ -25,7 +25,20 @@ function goMemberView(memberId){
 	location.href=`${pageContext.request.contextPath}/member/memberView/\${memberId}`;
 }
 </script>
-<div>
+<style>
+.hashtag-page.hashtag-container {
+	height:80px;
+	width:58%;
+	margin:auto;
+	margin-top:100px;
+	color:gray;
+}
+.hashtag-page.hashtag-container>span {
+	font-size:2em;
+	font-weight:600;
+}
+</style>
+<div class="hashtag-page hashtag-container">
 	<span>#${hashtag}</span>
 </div>
 <!-- 게시물 목록 -->

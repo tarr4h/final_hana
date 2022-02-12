@@ -120,7 +120,7 @@ const groupDM=(groupId, loginId)=>{
 								</tr>
 								<tr>
 									<th><span class="tableKey">리더</span></th>
-									<td>${group.leaderId}</td>
+									<td onclick="goMemberView('${group.leaderId}');" class="group-profile leader-id">${group.leaderId}</td>
 								</tr>
 								<tr class="memberCountTr" onclick="$('#groupMemberList').modal('show');">
 									<th><span class="tableKey" style="color:#673ab7c9;">멤버</span></th>

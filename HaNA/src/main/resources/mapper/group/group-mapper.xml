@@ -630,8 +630,53 @@
 	 		handled_yn = 'N'
 	 </select>
 	 
-<!-- 	 <select id="selectGroupBoardListByHashtag" resultType="groupBoard">
+	 <select id="selectGroupBoardListByHashtag" resultType="groupBoard">
 	 	select
-	 </select> -->
+		    *
+		from 
+		    group_board
+		where
+		    group_id in (SELECT
+		        group_id
+		FROM group_ g -- 내가 가입한 그룹 제외
+		         , (SELECT LEVEL AS lv 
+		              FROM dual 
+				           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+				WHERE REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL
+				and REGEXP_SUBSTR(g.hashtag,'[^,]+', 1, b.lv) = #{hashtag})
+		order by
+			reg_date
+	 </select> 
+	 
+	 <select id="selectGroupListByVisitCount" resultType="group">
+	 	select
+		    group_id,
+		    count(*) as visitCount 
+		from
+		    (select
+		    group_id
+		from
+		    group_visit_log
+		where
+		    group_id in (SELECT distinct
+						        group_id
+						FROM group_ g 
+						         , (SELECT
+						                LEVEL AS lv 
+						            FROM
+						                dual 
+						           CONNECT BY LEVEL <![CDATA[ < ]]>= 30) b --구분자(,) 최대 개수 30개
+						WHERE
+						    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL
+						    <if test="hashtag != ''">
+							    and
+							    REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) in ('운동','공부','맛집','술')
+						    </if>
+		    )
+		    and
+		    trunc(visit_date) = trunc(sysdate))-- 오늘 방문
+		group by
+		    group_id
+	 </select>
 </mapper>
 

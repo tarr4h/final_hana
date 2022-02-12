@@ -3,6 +3,7 @@ package com.kh.hana.group.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -259,6 +260,14 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public List<GroupBoard> selectGroupBoardListByHashtag(String hashtag) {
 		return session.selectList("group.selectGroupBoardListByHashtag",hashtag);
+	}
+
+	@Override
+	public List<Group> selectGroupListByVisitCount(Map<String, Object> param) {
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("group.selectGroupListByVisitCount",param,rowBounds);
 	}
 	
 

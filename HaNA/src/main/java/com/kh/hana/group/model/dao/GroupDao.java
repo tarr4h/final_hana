@@ -109,4 +109,6 @@ public interface GroupDao {
 
 	public List<GroupBoard> selectGroupBoardListByHashtag(String hashtag);
 
+	public List<Group> selectGroupListByVisitCount(Map<String, Object> param);
+
 }

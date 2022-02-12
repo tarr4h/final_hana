@@ -739,6 +739,25 @@ public class GroupController {
 		model.addAttribute("hashtag",hashtag);
 		return "/group/hashtagBoardPage";
 	}
+	
+	@GetMapping("/getGroupRanking/visit")
+	public ResponseEntity<Map<String,Object>> getGroupRanking(@RequestParam(value="hashtag[]", required=false) String[] hashtag, int cPage){
+		int limit = 5;
+		int offset = (cPage-1)*limit;
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("limit",limit);
+		param.put("offset",offset);
+		if(hashtag ==null) {
+			hashtag = new String[1];
+		}
+		param.put("hashtag", hashtag);
+		
+		List<Group> rankingGroupList = groupService.selectGroupListByVisitCount(param);
+		log.info("list = {}",rankingGroupList);
+		
+		return null;
+	}
 }
 
 

@@ -304,4 +304,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectGroupBoardListByHashtag(hashtag);
 	}
 
+	@Override
+	public List<Group> selectGroupListByVisitCount(Map<String, Object> param) {
+		return groupDao.selectGroupListByVisitCount(param);
+	}
+
 }
