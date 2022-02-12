@@ -296,4 +296,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.selectGroupApplyLog(map);
 	}
 
+	@Override
+	public List<GroupBoard> selectGroupBoardListByHashtag(String hashtag) {
+		return groupDao.selectGroupBoardListByHashtag(hashtag);
+	}
+
 }

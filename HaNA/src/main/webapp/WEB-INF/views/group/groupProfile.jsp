@@ -108,7 +108,7 @@
 								<tr>
 									<th><span class="tableKey">해시태그</span></th>
 									<td>
-										<c:forEach items="${group.hashtag}" var="name"><span class="hashtag">#${name}&nbsp;</span></c:forEach>
+										<c:forEach items="${group.hashtag}" var="name"><span class="hashtag" onclick="location.href='${pageContext.request.contextPath}/group/searchHashtag/${name}'">#${name}&nbsp;</span></c:forEach>
 									</td>
 								</tr>
 							</tbody>

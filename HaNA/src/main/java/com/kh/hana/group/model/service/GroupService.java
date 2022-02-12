@@ -106,5 +106,7 @@ public interface GroupService {
 
 	int selectGroupApplyLog(Map<String, Object> map);
 
+	List<GroupBoard> selectGroupBoardListByHashtag(String hashtag);
+
 	
 }

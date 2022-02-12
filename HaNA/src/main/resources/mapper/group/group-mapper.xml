@@ -629,5 +629,9 @@
 	 		and
 	 		handled_yn = 'N'
 	 </select>
+	 
+<!-- 	 <select id="selectGroupBoardListByHashtag" resultType="groupBoard">
+	 	select
+	 </select> -->
 </mapper>
 

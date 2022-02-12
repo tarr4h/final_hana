@@ -107,4 +107,6 @@ public interface GroupDao {
 
 	public int selectGroupApplyLog(Map<String, Object> map);
 
+	public List<GroupBoard> selectGroupBoardListByHashtag(String hashtag);
+
 }

@@ -255,6 +255,11 @@ public class GroupDaoImpl implements GroupDao {
 	public int selectGroupApplyLog(Map<String, Object> map) {
 		return session.selectOne("group.selectGroupApplyLog",map);
 	}
+
+	@Override
+	public List<GroupBoard> selectGroupBoardListByHashtag(String hashtag) {
+		return session.selectList("group.selectGroupBoardListByHashtag",hashtag);
+	}
 	
 
 

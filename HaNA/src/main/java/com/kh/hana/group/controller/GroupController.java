@@ -729,6 +729,16 @@ public class GroupController {
 			throw e;
 		}
 	}
+	
+	@GetMapping("/searchHashtag/{hashtag}")
+	public String searchHashtag(@PathVariable String hashtag,Model model) {
+		List<GroupBoard> groupBoardList = groupService.selectGroupBoardListByHashtag(hashtag);
+		log.info("groupBoardList = {}", groupBoardList);
+		model.addAttribute("groupBoardList", groupBoardList);
+		
+		model.addAttribute("hashtag",hashtag);
+		return "/group/hashtagBoardPage";
+	}
 }
 
 
