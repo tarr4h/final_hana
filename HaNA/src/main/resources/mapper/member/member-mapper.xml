@@ -223,11 +223,13 @@
 
 	<select id="selectBoardCommentList" resultType="boardComment">
 		select
-			*
+			bc.*,
+			m.picture writer_profile
 		from
-			board_comment
+			board_comment bc join member m
+		on bc.writer = m.id
 		where
-				board_no = #{boardNo}
+				bc.board_no = #{boardNo}
 		start with
 			comment_level = 1
 		connect by prior
