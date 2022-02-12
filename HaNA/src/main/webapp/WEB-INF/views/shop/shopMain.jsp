@@ -241,12 +241,19 @@ function scrollPage(){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
-								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+							    for(var j = 0; j < list[i].hashTags.length; j++){
+							    	if(j == 0){
+							    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+							    	} else if(j == list[i].hashTags.length - 1){
+							    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+							    	} else {
+							    		htmlOut += '#' + list[i].hashTags[j];
+							    	}
+							    };
 								$('#shopList').append(htmlOut);
 								// list[i].ID가 마지막이라면 return
 								if(i == max -1){
@@ -259,13 +266,19 @@ function scrollPage(){
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
-								  //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
-								    
+								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+								    for(var j = 0; j < list[i].hashTags.length; j++){
+								    	if(j == 0){
+								    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+								    	} else if(j == list[i].hashTags.length - 1){
+								    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+								    	} else {
+								    		htmlOut += '#' + list[i].hashTags[j];
+								    	}
+								    };
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
@@ -281,15 +294,25 @@ function scrollPage(){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
-								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 							    htmlOut += '</div>';
-							    //htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].SHOP_NAME + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 5px;"/>'+ list[i].ADDRESS + '</span>';
-								htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag.png" style="width: 18px; height: 17px; margin: 3px; position: relative; bottom: 3px;"/>'+ list[i].TAG_NAME + '</span>';	
-							    //htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-								//htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
+							
+							 //   htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].SHOP_NAME + '</span>';
+							//    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 5px;"/>'+ list[i].ADDRESS + '</span>';
+							//	htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag.png" style="width: 18px; height: 17px; margin: 3px; position: relative; bottom: 3px;"/>'+ list[i].TAG_NAME + '</span>';	
+							   
+							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+							    for(var j = 0; j < list[i].hashTags.length; j++){
+							    	if(j == 0){
+							    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+							    	} else if(j == list[i].hashTags.length - 1){
+							    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+							    	} else {
+							    		htmlOut += '#' + list[i].hashTags[j];
+							    	}
+							    };	
+
 								$('#shopList').append(htmlOut); 
 								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
@@ -301,13 +324,20 @@ function scrollPage(){
 						 	for(var i=startNum; i<list.length; i++){  
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
-									htmlOut += '<div class="shopProfile d-flex">';
-									 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
+									htmlOut += '<div class="shopProfile d-flex">';	
 									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';		
+								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+								    for(var j = 0; j < list[i].hashTags.length; j++){
+								    	if(j == 0){
+								    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+								    	} else if(j == list[i].hashTags.length - 1){
+								    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+								    	} else {
+								    		htmlOut += '#' + list[i].hashTags[j];
+								    	}
+								    };	
 									$('#shopList').append(htmlOut);
 									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
 									// list[i].ID가 마지막이라면 return

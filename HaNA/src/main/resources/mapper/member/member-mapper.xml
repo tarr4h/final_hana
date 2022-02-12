@@ -223,11 +223,13 @@
 
 	<select id="selectBoardCommentList" resultType="boardComment">
 		select
-			*
+			bc.*,
+			m.picture writer_profile
 		from
-			board_comment
+			board_comment bc join member m
+		on bc.writer = m.id
 		where
-				board_no = #{boardNo}
+				bc.board_no = #{boardNo}
 		start with
 			comment_level = 1
 		connect by prior
@@ -340,6 +342,8 @@
 	 	following_request
 	 where
 	 	member_id = #{loginMemberId}
+	 and
+	 	status = '요청'
 	</select>
 
 	<select id="requestFollowingList" resultMap="FollowingRequest">
@@ -354,6 +358,8 @@
 	    on f.req_id = k.id
 	where
 	    f.member_id = #{myId}	
+	 and
+	 	f.status ='요청'
 	</select>
 	
 	<resultMap id="FollowingRequest" type="map">
@@ -363,14 +369,16 @@
 		<result column="picture" property="picture"/>
 	</resultMap>
 	
-	<delete id="applyFollowing">
-		delete
+	<update id="applyFollowing">
+		update
 		 following_request
+		 set
+		 	status = '완료'
 		where
 			req_id=#{reqId}
 			and
 			member_id =#{myId}
-	</delete>
+	</update>
 	
 	<insert id="addRequestFollowing" >
 		insert into
@@ -409,8 +417,6 @@
 	 	req_id = #{loginMemberId}
 	 	and
 	 	member_id = #{id}
-	 	and
-	 	status = '요청'
 	</select>
 	
 	<select id="selectShopReviewList" parameterType="string" resultType="board">
@@ -428,5 +434,15 @@
 			reg_date desc	
 	</select>
 	
+	<select id="checkFollow" resultType="_int">
+	 select 
+	 	count(*) 
+	 from
+	 	follower
+	 where
+	 	member_id = #{loginMemberId}
+	 	and
+	 	following_id = #{id}	
+	</select>
 
 </mapper>

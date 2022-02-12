@@ -96,6 +96,8 @@ public interface MemberDao {
 
 	List<Board> selectShopReviewList(String id);
 
+	int checkFollow(Map<String, Object> map);
+
 	//int checkRefuse(Map<String, Object> map);
 
  
