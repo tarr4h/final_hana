@@ -1,11 +1,11 @@
 @charset "UTF-8";
 .col-sm-8 {
     flex: 0 0 auto;
-/*     width: 250px; */
+    width: 250px;
 }
 .col-sm-4{
-/* 	width : 350px; */
-	/* margin-right: 60px; */
+	width : 350px;
+	margin-right: 60px;
 	}
 
 .btn-dark {

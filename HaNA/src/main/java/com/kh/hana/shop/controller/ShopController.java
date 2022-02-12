@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,6 +71,7 @@ public class ShopController {
    
         List<Map<String, Object>> shopList = shopService.selectShopList(data,selectDataArr, maxDistance);
         log.info("length = {}", shopList.size());
+        log.info("shopList = {}", shopList);
         
         return ResponseEntity.ok(shopList);
     }
@@ -487,6 +490,120 @@ public class ShopController {
     	
     	return ResponseEntity.ok(returnMap);
     }
-
     
+    @GetMapping("/reservationStatistics")
+    public String reservationStatistics(@AuthenticationPrincipal Member member, Model model) {
+    	String shopId = member.getId();
+    	log.info("shopId = {}", shopId);
+    	
+    	// 통계 구해서 오기
+    	Map<String, Object> map = shopService.reservationStatistics(shopId);
+    	
+    	// 연령대별 예약인원 수    	
+    	Map<String, Object> ageGroup =  ageGroupStatistics((List) map.get("userList"));
+    	log.info("ageGroup = {}", ageGroup);
+    	model.addAttribute("ageGroup", ageGroup);
+    	
+    	// 전체 예약인원 수
+    	int visitorAll = Integer.parseInt(String.valueOf(map.get("visitorAll")));
+    	model.addAttribute("visitorAll", visitorAll);
+    	
+    	// 시간대별 예약 수
+    	Map<String, Integer> timeMap = (Map) map.get("timeMap");
+    	model.addAttribute("timeMap", timeMap);
+    	
+    	// 테이블별 예약 리스트
+    	List<Map<String, Object>> tableList = (List) map.get("tableList");
+
+    	log.info("tableList = {}", tableList);
+    	model.addAttribute("tableList", tableList);
+    	
+    	
+    	return "forward:/member/shopSetting/reservationStatistics";
+    }
+    
+    // 연령대 통계 구하기    
+    public Map<String, Object> ageGroupStatistics(List<Map<String, Object>> list){
+    	Map<String, Object> returnMap = new HashMap<>();
+    	
+    	// 10대
+    	int groupOneMale = 0;
+    	int groupOneFemale = 0;
+    	// 20대
+    	int groupTwoMale = 0;
+    	int groupTwoFemale = 0;
+    	// 30대
+    	int groupThrMale = 0;
+    	int groupThrFemale = 0;
+    	// 40대
+    	int groupFouMale = 0;
+    	int groupFouFemale = 0;
+    	// 50대
+    	int groupFivMale = 0;
+    	int groupFivFemale = 0;
+    	// 60대 이상
+    	int groupSixMale = 0;
+    	int groupSixFemale = 0;
+    	
+    	for(Map<String, Object> user : list) {
+    		int age = Integer.parseInt(String.valueOf(user.get("age")));
+    		String gender = String.valueOf(user.get("gender"));
+    		if(0< age && age < 20) {
+    			if(gender.equals("남")) {
+    				groupOneMale++;
+    			} else {
+    				groupOneFemale++;
+    			}
+    		} else if(19 < age && age < 30) {
+    			if(gender.equals("남")) {
+    				groupTwoMale++;
+    			} else {
+    				groupTwoFemale++;
+    			}
+    		} else if(29 < age && age < 40){
+    			if(gender.equals("남")) {
+    				groupThrMale++;
+    			} else {
+    				groupThrFemale++;
+    			}
+    		} else if(39 < age && age < 50) {
+    			if(gender.equals("남")) {
+    				groupFouMale++;
+    			} else {
+    				groupFouFemale++;
+    			}
+    		} else if(49 < age && age < 60) {
+    			if(gender.equals("남")) {
+    				groupFivMale++;
+    			} else {
+    				groupFivFemale++;
+    			}
+    		} else if(59 < age) {
+    			if(gender.equals("남")) {
+    				groupSixMale++;
+    			} else {
+    				groupSixFemale++;
+    			}
+    		}
+    	};
+    	
+    	returnMap.put("groupOneMale", groupOneMale);
+    	returnMap.put("groupOneFemale", groupOneFemale);
+    	returnMap.put("groupTwoMale", groupTwoMale);
+    	returnMap.put("groupTwoFemale", groupTwoFemale);
+    	returnMap.put("groupThrMale", groupThrMale);
+    	returnMap.put("groupThrFemale", groupThrFemale);
+    	returnMap.put("groupFouMale", groupFouMale);
+    	returnMap.put("groupFouFemale", groupFouFemale);
+    	returnMap.put("groupFivMale", groupFivMale);
+    	returnMap.put("groupFivFemale", groupFivFemale);
+    	returnMap.put("groupSixMale", groupSixMale);
+    	returnMap.put("groupSixFemale", groupSixFemale);
+    	
+    	log.info("oneMale = {}", groupOneMale);
+    	log.info("oneFeMale = {}", groupOneFemale);
+    	
+    	return returnMap;
+    }
+
 }
