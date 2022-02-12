@@ -321,7 +321,7 @@ select *from shop_info;
             
 
          select  
-        m.location_x, i.id,  regexp_replace(LISTAGG(  h.tag_name ,',' ) WITHIN GROUP ( ORDER BY  h.tag_name ), '([^,]+)(,\1)+', '\1')as name 
+            i.id,i.SHOP_NAME, i.ADDRESS , h.TAG_NAME , m.PICTURE
         from
             shop_info i	
             left join member m
@@ -331,8 +331,7 @@ select *from shop_info;
              where
             i.location_x  <  127.1257064
             and
-            i.location_y  <  37.5612273
-            GROUP BY i.id;
+            i.location_y  <  37.5612273;
             
            
      

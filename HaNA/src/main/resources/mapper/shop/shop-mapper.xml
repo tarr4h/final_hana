@@ -3,28 +3,45 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop">
-    <select id="selectShopList" parameterType="map" resultType="map">
-      select  
-         i.id,
-    	 regexp_replace(LISTAGG(  h.tag_name ,',' ) WITHIN GROUP ( ORDER BY  h.tag_name ), '([^,]+)(,\1)+', '\1')as name
-    	 
-      from
+   
+     <select id="selectShopList"  resultMap="hashTagsMap">
+       select
+            i.id as id, i.shop_name as shopName, i.address as address, 
+            h.tag_name as tagName, m.picture as picture
+        from
             shop_info i	
             left join member m
             on i.id = m.id
            	left join shophashtag s on i.id = s.member_id 
-    		left join hashtag h on s.tag_id = h.tag_id 
-       where
+    		left join hashtag h on s.tag_id = h.tag_id
+        where
             i.location_x <![CDATA[<]]> ${maxLocationX}
             and
             i.location_y <![CDATA[<]]> ${maxLocationY}
             and
             i.id != #{id}
-            and 
-            h.tag_name != null
-		GROUP BY i.id
     </select>
     
+        <resultMap type="shop" id="hashTagsMap">
+		<id column="id" property="id"/>		
+		<result column="shop_name" property="shopName"/>
+		<result column="bussiness_hour_start" property="bussinessHourStart"/>
+		<result column="bussiness_hour_end" property="bussinessHourEnd"/>
+		<result column="location_x" property="locationX"/>
+		<result column="location_y" property="locationY"/>
+		<result column="address" property="address"/>
+		<result column="address_detail" property="addressDetail"/>
+		<result column="shop_introduce" property="shopIntroduce"/>
+
+	
+	  <!-- <collection property="hashTags" ofType="HashTag">
+			<constructor>
+				<arg column="tagname" javaType="String"/>
+			</constructor>
+		</collection>  -->
+	</resultMap>
+  
+
     <select id="searchHashTag" parameterType="hashtag" resultType="hashtag">
     	select
     		*

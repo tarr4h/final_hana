@@ -14,4 +14,6 @@ public class HashTag implements Serializable {
 	private String tagId;
 	private String tagName;
 	private String memberId;
+	
+
 }
