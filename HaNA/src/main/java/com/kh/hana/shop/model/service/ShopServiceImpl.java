@@ -49,8 +49,8 @@ public class ShopServiceImpl implements ShopService {
 		
 		List<Map<String, Object>> lastShopList = new ArrayList<>();
 		for(Map<String, Object> shop : shopList) {
-			String x = (String) shop.get("LOCATION_X");
-			String y = (String) shop.get("LOCATION_Y");
+			String x = (String) shop.get("locationX");
+			String y = (String) shop.get("locationY");
 			log.info("serv shop = {}", shop);
 			boolean bool = CalculateArea.calculateArea(locationX, locationY, x, y, limit);
 			log.info("calTest = {}", bool);

@@ -5,24 +5,56 @@
 <mapper namespace="shop">
    
      <select id="selectShopList" parameterType="map" resultMap="hashTagsMap">
-       select
-            i.id as id, i.shop_name as shopName, i.address as address, 
-            h.tag_name as tagName, m.picture as picture
-        from
-            shop_info i	
-            left join member m
-            on i.id = m.id
-           	left join shophashtag s on i.id = s.member_id 
-    		left join hashtag h on s.tag_id = h.tag_id
+		select
+		    s.*,
+		    m.picture,
+		    h.tag_name
+		from
+		    shop_info s left join member m
+		    on s.id = m.id
+		    left join shophashtag t
+		    on s.id = t.member_id
+		    left join hashtag h
+		    on t.tag_id = h.tag_id
         where
-            i.location_x <![CDATA[<]]> ${maxLocationX}
+            s.location_x <![CDATA[<]]> ${maxLocationX}
             and
-            i.location_y <![CDATA[<]]> ${maxLocationY}
+            s.location_y <![CDATA[<]]> ${maxLocationY}
             and
-            i.id != #{id}
+            s.id != #{id}
+            and
+            s.address is not null
     </select>
     
-        <resultMap type="shop" id="hashTagsMap">
+    <select id="selectHashTagShopList" parameterType="map" resultMap="hashTagsMap">
+		select
+		    s.*,
+		    m.picture,
+		    h.tag_name
+		from
+		    shop_info s left join member m
+		    on s.id = m.id
+		    left join shophashtag t
+		    on s.id = t.member_id
+		    left join hashtag h
+		    on t.tag_id = h.tag_id
+        <where>
+         	s.location_x <![CDATA[<]]> ${maxLocationX}
+            and
+            s.location_y <![CDATA[<]]> ${maxLocationY}
+            and
+            s.id != #{id}
+            and
+            s.address is not null
+            and
+            h.tag_name in
+            <foreach collection="tags" item="tags" open="(" close =")" separator=",">
+            #{tags}
+            </foreach>
+        </where>
+    </select>
+    
+    <resultMap type="map" id="hashTagsMap">
 		<id column="id" property="id"/>		
 		<result column="shop_name" property="shopName"/>
 		<result column="bussiness_hour_start" property="bussinessHourStart"/>
@@ -32,13 +64,14 @@
 		<result column="address" property="address"/>
 		<result column="address_detail" property="addressDetail"/>
 		<result column="shop_introduce" property="shopIntroduce"/>
+		<result column="picture" property="picture"/>
 
-	<!-- 
-	 <collection property="hashTags" ofType="HashTag">
-			<constructor>
-				<arg column="tagname" javaType="String"/>
-			</constructor>
-		</collection>  -->
+
+		<collection property="hashTags" javaType="java.util.List" resultMap="hashTagName">
+		</collection>
+	</resultMap>
+	<resultMap type="String" id="hashTagName">
+		<id property="tagName" column="tag_name"/>
 	</resultMap>
   
 
@@ -160,31 +193,7 @@
   		where
   			table_id = #{tableId}
     </select>
-    
-    <select id="selectHashTagShopList" parameterType="map" resultType="map">
-        select
-            *
-        from
-    		 shop_info i	
-            left join member m
-            on i.id = m.id
-            left join shophashtag s 
-            on m.id = s.member_id 
-    		left join hashtag h 
-            on s.tag_id = h.tag_id
-        <where>
-         	i.location_x <![CDATA[<]]> ${maxLocationX}
-            and
-            i.location_y <![CDATA[<]]> ${maxLocationY}
-            and
-            i.id != #{id}
-            and
-            h.tag_name in
-            <foreach collection="tags" item="tags" open="(" close =")" separator=",">
-            #{tags}
-            </foreach>
-        </where>
-    </select>
+
     
     <insert id="insertReservation" parameterType="reservation">
     	insert into shop_table_reservation

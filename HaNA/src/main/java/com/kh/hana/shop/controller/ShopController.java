@@ -71,6 +71,7 @@ public class ShopController {
    
         List<Map<String, Object>> shopList = shopService.selectShopList(data,selectDataArr, maxDistance);
         log.info("length = {}", shopList.size());
+        log.info("shopList = {}", shopList);
         
         return ResponseEntity.ok(shopList);
     }
