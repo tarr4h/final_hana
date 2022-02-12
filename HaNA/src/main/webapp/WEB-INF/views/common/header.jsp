@@ -144,14 +144,12 @@
 	<sec:authorize access="isAuthenticated()">
 		<script>
 		let today = Date.now()-(9 * 60 * 60 * 1000);
-		
+
 		$(document).ready( function() {
 			connect(1);
 			dmAlarm();
 		});
 		let memberId;
-		let websocketws;
-		
 		<!-- roomNo 전역변수 -->
 		let roomNo;
 		
@@ -219,6 +217,15 @@
 					if(eSplit[4] !== roomNo){
 					 	beep2();
 						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${ShareMessage[1]}</a>`);
+						
+						const date = moment(today).format("YYYY년 MM월 DD일");
+						let tbodyNoti =`<tr>
+		    				<td>\${ShareMessage[1]} \${date}</td>
+			    			</tr>`;
+						$("tbody#notiTbody").append(tbodyNoti);
+						headerNotiAlarm = headerNotiAlarm + 1;
+						$("#notiAlarm").text(headerNotiAlarm);
+						
 						$("div#headerAlert").css('display','block');
 						setTimeout(function(){
 							$("div#headerAlert").css('display','none');
@@ -235,6 +242,7 @@
 							if(data.memberId != id){
 								msgCheck(data);
 							} 
+						unreadCheck(e);
 					}
 				};
 
@@ -251,7 +259,7 @@
 				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${message226Split[1]} \${message226Split[2]}</a>`);
 				const date = moment(today).format("YYYY년 MM월 DD일");
 				let tbodyNoti =`<tr>
-    				<td>\${message226Split[1]} \${message226Split[2]} \${message226Split[2]} \${date}</td>
+    				<td>\${message226Split[1]} \${message226Split[2]} \${date}</td>
 	    			</tr>`;
 				$("tbody#notiTbody").append(tbodyNoti);
 				
@@ -286,7 +294,6 @@
 
 				}
 				else{
-				console.log("eSplit[4] === 226 아닌 곳 입장");
 			 	beep();
 				let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
 				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
@@ -357,8 +364,6 @@
 				method:'GET',
 				data:{id : memberId},
 				success(resp){
-					console.log("resp",resp);
-					console.log("resp.size",resp.length);
 						window['headerNotiAlarm'] = resp.length;
 						$("#notiAlarm").text(headerNotiAlarm);
 					if(resp.length !== '0'){
@@ -398,6 +403,7 @@
 			/* error:console.log */
 		});
 	})
+	
 </script>
 
 	<div class="section-over-div">

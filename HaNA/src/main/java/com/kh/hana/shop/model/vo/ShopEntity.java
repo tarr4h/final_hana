@@ -1,6 +1,8 @@
 package com.kh.hana.shop.model.vo;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +22,11 @@ public class ShopEntity {
 	private String address;
 	private String addressDetail;
 	private String shopIntroduce;
+
+	
+
+	
+	
 	
 	
 }

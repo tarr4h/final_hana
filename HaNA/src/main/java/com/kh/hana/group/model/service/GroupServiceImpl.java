@@ -108,6 +108,7 @@ public class GroupServiceImpl implements GroupService{
 		try {
 			result = groupDao.insertGroupMember(map); // 멤버 추가
 			result = groupDao.updateApplyHandled(map); // 처리여부 업데이트
+			result = chatDao.updateROOMOUTmessage(map); // 한번 탈퇴했었다면 이전 퇴장메세지 변경
     		result = chatDao.insertGroupMessage22(map); // 그룹톡 입장
 		}catch(Exception e) {
 			throw e;
@@ -213,7 +214,9 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public int profileImage(Group group) {
-		return groupDao.profileImage(group);
+		int result = groupDao.profileImage(group);
+		result = chatDao.roomChatUpdateImage(group);
+		return result;
 	}
 
 	public int deleteCalendarData(Map<String, Object> param) {

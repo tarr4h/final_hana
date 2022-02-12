@@ -567,5 +567,17 @@ public class ChatController {
     	if(result>0) log.info("noti readcheck");
     	return ResponseEntity.ok("readcheck");
     }
+    
+    @GetMapping("/groupDM.do")
+    public ResponseEntity<?> groupDM(String groupId, String loginId){
+    	log.info("groupId = {}", groupId);
+    	log.info("loginId = {}", loginId);
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("groupId", groupId);
+    	param.put("loginId", loginId);
+    	Map<String, Object> map = chatService.groupDMcheckMember(param);
+    	
+    	return ResponseEntity.ok(map);
+    }
     		
 }
