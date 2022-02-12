@@ -99,19 +99,13 @@
 	    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
 	        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
 	        	</button>
-     
         	</c:when>
         	<c:otherwise>
-        		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
-	        		 
-	        	</button>
         	</c:otherwise>
-       
       </c:choose>
         </c:when>
     </c:choose>
       
-			
         	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
         		<input type="hidden" name ="friendId" value="${member.id}" />
         		<input type="hidden" name ="myId" value="${loginMember.id}" />
