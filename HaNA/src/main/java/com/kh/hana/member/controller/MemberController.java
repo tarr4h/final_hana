@@ -152,6 +152,12 @@ public class MemberController {
 		 log.info("isFriend={}", isFriend);
 		 model.addAttribute("isFriend", isFriend);
 		 
+		 //내가 팔로우했는가
+		 int isFollow = memberService.checkFollow(map);
+		 log.info("isFollow={}", isFollow);
+		 model.addAttribute("isFollow", isFollow);
+		 
+		 
 		 //비공개계정에 요청중인지
 		 int isRequest = memberService.isRequestFriend(map);
 		 log.info("isRequest = {}", isRequest);

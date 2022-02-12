@@ -12,10 +12,10 @@
 <fmt:requestEncoding value="utf-8" />
 
 	<c:forEach items="${reviewList }" var="review">
-		<div class="thumbnail col-sm-4 ">
+		<div class="thumbnail col-sm-4">
 	    	<input type="hidden" value="${review.no}" id="boardNo" name="no"/>
 	    	<img src="${pageContext.request.contextPath}/resources/upload/member/board/${review.picture[0] }" alt="" class="board-main-image"
-	    	style="width:100%; height:100%; margin-bottom: 10%"/>
+	    	style="width:80%; height:80%;  margin-left : 20%;"/>
 	    </div>
 	
 	</c:forEach>
