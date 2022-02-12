@@ -71,7 +71,7 @@ $(accountPrivateFrm).submit((e) => {
 .col-sm-8 {
     flex: 0 0 auto;
     width: 250px;
-    font-size:20px;
+    font-size:17px;
 }
 .col-sm-4{
 	width : 350px;

@@ -189,6 +189,57 @@
     border-color: gray;
     border-bottom-color: gray;
 }
+.private{
+    margin-left: 450px;
+    margin-top: 30px;
+    margin-bottom: -13;
+ }
+#requestButton {
+    width: 200px;
+    background: dimgrey;
+    margin-top: 60px;
+}
+.btn-danger {
+    color: #fff;
+    background-color: black;
+    border-color: black;
+    margin-left: -40px;
+    margin-top: 10px;
+   }
+.btn-success {
+    color: #fff;
+    background-color: #198754;
+    border-color: black;
+    margin-top: 10px;
+}
+.section-over-div {
+    min-height: 160vh;
+ }
+#reportBtn {
+    color: white;
+    border-color: black;
+    background-color:#ff000078;
+    margin-top: -100px;
+    margin-left: 153px;
+}
+#myInfo {
+    border: none;
+    border-bottom: solid;
+    border-color: gray;
+    border-bottom-width: unset;
+}
+.tableKey {
+    width: 17%;
+    font-size: 15px;
+    padding-bottom: 1px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+.tableValue {
+    width: 80%;
+    font-size: 15px;
+    padding-bottom: 6px;
+}
  .btn-submitContent{font-weight:bold;color:#384fc5c4;background-color:white;border:none;float:right;}
 .btn-boardModify{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
 .btn-reply{font-weight:bold;color:#8080808a;background-color:white;border:none;float:right;}
