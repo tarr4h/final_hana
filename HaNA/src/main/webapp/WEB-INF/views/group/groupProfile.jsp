@@ -24,11 +24,7 @@
 		document.getElementById('upFileForm').submit();
         return false;
 	}
-	
-// 리더만 수정할 수 있는 버튼 (만 있음)
-	function goGroupSetting() {
-		location.href = "${pageContext.request.contextPath}/group/groupSetting";
-	}
+
 //ajax POST 요청 csrf
     var csrfToken = $("meta[name='_csrf']").attr("content");
     $.ajaxPrefilter(function(options, originalOptions, jqXHR){
@@ -88,22 +84,6 @@
  -->		<!-- 프로필 세부정보 영역 -->
 		<div class="col-sm-6" id="profileStatus">
 		<div class="profileTableAreaContainer">
-		<!-- 설정버튼 -->
-			<button type="button" class="btn btn-outline-dark" id="settingBtn"
-				onclick="goGroupSetting();">
-				<img
-					src="${pageContext.request.contextPath }/resources/images/icons/setting.png"
-					alt="" />
-			</button>
-			<button type="button" class="btn btn-outline-dark" id="settingBtn"
-				onclick="">
-				<img
-					src="${pageContext.request.contextPath }/resources/images/icons/man.png"
-					alt="" />
-			</button>
-
-			<br />
-
 			<div class="profileTableArea">
 			    <div class="row">
 			        <div class="col-sm-8">

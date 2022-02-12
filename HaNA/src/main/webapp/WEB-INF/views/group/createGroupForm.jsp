@@ -7,7 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="메인화면" name="main"/>
+	<jsp:param value="그룹가입폼" name="title"/>
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 <div class="first-container">
