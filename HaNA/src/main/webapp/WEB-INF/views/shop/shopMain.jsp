@@ -32,8 +32,7 @@
 			<table class="table table-striped table-dark my-0">
 				<thead>
 					<tr>
-					
-						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><i class="fa-solid fa-crown"></i>HashTag Ranking<i class="fa-solid fa-crown"></i></th>
+						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle">HashTag Ranking</th>
 					</tr>
 					<tr>
 						<th scope="col">no</th>  
