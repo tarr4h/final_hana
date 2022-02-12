@@ -527,41 +527,81 @@ public class ShopController {
     	Map<String, Object> returnMap = new HashMap<>();
     	
     	// 10대
-    	int groupOne = 0;
+    	int groupOneMale = 0;
+    	int groupOneFemale = 0;
     	// 20대
-    	int groupTwo = 0;
+    	int groupTwoMale = 0;
+    	int groupTwoFemale = 0;
     	// 30대
-    	int groupThr = 0;
+    	int groupThrMale = 0;
+    	int groupThrFemale = 0;
     	// 40대
-    	int groupFou = 0;
+    	int groupFouMale = 0;
+    	int groupFouFemale = 0;
     	// 50대
-    	int groupFiv = 0;
+    	int groupFivMale = 0;
+    	int groupFivFemale = 0;
     	// 60대 이상
-    	int groupSix = 0;
+    	int groupSixMale = 0;
+    	int groupSixFemale = 0;
     	
     	for(Map<String, Object> user : list) {
     		int age = Integer.parseInt(String.valueOf(user.get("age")));
+    		String gender = String.valueOf(user.get("gender"));
     		if(0< age && age < 20) {
-    			groupOne++;
+    			if(gender.equals("남")) {
+    				groupOneMale++;
+    			} else {
+    				groupOneFemale++;
+    			}
     		} else if(19 < age && age < 30) {
-    			groupTwo++;
+    			if(gender.equals("남")) {
+    				groupTwoMale++;
+    			} else {
+    				groupTwoFemale++;
+    			}
     		} else if(29 < age && age < 40){
-    			groupThr++;
+    			if(gender.equals("남")) {
+    				groupThrMale++;
+    			} else {
+    				groupThrFemale++;
+    			}
     		} else if(39 < age && age < 50) {
-    			groupFou++;
+    			if(gender.equals("남")) {
+    				groupFouMale++;
+    			} else {
+    				groupFouFemale++;
+    			}
     		} else if(49 < age && age < 60) {
-    			groupFiv++;
+    			if(gender.equals("남")) {
+    				groupFivMale++;
+    			} else {
+    				groupFivFemale++;
+    			}
     		} else if(59 < age) {
-    			groupSix++;
+    			if(gender.equals("남")) {
+    				groupSixMale++;
+    			} else {
+    				groupSixFemale++;
+    			}
     		}
     	};
     	
-    	returnMap.put("groupOne", groupOne);
-    	returnMap.put("groupTwo", groupTwo);
-    	returnMap.put("groupThr", groupThr);
-    	returnMap.put("groupFou", groupFou);
-    	returnMap.put("groupFiv", groupFiv);
-    	returnMap.put("groupSix", groupSix);
+    	returnMap.put("groupOneMale", groupOneMale);
+    	returnMap.put("groupOneFemale", groupOneFemale);
+    	returnMap.put("groupTwoMale", groupTwoMale);
+    	returnMap.put("groupTwoFemale", groupTwoFemale);
+    	returnMap.put("groupThrMale", groupThrMale);
+    	returnMap.put("groupThrFemale", groupThrFemale);
+    	returnMap.put("groupFouMale", groupFouMale);
+    	returnMap.put("groupFouFemale", groupFouFemale);
+    	returnMap.put("groupFivMale", groupFivMale);
+    	returnMap.put("groupFivFemale", groupFivFemale);
+    	returnMap.put("groupSixMale", groupSixMale);
+    	returnMap.put("groupSixFemale", groupSixFemale);
+    	
+    	log.info("oneMale = {}", groupOneMale);
+    	log.info("oneFeMale = {}", groupOneFemale);
     	
     	return returnMap;
     }

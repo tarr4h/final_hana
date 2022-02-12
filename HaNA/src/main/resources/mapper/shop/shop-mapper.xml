@@ -264,6 +264,8 @@
 			on s.reservation_no = r.reservation_no
 			left join shop_info i
 			on r.shop_id = i.id
+			left join shop_table_setting t
+    		on r.reservation_table_id = t.table_id
 		where
 			s.attend_user = #{id}
 			<if test="state == 1">
@@ -582,18 +584,18 @@
 	</select>
 	
 	<select id="selectShopReservationTableList" parameterType="string" resultType="map">
-	select
-	    r.reservation_table_id,
-	    (select table_name from shop_table_setting where table_id = r.reservation_table_id) "tableName",
-	    count(*) "count"
-	from
-	    shop_table_reservation r left join shop_table_setting s
-	    on r.reservation_table_id = s.table_id
-	where
-	    r.reservation_status = '예약완료'
-	    and
-	    r.shop_id = #{shopId}
-	group by
-	    r.reservation_table_id
+		select
+		    r.reservation_table_id,
+		    (select table_name from shop_table_setting where table_id = r.reservation_table_id) "tableName",
+		    count(*) "count"
+		from
+		    shop_table_reservation r left join shop_table_setting s
+		    on r.reservation_table_id = s.table_id
+		where
+		    r.reservation_status = '예약완료'
+		    and
+		    r.shop_id = #{shopId}
+		group by
+		    r.reservation_table_id
 	</select>
 </mapper>
