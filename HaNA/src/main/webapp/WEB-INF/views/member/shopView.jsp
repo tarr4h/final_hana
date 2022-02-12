@@ -71,7 +71,7 @@
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
         	</c:if>
-        	<c:if test="${member.publicProfile == 1 && !loginMember.id.equals(member.id) && isFriend eq 0 }">
+        	<c:if test="${member.publicProfile == 1 && !loginMember.id.equals(member.id) && isFriend == 0 }">
         	<button type="button" class="btn btn-outline-dark icon" id="addFriendBtn" onclick="addFollowing();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
@@ -145,15 +145,17 @@
 					</tbody>
 				</table>
 			</div>
+
+		</div>
+    </div>
+</div> 
+<div style="width:75%; border: none; border-bottom: 1px solid; margin:5px auto 80px">
 			<!-- 글쓰기버튼 -->
 			<c:if test="${loginMember.id.equals(member.id) }">
         	<button id="boardModalBtn" class="writeBtn" style="float:right; margin-top:-40px"><i style="font-size: 30px;" class="fas fa-pencil-alt" aria-hidden="true"></i></button>
         	<jsp:include page="/WEB-INF/views/member/boardModal/boardModal.jsp"></jsp:include>
         	</c:if>
-		</div>
-    </div>
-</div> 
-<div style="width:75%; border: none; border-bottom: 1px solid; margin:5px auto 80px"></div>
+</div>
 <div class="container mt-2">       
     <div class="boardRow">   
         <!-- 탭 영역 -->
