@@ -136,7 +136,7 @@ public class GroupController {
 	}
 
 	@GetMapping("/groupBoardForm/{groupId}")
-	public String adminGroupBoardForm(@AuthenticationPrincipal Member member, @PathVariable String groupId, Model model){
+	public String groupBoardForm(@AuthenticationPrincipal Member member, @PathVariable String groupId, Model model){
 		List<Map<String,String>> members = groupService.selectGroupMemberList(groupId);
 		log.info("members = {}",members);
 		model.addAttribute("groupId",groupId);

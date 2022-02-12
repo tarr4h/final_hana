@@ -7,7 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="메인화면" name="main"/>
+	<jsp:param value="그룹가입폼" name="title"/>
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
 <div class="first-container">
@@ -126,7 +126,7 @@ function setThumbnail(event){
 //폼제출
 function submitFrm(){
     let idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
-    let nameReg = /^[.]{1,20}$/;
+    let nameReg = /^.{1,20}$/;
     if( !idReg.test( $("input[name=groupId]").val())) {
         alert("아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
         return;
