@@ -90,12 +90,22 @@
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
-        	</c:if>	
-    		<c:if test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) && isRequest != 1}">
-    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
-        	</button>
         	</c:if>
+        	
+      <c:choose>
+        <c:when test="${member.publicProfile == 2 && !loginMember.id.equals(member.id)}">
+       	  <c:choose>
+			<c:when test="${isRequest == 0  && isFriend == 0}">
+	    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
+	        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
+	        	</button>
+        	</c:when>
+        	<c:otherwise>
+        	</c:otherwise>
+      </c:choose>
+        </c:when>
+    </c:choose>
+      
         	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
         		<input type="hidden" name ="friendId" value="${member.id}" />
         		<input type="hidden" name ="myId" value="${loginMember.id}" />
