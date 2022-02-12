@@ -75,6 +75,8 @@ public interface ChatService {
 
 	int notiReadCheck(String id);
 
+	Map<String, Object> groupDMcheckMember(Map<String, Object> param);
+
 
 
 
