@@ -12,7 +12,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberView.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberView.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!-- 우측 공간확보 -->
 <section class="body-section" style="width:200px;height:100%;float:right;display:block;">
