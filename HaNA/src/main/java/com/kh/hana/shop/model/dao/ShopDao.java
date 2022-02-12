@@ -94,6 +94,16 @@ public interface ShopDao {
 
 	List<Map<String, Object>> selectShopGrade(String shopId);
 
+	List<Map<String, Object>> selectShopReservationUserList(String shopId);
+
+	int selectShopReservationDawnList(String shopId);
+
+	int selectShopReservationDayList(String shopId);
+
+	int selectShopReservationNightList(String shopId);
+
+	List<Map<String, Object>> selectShopReservationTableList(String shopId);
+
 
 
 
