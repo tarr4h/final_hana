@@ -245,6 +245,16 @@ public class GroupDaoImpl implements GroupDao {
 	public int selectOneId(String id) {
 		return session.selectOne("group.selectOneId",id);
 	}
+
+	@Override
+	public String selectGroupMemberLevel(Map<String, Object> map) {
+		return session.selectOne("group.selectGroupMemberLevel",map);
+	}
+
+	@Override
+	public int selectGroupApplyLog(Map<String, Object> map) {
+		return session.selectOne("group.selectGroupApplyLog",map);
+	}
 	
 
 

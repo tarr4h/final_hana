@@ -103,4 +103,8 @@ public interface GroupDao {
 
 	public int selectOneId(String id);
 
+	public String selectGroupMemberLevel(Map<String, Object> map);
+
+	public int selectGroupApplyLog(Map<String, Object> map);
+
 }

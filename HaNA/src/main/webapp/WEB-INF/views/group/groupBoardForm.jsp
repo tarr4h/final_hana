@@ -9,7 +9,7 @@
 <fmt:requestEncoding value="utf-8"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-    <jsp:param value="메인화면" name="main"/>
+    <jsp:param value="소모임포스팅" name="title" />
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
@@ -409,7 +409,7 @@ input {
 
 .wrapper {
     max-width: 50%;
-    height:80%;
+    min-height: 80%; 
     margin: 40px auto;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -520,11 +520,11 @@ input:focus::placeholder {
 }
 
 .label#tel::after {
-    content: 'Phone'
+    content: 'Shop'
 }
 
 .label#email::after {
-    content: 'Email'
+    content: 'Address'
 }
 
 input:focus~.label::after {

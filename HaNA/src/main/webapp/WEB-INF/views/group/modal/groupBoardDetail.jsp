@@ -33,11 +33,13 @@
 						</td>
 					</tr>
 				</table>
-				<div style="position:relative;margin-right:-665px; margin-bottom:5%;">
-				<img src="https://img.icons8.com/plasticine/100/000000/like--v2.png" class="heart unlike" onclick="like();" style="position:absolute; width:50px;"/>
-				<img src="https://img.icons8.com/plasticine/100/000000/like--v1.png" class="heart like" onclick="unlike();" style="position:absolute; width:50px;"/>
-				</div>
+				<!-- <div style="position:relative;margin-right:-665px; margin-bottom:5%;">
+				</div> -->
 				<div style="color:gray; margin-right:1%;">
+					<div style="display:inline;">
+						<img src="https://img.icons8.com/plasticine/100/000000/like--v2.png" class="heart unlike" onclick="like();" style="width:50px;"/>
+						<img src="https://img.icons8.com/plasticine/100/000000/like--v1.png" class="heart like" onclick="unlike();" style="width:50px;"/>
+					</div>					
 					<span class="like_count"></span>
 				</div>
 				</div>
@@ -165,28 +167,29 @@ function getPageDetail(boardNo){
 		 				
 		 				let img = `<img id='img\${i}' src='<%=request.getContextPath()%>/resources/upload/group/board/\${e}' alt="" class="group-board-img"/>`
 		 				$("#group-board-img-container").append(img); // 이미지 추가
+			  			$(`#img\${i}`).css("display","none");
 		 				maxIndex = i;
 		 			})
 		 			
 		 			$(".group-board-img").css("width","100%");
 		 			$(".group-board-img").css("position","absolute");
 		  			$(".group-board-img").css("left","0");
-		  			$("#img0").css("z-index","2");
+		  			$("#img0").css("display","inline");
 					
 		  			currentIndex = 0;
 		  			
 		  			//이미지 옆으로 넘기기
 		  			$(".right-button").click((e)=>{
 						if(currentIndex<maxIndex){
-			  				$(`#img\${currentIndex+1}`).css("z-index",2);
-			  				$(`#img\${currentIndex}`).css("z-index",1);
+			  				$(`#img\${currentIndex+1}`).css("display","inline");
+			  				$(`#img\${currentIndex}`).css("display","none");
 			  				currentIndex += 1;							
 						}
 		  			})
 		  			$(".left-button").click((e)=>{
 						if(currentIndex>0){
-			  				$(`#img\${currentIndex-1}`).css("z-index",2);
-			  				$(`#img\${currentIndex}`).css("z-index",1);
+			  				$(`#img\${currentIndex-1}`).css("display","inline");
+			  				$(`#img\${currentIndex}`).css("display","none");
 			  				currentIndex -= 1;							
 						}
 		  			})
@@ -271,6 +274,17 @@ function like(){
 			$(".like").css("display","inline");			 			
  			$(".unlike").css("display","none");
  			getLikeCount();
+ 			
+		    const data1 = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${gb.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${gb.no}@그룹`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data1);
+		    websocket.send(jsonData);	
+		    
 		},
 		error(xhr, statusText, err){
 			switch(xhr.status){
@@ -468,6 +482,7 @@ $(document.groupBoardCommentSubmitFrm).submit((e)=>{
 //댓글 제출 함수
 function submitCommentFunc(e){
 	let boardNo = $("[name=boardNo]",e.target).val(); 
+	let commentwriter = $("[name=writer]",e.target).val();
 	let o = {
 		boardNo:boardNo,
 		writer:$("[name=writer]",e.target).val(),
@@ -487,6 +502,32 @@ function submitCommentFunc(e){
 		success(data){
 			console.log(data);
 			$("[name=content]",e.target).val("");
+				
+			<!-- 게시글 작성자한테 -->
+			if($("[name=commentLevel]",e.target).val() === '1'){			
+		    const data1 = {
+		            "roomNo" : 226,
+		            "memberId" : `${loginMember.id}`,
+		            "message"   : `\${gb.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}@그룹`,
+		            "picture" : `${loginMember.picture}`,
+		            "messageRegDate" : today
+		        }; 
+		    let jsonData = JSON.stringify(data1);
+		    websocket.send(jsonData);	
+			}
+			<!-- 댓글 작성자한테 -->
+			else{
+			    const data1 = {
+			            "roomNo" : 226,
+			            "memberId" : `${loginMember.id}`,
+			            "message"   : `\${commentwriter}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}@그룹`,
+			            "picture" : `${loginMember.picture}`,
+			            "messageRegDate" : today
+			        }; 
+			    let jsonData = JSON.stringify(data1);
+			    websocket.send(jsonData);	
+			}			
+			
 			getCommentList(boardNo);
 		},
 		error(xhr, statusText, err){
