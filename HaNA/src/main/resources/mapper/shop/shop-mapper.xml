@@ -598,4 +598,31 @@
 		group by
 		    r.reservation_table_id
 	</select>
+	
+	<select id="selectShopReservationVisitorList" parameterType="string" resultType="map">
+		select
+		    distinct s.attend_user "userId",
+		    m.location_x "locationX",
+    		m.location_y "locationY",
+		    (select
+		        count(*)
+		    from
+		        shop_table_reservation_share rs left join shop_table_reservation tr
+		        on rs.reservation_no = tr.reservation_no
+		    where
+		        tr.reservation_status = '예약완료'
+		        and
+		        rs.attend_user = m.id) "visitCount"
+		from
+		    shop_table_reservation_share s left join shop_table_reservation r
+		    on r.reservation_no = s.reservation_no
+		    left join member m
+		    on s.attend_user = m.id
+		where
+		    shop_id = #{shopId}
+		    and
+		    reservation_status = '예약완료'
+		order by
+		    4 desc
+	</select>
 </mapper>

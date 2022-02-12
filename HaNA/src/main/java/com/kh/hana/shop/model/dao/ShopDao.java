@@ -104,6 +104,8 @@ public interface ShopDao {
 
 	List<Map<String, Object>> selectShopReservationTableList(String shopId);
 
+	List<Map<String, Object>> selectShopReservationVisitorList(String shopId);
+
 
 
 

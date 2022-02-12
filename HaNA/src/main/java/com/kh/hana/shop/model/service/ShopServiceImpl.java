@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.hana.common.util.CalculateArea;
+import com.kh.hana.common.util.CalculateArea2;
 import com.kh.hana.member.model.vo.Member;
 import com.kh.hana.shop.model.dao.ShopDao;
 import com.kh.hana.shop.model.vo.HashTag;
@@ -271,7 +272,9 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public Map<String, Object> reservationStatistics(String shopId) {
+	public Map<String, Object> reservationStatistics(Member member) {
+		String shopId = member.getId();
+		
 		// 연령 및 성별 통계 구해오기
 		List<Map<String, Object>> userList = shopDao.selectShopReservationUserList(shopId);
 		log.info("userList = {}", userList);
@@ -294,12 +297,29 @@ public class ShopServiceImpl implements ShopService {
 		// 테이블별 예약 수 불러오기
 		List<Map<String, Object>> tableList = shopDao.selectShopReservationTableList(shopId);
 		
+		// 방문자 리스트 불러오기
+		List<Map<String, Object>> visitorList = shopDao.selectShopReservationVisitorList(shopId);
+		
+		// 방문자와 업체의 거리 구해서 보내기
+		String stdLocationX = member.getLocationX();
+		String stdLocationY = member.getLocationY();
+		
+		List<Double> visitorDistance = new ArrayList<>();
+		for(Map<String, Object> visitor : visitorList) {
+			String locationX = (String) visitor.get("locationX");
+			String locationY = (String) visitor.get("locationY");
+			double distance = CalculateArea2.calculateArea(stdLocationX, stdLocationY, locationX, locationY);
+			visitorDistance.add(distance);
+		}
+		
 		// return할 data Map에 담아서 보내기
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("userList", userList);
 		returnMap.put("visitorAll", visitorAll);
 		returnMap.put("timeMap", timeMap);
 		returnMap.put("tableList", tableList);
+		returnMap.put("visitorList", visitorList);
+		returnMap.put("visitorDistance", visitorDistance);
 		
 		
 		return returnMap;
