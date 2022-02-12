@@ -358,6 +358,8 @@
 	    on f.req_id = k.id
 	where
 	    f.member_id = #{myId}	
+	 and
+	 	f.status ='요청'
 	</select>
 	
 	<resultMap id="FollowingRequest" type="map">
