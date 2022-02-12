@@ -103,6 +103,20 @@ footer {
   padding: 5px 10px;
   margin: 5px;
 }
+
+
+/* visitor Table */
+#visitorRankTable{
+	border-collapse:collapse;
+	width: 300px;
+}
+#visitorRankTable th{
+	border: 1px dotted black;
+	width: 100px;
+}
+#visitorRankTable td{
+	border: 1px dotted black;
+}
 </style>
 
 <!-- google chart -->
@@ -154,18 +168,19 @@ footer {
 				  	
 				  	<!-- 방문자 평균 -->
 					<div class="col-sm-2 nav-item d-flex justify-content-center align-items-center">
-				    	<a class="nav-link statsTab" href="#" id="visitorStats">방문자 평균</a>
-				  	</div>
-				  	
-				  	<!-- 방문 회원 리스트 -->
-				  	<div class="col-sm-2 nav-item d-flex justify-content-center align-items-center">
-				    	<a class="nav-link statsTab" href="#" id="visitorList">방문 회원 목록</a>
+				    	<a class="nav-link statsTab" href="#" id="visitorStats">방문자 통계</a>
 				  	</div>
 				  	
 				  	<!-- 방문 회원 랭킹 -->
 				  	<div class="col-sm-2 nav-item d-flex justify-content-center align-items-center">
 				    	<a class="nav-link statsTab" href="#" id="visitorRank">방문 회원 랭킹</a>
 				  	</div>
+				  	
+				  	<!-- 방문 회원 리스트 -->
+				  	<div class="col-sm-2 nav-item d-flex justify-content-center align-items-center">
+				    	<a class="nav-link statsTab" href="#" id="visitorDistance">방문 거리 통계</a>
+				  	</div>
+				  	
 		        </div>
    		    </div>
    		    <div class="row">
@@ -206,6 +221,40 @@ footer {
 					  	<!-- google chart -->
 				 		<div id="chart_div2"></div>
 					</div>
+					
+					<!-- 방문자 랭킹 AREA -->
+					<div class="contentArea visitorRank" style="display:none">
+						<h3>방문 회원 랭킹 입니다.</h3>
+						<table id="visitorRankTable">
+							<thead>
+								<tr>
+									<td>순위</td>
+									<td>방문자 ID</td>
+									<td>방문 횟수</td>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${visitorList }" var="visitor" varStatus="vs">
+									<c:if test="${vs.count <= 10 }">
+									<tr>
+										<td>
+											${vs.count }
+										</td>
+										<td>${visitor.userId }</td>
+										<td>${visitor.visitCount }</td>
+									</tr>
+									</c:if>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					
+					<!-- 방문자 거리 AREA -->
+					<div class="contentArea visitorDistance" style="display:none;">
+						<h3>방문 회원의 거리 통계</h3>
+						<!-- google chart -->
+						<div id="chart_div3"></div>
+					</div>
 					<!-- cotent Area End -->
 				</div>
 			</div>
@@ -220,7 +269,7 @@ footer {
 	countStats
 	tableStats
 	visitorStats
-	visitorList
+	visitorDistance
 	visitorRank
 */
 $(".statsTab").click((e) => {
@@ -231,12 +280,14 @@ $(".statsTab").click((e) => {
 	$(e.target).addClass("active");
 	drawStacked();
 	drawStacked2();
+	drawStacked3();
 });
 
 /* googleChart */
 google.charts.load('current', {packages: ['corechart', 'bar']});
 google.charts.setOnLoadCallback(drawStacked);
 google.charts.setOnLoadCallback(drawStacked2);
+google.charts.setOnLoadCallback(drawStacked3);
 /*  1 : 방문자 평균 */
 function drawStacked() {
       var data = google.visualization.arrayToDataTable([  
@@ -279,7 +330,7 @@ function drawStacked2() {
         chartArea: {width: '50%'},
         isStacked: true,
         hAxis: {
-          title: 'Total Reservation',
+          title: 'Table Reservation',
           minValue: 0,
         },
         vAxis: {
@@ -289,6 +340,31 @@ function drawStacked2() {
       var chart = new google.visualization.BarChart(document.getElementById('chart_div2'));
       chart.draw(data2, options);
 }
+/*  3 : 거리 평균 */
+function drawStacked3() {
+      var data3 = google.visualization.arrayToDataTable([
+   	  	['거리', '방문자 수'],
+   		['5km 이내', ${visitorDistance.innerFive}],
+   		['10km 이내', ${visitorDistance.innerTen}],
+   		['20km 이내', ${visitorDistance.innerTwenty}],
+   		['20km 초과', ${visitorDistance.outterTwenty}]
+      ]);
+
+      var options = {
+        title: '방문자 거리 통계',
+        chartArea: {width: '50%'},
+        isStacked: true,
+        hAxis: {
+          title: 'Distance Reservation',
+          minValue: 0,
+        },
+        vAxis: {
+          title: ''
+        }
+      };
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+      chart.draw(data3, options);
+};
 
 
 /* 1 graph script */
