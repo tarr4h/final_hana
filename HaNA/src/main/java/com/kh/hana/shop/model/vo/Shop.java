@@ -18,12 +18,11 @@ public class Shop extends ShopEntity implements Serializable {
 	
 	private List<Reservation> manageTables;
 	private List<HashTag> hashTags;
-	private String  picture;
-	private String  tagName;
+	private String picture;
 
 	@Builder
 	public Shop(String id, String shopName, String bussinessHourStart, String bussinessHourEnd, String locationX, String locationY,
-			String address, String addressDetail, String shopIntroduce,String  picture,String  tagName, List<Reservation> manageTables ,List<HashTag> hashTags) {
+			String address, String addressDetail, String shopIntroduce,String picture, List<Reservation> manageTables,List<HashTag> hashTags) {
 		super(id, shopName, bussinessHourStart, bussinessHourEnd, locationX, locationY, address, addressDetail, shopIntroduce );
 		this.manageTables = manageTables;
 	}
