@@ -30,13 +30,15 @@
 					<div class="modal-body">
 	            <input type="hidden" value="<sec:authentication property='principal.username'/>" name="writer"/></td>
 	            <input type="hidden" value="${id}" name="id"/></td>
+	            <div class="boardAttachArea">
+					 <input type="button" value="파일 추가" id="appendAttachArea" class="btn btn-outline-dark"/>
+					 <input type="file" name="file" class="form-control" required/>
+				</div>
+				<br/>
 		        <div class="font-weight-bold head pb-1"> </div> 
 		    	<textarea id="desc" cols="120" rows="5" placeholder="작성하기" name="content"></textarea>  
 		    	<br/><br/>  
-		    	<div class="boardAttachArea">
-						<input type="button" value="이미지 추가" class="appendAttachArea"/>
-						<input type="file" name="file" required/>
-				</div>
+
 				<!--<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file1" value="파일 선택"></div>
 				<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file2" value="파일 선택"></div>
 				<div class="font-weight-bold head pb-1"><label class="labels"></label><input type="file" class="form-control" placeholder=File name="file" id="file3" value="파일 선택"></div> 
@@ -59,9 +61,9 @@ $("#btn-add").click(()=> {
   $("#boardFormModal").modal();
 });
 /* 이미지업로드영역 추가 */
-$(".appendAttachArea").click((e) => {
+$("#appendAttachArea").click((e) => {
 	let inputFile = `
-		<input type="file" name="file" required/>
+		<input type="file" name="file" class="form-control" required/>
 	`;
 	$(".boardAttachArea").append(inputFile);
 });

@@ -16,7 +16,7 @@
 	    <div class="thumbnail col-sm-4 ">
 	    	<input type="hidden" value="${board.no}" id="boardNo" name="no"/>
 	    	<img src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0] }" alt="" class="board-main-image"
-	    	style="width:100%; height:100%; margin-bottom: 10%"/>
+	    	style="width:95%; height:95%; margin-bottom: 10%"/>
 	    </div>
     </c:forEach>
  

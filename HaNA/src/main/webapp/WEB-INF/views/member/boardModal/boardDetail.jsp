@@ -318,7 +318,7 @@ function getCommentList(boardNo){
 	  			let tr = `
 	  				<tr class="level\${e.commentLevel}">
 	  				<td style="width:50px;">
-	  				<img style="height:40px; border-radius:50%;" src="/hana/resources/upload/member/profile/${e.picture}" alt="" />
+	  				<img style="height:40px; border-radius:50%;" alt="" />
 	  				</td>
 					<td >
 						<sub class="comment-writer"><a href="javascript:void(0);" onclick="goMemberView('\${e.writer}');" style="color:black; text-decoration:none; font-weight:bold;">\${e.writer}</a></sub>

@@ -178,7 +178,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int applyFollowing(Map<String, Object> map) {
-		return session.delete("member.applyFollowing",map);
+		return session.update("member.applyFollowing",map);
 	}
 
 	@Override
@@ -203,6 +203,11 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Board> selectShopReviewList(String id) {
 		return session.selectList("member.selectShopReviewList", id);
+	}
+
+	@Override
+	public int checkFollow(Map<String, Object> map) {
+		return session.selectOne("member.checkFollow", map);
 	}
 
 //	@Override

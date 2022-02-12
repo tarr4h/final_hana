@@ -61,7 +61,7 @@
     		<span style="font-weight:bold">비공개</span>
     		 </c:when>
     		 <c:otherwise>
-        	 <button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
+        	 <button  type="button" class="btn btn-outline-dark" id="btn-following-list">${followerCount}명</button>
         	 </c:otherwise>
         	 </c:choose>
         	&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -71,38 +71,31 @@
     		<span style="font-weight:bold">비공개</span>
     		 </c:when>
     		 <c:otherwise>
-        	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button>
+        	 <button  type="button" class="btn btn-outline-dark" id="btn-follower-list">${followingCount}명</button>
         	  </c:otherwise>
         	 </c:choose> 
 	
     		<!-- 신고버튼 -->
         	<c:if test="${!loginMember.id.equals(member.id) }">
- 			 <input type="button" id="reportBtn" class="btn btn-danger" value="신고">
+ 			 <div id="report-box"><input type="button" id="reportBtn" class="btn btn-danger" value="신고"></div>
         	</c:if>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 --> 
-        	
 			<c:if test="${loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
         	</c:if>
+        	<!-- 친구버튼 -->
         	<c:if test="${member.publicProfile == 1 && !loginMember.id.equals(member.id) && isFriend == 0}">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
+        	</c:if>	
+    		<c:if test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) && isRequest != 1}">
+    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
+        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
+        	</button>
         	</c:if>
-        	 <c:choose>
-    		<c:when test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) && isRequest != 1}">
-    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
-        	</button>
-        	</c:when>
-        	 <c:when test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) &&  isFriend != 1}">
-    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
-        	</button>
-        	</c:when>
-        	</c:choose>
         	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
         		<input type="hidden" name ="friendId" value="${member.id}" />
         		<input type="hidden" name ="myId" value="${loginMember.id}" />
@@ -163,7 +156,7 @@
          <c:forEach items="${boardList}" var="board" varStatus="vs">
 	        <div class="thumbnail col-sm-4" >     
 	       	 	<input type="hidden" value="${board.no}" id="boardNo" name="no"/>
-	        	<img class="board-main-image" style="width:95%; height:90%; margin-left:21px; "
+	        	<img class="board-main-image" style="width:90%; height:100%; margin-left:21px; "
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
 						alt=""  />
 		      </div>
@@ -402,7 +395,9 @@ function followingApplyFunc(){
 }
 //비공개계정에 친구 추가 클릭
 function requestFollowing1(){
+	if(confirm("팔로잉 요청을 하시겠습니까?")){
 	$(document.requestFollowingFrm).submit();	
+	}	
 }
 //친구추가하기
 function addFollowing(){
@@ -464,28 +459,28 @@ $("#input-file").change((e) => {
 .section-over-div {
     min-height: 160vh;
  }
+#report-box{
+	float:right;
+ 
+} 
 #reportBtn {
     color: white;
     border-color: black;
     background-color:#ff000078;
-    margin-top: -100px;
-    margin-left: 153px;
 }
 .profile-container mt-2{
-
  	border: none;
     border-bottom: solid; 
     border-bottom-width: unset;  
-
 }
 #myInfo {
 	margin-top: 45px;
-	margin-bottom :100px;
+	margin-bottom :60px;
     border: none;
     border-bottom: solid;
     border-color: gray;
-    border-bottom-width: 2px;  
-    height : 400px;
+    border-bottom-width: 1px;  
+    height : 375px;
     margin-left:280px;   
 }
 .tableKey {
@@ -506,7 +501,7 @@ $("#input-file").change((e) => {
 	border : none;
 } 
 .boardRow {
-    width: 900px;
+    width: 65%;
    margin : auto;
 }
 .board-main-image{
