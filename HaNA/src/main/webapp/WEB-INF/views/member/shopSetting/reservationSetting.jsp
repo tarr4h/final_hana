@@ -113,8 +113,8 @@ tbody td:hover {
 					<tbody></tbody>
 					<tfoot>
 						<tr>
-							<td colspan=7 style="text-align:center;">
-								<input type="button" id="tableAppendBtn" value="추가" data-calnum="0"/>
+							<td colspan=8 style="text-align:center;">
+								<input type="button" id="tableAppendBtn" value="추가" data-calnum="0" style="width:100%;height:100%;"/>
 							</td>
 						</tr>
 					</tfoot>

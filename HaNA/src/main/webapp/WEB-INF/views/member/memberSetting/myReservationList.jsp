@@ -94,7 +94,6 @@
 	
 	/* 일자별 list 불러오기 func */
 	function setDate(e){
-		console.log($("#resYear").val(), $("#resMonth").val(), e);
 		$("#selectDate").val(e);
 		$(".dateBtn").css('background-color', '#ffffff');
 		$(`#dateBtn\${e}`).css('background-color', 'green');
@@ -148,6 +147,7 @@
 					<tr>
 						<th>예약일</th>
 						<th>업체</th>
+						<th>테이블</th>
 						<th>시간</th>
 						<th>인원</th>
 						<th>상태</th>
@@ -164,6 +164,9 @@
 							<td>\${resDate.getFullYear()}-\${resDate.getMonth()+1}-\${resDate.getDate()}</td>
 							<td>
 								<a href="${pageContext.request.contextPath}/member/shopView/\${e.shopId}">\${e.shopName}(\${e.shopId})</a>
+							</td>
+							<td>
+								\${e.tableName}
 							</td>
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
 							<td>
@@ -244,6 +247,7 @@
 					<tr>
 						<th>예약일</th>
 						<th>업체</th>
+						<th>테이블</th>
 						<th>시간</th>
 						<th>인원</th>
 						<th>후기 작성하기</th>
@@ -257,6 +261,9 @@
 							<td>\${resDate.getFullYear()}-\${resDate.getMonth()+1}-\${resDate.getDate()}</td>
 							<td>
 								<a href="${pageContext.request.contextPath}/member/shopView/\${e.shopId}">\${e.shopName}(\${e.shopId})</a>
+							</td>
+							<td>
+								\${e.tableName}
 							</td>
 							<td>\${e.timeStart} ~ \${e.timeEnd}</td>
 							<td>
