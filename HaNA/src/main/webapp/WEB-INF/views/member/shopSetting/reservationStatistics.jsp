@@ -196,6 +196,7 @@ footer {
 			  		<!-- 방문자 평균 AREA -->
 				  	<div class="contentArea visitorStats" style="display:none;">
 						<h3>총 방문 인원은 ${visitorAll }명 입니다.</h3>
+						<p>* 비공개 회원은 차트에 포함되지 않습니다.</p>
 					  	<!-- google chart -->
 				 		<div id="chart_div"></div>
 					</div>
@@ -240,12 +241,12 @@ google.charts.setOnLoadCallback(drawStacked2);
 function drawStacked() {
       var data = google.visualization.arrayToDataTable([  
         ['연령대', '남', '여'],
-        ['10대', 30, 46],
-        ['20대', 27, 59],
-        ['30대', 21, 79],
-        ['40대', 11, 13],
-        ['50대', 8, 2],
-        ['60대 이상', 1, 3]
+        ['10대', ${ageGroup.groupOneMale}, ${ageGroup.groupOneFemale}],
+        ['20대', ${ageGroup.groupTwoMale}, ${ageGroup.groupTwoFemale}],
+        ['30대', ${ageGroup.groupThrMale}, ${ageGroup.groupThrFemale}],
+        ['40대', ${ageGroup.groupFouMale}, ${ageGroup.groupFouFemale}],
+        ['50대', ${ageGroup.groupFivMale}, ${ageGroup.groupFivFemale}],
+        ['60대 이상', ${ageGroup.groupSixMale}, ${ageGroup.groupSixFemale}]
       ]);
 
       var options = {

@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="프로필 설정" name="title"/>
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberSetting.css" />
 <sec:authentication property="principal" var="loginMember"/>
 
 <c:if test="${not empty msg}">
