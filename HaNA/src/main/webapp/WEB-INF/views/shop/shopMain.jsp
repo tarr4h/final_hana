@@ -19,7 +19,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
 <!-- 우측 공간확보 -->
 <section class="body-section"
 	style="width: 200px; height: 100%; float: right; display: block;">
@@ -33,7 +32,8 @@
 			<table class="table table-striped table-dark my-0">
 				<thead>
 					<tr>
-						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle">HashTag Ranking</th>
+					
+						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><i class="fa-solid fa-crown"></i>HashTag Ranking<i class="fa-solid fa-crown"></i></th>
 					</tr>
 					<tr>
 						<th scope="col">no</th>  
@@ -226,24 +226,32 @@ function scrollPage(){
 					const max = list.length;
 					console.log("list" , list);	
 					// list.TAG_NAME 값 비교가 안되서 어차피 tag_name은 있거나 없거나 이니까 변수로 옮겨서 null 체크 
-				 	var  tagName ="";				 	
+				 	var  tagName = 0;				 	
 					for(var i =0; i<list.length; i++){
-						 tagName = list[i].TAG_NAME;
+						 tagName = list[i].hashTags.length;
 					}
 					 
 					
-				if(tagName == null){ // 해시태그 없을때
+				if(tagName == 0){ // 해시태그 없을때
 					if(startNum == 0 ){
 							  for(var i=0; i<endNum; i++){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
+							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+							    for(var j = 0; j < list[i].hashTags.length; j++){
+							    	if(j == 0){
+							    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+							    	} else if(j == list[i].hashTags.length - 1){
+							    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+							    	} else {
+							    		htmlOut += '#' + list[i].hashTags[j];
+							    	}
+							    };
 								$('#shopList').append(htmlOut);
 								// list[i].ID가 마지막이라면 return
 								if(i == max -1){
@@ -259,10 +267,17 @@ function scrollPage(){
 								  //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
-								    
+								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+								    for(var j = 0; j < list[i].hashTags.length; j++){
+								    	if(j == 0){
+								    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+								    	} else if(j == list[i].hashTags.length - 1){
+								    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+								    	} else {
+								    		htmlOut += '#' + list[i].hashTags[j];
+								    	}
+								    };
 									$('#shopList').append(htmlOut);
 									// list[i].ID가 마지막이라면 return
 									if(i == max -1){
@@ -271,7 +286,7 @@ function scrollPage(){
 								
 						 	}
 						}
-				}else if (tagName != null){ // 해시태그 있을때	
+				}else if (tagName != 0){ // 해시태그 있을때	
 					/* $("#shopList").empty(); */ //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<list.length; i++){
@@ -279,11 +294,19 @@ function scrollPage(){
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
+								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-								htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
+							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+							    for(var j = 0; j < list[i].hashTags.length; j++){
+							    	if(j == 0){
+							    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+							    	} else if(j == list[i].hashTags.length - 1){
+							    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+							    	} else {
+							    		htmlOut += '#' + list[i].hashTags[j];
+							    	}
+							    };	
 								$('#shopList').append(htmlOut); 
 								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
@@ -299,9 +322,17 @@ function scrollPage(){
 									 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';		
+								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+								    for(var j = 0; j < list[i].hashTags.length; j++){
+								    	if(j == 0){
+								    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+								    	} else if(j == list[i].hashTags.length - 1){
+								    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+								    	} else {
+								    		htmlOut += '#' + list[i].hashTags[j];
+								    	}
+								    };	
 									$('#shopList').append(htmlOut);
 									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
 									// list[i].ID가 마지막이라면 return

@@ -118,25 +118,11 @@ public class MemberController {
 		log.info("member={}", member);
 		model.addAttribute("member", member);
 		
-		
 		//게시글 목록 가져오기
 		List<Board> boardList = memberService.selectBoardList(id);
 		log.info("boardList = {}", boardList);
 		
 		model.addAttribute("boardList", boardList);
-		
-		// 업체인 경우 shop 정보 + 리뷰 게시글 가져오기
-		if(member.getAccountType() == 0) {
-			Shop shopInfo = memberService.selectOneShopInfo(id);
-			log.info("shopInfo = {}", shopInfo);
-			model.addAttribute("shopInfo", shopInfo);
-			
-			List<Board> reviewList = memberService.selectShopReviewList(shopInfo.getId());
-			model.addAttribute("reviewList", reviewList);
-			log.info("reviewLIst = {}", reviewList);
-			
-			return "/member/"+"shopView";
-		};
 		
 		//친구라면 
 		 Member loginMember = (Member) authentication.getPrincipal();
@@ -152,6 +138,11 @@ public class MemberController {
 		 log.info("isFriend={}", isFriend);
 		 model.addAttribute("isFriend", isFriend);
 		 
+		 //내가 팔로우했는가
+		 int isFollow = memberService.checkFollow(map);
+		 log.info("isFollow={}", isFollow);
+		 model.addAttribute("isFollow", isFollow);
+		 
 		 //비공개계정에 요청중인지
 		 int isRequest = memberService.isRequestFriend(map);
 		 log.info("isRequest = {}", isRequest);
@@ -161,8 +152,20 @@ public class MemberController {
 		 int request = memberService.followingRequest(map);
 		 log.info("request={}", request);
 		 model.addAttribute("request", request);
- 
-			return "/member/"+"memberView";
+		
+		// 업체인 경우 shop 정보 + 리뷰 게시글 가져오기
+		if(member.getAccountType() == 0) {
+			Shop shopInfo = memberService.selectOneShopInfo(id);
+			log.info("shopInfo = {}", shopInfo);
+			model.addAttribute("shopInfo", shopInfo);
+			
+			List<Board> reviewList = memberService.selectShopReviewList(shopInfo.getId());
+			model.addAttribute("reviewList", reviewList);
+			log.info("reviewLIst = {}", reviewList);
+			
+			return "/member/"+"shopView";
+		};
+			return "/member/"+ view;
 		}
 	 
 	

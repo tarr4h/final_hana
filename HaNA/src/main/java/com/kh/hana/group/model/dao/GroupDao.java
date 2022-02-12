@@ -109,6 +109,13 @@ public interface GroupDao {
 
 	public List<GroupBoard> selectGroupBoardListByHashtag(String hashtag);
 
-	public List<Group> selectGroupListByVisitCount(Map<String, Object> param);
+	public List<Map<String,Object>> selectGroupListByVisitCount(Map<String, Object> param);
 
+	public int selectAllGroupCount();
+
+	public int selectAllGroupCountByHashtag(Map<String, Object> param);
+
+	public List<Map<String, Object>> selectGroupListByMemberCount(Map<String, Object> param);
+
+	public List<Map<String, Object>> selectGroupListByApplyCount(Map<String, Object> param);
 }

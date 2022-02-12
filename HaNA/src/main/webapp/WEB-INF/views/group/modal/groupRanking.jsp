@@ -21,7 +21,7 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="select-category container">
 							<span onclick="$('#hashtagListModal-ranking').modal('show');">해시태그 선택&nbsp;&nbsp;&nbsp;</span>
 							<select name="category" id="category">
-								<option value="visit">오늘 방문</option>
+								<option value="visit">방문자 수</option>
 								<option value="member">회원 수</option>
 								<option value="apply">가입신청 수&nbsp;</option>
 							</select>						
@@ -31,47 +31,12 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 				<c:if test="${groupRankingList.size() eq 0}">
 					<div class="no-ranking-msg">존재하는 그룹이 없습니다.</div>
 				</c:if>
-				<c:forEach items="${recommendedGroupList}" var="group" varStatus="vs">
-				<div class="group-ranking-list" style="width:60%; margin:auto; margin-top:15px; margin-bottom:15px;">
-					<div class="pointer row" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${group.groupId}'">
-						<div class="group-container-section1 col-sm-5">
-							<div class="group-modal-profile-container">
-								<c:if test="${empty group.image}">
-									<img
-										id="group-profile"
-										src="${pageContext.request.contextPath}/resources/images/user.png"
-										alt=""
-										 />
-								</c:if>
-								<c:if test="${not empty group.image}">
-									<img
-										id="group-profile"
-										src="${pageContext.request.contextPath}/resources/upload/group/profile/${group.image}"
-										alt=""/>
-								</c:if>
-							</div>
-						</div>
-						<div class="group-container-section2 col-sm-7">
-							<div class="ranking-group-list-info-container">
-								<div>
-									<span class="group-list-groupId">${group.groupId}</span>
-								</div>
-								<div>
-									<span class="group-list-groupName">${group.groupName}</span>
-								</div>		
-								<div>
-									<c:forEach items="${group.hashtag}" var="hashtag">
-										<span class="group-list-hashtag">#${hashtag}&nbsp;</span>
-									</c:forEach>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div id="ranking-box">
 				</div>
-					<br />
-				</c:forEach>
 			</div>
-			<div class="modal-footer"></div>
+			<div class="modal-footer">
+			<div id="pagebar-box" style="margin:auto;"></div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -133,9 +98,60 @@ function getGroupRanking(cPage){
 			hashtag
 		},
 		success(data){
-			console.log(data);
+			makeGroupList(data,category);
+			makePageBar(data);
 		},
 		error:console.log
 	})
 }
+function makeGroupList(data,category){
+	$("#ranking-box").empty();
+	let msg;
+	if(category == 'visit'){
+		msg="오늘 방문";
+	}
+	else if(category == 'member'){
+		msg="회원 수";
+	}
+	else if(category == 'apply'){
+		msg="가입신청 수";
+	}
+	$.each(data.rankingGroupList,(i,e)=>{
+		let div = `<div class="group-ranking-list" style="width:60%; margin:auto; margin-top:27px; margin-bottom:15px;">
+			<div class="pointer row" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/\${e.groupId}'">
+			<div class="group-container-section1 col-sm-5">
+				<div class="group-modal-profile-container">
+					<img
+						id="group-profile"
+						src="${pageContext.request.contextPath}/resources/upload/group/profile/\${e.image}"
+						alt=""/>
+				</div>
+			</div>
+			<div class="group-container-section2 col-sm-7">
+				<div class="ranking-group-list-info-container">
+					<div>
+						<span class="group-list-groupId">\${e.groupId}</span>
+					</div>
+					<div>
+						<span class="group-list-groupName">\${e.groupName}</span>
+					</div>		
+					<div>
+						<span class="group-list-hashtag">\${msg} : \${e.category}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>`
+	$("#ranking-box").append(div);
+	})
+	
+}
+function makePageBar(data){
+	$("#pagebar-box").empty();
+	console.log(data.pagebar);
+	$("#pagebar-box").append(data.pagebar);
+}
+$("#pagebar-box").click((e)=>{
+	getGroupRanking($(e.target).data('page'));
+})
 </script>

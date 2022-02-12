@@ -79,6 +79,7 @@ tbody td:hover {
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/hashtag'">해시태그 설정</li>
 			  <li class="list-group-item active" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/reservationSetting'">예약 관리</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/reservationPriceSetting'">요금 관리</li>
+				<li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/shop/reservationStatistics'">예약 통계</li>	
 			</ul>
         </div>
         <!-- 설정 영역 -->
@@ -112,8 +113,8 @@ tbody td:hover {
 					<tbody></tbody>
 					<tfoot>
 						<tr>
-							<td colspan=7 style="text-align:center;">
-								<input type="button" id="tableAppendBtn" value="추가" data-calnum="0"/>
+							<td colspan=8 style="text-align:center;">
+								<input type="button" id="tableAppendBtn" value="추가" data-calnum="0" style="width:100%;height:100%;"/>
 							</td>
 						</tr>
 					</tfoot>

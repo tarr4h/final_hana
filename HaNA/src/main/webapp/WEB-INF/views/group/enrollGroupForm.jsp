@@ -53,7 +53,6 @@
                 		<div class="modal-footer"> <button type="button" id="submitBtn" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px; width:100%;" data-dismiss="modal" aria-label="Close">Submit</button> </div>
                     </form:form>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -69,7 +68,5 @@
 	})
 </script>
 
-<style>
-    </style>
 </body>
 </html>

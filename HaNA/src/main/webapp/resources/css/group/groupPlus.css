@@ -387,3 +387,14 @@ width:80%; height:40px; color:gray; font-weight:400;
 .group-ranking-select-container .select-category.container span:hover{
 	cursor:pointer;
 }
+
+#pagebar-box a {
+	text-decoration: none;
+	color:black;
+}
+.cpage {
+	color:red;
+}
+#pagebar-box:hover {
+	cursor:pointer;
+}

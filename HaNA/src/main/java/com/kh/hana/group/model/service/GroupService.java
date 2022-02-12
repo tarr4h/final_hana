@@ -108,7 +108,15 @@ public interface GroupService {
 
 	List<GroupBoard> selectGroupBoardListByHashtag(String hashtag);
 
-	List<Group> selectGroupListByVisitCount(Map<String, Object> param);
+	List<Map<String,Object>> selectGroupListByVisitCount(Map<String, Object> param);
+
+	int selectAllGroupCount();
+
+	int selectAllGroupCountByHashtag(Map<String, Object> param);
+
+	List<Map<String, Object>> selectGroupListByMemberCount(Map<String, Object> param);
+
+	List<Map<String, Object>> selectGroupListByApplyCount(Map<String, Object> param);
 
 	
 }

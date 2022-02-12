@@ -12,7 +12,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberView.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberView.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!-- 우측 공간확보 -->
 <section class="body-section" style="width:200px;height:100%;float:right;display:block;">
@@ -30,7 +30,7 @@
 	</script>
 </c:if>
  
-<div class="container mt-2">
+<div class="profile-container mt-2">
     <div class="row" id="myInfo">   	
     	<!-- 프로필이미지 영역 -->
         <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
@@ -61,7 +61,7 @@
     		<span style="font-weight:bold">비공개</span>
     		 </c:when>
     		 <c:otherwise>
-        	 <button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
+        	 <button  type="button" class="btn btn-outline-dark" id="btn-following-list">${followerCount}명</button>
         	 </c:otherwise>
         	 </c:choose>
         	&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -71,45 +71,41 @@
     		<span style="font-weight:bold">비공개</span>
     		 </c:when>
     		 <c:otherwise>
-        	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button>
+        	 <button  type="button" class="btn btn-outline-dark" id="btn-follower-list">${followingCount}명</button>
         	  </c:otherwise>
         	 </c:choose> 
 	
-
+    		<!-- 신고버튼 -->
+        	<c:if test="${!loginMember.id.equals(member.id) }">
+ 			 <div id="report-box"><input type="button" id="reportBtn" class="btn btn-danger" value="신고"></div>
+        	</c:if>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 --> 
 			<c:if test="${loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="goSetting();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
         	</c:if>
+        	<!-- 친구버튼 -->
         	<c:if test="${member.publicProfile == 1 && !loginMember.id.equals(member.id) && isFriend == 0}">
         	<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="addFollowing()">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
+        	</c:if>	
+    		<c:if test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) && isRequest != 1}">
+    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
+        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
+        	</button>
         	</c:if>
-        	 <c:choose>
-    		<c:when test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) && isRequest != 1}">
-    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
-        	</button>
-        	</c:when>
-        	 <c:when test="${member.publicProfile == 2 && !loginMember.id.equals(member.id) &&  isFriend != 1}">
-    		<button type="button" class="btn btn-outline-dark" id="settingBtn" onclick="requestFollowing1()">
-        		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
-        	</button>
-        	</c:when>
-        	</c:choose>
         	<form:form name="addFollowingFrm" action="${pageContext.request.contextPath}/member/addFollowing" method = "POST">
         		<input type="hidden" name ="friendId" value="${member.id}" />
         		<input type="hidden" name ="myId" value="${loginMember.id}" />
         	</form:form>
-        	
         	 <form:form name="requestFollowingFrm" action="${pageContext.request.contextPath}/member/requestFollowing" method = "POST">
         		<input type="hidden" name ="friendId" value="${member.id}" />
         		<input type="hidden" name ="myId" value="${loginMember.id}" />
         		<input type="hidden" name ="status" value="요청" />
         	</form:form>
- 
+
 
             <br /><br/>
             
@@ -135,21 +131,20 @@
 				</table>
 			</div>
     <c:if test="${loginMember.id.equals(member.id) }">
-        	<button id="btn-add" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
+        	<button id="btn-add" class="writeBtn" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 	</c:if>
 	    <c:if test="${request > 0 && loginMember.id.equals(member.id)}">
     	<button type="button" class="btn btn-secondary" id="requestButton">팔로잉 요청이 있습니다.</button>
     </c:if>
+
 		</div>
    </div>
    
 </div> 
 <br>
 
-<div class="container mt-2">       
-    <div class="row">   
-    </div>
-
+<div class="board-container mt-2">       
+    <div class="boardRow">   
 	<!-- 게시물목록 -->        
  	<c:choose>
     		<c:when test="${member.publicProfile == 2  && loginMember.id != member.id && isFriend != 1}">
@@ -161,18 +156,19 @@
          <c:forEach items="${boardList}" var="board" varStatus="vs">
 	        <div class="thumbnail col-sm-4" >     
 	       	 	<input type="hidden" value="${board.no}" id="boardNo" name="no"/>
-	        	<img class="board-main-image" style="width:100%; height:100%; margin-bottom: 10%"
+	        	<img class="board-main-image" style="width:90%; height:100%; margin-left:21px; "
 						src="${pageContext.request.contextPath}/resources/upload/member/board/${board.picture[0]}"
 						alt=""  />
 		      </div>
-	      <c:if test="${board eq null}">
-	      	<div>게시물 없음 </div>
-	      </c:if>
 	      </c:forEach>
+	      <c:if test="${boardList.isEmpty()}">
+	      	<div><span style="font-size:16px; margin-left:370px; font-weight: bold;">등록된 게시물이 없습니다. 글을 작성해보세요!</span></div>
+	      </c:if>
 	   </div>
 	    </c:otherwise>
  	</c:choose> 
 	</div>
+</div>
   <br/><br/> <br/><br/> <br/><br/> <br/><br/>
 <script>
 $("#requestButton").on( "click", function() {
@@ -224,7 +220,7 @@ $("#btn-follower-list").on( "click", function() {
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
-							<th>팔로잉</th>
+							<th style ="font-size : 14px;">팔로잉</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody">
@@ -250,7 +246,7 @@ $("#btn-follower-list").on( "click", function() {
 				<table class="table" style="text-align: center;" name="modalTable">
 					<thead class="table-light">
 						<tr>
-							<th>팔로워</th>
+							<th style ="font-size : 14px;">팔로워</th>
 						</tr>
 					</thead>
 					<tbody id="modalTbody1">
@@ -258,7 +254,7 @@ $("#btn-follower-list").on( "click", function() {
 				</table>
 			</div>
 			<div class="modal-footer">
-			<!-- <button type="button" class="btn btn-primary">Save changes</button> -->	
+		 
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -407,7 +403,9 @@ function followingApplyFunc(){
 }
 //비공개계정에 친구 추가 클릭
 function requestFollowing1(){
+	if(confirm("팔로잉 요청을 하시겠습니까?")){
 	$(document.requestFollowingFrm).submit();	
+	}	
 }
 //친구추가하기
 function addFollowing(){
@@ -444,7 +442,7 @@ $("#input-file").change((e) => {
 </script>
 <style>
 .private{
-    margin-left: 450px;
+    margin-left: 350px;
     margin-top: 30px;
     margin-bottom: -13;
  }
@@ -468,7 +466,55 @@ $("#input-file").change((e) => {
 }
 .section-over-div {
     min-height: 160vh;
-
+ }
+#report-box{
+	float:right;
+ 
+} 
+#reportBtn {
+    color: white;
+    border-color: black;
+    background-color:#ff000078;
+}
+.profile-container mt-2{
+ 	border: none;
+    border-bottom: solid; 
+    border-bottom-width: unset;  
+}
+#myInfo {
+	margin-top: 45px;
+	margin-bottom :60px;
+    border: none;
+    border-bottom: solid;
+    border-color: gray;
+    border-bottom-width: 1px;  
+    height : 375px;
+    margin-left:280px;  
+}
+.tableKey {
+    width: 17%;
+    font-size: 15px;
+    padding-bottom: 1px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+.tableValue {
+    width: 80%;
+    font-size: 15px;
+    padding-bottom: 6px;
+}
+.writeBtn{
+	border-radius : 50px;
+	background-color : white;
+	border : none;
+} 
+.boardRow {
+    width: 65%;
+   margin : auto;
+}
+.board-main-image{
+cursor: pointer;
+ }
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 

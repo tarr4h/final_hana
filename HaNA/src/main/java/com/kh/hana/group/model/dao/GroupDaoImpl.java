@@ -263,11 +263,37 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List<Group> selectGroupListByVisitCount(Map<String, Object> param) {
+	public List<Map<String,Object>> selectGroupListByVisitCount(Map<String, Object> param) {
 		int offset = (int) param.get("offset");
 		int limit = (int) param.get("limit");
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return session.selectList("group.selectGroupListByVisitCount",param,rowBounds);
+	}
+
+	@Override
+	public int selectAllGroupCount() {
+		return session.selectOne("group.selectAllGroupCount");
+	}
+
+	@Override
+	public int selectAllGroupCountByHashtag(Map<String, Object> param) {
+		return session.selectOne("group.selectAllGroupCountByHashtag",param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectGroupListByMemberCount(Map<String, Object> param) {
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("group.selectGroupListByMemberCount",param,rowBounds);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectGroupListByApplyCount(Map<String, Object> param) {
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("group.selectGroupListByApplyCount",param,rowBounds);
 	}
 	
 

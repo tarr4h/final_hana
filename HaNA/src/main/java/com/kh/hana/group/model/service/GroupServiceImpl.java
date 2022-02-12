@@ -305,8 +305,29 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<Group> selectGroupListByVisitCount(Map<String, Object> param) {
+	public List<Map<String,Object>> selectGroupListByVisitCount(Map<String, Object> param) {
 		return groupDao.selectGroupListByVisitCount(param);
+	}
+
+	@Override
+	public int selectAllGroupCount() {
+		return groupDao.selectAllGroupCount();
+	}
+
+	@Override
+	public int selectAllGroupCountByHashtag(Map<String, Object> param) {
+		return groupDao.selectAllGroupCountByHashtag(param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectGroupListByMemberCount(Map<String, Object> param) {
+		return groupDao.selectGroupListByMemberCount(param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectGroupListByApplyCount(Map<String, Object> param) {
+		return groupDao.selectGroupListByApplyCount(param);
+
 	}
 
 }
