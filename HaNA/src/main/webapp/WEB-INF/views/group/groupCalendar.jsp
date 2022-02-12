@@ -3,8 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link href='${pageContext.request.contextPath}/resources/fullcalendar/main.css' rel='stylesheet' />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/group.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 
 <script src='${pageContext.request.contextPath}/resources/fullcalendar/main.js'></script>
 <script src='${pageContext.request.contextPath}/resources/fullcalendar/ko.js'></script>

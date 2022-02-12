@@ -127,7 +127,9 @@
 								</tr>
 								<tr>
 									<th><span class="tableKey">해시태그</span></th>
-									<td></td>
+									<td>
+										<c:forEach items="${group.hashtag}" var="name"><span class="hashtag">#${name}&nbsp;</span></c:forEach>
+									</td>
 								</tr>
 							</tbody>
 						</table>

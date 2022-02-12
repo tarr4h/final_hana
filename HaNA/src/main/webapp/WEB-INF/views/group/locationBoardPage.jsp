@@ -9,8 +9,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/group.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <sec:authentication property="principal" var="loginMember" />

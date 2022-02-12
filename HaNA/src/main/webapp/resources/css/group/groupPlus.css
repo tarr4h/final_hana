@@ -315,3 +315,41 @@ margin-top:10px;
 	display:none;
 	
 }
+
+.hashtag {
+	color:#6262d0;
+}
+
+/*그룹통계*/
+.statistic-page-label{
+text-align:center;
+margin-top:7vh;
+height:10vh;
+}
+.statistic-container {
+border-top:1px solid gray;
+width:55%;
+min-height:1000px;
+margin:auto;
+margin-bottom:10%;
+}
+.select-graph-box-container {
+padding:50px;
+}
+.statistic-select-box {
+	width:100px;
+	height:35px;
+	text-align:center;
+}
+.graph-memberId {
+text-align:right;
+font-weight:bold;
+}
+.graph-bar {
+margin-top:10px;display:inline-block; background-color:#607d8b; height:50%;
+}
+.graph-bar-container {
+width:80%; height:40px; color:gray; font-weight:400;
+}
+
+
