@@ -87,5 +87,11 @@ public interface ChatDao {
 
 	int notiReadCheck(String id);
 
+	Integer checkMemberGroup(Map<String, Object> param);
+
+	int updateROOMOUTmessage(Map<String, Object> map);
+
+	int roomChatUpdateImage(Group group);
+
 
 }

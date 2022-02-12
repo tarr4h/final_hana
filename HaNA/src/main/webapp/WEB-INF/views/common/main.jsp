@@ -171,10 +171,6 @@ const slideMargin = 0; //슬라이드간의 margin 값
     <!-- 다시만든 main -->
     <main>
     <div class="feeds">
-    <span>회원추천 몇개 더</span>
-    <span>좋아요 ,댓글 알림</span>
-    <span>공유 메세지</span>
-    <span>웹소켓 예외처리</span>
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
@@ -185,13 +181,11 @@ const slideMargin = 0; //슬라이드간의 margin 값
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}">
               <span class="userID main-id point-span">${groupboard.writer}</span>
     </div>
-    		<div style="display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${groupboard.groupId}'">
+    <a href="javascript:void(0);" onclick="boardDetailVeiw('${groupboard.no}','1','${groupboard.writer}','${groupboard.groupId}')"">
     		<img style="width:32px;height:32px;margin-left: 250px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
     		<span>${groupboard.groupName} 바로가기</span>
-    		</div>
-<%--     		<div>
-    		<button onclick="getPageDetail('${groupboard.no}');">상세게시글</button>
-    		</div> --%>
+    </a>
+
     </td>
     </tr>
     <tr>
@@ -511,6 +505,9 @@ const deleteLike${vss.index }=()=>{
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${board.writerProfile}">
               <span class="userID main-id point-span">${board.writer}</span>
     </div>
+    <a style="margin-left: 330px;" href="javascript:void(0);" onclick="boardDetailVeiw('${board.no}','0','${board.writer}','')">
+    		<span>상세보기</span>
+    </a>
     </td>
     </tr>
     <tr>
@@ -711,9 +708,9 @@ $.ajax({
 	},
 	method: "GET",
 	success(resp){
-		console.log(resp);
+/* 		console.log(resp);
+		console.log("0${vss.index }=",i0${vss.index }); */
 		i0${vss.index } = resp;
-		console.log("0${vss.index }=",i0${vss.index });
 		$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
 	},
     error:console.log
@@ -896,7 +893,7 @@ const DMsend=(writer)=>{
 			success(resp){
 				console.log(resp);
 				if(resp !== 0){
-					location.href = '${pageContext.request.contextPath}/chat/chat.do';
+					location.href = `${pageContext.request.contextPath}/chat/chat.do?\${resp}`;
 					<!-- 나중에 바로 채팅방 접속까지 고려 -->
 				}
 				else
@@ -1036,10 +1033,16 @@ const commetLevel2Write=(index,boardNo,commentwriter)=>{
 	$(".commentLevel2Message").empty();
  	$("li#Level2Comment"+index+":last").append(comment);
 }
+const boardDetailVeiw=(boardNo, type,writer,groupId) =>{
+	if(type === '1'){
+		location.href = `${pageContext.request.contextPath}/group/groupPage/\${groupId}?\${boardNo}`;
+	}
+	else{
+		location.href = `${pageContext.request.contextPath}/member/memberView/\${writer}?\${boardNo}`;
+	}
+};
 </script>
     <style>
     .commentLevel2{margin-left: 50px}
     </style>
-    
-
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

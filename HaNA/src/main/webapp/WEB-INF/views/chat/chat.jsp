@@ -31,6 +31,8 @@
 </c:if>
 </sec:authorize>
 <span>오류있으면 제보좀요</span><br />
+<span>채팅방 입장시 읽음처리</span><br />
+<span>채팅방 입장 후 채팅하다가 답장안하면 안읽씹됨</span><br />
 
 <script>
 let id;
@@ -41,6 +43,12 @@ let picture;
 </sec:authorize>
 $(()=>{
 	roomList();
+	let temp = location.href.split("?");
+ 	if(temp[1] !== undefined){	
+ 	setTimeout(function() {
+		roomchat(temp[1]);
+	}, 1000);
+	}
 });
 
 const roomList = () => {
@@ -496,7 +504,7 @@ const displaychat = (check, e) =>{
 			</div>
 			</div>`
 	}
-	else if(e.message === 'ROOMOUT'){
+	else if(e.message === 'ROOMOUT' || e.message ==='ROOMOUT333'){
 		chat += `<div class="d-flex justify-content-center mb-2">
 			<div class="msg_cotainer_send">
 			\${e.memberId}가 퇴장하셨습니다.

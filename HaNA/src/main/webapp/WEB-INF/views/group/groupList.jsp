@@ -7,7 +7,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <fmt:requestEncoding value="utf-8" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/groupPlus.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="그룹메인" name="title" />
