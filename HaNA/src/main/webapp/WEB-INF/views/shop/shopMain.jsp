@@ -27,6 +27,7 @@
 <section class="body-section">
 	<sec:authentication property="principal" var="loginMember" />
 
+
 	<div class="container mb-4">
 		<div class="row hashTagRank">
 			<table class="table table-striped table-dark my-0">
@@ -35,10 +36,8 @@
 						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><img src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png" style= "width:30px;  margin:5px;
    						 position :relative; bottom :3px;"/>HashTag Ranking<img src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png" style= "width:30px;  margin:5px;
    						 position :relative; bottom :3px;"/></th>
-   						 
 					</tr>
 					<tr>
-					
 						<th scope="col">no</th>  
 						<th scope="col">일간</th>  
 						<th scope="col">주간</th>  
@@ -81,13 +80,14 @@
 		
 		<!-- 거리 설정 영역 -->
 		<div class="row searchArea my-0">
-			<div style="float:left;">
+		
+			<div style="float:left; position: relative; top: 50px;">
 				<label for="dis1">8km</label>
-				<input type="radio" name="maxDistance" id="dis1" value="8" checked/>
+				<input type="radio" name="maxDistance" id="dis1" value="8"checked/>
 				<label for="dis2">4km</label>
 				<input type="radio" name="maxDistance" id="dis2" value="4"/>
 				<label for="dis3">2km</label>
-				<input type="radio" name="maxDistance" id="dis3" value="2"/>
+				<input type="radio" name="maxDistance" id="dis3" value="2" />
 			</div>
 		</div>
 		<!-- 검색 영역 -->
@@ -182,8 +182,6 @@ var hashTagData = ""; // 검색 데이터 잠시 담을 변수
 
 function scrollPage(){	
 	
-	
-
 		//  페이지 들어 왔을때 (태그 선택 후 검색 버튼을 클릭 하지 않았을 경우) 스크롤을 하면 거리기반 매장만 뜨게 
 		if(chkClick == false) {
 			 selectDataArr.length = 0; // 태그 데이터 삭제 
@@ -238,7 +236,7 @@ function scrollPage(){
 					if(startNum == 0 ){
 							  for(var i=0; i<endNum; i++){
 								var htmlOut='';
-								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
@@ -268,7 +266,7 @@ function scrollPage(){
 					}else{ 
 						 	for(var i=startNum; i<endNum; i++){  
 									var htmlOut='';
-									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
+									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
 									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 								    htmlOut += '</div>';
@@ -296,7 +294,7 @@ function scrollPage(){
 					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
 							  for(var i=0; i<list.length; i++){
 								var htmlOut='';
-								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
@@ -322,7 +320,7 @@ function scrollPage(){
 					}else{ 
 						 	for(var i=startNum; i<list.length; i++){  
 									var htmlOut='';
-									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
+									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';	
 									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 								    htmlOut += '</div>';
@@ -412,7 +410,7 @@ function scrollPage(){
         	var tagData = document.createTextNode(hashTagData);     	
 		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
 		    // button style
-		    hashTagBtn.style = 'background-color: #212529;border-radius:13px;border: 2px solid #f8fbff;color: rgb(255 225 90);font-size:13px;padding:5px 10px;font-weight:bold;margin: 4px;';
+		    hashTagBtn.style = 'background-color: #ecb61f;border-radius:13px;border: 2px solid #f8fbff;color: #f9fafb;font-size:16px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
         }
@@ -575,7 +573,7 @@ $(".tagClick").click(function(){
 	 			console.log(list)
 	 			   for(var i=0; i<list.length; i++){
 						var htmlOut='';
-						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
+						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
 						htmlOut += '<div class="shopProfile d-flex">';	
 						htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 					    htmlOut += '</div>';
@@ -597,9 +595,7 @@ $(".tagClick").click(function(){
 	 		error: console.log
 	 		
 	 	});
-			
-	
-	
+
 });
 
 </script>
