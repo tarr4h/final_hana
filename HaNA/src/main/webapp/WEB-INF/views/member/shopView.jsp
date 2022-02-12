@@ -6,7 +6,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberView.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberView.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
