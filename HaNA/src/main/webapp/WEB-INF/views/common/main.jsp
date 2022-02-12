@@ -181,13 +181,11 @@ const slideMargin = 0; //슬라이드간의 margin 값
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${groupboard.writerProfile}">
               <span class="userID main-id point-span">${groupboard.writer}</span>
     </div>
-    		<div style="display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/${groupboard.groupId}'">
+    <a href="javascript:void(0);" onclick="boardDetailVeiw('${groupboard.no}','1','${groupboard.writer}','${groupboard.groupId}')"">
     		<img style="width:32px;height:32px;margin-left: 250px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
     		<span>${groupboard.groupName} 바로가기</span>
-    		</div>
-     		<div>
-    		<button onclick="boardDetailVeiw('${groupboard.no}','1')">상세게시글</button>
-    		</div>
+    </a>
+
     </td>
     </tr>
     <tr>
@@ -507,6 +505,9 @@ const deleteLike${vss.index }=()=>{
               <img class="img-profile pic" src="${pageContext.request.contextPath }/resources/upload/member/profile/${board.writerProfile}">
               <span class="userID main-id point-span">${board.writer}</span>
     </div>
+    <a style="margin-left: 330px;" href="javascript:void(0);" onclick="boardDetailVeiw('${board.no}','0','${board.writer}','')">
+    		<span>상세보기</span>
+    </a>
     </td>
     </tr>
     <tr>
@@ -892,7 +893,7 @@ const DMsend=(writer)=>{
 			success(resp){
 				console.log(resp);
 				if(resp !== 0){
-					location.href = '${pageContext.request.contextPath}/chat/chat.do';
+					location.href = `${pageContext.request.contextPath}/chat/chat.do?\${resp}`;
 					<!-- 나중에 바로 채팅방 접속까지 고려 -->
 				}
 				else
@@ -1032,23 +1033,16 @@ const commetLevel2Write=(index,boardNo,commentwriter)=>{
 	$(".commentLevel2Message").empty();
  	$("li#Level2Comment"+index+":last").append(comment);
 }
-const boardDetailVeiw=(boardNo, type) =>{
-	console.log(boardNo);
-	console.log(type);
-	//1 소모임
+const boardDetailVeiw=(boardNo, type,writer,groupId) =>{
 	if(type === '1'){
-		console.log("11");
-		getPageDetail(boardNo);
-
+		location.href = `${pageContext.request.contextPath}/group/groupPage/\${groupId}?\${boardNo}`;
 	}
 	else{
-		console.log("else");
-		getMemberPageDetail(boardNo);
+		location.href = `${pageContext.request.contextPath}/member/memberView/\${writer}?\${boardNo}`;
 	}
 };
 </script>
     <style>
     .commentLevel2{margin-left: 50px}
     </style>
-
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

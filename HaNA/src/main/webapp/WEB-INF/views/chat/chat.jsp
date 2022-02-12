@@ -43,6 +43,12 @@ let picture;
 </sec:authorize>
 $(()=>{
 	roomList();
+	let temp = location.href.split("?");
+ 	if(temp[1] !== undefined){	
+ 	setTimeout(function() {
+		roomchat(temp[1]);
+	}, 1000);
+	}
 });
 
 const roomList = () => {

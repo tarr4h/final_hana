@@ -144,14 +144,12 @@
 	<sec:authorize access="isAuthenticated()">
 		<script>
 		let today = Date.now()-(9 * 60 * 60 * 1000);
-		
+
 		$(document).ready( function() {
 			connect(1);
 			dmAlarm();
 		});
 		let memberId;
-		let websocketws;
-		
 		<!-- roomNo 전역변수 -->
 		let roomNo;
 		
@@ -222,7 +220,7 @@
 						
 						const date = moment(today).format("YYYY년 MM월 DD일");
 						let tbodyNoti =`<tr>
-		    				<td>\${message226Split[1]} \${date}</td>
+		    				<td>\${ShareMessage[1]} \${date}</td>
 			    			</tr>`;
 						$("tbody#notiTbody").append(tbodyNoti);
 						headerNotiAlarm = headerNotiAlarm + 1;
@@ -261,7 +259,7 @@
 				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${message226Split[1]} \${message226Split[2]}</a>`);
 				const date = moment(today).format("YYYY년 MM월 DD일");
 				let tbodyNoti =`<tr>
-    				<td>\${message226Split[1]} \${message226Split[2]} \${message226Split[2]} \${date}</td>
+    				<td>\${message226Split[1]} \${message226Split[2]} \${date}</td>
 	    			</tr>`;
 				$("tbody#notiTbody").append(tbodyNoti);
 				
@@ -407,6 +405,7 @@
 			/* error:console.log */
 		});
 	})
+	
 </script>
 
 	<div class="section-over-div">

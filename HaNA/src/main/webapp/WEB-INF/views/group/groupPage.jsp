@@ -26,6 +26,13 @@
 <sec:authentication property="principal" var="loginMember" />
 
 <script>
+//게시글 상세보기 시 페이지 이동 후 게시글 출력
+$(document).ready( function() {
+	let temp = location.href.split("?");
+ 	if(temp[1] !== undefined){		
+ 	getPageDetail(temp[1]);
+	}
+});
 let gb; // 스크립트에서 사용할 게시물 정보 
 
 //계정페이지로 이동

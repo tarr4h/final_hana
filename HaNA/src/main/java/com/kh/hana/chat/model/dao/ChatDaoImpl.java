@@ -204,6 +204,11 @@ public class ChatDaoImpl implements ChatDao {
 		return session.delete("chat.notiReadCheck",id);
 	}
 
+	@Override
+	public Integer checkMemberGroup(Map<String, Object> param) {
+		return session.selectOne("chat.checkMemberGroup",param);
+	}
+
 
 
 

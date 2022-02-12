@@ -365,5 +365,15 @@
 		where member_id = #{id}
 	</delete>
 	
+	<select id="checkMemberGroup" resultType="Integer">
+	select 
+		room_no
+	from 
+		chat 
+	where 
+		room_no=(select room_no from chat_room where group_room_id = #{groupId}) 
+		and 
+		member_id = #{loginId}
+	</select>
 
 </mapper>
