@@ -93,11 +93,10 @@
 		<!-- 검색 영역 -->
 		<div class="row searchArea my-0">
 			<nav class="navbar navbar-light bg-light justify-content-end">
-				<span class="navbar-brand mb-0 h1" id="searchTitle">Search
-					HashTag</span>
+				<span class="navbar-brand mb-0 h1" id="searchTitle"><img src="${pageContext.request.contextPath }/resources/images/icons/search.png" style="width: 18px; height: 17px; margin: 3px 3px; position: relative; bottom: 3px;"/></span>
 				<form class="form-inline d-flex">
 					<input class="form-control mr-sm-2" type="search"
-						placeholder="Search" aria-label="Search" id="searchInput">
+						placeholder="# 해시태그를 검색하세요." aria-label="Search" id="searchInput">
 				</form>
 			</nav>
 		</div>
@@ -243,15 +242,20 @@ function scrollPage(){
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+							//    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
+							//    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+								htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
+								htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
 							    for(var j = 0; j < list[i].hashTags.length; j++){
 							    	if(j == 0){
-							    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+							    		//htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];
+							    		 htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
 							    	} else if(j == list[i].hashTags.length - 1){
-							    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+							    		//htmlOut += '#' + list[i].hashTags[j] + '</span>';
+							    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
 							    	} else {
-							    		htmlOut += '#' + list[i].hashTags[j];
+							    		//htmlOut += '#' + list[i].hashTags[j];
+							    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
 							    	}
 							    };
 								$('#shopList').append(htmlOut);
@@ -266,17 +270,17 @@ function scrollPage(){
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';
-								    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
+									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
 								    for(var j = 0; j < list[i].hashTags.length; j++){
 								    	if(j == 0){
-								    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+								    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
 								    	} else if(j == list[i].hashTags.length - 1){
-								    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+								    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
 								    	} else {
-								    		htmlOut += '#' + list[i].hashTags[j];
+								    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
 								    	}
 								    };
 									$('#shopList').append(htmlOut);
@@ -294,23 +298,17 @@ function scrollPage(){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
-								 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
-							
-							 //   htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].SHOP_NAME + '</span>';
-							//    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 5px;"/>'+ list[i].ADDRESS + '</span>';
-							//	htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag.png" style="width: 18px; height: 17px; margin: 3px; position: relative; bottom: 3px;"/>'+ list[i].TAG_NAME + '</span>';	
-							   
-							    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
 							    for(var j = 0; j < list[i].hashTags.length; j++){
 							    	if(j == 0){
-							    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+							    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
 							    	} else if(j == list[i].hashTags.length - 1){
-							    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+							    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
 							    	} else {
-							    		htmlOut += '#' + list[i].hashTags[j];
+							    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
 							    	}
 							    };	
 
@@ -326,17 +324,17 @@ function scrollPage(){
 									var htmlOut='';
 									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
 									htmlOut += '<div class="shopProfile d-flex">';	
-									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
+									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
 								    for(var j = 0; j < list[i].hashTags.length; j++){
 								    	if(j == 0){
-								    		htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];	
+								    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
 								    	} else if(j == list[i].hashTags.length - 1){
-								    		htmlOut += '#' + list[i].hashTags[j] + '</span>';
+								    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
 								    	} else {
-								    		htmlOut += '#' + list[i].hashTags[j];
+								    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
 								    	}
 								    };	
 									$('#shopList').append(htmlOut);
@@ -414,7 +412,7 @@ function scrollPage(){
         	var tagData = document.createTextNode(hashTagData);     	
 		    document.getElementById('hashTagResult').appendChild(hashTagBtn);
 		    // button style
-		    hashTagBtn.style = 'background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%); background-color:#44c767;border-radius:20px;border:2px solid #18ab29;color:#ffffff;font-size:12px;padding:5px 10px;font-weight:bold;margin: 4px;';
+		    hashTagBtn.style = 'background-color: #212529;border-radius:13px;border: 2px solid #f8fbff;color: rgb(255 225 90);font-size:13px;padding:5px 10px;font-weight:bold;margin: 4px;';
 		    hashTagBtn.appendChild( tagData );
 		    console.log( tagData.nodeValue) // 텍스트 노드의 값을 가져오는 API .nodeValue
         }
@@ -578,13 +576,20 @@ $(".tagClick").click(function(){
 	 			   for(var i=0; i<list.length; i++){
 						var htmlOut='';
 						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].ID +'\'">';
-						htmlOut += '<div class="shopProfile d-flex">';
-						 //  htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png"/>';
-						htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].PICTURE +'"/>';
+						htmlOut += '<div class="shopProfile d-flex">';	
+						htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 					    htmlOut += '</div>';
-					    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].SHOP_NAME + '</span>'
-					    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].ADDRESS + '</span>'
-					    htmlOut += '<span class = "shopScroll">'+'해시태그: '+'#'+ list[i].TAG_NAME + '</span>';	
+					    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
+					    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
+					    for(var j = 0; j < list[i].hashTags.length; j++){
+					    	if(j == 0){
+					    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
+					    	} else if(j == list[i].hashTags.length - 1){
+					    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
+					    	} else {
+					    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
+					    	}
+					    };
 						$('#shopList').append(htmlOut);
 	 			   }
 	 			
