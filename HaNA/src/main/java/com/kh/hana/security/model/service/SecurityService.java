@@ -41,6 +41,8 @@ public class SecurityService implements UserDetailsService {
 			if(restrictedCount == 0) {
 				// user_role이 없는데, 현시각 포함된 제제내역이 없는 경우, user_role을 부여
 				int insertUserRole = securityDao.insertUserRole(username);
+				// user_role 복구 시, 신고내역 S -> Y로 변경
+				int historyS2Y = securityDao.updateReportHistoryS2Y(username);
 			}
 		}
 		UserDetails member = securityDao.loadUserByUsername(username);

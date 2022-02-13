@@ -774,7 +774,15 @@ public class MemberController {
 			return ResponseEntity.ok(result);
 		}
 	
-	
+		@GetMapping("/selectRestrictionData")
+		public ResponseEntity<?> selectRestrictionData(@RequestParam String id){
+			log.info("id = {}", id);
+			
+			Map<String, Object> data = memberService.selectRestrictionData(id);
+			log.info("data = {}", data);
+			
+			return ResponseEntity.ok(data);
+		}
 	
 
 }
