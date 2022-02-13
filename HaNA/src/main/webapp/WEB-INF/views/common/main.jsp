@@ -183,7 +183,7 @@ const slideMargin = 0; //슬라이드간의 margin 값
     </div>
     <a href="javascript:void(0);" onclick="boardDetailVeiw('${groupboard.no}','1','${groupboard.writer}','${groupboard.groupId}')"">
     		<img style="width:32px;height:32px;margin-left: 250px;" src="${pageContext.request.contextPath }/resources/upload/group/profile/${groupboard.groupImage}">
-    		<span>${groupboard.groupName} 바로가기</span>
+    		<span>${groupboard.groupName}</span>
     </a>
 
     </td>
@@ -684,7 +684,7 @@ const commetWrite0${vss.index}=()=>{
 		    const data = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `${board.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${board.no}@일반@null`,
+		            "message"   : `${board.writer}@${loginMember.id}님이 댓글을 등록했습니다.@${board.no}@일반@${board.writer}`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
@@ -775,7 +775,7 @@ const insertLike0${vss.index }=()=>{
 			    const data = {
 			            "roomNo" : 226,
 			            "memberId" : `${loginMember.id}`,
-			            "message"   : `${board.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@${board.no}@일반@null`,
+			            "message"   : `${board.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@${board.no}@일반@${board.writer}`,
 			            "picture" : `${loginMember.picture}`,
 			            "messageRegDate" : today
 			        }; 

@@ -355,6 +355,7 @@
 				</otherwise>
 			</choose>
 	#{boardType},
+	#{idORwriter},
 	default)
 	</insert>
 	

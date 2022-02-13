@@ -255,40 +255,19 @@
 			}
 			
 			else if(eSplit[4] === '226'){
-				console.log("eSplit[4] === 226 입장");
 				let message226Split = eSplit[1].split("@");
-				console.log("message226Split[0] = ",message226Split[0]);
-				console.log("message226Split[1] = ",message226Split[1]);
-				console.log("message226Split[2] = ",message226Split[2]);
-				console.log("message226Split[3] = ",message226Split[3]);
-				console.log("message226Split[4] = ",message226Split[4]);
 			 	beep2();
 				const date = moment(today).format("YYYY년 MM월 DD일");
 				let tbodyNoti =``;
 				if(message226Split[3] === '일반'){
-					//일반 대댓글 boardwriter를 가져와서 boardNo
-					if(message226Split[4] !== null){
-						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
-						tbodyNoti =`<tr>
-		    				<td><a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
-			    			</tr>`;		
-					}
-					//boardwriter가 이미 있으니 그냥 boardNo
-					else{
-						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[0]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
-						tbodyNoti =`<tr>
-		    				<td><a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[0]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
-			    			</tr>`;		
-					}
-		
+				//일반				
+				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
+				tbodyNoti =`<tr>
+    				<td><a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
+	    			</tr>`;	
 				}
-				//소모임은 그냥 groupId에 boardNo하면됨
+				//소모임
 				else{
-					console.log("eSplit[0] =",eSplit[0]);
-					console.log("eSplit[1] =",eSplit[1]);
-					console.log("eSplit[2] =",eSplit[2]);
-					console.log("eSplit[3] =",eSplit[3]);
-					console.log("eSplit[4] =",eSplit[4]);
 					$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/group/groupPage/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
 					tbodyNoti =`<tr>
 	    				<td><a href="${pageContext.request.contextPath}/group/groupPage/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
@@ -402,11 +381,20 @@
 					if(resp.length !== '0'){
 						let tbodyNoti =``;
 							$(resp).each((i, noti) => {
-								const {memberId, message, boardNo,regDate} = noti;
+								const {memberId, message, boardNo,boardType,idORwriter, regDate} = noti;
 								const date = moment(regDate).format("YYYY년 MM월 DD일");
-								tbodyNoti += `<tr>
-				    				<td>\${message} \${boardNo} \${date}</td>
-					    			</tr>`;
+								console.log("boardType = ",boardType);
+								console.log("idORwriter = ",idORwriter);
+								if(boardType === '1'){
+									tbodyNoti += `<tr>
+					    				<td><a href="${pageContext.request.contextPath}/group/groupPage/\${idORwriter}?\${boardNo}">\${message} \${date}</a></td>
+						    			</tr>`;
+								}
+								else{
+								tbodyNoti +=`<tr>
+				    				<td><a href="${pageContext.request.contextPath}/member/memberView/\${idORwriter}?\${boardNo}">\${message} \${date}</a></td>
+					    			</tr>`;										
+								}
 							});
 							$("tbody#notiTbody").html(tbodyNoti);
 					}

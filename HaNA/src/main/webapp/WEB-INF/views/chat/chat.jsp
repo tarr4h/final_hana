@@ -557,7 +557,7 @@ const displaychat = (check, e) =>{
 				<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
 			</div>
 			<div class="msg_cotainer">
-			\${e.message}
+			\${e.memberId}: \${e.message}
 				<span class="msg_time">\${returnDate}</span>
 			</div>
 		</div>`;
