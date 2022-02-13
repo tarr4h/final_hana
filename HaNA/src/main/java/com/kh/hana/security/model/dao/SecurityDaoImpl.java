@@ -16,4 +16,31 @@ public class SecurityDaoImpl implements SecurityDao {
 		return session.selectOne("security.loadUserByUsername", username);
 	}
 
+	@Override
+	public int selctUserReportCount(String username) {
+		return session.selectOne("security.selectUserReportCount", username);
+	}
+
+	@Override
+	public int deleteUserRole(String username) {
+		return session.delete("security.deleteUserRole", username);
+	}
+
+	@Override
+	public int selectUserRestrictCount(String username) {
+		return session.selectOne("security.selectUserRestrictCount", username);
+	}
+
+	@Override
+	public int selectUserRoleCount(String username) {
+		return session.selectOne("security.selectUserRoleCount", username);
+	}
+
+	@Override
+	public int insertUserRole(String username) {
+		return session.insert("security.insertUserRole", username);
+	}
+	
+	
+
 }

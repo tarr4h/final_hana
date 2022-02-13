@@ -210,6 +210,18 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.checkFollow", map);
 	}
 
+	@Override
+	public int insertReport(Map<String, Object> map) {
+		return session.insert("member.insertReport", map);
+	}
+
+	@Override
+	public int selectReportUser(Map<String, Object> map) {
+		return session.selectOne("member.selectReportUser", map);
+	}
+	
+	
+
 //	@Override
 //	public int checkRefuse(Map<String, Object> map) {
 //		return session.selectOne("member.checkRefuse", map);
