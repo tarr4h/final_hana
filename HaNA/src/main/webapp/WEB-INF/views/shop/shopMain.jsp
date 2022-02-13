@@ -77,19 +77,19 @@
 		</div>
 		
 		<!-- 거리 설정 영역 -->
-		<div class="row searchArea my-0">
-		
-			<div style="float:left; position: relative; top: 50px;">
-				<label for="dis1">8km</label>
+		<div class="row searchArea my-0">		
+			<div class="radioStyle">
 				<input type="radio" name="maxDistance" id="dis1" value="8"checked/>
-				<label for="dis2">4km</label>
+				<label for="dis1"  class="lableStyle">8km</label>
 				<input type="radio" name="maxDistance" id="dis2" value="4"/>
-				<label for="dis3">2km</label>
+				<label for="dis2" class="lableStyle">4km</label>
 				<input type="radio" name="maxDistance" id="dis3" value="2" />
+				<label for="dis3" class="lableStyle" >2km</label>
 			</div>
 		</div>
 		<!-- 검색 영역 -->
 		<div class="row searchArea my-0">
+		
 			<nav class="navbar navbar-light bg-light justify-content-end">
 				<span class="navbar-brand mb-0 h1" id="searchTitle"><img class = "shopSearchImg" src="${pageContext.request.contextPath }/resources/images/icons/search.png"/></span>
 				<form class="form-inline d-flex">
@@ -112,7 +112,7 @@
 		<div class="row shopRank bg-dark text-white">
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-				<span class="d-flex align-items-start"><img class="shopRankingImg"src="${pageContext.request.contextPath }/resources/images/icons/crown1.png" />
+				<span class="d-flex align-items-start"><img class="shopRankingImg"src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png" />
 				</span><span class="mb-4">"조회수 1위"</span>
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
@@ -126,7 +126,7 @@
 			</div>
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-				<span class="d-flex align-items-start"><img  class="shopRankingImg" src="${pageContext.request.contextPath }/resources/images/icons/crown1.png"/>
+				<span class="d-flex align-items-start"><img  class="shopRankingImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png"/>
 				</span><span class="mb-4">"리뷰수 1위"</span>
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
@@ -139,8 +139,8 @@
 			</div>
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-				<span class="d-flex align-items-start"><img class="shopRankingImg" src="${pageContext.request.contextPath }/resources/images/icons/crown1.png"/>
-				</span><span class="mb-4">"예약수 1위"</span>
+				<span class="d-flex align-items-start"><img class="shopRankingImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png"/>
+				</span><span class="mb-4" >"예약수 1위"</span>
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<img class="shopProfileImg"

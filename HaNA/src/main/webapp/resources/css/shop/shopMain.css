@@ -27,7 +27,7 @@
 .shopRank div{
 	height: 300px;
 	border: 1px solid #f9fafb;
-    background-color: #ffbf00;
+    background-color: #559b67;
 }
 .shopProfile.d-flex{
 	width:150px;
@@ -40,14 +40,11 @@
 	height:100%;
 	border-radius:100%;
 }
-
-
 .shopList div{
 	 height: 300px;
 	 border: 1px solid #afb7bf;
 
 }
-
 .searchResultArea {
 	height: 70px;
 	border: 1px solid black;
@@ -73,11 +70,13 @@
 	font-weight: 800;
 }
 .rankingTop3{
-	color: #41464b;
+	color: #dee2e6;
 }
 .mb-4{
-	color: #41464b;
+	color: #dee2e6;
 	font-weight: 800;
+	margin-bottom: 10px !important;
+	
 }
 .shopCrownImg{
 	width: 30px;
@@ -114,9 +113,8 @@
 	bottom: 3px;
 }
 .shopRankingImg{
-	width: 26px; 
-	height: 25px; 
-	margin: 3px; 
+	width: 28px; 
+	height: 28px; 
 	position: relative; 
 	bottom: 2px;
 }
@@ -128,3 +126,70 @@
 	position: relative; 
 	bottom: 5px;
 }
+.radioStyle{
+	position: relative; 
+	top: 50px;
+}
+.radioStyle input[type="radio"]{
+	position: absolute; 
+	width: 1px;
+	height:1px; 
+	margin:-1px; 
+	overflow: hidden; 
+	clip: rect(0,0,0,0); 
+} 
+.radioStyle input[type="radio"] + label{ 
+	display: inline-block; 
+	position: relative; 
+	padding-left: 26px; 
+	cursor: pointer;} 
+.radioStyle input[type="radio"] + label:before{ 
+	content:''; 
+	position: absolute; 
+	left: 0; 
+	top: 3px; 
+	width: 18px; 
+	height: 18px; 
+	text-align: center; 
+	background: #fff; 
+	border: 1px solid #ccc;  
+	border-radius: 50%;
+}
+.radioStyle input[type="radio"]:checked + label:after{
+	content: ''; 
+	position: absolute; 
+	top: 3px; 
+	left: 0; 
+	width: 18px; 
+	height: 18px; 
+	background-color: #a473c2; 
+	border-radius: 50%;
+}
+.radioStyle input[type="radio"]:checked + label{
+ 	color: #be91da;
+}
+.lableStyle{
+	color:#41464b; 
+	margin: 0px 5px 2px 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
