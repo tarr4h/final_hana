@@ -11,6 +11,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <fmt:requestEncoding value="utf-8" />
+<sec:authentication property="principal" var="loginMember"/>
 
 <!-- 게시물 상세보기 Modal-->
 	<div class="modal fade" id="groupPageDetail" tabindex="-1">
@@ -274,11 +275,11 @@ function like(){
 			$(".like").css("display","inline");			 			
  			$(".unlike").css("display","none");
  			getLikeCount();
- 			
+
 		    const data1 = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `\${gb.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${gb.no}@그룹`,
+		            "message"   : `\${gb.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@\${gb.no}@그룹@\${gb.groupId}`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
@@ -508,7 +509,7 @@ function submitCommentFunc(e){
 		    const data1 = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `\${gb.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}@그룹`,
+		            "message"   : `\${gb.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}@그룹@\${gb.groupId}`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
@@ -520,7 +521,7 @@ function submitCommentFunc(e){
 			    const data1 = {
 			            "roomNo" : 226,
 			            "memberId" : `${loginMember.id}`,
-			            "message"   : `\${commentwriter}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}@그룹`,
+			            "message"   : `\${commentwriter}@${loginMember.id}님이 대댓글을 등록했습니다.@\${boardNo}@그룹@\${gb.groupId}`,
 			            "picture" : `${loginMember.picture}`,
 			            "messageRegDate" : today
 			        }; 

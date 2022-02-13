@@ -216,15 +216,17 @@
 				if(eSplit[0]!==memberId){
 					if(eSplit[4] !== roomNo){
 					 	beep2();
-						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${ShareMessage[1]}</a>`);
+						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do?\${eSplit[4]}">\${ShareMessage[1]}</a>`);
 						
 						const date = moment(today).format("YYYY년 MM월 DD일");
 						let tbodyNoti =`<tr>
-		    				<td>\${ShareMessage[1]} \${date}</td>
+		    				<td><a href="${pageContext.request.contextPath}/chat/chat.do?\${eSplit[4]}">\${ShareMessage[1]} \${date}</a></td>
 			    			</tr>`;
 						$("tbody#notiTbody").append(tbodyNoti);
 						headerNotiAlarm = headerNotiAlarm + 1;
 						$("#notiAlarm").text(headerNotiAlarm);
+						headerdmAlarm = headerdmAlarm+1;
+						$("#dmAlarm").text(headerdmAlarm);
 						
 						$("div#headerAlert").css('display','block');
 						setTimeout(function(){
@@ -246,21 +248,51 @@
 					}
 				};
 
-				websocket.close();
-				connect(1);
+			/* 	websocket.close();
+				connect(1); */
 				return
 			}
 			
 			else if(eSplit[4] === '226'){
 				console.log("eSplit[4] === 226 입장");
 				let message226Split = eSplit[1].split("@");
+				console.log("message226Split[0] = ",message226Split[0]);
+				console.log("message226Split[1] = ",message226Split[1]);
+				console.log("message226Split[2] = ",message226Split[2]);
 				console.log("message226Split[3] = ",message226Split[3]);
+				console.log("message226Split[4] = ",message226Split[4]);
 			 	beep2();
-				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${message226Split[1]} \${message226Split[2]}</a>`);
 				const date = moment(today).format("YYYY년 MM월 DD일");
-				let tbodyNoti =`<tr>
-    				<td>\${message226Split[1]} \${message226Split[2]} \${date}</td>
-	    			</tr>`;
+				let tbodyNoti =``;
+				if(message226Split[3] === '일반'){
+					//일반 대댓글 boardwriter를 가져와서 boardNo
+					if(message226Split[4] !== null){
+						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
+						tbodyNoti =`<tr>
+		    				<td><a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
+			    			</tr>`;		
+					}
+					//boardwriter가 이미 있으니 그냥 boardNo
+					else{
+						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[0]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
+						tbodyNoti =`<tr>
+		    				<td><a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[0]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
+			    			</tr>`;		
+					}
+		
+				}
+				//소모임은 그냥 groupId에 boardNo하면됨
+				else{
+					console.log("eSplit[0] =",eSplit[0]);
+					console.log("eSplit[1] =",eSplit[1]);
+					console.log("eSplit[2] =",eSplit[2]);
+					console.log("eSplit[3] =",eSplit[3]);
+					console.log("eSplit[4] =",eSplit[4]);
+					$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/group/groupPage/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
+					tbodyNoti =`<tr>
+	    				<td><a href="${pageContext.request.contextPath}/group/groupPage/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
+		    			</tr>`;	
+				}
 				$("tbody#notiTbody").append(tbodyNoti);
 				
 				$("div#headerAlert").css('display','block');
@@ -296,7 +328,7 @@
 				else{
 			 	beep();
 				let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
-				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
+				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do?\${eSplit[4]}">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
 				$("div#headerAlert").css('display','block');
 				setTimeout(function(){
 					$("div#headerAlert").css('display','none');

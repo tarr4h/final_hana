@@ -21,7 +21,7 @@
 		chat c left join member m 
 		on c.member_id = m.id 
 	where 
-		c.room_no = #{roomNo}  and to_char(message_reg_date, 'YYYY/MM/DD HH24:MI:SS') >= to_char((select MAX(message_reg_date) from chat where message = 'ROOMENTER' and member_id=#{memberId}), 'YYYY/MM/DD HH24:MI:SS')
+		c.room_no = #{roomNo}  and to_char(message_reg_date, 'YYYY/MM/DD HH24:MI:SS') >= to_char((select MAX(message_reg_date) from chat where message = 'ROOMENTER' and member_id=#{memberId} and room_no = #{roomNo}), 'YYYY/MM/DD HH24:MI:SS')
 		order by c.message_reg_date
 	</select>
 	

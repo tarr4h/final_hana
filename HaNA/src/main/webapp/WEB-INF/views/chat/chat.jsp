@@ -517,7 +517,7 @@ const displaychat = (check, e) =>{
 		if(check === 'right'){
 		chat += `<div class="d-flex justify-content-end mb-4">
 		<div class="msg_cotainer_send">
-		\${messageSplit[1]} \${messageSplit[2]}
+		\${messageSplit[1]}
 		<span class="msg_time_send">\${returnDate}</span>
 		</div>
 		<div class="img_cont_msg">
