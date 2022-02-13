@@ -9,34 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="관리자페이지" name="title"/>
 </jsp:include>
-<style>
-.admin-total {
- margin:100px 0px;
- min-height:1100px;
-}
-.admin-side{
-	border-right:1.3px solid gray;
-	padding-right:70px;
-}
-.admin-side-menu {
-width:100%;
-margin-top:200px;
-}
-.admin-side-menu ul{
-	list-style:none;
-	text-align:right;
-}
-.admin-side-menu ul li {
-	margin-bottom:20px;
-}
-
-.admin-side-menu ul li a{
-	color:gray;
-	text-decoration:none;
-	font-size:1.5em;
-	font-weight:500;
-}
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/adminMain.css" />
 <section>
 <div class="row admin-total" >
 	<div class="col-sm-3 admin-side">

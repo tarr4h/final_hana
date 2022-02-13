@@ -121,7 +121,7 @@
 				<!-- 관리자메뉴 -->
 				<sec:authorize access="hasRole('ADMIN')">
 					<li class="nav-item">
-						<a class="nav-link text-light" href="${pageContext.request.contextPath}/admin/adminMain">관리자</a>
+						<a class="nav-link text-light" href="${pageContext.request.contextPath}/admin/searchStatistics">관리자</a>
 					</li>
 				</sec:authorize>
 				    
