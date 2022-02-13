@@ -40,7 +40,7 @@
         	<form:form action="${pageContext.request.contextPath }/member/shopSetting/shopInfo" method="post" name="updateFrm">  
         		<table class="mx-auto">
         		<tr>
-	        		<th><label for="shopName">매장명</label></th>
+	        		<th><label for="shopName"><div style="width:90px; height:70px;">매장명</div></label></th>
 	        		<td>
 	        		<input type="text" class="form-control" name="shopName" id="" value="${shop.shopName }"/> 
 	        		</td> 
@@ -59,8 +59,8 @@
 		        <tr>
 		        	<th><label for="address">주소</label></th>
 		        	<td>
-		        	<input type="text" class="form-control" name="address" value="${shop.address }"/>
 		        	<input type="button" class="form-control" value="검색" onclick="execDaumPostcode();" />
+		        	<input type="text" class="form-control" name="address" value="${shop.address }"/>
 		        	<input type="text" class="form-control" name="addressDetail" value="${shop.addressDetail }" required/>
 		        	</td>
 				</tr>
@@ -70,7 +70,7 @@
 		        	<input type="hidden" name="id" value="${loginMember.id }"/>
 		        	<br />
 		        	<br />
-		        	<input type="submit" value="저장하기" id="formBtn"/>
+		        	<input type="submit" class="btn btn-outline-success" value="저장하기" id="formBtn" style="margin-left:220px;"/>
         	</form:form>
         	
         </div>
@@ -174,6 +174,23 @@ function execDaumPostcode() {
    }
 textarea.form-control {
     min-height: 150px;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+    text-align: center;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: gray;
+    border-color: gray;
 }
 </style>
 
