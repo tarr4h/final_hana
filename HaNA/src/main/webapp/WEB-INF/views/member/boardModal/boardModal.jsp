@@ -27,7 +27,7 @@
 						 <input type="file" name="upFile" class="form-control" required/>
 					</div>
 					
-						<input type="button" value="파일 추가"  id="appendAttachArea" class="form-control" style="background-color: gainsboro; color:white;"/>
+						<input type="button" value="파일 추가"  id="appendAttachArea" class="form-control" style="background-color: gainsboro; color:black;"/>
 					<br />
 						<div class="font-weight-bold head pb-1"> </div> 
 				    	<textarea id="desc" cols="120" rows="5" placeholder="작성하기" name="content"></textarea>  

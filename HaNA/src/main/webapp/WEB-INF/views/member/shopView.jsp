@@ -269,7 +269,7 @@
 					console.log(e.picture);
 					let tr= `
 					<tr>
-						<td>
+						<td id="test1">
 							<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
 							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].memberId}">\${e.followers[0].memberId}</a>
 						</td>
@@ -304,7 +304,7 @@
 					console.log(e.followers[0].followingId);
 					let tr= `
 						<tr>
-						<td>
+						<td id="test1">
 							<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
 							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].followingId}">\${e.followers[0].followingId}</a>
 						</td>
@@ -442,6 +442,10 @@ cursor: pointer;
 }
 #addFriendBtn{
 margin-left: 500px;
+}
+#test1{
+	border-top:none;
+	border-bottom:none;
 }
 </style> 
  
