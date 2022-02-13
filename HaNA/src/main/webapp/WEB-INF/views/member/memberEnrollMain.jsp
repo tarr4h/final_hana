@@ -24,7 +24,7 @@
 				            <section>
 				                <div class="product">
 				                    <div class="item">
-				                        <div class="left"> <a href="#" class="thumb"> <img src="https://i.imgur.com/yYu3Hbl.jpg" alt=""> </a>
+				                        <div class="left"> <a href="#" class="thumb"> <img src="${pageContext.request.contextPath }/resources/images/enrollFrm/normal.png" alt=""> </a>
 				                            <div class="purchase">
 				                                <h6>일반 사용자</h6>
 				                            </div>
@@ -34,7 +34,7 @@
 				                        </span>
 				                    </div>
 				                    <div class="item">
-				                        <div class="left"> <a href="#" class="thumb"> <img src="https://www.businessinsider.in/thumb/msid-70101317,width-600,resizemode-4,imgsize-87580/tech/ways-to-increase-mobile-phone-speed/13d0e0722dbca5aa91e16a8ae2a744e5.jpg" alt=""> </a>
+				                        <div class="left"> <a href="#" class="thumb"> <img src="${pageContext.request.contextPath }/resources/images/enrollFrm/gap.png" alt=""> </a>
 				                            <div class="purchase">
 				                                <h6>업체 사용자</h6>
 				                            </div>
