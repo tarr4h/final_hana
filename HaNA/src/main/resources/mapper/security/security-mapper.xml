@@ -34,4 +34,48 @@
 			</constructor>
 		</collection>
 	</resultMap>
+	
+	<select id="selectUserReportCount" parameterType="string" resultType="int">
+		select
+		    count(*)
+		from
+		    report_history
+		where
+		    id = #{username}
+		    and
+		    status = 'N'
+	</select>
+	
+	<delete id="deleteUserRole" parameterType="string">
+		delete from authority
+		where
+		    member_id = #{username}
+		    and
+		    authority = 'ROLE_USER'
+	</delete>
+	
+	<select id="selectUserRestrictCount" parameterType="string" resultType="int"> 
+		select
+			count(*)
+		from
+			user_restricted
+		where
+			restricted_date > sysdate
+	</select>
+	
+	<select id="selectUserRoleCount" parameterType="string" resultType="int">
+		select
+		    count(*)
+		from
+		    authority
+		where
+		    member_id = #{username}
+		    and
+		    authority = 'ROLE_USER'
+	</select>
+	
+	<insert id="insertUserRole" parameterType="string">
+		insert into authority
+		values(#{username}, 'ROLE_USER')
+	</insert>
 </mapper>

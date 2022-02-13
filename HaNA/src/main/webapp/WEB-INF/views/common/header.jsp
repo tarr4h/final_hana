@@ -61,6 +61,7 @@
 		  </button>
 		  <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
 		    <ul class="navbar-nav">
+		    <sec:authorize access="hasRole('USER')">
 		      <li class="nav-item">
 					<button id="notifyBtn">noti <span class="badge" id="notiAlarm"></span></button>
 					<div id="notiArea">
@@ -92,6 +93,7 @@
 		      <li class="nav-item">
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM<span class="badge" id="dmAlarm"></span></a>
 		      </li>
+		      </sec:authorize>
 		      </sec:authorize>
 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">

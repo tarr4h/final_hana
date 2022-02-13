@@ -259,6 +259,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.checkFollow(map);
 	}
 
+	@Override
+	public int insertReport(Map<String, Object> map) {
+		// 제제 전 신고내역에 신고한 유저 포함 여부 확인
+		int checkReport = memberDao.selectReportUser(map);
+		// 신고내역이 없는 경우에만 신고되도록 처리
+		if(checkReport == 0) {
+			return memberDao.insertReport(map);
+		} else {
+			return 0;
+		}
+	}
+
 //	@Override
 //	public int checkRefuse(Map<String, Object> map) {
 //		return memberDao.checkRefuse(map);
