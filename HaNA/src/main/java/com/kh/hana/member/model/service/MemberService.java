@@ -91,6 +91,8 @@ public interface MemberService {
 
 	int insertReport(Map<String, Object> map);
 
+	Map<String, Object> selectRestrictionData(String id);
+
 	//int checkRefuse(Map<String, Object> map);
 
 	 

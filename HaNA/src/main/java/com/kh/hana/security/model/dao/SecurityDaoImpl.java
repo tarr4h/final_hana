@@ -40,6 +40,11 @@ public class SecurityDaoImpl implements SecurityDao {
 	public int insertUserRole(String username) {
 		return session.insert("security.insertUserRole", username);
 	}
+
+	@Override
+	public int updateReportHistoryS2Y(String username) {
+		return session.update("security.updateReportHistoryS2Y", username);
+	}
 	
 	
 

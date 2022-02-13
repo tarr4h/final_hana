@@ -1,10 +1,10 @@
 package com.kh.hana.admin.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.HashMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.hana.admin.model.service.AdminService;
 import com.kh.hana.group.model.service.GroupService;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,15 @@ public class AdminController {
 	@GetMapping("/searchStatistics")
 	public void searchStatistics() {}
 	
+	@GetMapping("/restrictionList")
+	public void restrictionList(@RequestParam(defaultValue="1") int cPage) {
+    	int limit = 10;
+    	int offset = (cPage -1) * limit;
+		
+		List<Map<String, Object>> restrictedUserList = adminService.selectRestrictionList(limit, offset);
+		
+	}
+
 	@GetMapping("/getStatics")
 	public ResponseEntity<List<Map<String,Object>>> getStatics(@RequestParam String category, @RequestParam int day){
 		try {
@@ -79,6 +89,5 @@ public class AdminController {
 			throw e;
 		}
 	}
-	
-	
+
 }
