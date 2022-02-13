@@ -14,10 +14,12 @@
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberView.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 <!-- 우측 공간확보 -->
 <section class="body-section" style="width:200px;height:100%;float:right;display:block;">
 <span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
 </section>
+
 <section>
  <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">
@@ -145,7 +147,7 @@
         	<button id="btn-add" class="writeBtn" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 	</c:if>
 	    <c:if test="${request > 0 && loginMember.id.equals(member.id)}">
-    	<button type="button" class="btn btn-secondary" id="requestButton">팔로잉 요청이 있습니다.</button>
+    	<button type="button" class="btn btn-success" id="requestButton" style="font-weight: bold">팔로잉 요청이 있습니다.</button>
     </c:if>
 
 		</div>
@@ -173,7 +175,7 @@
 		      </div>
 	      </c:forEach>
 	      <c:if test="${boardList.isEmpty()}">
-	      	<div><span style="font-size:16px; margin-left:370px; font-weight: bold;">등록된 게시물이 없습니다. 글을 작성해보세요!</span></div>
+	      	<div><span style="font-size:16px; margin-left:430px; font-weight: bold;">등록된 게시물이 없습니다.</span></div>
 	      </c:if>
 	   </div>
 	    </c:otherwise>
@@ -458,9 +460,8 @@ $("#input-file").change((e) => {
     margin-bottom: -13;
  }
 #requestButton {
-    width: 200px;
-    background: dimgrey;
-    margin-top: 60px;
+    width: 230px;
+    margin-top: 30px;
 }
 .btn-danger {
     color: #fff;
@@ -480,7 +481,6 @@ $("#input-file").change((e) => {
  }
 #report-box{
 	float:right;
- 
 } 
 #reportBtn {
     color: white;
@@ -526,6 +526,12 @@ $("#input-file").change((e) => {
 .board-main-image{
 cursor: pointer;
  }
+@keyframes blink-effect { 50% { opacity: 0; 
+}
+ } 
+#requestButton { 
+	animation: blink-effect 1s step-end infinite;animation-iteration-count:2; 
+}
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 
