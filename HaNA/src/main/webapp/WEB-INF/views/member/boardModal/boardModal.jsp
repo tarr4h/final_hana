@@ -22,13 +22,12 @@
 			<!-- 내용 -->
 			<div class="modal-body">
 					<input type="hidden" name="writer" value="${loginMember.id }" />
-					<label for="boardTitle">제목</label>
-					<input type="text" name="title" class="form-control"/>
 					<br />
 					<div class="boardAttachArea">
-						<input type="button" value="파일 추가"  id="appendAttachArea" class="btn btn-outline-dark"/>
 						 <input type="file" name="upFile" class="form-control" required/>
 					</div>
+					
+						<input type="button" value="파일 추가"  id="appendAttachArea" class="form-control" style="background-color: gainsboro; color:white;"/>
 					<br />
 						<div class="font-weight-bold head pb-1"> </div> 
 				    	<textarea id="desc" cols="120" rows="5" placeholder="작성하기" name="content"></textarea>  
@@ -50,7 +49,7 @@ $("#boardModalBtn").click((e) => {
 /* 이미지업로드영역 추가 */
 $("#appendAttachArea").click((e) => {
 	let inputFile = `
-		<input type="file" name="upFile" required/>
+		<input type="file" name="upFile" class="form-control" required/>
 	`;
 	$(".boardAttachArea").append(inputFile);
 });
