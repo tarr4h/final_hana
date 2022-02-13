@@ -492,12 +492,9 @@ public class ShopController {
     }
     
     @GetMapping("/reservationStatistics")
-    public String reservationStatistics(@AuthenticationPrincipal Member member, Model model) {
-    	String shopId = member.getId();
-    	log.info("shopId = {}", shopId);
-    	
+    public String reservationStatistics(@AuthenticationPrincipal Member member, Model model) {   	
     	// 통계 구해서 오기
-    	Map<String, Object> map = shopService.reservationStatistics(shopId);
+    	Map<String, Object> map = shopService.reservationStatistics(member);
     	
     	// 연령대별 예약인원 수    	
     	Map<String, Object> ageGroup =  ageGroupStatistics((List) map.get("userList"));
@@ -514,12 +511,51 @@ public class ShopController {
     	
     	// 테이블별 예약 리스트
     	List<Map<String, Object>> tableList = (List) map.get("tableList");
-
-    	log.info("tableList = {}", tableList);
     	model.addAttribute("tableList", tableList);
     	
+    	// 방문 회원 리스트
+    	List<Map<String, Object>> visitorList = (List) map.get("visitorList");
+    	model.addAttribute("visitorList", visitorList);
+    	
+    	// 방문 회원 업체와의 거리
+    	List<Double> visitorDistanceList = (List) map.get("visitorDistance");
+    	log.info("visitorDistanceLIst = {}", visitorDistanceList);
+    	Map<String, Object> visitorDistance = visitorDistanceStatistics(visitorDistanceList);
+    	log.info("visitorDistance = {}", visitorDistance);
+    	model.addAttribute("visitorDistance", visitorDistance);
     	
     	return "forward:/member/shopSetting/reservationStatistics";
+    }
+    
+    // 방문자 거리 통계 구하기
+    public Map<String, Object> visitorDistanceStatistics(List<Double> list){
+    	Map<String, Object> returnMap = new HashMap<>();
+    	
+    	int innerFive = 0;
+    	int innerTen = 0;
+    	int innerTwenty = 0;
+    	int outterTwenty = 0;
+    	
+    	for(double dis : list) {
+    		if(dis <= (double) 5) {
+    			innerFive++;
+    		}
+    		if(dis > (double) 5 && dis <= (double) 10) {
+    			innerTen++;
+    		}
+    		if(dis > (double) 10 && dis <= (double) 20) {
+    			innerTwenty++;
+    		}
+    		if(dis > (double) 20) {
+    			outterTwenty++;
+    		}
+    	}
+    	returnMap.put("innerFive", innerFive);
+    	returnMap.put("innerTen", innerTen);
+    	returnMap.put("innerTwenty", innerTwenty);
+    	returnMap.put("outterTwenty", outterTwenty);
+    	
+    	return returnMap;
     }
     
     // 연령대 통계 구하기    
