@@ -397,7 +397,7 @@ function submitCommentFunc(e){
 		    const data1 = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `\${boardDetail.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}`,
+		            "message"   : `\${boardDetail.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}@일반@\${boardDetail.writer}`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
@@ -409,7 +409,7 @@ function submitCommentFunc(e){
 			    const data1 = {
 			            "roomNo" : 226,
 			            "memberId" : `${loginMember.id}`,
-			            "message"   : `\${commentwriter}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardNo}`,
+			            "message"   : `\${commentwriter}@${loginMember.id}님이 대댓글을 등록했습니다.@\${boardNo}@일반@\${boardDetail.writer}`,
 			            "picture" : `${loginMember.picture}`,
 			            "messageRegDate" : today
 			        }; 
@@ -498,7 +498,7 @@ function like(){
 		    const data1 = {
 		            "roomNo" : 226,
 		            "memberId" : `${loginMember.id}`,
-		            "message"   : `\${boardDetail.writer}@${loginMember.id}님이 댓글을 등록했습니다.@\${boardDetail.no}`,
+		            "message"   : `\${boardDetail.writer}@${loginMember.id}님이 좋아요를 눌렀습니다.@\${boardDetail.no}@일반@\${boardDetail.writer}`,
 		            "picture" : `${loginMember.picture}`,
 		            "messageRegDate" : today
 		        }; 
