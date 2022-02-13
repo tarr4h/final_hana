@@ -530,7 +530,6 @@ cursor: pointer;
 #requestButton { 
 	animation: blink-effect 1s step-end infinite;animation-iteration-count:2; 
 }
- 
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 
