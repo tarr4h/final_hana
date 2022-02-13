@@ -11,6 +11,8 @@
 	<jsp:param value="메인화면" name="title"/>
 </jsp:include>
 
+<jsp:include page="/WEB-INF/views/common/exmain.jsp"></jsp:include>
+
 <!-- chatcontroller 맨 밑에서 requestmapping -->
 
 <sec:authorize access="hasRole('USER')">

@@ -22,17 +22,15 @@
 <section class="body-section">
 	<sec:authentication property="principal" var="loginMember" />
 
-
 	<div class="container mb-4">
 		<div class="row hashTagRank">
 			<table class="table table-striped table-dark my-0">
 				<thead>
 					<tr>
-						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><img src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png" style= "width:30px;  margin:5px;
-   						 position :relative; bottom :3px;"/>HashTag Ranking<img src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png" style= "width:30px;  margin:5px;
-   						 position :relative; bottom :3px;"/></th>
+						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><img class="shopCrownImg"src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png"/>
+						HashTag Ranking<img class="shopCrownImg" src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png"/></th>
 					</tr>
-					<tr>
+					<tr style="color:#ffc107">
 						<th scope="col">no</th>  
 						<th scope="col">일간</th>  
 						<th scope="col">주간</th>  
@@ -42,28 +40,28 @@
 				</thead>
 				<tbody>
 					 <tr>
-						<th scope="row" >1</th>
+						<th scope="row" style="color:#288359" >1</th>
 						<td id="toDayFirstRanking" class="tagClick" onClick="hashTagClick()">Mark ★</td>
 						<td id="weekFirstRanking" class="tagClick" onClick="hashTagClick()" >@mdo ★</td>
 						<td id="monthFirstRanking" class="tagClick" onClick="hashTagClick()">Otto ★</td>
 						<td >@mdo ★</td> 
 					</tr> 
 					 <tr>
-						<th scope="row">2</th>
+						<th scope="row" style="color:#288359">2</th>
 						<td id="toDaySecondRanking" class="tagClick" onClick="hashTagClick()">Jacob</td>
 						<td id="weekSecondRanking" class="tagClick" onClick="hashTagClick()">@fat</td>
 						<td id="monthSecondRanking" class="tagClick" onClick="hashTagClick()">Thornton</td>
 						<td>@fat</td> 
 					</tr> 
 					<tr>
-						<th scope="row">3</th>
+						<th scope="row" style="color:#288359">3</th>
 						 <td id="toDayThirdTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekThirdRanking" class="tagClick" onClick="hashTagClick()">@test!!</td>
 						<td id="monthThirdRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
 						<td>@twitter</td> 
 					</tr>
 					<tr>
-						<th scope="row">4</th>
+						<th scope="row" style="color:#288359">4</th>
 						<td id="toDayFourthTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekFourthRanking" class="tagClick" onClick="hashTagClick()">@twitter</td>
 						<td id="monthFourthRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
@@ -74,21 +72,21 @@
 		</div>
 		
 		<!-- 거리 설정 영역 -->
-		<div class="row searchArea my-0">
-		
-			<div style="float:left; position: relative; top: 50px;">
-				<label for="dis1">8km</label>
+		<div class="row searchArea my-0">		
+			<div class="radioStyle">
 				<input type="radio" name="maxDistance" id="dis1" value="8"checked/>
-				<label for="dis2">4km</label>
+				<label for="dis1"  class="lableStyle">8km</label>
 				<input type="radio" name="maxDistance" id="dis2" value="4"/>
-				<label for="dis3">2km</label>
+				<label for="dis2" class="lableStyle">4km</label>
 				<input type="radio" name="maxDistance" id="dis3" value="2" />
+				<label for="dis3" class="lableStyle" >2km</label>
 			</div>
 		</div>
 		<!-- 검색 영역 -->
 		<div class="row searchArea my-0">
+		
 			<nav class="navbar navbar-light bg-light justify-content-end">
-				<span class="navbar-brand mb-0 h1" id="searchTitle"><img src="${pageContext.request.contextPath }/resources/images/icons/search.png" style="width: 18px; height: 17px; margin: 3px 3px; position: relative; bottom: 3px;"/></span>
+				<span class="navbar-brand mb-0 h1" id="searchTitle"><img class = "shopSearchImg" src="${pageContext.request.contextPath }/resources/images/icons/search.png"/></span>
 				<form class="form-inline d-flex">
 					<input class="form-control mr-sm-2" type="search"
 						placeholder="# 해시태그를 검색하세요." aria-label="Search" id="searchInput">
@@ -109,8 +107,8 @@
 		<div class="row shopRank bg-dark text-white">
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-				<span class="d-flex align-items-start">★★★</span> <span class="mb-4">조회
-					수 1위 매장</span>
+				<span class="d-flex align-items-start"><img class="shopRankingImg"src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png" />
+				</span><span class="mb-4">"조회수 1위"</span>
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<a href="#"> <img class="shopProfileImg"
@@ -118,34 +116,37 @@
 						alt="" />
 					</a>
 				</div>
-				<span>매장ID</span> <span>조회 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span>
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>조회 수</span>
 			</div>
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-				<span class="d-flex align-items-start">★★★</span> <span class="mb-4">리뷰
-					수 1위 매장</span>
+				<span class="d-flex align-items-start"><img  class="shopRankingImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png"/>
+				</span><span class="mb-4">"리뷰수 1위"</span>
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<img class="shopProfileImg"
 						src="${pageContext.request.contextPath }/resources/images/duck.png"
 						alt="" />
 				</div>
-				<span>매장ID</span> <span>리뷰 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span> 
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>리뷰 수</span>
 			</div>
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-				<span class="d-flex align-items-start">★★★</span> <span class="mb-4">예약
-					수 1위 매장</span>
+				<span class="d-flex align-items-start"><img class="shopRankingImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png"/>
+				</span><span class="mb-4" >"예약수 1위"</span>
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<img class="shopProfileImg"
 						src="${pageContext.request.contextPath }/resources/images/duck.png"
 						alt="" />
 				</div>
-				<span>매장ID</span> <span>예약 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span> 
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>예약 수</span>
 			</div>
 		</div>
-		<div class="row shopList bg-secondary text-white" id="shopList">
+		<div class="row shopList bg-secondary text-white" id="shopList" style="background-color: #e9ecef !important;">
 			<!-- 
        <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
         	<div class="shopProfile d-flex">
@@ -235,20 +236,15 @@ function scrollPage(){
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
-							//    htmlOut += '<span class = "shopScroll">'+'매장명: '+ list[i].shopName + '</span>';
-							//    htmlOut += '<span class = "shopScroll">'+'위치: '+ list[i].address + '</span>';
-								htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
-								htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
+								htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
+								htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
 							    for(var j = 0; j < list[i].hashTags.length; j++){
 							    	if(j == 0){
-							    		//htmlOut += '<span class = "shopScroll">'+'해시태그: ' + '#' + list[i].hashTags[j];
-							    		 htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
+							    		 htmlOut += '<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
 							    	} else if(j == list[i].hashTags.length - 1){
-							    		//htmlOut += '#' + list[i].hashTags[j] + '</span>';
-							    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
+							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j] + '</span>';
 							    	} else {
-							    		//htmlOut += '#' + list[i].hashTags[j];
-							    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
+							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
 							    	}
 							    };
 								$('#shopList').append(htmlOut);
@@ -265,15 +261,15 @@ function scrollPage(){
 									htmlOut += '<div class="shopProfile d-flex">';
 									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
 								    for(var j = 0; j < list[i].hashTags.length; j++){
 								    	if(j == 0){
-								    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
+								    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
 								    	} else if(j == list[i].hashTags.length - 1){
-								    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
+								    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j] + '</span>';
 								    	} else {
-								    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
+								    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
 								    	}
 								    };
 									$('#shopList').append(htmlOut);
@@ -293,15 +289,15 @@ function scrollPage(){
 								htmlOut += '<div class="shopProfile d-flex">';
 							    htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 							    htmlOut += '</div>';
-							    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
-							    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
 							    for(var j = 0; j < list[i].hashTags.length; j++){
 							    	if(j == 0){
-							    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
+							    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
 							    	} else if(j == list[i].hashTags.length - 1){
-							    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
+							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j] + '</span>';
 							    	} else {
-							    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
+							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
 							    	}
 							    };	
 
@@ -319,15 +315,15 @@ function scrollPage(){
 									htmlOut += '<div class="shopProfile d-flex">';	
 									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
+								    htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
 								    for(var j = 0; j < list[i].hashTags.length; j++){
 								    	if(j == 0){
-								    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
+								    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
 								    	} else if(j == list[i].hashTags.length - 1){
-								    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
+								    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" />'+ list[i].hashTags[j] + '</span>';
 								    	} else {
-								    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
+								    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
 								    	}
 								    };	
 									$('#shopList').append(htmlOut);
@@ -572,20 +568,19 @@ $(".tagClick").click(function(){
 						htmlOut += '<div class="shopProfile d-flex">';	
 						htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
 					    htmlOut += '</div>';
-					    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png" style="width: 30px; height: 28px; margin: 3px 5px 0px 0px; padding: 3px; position: relative; bottom: 5px;"/>'+ list[i].shopName + '</span>';
-					    htmlOut += '<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/map-marker-home.png" style="width: 24px; height: 25px; margin: 3px; position: relative; bottom: 2px;"/>'+ list[i].address + '</span>';
+					    htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
+					    htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
 					    for(var j = 0; j < list[i].hashTags.length; j++){
 					    	if(j == 0){
-					    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];	
+					    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
 					    	} else if(j == list[i].hashTags.length - 1){
-					    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j] + '</span>';
+					    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j] + '</span>';
 					    	} else {
-					    		htmlOut +='<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" style="width: 18px; height: 17px; margin: 4px 4px; position: relative; bottom: 2px;"/>'+ list[i].hashTags[j];
+					    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
 					    	}
 					    };
 						$('#shopList').append(htmlOut);
 	 			   }
-	 			
 	 		},
 	 		error: console.log
 	 		

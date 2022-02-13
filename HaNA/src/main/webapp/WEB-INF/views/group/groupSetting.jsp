@@ -88,7 +88,6 @@
     </form:form>
 </div>
 
-
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
