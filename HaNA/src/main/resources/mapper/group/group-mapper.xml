@@ -645,7 +645,7 @@
 				WHERE REGEXP_SUBSTR(g.hashtag, '[^,]+', 1, b.lv) IS NOT NULL
 				and REGEXP_SUBSTR(g.hashtag,'[^,]+', 1, b.lv) = #{hashtag})
 		order by
-			reg_date
+			reg_date desc
 	 </select> 
 	 
 	 <select id="selectAllGroupCount" resultType="_int">
@@ -676,23 +676,14 @@
 	 </select>
 	 
 	 <select id="selectGroupListByVisitCount" resultMap="groupRanking">  
-		    select
+		   select
 			    rownum,
 			    b.*
 			from(
 			select
 			    g.group_id, group_name, image, nvl(category,0) as category
 			from
-			    group_ g join
-			(select
-			    group_id,
-			    count(*) as category
-			from
-			    (select
-			    group_id
-			from
-			    group_visit_log
-			where
+			    (select * from group_ g where
 			    group_id in (SELECT distinct
 			        group_id
 			FROM group_ g 
@@ -710,9 +701,18 @@
 							#{name}
 						</foreach>	
 				</if>
-				)
-			    and
-			    trunc(visit_date) = trunc(sysdate))-- 오늘 방문
+				)) g
+			     left join
+			(select
+			    group_id,
+			    count(*) as category
+			from
+			    (select
+					    group_id
+					from
+					    group_visit_log
+					    where
+					    trunc(visit_date) = trunc(sysdate))-- 오늘 방문
 			group by
 			    group_id) a
 			on g.group_id = a.group_id
@@ -769,16 +769,7 @@
 			select
 			    g.group_id, group_name, image, nvl(category,0) as category
 			from
-			    group_ g join
-			(select
-			    group_id,
-			    count(*) as category
-			from
-			    (select
-			    group_id
-			from
-			    group_apply_list
-			where
+			    (select * from group_ g where
 			    group_id in (SELECT distinct
 			        group_id
 			FROM group_ g 
@@ -796,7 +787,18 @@
 							#{name}
 						</foreach>	
 				</if>
-				))
+				)) g
+			     left join
+			(select
+			    group_id,
+			    count(*) as category
+			from
+			    (select
+					    group_id
+					from
+					    group_apply_list
+					    where
+					    trunc(reg_date) = trunc(sysdate))-- 오늘 방문
 			group by
 			    group_id) a
 			on g.group_id = a.group_id

@@ -114,16 +114,23 @@ function makeGroupList(data,category){
 		msg="회원 수";
 	}
 	else if(category == 'apply'){
-		msg="가입신청 수";
+		msg="오늘 가입신청 수";
 	}
 	$.each(data.rankingGroupList,(i,e)=>{
+		let img;
+		if(e.image == null){
+			img = 'images/user.png';
+		}else{
+			img = `upload/group/profile/\${e.image}`;
+		}
+		
 		let div = `<div class="group-ranking-list" style="width:60%; margin:auto; margin-top:27px; margin-bottom:15px;">
 			<div class="pointer row" onclick="location.href='${pageContext.request.contextPath}/group/groupPage/\${e.groupId}'">
 			<div class="group-container-section1 col-sm-5">
 				<div class="group-modal-profile-container">
 					<img
 						id="group-profile"
-						src="${pageContext.request.contextPath}/resources/upload/group/profile/\${e.image}"
+						src="${pageContext.request.contextPath}/resources/\${img}"
 						alt=""/>
 				</div>
 			</div>
