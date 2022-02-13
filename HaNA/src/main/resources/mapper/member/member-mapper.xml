@@ -444,5 +444,23 @@
 	 	and
 	 	following_id = #{id}	
 	</select>
+	
+	<insert id="insertReport" parameterType="map">
+		insert into report_history
+		values(#{reportedUser}, #{reportUser}, #{content}, default)
+	</insert>
+	
+	<select id="selectReportUser" parameterType="map" resultType="int">
+		select
+		    count(*)
+		from
+		    report_history
+		where
+		    id = #{reportedUser}
+		    and
+		    report_user = #{reportUser}
+		    and
+		    status = 'N'
+	</select>
 
 </mapper>

@@ -762,7 +762,17 @@ public class MemberController {
 	    	
 	    }
 	
-	
+		@PostMapping("/reportUser")
+		public ResponseEntity<?> reportUser(@RequestParam String reportUser, @RequestParam String reportedUser, @RequestParam String content) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("reportUser", reportUser);
+			map.put("reportedUser", reportedUser);
+			map.put("content", content);
+			
+			int result = memberService.insertReport(map);
+			
+			return ResponseEntity.ok(result);
+		}
 	
 	
 	
