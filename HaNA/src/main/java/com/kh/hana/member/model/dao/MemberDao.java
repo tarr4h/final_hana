@@ -102,6 +102,8 @@ public interface MemberDao {
 
 	int selectReportUser(Map<String, Object> map);
 
+	Map<String, Object> selectRestrictionData(String id);
+
 	//int checkRefuse(Map<String, Object> map);
 
  

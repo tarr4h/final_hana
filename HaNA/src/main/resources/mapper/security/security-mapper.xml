@@ -78,4 +78,13 @@
 		insert into authority
 		values(#{username}, 'ROLE_USER')
 	</insert>
+	
+	<update id="updateReportHistoryS2Y" parameterType="string">
+		update report_history
+		set status = 'Y'
+		where
+			id = #{username}
+			and
+			status = 'S'
+	</update>
 </mapper>
