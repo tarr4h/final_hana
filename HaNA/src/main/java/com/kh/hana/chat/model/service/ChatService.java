@@ -77,6 +77,8 @@ public interface ChatService {
 
 	Map<String, Object> groupDMcheckMember(Map<String, Object> param);
 
+	List<Member> followerList(String id);
+
 
 
 

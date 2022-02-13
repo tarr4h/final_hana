@@ -291,6 +291,11 @@ public class ChatServiceImpl implements ChatService {
 		return resp;
 	}
 
+	@Override
+	public List<Member> followerList(String id) {
+		return chatDao.followerList(id);
+	}
+
 
 
 

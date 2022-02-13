@@ -30,10 +30,7 @@
 	</script>
 </c:if>
 </sec:authorize>
-<span>오류있으면 제보좀요</span><br />
-<span>채팅방 입장시 읽음처리</span><br />
-<span>채팅방 입장 후 채팅하다가 답장안하면 안읽씹됨</span><br />
-
+<br /><br /><br />
 <script>
 let id;
 let picture;
@@ -537,7 +534,33 @@ const displaychat = (check, e) =>{
 	</div>`;
 	}
 	}
-	
+	//messageSplit[0]가 share510이라면 더치페이메세지
+	else if(messageSplit[0] === 'share510'){
+		
+		if(check === 'right'){
+			chat += `<div class="d-flex justify-content-end mb-4">
+			<div class="msg_cotainer_send">
+			\${messageSplit[1]}
+			<span class="msg_time_send">\${returnDate}</span>
+			</div>
+			<div class="img_cont_msg">
+			<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
+			</div>
+			</div>`;
+		}
+		else{
+			chat += `<div class="d-flex justify-content-start mb-4">
+				<div class="img_cont_msg">
+				<img src="../resources/upload/member/profile/\${e.picture}" class="rounded-circle user_img_msg">
+			</div>
+			<div class="msg_cotainer">
+			\${messageSplit[1]} <button class="" onclick="abcdefsdfsdfsdf('\${messageSplit[2]}')">더치페이</button>
+				<span class="msg_time">\${returnDate}</span>
+			</div>
+		</div>`;
+		}
+		
+	}	
 	else{
 	<!-- 일반 채팅 뿌려주기 -->
 		if(check === 'right'){

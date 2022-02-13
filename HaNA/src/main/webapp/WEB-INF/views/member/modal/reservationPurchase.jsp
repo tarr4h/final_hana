@@ -83,17 +83,49 @@ function requestDutchpay(){
 		method: 'POST',
 		data:{
 			reservationNo: resNo,
-			status: 'Y'
+			status: 'N'
 		},
 		success(res){
-			if(res == 1){
+			console.log(res);
+			
+			//공유된 회원 불러오기
+ 				$.ajax({
+				url: '${pageContext.request.contextPath}/shop/selectAcceptedFriends',
+				data:{
+					reservationNo: resNo
+				},
+				success(resp){
+					console.log(resp);
+					//공유된 회원 불러와서 나를 제외한 회원에게 더치페이 메세지 보내기
+					//이것도 여기2초 더치페이 메세지 보내기 함수에서 1초 총 3초에 한번씩 보냄
+					let delay = 0;
+					$.each(resp, (a, b) => {
+						delay += 2000;
+					    setTimeout(async () => {
+						if(b.id !==`${loginMember.id}`){
+						Dutchtest22(b.id,resNo);
+						}
+
+						    }, delay);
+					});
+					alert("더치페이 전송 완료!");
+					$("#resPurchaseModal1").modal("hide");
+					//2명이면 6초 3명이면 9초 다~~보내고 +0.5초 후 reload시킴
+					delay += 500;
+ 					setTimeout(function() {
+						location.reload(); 
+					},delay);
+				},
+				error:console.log
+					
+				}); 
+			
+			
+/*  			if(res == 1){
 				alert("요청이 전송되었습니다.");			
-			};
+			};  */
 		},
-		error: console.log,
-		complete(){
-			location.reload();
-		}
+		error: console.log
 	});
 };
 
