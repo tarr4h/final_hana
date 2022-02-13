@@ -51,4 +51,63 @@ values(
 delete group_hashtag where name=#{name}
 </delete>
 
+	<select id="selectRestrictionList" resultType="map">
+		select
+			*
+		from
+			user_restricted
+		where
+			restricted_date > sysdate
+		order by
+			restricted_date
+	</select>
+	
+	<select id="selectRestrictionListTotalCount" resultType="int">
+		select
+			count(*)
+		from
+			user_restricted
+		where
+			restricted_date > sysdate
+		order by
+			restricted_date
+	</select>
+
+	<select id="selectAppealList" resultType="map">
+		select
+			*
+		from
+			user_restricted
+		where
+			appeal_distriction = 'Y'
+			and
+			restricted_date > sysdate
+	</select>
+	
+	<select id="selectAppealListTotalCount" resultType="int">
+		select
+			count(*)
+		from
+			user_restricted
+		where
+			appeal_distriction = 'Y'
+			and
+			restricted_date > sysdate
+	</select>
+	
+	<select id="selectReportedHistory" parameterType="string" resultType="map">
+		select
+			*
+		from
+			report_history
+		where
+			id = #{id}
+			and
+			status = 'S'
+	</select>
+
+	<update id="updateUserRestrictedDate" parameterType="string">
+		update user_restricted set restricted_date = sysdate where id = #{id}
+	</update>
+
 </mapper>

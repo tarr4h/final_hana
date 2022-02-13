@@ -39,4 +39,38 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.deleteHashtag(name);
 	}
 
+	@Override
+	public int selectRestrictionListTotalCount() {
+		return adminDao.selectRestrictionListTotalCount();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAppealList(int limit, int offset) {
+		return adminDao.selectAppealList(limit, offset);
+	}
+
+	@Override
+	public int selectAppealListTotalCount() {
+		return adminDao.selectAppealListTotalCount();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectReportedHistory(String id) {
+		return adminDao.selectReportedHistory(id);
+	}
+
+	@Override
+	public int acceptAppeal(String id) {
+//		int addRole = adminDao.insertUserRole(id);
+		int changeDate = adminDao.updateUserRestrictedDate(id);
+//		int changeHistoryStatus = adminDao.updateReportHistoryStatus(id);
+		
+//		log.info("addRole = {}", addRole);
+		log.info("changeDate = {}", changeDate);
+//		log.info("ChangeHistoryStat = {}", changeHistoryStatus);
+		
+		return changeDate;
+	}
+
+	
 }

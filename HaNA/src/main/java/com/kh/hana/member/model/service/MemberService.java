@@ -93,6 +93,8 @@ public interface MemberService {
 
 	Map<String, Object> selectRestrictionData(String id);
 
+	int appealMyDistriction(String id);
+
 	//int checkRefuse(Map<String, Object> map);
 
 	 

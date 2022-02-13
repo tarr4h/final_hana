@@ -224,6 +224,11 @@ public class MemberDaoImpl implements MemberDao {
 	public Map<String, Object> selectRestrictionData(String id) {
 		return session.selectOne("member.selectRestrictionData", id);
 	}
+
+	@Override
+	public int appealMyDistriction(String id) {
+		return session.update("member.appealMyDistriction", id);
+	}
 	
 	
 

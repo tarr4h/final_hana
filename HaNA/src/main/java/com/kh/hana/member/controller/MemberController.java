@@ -785,5 +785,11 @@ public class MemberController {
 			return ResponseEntity.ok(data);
 		}
 	
+		@PostMapping("/appealMyDistriction")
+		public ResponseEntity<?> appealMyDistriction(@RequestParam String id){
+			int result = memberService.appealMyDistriction(id);
+			
+			return ResponseEntity.ok(result);
+		}
 
 }
