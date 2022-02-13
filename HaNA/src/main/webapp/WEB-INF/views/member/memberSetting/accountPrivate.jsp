@@ -11,7 +11,11 @@
 </jsp:include>
 <section>
 <sec:authentication property="principal" var="loginMember"/>
-
+<c:if test="${not empty msg}">
+	<script>
+	alert("${msg}");
+	</script>
+</c:if>
 
 <br><br><br>
 <div class="container">
@@ -41,8 +45,8 @@
         		<input type="checkbox" name="publicProfile" id="publicProfile" >계정 비공개
         		</c:otherwise>
         		</c:choose>
-        		 <!-- <input type="hidden" name="accountCheckYN" id="input_check_hidden" value='1' /> --> 
-        		<input type="submit" class="changeButton" value="변경">
+        		 &nbsp;
+        		<input type="submit" class="changeButton" value="변경" style="color:green;">
         	<br><br>     	 
         </form:form>
         </div>
@@ -61,12 +65,14 @@ $(accountPrivateFrm).submit((e) => {
 //}
 </script>
 <style>
-.changeButton{
-	border: none;
-	border-radius: 5px;
-	width: 80px;
+.changeButton {
+    width: 65px;
     height: 30px;
     margin-top: 10px;
+    border-style: none;
+    border-bottom: solid;
+    background-color: white;
+    border-width: 1px;
 }
 .col-sm-8 {
     flex: 0 0 auto;

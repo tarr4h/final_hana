@@ -61,6 +61,7 @@
         	 &nbsp;&nbsp;&nbsp;
         	<span class="followTitle" style="font-size : 14px">팔로워 : </span>
         	 <button  type="button" class="btn btn-outline-dark" id="btn-follower-list">${followingCount}명</button>
+        	 <br /> 
         	 <!-- 신고버튼 -->
         	<c:if test="${!loginMember.id.equals(member.id) }">
  			 <div id="report-box"><input type="button" id="reportBtn" class="btn btn-danger" value="신고"></div>
@@ -81,8 +82,8 @@
         		<input type="hidden" name ="myId" value="${loginMember.id}" />
         	</form:form>
         	</c:if>
-
-            <br /><br /><br />
+        	
+            <br /><br /> 
             
             <div class="profileTableArea">
 				<table id="profileTable">
@@ -118,7 +119,7 @@
 								<span class="tableValue grade">4.9</span>
 							</td>
 						</tr>
-						<tr><td></td></tr><tr><td></td></tr>
+						<tr><td></td></tr><tr><td></td></tr> 
 						<!-- 본인인 경우 예약확인버튼 노출 -->
 						<c:if test="${loginMember.id.equals(member.id) }">
 						<tr>
@@ -144,18 +145,16 @@
 						</c:if>
 					</tbody>
 				</table>
-			</div>
-
-		</div>
-    </div>
-</div> 
-<div style="width:75%; border: none; border-bottom: 1px solid; margin:5px auto 80px">
 			<!-- 글쓰기버튼 -->
 			<c:if test="${loginMember.id.equals(member.id) }">
         	<button id="boardModalBtn" class="writeBtn" style="float:right; margin-top:-40px"><i style="font-size: 30px;" class="fas fa-pencil-alt" aria-hidden="true"></i></button>
         	<jsp:include page="/WEB-INF/views/member/boardModal/boardModal.jsp"></jsp:include>
         	</c:if>
-</div>
+			</div>
+		</div>
+    </div>
+</div> 
+<br/><br/> 
 <div class="container mt-2">       
     <div class="boardRow">   
         <!-- 탭 영역 -->
@@ -307,7 +306,7 @@
 						<tr>
 						<td>
 							<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
-							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followingId}">\${e.followers[0].followingId}</a>
+							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].followingId}">\${e.followers[0].followingId}</a>
 						</td>
 					</tr>
 				`;
@@ -378,11 +377,16 @@
 <style>
 .profile-container mt-2{
  	border: none;
+ 	 border-bottom: solid; 
+    border-bottom-width: unset;  
 }
 #myInfo {
 	margin-top: 45px;
-	margin-bottom :-20px;
+	margin-bottom :-30px;
     border: none; 
+    border-bottom: solid;
+    border-color: gray;
+    border-bottom-width: 1px;  
     height : 380px;
     margin-left:100px;   
 }
@@ -436,7 +440,9 @@ cursor: pointer;
     border-color: black;
     background-color:#ff000078;
 }
-
+#addFriendBtn{
+margin-left: 500px;
+}
 </style> 
  
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

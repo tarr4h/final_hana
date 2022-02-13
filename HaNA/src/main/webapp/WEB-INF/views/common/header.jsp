@@ -97,7 +97,7 @@
 		      </sec:authorize>
 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
-			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">로그인(임시)</a>		      	
+			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">Log In</a>		      	
 		      	</sec:authorize>					
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
@@ -123,13 +123,13 @@
 				<!-- 관리자메뉴 -->
 				<sec:authorize access="hasRole('ADMIN')">
 					<li class="nav-item">
-						<a class="nav-link text-light" href="${pageContext.request.contextPath}/admin/searchStatistics">관리자</a>
+						<a class="nav-link text-light" href="${pageContext.request.contextPath}/admin/restrictionList">관리자</a>
 					</li>
 				</sec:authorize>
 				    
 				<li class="nav-item">
 		      	<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
-					<input type="submit" value="로그아웃" />
+					<input type="submit" value="LogOut" />
 				</form:form>
 				</li>
 			</sec:authorize>
