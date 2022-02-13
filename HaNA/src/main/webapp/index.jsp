@@ -13,7 +13,7 @@
 
 <!-- chatcontroller 맨 밑에서 requestmapping -->
 
-<sec:authorize access="isAuthenticated()">
+<sec:authorize access="hasRole('USER')">
 <jsp:forward page="/common/main.do"/>
 </sec:authorize>
 
