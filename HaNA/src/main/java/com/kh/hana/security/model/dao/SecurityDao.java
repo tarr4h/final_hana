@@ -16,4 +16,6 @@ public interface SecurityDao {
 
 	int insertUserRole(String username);
 
+	int updateReportHistoryS2Y(String username);
+
 }

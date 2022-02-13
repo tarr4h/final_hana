@@ -273,6 +273,16 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	@Override
+	public Map<String, Object> selectRestrictionData(String id) {
+		return memberDao.selectRestrictionData(id);
+	}
+
+	@Override
+	public int appealMyDistriction(String id) {
+		return memberDao.appealMyDistriction(id);
+	}
+
 //	@Override
 //	public int checkRefuse(Map<String, Object> map) {
 //		return memberDao.checkRefuse(map);

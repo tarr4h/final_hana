@@ -17,9 +17,8 @@
 		alert("${msg}");
 	</script>
 </c:if>
-
-<h1>shop프로필설정</h1>
-<div class="container">
+<br/><br/><br/>
+<br/><div class="container">
     <div class="row">
     	<!-- 메뉴 영역 -->
         <div class="col-sm-4">
@@ -39,7 +38,7 @@
 		<table class="mx-auto">
 		 <input type="hidden" name="id" value="${loginMember.id}" />
 			<tr>
-				<th class="title">이름</th>
+				<th class="title"><div style="width:90px; height:70px;">이름</div></th>
 				<td>
 					<div id="memberId-container">
 						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >
@@ -57,8 +56,8 @@
 			<tr>
 				<th class="title" rowspan="2">주소</th>
 	  		  	<td>	
-	        	<input type="text" class="form-control" name="addressAll" value="${loginMember.addressAll }"/>
 	        	<input type="button" class="form-control" value="검색" onclick="execDaumPostcode();" />
+	        	<input type="text" class="form-control" name="addressAll" value="${loginMember.addressAll }"/>
 	        </tr>
 	        <tr>
 	        	<td>
@@ -69,8 +68,8 @@
 			</tr>  
 		</table>
 		<br/><br/>
-		<input type="submit" class="btn btn-dark" value="저장">
-		<input type="reset" class="btn btn-dark">
+		<input type="submit" class="btn btn-outline-success" value="저장" style="margin-left:220px;">
+		<input type="reset" class="btn btn-outline-success">
 	</form:form>
 		</div>
 	</div>
@@ -160,7 +159,7 @@ function execDaumPostcode() {
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     margin-bottom : 15px;
-    margin-left: 30px;
+    margin-left: 1px;
 } 
 .custom-select{
 	width : 450px;

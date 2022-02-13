@@ -22,7 +22,7 @@ public class RestrictedUserDenied {
 			// 제제된 경우 ROLE_USER가 삭제되어 신고유저 제제페이지 이동
 			return "forward:/WEB-INF/views/common/error/reportedUserPage.jsp";
 		}
-		// 일반 403 제제 시 에러페이지
+		// 일반 403 제제 시 일반 에러페이지
 		return "forward:/WEB-INF/views/common/error/forbidden.jsp";
 	}
 }

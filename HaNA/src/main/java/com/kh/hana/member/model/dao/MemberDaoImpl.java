@@ -219,6 +219,16 @@ public class MemberDaoImpl implements MemberDao {
 	public int selectReportUser(Map<String, Object> map) {
 		return session.selectOne("member.selectReportUser", map);
 	}
+
+	@Override
+	public Map<String, Object> selectRestrictionData(String id) {
+		return session.selectOne("member.selectRestrictionData", id);
+	}
+
+	@Override
+	public int appealMyDistriction(String id) {
+		return session.update("member.appealMyDistriction", id);
+	}
 	
 	
 
