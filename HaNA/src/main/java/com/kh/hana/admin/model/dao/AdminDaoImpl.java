@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 public class AdminDaoImpl implements AdminDao {
+	
 	@Autowired
 	private SqlSession session;
 
@@ -22,5 +23,19 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectList("admin.selectRestrictionList", null, rowBounds);
 	}
 	
+	@Override
+	public List<Map<String, Object>> selectSearchStatistics(Map<String, Object> param) {
+		return session.selectList("admin.selectSearchStatistics",param);
+	}
+
+	@Override
+	public int insertHashtag(String name) {
+		return session.insert("admin.insertHashtag",name);
+	}
+
+	@Override
+	public int deleteHashtag(String name) {
+		return session.delete("deleteHashtag",name);
+	}
 	
 }

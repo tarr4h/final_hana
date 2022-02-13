@@ -16,9 +16,9 @@
 		<div class="admin-side-menu">
 			<ul>
 			<li><a href="${pageContext.request.contextPath }/admin/restrictionList">신고 내역</a></li>
-			<li><a href="">제제 내역</a></li>
-			<li><a href="">검색 통계</a></li>
-			<li><a href="">소모임 해시태그 관리</a></li>
+			<li><a href="#">제제 내역</a></li>
+			<li><a href="${pageContext.request.contextPath}/admin/searchStatistics">검색 통계</a></li>
+			<li><a href="${pageContext.request.contextPath}/admin/modifyHashtag">소모임 해시태그 관리</a></li>
 			</ul>
 		</div>
 	</div>

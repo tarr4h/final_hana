@@ -7,4 +7,10 @@ public interface AdminService {
 
 	List<Map<String, Object>> selectRestrictionList(int limit, int offset);
 
+	List<Map<String, Object>> selectSearchStatistics(Map<String, Object> param);
+
+	int insertHashtag(String name);
+
+	int deleteHashtag(String name);
+
 }

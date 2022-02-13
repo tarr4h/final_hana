@@ -24,7 +24,7 @@
 			<option value="like">좋아요 수</option>
 		</select>
 		<select class="statistic-select-box" name="day" id="day">
-			<option value="0">전체</option>
+			<option value="0">기간 전체</option>
 			<option value="30">한 달</option>
 			<option value="7">일주일</option>
 		</select>
