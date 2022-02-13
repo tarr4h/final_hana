@@ -70,7 +70,7 @@
 		        	<input type="hidden" name="id" value="${loginMember.id }"/>
 		        	<br />
 		        	<br />
-		        	<input type="submit" value="저장하기" id="formBtn"/>
+		        	<input type="submit" class="btn btn-outline-success" value="저장하기" id="formBtn" style="margin-left:220px;"/>
         	</form:form>
         	
         </div>
