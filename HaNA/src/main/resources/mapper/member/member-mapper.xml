@@ -474,4 +474,12 @@
 			restricted_date > sysdate
 	</select>
 
+	<update id="appealMyDistriction" parameterType="string">
+		update user_restricted
+		set appeal_distriction = 'Y'
+		where
+			id = #{id}
+			and
+			restricted_date > sysdate
+	</update>
 </mapper>

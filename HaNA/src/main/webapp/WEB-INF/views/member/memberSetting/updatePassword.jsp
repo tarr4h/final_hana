@@ -45,7 +45,7 @@
         	<label for="password-check">새 비밀번호 확인</label>
         	<input type="password" name="passwordCheck" id="passwordCheck" class="password"/>
         	<br><br>
-        	<input type="submit" class="btn btn-dark" value="비밀번호 변경">
+        	<input type="submit" class="btn btn-outline-success" value="비밀번호 변경" style="margin-left:90px; margin-top:30px;">
         </form:form>
         </div>
     </div>

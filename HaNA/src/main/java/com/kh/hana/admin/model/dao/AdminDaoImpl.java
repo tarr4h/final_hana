@@ -37,5 +37,32 @@ public class AdminDaoImpl implements AdminDao {
 	public int deleteHashtag(String name) {
 		return session.delete("deleteHashtag",name);
 	}
+
+	@Override
+	public int selectRestrictionListTotalCount() {
+		return session.selectOne("admin.selectRestrictionListTotalCount", null);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAppealList(int limit, int offset) {
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("admin.selectAppealList", null, rowBounds);
+	}
+
+	@Override
+	public int selectAppealListTotalCount() {
+		return session.selectOne("admin.selectAppealListTotalCount", null);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectReportedHistory(String id) {
+		return session.selectList("admin.selectReportedHistory", id);
+	}
+
+	@Override
+	public int updateUserRestrictedDate(String id) {
+		return session.update("admin.updateUserRestrictedDate", id);
+	}
+
 	
 }
