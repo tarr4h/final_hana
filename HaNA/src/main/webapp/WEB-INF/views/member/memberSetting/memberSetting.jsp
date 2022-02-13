@@ -41,7 +41,7 @@
 		<table class="mx-auto">
 		 <input type="hidden" name="id" value="${loginMember.id}" />
 			<tr>
-				<th class="title">이름</th>
+				<th class="title"><div style="width:90px; height:70px;">이름</div></th>
 				<td>
 					<div id="memberId-container">
 						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >
@@ -59,8 +59,8 @@
 			<tr>
 				<th class="title" rowspan="2">주소</th>
 	  		  	<td>	
-	        	<input type="text" class="form-control" name="addressAll" value="${loginMember.addressAll }"/>
 	        	<input type="button" class="form-control" value="검색" onclick="execDaumPostcode();" />
+	        	<input type="text" class="form-control" name="addressAll" value="${loginMember.addressAll }"/>
 	        </tr>
 	        <tr>
 	        	<td>
@@ -71,8 +71,8 @@
 			</tr>  
 		</table>
 		<br/><br/>
-		<input type="submit" class="btn btn-dark" value="저장">
-		<input type="reset" class="btn btn-dark">
+		<input type="submit" class="btn btn-outline-success" value="저장" style="margin-left:220px;">
+		<input type="reset" class="btn btn-outline-success">
 	</form:form>
 		</div>
 	</div>
@@ -81,8 +81,8 @@
 <script type="text/javascript" 
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder">
 </script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 function execDaumPostcode() {
     new daum.Postcode({
@@ -103,15 +103,14 @@ function execDaumPostcode() {
             if(data.buildingName !== '' && data.apartment === 'Y'){
                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
             }
-
-            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('postcode').value = data.zonecode;
-            document.getElementById("roadAddress").value = roadAddr;
             
-            $("[name=addressAll]").val(data.roadAddress);
+            if(data.roadAddress == null){
+            	alert("유효하지 않은 도로명 주소입니다. 다시 선택해주세요");
+            }
             
-        	var Addr_val = $('[name=addressAll]').val();
-
+            $("[name=addressAll]").val(data.roadAddress);     
+            
+        	var Addr_val = data.roadAddress;
         	// 도로명 주소를 좌표 값으로 변환(API)
           	naver.maps.Service.geocode({
                 query: Addr_val
@@ -129,17 +128,15 @@ function execDaumPostcode() {
                 
                 $('[name=locationX]').val(x);
                 $('[name=locationY]').val(y);
-            	
+                
                 console.log(x);
                 console.log(y);
                 
-                close();
+            	close();
             });
-        	
         }
     }).open();
 }
-</section>
 </script>
 
 <style>
@@ -182,7 +179,7 @@ function execDaumPostcode() {
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     margin-bottom : 15px;
-    margin-left: 30px;
+    margin-left: 1px;
 } 
 .custom-select{
 	width : 450px;

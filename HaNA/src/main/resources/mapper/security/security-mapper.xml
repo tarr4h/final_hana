@@ -61,6 +61,8 @@
 			user_restricted
 		where
 			restricted_date > sysdate
+			and
+			id = #{id}
 	</select>
 	
 	<select id="selectUserRoleCount" parameterType="string" resultType="int">

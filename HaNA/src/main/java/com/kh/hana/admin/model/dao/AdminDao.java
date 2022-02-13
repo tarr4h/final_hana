@@ -13,4 +13,14 @@ public interface AdminDao {
 
 	int deleteHashtag(String name);
 
+	int selectRestrictionListTotalCount();
+
+	List<Map<String, Object>> selectAppealList(int limit, int offset);
+
+	int selectAppealListTotalCount();
+
+	List<Map<String, Object>> selectReportedHistory(String id);
+
+	int updateUserRestrictedDate(String id);
+
 }

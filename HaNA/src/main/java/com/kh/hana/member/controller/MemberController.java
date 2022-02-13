@@ -281,7 +281,7 @@ public class MemberController {
 			
 			int result = memberService.applyFollowing(map);
 			log.info("result ={}", result);
-			redirectAttr.addFlashAttribute("msg", result > 0? "수락 성공" : "수락 실패");
+			redirectAttr.addFlashAttribute("msg", result > 0? "수락하셨습니다." : "수락 실패");
 			
 			
     		if(result == 1) {
@@ -714,7 +714,7 @@ public class MemberController {
 	
 	//계정 비공개
 	@PostMapping("/accountPrivate")
-	 public String checkAccountPrivate(@RequestParam String id, @RequestParam (defaultValue ="1")int publicProfile, Model model, Member member){
+	 public String checkAccountPrivate(@RequestParam String id, @RequestParam (defaultValue ="1")int publicProfile, Model model, Member member,RedirectAttributes redirectAttr){
     	
     	try{
     		log.info("checkAccountPrivate.member.id = {}",id);
@@ -726,7 +726,8 @@ public class MemberController {
     		map.put("member",member);
     		
     		int result = memberService.checkAccountPrivate(map);
-    	 
+    		
+    		redirectAttr.addFlashAttribute("msg", result > 0 ? "변경되었습니다." : "변경에 실패했습니다.");
     		model.addAttribute("publicProfile",publicProfile);
     		
     	}catch(Exception e) {
@@ -784,5 +785,11 @@ public class MemberController {
 			return ResponseEntity.ok(data);
 		}
 	
+		@PostMapping("/appealMyDistriction")
+		public ResponseEntity<?> appealMyDistriction(@RequestParam String id){
+			int result = memberService.appealMyDistriction(id);
+			
+			return ResponseEntity.ok(result);
+		}
 
 }

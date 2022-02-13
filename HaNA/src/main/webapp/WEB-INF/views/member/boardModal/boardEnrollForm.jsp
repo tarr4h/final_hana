@@ -46,7 +46,7 @@
 			</div>
 			</div>
 			<div class="modal-footer">
-           <input type="submit" value="게시"/>
+           <input type="submit" value="등록하기"/>
 			</div>
 			 </form:form>
 		</div>      
