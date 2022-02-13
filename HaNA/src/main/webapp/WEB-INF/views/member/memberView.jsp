@@ -145,7 +145,7 @@
         	<button id="btn-add" class="writeBtn" style="float:right; margin-top:80px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
 	</c:if>
 	    <c:if test="${request > 0 && loginMember.id.equals(member.id)}">
-    	<button type="button" class="btn btn-secondary" id="requestButton">팔로잉 요청이 있습니다.</button>
+    	<button type="button" class="btn btn-success" id="requestButton" style="font-weight: bold">팔로잉 요청이 있습니다.</button>
     </c:if>
 
 		</div>
@@ -458,9 +458,8 @@ $("#input-file").change((e) => {
     margin-bottom: -13;
  }
 #requestButton {
-    width: 200px;
-    background: dimgrey;
-    margin-top: 60px;
+    width: 230px;
+    margin-top: 30px;
 }
 .btn-danger {
     color: #fff;
@@ -480,7 +479,6 @@ $("#input-file").change((e) => {
  }
 #report-box{
 	float:right;
- 
 } 
 #reportBtn {
     color: white;
@@ -526,6 +524,13 @@ $("#input-file").change((e) => {
 .board-main-image{
 cursor: pointer;
  }
+@keyframes blink-effect { 50% { opacity: 0; 
+}
+ } 
+#requestButton { 
+	animation: blink-effect 1s step-end infinite;animation-iteration-count:2; 
+}
+ 
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 
