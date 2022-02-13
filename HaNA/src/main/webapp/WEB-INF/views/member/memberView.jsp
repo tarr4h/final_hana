@@ -173,7 +173,7 @@
 		      </div>
 	      </c:forEach>
 	      <c:if test="${boardList.isEmpty()}">
-	      	<div><span style="font-size:16px; margin-left:370px; font-weight: bold;">등록된 게시물이 없습니다. 글을 작성해보세요!</span></div>
+	      	<div><span style="font-size:16px; margin-left:430px; font-weight: bold;">등록된 게시물이 없습니다.</span></div>
 	      </c:if>
 	   </div>
 	    </c:otherwise>
