@@ -104,6 +104,8 @@ public interface MemberDao {
 
 	Map<String, Object> selectRestrictionData(String id);
 
+	int appealMyDistriction(String id);
+
 	//int checkRefuse(Map<String, Object> map);
 
  

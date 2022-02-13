@@ -11,7 +11,7 @@
 <sec:authentication property="principal" var="loginMember"/>
 <div style="text-align:center; margin-top:300px; font-size:3em; font-weight:650; color:blue;">신고 유저 제제 페이지</div>
 <div class="restrictionDate"></div>
-<input type="button" value="항의하기" />
+<input type="button" value="항의하기" onclick="appealMyDistriction('${loginMember.id}')"/>
 
 
 <script>
@@ -32,5 +32,23 @@
 			error: console.log
 		});
 	};
+	
+	function appealMyDistriction(id){
+		console.log(id);
+		$.ajax({
+			url: '${pageContext.request.contextPath}/member/appealMyDistriction',
+			method: 'POST',
+			data: {
+				id
+			},
+			success(res){
+				console.log(res);
+			},
+			error:console.log,
+			complete(){
+				alert("제출되었습니다.\n관리자 확인후 처리됩니다.");
+			}
+		});
+	}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
