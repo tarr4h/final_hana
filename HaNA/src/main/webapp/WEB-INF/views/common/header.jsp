@@ -97,7 +97,7 @@
 		      </sec:authorize>
 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
-			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">로그인(임시)</a>		      	
+			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">Log In</a>		      	
 		      	</sec:authorize>					
 		      </li>
 		      <sec:authorize access="isAuthenticated()">
@@ -129,7 +129,7 @@
 				    
 				<li class="nav-item">
 		      	<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
-					<input type="submit" value="로그아웃" />
+					<input type="submit" value="LogOut" />
 				</form:form>
 				</li>
 			</sec:authorize>
@@ -215,7 +215,7 @@
  			let eSplit = e.data.split(",");
 			let ShareMessage = eSplit[1].split("@");
 			console.log("eSplit[4] = ",eSplit[4]);
-			if(ShareMessage[0] === 'share115'){
+			if(ShareMessage[0] === 'share115' || ShareMessage[0] === 'share510'){
 				if(eSplit[0]!==memberId){
 					if(eSplit[4] !== roomNo){
 					 	beep2();

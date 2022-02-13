@@ -19,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -106,10 +107,11 @@ public class ChatController {
     	return ResponseEntity.ok(chat);
     }
     
-    //전체목록에서 친구목록으로 나중에 쿼리 변경
+    //친구목록
     @GetMapping("/memberList.do")
-    public ResponseEntity<?> memberList(){
-    	List<Member> member = chatService.memberList();
+    public ResponseEntity<?> memberList(@AuthenticationPrincipal Member Member){
+    	String id = Member.getId();
+    	List<Member> member = chatService.followerList(id);
     	log.info("memberList = {}", member);
     	return ResponseEntity.ok(member);
     }

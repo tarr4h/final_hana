@@ -14,10 +14,12 @@
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberView.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 <!-- 우측 공간확보 -->
 <section class="body-section" style="width:200px;height:100%;float:right;display:block;">
 <span style="float:right;">ㅁㄴ이랸멍리ㅑㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴ어랴ㅣㅁㄴㅇㄹ</span>
 </section>
+
 <section>
  <script src="https://kit.fontawesome.com/0748f32490.js"
 	crossorigin="anonymous">

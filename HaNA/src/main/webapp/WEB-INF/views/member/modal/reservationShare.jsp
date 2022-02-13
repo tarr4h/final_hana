@@ -10,6 +10,17 @@
 <script>
 let ShareroomNo;
 let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
+
+let sharmembers ='';
+//이건 모달 닫히면 append한거 지우고 button value초기화
+$(document).ready(function(){       
+    $('#shareModal').on('hide.bs.modal', function () {
+    	sharmembers ='';
+    	$("table#selectListTable tbody").empty();
+    	$("#sharbutton").css("display","none").val('');
+    });
+ 
+});
 </script>
 
 <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -33,6 +44,10 @@ let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
 				<table id="friendListTable">
 					<tbody></tbody>
 				</table>
+				<table id="selectListTable">
+					<tbody></tbody>
+				</table>
+				<button style="display: none" id="sharbutton" onclick="shareReservation(this.value)">공유하기</button>
 				<input type="hidden" name="shareReservationNo" />
 				<input type="hidden" name="shareVisitorCount" />
 			</div>
@@ -48,6 +63,8 @@ function shareReservationModal(reservationNo, visitorCount){
 	$("[name=friendId]").val('');
 	$("#friendListTable tbody").empty();
 	selectAcceptedFriends(reservationNo);
+	console.log("shareReservationModal maxUser = ",visitorCount);
+	console.log("shareReservationModal maxUser-1 = ",visitorCount-1);
 	$('#shareModal').modal({backdrop:'static', keyboard:false});
 };
 
@@ -91,20 +108,23 @@ function onOpenShare() {
 	    let jsonData = JSON.stringify(data);
 	    websocket.send(jsonData);
 }
-function shareReservation(reservationNo, targetUser){
+//targetUser
+function shareReservation(reservationNo){
 	let maxUser = $("[name=shareVisitorCount]").val();
 	let countFr = selectAcceptedFriendsForCheck(reservationNo);
+	
 	let countNum = 0;
 	$.each(countFr, (a, b) => {
 		countNum += 1;
 	});
+
+	console.log("countNum = ", countNum);
 	if(countNum >= maxUser){
 		alert("예약 인원만큼 공유됨");
 		return false;
 	};
-	
 	/* 요청 필요 데이터 */
-	const testtest=()=>{
+ 	const testtest=(targetUser)=>{
 		$.ajax({
 			url:`${pageContext.request.contextPath}/chat/shareReservation.do`,
 			data:{
@@ -118,22 +138,18 @@ function shareReservation(reservationNo, targetUser){
 				ShareroomNo = resp;
 				connect(2);
 				//웹소켓 접속을 하고 websocket.send를 보내야하는데 비동기라 send가 먼저 작동돼서 1초뒤 send되게
-				 setTimeout(function() {
+ 				 setTimeout(function() {
 					    const data = {
 					            "roomNo" : ShareroomNo,
 					            "memberId" : `${loginMember.id}`,
 					            "message"   : `share115@${loginMember.id}님이 예약을 공유했습니다.@\${reservationNo}`,
 					            "picture" : `${loginMember.picture}`,
 					            "messageRegDate" : Sharetoday
-					        }; 
-					    let messageSplit = data.message.split("@");
-					    
+					        }; 				    
 					    let jsonData = JSON.stringify(data);
 					    websocket.send(jsonData);
-					    $('#shareModal').modal('hide');
-					    alert("공유 완료\n공유 요청 메시지가 전송되었습니다.");
-						websocket.close();
-						connect(1);
+					    websocket.close();
+					    connect(1);
 				 },1000);
 				
 			},
@@ -141,7 +157,80 @@ function shareReservation(reservationNo, targetUser){
 		}); 
 
 	};
-	testtest();
+//전역변수에 담긴 id들 반복문통해서 보내주기
+//바로 보내면 웹소켓 오류떠서 여기2초 웹소켓보내기 함수에서 1초 총 3초에 한번씩 보냄
+	let sharmembersSplit = sharmembers.split(",");
+	let delay = 0;
+	$.each(sharmembersSplit, (i, b) => {
+		delay += 2000;
+	    setTimeout(async () => {
+			//전역변수에 담긴게 abcde,yeseong, 이런식이라 split한값이 있을때만 보내기
+			if(sharmembersSplit[i] !== ''){
+				console.log("reservationNo =",reservationNo);
+				testtest(sharmembersSplit[i],reservationNo);
+				console.log("gdgdgdgd");
+				console.log("ggggg",sharmembersSplit[i]);				
+			}
+			else{
+				
+			}
+
+		    }, delay);
+	});
+
+    $('#shareModal').modal('hide');
+    alert("공유 완료\n공유 요청 메시지가 전송되었습니다.");
+};
+
+//더치페이 웹소켓 전송
+const Dutchtest22=(targetUser,reservationNo)=>{
+	$.ajax({
+		url:`${pageContext.request.contextPath}/chat/shareReservation.do`,
+		data:{
+			id : `${loginMember.id}`,
+			reservationNo : reservationNo,
+			targetUser : targetUser
+		},
+		method: "GET",
+		success(resp){
+			//채팅방 번호를 전역변수에 넣음
+			ShareroomNo = resp;
+			connect(2);
+			//웹소켓 접속을 하고 websocket.send를 보내야하는데 비동기라 send가 먼저 작동돼서 1초뒤 send되게
+				 setTimeout(function() {
+				    const data = {
+				            "roomNo" : ShareroomNo,
+				            "memberId" : `${loginMember.id}`,
+				            "message"   : `share510@${loginMember.id}님이 더치페이를 요청했습니다.@\${reservationNo}`,
+				            "picture" : `${loginMember.picture}`,
+				            "messageRegDate" : Sharetoday
+				        }; 				    
+				    let jsonData = JSON.stringify(data);
+				    websocket.send(jsonData);
+				    websocket.close();
+				    connect(1);
+			 },1000);
+			
+		},
+		error: console.log
+	}); 
+
+};
+//여러명 보내기 위해 기존 바로 공유하기에서 선택으로 modal에 append하구 append할때마다 전역변수에 값 추가
+//선택하면 공유모달 밑에 append
+const modalAppendshareMember = (reservationNo,targetUser) => {
+	console.log("reservationNo = ",reservationNo);
+	//전역변수에 값 +=
+	sharmembers += targetUser+",";
+	let append = `<tr>
+		<td>\${targetUser}</td>
+		</tr>`;
+	
+	//선택한 친구 append하기
+	$("table#selectListTable tbody").append(append);
+	//공유하기 버튼 보여주기
+	$("#sharbutton").css("display","").val(reservationNo);
+	
 };
 
 function selectAcceptedFriendsForCheck(reservationNo){
@@ -159,7 +248,7 @@ function selectAcceptedFriendsForCheck(reservationNo){
 	});
 	return returnVal;
 }
-
+///* <input type="button" value="공유하기" onclick="shareReservation('\${resNo}', '\${e.id}');"/> */
 $("[name=friendId]").keyup((e) => {
  	$.ajax({
 		url: '${pageContext.request.contextPath}/member/followingListById',
@@ -177,7 +266,7 @@ $("[name=friendId]").keyup((e) => {
 						</td>
 						<td>\${e.id}</td>
 						<td>
-							<input type="button" value="공유하기" onclick="shareReservation('\${resNo}', '\${e.id}');"/>
+							<input type="button" value="선택" onclick="modalAppendshareMember('\${resNo}','\${e.id}');"/>
 						</td>
 					</tr>
 				`;
