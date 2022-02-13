@@ -58,7 +58,11 @@
 </div>
 <div class="plusHashtagButton-container" onclick="$('#hashtagListModal').modal();">
 	<img class="plusHashtagButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""/>
-	<span class="plusButtonLabel">&nbsp;관심 해시태그 등록</span>
+	<span class="plusButtonLabel">&nbsp;나의 관심 해시태그</span>
+</div>
+<div class="groupRankingButton-container" onclick="$('#groupRankingModal').modal();">
+	<img class="groupRankingButton"src="${pageContext.request.contextPath}/resources/images/icons/crown.png" alt=""/>
+	<span class="plusButtonLabel">&nbsp;소그룹 랭킹</span>
 </div>
 <div class="groupListModalButton-container" onclick="$('#recommendedGroupListModal').modal();">
 	<img class="groupListModalButton"src="${pageContext.request.contextPath}/resources/images/icons/thumbs-up.png" alt=""/>
@@ -129,5 +133,6 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 	});
 
 </script>
+ <jsp:include page="/WEB-INF/views/group/modal/groupRanking.jsp"></jsp:include>
  <jsp:include page="/WEB-INF/views/group/modal/groupRecommend.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

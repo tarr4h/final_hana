@@ -75,7 +75,7 @@ public interface ShopService {
 
 	List<Map<String, Object>> selectShopGrade(String shopId);
 
-	Map<String, Object> reservationStatistics(String shopId);
+	Map<String, Object> reservationStatistics(Member member);
 
 
 

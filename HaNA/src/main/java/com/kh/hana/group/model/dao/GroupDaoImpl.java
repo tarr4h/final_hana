@@ -3,6 +3,7 @@ package com.kh.hana.group.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -254,6 +255,45 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public int selectGroupApplyLog(Map<String, Object> map) {
 		return session.selectOne("group.selectGroupApplyLog",map);
+	}
+
+	@Override
+	public List<GroupBoard> selectGroupBoardListByHashtag(String hashtag) {
+		return session.selectList("group.selectGroupBoardListByHashtag",hashtag);
+	}
+
+	@Override
+	public List<Map<String,Object>> selectGroupListByVisitCount(Map<String, Object> param) {
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("group.selectGroupListByVisitCount",param,rowBounds);
+	}
+
+	@Override
+	public int selectAllGroupCount() {
+		return session.selectOne("group.selectAllGroupCount");
+	}
+
+	@Override
+	public int selectAllGroupCountByHashtag(Map<String, Object> param) {
+		return session.selectOne("group.selectAllGroupCountByHashtag",param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectGroupListByMemberCount(Map<String, Object> param) {
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("group.selectGroupListByMemberCount",param,rowBounds);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectGroupListByApplyCount(Map<String, Object> param) {
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("group.selectGroupListByApplyCount",param,rowBounds);
 	}
 	
 

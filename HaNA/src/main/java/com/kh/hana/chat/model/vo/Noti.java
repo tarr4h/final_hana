@@ -21,6 +21,7 @@ public class Noti implements Serializable {
 	private String message;
 	private int boardNo;
 	private int boardType;
+	private String idORwriter;
 	private Date regDate;
 
 }

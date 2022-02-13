@@ -76,5 +76,4 @@ if(msg != null){
 <!-- 게시물 상세보기 모달 -->
 <jsp:include page="/WEB-INF/views/group/modal/groupBoardDetail.jsp"/>
 
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

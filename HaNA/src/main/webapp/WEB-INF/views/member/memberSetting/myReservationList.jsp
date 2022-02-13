@@ -206,9 +206,10 @@
 						$("#myReservationTable tbody").find(".purchaseResBtn:last").prop('disabled', 'true');
 					}
 					
-					/* 더치페이 본인몫 결제완료 시(S), 결제 비활성화 */
+					/* 더치페이 본인몫 결제완료 시(S), 결제 비활성화, 공유버튼 비활성화 */
 					if(e.reqDutchpay == 'S'){
 						$("#myReservationTable tbody").find(".purchaseResBtn:last").prop('disabled', 'true');
+						$("#myReservationTable tbody").find(".shareResBtn:last").prop('disabled', 'true');
 					}
 					
 					/* 더치페이 요청 후 공유버튼 비활성화 */

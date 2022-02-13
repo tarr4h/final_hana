@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/29546d6ff0.js" crossorigin="anonymous"></script>
@@ -60,6 +61,7 @@
 		  </button>
 		  <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
 		    <ul class="navbar-nav">
+		    <sec:authorize access="hasRole('USER')">
 		      <li class="nav-item">
 					<button id="notifyBtn">noti <span class="badge" id="notiAlarm"></span></button>
 					<div id="notiArea">
@@ -92,6 +94,7 @@
 		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM<span class="badge" id="dmAlarm"></span></a>
 		      </li>
 		      </sec:authorize>
+		      </sec:authorize>
 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
 			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">로그인(임시)</a>		      	
@@ -120,7 +123,7 @@
 				<!-- 관리자메뉴 -->
 				<sec:authorize access="hasRole('ADMIN')">
 					<li class="nav-item">
-						<a class="nav-link text-light" href="#">관리자</a>
+						<a class="nav-link text-light" href="${pageContext.request.contextPath}/admin/searchStatistics">관리자</a>
 					</li>
 				</sec:authorize>
 				    
@@ -216,15 +219,17 @@
 				if(eSplit[0]!==memberId){
 					if(eSplit[4] !== roomNo){
 					 	beep2();
-						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${ShareMessage[1]}</a>`);
+						$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do?\${eSplit[4]}">\${ShareMessage[1]}</a>`);
 						
 						const date = moment(today).format("YYYY년 MM월 DD일");
 						let tbodyNoti =`<tr>
-		    				<td>\${ShareMessage[1]} \${date}</td>
+		    				<td><a href="${pageContext.request.contextPath}/chat/chat.do?\${eSplit[4]}">\${ShareMessage[1]} \${date}</a></td>
 			    			</tr>`;
 						$("tbody#notiTbody").append(tbodyNoti);
 						headerNotiAlarm = headerNotiAlarm + 1;
 						$("#notiAlarm").text(headerNotiAlarm);
+						headerdmAlarm = headerdmAlarm+1;
+						$("#dmAlarm").text(headerdmAlarm);
 						
 						$("div#headerAlert").css('display','block');
 						setTimeout(function(){
@@ -246,21 +251,30 @@
 					}
 				};
 
-				websocket.close();
-				connect(1);
+			/* 	websocket.close();
+				connect(1); */
 				return
 			}
 			
 			else if(eSplit[4] === '226'){
-				console.log("eSplit[4] === 226 입장");
 				let message226Split = eSplit[1].split("@");
-				console.log("message226Split[3] = ",message226Split[3]);
 			 	beep2();
-				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${message226Split[1]} \${message226Split[2]}</a>`);
 				const date = moment(today).format("YYYY년 MM월 DD일");
-				let tbodyNoti =`<tr>
-    				<td>\${message226Split[1]} \${message226Split[2]} \${date}</td>
-	    			</tr>`;
+				let tbodyNoti =``;
+				if(message226Split[3] === '일반'){
+				//일반				
+				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
+				tbodyNoti =`<tr>
+    				<td><a href="${pageContext.request.contextPath}/member/memberView/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
+	    			</tr>`;	
+				}
+				//소모임
+				else{
+					$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/group/groupPage/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]}</a>`);
+					tbodyNoti =`<tr>
+	    				<td><a href="${pageContext.request.contextPath}/group/groupPage/\${message226Split[4]}?\${message226Split[2]}">\${message226Split[1]} \${date}</a></td>
+		    			</tr>`;	
+				}
 				$("tbody#notiTbody").append(tbodyNoti);
 				
 				$("div#headerAlert").css('display','block');
@@ -296,7 +310,7 @@
 				else{
 			 	beep();
 				let msg = (eSplit[1] != 'null' ? '메세지를' : '사진을');
-				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
+				$("div#headerAlert").html(`<a href="${pageContext.request.contextPath}/chat/chat.do?\${eSplit[4]}">\${eSplit[0]}님이 \${msg} 보냈습니다</a>`);
 				$("div#headerAlert").css('display','block');
 				setTimeout(function(){
 					$("div#headerAlert").css('display','none');
@@ -369,11 +383,20 @@
 					if(resp.length !== '0'){
 						let tbodyNoti =``;
 							$(resp).each((i, noti) => {
-								const {memberId, message, boardNo,regDate} = noti;
+								const {memberId, message, boardNo,boardType,idORwriter, regDate} = noti;
 								const date = moment(regDate).format("YYYY년 MM월 DD일");
-								tbodyNoti += `<tr>
-				    				<td>\${message} \${boardNo} \${date}</td>
-					    			</tr>`;
+								console.log("boardType = ",boardType);
+								console.log("idORwriter = ",idORwriter);
+								if(boardType === '1'){
+									tbodyNoti += `<tr>
+					    				<td><a href="${pageContext.request.contextPath}/group/groupPage/\${idORwriter}?\${boardNo}">\${message} \${date}</a></td>
+						    			</tr>`;
+								}
+								else{
+								tbodyNoti +=`<tr>
+				    				<td><a href="${pageContext.request.contextPath}/member/memberView/\${idORwriter}?\${boardNo}">\${message} \${date}</a></td>
+					    			</tr>`;										
+								}
 							});
 							$("tbody#notiTbody").html(tbodyNoti);
 					}

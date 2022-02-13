@@ -89,6 +89,8 @@ public interface MemberService {
 
 	int checkFollow(Map<String, Object> map);
 
+	int insertReport(Map<String, Object> map);
+
 	//int checkRefuse(Map<String, Object> map);
 
 	 

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop">
    
-     <select id="selectShopList" parameterType="map" resultMap="hashTagsMap">
+   <select id="selectShopList" parameterType="map" resultMap="hashTagsMap">
 		select
 		    s.*,
 		    m.picture,
@@ -52,8 +52,26 @@
             #{tags}
             </foreach>
         </where>
+        
     </select>
-    
+    	<select id="selectHashTagClickShopList" parameterType="map" resultMap="hashTagsMap">	
+		select
+            s.*,
+		    m.picture,
+		    h.tag_name
+        from
+            shop_info s left join member m
+		    on s.id = m.id
+		    left join shophashtag t
+		    on s.id = t.member_id
+		    left join hashtag h
+		    on t.tag_id = h.tag_id
+        where 
+        	 s.address is not null
+        	 and 
+            h.tag_name = #{tagName}
+	</select>
+	
     <resultMap type="map" id="hashTagsMap">
 		<id column="id" property="id"/>		
 		<result column="shop_name" property="shopName"/>
@@ -477,20 +495,7 @@
 			reservation_no = #{reservationNo}
 	</update>
 
-	<select id="selectHashTagClickShopList" resultType="map">	
-		select
-            *
-        from
-            shop_info i	
-            left join member m
-            on i.id = m.id
-            left join shophashtag s 
-            on m.id = s.member_id 
-    		left join hashtag h 
-            on s.tag_id = h.tag_id
-        where 
-            tag_name = #{tagName}
-	</select>
+
 
 	
 	<insert id="insertBoardReview" parameterType="map">
@@ -597,5 +602,32 @@
 		    r.shop_id = #{shopId}
 		group by
 		    r.reservation_table_id
+	</select>
+	
+	<select id="selectShopReservationVisitorList" parameterType="string" resultType="map">
+		select
+		    distinct s.attend_user "userId",
+		    m.location_x "locationX",
+    		m.location_y "locationY",
+		    (select
+		        count(*)
+		    from
+		        shop_table_reservation_share rs left join shop_table_reservation tr
+		        on rs.reservation_no = tr.reservation_no
+		    where
+		        tr.reservation_status = '예약완료'
+		        and
+		        rs.attend_user = m.id) "visitCount"
+		from
+		    shop_table_reservation_share s left join shop_table_reservation r
+		    on r.reservation_no = s.reservation_no
+		    left join member m
+		    on s.attend_user = m.id
+		where
+		    shop_id = #{shopId}
+		    and
+		    reservation_status = '예약완료'
+		order by
+		    4 desc
 	</select>
 </mapper>

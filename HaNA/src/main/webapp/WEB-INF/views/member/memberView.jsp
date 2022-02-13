@@ -78,6 +78,7 @@
     		<!-- 신고버튼 -->
         	<c:if test="${!loginMember.id.equals(member.id) }">
  			 <div id="report-box"><input type="button" id="reportBtn" class="btn btn-danger" value="신고"></div>
+ 			 <jsp:include page="/WEB-INF/views/member/reportModal/userReportModal.jsp"/>
         	</c:if>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 --> 
 			<c:if test="${loginMember.id.equals(member.id) }">

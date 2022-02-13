@@ -132,8 +132,10 @@ function shareReservation(reservationNo, targetUser){
 					    websocket.send(jsonData);
 					    $('#shareModal').modal('hide');
 					    alert("공유 완료\n공유 요청 메시지가 전송되었습니다.");
+						websocket.close();
+						connect(1);
 				 },1000);
-
+				
 			},
 			error: console.log
 		}); 
