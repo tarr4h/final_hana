@@ -194,6 +194,7 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public int updateGroup(Group group) {
+		int result = chatDao.roomChatUpdate(group);
 		return groupDao.updateGroup(group);
 	}
 
