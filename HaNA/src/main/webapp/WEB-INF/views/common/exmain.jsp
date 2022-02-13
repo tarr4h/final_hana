@@ -26,9 +26,9 @@
 				같은 동네, 같은 취미<br /> 공통사를 가진 친구를 사귀고 싶다면
 			</p>
 			<ul class="actions">
-				<li><a href="#"
+				<li><a href="${pageContext.request.contextPath}/member/login.jsp"
 					class="button primary icon solid fa-chevron-down scrolly"> LOG IN</a></li>
-				<li><a href="#" class="button icon solid fas fa-pencil-alt"> SIGN UP</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/memberEnrollMain"  class="button icon solid fas fa-pencil-alt"> SIGN UP</a></li>
 			</ul>
 		</div>
 		<div class="image phone">
