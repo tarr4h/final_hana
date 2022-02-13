@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@GetMapping("/adminMain")
-	public void adminMain() {}
+	@GetMapping("/searchStatistics")
+	public void searchStatistics() {}
 	
 }
