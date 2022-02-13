@@ -26,7 +26,8 @@
 
 .shopRank div{
 	height: 300px;
-	border: 1px solid white;
+	border: 1px solid #f9fafb;
+    background-color: #ffbf00;
 }
 .shopProfile.d-flex{
 	width:150px;
@@ -42,8 +43,9 @@
 
 
 .shopList div{
-	height: 300px;
-	border: 1px solid white;
+	 height: 300px;
+	 border: 1px solid #afb7bf;
+
 }
 
 .searchResultArea {
@@ -65,4 +67,64 @@
 #searchBtn:hover{
 	color: #f9fafb;
 	background-color: #ecb61f;
+}
+.shopScroll{
+	color: #41464b;
+	font-weight: 800;
+}
+.rankingTop3{
+	color: #41464b;
+}
+.mb-4{
+	color: #41464b;
+	font-weight: 800;
+}
+.shopCrownImg{
+	width: 30px;
+	margin: 5px;
+	position: relative; 
+	bottom: 3px;
+}
+.shopNameImg{
+	width: 30px; 
+	height: 28px; 
+	margin: 3px 5px 0px 0px; 
+	padding: 3px; 
+	position: relative; 
+	bottom: 5px;
+}
+.shopAddresseImg{
+	width: 26px; 
+	height: 25px;
+	margin: 3px;
+	position: relative;
+	bottom: 2px;
+}
+.shopHashTagImg{
+	width: 18px; 
+	height:17px; 
+	margin: 4px 4px; 
+	position: relative; bottom: 2px;
+}
+.shopSearchImg{
+	width: 18px; 
+	height: 17px; 
+	margin: 3px 3px; 
+	position: relative; 
+	bottom: 3px;
+}
+.shopRankingImg{
+	width: 26px; 
+	height: 25px; 
+	margin: 3px; 
+	position: relative; 
+	bottom: 2px;
+}
+.shopRankingNumberImg{
+	width: 30px; 
+	height: 28px; 
+	margin: 3px 5px 0px 0px; 
+	padding: 3px; 
+	position: relative; 
+	bottom: 5px;
 }
