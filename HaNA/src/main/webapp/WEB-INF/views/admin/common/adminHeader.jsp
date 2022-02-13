@@ -9,16 +9,17 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="관리자페이지" name="title"/>
 </jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/adminMain.css" />
 <section>
-
-<h1>제제내역</h1>
-
-
-
-<h1>신고내역</h1>
-
-
-
-
-</section>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+<div class="row admin-total" >
+	<div class="col-sm-3 admin-side">
+		<div class="admin-side-menu">
+			<ul>
+			<li><a href="">신고 내역</a></li>
+			<li><a href="">제제 내역</a></li>
+			<li><a href="">검색 통계</a></li>
+			<li><a href="">소모임 해시태그 관리</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-sm-9">

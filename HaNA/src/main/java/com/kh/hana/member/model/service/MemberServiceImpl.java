@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.hana.member.model.dao.MemberDao;
 import com.kh.hana.member.model.vo.Board;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@Transactional(rollbackFor=Exception.class) // 익셉션 발생시 롤백
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
