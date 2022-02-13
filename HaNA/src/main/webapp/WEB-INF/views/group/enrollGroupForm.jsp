@@ -37,7 +37,6 @@
                 <div class="modal-header">
                     <h5 class="modal-title text-light" id="exampleModalLabel">가입 신청 폼</h5> <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
                 </div>
-                
                 <div class="modal-body">
                     <form:form name="enrollGroupForm" method="post" action="${pageContext.request.contextPath}/group/enrollGroupForm">
                         <div class="form-group"> 
@@ -53,7 +52,6 @@
                 		<div class="modal-footer"> <button type="button" id="submitBtn" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px; width:100%;" data-dismiss="modal" aria-label="Close">Submit</button> </div>
                     </form:form>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -69,7 +67,5 @@
 	})
 </script>
 
-<style>
-    </style>
 </body>
 </html>

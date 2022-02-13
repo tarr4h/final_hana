@@ -120,7 +120,7 @@ const groupDM=(groupId, loginId)=>{
 								</tr>
 								<tr>
 									<th><span class="tableKey">리더</span></th>
-									<td>${group.leaderId}</td>
+									<td onclick="goMemberView('${group.leaderId}');" class="group-profile leader-id">${group.leaderId}</td>
 								</tr>
 								<tr class="memberCountTr" onclick="$('#groupMemberList').modal('show');">
 									<th><span class="tableKey" style="color:#673ab7c9;">멤버</span></th>
@@ -129,7 +129,7 @@ const groupDM=(groupId, loginId)=>{
 								<tr>
 									<th><span class="tableKey">해시태그</span></th>
 									<td>
-										<c:forEach items="${group.hashtag}" var="name"><span class="hashtag">#${name}&nbsp;</span></c:forEach>
+										<c:forEach items="${group.hashtag}" var="name"><span class="hashtag" onclick="location.href='${pageContext.request.contextPath}/group/searchHashtag/${name}'">#${name}&nbsp;</span></c:forEach>
 									</td>
 								</tr>
 							</tbody>

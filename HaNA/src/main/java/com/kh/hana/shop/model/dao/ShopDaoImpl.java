@@ -232,6 +232,36 @@ public class ShopDaoImpl implements ShopDao {
 	public List<Map<String, Object>> selectShopGrade(String shopId) {
 		return session.selectList("shop.selectShopGrade", shopId);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectShopReservationUserList(String shopId) {
+		return session.selectList("shop.selectShopReservationUserList", shopId);
+	}
+
+	@Override
+	public int selectShopReservationDawnList(String shopId) {
+		return session.selectOne("shop.selectShopReservationDawnList", shopId);
+	}
+
+	@Override
+	public int selectShopReservationDayList(String shopId) {
+		return session.selectOne("shop.selectShopReservationDayList", shopId);
+	}
+
+	@Override
+	public int selectShopReservationNightList(String shopId) {
+		return session.selectOne("shop.selectShopReservationNightList", shopId);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectShopReservationTableList(String shopId) {
+		return session.selectList("shop.selectShopReservationTableList", shopId);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectShopReservationVisitorList(String shopId) {
+		return session.selectList("shop.selectShopReservationVisitorList", shopId);
+	}
 	
 	
 

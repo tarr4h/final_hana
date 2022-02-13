@@ -6,7 +6,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberView.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberView.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="마이페이지" name="title"/>
 </jsp:include>
@@ -30,7 +30,7 @@
 	</script>
 </c:if>
 
-<div class="container profile mt-2">
+<div class="profile-container mt-2">
     <div class="row" id="myInfo">
     	<!-- 프로필이미지 영역 -->
         <div class="col-sm-5 d-flex justify-content-center align-items-center flex-column" id="profileImg">
@@ -56,18 +56,22 @@
         <!-- 프로필 세부정보 영역 -->
         <div class="col-sm-7" id="profileStatus">
         <br /><br /><br />
-        	<span class="followTitle">팔로잉 :</span>
-        	<button  type="button" class="btn btn-secondary" id="btn-following-list">${followerCount}명</button>
-        	<span class="followTitle">팔로워 : </span>
-        	 <button  type="button" class="btn btn-secondary" id="btn-follower-list">${followingCount}명</button>
-        	 
+        	<span class="followTitle" style="font-size : 14px">팔로잉 :</span>
+        	<button  type="button" class="btn btn-outline-dark" id="btn-following-list">${followerCount}명</button>
+        	 &nbsp;&nbsp;&nbsp;
+        	<span class="followTitle" style="font-size : 14px">팔로워 : </span>
+        	 <button  type="button" class="btn btn-outline-dark" id="btn-follower-list">${followingCount}명</button>
+        	 <!-- 신고버튼 -->
+        	<c:if test="${!loginMember.id.equals(member.id) }">
+ 			 <div id="report-box"><input type="button" id="reportBtn" class="btn btn-danger" value="신고"></div>
+        	</c:if>
         	<!-- 설정버튼 : 본인계정일땐 설정, 아닐땐 친구추가 버튼 -->
         	<c:if test="${loginMember.id.equals(member.id) }">
         	<button type="button" class="btn btn-outline-dark icon" id="settingBtn" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/personal'">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/setting.png" alt="" />
         	</button>
         	</c:if>
-        	<c:if test="${!loginMember.id.equals(member.id) && isFriend == 0 }">
+        	<c:if test="${member.publicProfile == 1 && !loginMember.id.equals(member.id) && isFriend == 0 }">
         	<button type="button" class="btn btn-outline-dark icon" id="addFriendBtn" onclick="addFollowing();">
         		<img src="${pageContext.request.contextPath }/resources/images/icons/man.png" alt="" />
         	</button>
@@ -78,29 +82,32 @@
         	</form:form>
         	</c:if>
 
-            <br /><br />
+            <br /><br /><br />
             
             <div class="profileTableArea">
 				<table id="profileTable">
 					<tbody>
 						<tr>
-							<td>
+							<td class="key">
 								<span class="tableKey">아이디</span>
 							</td>
 							<td>
 								<span class="tableValue">${member.id}</span>
 							</td>
 						</tr>
+						<tr><td></td></tr>
 						<tr>
 							<td><span class="tableKey">지역</span></td>
-							<td>${shopInfo.address}</td>
+							<td class="tableValue">${shopInfo.address}</td>
 						</tr>
+						<tr><td></td></tr>
 						<tr>
 							<td rowspan=2><span class="tableKey">소개</span></td>
 							<td class="tableValue" rowspan=2>
 								 ${shopInfo.shopIntroduce} 
 							</td>
 						</tr>
+						<tr><td></td></tr>
 						<tr>
 							<td></td>
 							<td></td>
@@ -111,12 +118,12 @@
 								<span class="tableValue grade">4.9</span>
 							</td>
 						</tr>
-						
+						<tr><td></td></tr><tr><td></td></tr>
 						<!-- 본인인 경우 예약확인버튼 노출 -->
 						<c:if test="${loginMember.id.equals(member.id) }">
 						<tr>
 							<td>
-								<input type="button" value="예약확인" id="reservationListBtn"/>
+								<input type="button" value="예약확인" id="reservationListBtn" class="btn btn-outline-primary"/>
 								
 								<!-- reservation check Modal -->
 								<jsp:include page="/WEB-INF/views/member/modal/shopReservationList.jsp"></jsp:include>
@@ -128,7 +135,7 @@
 						<c:if test="${!loginMember.id.equals(member.id) }">
 						<tr>
 							<td>
-								<input type="button" value="예약" id="reservationBtn"/>
+								<input type="button" value="예약" id="reservationBtn" class="btn btn-outline-primary"/>
 								
 								<!-- reservation Modal -->
 								<jsp:include page="/WEB-INF/views/member/modal/shopReservation.jsp"></jsp:include>
@@ -138,28 +145,30 @@
 					</tbody>
 				</table>
 			</div>
-			<!-- 글쓰기버튼 -->
-			<c:if test="${loginMember.id.equals(member.id) }">
-        	<button id="boardModalBtn" style="float:right; margin-top:30px"><i style="font-size: 30px;" class="fas fa-pencil-alt"></i></button>
-        	<jsp:include page="/WEB-INF/views/member/boardModal/boardModal.jsp"></jsp:include>
-        	</c:if>
+
 		</div>
     </div>
 </div> 
-
+<div style="width:75%; border: none; border-bottom: 1px solid; margin:5px auto 80px">
+			<!-- 글쓰기버튼 -->
+			<c:if test="${loginMember.id.equals(member.id) }">
+        	<button id="boardModalBtn" class="writeBtn" style="float:right; margin-top:-40px"><i style="font-size: 30px;" class="fas fa-pencil-alt" aria-hidden="true"></i></button>
+        	<jsp:include page="/WEB-INF/views/member/boardModal/boardModal.jsp"></jsp:include>
+        	</c:if>
+</div>
 <div class="container mt-2">       
-    <div class="row">   
+    <div class="boardRow">   
         <!-- 탭 영역 -->
         <div class="col-sm-12 nav nav-pills nav-fill" id="tab">   	
 		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center">
 		    <a class="nav-link active" href="#" id="normalTabBtn">게시물</a>
 		  </div>
-		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center">
+		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center" >
 		    <a class="nav-link" href="#" id="reviewTabBtn">후기</a>
 		  </div>
         </div>
     </div>
-
+	<br/><br/>
     <div class="row" id="normalArea">
 	    <jsp:include page="/WEB-INF/views/member/shopViewBoardArea/normalBoard.jsp"></jsp:include>
     </div>
@@ -366,6 +375,68 @@
 
 <a href="/" class="badge badge-dark">Dark</a>
 </section>
- 
+<style>
+.profile-container mt-2{
+ 	border: none;
+}
+#myInfo {
+	margin-top: 45px;
+	margin-bottom :-20px;
+    border: none; 
+    height : 380px;
+    margin-left:100px;   
+}
+.tableKey {
+    width: 5%;
+    font-size: 15px;
+    padding-bottom: 1px;
+    font-weight: 700;
+    margin-left: 5px;
+}
+.tableValue {
+    width: 100%;
+    font-size: 14px;
+    padding-bottom: 6px;
+}
+.boardRow {
+   width: 35%;
+   margin :auto;
+}
+.board-main-image{
+cursor: pointer;
+ }
+#reviewTabBtn {
+    background-color: gray;
+    color: white;
+}
+#normalTabBtn{
+	background-color: gray;
+    color: white;
+}
+.writeBtn{
+	border-radius : 50px;
+	background-color : white;
+	border : none;
+} 
+.key{
+	width:160px;
+}
+#btn-following-list{
+	width: 60px;
+}
+#btn-follower-list{
+	width: 60px;
+}
+#report-box{
+	float:right;
+	margin-top : 40px;
+} 
+#reportBtn {
+    color: white;
+    border-color: black;
+    background-color:#ff000078;
+}
+
+</style> 
  
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

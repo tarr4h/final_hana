@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="프로필 설정" name="title"/>
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberSetting.css" />
 <sec:authentication property="principal" var="loginMember"/>
 
 <c:if test="${not empty msg}">
@@ -30,6 +30,7 @@
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/hashtag'">해시태그 설정</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/reservationSetting'">예약 관리</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/shopSetting/reservationPriceSetting'">요금 관리</li>
+				<li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/shop/reservationStatistics'">예약 통계</li>	
 			</ul>
         </div>
         
