@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+#myReservationTable {
+	border: 1px solid black;
+	border-collapse: collapse;
+}	
+#myReservationTable th{
+	border: 1px solid black;
+	border-collapse: collapse;
+}	
+#myReservationTable td{
+	border: 1px solid black;
+	border-collapse: collapse;
+}	
+
+#leftSideList{
+	height: 900px;
+}
+
+
+#res-container{
+	width: 65%;
+}
+
+#myReservationTable{
+	table-layout:fixed;
+	word-break:break-all;
+	font-size: 15px;
+}
+
+#myReservationTable input{
+	width:30px;
+	padding: 0;
+	background-color: #e7e6e6;
+	border: 1px solid gray;
+}
+

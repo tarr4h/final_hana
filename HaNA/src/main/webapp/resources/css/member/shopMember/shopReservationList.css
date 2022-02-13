@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+#reservationTable{
+	border-collapse: collapse;
+}
+#reservationTable th{
+	text-align: center;
+	border: 1px solid black;
+}
+#reservationTable td{
+	border: 1px solid black;
+}
+
+.res-dateBtn{
+	width: 100%;
+	background-color: white;
+	border: none;
+}
+#listModal1{
+	margin-top:100px;
+
+}
+#res-list-closeBtn{
+	background-color: white;
+	border:none;
+}
+
+#res-list-closeBtn:hover{
+	background-color: gray;
+}

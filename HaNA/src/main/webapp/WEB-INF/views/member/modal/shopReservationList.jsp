@@ -7,20 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <sec:authentication property="principal" var="loginMember"/>
-
-<style>
-	#reservationTable{
-		border-collapse: collapse;
-	}
-	#reservationTable th{
-		text-align: center;
-		border: 1px solid black;
-	}
-	#reservationTable td{
-		border: 1px solid black;
-	}
-
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/shopMember/shopReservationList.css" />
 
 	<div class="modal fade" id="listModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
@@ -28,7 +15,7 @@
 				<!-- header -->
 				<div class="modal-header">
 					<h3 class="modal-title">예약 확인</h3>
-						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<button class="close" id="res-list-closeBtn" type="button" data-dismiss="modal" aria-label="Close">
 							닫기
 						</button>
 				</div>
@@ -36,10 +23,10 @@
 				<div class="modal-body">
 					<!-- 총 예약건수 -->
 					<div id="reservation-count-all">
-						<span>미래 예약완료 건 수 : </span>
+						<span>총 예약 건 수 : </span>
 						<span id="resCount"></span>
 						<br />
-						<span>해당일의 예약 건 수 : </span>
+						<span>오늘의 예약 건 수 : </span>
 						<span id="dailyResCount"></span>
 					</div>
 					<!-- 일자별 예약리스트 -->
@@ -59,14 +46,14 @@
 									</th>
 								</tr>
 								<tr>
-									<th>예약일</th>
-									<th>예약자</th>
-									<th>예약테이블</th>
-									<th>예약시작</th>
-									<th>예약종료</th>
-									<th>방문자 수</th>
-									<th>예약요청</th>
-									<th>예약상태</th>
+									<th width="15%">예약일</th>
+									<th width="15%">예약자</th>
+									<th width="10%">예약테이블</th>
+									<th width="5%">예약시작</th>
+									<th width="5%">예약종료</th>
+									<th width="5%">인원</th>
+									<th width="20%">예약요청</th>
+									<th width="10%">예약상태</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -76,7 +63,6 @@
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
-					<a class="btn nextBtn" data-num="1" href="#">다음</a>
 				</div>
 			</div>
 		</div>
@@ -201,39 +187,53 @@
 				$("#reservationTable tbody").empty();
 				
 				let countNum = 0;
+				
 				$.each(res, (i, e) => {
-					let convertDate = new Date(e.reservationDate);
+					if(e.reservationStatus == '예약완료'){
+						let convertDate = new Date(e.reservationDate);
+						let tr = `
+							<tr>
+								<td>
+									\${convertDate.getFullYear()}년 \${convertDate.getMonth()+1}월 \${convertDate.getDate()}일
+								</td>
+								<td>
+									\${e.reservationUser}
+								</td>
+								<td>
+									\${e.reservationTableId}
+								</td>
+								<td>
+									\${e.timeStart}
+								</td>
+								<td>
+									\${e.timeEnd}
+								</td>
+								<td>
+									\${e.visitorCount}
+								</td>
+								<td>
+									\${e.reqOrder}
+								</td>
+								<td>
+									\${e.reservationStatus}
+								</td>
+							</tr>
+						`;
+						$("#reservationTable tbody").append(tr);
+						countNum += 1;
+					}
+				});
+				
+				if($("#reservationTable tbody").text() == ''){
+					console.log("empty");
 					let tr = `
 						<tr>
-							<td>
-								\${convertDate.getFullYear()}년 \${convertDate.getMonth()+1}월 \${convertDate.getDate()}일
-							</td>
-							<td>
-								\${e.reservationUser}
-							</td>
-							<td>
-								\${e.reservationTableId}
-							</td>
-							<td>
-								\${e.timeStart}
-							</td>
-							<td>
-								\${e.timeEnd}
-							</td>
-							<td>
-								\${e.visitorCount}
-							</td>
-							<td>
-								\${e.reqOrder}
-							</td>
-							<td>
-								\${e.reservationStatus}
-							</td>
+							<th colspan="8">등록된 내역이 없습니다.</th>
 						</tr>
 					`;
 					$("#reservationTable tbody").append(tr);
-					countNum += 1;
-				});
+				}
+				
 				$("#dailyResCount").text('');
 				$("#dailyResCount").text(countNum);
 			},
