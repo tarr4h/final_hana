@@ -174,7 +174,7 @@ const slideMargin = 0; //슬라이드간의 margin 값
 	    <c:if test="${not empty groupboard}">
         <c:forEach items="${groupboard}" var="groupboard" varStatus="vss">
     <article>
-    <table>
+    <table id="maintable">
     <tr>
     <td >
     <div  style="width: 200px;display: inline-block;cursor: pointer;" onclick="location.href='${pageContext.request.contextPath}/member/memberView/${groupboard.writer}'">

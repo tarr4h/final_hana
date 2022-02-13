@@ -74,11 +74,13 @@
 		and room_no = #{roomNo}
 	</update>
 	
-	<select id="memberList" resultType="member">
+	<select id="followerList" resultType="member">
 	select
 		*
 	from
 		member
+	where
+		id in (select distinct member_id from follower where following_id = #{id})
 	</select>
 	
 	<select id="memberList2" resultType="member">

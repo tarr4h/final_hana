@@ -219,6 +219,11 @@ public class ChatDaoImpl implements ChatDao {
 		return session.update("chat.roomChatUpdateImage",group);
 	}
 
+	@Override
+	public List<Member> followerList(String id) {
+		return session.selectList("chat.followerList",id);
+	}
+
 
 
 

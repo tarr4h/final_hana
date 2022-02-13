@@ -93,5 +93,7 @@ public interface ChatDao {
 
 	int roomChatUpdateImage(Group group);
 
+	List<Member> followerList(String id);
+
 
 }
