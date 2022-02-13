@@ -95,5 +95,7 @@ public interface ChatDao {
 
 	List<Member> followerList(String id);
 
+	int roomChatUpdate(Group group);
+
 
 }

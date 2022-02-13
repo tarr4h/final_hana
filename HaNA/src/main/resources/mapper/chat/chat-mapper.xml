@@ -396,6 +396,15 @@
 	where 
 		group_room_id = #{groupId}
 	</update>
+	<update id="roomChatUpdate">
+	update
+		chat_room
+	set 
+		group_img = #{image},
+		room_name = #{groupName}
+	where 
+		group_room_id = #{groupId}	
+	</update>
 	
 
 </mapper>

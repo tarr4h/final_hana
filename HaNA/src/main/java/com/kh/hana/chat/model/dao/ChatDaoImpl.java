@@ -224,6 +224,11 @@ public class ChatDaoImpl implements ChatDao {
 		return session.selectList("chat.followerList",id);
 	}
 
+	@Override
+	public int roomChatUpdate(Group group) {
+		return session.update("chat.roomChatUpdate",group);
+	}
+
 
 
 

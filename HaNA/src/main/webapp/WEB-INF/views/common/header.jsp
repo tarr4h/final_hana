@@ -215,7 +215,7 @@
  			let eSplit = e.data.split(",");
 			let ShareMessage = eSplit[1].split("@");
 			console.log("eSplit[4] = ",eSplit[4]);
-			if(ShareMessage[0] === 'share115'){
+			if(ShareMessage[0] === 'share115' || ShareMessage[0] === 'share510'){
 				if(eSplit[0]!==memberId){
 					if(eSplit[4] !== roomNo){
 					 	beep2();
