@@ -58,7 +58,7 @@
 </div>
 <div class="plusHashtagButton-container" onclick="$('#hashtagListModal').modal();">
 	<img class="plusHashtagButton"src="${pageContext.request.contextPath}/resources/images/icons/plus.png" alt=""/>
-	<span class="plusButtonLabel">&nbsp;관심 해시태그 등록</span>
+	<span class="plusButtonLabel">&nbsp;나의 관심 해시태그</span>
 </div>
 <div class="groupRankingButton-container" onclick="$('#groupRankingModal').modal();">
 	<img class="groupRankingButton"src="${pageContext.request.contextPath}/resources/images/icons/crown.png" alt=""/>
