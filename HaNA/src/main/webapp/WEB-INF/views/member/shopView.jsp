@@ -156,6 +156,7 @@
 </div> 
 <br/><br/> 
 <div class="container mt-2">  
+<br/><br/>
   <div class="total">     
     <div class="boardRow">   
         <!-- 탭 영역 -->
