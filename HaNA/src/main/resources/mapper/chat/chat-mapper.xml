@@ -14,7 +14,7 @@
     ) and room_no not in(select room_no from chat where member_id = #{id} and message='ROOMOUT')
 	</select>
 		
-		<select id="roomchat2" resultMap="chatMap">
+	<select id="roomchat2" resultMap="chatMap">
 	select 
 		c.*, m.picture 
 	from 
