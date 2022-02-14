@@ -106,6 +106,14 @@ public interface ShopDao {
 
 	List<Map<String, Object>> selectShopReservationVisitorList(String shopId);
 
+	List<Map<String, Object>> selectRankShopAvg();
+
+	List<Map<String, Object>> selectRankShopReview();
+
+	List<Map<String, Object>> selectRankShopRes();
+
+
+
 
 
 

@@ -38,12 +38,10 @@ public class ShopServiceImpl implements ShopService {
 			List<String> tags = new ArrayList<>();
 			for(String str : selectDataArr) {
 				tags.add(str);
-				data.put("tags", tags);
-				log.info("tags = {}", tags);
-				log.info("data = {}", data);
+				data.put("tags", tags);				
 			}
 			 shopList = shopDao.selectHashTagShopList(data);			
-			 log.info("해시태그 있는  = {}", shopList);
+			 log.info("해시태그가 있 = {}", shopList);
 		}
 		String locationX = (String)data.get("locationX");
 		String locationY = (String)data.get("locationY");
@@ -60,10 +58,7 @@ public class ShopServiceImpl implements ShopService {
 				lastShopList.add(shop);
 			}
 		}
-		log.info("shopList LAsts = {}", lastShopList);
-		log.info("listSize = {}", lastShopList.size());
 		return lastShopList;
-		
 	}
 
 	@Override
@@ -320,6 +315,43 @@ public class ShopServiceImpl implements ShopService {
 		returnMap.put("tableList", tableList);
 		returnMap.put("visitorList", visitorList);
 		returnMap.put("visitorDistance", visitorDistance);
+		
+		
+		return returnMap;
+	}
+
+	@Override
+	public Map<String, Object> getPrice(String reservationNo) {
+		Map<String, Object> map = new HashMap<>();
+		List<Map<String, Object>> list = shopDao.selectPriceAndVisitors(reservationNo);
+		
+		log.info("list = {}", list);
+		log.info("list0 = {}", list.get(0));
+		log.info("list0.ogp = {}", String.valueOf(list.get(0).get("ORIGINALPRICE")));
+		int price = Integer.parseInt(String.valueOf(list.get(0).get("ORIGINALPRICE")));
+		int visitors = list.size();
+		
+		map.put("price", price);
+		map.put("visitors", visitors);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> selectShopRank() {
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		// 평점 1위 매장
+		List<Map<String, Object>> avgShop = shopDao.selectRankShopAvg();
+		returnMap.put("avgShop", avgShop.get(0));
+		
+		// 리뷰 수 1위 매장
+		List<Map<String, Object>> revShop = shopDao.selectRankShopReview();
+		returnMap.put("revShop", revShop.get(0));
+		
+		// 예약 수 1위 매장
+		List<Map<String, Object>> resShop = shopDao.selectRankShopRes();
+		returnMap.put("resShop", resShop.get(0));
 		
 		
 		return returnMap;

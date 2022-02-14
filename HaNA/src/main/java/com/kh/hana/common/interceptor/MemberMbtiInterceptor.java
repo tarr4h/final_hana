@@ -1,7 +1,5 @@
 package com.kh.hana.common.interceptor;
 
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,23 +19,21 @@ public class MemberMbtiInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	private SqlSessionTemplate session;
 	private String memberId;
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); 
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		MemberEntity id = (MemberEntity) authentication.getPrincipal();
 		memberId = id.getId();
 
-		// memberId가 null이 아니라면 해당 Id 데이터를 바로 delete 해준다 
-		if(memberId != null) {
-			 session.delete("mbti.deleteData",memberId);			
+		// memberId가 null이 아니라면 해당 Id 데이터를 바로 delete 해준다
+		if (memberId != null) {
+			session.delete("mbti.deleteData", memberId);
 		}
-		
-		return super.preHandle(request, response, handler);		
-	}
-	
 
-	
+		return super.preHandle(request, response, handler);
+	}
+
 }

@@ -10,86 +10,8 @@
 <script src="${pageContext.request.contextPath }/resources/js/summernote/summernote-lite.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/summernote/summernote-lite.css" />
-<style>
-@charset "UTF-8";
-.rating {
-    /* margin: 50px auto; */
-    width: 200px;
-}
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/reviewModal.css" />
 
-.rating > * {
-    float: right;
-}
-
-@keyframes pulse {
-    50% {
-        color: #5e5e5e;
-        text-shadow: 0 0 15px #777777;
-    }
-}
-
-.rating label {
-    height: 20px;
-    width: 15%;
-    display: block;
-    position: relative;
-    cursor: pointer;
-}
-
-.rating label:nth-of-type(5):after {
-    animation-delay: 0.25s;
-}
-
-.rating label:nth-of-type(4):after {
-    animation-delay: 0.2s;
-}
-
-.rating label:nth-of-type(3):after {
-    animation-delay: 0.15s;
-}
-
-.rating label:nth-of-type(2):after {
-    animation-delay: 0.1s;
-}
-
-.rating label:nth-of-type(1):after {
-    animation-delay: 0.05s;
-}
-
-.rating label:after {
-    transition: all 0.4s ease-out;
-    -webkit-font-smoothing: antialiased;
-    position: absolute;
-    content: "☆";
-    color: #444;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    font-size: 40px;
-    animation: 1s pulse ease;
-}
-
-.rating label:hover:after {
-    color: #5e5e5e;
-    text-shadow: 0 0 15px #5e5e5e;
-}
-
-.rating input {
-    display: none;
-}
-
-.rating input:checked + label:after,
-.rating input:checked ~ label:after {
-    content: "★";
-    color: #F9BF3B;
-    text-shadow: 0 0 20px #F9BF3B;
-}
-
-
-
-</style>
 
 
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -105,17 +27,23 @@
 			</div>
 			<!-- 내용 -->
 			<div class="modal-body">
+				<div class="review-body">
 					<input type="hidden" name="writer" value="${loginMember.id }" />
-					<br />
+						<br />
+					<!-- 첨부영역 -->	
 					<div class="boardAttachArea">
-						<input type="button" value="이미지 추가" class="appendAttachArea"/>
-						<input type="file" name="upFile" required/>
+						<input type="file" id="rev-fileBtn" name="upFile" required/>
 					</div>
-					<textarea name="content" id="summernote"></textarea>
-					
+					<!-- 추가버튼 -->
+					<input type="button" id="rev-appendBtn" value="이미지 추가" class="appendAttachArea"/>
+					<!-- 텍스트 영역 -->
+					<div class="contentArea">
+						<span id="contentTitle">리뷰 작성</span>
+						<textarea name="content" id="summernote"></textarea>
+					</div>					
 					<!-- 별점매기기 -->
+					<span class="rating-title">평점</span>
 					<div id="starArea" style="display:block;float:left">
-						<label for="rating">평점</label>
 						<div class="rating">
 							 <input type="radio" name="rating" id="r1" value="5">
 							 <label for="r1"></label>
@@ -134,7 +62,8 @@
 						</div>
 						<input type="hidden" name="checkedVal" id="" />
 					</div>
-					<br /><br />
+						<br /><br />
+				</div>					
 			</div>
 			<!-- footer -->
 			<div class="modal-footer">
@@ -170,18 +99,4 @@ $(".appendAttachArea").click((e) => {
 	$(".boardAttachArea").append(inputFile);
 });
 
-$(document).ready(function() {
-	//여기 아래 부분
-	$('#summernote').summernote({
-		  height: 150,                 // 에디터 높이
-		  minHeight: 150,             // 최소 높이
-		  maxHeight: 300,             // 최대 높이
-		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
-		  toolbar: [],
-		  disableResizeEditor: true
-	});
-	$(".note-resizebar").css('display', 'none');
-});
 </script>

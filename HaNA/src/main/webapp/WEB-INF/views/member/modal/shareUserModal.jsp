@@ -7,6 +7,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <sec:authentication property="principal" var="loginMember"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/reservationShare/shareMember.css" />
+
 
 <div class="modal fade" id="shareUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -45,13 +47,13 @@ function showAcceptedFriends(reservationNo){
 			$.each(res, (i, e) => {
 				let tr = `
 					<tr>
-						<td>
+						<td width="30%">
 							<img src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt="" style="width:50px;height:50px;border-radius:100%"/>
 						</td>
-						<td>
+						<td width="40%">
 							<span class="sharedFr">\${e.id}</span>
 						</td>
-						<td>
+						<td width="30%">
 							공유완료
 						</td>
 					</tr>

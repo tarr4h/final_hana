@@ -44,9 +44,14 @@ public class ShopController {
     private ShopService shopService;
     
     @GetMapping("/shopMain")
-    public void shopMain() {
-        
+    public void shopMain(Model model) {
+    	// 매장 랭킹 구해오기
+    	Map<String, Object> rankingList = shopService.selectShopRank();
+    	log.info("rankingList = {}", rankingList);
+    	
+    	model.addAttribute("rankingList", rankingList);
     }
+    
     @GetMapping("/shopList")
     public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY, @RequestParam int maxDistance) {
     	log.info("maxDistance = {}", maxDistance);
@@ -379,6 +384,7 @@ public class ShopController {
     	map.put("status", status);
     	
     	int result = shopService.updateReqDutchpay(map);
+    	log.info("updateResult = {}", result);
     	
     	return ResponseEntity.ok(result);
     }
@@ -640,6 +646,15 @@ public class ShopController {
     	log.info("oneFeMale = {}", groupOneFemale);
     	
     	return returnMap;
+    }
+    
+    @GetMapping("/getPrice")
+    public ResponseEntity<?> getPrice(@RequestParam String reservationNo){
+    	
+    	Map<String, Object> ogPrice = shopService.getPrice(reservationNo);
+    	log.info("ogPrice = {}", ogPrice);
+    	
+    	return ResponseEntity.ok(ogPrice);
     }
 
 }

@@ -88,7 +88,9 @@ const displayRoom = (selector, data) => {
 							console.log("roomNo=",roomNo);
 							console.log("data=",data);
  							window[memberId+roomNo] = data;
-							$(`#roomAlarm`+roomNo).text(window[memberId+roomNo]);
+ 							if(data !== 0)
+								$(`#roomAlarm`+roomNo).text(window[memberId+roomNo]);
+ 								
 							
 						}
 							
@@ -109,7 +111,7 @@ const displayRoom = (selector, data) => {
 							</div>
 							<div class="user_info">
 								<span>\${roomType != 1 ? members : roomName}방</span>
-								<button onclick="roomchat(this.value)" value="\${roomNo}">버튼</button>
+								<button type="button" class="btn btn-info" onclick="roomchat(this.value)" value="\${roomNo}">입장</button>
 								<span class="badge" id="roomAlarm\${roomNo}"></span>
 							</div>
 						</div>
@@ -120,7 +122,34 @@ const displayRoom = (selector, data) => {
 			});
 		}
 		else{
-			chatroom += `<span>회원 검색 or 친구목록 or 소모임 가입을 통해 대화가 가능합니다.</span>`;
+			chatroom += `<div class="card-body contacts_body">
+				<ui class="contacts">
+				<li class="active">
+					<div class="d-flex bd-highlight" id="chatroom">
+						<div class="img_cont">
+							<img src="../resources/images/icons/eb13.jpg" class="rounded-circle user_img">
+						</div>
+						<div class="user_info">
+							<span>소모임에 가입시 활성화</span>
+						</div>
+					</div>
+				</li>
+				</ui>
+			</div>
+			<div class="card-body contacts_body">
+			<ui class="contacts">
+			<li class="active">
+				<div class="d-flex bd-highlight" id="chatroom">
+					<div class="img_cont">
+						<img src="../resources/images/duck2.jpg" class="rounded-circle user_img">
+					</div>
+					<div class="user_info">
+						<span>친구와 채팅시 활성화</span>
+					</div>
+				</div>
+			</li>
+			</ui>
+		</div>`;
 		}
 		
 		$target.html(chatroom);
@@ -132,8 +161,8 @@ const displayRoom = (selector, data) => {
 				<div class="col-md-4 col-xl-4 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
 						<div class="input-group">
-							<input type="text" placeholder="아이디 or 이름을 입력하세요" id="findMemberInput" class="form-control search">
-							<button id="allMember">친구목록</button>
+							<input type="text" placeholder="아이디 or 이름을 입력" id="findMemberInput" class="form-control search">
+							<button type="button" class="btn btn-warning" id="allMember">친구목록</button>
 						</div>
 					</div>
 					<div id="chatList">
@@ -183,13 +212,13 @@ const displayRoom = (selector, data) => {
 					<h5 class="modal-title" id=""fileupload"">사진 올리기</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
-					</button>
+					</button>			
 				</div>
 				<div>
 				  <form id="uploadForm" enctype="multipart/form-data">
 				  	<input type="file" id="fileUpload" />
 				  </form>
-					<button type="button" onclick="fileSend()" id="sendFileBtn">사진 올리기</button>
+					<button type="button" class="btn btn-primary"onclick="fileSend()" id="sendFileBtn">사진 올리기</button>
 				</div>
 			</div>
 		</div>
@@ -286,7 +315,7 @@ if(websocket !== undefined){
 	console.log("memberIdroomNo=",window[memberId+no]);
 	headerdmAlarm = headerdmAlarm-window[memberId+roomNo];
 	window[memberId+roomNo] = 0;
-	$(`#roomAlarm`+no).text(window[memberId+roomNo]);
+	$(`#roomAlarm`+no).empty();
 	$("#dmAlarm").text(headerdmAlarm);
 		
 	sendBtn();
@@ -700,7 +729,7 @@ $("#findMemberInput").autocomplete({
 }).autocomplete( "instance" )._renderItem = function( ul, item ) {  
     const {id , name, picture} = item;
 	return $( "<li>" )    
-    .append( `<div><img src='../resources/upload/member/profile/\${picture}' class='rounded-circle user_img'/>` + "id = " + id + "이름 = " + name + " " + `<button onclick='chatsend(this.value);' value='\${id}'>전송</button></div>` )    //여기에다가 원하는 모양의 HTML을 만들면 UI가 원하는 모양으로 변함.
+    .append( `<div><img src='../resources/upload/member/profile/\${picture}' class='rounded-circle user_img'/>` + "id = " + id + "이름 = " + name + " " + `<button type="button" class="btn btn-primary" onclick='chatsend(this.value);' value='\${id}'>전송</button></div>` )    //여기에다가 원하는 모양의 HTML을 만들면 UI가 원하는 모양으로 변함.
     .appendTo( ul );
 }; 
 
