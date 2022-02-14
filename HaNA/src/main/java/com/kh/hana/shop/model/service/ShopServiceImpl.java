@@ -38,12 +38,10 @@ public class ShopServiceImpl implements ShopService {
 			List<String> tags = new ArrayList<>();
 			for(String str : selectDataArr) {
 				tags.add(str);
-				data.put("tags", tags);
-				log.info("tags = {}", tags);
-				log.info("data = {}", data);
+				data.put("tags", tags);				
 			}
 			 shopList = shopDao.selectHashTagShopList(data);			
-			 log.info("해시태그 있는  = {}", shopList);
+			 log.info("해시태그가 있 = {}", shopList);
 		}
 		String locationX = (String)data.get("locationX");
 		String locationY = (String)data.get("locationY");
@@ -60,10 +58,7 @@ public class ShopServiceImpl implements ShopService {
 				lastShopList.add(shop);
 			}
 		}
-		log.info("shopList LAsts = {}", lastShopList);
-		log.info("listSize = {}", lastShopList.size());
 		return lastShopList;
-		
 	}
 
 	@Override
