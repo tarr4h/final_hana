@@ -7,6 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <sec:authentication property="principal" var="loginMember"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/reservationShare/reservationAccept.css" />
 
 <div class="modal fade" id="resAcceptModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -64,15 +65,15 @@ function setReservationDetail(resNo, id){
 			let date = new Date(res.reservation.reservationDate);
 			let tr = `
 				<tr>
-					<td>\${date.getFullYear()}-\${date.getMonth()+1}-\${date.getDate()}</td>
-					<td>\${res.reservation.timeStart} ~ \${res.reservation.timeEnd}</td>
-					<td>
+					<td width="20%">\${date.getFullYear()}-\${date.getMonth()+1}-\${date.getDate()}</td>
+					<td width="25%">\${res.reservation.timeStart} ~ \${res.reservation.timeEnd}</td>
+					<td width="15%">
 						<a href="${pageContext.request.contextPath}/member/shopView/\${res.reservation.shopId}">
 							\${res.reservation.shopId}
 						</a>
 					</td>
-					<td>\${res.reservation.visitorCount}</td>
-					<td>\${res.reservation.reservationStatus}</td>
+					<td width="10%">\${res.reservation.visitorCount}</td>
+					<td width="15%">\${res.reservation.reservationStatus}</td>
 				</tr>
 			`;
 			

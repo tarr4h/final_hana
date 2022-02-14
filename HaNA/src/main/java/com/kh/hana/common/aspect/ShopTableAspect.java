@@ -43,15 +43,24 @@ public class ShopTableAspect {
 			
 			List<Reservation> resultTable = shopService.selectTableReservation(infoMap);
 			
+			log.info("resultTable EMpty? = {}", resultTable.isEmpty());
 			if(resultTable.isEmpty()) {
 				if(callMethod.contains("update")) {
 					table.setUpdatable("Y");
-					int result = shopService.updateTable(table);
 				}
 			} else {
-				throw new Throwable();				
+				if(callMethod.contains("update")){
+					table.setUpdatable("N");
+					int result = shopService.updateTable(table);
+					if(result > 0) {
+						throw new Throwable();											
+					}
+				}
+				if(callMethod.contains("delete")) {
+					throw new Throwable();														
+				}
 			}
-			
+				
 			Object returnObj = joinPoint.proceed();
 				
 			return returnObj;

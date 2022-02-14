@@ -42,30 +42,16 @@ thead th {
 
 tbody td {
     position: relative;
+    border-bottom: 1px dotted gray;
 }
-/* tbody tr:hover {
-    background-color: #dddfe7;
-}
-tbody td:hover:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -9999px;
-    bottom: -9999px;
-    z-index: -1;
-}
-tbody td:hover {
-	background-color:#c7cfef;
-} */
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
  	<jsp:param value="예약 설정" name="title"/>
 </jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
 <section>
 <sec:authentication property="principal" var="loginMember"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberSetting.css" />
 
 <br/><br/><br/><br/>
 <div class="container">
@@ -342,6 +328,7 @@ function updateFrm(num){
 	};
 	
 	const tableStr = JSON.stringify(content);
+	console.log(tableStr);
 
 	$.ajax({
 		url: '${pageContext.request.contextPath}/shop/updateShopTable?${_csrf.parameterName}=${_csrf.token}',

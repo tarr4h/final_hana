@@ -379,6 +379,7 @@ public class ShopController {
     	map.put("status", status);
     	
     	int result = shopService.updateReqDutchpay(map);
+    	log.info("updateResult = {}", result);
     	
     	return ResponseEntity.ok(result);
     }
@@ -640,6 +641,15 @@ public class ShopController {
     	log.info("oneFeMale = {}", groupOneFemale);
     	
     	return returnMap;
+    }
+    
+    @GetMapping("/getPrice")
+    public ResponseEntity<?> getPrice(@RequestParam String reservationNo){
+    	
+    	Map<String, Object> ogPrice = shopService.getPrice(reservationNo);
+    	log.info("ogPrice = {}", ogPrice);
+    	
+    	return ResponseEntity.ok(ogPrice);
     }
 
 }

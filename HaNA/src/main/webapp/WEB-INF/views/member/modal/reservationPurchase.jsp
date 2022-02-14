@@ -7,6 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <sec:authentication property="principal" var="loginMember"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/reservationPurchase/reservationPurchase.css" />
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <div class="modal fade" id="resPurchaseModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -21,14 +22,17 @@
 			</div>
 			<!-- 내용 -->
 			<div class="modal-body">
-				<h3>금액 결제 완료 시 예약이 확정됩니다.</h3>
+				<div style="text-align:center;width:100%;">
+					<h4>* 금액 결제 완료 시 예약이 확정됩니다.</h4>
+					<br />
+					<span>결제 금액은 </span><span id="purchaseAmount"></span><span>원 입니다.</span>
+				</div>
+				<br />
 				<div class="purchaseAll">
-					<span>전체금액 한번에 결제하기</span>
-					<input type="button" value="선택" id="req-pay-All" onclick="resAll();"/>
+					<input type="button" class="req-Btn" value="전체금액 한번에 결제하기" id="req-pay-All" onclick="resAll();"/>
 				</div>
 				<div class="dutchpay">
-					<span>공유인원에게 더치페이 요청하기</span>
-					<input type="button" value="선택" id="req-pay-Each" onclick="requestDutchpay();"/>
+					<input type="button" class="req-Btn" value="공유 인원에게 더치페이 요청하기" id="req-pay-Each" onclick="requestDutchpay();"/>
 				</div>
 				<input type="hidden" name="req-pay-rs-no" />
 			</div>
@@ -45,15 +49,18 @@
 		<div class="modal-content">
 			<!-- header -->
 			<div class="modal-header">
-				<h3 class="modal-title">결제하기</h3>
+				<h3 class="modal-title">더치페이</h3>
 					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 						닫기
 					</button>
 			</div>
 			<!-- 내용 -->
 			<div class="modal-body">
-				<h3>더치페이 요청입니다.</h3>								
-				<input type="button" value="결제하기" onclick="resDutchpay();"/>
+				<div class="dutchTitle">
+					<h4>총 결제금액에서 1/N만큼만 결제됩니다.</h4>
+					<span>결제금액은 </span><span id="dutchAmount"></span><span>원 입니다. </span>
+				</div>								
+				<input type="button" class="req-Btn" value="결제하기" onclick="resDutchpay();"/>
 			</div>
 			<!-- footer -->
 			<div class="modal-footer">
@@ -68,12 +75,34 @@
 function purchaseModal(reservationNo, reservationUser, reqDutchpay){
 	if('${loginMember.id}' == reservationUser && reqDutchpay == 'N'){
 		$("[name=req-pay-rs-no]").val(reservationNo);
+		getPrice(reservationNo, 'all');
 		$('#resPurchaseModal1').modal({backdrop:'static', keyboard:false});
 	} else if(reqDutchpay == 'Y'){
 		$("[name=req-pay-rs-no]").val(reservationNo);
+		getPrice(reservationNo, 'dutch');
 		$('#resPurchaseModal2').modal({backdrop:'static', keyboard:false});
 	};
 };
+
+/* 총 결제금액 가져오기 */
+function getPrice(reservationNo, type){
+	$.ajax({
+		url: '${pageContext.request.contextPath}/shop/getPrice',
+		data:{
+			reservationNo
+		},
+		success(res){
+			console.log(res);
+			if(type == 'all'){
+				$("#purchaseAmount").text(res.price);
+			} else {
+				let priceByVisitors = Math.floor(res.price / res.visitors);
+				$("#dutchAmount").text(priceByVisitors);
+			}
+		},
+		error: console.log
+	});
+}
 
 /* 더치페이 요청보내기 */
 function requestDutchpay(){
@@ -83,7 +112,7 @@ function requestDutchpay(){
 		method: 'POST',
 		data:{
 			reservationNo: resNo,
-			status: 'N'
+			status: 'Y'
 		},
 		success(res){
 			console.log(res);

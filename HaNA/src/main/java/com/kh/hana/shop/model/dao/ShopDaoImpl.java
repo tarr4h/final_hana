@@ -262,7 +262,7 @@ public class ShopDaoImpl implements ShopDao {
 	public List<Map<String, Object>> selectShopReservationVisitorList(String shopId) {
 		return session.selectList("shop.selectShopReservationVisitorList", shopId);
 	}
-	
+
 	
 
 }
