@@ -31,33 +31,33 @@
 						HashTag Ranking<img class="shopCrownImg" src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png"/></th>
 					</tr>
 					<tr id="rankingTrColor">
-						<th scope="col">no</th>  
-						<th scope="col">일간</th>  
-						<th scope="col">주간</th>  
-						<th scope="col">월간</th>	
+						<th scope="col" id ="thNo">no</th>  
+						<th scope="col" id="thNo2">일간</th>  
+						<th scope="col" id="thNo3">주간</th>  
+						<th scope="col" id="thNo4">월간</th>	
 					</tr>
 				</thead>
 				<tbody>
 					 <tr>
-						<th scope="row" class="rankingThColor">1</th>
+						<th scope="row" class="rankingThColor" id ="rankingThColor_1">1</th>
 						<td id="toDayFirstRanking" class="tagClick" onClick="hashTagClick()">Mark ★</td>
 						<td id="weekFirstRanking" class="tagClick" onClick="hashTagClick()" >@mdo ★</td>
 						<td id="monthFirstRanking" class="tagClick" onClick="hashTagClick()">Otto ★</td>
 					</tr> 
 					 <tr>
-						<th scope="row" class="rankingThColor">2</th>
+						<th scope="row" class="rankingThColor" id ="rankingThColor_2">2</th>
 						<td id="toDaySecondRanking" class="tagClick" onClick="hashTagClick()">Jacob</td>
 						<td id="weekSecondRanking" class="tagClick" onClick="hashTagClick()">@fat</td>
 						<td id="monthSecondRanking" class="tagClick" onClick="hashTagClick()">Thornton</td>
 					</tr> 
 					<tr>
-						<th scope="row" class="rankingThColor">3</th>
+						<th scope="row" class="rankingThColor" id ="rankingThColor_3">3</th>
 						 <td id="toDayThirdTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekThirdRanking" class="tagClick" onClick="hashTagClick()">@test!!</td>
 						<td id="monthThirdRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
 					</tr>
 					<tr>
-						<th scope="row" class="rankingThColor">4</th>
+						<th scope="row" class="rankingThColor" id ="rankingThColor_4">4</th>
 						<td id="toDayFourthTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekFourthRanking" class="tagClick" onClick="hashTagClick()">@twitter</td>
 						<td id="monthFourthRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
