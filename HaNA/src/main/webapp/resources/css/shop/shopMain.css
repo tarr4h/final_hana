@@ -120,10 +120,11 @@
 .shopRankingNumberImg{
 	width: 30px; 
 	height: 28px; 
-	margin: 3px 5px 0px 0px; 
-	padding: 3px; 
+	margin: 3px 6px 0px 0px; 
+	padding: 0px; 
 	position: relative; 
 	bottom: 5px;
+	right: 13px;
 }
 .radioStyle{
 	position: relative; 

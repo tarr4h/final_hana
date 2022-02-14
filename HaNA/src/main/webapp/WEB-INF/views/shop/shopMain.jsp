@@ -99,7 +99,7 @@
 
 		<!-- 매장 랭킹 영역 -->
 		<div class="row shopRank bg-dark text-white">
-			<div
+			<div 	
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
 				<span class="d-flex align-items-start"><img class="shopRankingImg"src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png" />
 				</span><span class="mb-4">"평점 1위"</span>
