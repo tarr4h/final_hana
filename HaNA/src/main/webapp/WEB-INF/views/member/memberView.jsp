@@ -31,7 +31,7 @@
 	alert("${msg}");
 	</script>
 </c:if>
- 
+<br/><br/> 
 <div class="profile-container mt-2">
     <div class="row" id="myInfo">   	
     	<!-- 프로필이미지 영역 -->
