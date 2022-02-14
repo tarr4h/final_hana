@@ -22,9 +22,12 @@
 			</div>
 			<!-- 내용 -->
 			<div class="modal-body">
-				<h4>* 금액 결제 완료 시 예약이 확정됩니다.</h4>
+				<div style="text-align:center;width:100%;">
+					<h4>* 금액 결제 완료 시 예약이 확정됩니다.</h4>
+					<br />
+					<span>결제 금액은 </span><span id="purchaseAmount"></span><span>원 입니다.</span>
+				</div>
 				<br />
-				<span>결제 금액은 </span><span id="purchaseAmount"></span><span>원 입니다.</span>
 				<div class="purchaseAll">
 					<input type="button" class="req-Btn" value="전체금액 한번에 결제하기" id="req-pay-All" onclick="resAll();"/>
 				</div>
@@ -109,7 +112,7 @@ function requestDutchpay(){
 		method: 'POST',
 		data:{
 			reservationNo: resNo,
-			status: 'N'
+			status: 'Y'
 		},
 		success(res){
 			console.log(res);

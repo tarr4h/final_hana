@@ -379,6 +379,7 @@ public class ShopController {
     	map.put("status", status);
     	
     	int result = shopService.updateReqDutchpay(map);
+    	log.info("updateResult = {}", result);
     	
     	return ResponseEntity.ok(result);
     }
