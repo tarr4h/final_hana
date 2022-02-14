@@ -167,6 +167,33 @@ const forEachLikeCss = (index)=>{
 const slideWidth = 800; //한개의 슬라이드 넓이 
 const slideMargin = 0; //슬라이드간의 margin 값 
 </script>
+    <!--  -->
+    <c:if test="${empty groupboard and empty board}">
+    <div class="container mt-5">
+	<h1 style="margin-left: 50px">추천 친구</h1>
+        <div class="d-flex align-items-center cards">
+    <c:forEach items="${popularList}" var="member" varStatus="vs">
+
+            <div class="card">
+                <div class="mb-3"> <span class="text-grey fs-5">${vs.count}등</span> <span class="light-grey fs-6"></span> </div>
+                <div class="h5"> <a href="#">팔로워 : ${member.count}명</a> </div>
+                <div class="mt-auto">
+                    <div class="d-flex align-items-center">
+                        <div class="profile"> <img src="${pageContext.request.contextPath }/resources/upload/member/profile/${member.picture}"> </div>
+                        <a href="${pageContext.request.contextPath }/member/memberView/${member.memberId}">
+                        <div class="ms-2">
+                            <div class="light-grey fs-6">${member.memberId}</div>
+                            <div class="text-grey fs-5">${member.name}</div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+     </c:forEach>
+        </div>
+    </div>
+
+     </c:if>
     
     <!-- 다시만든 main -->
     <main>
@@ -309,7 +336,7 @@ $(`.next${vss.index }`).on('click', function () {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
 					const date = moment(regDate).format("YYYY년 MM월 DD일");
 					commentList += `<li>
-		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+',\'' + writer + '\',\'${groupboard.groupId}\');">답글</button>' : ''}</span>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button class="btn btn-primary btn-sm" id="commentLev2btn" type="button" onclick="commentLev2('+no+','+boardNo+',\'' + writer + '\',\'${groupboard.groupId}\');">답글</button>' : ''}</span>
 		                </li>
 		                <li id='\${commentLevel === 1 ?  'Level2Comment'+no+'' : 'Level2Comment'+commentRef+''}'>
 			              <div class="time-log">
@@ -349,7 +376,7 @@ const commetWrite${vss.index}=()=>{
 			const date = moment(today).format("YYYY년 MM월 DD일");
 			const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = resp;
 			let commentList =`<li>
-		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev2('+no+','+boardNo+',\'' + writer + '\',\'${groupboard.groupId}\');">답글</button>' : ''}</span>
+		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button class="btn btn-primary btn-sm" type="button" onclick="commentLev2('+no+','+boardNo+',\'' + writer + '\',\'${groupboard.groupId}\');">답글</button>' : ''}</span>
 		        </li>
 		        <li id='\${commentLevel === 1 ?  'Level2Comment'+no+'' : 'Level2Comment'+commentRef+''}'>
 		          <div class="time-log">
@@ -631,7 +658,7 @@ $(`.next0${vss.index }`).on('click', function () {
 					const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = comment;
 					const date = moment(regDate).format("YYYY년 MM월 DD일");
 					commentList += `<li>
-		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+',\'' + writer + '\',\'${board.writer}\');">답글</button>' : ''}</span>
+		                  <span class="\${commentLevel === 1 ?  '' : 'commentLevel2'}"><span class="point-span userID">\${writer}</span>\${content}\${commentLevel === 1 ?  '<button class="btn btn-default" id="commentLev2btn" type="button" onclick="commentLev20('+no+','+boardNo+',\'' + writer + '\',\'${board.writer}\');">답글</button>' : ''}</span>
 		                </li>	                
 		                <li id='\${commentLevel === 1 ?  'Level2Comment0'+no+'' : 'Level2Comment0'+commentRef+''}'>
 			              <div class="time-log">
@@ -670,7 +697,7 @@ const commetWrite0${vss.index}=()=>{
 			const date = moment(today).format("YYYY년 MM월 DD일");
 			const {boardNo, commentLevel, commentRef, content, no, regDate, writer} = resp;
 			let commentList =`<li>
-		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button onclick="commentLev20('+no+','+boardNo+',\'' + writer + '\',\'${board.writer}\');">답글</button>' : ''}</span>
+		        <span><span class="point-span userID">${loginMember.id}</span>\${msg}\${commentLevel === 1 ?  '<button class="btn btn-primary btn-sm" type="button" onclick="commentLev20('+no+','+boardNo+',\'' + writer + '\',\'${board.writer}\');">답글</button>' : ''}</span>
 		        </li>
 		        <li id='\${commentLevel === 1 ?  'Level2Comment0'+no+'' : 'Level2Comment0'+commentRef+''}'>
 		          <div class="time-log">
@@ -707,8 +734,8 @@ $.ajax({
 	},
 	method: "GET",
 	success(resp){
-/* 		console.log(resp);
-		console.log("0${vss.index }=",i0${vss.index }); */
+ 		console.log(resp);
+		/* console.log("0${vss.index }=",i0${vss.index }); */
 		i0${vss.index } = resp;
 		$("#likeCount0${vss.index } span").html((i0${vss.index } >0 ? i0${vss.index }+`명이 좋아합니다` : ''));
 	},
@@ -830,7 +857,7 @@ const deleteLike0${vss.index }=()=>{
           </div>
         </div>
 
-        
+<c:if test="${not empty groupboard or not empty board}">   
         <!-- recommendation section -->
         <div class="section-recommend">
           <div class="menu-title">
@@ -845,7 +872,7 @@ const deleteLike0${vss.index }=()=>{
                 <img class="img-profile" src="${pageContext.request.contextPath }/resources/upload/member/profile/${member.picture}">
                 <div class="profile-text">
                   <span class="userID point-span">${member.id}</span>
-                  <span class="sub-span">${member.name != null ? '나를 팔로잉한 친구' : '같은 소모임에 있는 친구'}</span>
+                  <span class="sub-span">${member.name != null ? '나를 팔로잉한 친구' : (member.addressFull == null ? '같은 소모임에 있는 친구': '가장 인기 있는 친구')}</span>
                 </div>
               </div>
               <span class="btn-follow" onclick="insertFollow('${member.id}','${vs.index}');" style="cursor: pointer">팔로우</span>
@@ -854,7 +881,7 @@ const deleteLike0${vss.index }=()=>{
           </c:if>
 </ul>
         </div>
-
+ </c:if>
 
       </div>
     </main>
@@ -1046,6 +1073,102 @@ const boardDetailVeiw=(boardNo, type,writer,groupId) =>{
 };
 </script>
     <style>
-    .commentLevel2{margin-left: 50px}
+    .commentLevel2{margin-left: 50px;}
+    #commentLev2btn{margin-left: 5px;}
+     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Kalam&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif
+}
+
+body {
+    background: white
+}
+
+.container {
+    overflow: auto
+}
+
+.cards {
+    overflow: auto;
+    min-height: 550px
+}
+
+.card {
+    background: #3a3a3a;
+    background: linear-gradient(to right, #474747, #222);
+    min-width: 300px;
+    height: 380px;
+    border-radius: 10px;
+    box-shadow: -5px 5px 25px #0000009d;
+    padding: 20px;
+    border: none;
+    transition: all .3s ease-in-out
+}
+
+.card .text-grey {
+    color: #ccc;
+    font-weight: 500
+}
+
+.card .light-grey {
+    color: #aaa;
+    font-weight: 300
+}
+
+.card .fs-5 {
+    font-size: 1.15rem !important
+}
+
+.card a {
+    color: #fff;
+    text-decoration: none
+}
+
+.card .profile img {
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 5px 15px rgba(26, 25, 25, 0.329);
+    object-fit: cover;
+    border-radius: 50%
+}
+
+.card:not(:first-child) {
+    margin-left: -8rem
+}
+
+.cards::-webkit-scrollbar {
+    height: 10px
+}
+
+.cards::-webkit-scrollbar-track {
+    background: inherit
+}
+
+.cards::-webkit-scrollbar-thumb {
+    background-color: #3a3a3a;
+    background: linear-gradient(to right, #ff002b, #002fff);
+    border-radius: 10px
+}
+
+.card:hover,
+.card:focus-within {
+    transform: translateY(-1rem) rotateZ(5deg)
+}
+
+.card:hover~.card,
+.card:focus-within~.card {
+    transform: translateX(8rem)
+}
+
+.card .designation {
+    display: inline;
+    border-radius: 10px;
+    padding: 4px 10px;
+    border: 1px solid #ddd
+}
     </style>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

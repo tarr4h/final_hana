@@ -79,6 +79,8 @@ public interface ChatService {
 
 	List<Member> followerList(String id);
 
+	List<Map<String, Object>> mostPopularMember();
+
 
 
 
