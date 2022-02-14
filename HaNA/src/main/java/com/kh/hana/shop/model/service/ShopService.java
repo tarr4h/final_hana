@@ -79,6 +79,8 @@ public interface ShopService {
 
 	Map<String, Object> getPrice(String reservationNo);
 
+	Map<String, Object> selectShopRank();
+
 
 
 

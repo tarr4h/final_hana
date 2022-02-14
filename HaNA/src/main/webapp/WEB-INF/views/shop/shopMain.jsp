@@ -108,16 +108,16 @@
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
 				<span class="d-flex align-items-start"><img class="shopRankingImg"src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png" />
-				</span><span class="mb-4">"조회수 1위"</span>
+				</span><span class="mb-4">"평점 1위"</span>
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<a href="#"> <img class="shopProfileImg"
-						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						src="${pageContext.request.contextPath }/resources/upload/member/profile/${rankingList.avgShop.picture}"
 						alt="" />
 					</a>
 				</div>
-				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span>
-				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>조회 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>${rankingList.avgShop.shop }</span>
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>${rankingList.avgShop.avg }</span>
 			</div>
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
@@ -126,11 +126,11 @@
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<img class="shopProfileImg"
-						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						src="${pageContext.request.contextPath }/resources/upload/member/profile/${rankingList.revShop.picture}"
 						alt="" />
 				</div>
-				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span> 
-				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>리뷰 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>${rankingList.revShop.id }</span>
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>${rankingList.revShop.count }</span>
 			</div>
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
@@ -139,11 +139,11 @@
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<img class="shopProfileImg"
-						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						src="${pageContext.request.contextPath }/resources/upload/member/profile/${rankingList.resShop.picture}"
 						alt="" />
 				</div>
-				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span> 
-				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>예약 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>${rankingList.resShop.id }</span>
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>${rankingList.resShop.count }</span>
 			</div>
 		</div>
 		<div class="row shopList bg-secondary text-white" id="shopList" style="background-color: #e9ecef !important;">
