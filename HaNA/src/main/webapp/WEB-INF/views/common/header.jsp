@@ -16,6 +16,120 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+<!-- test style -->
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*:focus,
+*:active {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wrapper {
+  display: inline-flex;
+}
+
+.wrapper .icon {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 15px;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip {
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: #ffffff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background-color: #ffffff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+  background-color: #3b5999;
+  color: #ffffff;
+}
+
+.wrapper .twitter:hover,
+.wrapper .twitter:hover .tooltip,
+.wrapper .twitter:hover .tooltip::before {
+  background-color: #46c1f6;
+  color: #ffffff;
+}
+
+.wrapper .instagram:hover,
+.wrapper .instagram:hover .tooltip,
+.wrapper .instagram:hover .tooltip::before {
+  background-color: #e1306c;
+  color: #ffffff;
+}
+
+.wrapper .github:hover,
+.wrapper .github:hover .tooltip,
+.wrapper .github:hover .tooltip::before {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.wrapper .youtube:hover,
+.wrapper .youtube:hover .tooltip,
+.wrapper .youtube:hover .tooltip::before {
+  background-color: #de463b;
+  color: #ffffff;
+}
+
+</style>
+<!--test end  -->
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -52,10 +166,10 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark pr-3">
 			<div class="title-image-box" style="margin-left:20px;">
-			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:130px;height:130px;border-radius:100%;"></a>
+			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:80px;height:80px;border-radius:100%;"></a>
 			</div>
-			<span class="navbar-brand text-white" style="font-size:40px;">DNHBQ</span>
-			<sec:authorize access="hasRole('USER')">				
+			<span class="navbar-brand text-white" style="font-size:40px;">AroundUs</span>
+			<sec:authorize access="hasRole('USER')">
 			<jsp:include page="/WEB-INF/views/common/modal/searchResult.jsp"/>
 			</sec:authorize>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +178,7 @@
 		  <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
 		    <ul class="navbar-nav">
 		    <sec:authorize access="hasRole('USER')">
-		      <li class="nav-item">
+		      <!-- <li class="nav-item">
 					<button id="notifyBtn">noti <span class="badge" id="notiAlarm"></span></button>
 					<div id="notiArea">
 				    	<table id="notiTable">
@@ -77,64 +191,85 @@
 				    		</tbody>
 				    	</table>
 				    </div>
-			  </li>
+			  </li> -->
+			  
+			  <!-- test start  -->
+			  	<div class="wrapper">
+			  		<div class="icon facebook" id="notifyBtn">
+					  <div class="tooltip">noti</div>
+					  <span><span class="badge" id="notiAlarm"></span></span>
+					</div>
+					<div id="notiArea">
+				    	<table id="notiTable">
+				    		<thead>
+				    			<tr>
+				    				<th>알림목록</th>
+				    			</tr>
+				    		</thead>
+				    		<tbody id="notiTbody">
+				    		</tbody>
+				    	</table>
+				    </div>
+			  	
+					<div class="icon facebook">
+					  <div class="tooltip">HOME</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/"><i class="fab fa-facebook-f"></i></a></span>
+					</div>
+					<div class="icon twitter">
+					  <div class="tooltip">AroundMe</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath }/shop/shopMain"><i class="fab fa-twitter"></i></a></span>
+					</div>
+					<div class="icon twitter">
+					  <div class="tooltip">소모임</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/group/groupList"><i class="fab fa-twitter"></i></a></span>
+					</div>
+					<div class="icon github">
+					  <div class="tooltip">DM</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/chat/chat.do"><span class="badge" id="dmAlarm"></span></a></span>
+					</div>
+					<div class="icon instagram">
+					  <div class="tooltip">MBTI</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/mbti/mbti.do"><i class="fab fa-instagram"></i></a></span>
+					</div>
+					  
+				  	<c:if test="${loginMember.accountType eq 1}">
+			        	<div class="icon youtube">
+					    <div class="tooltip"><sec:authentication property="principal.username"/></div>
+					    <span><a id="linkd" class="nav-linkt" href="${pageContext.request.contextPath}/member/memberView/${loginMember.id}" ><i class="fab fa-youtube"></i></a></span>
+					    </div>			    	
+			    	</c:if>
+			    	<c:if test="${loginMember.accountType eq 0}">
+				        <div class="icon youtube">
+					    <div class="tooltip"><sec:authentication property="principal.username"/></div>
+					    <span><a id="linkd" class="nav-link" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" ><i class="fab fa-youtube"></i></a></span>
+					    </div>				    	
+			    	</c:if>
+			    	
+			    	
+					<!-- 관리자메뉴 -->
+					<sec:authorize access="hasRole('ADMIN')">
+					<div class="icon instagram">
+					  <div class="tooltip">관리자</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/mbti/mbti.do"><i class="fab fa-instagram"></i></a></span>
+					</div>
+					</sec:authorize>
+					
+					<div class="icon instagram logoutIcon">
+					  <div class="tooltip">LogOut</div>
+					  <span><i class="fab fa-instagram">
+						    <form:form method="POST" name="logoutFrm" action="${pageContext.request.contextPath }/member/logout">
+							</form:form>
+					  </i></span>
+					</div>
+				</div>
+			  <!-- test end -->
+		      </sec:authorize>
 		      
-		      <li class="nav-item active">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/">Home</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath }/shop/shopMain">AroundMe</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/mbti/mbti.do">MBTI</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>
-		      </li>
-		      <sec:authorize access="isAuthenticated()">
-		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM<span class="badge" id="dmAlarm"></span></a>
-		      </li>
-		      </sec:authorize>
-		      </sec:authorize>
-		      <li class="nav-item">
+<%-- 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
 			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">Log In</a>		      	
 		      	</sec:authorize>					
-		      </li>
-		      <sec:authorize access="isAuthenticated()">
-				    <li class="nav-item dropdown">
-				    	<c:if test="${loginMember.accountType eq 1}">
-			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView/${loginMember.id}" >
-				          <span><sec:authentication property="principal.username"/></span>
-				        </a>				    	
-				    	</c:if>
-				    	<c:if test="${loginMember.accountType eq 0}">
-			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" >
-				          <span><sec:authentication property="principal.username"/></span>
-				        </a>				    	
-				    	</c:if>
-				   
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				          <a class="dropdown-item" href="#">게시글 작성</a>
-				          <a class="dropdown-item" href="#">예약 목록</a>
-				          <a class="dropdown-item" href="#">계정 설정</a>
-				        </div>
-				    </li>
-						      
-				<!-- 관리자메뉴 -->
-				<sec:authorize access="hasRole('ADMIN')">
-					<li class="nav-item">
-						<a class="nav-link text-light" href="${pageContext.request.contextPath}/admin/restrictionList">관리자</a>
-					</li>
-				</sec:authorize>
-				    
-				<li class="nav-item">
-		      	<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
-					<input type="submit" value="LogOut" />
-				</form:form>
-				</li>
-			</sec:authorize>
+		      </li> --%>
 		  	</ul>
 		  </div>
 		</nav>
@@ -429,6 +564,12 @@
 		});
 	})
 	
+</script>
+
+<script>
+	$(".logoutIcon").click((e) => {
+		$(document.logoutFrm).submit();
+	});
 </script>
 
 	<div class="section-over-div">
