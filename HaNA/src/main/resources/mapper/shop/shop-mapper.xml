@@ -632,4 +632,50 @@
 		order by
 		    4 desc
 	</select>
+	
+	<select id="selectRankShopAvg" resultType="map">
+		select
+		    round(avg(b.grade), 1) "avg",
+		    shop_id "shop",
+	        (select picture from member where id = r.shop_id) "picture"
+		from
+		    board_review b left join shop_table_reservation r
+		    on b.reservation_no = r.reservation_no
+	        left join member m
+    		on r.shop_id = m.id
+		group by
+		    r.shop_id
+		order by 
+		    1 desc
+	</select>
+	<select id="selectRankShopReview" resultType="map">
+		select
+		    count(*) "count",
+		    r.shop_id "id",
+		    (select picture from member where id = r.shop_id) "picture"
+		from
+		    board_review b left join shop_table_reservation r
+		    on b.reservation_no = r.reservation_no
+		    left join member m
+		    on r.shop_id = m.id
+		group by
+		    r.shop_id
+		order by 
+		    1 desc
+	</select>
+	<select id="selectRankShopRes" resultType="map">
+		select
+		    count(*) "count",
+		    shop_id "id",
+		    (select picture from member where id = r.shop_id) "picture"
+		from
+		    shop_table_reservation r left join member m
+		    on r.shop_id = m.id
+		where
+		    reservation_status = '예약완료'
+		group by
+		    shop_id
+		order by
+		    1 desc
+	</select>
 </mapper>

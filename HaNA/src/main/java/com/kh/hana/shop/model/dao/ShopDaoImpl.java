@@ -263,6 +263,23 @@ public class ShopDaoImpl implements ShopDao {
 		return session.selectList("shop.selectShopReservationVisitorList", shopId);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectRankShopAvg() {
+		return session.selectList("shop.selectRankShopAvg", null);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectRankShopReview() {
+		return session.selectList("shop.selectRankShopReview", null);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectRankShopRes() {
+		return session.selectList("shop.selectRankShopRes", null);
+	}
+
+
+
 	
 
 }
