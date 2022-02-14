@@ -7,13 +7,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page autoFlush="true" buffer="1094kb"%>
 <fmt:requestEncoding value="utf-8"/>
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="메인화면" name="title"/>
-</jsp:include>
+
+
+<jsp:include page="/WEB-INF/views/common/exmain.jsp"></jsp:include>
 
 <!-- chatcontroller 맨 밑에서 requestmapping -->
 
 <sec:authorize access="hasRole('USER')">
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param value="메인화면" name="title"/>
+</jsp:include>
 <jsp:forward page="/common/main.do"/>
 </sec:authorize>
 
