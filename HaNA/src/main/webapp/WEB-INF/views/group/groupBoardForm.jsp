@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupPlus.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/group/groupBoardForm.css" />
 
-<div class="wrapper bg-white">
+<div class="form-wrapper bg-white">
     <div class="h6 font-weight-bold"> 게시글 포스팅 </div>
     <form
     	name="groupBoardFrm"
