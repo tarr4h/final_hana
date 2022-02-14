@@ -169,14 +169,16 @@
     </select>
     
     <select id="selectShopTableList" parameterType="string" resultType="table">
-    	select
-    		*
-   		from
-   			shop_table_setting
+		select
+		    s.*,
+		    p.price
+		from
+		    shop_table_setting s left join shop_table_price p
+		    on s.table_id = p.table_id
 		where
-			shop_id = #{id}
+			s.shop_id = #{id}
 		order by
-			table_name
+			s.table_name
     </select>
     
     <delete id="deleteShopTable" parameterType="string">

@@ -342,6 +342,7 @@ function updateFrm(num){
 	};
 	
 	const tableStr = JSON.stringify(content);
+	console.log(tableStr);
 
 	$.ajax({
 		url: '${pageContext.request.contextPath}/shop/updateShopTable?${_csrf.parameterName}=${_csrf.token}',

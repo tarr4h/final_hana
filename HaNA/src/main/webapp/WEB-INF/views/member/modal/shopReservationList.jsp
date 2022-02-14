@@ -23,10 +23,10 @@
 				<div class="modal-body">
 					<!-- 총 예약건수 -->
 					<div id="reservation-count-all">
-						<span>총 예약 건 수 : </span>
+						<span class="res-count-title">총 예약 건 수 : </span>
 						<span id="resCount"></span>
 						<br />
-						<span>오늘의 예약 건 수 : </span>
+						<span class="res-count-title">선택일 예약 건 수 : </span>
 						<span id="dailyResCount"></span>
 					</div>
 					<!-- 일자별 예약리스트 -->
@@ -37,23 +37,23 @@
 						<table id="reservationTable">
 							<thead>
 								<tr>
-									<th colspan="2">
+									<th>
 										<input type="button" value="&lt;" class="res-dateBtn" id="res-prevDate"/>
 									</th>
-									<th colspan="4" id="res-today"></th>
-									<th colspan="2">
+									<th colspan="6" id="res-today"></th>
+									<th>
 										<input type="button" value="&gt;" class="res-dateBtn" id="res-nextDate"/>
 									</th>
 								</tr>
 								<tr>
 									<th width="15%">예약일</th>
-									<th width="15%">예약자</th>
-									<th width="10%">예약테이블</th>
+									<th width="10%">예약자</th>
+									<th width="12%">예약테이블</th>
 									<th width="5%">예약시작</th>
 									<th width="5%">예약종료</th>
 									<th width="5%">인원</th>
-									<th width="20%">예약요청</th>
-									<th width="10%">예약상태</th>
+									<th width="25%">예약요청</th>
+									<th width="15%">예약상태</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -170,6 +170,7 @@
 			},
 			success(res){
 				$("#resCount").text(res);
+				$("#resCount").css("background-color", "powderblue");
 			},
 			error: console.log
 		})

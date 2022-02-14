@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+
+/* 예약일 선택 table */
+#calendarTable{
+	margin: auto;
+}
+#calendarTable th{
+	text-align: center;
+}
+#calendarTable td{
+	text-align: center;
+}
+.dateNormal{
+	color:black;
+}
+.dateSat{
+	color:blue;
+}
+.dateSun{
+	color:red;
+}
+.disabled{
+	color:yellow;
+}
+.dateBtn{
+	border: none;
+	background-color: #ffffff;
+	outline: 0;
+}
+.calendar-btn{
+	background-color: white;
+	border: none;
+}
+
+/* 닫기버튼 */
+.close{
+	background-color: white;
+	border : none;
+	border-radius: 15%;
+}
+.close:hover{
+	background-color: gray;
+}
+
+/* 테이블 선택 */
+#table-select{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+#table-select th{
+	border-right: 1px solid gray;
+	border-bottom: 1px solid black;
+	text-align: center;	
+}
+#table-select td{
+	border-right: 1px solid gray;
+	border-bottom: 1px solid black;
+}
+
