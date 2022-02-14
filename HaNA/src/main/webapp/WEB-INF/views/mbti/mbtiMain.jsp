@@ -16,8 +16,7 @@
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 	<div id="mbtiMain-Background">
-		<img src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지"
-			style="width: 100%; height: 100%; position: relative;" />
+		<img class ="mbtiMainImg" src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지" />
 		<h1 id="mainPage-h1">나는 어떤 사람 일까 ?</h1>
 		<span id="mainPage-span">"mbti로 알아보는 성격 유형 테스트"</span>
 		<button id="mainPage-button"

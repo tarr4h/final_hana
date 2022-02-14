@@ -30,7 +30,7 @@
 						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><img class="shopCrownImg"src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png"/>
 						HashTag Ranking<img class="shopCrownImg" src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png"/></th>
 					</tr>
-					<tr style="color:#ffc107">
+					<tr id="rankingTrColor">
 						<th scope="col">no</th>  
 						<th scope="col">일간</th>  
 						<th scope="col">주간</th>  
@@ -40,28 +40,28 @@
 				</thead>
 				<tbody>
 					 <tr>
-						<th scope="row" style="color:#288359" >1</th>
+						<th scope="row" class="rankingThColor">1</th>
 						<td id="toDayFirstRanking" class="tagClick" onClick="hashTagClick()">Mark ★</td>
 						<td id="weekFirstRanking" class="tagClick" onClick="hashTagClick()" >@mdo ★</td>
 						<td id="monthFirstRanking" class="tagClick" onClick="hashTagClick()">Otto ★</td>
 						<td >@mdo ★</td> 
 					</tr> 
 					 <tr>
-						<th scope="row" style="color:#288359">2</th>
+						<th scope="row" class="rankingThColor">2</th>
 						<td id="toDaySecondRanking" class="tagClick" onClick="hashTagClick()">Jacob</td>
 						<td id="weekSecondRanking" class="tagClick" onClick="hashTagClick()">@fat</td>
 						<td id="monthSecondRanking" class="tagClick" onClick="hashTagClick()">Thornton</td>
 						<td>@fat</td> 
 					</tr> 
 					<tr>
-						<th scope="row" style="color:#288359">3</th>
+						<th scope="row" class="rankingThColor">3</th>
 						 <td id="toDayThirdTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekThirdRanking" class="tagClick" onClick="hashTagClick()">@test!!</td>
 						<td id="monthThirdRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
 						<td>@twitter</td> 
 					</tr>
 					<tr>
-						<th scope="row" style="color:#288359">4</th>
+						<th scope="row" class="rankingThColor">4</th>
 						<td id="toDayFourthTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekFourthRanking" class="tagClick" onClick="hashTagClick()">@twitter</td>
 						<td id="monthFourthRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
@@ -108,16 +108,16 @@
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
 				<span class="d-flex align-items-start"><img class="shopRankingImg"src="${pageContext.request.contextPath }/resources/images/icons/free-icon-crown-1804177.png" />
-				</span><span class="mb-4">"조회수 1위"</span>
+				</span><span class="mb-4">"평점 1위"</span>
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<a href="#"> <img class="shopProfileImg"
-						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						src="${pageContext.request.contextPath }/resources/upload/member/profile/${rankingList.avgShop.picture}"
 						alt="" />
 					</a>
 				</div>
-				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span>
-				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>조회 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>${rankingList.avgShop.shop }</span>
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>${rankingList.avgShop.avg }</span>
 			</div>
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
@@ -126,11 +126,11 @@
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<img class="shopProfileImg"
-						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						src="${pageContext.request.contextPath }/resources/upload/member/profile/${rankingList.revShop.picture}"
 						alt="" />
 				</div>
-				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span> 
-				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>리뷰 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>${rankingList.revShop.id }</span>
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>${rankingList.revShop.count }</span>
 			</div>
 			<div
 				class="col-md-4 d-flex justify-content-center align-items-center flex-column">
@@ -139,11 +139,11 @@
 				<div class="shopProfile d-flex">
 					<!-- 프로필사진 영역 -->
 					<img class="shopProfileImg"
-						src="${pageContext.request.contextPath }/resources/images/duck.png"
+						src="${pageContext.request.contextPath }/resources/upload/member/profile/${rankingList.resShop.picture}"
 						alt="" />
 				</div>
-				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>매장ID</span> 
-				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>예약 수</span>
+				<span class="rankingTop3"><img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>${rankingList.resShop.id }</span>
+				<span class="rankingTop3"><img class="shopRankingNumberImg" src="${pageContext.request.contextPath }/resources/images/icons/premium-icon-thumbs-up-2415237.png"/>${rankingList.resShop.count }</span>
 			</div>
 		</div>
 		<div class="row shopList bg-secondary text-white" id="shopList" style="background-color: #e9ecef !important;">
@@ -544,7 +544,7 @@ $(".tagClick").click(function(){
 	$("#shopList").empty();
 	
 	
-	// td 안에 값 가져와서 # 는 잘라서 저장 
+	// td 안에 값 가져와서 #는 잘라줌  
 	var tr = $(this);
 	var td = tr.children();
 	var name = tr.text();

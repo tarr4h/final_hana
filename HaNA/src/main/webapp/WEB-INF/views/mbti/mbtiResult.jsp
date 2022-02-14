@@ -16,12 +16,11 @@
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 	<div id="mbtiMain-Background">
-		<img src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지"
-			style="width: 100%; height: 100%; position: relative;" />
+		<img class="mbtiResultImg" src="/hana/resources/images/learn-g9ed443a84_1920.png" alt="이미지" />
 		<p id="mainResultPage-p">당신의 성격 유형은 :</p>
 		<div id="mainResultPage-append"></div>
 		<div>
-			<h4 style="color: #ffffff; position: relative; bottom: 370px;">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
+			<h4 id="mbtiResultH4">${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }</h4>
 			<input type="hidden" id="mbtiResult"
 				value="${memberMbti[0] }${memberMbti[1] }${memberMbti[2] }${memberMbti[3] }" />
 			<input type="hidden" id="memberId" value="${memberId}" />

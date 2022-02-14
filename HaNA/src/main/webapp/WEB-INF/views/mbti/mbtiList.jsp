@@ -14,23 +14,22 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mbti.css" />
 
 <div id="mbtiList-Background">
-<img src="/hana/resources/images/white-g27215466c_1920.png" alt="이미지" style="width: 900px;
-    height: 600px; position: relative; left: 100px"/>
+<img class="mbtiListImg" src="/hana/resources/images/white-g27215466c_1920.png" alt="이미지"/>
 	<form action="${pageContext.request.contextPath }/mbti/mbtiList.do" id="mbtiForm" name="mbtiFrm">
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<ul id="mbtiListPage-ul">
 		 <c:forEach items="${mbtiList}" var="list">
 			<li>
-				<p class="mbtiListPage-p" style="padding-top:10px;margin-bottom:10px;">${list.no}. ${list.question}</p>
+				<p class="mbtiListPage-p">${list.no}. ${list.question}</p>
 					<input type="hidden" name="no" value="${list.no }" />
 					   <!-- 동의 -->
-					<span style="position: relative; bottom: 5px; margin:4px;"><i class="far fa-circle"></i></span>
+					<span class="mbtiListlIcon"><i class="far fa-circle"></i></span>
 					<input type="radio" id="cbtest-${list.no}-yes" name="memberResult-${list.no}" value="2"/>	
 					 	<label for="cbtest-${list.no}-yes" class="cb2"></label>
 					<input type="radio" id="cbtest-${list.no}-no" name="memberResult-${list.no}" value="1" />
 						<label for="cbtest-${list.no}-no" class="cb1"></label>
 					   <!-- 비동의 -->
-					<span style="position: relative; bottom: 5px; margin:4px;"><i class="fas fa-times"></i></span>
+					<span class="mbtiListlIcon"><i class="fas fa-times"></i></span>
 			</li>
 		 </c:forEach>
 		</ul>
