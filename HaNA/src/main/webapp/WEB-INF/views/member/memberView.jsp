@@ -31,7 +31,7 @@
 	alert("${msg}");
 	</script>
 </c:if>
- 
+<br/><br/> 
 <div class="profile-container mt-2">
     <div class="row" id="myInfo">   	
     	<!-- 프로필이미지 영역 -->
@@ -155,7 +155,8 @@
    
 </div> 
 <br>
-
+<div style="width: 1260px; border:none; border-bottom : solid 1px; margin:auto; margin-top:-10px; "></div>
+<br/><br/><br/>
 <div class="board-container mt-2">       
     <div class="boardRow">   
 	<!-- 게시물목록 -->        
@@ -357,7 +358,7 @@ $("#btn-following-list").click((e) => {
 				console.log(e.picture);
 				let tr= `
 				<tr>
-					<td>
+					<td  id="test1">
 						<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
 						<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].memberId}">\${e.followers[0].memberId}</a>
 					</td>
@@ -393,7 +394,7 @@ $("#btn-follower-list").click((e) => {
 				console.log(e.followers[0].followingId);
 				let tr= `
 					<tr>
-					<td>
+					<td id="test1">
 						<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
 						<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].followingId}">\${e.followers[0].followingId}</a>
 					</td>
@@ -487,20 +488,13 @@ $("#input-file").change((e) => {
     border-color: black;
     background-color:#ff000078;
 }
-.profile-container mt-2{
- 	border: none;
-    border-bottom: solid; 
-    border-bottom-width: unset;  
-}
 #myInfo {
 	margin-top: 45px;
 	margin-bottom :60px;
-    border: none;
-    border-bottom: solid;
-    border-color: gray;
-    border-bottom-width: 1px;  
     height : 375px;
-    margin-left:280px;  
+    margin:auto;
+    width: 1400px; 
+    border:none;
 }
 .tableKey {
     width: 17%;
@@ -520,7 +514,7 @@ $("#input-file").change((e) => {
 	border : none;
 } 
 .boardRow {
-    width: 65%;
+   width:55%;
    margin : auto;
 }
 .board-main-image{
@@ -532,6 +526,11 @@ cursor: pointer;
 #requestButton { 
 	animation: blink-effect 1s step-end infinite;animation-iteration-count:2; 
 }
+#test1{
+	border-top:none;
+	border-bottom:none;
+}
+ 
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 

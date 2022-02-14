@@ -369,16 +369,16 @@
 		<result column="picture" property="picture"/>
 	</resultMap>
 	
-	<update id="applyFollowing">
-		update
+	<delete id="applyFollowing">
+		delete from
 		 following_request
-		 set
-		 	status = '완료'
 		where
 			req_id=#{reqId}
 			and
 			member_id =#{myId}
-	</update>
+			and
+			status = '요청'
+	</delete>
 	
 	<insert id="addRequestFollowing" >
 		insert into

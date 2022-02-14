@@ -57,20 +57,21 @@
 	INSERT 
 		INTO 
 	CHAT 
-		VALUES(#{roomNo}, #{memberId}, #{message}, default, default,default)
+		VALUES(#{roomNo}, #{memberId}, #{message}, default, #{memberId},default)
 	</insert>
 	<insert id="insertFileMessage">
 	INSERT 
 		INTO 
 	CHAT 
-		VALUES(#{roomNo}, #{memberId}, #{message}, default, default, #{fileImg})
+		VALUES(#{roomNo}, #{memberId}, #{message}, default, #{memberId}, #{fileImg})
 	</insert>
 	<update id="updateUnreadCount">
 	update 
 		chat 
 	set 
-		unreadcount = 0 
-	where member_id != #{memberId}
+		unreadcount = unreadcount ||','||#{memberId}
+	where 
+		unreadcount not like '%'||#{memberId}||'%'
 		and room_no = #{roomNo}
 	</update>
 	
@@ -117,14 +118,14 @@
 	insert
 		into
 	chat
-		values(#{roomNo},#{loginId},'ROOMENTER',default,0,default)
+		values(#{roomNo},#{loginId},'ROOMENTER',default,#{loginId},default)
 	</insert>
 	
 	<insert id="insertEnterMessage2">
 	insert
 		into
 	chat
-		values(#{roomNo},#{memberId},'ROOMENTER',default,0,default)
+		values(#{roomNo},#{memberId},'ROOMENTER',default,#{memberId},default)
 	</insert>
 	
 	<insert id="insertShareMessage">
@@ -151,7 +152,7 @@
 	insert
 		into
 	chat
-		values(#{roomNo},#{group.leaderId},'ROOMENTER',default,0,default)
+		values(#{roomNo},#{group.leaderId},'ROOMENTER',default,#{group.leaderId},default)
 	</insert>
 	
 	<!-- 소모임 가입 회원 입장메세지 -->
@@ -164,7 +165,7 @@
 		#{memberId},
 		'ROOMENTER',
 		default,
-		0,
+		#{memberId},
 		default
 		)
 	</insert>
@@ -249,7 +250,7 @@
 	where 
 		room_no in (select room_no from chat where member_id = #{id}) 
 	and 
-		member_id != #{id} and unreadcount = 1
+		unreadcount not like '%'||#{id}||'%'
 	</select>
 	<select id="roomUnreadChat" resultType="_int">
 	select 
@@ -257,9 +258,8 @@
 	from 
 		chat 
 	where room_no = #{roomNo} 
-		and 
-	member_id != #{memberId} 
-		and unreadcount = 1
+	and 
+		unreadcount not like '%'||#{memberId}||'%'
 	</select>
 	
 	

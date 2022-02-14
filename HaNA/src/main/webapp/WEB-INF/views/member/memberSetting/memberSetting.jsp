@@ -35,20 +35,21 @@
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
         </div>
-   
+ 
 <div id="enroll-container" class="mx-auto text-center">
-	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" method="POST">
+	<form:form name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" method="POST">	 
 		<table class="mx-auto">
 		 <input type="hidden" name="id" value="${loginMember.id}" />
+		 <tr><td></td></tr>	<tr><td></td></tr>	
 			<tr>
-				<th class="title"><div style="width:90px; height:70px;">이름</div></th>
+				<th class="title"><div style="width:70px; height:60px;">이름</div></th>
 				<td>
 					<div id="memberId-container">
-						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >
-					 				
+						<input type="text" class="form-control" name="name" id="name" value="${loginMember.name}" required >			
 					</div>
 				</td>
-			</tr>		
+			</tr>	
+			<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>				
 			<tr>
 				<th class="title">소개</th>
 				<td>
@@ -56,6 +57,7 @@
 				<textarea class="form-control" name="introduce" id="introduce" cols="55" rows="85" >  ${loginMember.introduce} </textarea>
 				</td>
 			</tr>
+			<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>	<tr><td></td></tr>		
 			<tr>
 				<th class="title" rowspan="2">주소</th>
 	  		  	<td>	
