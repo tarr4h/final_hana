@@ -34,8 +34,7 @@
 						<th scope="col">no</th>  
 						<th scope="col">일간</th>  
 						<th scope="col">주간</th>  
-						<th scope="col">월간</th>
-						<th scope="col">실시간</th>
+						<th scope="col">월간</th>	
 					</tr>
 				</thead>
 				<tbody>
@@ -44,28 +43,24 @@
 						<td id="toDayFirstRanking" class="tagClick" onClick="hashTagClick()">Mark ★</td>
 						<td id="weekFirstRanking" class="tagClick" onClick="hashTagClick()" >@mdo ★</td>
 						<td id="monthFirstRanking" class="tagClick" onClick="hashTagClick()">Otto ★</td>
-						<td >@mdo ★</td> 
 					</tr> 
 					 <tr>
 						<th scope="row" class="rankingThColor">2</th>
 						<td id="toDaySecondRanking" class="tagClick" onClick="hashTagClick()">Jacob</td>
 						<td id="weekSecondRanking" class="tagClick" onClick="hashTagClick()">@fat</td>
 						<td id="monthSecondRanking" class="tagClick" onClick="hashTagClick()">Thornton</td>
-						<td>@fat</td> 
 					</tr> 
 					<tr>
 						<th scope="row" class="rankingThColor">3</th>
 						 <td id="toDayThirdTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekThirdRanking" class="tagClick" onClick="hashTagClick()">@test!!</td>
 						<td id="monthThirdRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
-						<td>@twitter</td> 
 					</tr>
 					<tr>
 						<th scope="row" class="rankingThColor">4</th>
 						<td id="toDayFourthTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekFourthRanking" class="tagClick" onClick="hashTagClick()">@twitter</td>
 						<td id="monthFourthRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
-						<td>@twitter</td> 
 					</tr>
 				</tbody>
 			</table>
@@ -84,7 +79,6 @@
 		</div>
 		<!-- 검색 영역 -->
 		<div class="row searchArea my-0">
-		
 			<nav class="navbar navbar-light bg-light justify-content-end">
 				<span class="navbar-brand mb-0 h1" id="searchTitle"><img class = "shopSearchImg" src="${pageContext.request.contextPath }/resources/images/icons/search.png"/></span>
 				<form class="form-inline d-flex">

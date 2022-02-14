@@ -173,11 +173,15 @@
 }
 #rankingTrColor{
 	color:#ffc107;
+	text-align: center;
 }
 .rankingThColor{
 	color:#ffc107;
+	text-align: center;
 }
-
+.tagClick{
+	text-align: center;
+}
 
 
 
