@@ -391,8 +391,8 @@
     border-color: gray;
     border-bottom-width: 1px;  
     height : 380px;
-    margin-left:100px;   
-    width:1150px;
+    margin-left:90px;   
+    width:1270px;
 }
 .tableKey {
     width: 5%;
@@ -407,7 +407,7 @@
     padding-bottom: 6px;
 }
 .boardRow {
-    width: 900px;
+    width: 1190px;
     margin : auto;
 }
 .board-main-image{
@@ -448,7 +448,7 @@ margin-left: 500px;
     background-color: #a9a9a97d;
 }
 .total{
-	width:1000px;
+	width:1300px;
 	margin:auto;
 } 
 #normalArea{
