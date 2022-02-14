@@ -77,6 +77,9 @@ public interface ShopService {
 
 	Map<String, Object> reservationStatistics(Member member);
 
+	Map<String, Object> getPrice(String reservationNo);
+
+
 
 
 
