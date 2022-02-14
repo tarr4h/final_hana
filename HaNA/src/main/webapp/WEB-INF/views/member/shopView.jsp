@@ -155,9 +155,7 @@
     </div>
 </div> 
 <br/><br/> 
-<div class="container mt-2">  
-<br/><br/>
-  <div class="total">     
+<div class="container mt-2">       
     <div class="boardRow">   
         <!-- 탭 영역 -->
         <div class="col-sm-12 nav nav-pills nav-fill" id="tab">   	
@@ -165,7 +163,7 @@
 		    <a class="nav-link active" href="#" id="normalTabBtn" style="color:black; font-weight: bold">게시물</a>
 		  </div>
 		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center" >
-		    <a class="nav-link" href="#" id="reviewTabBtn" style="color:black; font-weight: bold">후기</a>
+		    <a class="nav-link" href="#" id="reviewTabBtn" style="color:black; font-weight: bold"">후기</a>
 		  </div>
         </div>
     </div>
@@ -178,7 +176,7 @@
     </div>
     <jsp:include page="/WEB-INF/views/member/boardModal/boardDetail.jsp"/>
 </div>
-</div>
+
 <script>
 	$("#reviewTabBtn").click((e) => {
 		$("#normalArea").hide();
@@ -379,9 +377,9 @@
 <style>
 .profile-container mt-2{
  	border: none;
- 	border-bottom: solid; 
+ 	 border-bottom: solid; 
     border-bottom-width: unset;  
- 
+    width: 850px;
 }
 #myInfo {
 	margin-top: 45px;
@@ -391,8 +389,7 @@
     border-color: gray;
     border-bottom-width: 1px;  
     height : 380px;
-    margin-left:90px;   
-    width:1270px;
+    margin-left:100px;   
 }
 .tableKey {
     width: 5%;
@@ -407,7 +404,7 @@
     padding-bottom: 6px;
 }
 .boardRow {
-    width: 1190px;
+    width: 1000px;
     margin : auto;
 }
 .board-main-image{
@@ -447,16 +444,9 @@ margin-left: 500px;
     color: #fff;
     background-color: #a9a9a97d;
 }
-.total{
-	width:1300px;
-	margin:auto;
-} 
-#normalArea{
-	margin-right:40px;
-	 
-}
-#reviewArea{
-	margin-right:40px;
+#tab{
+ width: 85%;
+ margin:auto;
 }
 </style> 
  

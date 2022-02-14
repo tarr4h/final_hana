@@ -7,35 +7,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <sec:authentication property="principal" var="loginMember"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/shopMember/shopReservationModal.css" />
 
-<style>
-	/* 예약일 선택 table */
-	#calendarTable th{
- 		text-align: center;
-	}
-	#calendarTable td{
-		text-align: center;
-	}
-	.dateNormal{
-		color:black;
-	}
-	.dateSat{
-		color:blue;
-	}
-	.dateSun{
-		color:red;
-	}
-	.disabled{
-		color:yellow;
-	}
-	.dateBtn{
-		border: none;
-		background-color: #ffffff;
-		outline: 0;
-	}
-</style>
 	<!-- Modal1-->
-	<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -58,7 +33,7 @@
 	</div>
 	
 	<!-- Modal2 : 예약일시 선택 -->
-	<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -74,7 +49,12 @@
 					<table id="calendarTable">
 						<thead>
 							<tr>
-								<th colspan=7 id="monthHeader">							
+								<th>
+									<input type="button" class="calendar-btn" value="&lt;" id="getNextMonth" onclick="getPrevMonth();"/>			
+								</th>
+								<th colspan=5 id="monthHeader"></th>
+								<th>
+									<input type="button" class="calendar-btn" value=">" id="getPrevMonth" onclick="getNextMonth();"/>			
 								</th>
 							</tr>
 							<tr>
@@ -89,8 +69,7 @@
 						</thead>
 						<tbody></tbody>
 					</table>
-					<input type="button" value="이전" id="getNextMonth" onclick="getPrevMonth();"/>
-					<input type="button" value="다음" id="getPrevMonth" onclick="getNextMonth();"/>
+					
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -102,8 +81,8 @@
 	</div>
 	
 	<!-- Modal3 : 예약테이블 선택 -->
-	<div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+	<div class="modal fade shop-res-modal" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<!-- header -->
 				<div class="modal-header">
@@ -127,7 +106,7 @@
 	</div>
 	
 	<!-- Modal4 : 예약시간 선택 -->
-	<div class="modal fade" id="modal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -152,7 +131,7 @@
 	</div>
 	
 	<!-- Modal5 : 방문자 수, 예약 요청 입력 -->
-	<div class="modal fade" id="modal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -162,11 +141,22 @@
 				</div>
 				<!-- 내용 -->
 				<div class="modal-body">
-					<label for="visitors">방문 인원 수</label>
-					<input type="number" name="visitors" id="" min="1" max="10" />
-					<br />
-					<label for="req_order">요청사항 입력</label>
-					<textarea name="req_order" id="" cols="30" rows="5" placeholder="예약 시 필요한 내용을 적어주세요."></textarea>
+					<table id="res-info">
+						<tr>
+							<th>방문 인원 수</th>
+							<td>
+								<input type="number" name="visitors" id="" min="1" max="10" />(명)
+							</td>
+						</tr>
+						<tr>
+							<th>
+								요청사항 입력
+							</th>
+							<td>
+								<textarea name="req_order" id="req_order_textarea" cols="30" rows="5" placeholder="예약 시 필요한 내용을 적어주세요."></textarea>
+							</td>
+						</tr>	
+					</table>
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -431,11 +421,12 @@
 				let thead = $("#table-select thead");
 				let th = `
 					<tr>
-						<th>선택</th>
-						<th>테이블명</th>
-						<th>최대인원</th>
-						<th>운영시간</th>
-						<th>특이사항</th>
+						<th width="5%">선택</th>
+						<th width="15%">테이블명</th>
+						<th width="15%">최대인원</th>
+						<th width="15%">운영시간</th>
+						<th width="25%">특이사항</th>
+						<th width="15%">가격</th>
 					</tr>
 				`;
 				tbody.empty();
@@ -463,6 +454,9 @@
 									</td>
 									<td>
 										\${e.memo}
+									</td>
+									<td>
+										\${e.price}원
 									</td>
 								</tr>
 							`;
@@ -514,10 +508,10 @@
 				} else{
 					const th = `
 						<tr>
-							<th>선택</th>
-							<th>시작시간</th>
-							<th>종료시간</th>
-							<th>상태</th>
+							<th width="10%">선택</th>
+							<th width="20%">시작시간</th>
+							<th width="20%">종료시간</th>
+							<th width="20%">상태</th>
 						</tr>
 					`;
 					$("#time-select thead").append(th);

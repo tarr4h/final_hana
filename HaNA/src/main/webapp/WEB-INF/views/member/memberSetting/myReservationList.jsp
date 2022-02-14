@@ -9,18 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="설정화면" name="memberSetting/"/>
 </jsp:include>
-<style>
-	#myReservationTable {
-		border: 1px solid black;
-		border-collapse: collapse;
-	}	
-	#myReservationTable th{
-		border: 1px solid black;
-	}	
-	#myReservationTable td{
-		border: 1px solid black;
-	}	
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/reservationList/reservationList.css" />
 <section>
 <sec:authentication property="principal" var="loginMember"/>
 
@@ -35,10 +24,10 @@
 
 
 <br><br><br> 
-<div class="container">
-    <div class="row">
+<div class="container resContainer">
+    <div class="row" id="resRow">
     	<!-- 메뉴 영역 -->
-        <div class="col-sm-4">
+        <div class="col-sm-4" id="leftSideList">
         	<ul class="list-group">
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/memberSetting'">프로필 변경</li>
 			  <li class="list-group-item" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/updatePassword'">비밀번호 변경</li>
@@ -46,15 +35,10 @@
 			  <li class="list-group-item active" onclick="location.href='${pageContext.request.contextPath}/member/memberSetting/myReservationList'">내 예약내역</li>
 			</ul>
         </div>
-        <div class="col-sm-8">
+        
+		<div id="res-container" class="mx-auto text-center">
         	<div class="myResHeader">
 				<h1>나의 예약내역</h1>
-			</div>
-			<div class="myResCalendarArea">
-				<input type="button" value="캘린더" id="myResCalendarBtn"/>
-				<div class="myResCalendar" style="display:none;position:absolute;z-index:1;background-color:#f3f3f3;">
-					<jsp:include page="/WEB-INF/views/member/calendar/calendar.jsp"></jsp:include>
-				</div>
 			</div>
 			
 		    <div class="row">   
@@ -68,17 +52,20 @@
 				  </div>
 		        </div>
 		    </div>
-			
-			<div class="myResListArea">
-				<table id="myReservationTable">
-					<thead>
-
-					</thead>
-					<tbody></tbody>
-				</table>
-
-				<div class="pageBar"></div>
+			<div class="row">
+				<!-- table 영역 -->
+					<div class="myResListArea">
+						<table id="myReservationTable">
+							<thead>
+		
+							</thead>
+							<tbody></tbody>
+						</table>
+		
+						<div class="pageBar"></div>
+					</div>
 			</div>
+			
         </div>
     </div>
 </div>
@@ -145,15 +132,16 @@
 				$(".pageBar").text('');
 				let thead = `
 					<tr>
-						<th>예약일</th>
-						<th>업체</th>
-						<th>테이블</th>
-						<th>시간</th>
-						<th>인원</th>
-						<th>상태</th>
-						<th>공유하기</th>
-						<th>결제하기</th>
-						<th>취소하기</th>
+						<th width="10%">예약일</th>
+						<th width="15%">업체</th>
+						<th width="10%">테이블</th>
+						<th width="13%">시간</th>
+						<th width="5%">인원</th>
+						<th width="20%">요청사항</th>
+						<th width="10%">상태</th>
+						<th width="5%">공유하기</th>
+						<th width="5%">결제하기</th>
+						<th width="5%">취소하기</th>
 					</tr>
 				`;
 				$("#myReservationTable thead").append(thead);
@@ -172,15 +160,18 @@
 							<td>
 								<a href="#" onclick="showShareUserModal('\${e.reservationNo}')">\${e.visitorCount}명</a>
 							</td>
+							<td>
+								\${e.reqOrder}
+							</td>
 							<td>\${e.reservationStatus}</td>
 							<td>
-								<input type="button" value="공유하기" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}', '\${e.visitorCount}');"/>
+								<input type="button" value="공유" class="shareResBtn res-list-btnArea" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}', '\${e.visitorCount}');"/>
 							</td>
 							<td>
-								<input type="button" value="결제하기" class="purchaseResBtn" data-rs-no"\${e.reservationNo}" onclick="purchaseModal('\${e.reservationNo}', '\${e.reservationUser}', '\${e.reqDutchpay}')"/>
+								<input type="button" value="결제" class="purchaseResBtn res-list-btnArea" data-rs-no"\${e.reservationNo}" onclick="purchaseModal('\${e.reservationNo}', '\${e.reservationUser}', '\${e.reqDutchpay}')"/>
 							</td>
 							<td>
-								<input type="button" value="취소하기" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
+								<input type="button" value="취소" class="cancleResBtn res-list-btnArea" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
 							</td>
 						</tr>
 					`;
@@ -251,7 +242,7 @@
 						<th>테이블</th>
 						<th>시간</th>
 						<th>인원</th>
-						<th>후기 작성하기</th>
+						<th>후기 작성</th>
 					</tr>
 				`;
 				$("#myReservationTable thead").append(thead);
@@ -271,7 +262,7 @@
 								<a href="#" onclick="showShareUserModal('\${e.reservationNo}')">\${e.visitorCount}명</a>
 							</td>
 							<td>
-								<input type="button" value="후기 작성" class="reviewBtn" data-rs-no="\${e.reservationNo}" onclick="enrollReview('\${e.reservationNo}')"/>
+								<input type="button" value="작성" class="reviewBtn res-list-btnArea" data-rs-no="\${e.reservationNo}" onclick="enrollReview('\${e.reservationNo}')"/>
 							</td>
 						</tr>
 					`;
@@ -282,12 +273,12 @@
 					/* 후기 작성완료 시 상태 변경 */
 					if(e.reviewStatus == 'S'){
 						$("#myReservationTable tbody").find(".reviewBtn:last").prop('disabled', 'true');
-						$("#myReservationTable tbody").find(".reviewBtn:last").val('작성완료');
+						$("#myReservationTable tbody").find(".reviewBtn:last").val('완료');
 					};
 					/* 예약 완료가 아닌 경우 상태 변경 */
 					if(e.reservationStatus == '예약취소' || e.reservationStatus == '예약대기'){
 						$("#myReservationTable tbody").find(".reviewBtn:last").prop('disabled', 'true');
-						$("#myReservationTable tbody").find(".reviewBtn:last").val('작성불가');
+						$("#myReservationTable tbody").find(".reviewBtn:last").val('불가');
 					}
 				});
 				$(".pageBar").append(res.pageBar);
