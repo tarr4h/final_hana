@@ -45,6 +45,9 @@
 		name like '%' ||  #{keyword} || '%'
 		or
 		address_all like '%' ||  #{keyword} || '%')
+		or
+		id in (select member_id from shophashtag left join hashtag using(tag_id) where tag_name like '%'||#{keyword}||'%'
+		)
 
 </select>
 

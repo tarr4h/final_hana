@@ -38,7 +38,7 @@
 $(".delete-btn").click((e)=>{
 	let name = $(e.target).data('name');
 	if(confirm(`[\${name}] 해시태그를 삭제하시겠습니까?`)){
-		$(document.deleteHashtagFrm).val(name).submit();		
+		$(document.deleteHashtagFrm).find("[name=name]").val(name).parent().submit();		
 	}
 })
 
