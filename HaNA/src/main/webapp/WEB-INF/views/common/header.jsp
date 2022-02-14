@@ -130,7 +130,7 @@
 			    	<c:if test="${loginMember.accountType eq 0}">
 				        <div class="icon facebook">
 					    <div class="tooltip"><sec:authentication property="principal.username"/></div>
-					    <span><a id="linkd" class="nav-link" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" ><i class="fa fa-shopping-cart"></i></a></span>
+					    <span><a id="linkd" class="nav-link" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" ><i class="fa fa-user fa-1x fa-icon-image"></i></a></span>
 					    </div>				    	
 			    	</c:if>
 			    	
