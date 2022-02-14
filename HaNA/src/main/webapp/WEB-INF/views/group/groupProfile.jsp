@@ -192,7 +192,7 @@ const groupDM=(groupId, loginId)=>{
 		</div>
 	</div>
 </div>
-<div>
+<div class="iconn-container">
 <div class="iconn">
 	<a href="${pageContext.request.contextPath}/group/groupPage/${group.groupId}"><i class="fas fa-pencil-alt"></i></a>
 	<a href="${pageContext.request.contextPath}/group/groupCalendar/${group.groupId}"><i class="fas fa-calendar-alt"></i></a>
