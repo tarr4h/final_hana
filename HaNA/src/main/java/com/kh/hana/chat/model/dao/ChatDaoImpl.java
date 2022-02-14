@@ -229,6 +229,11 @@ public class ChatDaoImpl implements ChatDao {
 		return session.update("chat.roomChatUpdate",group);
 	}
 
+	@Override
+	public List<Map<String, Object>> mostPopularMember() {
+		return session.selectList("chat.mostPopularMember");
+	}
+
 
 
 
