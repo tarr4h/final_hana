@@ -27,12 +27,11 @@
 .shopRank div{
 	height: 300px;
 	border: 1px solid #f9fafb;
-    background-color: #559b67;
+    background-color: #557393;
 }
 .shopProfile.d-flex{
 	width:150px;
 	height:150px;
-	border:1px solid black;
 	border-radius:100%;
 }
 .shopProfileImg{
@@ -172,9 +171,12 @@
 	color:#41464b; 
 	margin: 0px 5px 2px 5px;
 }
-
-
-
+#rankingTrColor{
+	color:#ffc107;
+}
+.rankingThColor{
+	color:#ffc107;
+}
 
 
 

@@ -7,6 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:requestEncoding value="utf-8"/>
 <sec:authentication property="principal" var="loginMember"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/reservationShare/reservationShare.css" />
 <script>
 let ShareroomNo;
 let Sharetoday = Date.now()-(9 * 60 * 60 * 1000);
@@ -35,16 +36,29 @@ $(document).ready(function(){
 			</div>
 			<!-- 내용 -->
 			<div class="modal-body">
-				<h4>친구를 선택하세요</h4>
-				<input type="text" name="friendId" id="" />
+				<!-- <input type="text" name="friendId" id="" /> -->
+				
+				<!-- CSS INPUT -->
+				<div class="form__group field">
+				  <input type="text" class="form__field" placeholder="user id" name="friendId" id='name' required />
+				  <label for="name" class="form__label">공유할 친구를 조회하세요</label>
+				</div>
+				<!-- CSS INPUT END -->
+				
 				<table id="acceptedFriendListTable">
 					<tbody>
 					</tbody>
 				</table>
+				<hr />
 				<table id="friendListTable">
 					<tbody></tbody>
 				</table>
 				<table id="selectListTable">
+					<thead>
+						<tr>
+							<th><span id="hiddenSpan" style="display:none">선택한 친구 목록입니다.</span></th>
+						</tr>
+					</thead>
 					<tbody></tbody>
 				</table>
 				<button style="display: none" id="sharbutton" onclick="shareReservation(this.value)">공유하기</button>
@@ -80,13 +94,13 @@ function selectAcceptedFriends(reservationNo){
 				if(e.id != '${loginMember.id}'){
 					let tr = `
 						<tr>
-							<td>
+							<td width="30%">
 								<img src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt="" style="width:50px;height:50px;border-radius:100%"/>
 							</td>
-							<td>
+							<td width="40%">
 								<span class="sharedFr">\${e.id}</span>
 							</td>
-							<td>
+							<td width="30%">
 								공유완료
 							</td>
 						</tr>
@@ -228,7 +242,10 @@ const modalAppendshareMember = (reservationNo,targetUser) => {
 	
 	//선택한 친구 append하기
 	$("table#selectListTable tbody").append(append);
-	//공유하기 버튼 보여주기
+	
+	// hiddenspan 보여주기
+	$("#hiddenSpan").css("display", "");
+	// 선택한 공유하기 버튼 보여주기
 	$("#sharbutton").css("display","").val(reservationNo);
 	
 };
@@ -261,12 +278,14 @@ $("[name=friendId]").keyup((e) => {
 			$.each(res, (i, e) => {
 				let tr = `
 					<tr>
-						<td>
+						<td width="30%">
 							<img src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.pic}" alt="" style="width:50px;height:50px;border-radius:100%"/>
 						</td>
-						<td>\${e.id}</td>
-						<td>
-							<input type="button" value="선택" onclick="modalAppendshareMember('\${resNo}','\${e.id}');"/>
+						<td width="40%">\${e.id}</td>
+						<td width="30%">
+							<a href="#" class="bn62" onclick="modalAppendshareMember('\${resNo}','\${e.id}');">
+							  선택
+							</a>
 						</td>
 					</tr>
 				`;
