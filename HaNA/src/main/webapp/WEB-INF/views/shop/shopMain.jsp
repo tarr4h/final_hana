@@ -30,7 +30,7 @@
 						<th colspan="5" class="bg-white text-dark" id="hashTagRankTitle"><img class="shopCrownImg"src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png"/>
 						HashTag Ranking<img class="shopCrownImg" src="${pageContext.request.contextPath }/resources/images/icons/crownblack.png"/></th>
 					</tr>
-					<tr style="color:#ffc107">
+					<tr id="rankingTrColor">
 						<th scope="col">no</th>  
 						<th scope="col">일간</th>  
 						<th scope="col">주간</th>  
@@ -40,28 +40,28 @@
 				</thead>
 				<tbody>
 					 <tr>
-						<th scope="row" style="color:#288359" >1</th>
+						<th scope="row" class="rankingThColor">1</th>
 						<td id="toDayFirstRanking" class="tagClick" onClick="hashTagClick()">Mark ★</td>
 						<td id="weekFirstRanking" class="tagClick" onClick="hashTagClick()" >@mdo ★</td>
 						<td id="monthFirstRanking" class="tagClick" onClick="hashTagClick()">Otto ★</td>
 						<td >@mdo ★</td> 
 					</tr> 
 					 <tr>
-						<th scope="row" style="color:#288359">2</th>
+						<th scope="row" class="rankingThColor">2</th>
 						<td id="toDaySecondRanking" class="tagClick" onClick="hashTagClick()">Jacob</td>
 						<td id="weekSecondRanking" class="tagClick" onClick="hashTagClick()">@fat</td>
 						<td id="monthSecondRanking" class="tagClick" onClick="hashTagClick()">Thornton</td>
 						<td>@fat</td> 
 					</tr> 
 					<tr>
-						<th scope="row" style="color:#288359">3</th>
+						<th scope="row" class="rankingThColor">3</th>
 						 <td id="toDayThirdTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekThirdRanking" class="tagClick" onClick="hashTagClick()">@test!!</td>
 						<td id="monthThirdRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
 						<td>@twitter</td> 
 					</tr>
 					<tr>
-						<th scope="row" style="color:#288359">4</th>
+						<th scope="row" class="rankingThColor">4</th>
 						<td id="toDayFourthTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
 						<td id="weekFourthRanking" class="tagClick" onClick="hashTagClick()">@twitter</td>
 						<td id="monthFourthRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
@@ -544,7 +544,7 @@ $(".tagClick").click(function(){
 	$("#shopList").empty();
 	
 	
-	// td 안에 값 가져와서 # 는 잘라서 저장 
+	// td 안에 값 가져와서 #는 잘라줌  
 	var tr = $(this);
 	var td = tr.children();
 	var name = tr.text();
