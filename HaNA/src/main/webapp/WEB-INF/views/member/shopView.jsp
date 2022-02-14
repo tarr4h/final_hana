@@ -155,19 +155,20 @@
     </div>
 </div> 
 <br/><br/> 
-<div class="container mt-2">       
+<div class="container mt-2">  
+  <div class="total">     
     <div class="boardRow">   
         <!-- 탭 영역 -->
         <div class="col-sm-12 nav nav-pills nav-fill" id="tab">   	
 		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center">
-		    <a class="nav-link active" href="#" id="normalTabBtn">게시물</a>
+		    <a class="nav-link active" href="#" id="normalTabBtn" style="color:black; font-weight: bold">게시물</a>
 		  </div>
 		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center" >
-		    <a class="nav-link" href="#" id="reviewTabBtn">후기</a>
+		    <a class="nav-link" href="#" id="reviewTabBtn" style="color:black; font-weight: bold">후기</a>
 		  </div>
         </div>
     </div>
-	<br/><br/>
+	<br/> 
     <div class="row" id="normalArea">
 	    <jsp:include page="/WEB-INF/views/member/shopViewBoardArea/normalBoard.jsp"></jsp:include>
     </div>
@@ -176,7 +177,7 @@
     </div>
     <jsp:include page="/WEB-INF/views/member/boardModal/boardDetail.jsp"/>
 </div>
-
+</div>
 <script>
 	$("#reviewTabBtn").click((e) => {
 		$("#normalArea").hide();
@@ -403,20 +404,12 @@
     padding-bottom: 6px;
 }
 .boardRow {
-   width: 35%;
-   margin :auto;
+    width: 900px;
+    margin : auto;
 }
 .board-main-image{
 cursor: pointer;
  }
-#reviewTabBtn {
-    background-color: gray;
-    color: white;
-}
-#normalTabBtn{
-	background-color: gray;
-    color: white;
-}
 .writeBtn{
 	border-radius : 50px;
 	background-color : white;
@@ -446,6 +439,21 @@ margin-left: 500px;
 #test1{
 	border-top:none;
 	border-bottom:none;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #a9a9a97d;
+}
+.total{
+	width:1000px;
+	margin:auto;
+} 
+#normalArea{
+	margin-right:40px;
+	 
+}
+#reviewArea{
+	margin-right:40px;
 }
 </style> 
  
