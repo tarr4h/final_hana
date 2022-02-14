@@ -31,7 +31,7 @@
 	alert("${msg}");
 	</script>
 </c:if>
-<br/><br/> 
+ 
 <div class="profile-container mt-2">
     <div class="row" id="myInfo">   	
     	<!-- 프로필이미지 영역 -->
@@ -155,8 +155,7 @@
    
 </div> 
 <br>
-<div style="width: 1260px; border:none; border-bottom : solid 1px; margin:auto; margin-top:-10px; "></div>
-<br/><br/><br/>
+
 <div class="board-container mt-2">       
     <div class="boardRow">   
 	<!-- 게시물목록 -->        
@@ -488,13 +487,20 @@ $("#input-file").change((e) => {
     border-color: black;
     background-color:#ff000078;
 }
+.profile-container mt-2{
+ 	border: none;
+    border-bottom: solid; 
+    border-bottom-width: unset;  
+}
 #myInfo {
 	margin-top: 45px;
 	margin-bottom :60px;
+    border: none;
+    border-bottom: solid;
+    border-color: gray;
+    border-bottom-width: 1px;  
     height : 375px;
-    margin:auto;
-    width: 1400px; 
-    border:none;
+    margin-left:280px;  
 }
 .tableKey {
     width: 17%;
@@ -514,7 +520,7 @@ $("#input-file").change((e) => {
 	border : none;
 } 
 .boardRow {
-   width:55%;
+    width: 65%;
    margin : auto;
 }
 .board-main-image{
@@ -530,7 +536,6 @@ cursor: pointer;
 	border-top:none;
 	border-bottom:none;
 }
- 
 </style>
 <!-- 게시글 작성 모달 -->
 <jsp:include page="/WEB-INF/views/member/boardModal/boardEnrollForm.jsp"/> 
