@@ -14,122 +14,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/iconCss.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-<!-- test style -->
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-*:focus,
-*:active {
-  outline: none !important;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.wrapper {
-  display: inline-flex;
-}
-
-.wrapper .icon {
-  position: relative;
-  background-color: #ffffff;
-  border-radius: 50%;
-  padding: 15px;
-  margin: 10px;
-  width: 50px;
-  height: 50px;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.wrapper .tooltip {
-  position: absolute;
-  top: 0;
-  font-size: 14px;
-  background-color: #ffffff;
-  color: #ffffff;
-  padding: 5px 8px;
-  border-radius: 5px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.wrapper .tooltip::before {
-  position: absolute;
-  content: "";
-  height: 8px;
-  width: 8px;
-  background-color: #ffffff;
-  bottom: -3px;
-  left: 50%;
-  transform: translate(-50%) rotate(45deg);
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.wrapper .icon:hover .tooltip {
-  top: -45px;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.wrapper .icon:hover span,
-.wrapper .icon:hover .tooltip {
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
-}
-
-.wrapper .facebook:hover,
-.wrapper .facebook:hover .tooltip,
-.wrapper .facebook:hover .tooltip::before {
-  background-color: #3b5999;
-  color: #ffffff;
-}
-
-.wrapper .twitter:hover,
-.wrapper .twitter:hover .tooltip,
-.wrapper .twitter:hover .tooltip::before {
-  background-color: #46c1f6;
-  color: #ffffff;
-}
-
-.wrapper .instagram:hover,
-.wrapper .instagram:hover .tooltip,
-.wrapper .instagram:hover .tooltip::before {
-  background-color: #e1306c;
-  color: #ffffff;
-}
-
-.wrapper .github:hover,
-.wrapper .github:hover .tooltip,
-.wrapper .github:hover .tooltip::before {
-  background-color: #333333;
-  color: #ffffff;
-}
-
-.wrapper .youtube:hover,
-.wrapper .youtube:hover .tooltip,
-.wrapper .youtube:hover .tooltip::before {
-  background-color: #de463b;
-  color: #ffffff;
-}
-
-</style>
-<!--test end  -->
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -138,7 +24,10 @@
 <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
 <style>
 	.section-over-div {min-height : 100vh;}
-	.navbar-expand-lg { height : 10em;}
+	.navbar-expand-lg {
+		height : 9em;
+		background-color:#d9d3d3;
+	}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
 	div#headerAlert{display: none; text-align: center;}
@@ -164,11 +53,11 @@
 	<sec:authentication property="principal" var="loginMember"/>	
 	
 	<header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-dark pr-3">
+		<nav class="navbar navbar-expand-lg navbar-light pr-3">
 			<div class="title-image-box" style="margin-left:20px;">
-			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:80px;height:80px;border-radius:100%;"></a>
+			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:70px;height:70px;border-radius:100%;"></a>
 			</div>
-			<span class="navbar-brand text-white" style="font-size:40px;">AroundUs</span>
+			<span class="navbar-brand" style="font-size:20px;">AroundUs</span>
 			<sec:authorize access="hasRole('USER')">
 			<jsp:include page="/WEB-INF/views/common/modal/searchResult.jsp"/>
 			</sec:authorize>
@@ -195,7 +84,7 @@
 			  
 			  <!-- test start  -->
 			  	<div class="wrapper">
-			  		<div class="icon facebook" id="notifyBtn">
+			  		<div class="icon github" id="notifyBtn">
 					  <div class="tooltip">noti</div>
 					  <span><span class="badge" id="notiAlarm"></span></span>
 					</div>
@@ -213,15 +102,15 @@
 			  	
 					<div class="icon facebook">
 					  <div class="tooltip">HOME</div>
-					  <span><a class="nav-link" href="${pageContext.request.contextPath}/"><i class="fab fa-facebook-f"></i></a></span>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/"><i class="fa fa-home fa-fw"></i></a></span>
 					</div>
 					<div class="icon twitter">
 					  <div class="tooltip">AroundMe</div>
-					  <span><a class="nav-link" href="${pageContext.request.contextPath }/shop/shopMain"><i class="fab fa-twitter"></i></a></span>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath }/shop/shopMain"><i class="fab fa-shopify"></i></a></span>
 					</div>
-					<div class="icon twitter">
-					  <div class="tooltip">소모임</div>
-					  <span><a class="nav-link" href="${pageContext.request.contextPath}/group/groupList"><i class="fab fa-twitter"></i></a></span>
+					<div class="icon youtube">
+					  <div class="tooltip">Group</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/group/groupList"><i class="fas fa-users"></i></a></span>
 					</div>
 					<div class="icon github">
 					  <div class="tooltip">DM</div>
@@ -229,19 +118,19 @@
 					</div>
 					<div class="icon instagram">
 					  <div class="tooltip">MBTI</div>
-					  <span><a class="nav-link" href="${pageContext.request.contextPath}/mbti/mbti.do"><i class="fab fa-instagram"></i></a></span>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/mbti/mbti.do"><i class="fas fa-chart-bar"></i></a></span>
 					</div>
 					  
 				  	<c:if test="${loginMember.accountType eq 1}">
 			        	<div class="icon youtube">
 					    <div class="tooltip"><sec:authentication property="principal.username"/></div>
-					    <span><a id="linkd" class="nav-linkt" href="${pageContext.request.contextPath}/member/memberView/${loginMember.id}" ><i class="fab fa-youtube"></i></a></span>
+					    <span><a id="linkd" class="nav-link" href="${pageContext.request.contextPath}/member/memberView/${loginMember.id}" ><i class="fa fa-user fa-1x fa-icon-image"></i></a></span>
 					    </div>			    	
 			    	</c:if>
 			    	<c:if test="${loginMember.accountType eq 0}">
-				        <div class="icon youtube">
+				        <div class="icon facebook">
 					    <div class="tooltip"><sec:authentication property="principal.username"/></div>
-					    <span><a id="linkd" class="nav-link" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" ><i class="fab fa-youtube"></i></a></span>
+					    <span><a id="linkd" class="nav-link" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" ><i class="fa fa-shopping-cart"></i></a></span>
 					    </div>				    	
 			    	</c:if>
 			    	
@@ -249,17 +138,18 @@
 					<!-- 관리자메뉴 -->
 					<sec:authorize access="hasRole('ADMIN')">
 					<div class="icon instagram">
-					  <div class="tooltip">관리자</div>
-					  <span><a class="nav-link" href="${pageContext.request.contextPath}/mbti/mbti.do"><i class="fab fa-instagram"></i></a></span>
+					  <div class="tooltip">admin</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/admin/restrictionList"><i class="fa fa-cog fa-fw"></i></a></span>
 					</div>
 					</sec:authorize>
 					
-					<div class="icon instagram logoutIcon">
+					<div class="icon twitter logoutIcon">
 					  <div class="tooltip">LogOut</div>
-					  <span><i class="fab fa-instagram">
+					  <span>
+					  		<i class="fas fa-plug"></i>
 						    <form:form method="POST" name="logoutFrm" action="${pageContext.request.contextPath }/member/logout">
 							</form:form>
-					  </i></span>
+					  </span>
 					</div>
 				</div>
 			  <!-- test end -->
