@@ -293,8 +293,15 @@ public class ChatController {
     	
     	//추천친구 (같은 그룹에 있지만 팔로잉 안된 친구 or 맞팔 안된 친구)
     	List<Member> memberList = chatService.recommendMemberList(memberId);
+    	log.info("memberList = {}",memberList);
     	if(memberList.size() >0)
     		model.addAttribute(memberList);
+    	else if(memberList.size() == 0) {
+    		List<Map<String, Object>> popularList = chatService.mostPopularMember();
+    		log.info("popularList = {}",popularList);
+    		model.addAttribute("popularList",popularList);
+    	}
+    		
     	
     	
     	model.addAttribute("groupboard", groupboard);

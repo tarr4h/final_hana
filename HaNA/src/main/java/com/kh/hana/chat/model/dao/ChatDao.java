@@ -97,5 +97,7 @@ public interface ChatDao {
 
 	int roomChatUpdate(Group group);
 
+	List<Map<String, Object>> mostPopularMember();
+
 
 }

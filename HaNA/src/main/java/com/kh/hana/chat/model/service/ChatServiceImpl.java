@@ -296,6 +296,11 @@ public class ChatServiceImpl implements ChatService {
 		return chatDao.followerList(id);
 	}
 
+	@Override
+	public List<Map<String, Object>> mostPopularMember() {
+		return chatDao.mostPopularMember();
+	}
+
 
 
 

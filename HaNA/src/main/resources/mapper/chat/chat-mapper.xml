@@ -406,5 +406,18 @@
 		group_room_id = #{groupId}	
 	</update>
 	
+	<select id="mostPopularMember" resultMap="moestPopluarFollower">
+	select
+	x.*,(select picture from member where id=x.id) picture, (select name from member where id=x.id) name
+	from(
+	select m.id, count(*) count from member m left join follower f on m.id = f.member_id group by m.id order by count(*) desc
+	) x where rownum between 1 and 5
+	</select>
+		<resultMap type="map" id="moestPopluarFollower">
+		<id column="id" property="memberId"/>
+		<result column="count" property="count"/>
+		<result column="picture" property="picture"/>
+		<result column="name" property="name"/>
+	</resultMap>
 
 </mapper>
