@@ -379,8 +379,9 @@
 <style>
 .profile-container mt-2{
  	border: none;
- 	 border-bottom: solid; 
+ 	border-bottom: solid; 
     border-bottom-width: unset;  
+ 
 }
 #myInfo {
 	margin-top: 45px;
@@ -391,6 +392,7 @@
     border-bottom-width: 1px;  
     height : 380px;
     margin-left:100px;   
+    width:1150px;
 }
 .tableKey {
     width: 5%;
