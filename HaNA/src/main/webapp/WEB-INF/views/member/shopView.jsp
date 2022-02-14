@@ -155,19 +155,21 @@
     </div>
 </div> 
 <br/><br/> 
-<div class="container mt-2">       
+<div class="container mt-2">  
+<br/><br/>
+  <div class="total">     
     <div class="boardRow">   
         <!-- 탭 영역 -->
         <div class="col-sm-12 nav nav-pills nav-fill" id="tab">   	
 		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center">
-		    <a class="nav-link active" href="#" id="normalTabBtn">게시물</a>
+		    <a class="nav-link active" href="#" id="normalTabBtn" style="color:black; font-weight: bold">게시물</a>
 		  </div>
 		  <div class="col-sm-6 nav-item d-flex justify-content-center align-items-center" >
-		    <a class="nav-link" href="#" id="reviewTabBtn">후기</a>
+		    <a class="nav-link" href="#" id="reviewTabBtn" style="color:black; font-weight: bold">후기</a>
 		  </div>
         </div>
     </div>
-	<br/><br/>
+	<br/> 
     <div class="row" id="normalArea">
 	    <jsp:include page="/WEB-INF/views/member/shopViewBoardArea/normalBoard.jsp"></jsp:include>
     </div>
@@ -176,7 +178,7 @@
     </div>
     <jsp:include page="/WEB-INF/views/member/boardModal/boardDetail.jsp"/>
 </div>
-
+</div>
 <script>
 	$("#reviewTabBtn").click((e) => {
 		$("#normalArea").hide();
@@ -269,7 +271,7 @@
 					console.log(e.picture);
 					let tr= `
 					<tr>
-						<td>
+						<td id="test1">
 							<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
 							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].memberId}">\${e.followers[0].memberId}</a>
 						</td>
@@ -304,7 +306,7 @@
 					console.log(e.followers[0].followingId);
 					let tr= `
 						<tr>
-						<td>
+						<td id="test1">
 							<img style="width:50px; height:50px; border-radius:50%" src="${pageContext.request.contextPath}/resources/upload/member/profile/\${e.picture}" alt=""/>
 							<a id = "a" href="${pageContext.request.contextPath}/member/memberView/\${e.followers[0].followingId}">\${e.followers[0].followingId}</a>
 						</td>
@@ -377,8 +379,9 @@
 <style>
 .profile-container mt-2{
  	border: none;
- 	 border-bottom: solid; 
+ 	border-bottom: solid; 
     border-bottom-width: unset;  
+ 
 }
 #myInfo {
 	margin-top: 45px;
@@ -388,7 +391,8 @@
     border-color: gray;
     border-bottom-width: 1px;  
     height : 380px;
-    margin-left:100px;   
+    margin-left:90px;   
+    width:1270px;
 }
 .tableKey {
     width: 5%;
@@ -403,20 +407,12 @@
     padding-bottom: 6px;
 }
 .boardRow {
-   width: 35%;
-   margin :auto;
+    width: 1190px;
+    margin : auto;
 }
 .board-main-image{
 cursor: pointer;
  }
-#reviewTabBtn {
-    background-color: gray;
-    color: white;
-}
-#normalTabBtn{
-	background-color: gray;
-    color: white;
-}
 .writeBtn{
 	border-radius : 50px;
 	background-color : white;
@@ -442,6 +438,25 @@ cursor: pointer;
 }
 #addFriendBtn{
 margin-left: 500px;
+}
+#test1{
+	border-top:none;
+	border-bottom:none;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #a9a9a97d;
+}
+.total{
+	width:1300px;
+	margin:auto;
+} 
+#normalArea{
+	margin-right:40px;
+	 
+}
+#reviewArea{
+	margin-right:40px;
 }
 </style> 
  

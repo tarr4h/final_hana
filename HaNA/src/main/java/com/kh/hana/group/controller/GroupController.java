@@ -143,7 +143,7 @@ public class GroupController {
 		model.addAttribute("members",members);
 		return "/group/groupBoardForm";
 	}
-	//이거
+	
 	@PostMapping("/enrollGroupBoard")
 	public String enrollGroupBoard(GroupBoard groupBoard,
 			@RequestParam(name="file", required=false) MultipartFile[] files){
@@ -181,7 +181,7 @@ public class GroupController {
 			return "redirect:/group/enrollGroupBoard";
 		}
 	}
-	//이거
+
 	@GetMapping("/groupBoardDetail/{no}")
 	public ResponseEntity<Map<String,Object>> groupBoardDetail(@AuthenticationPrincipal Member loginMember, @PathVariable int no, Model model) {
 		Map<String, Object> map = new HashMap<>();

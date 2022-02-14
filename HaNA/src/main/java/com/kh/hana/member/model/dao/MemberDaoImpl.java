@@ -178,7 +178,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int applyFollowing(Map<String, Object> map) {
-		return session.update("member.applyFollowing",map);
+		return session.delete("member.applyFollowing",map);
 	}
 
 	@Override
