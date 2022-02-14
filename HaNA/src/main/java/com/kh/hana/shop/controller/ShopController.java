@@ -641,5 +641,14 @@ public class ShopController {
     	
     	return returnMap;
     }
+    
+    @GetMapping("/getPrice")
+    public ResponseEntity<?> getPrice(@RequestParam String reservationNo){
+    	
+    	Map<String, Object> ogPrice = shopService.getPrice(reservationNo);
+    	log.info("ogPrice = {}", ogPrice);
+    	
+    	return ResponseEntity.ok(ogPrice);
+    }
 
 }

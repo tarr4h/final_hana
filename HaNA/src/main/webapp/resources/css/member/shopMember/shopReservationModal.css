@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+.shop-res-modal{
+	margin-top: 100px;
+}
 
 /* 예약일 선택 table */
 #calendarTable{
@@ -52,9 +55,43 @@
 	border-right: 1px solid gray;
 	border-bottom: 1px solid black;
 	text-align: center;	
+	background-color: #dbd9d9;
 }
 #table-select td{
 	border-right: 1px solid gray;
 	border-bottom: 1px solid black;
+	text-align: center;
+}
+
+
+/* 시간 선택 */
+#time-select{
+	margin: auto;
+	border-collapse: collapse;
+	border: 1px solid gray;
+}
+#time-select th{
+	border: 1px dotted gray;
+	text-align: center;
+	background-color: #dbd9d9;
+}
+#time-select td{
+	border: 1px dotted gray;
+	text-align: center;
+}
+
+/* 인원, 요청사항 입력 */
+#res-info{
+	margin: auto;
+}
+#res-info th{
+	padding-right: 10px;
+	text-align:center;
+}
+#res-info td{
+	width: 300px;
+}
+#req_order_textarea{
+	width: 100%;
 }
 

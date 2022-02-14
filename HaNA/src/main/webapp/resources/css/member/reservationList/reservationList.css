@@ -1,8 +1,19 @@
 @charset "UTF-8";
 
+.myResListArea{
+	width: 100%;
+	padding: 0;
+}
+
+#tab{
+	margin-top: 20px;
+}
+
 #myReservationTable {
 	border: 1px solid black;
 	border-collapse: collapse;
+	width:99%;
+	margin-top:5px;
 }	
 #myReservationTable th{
 	border: 1px solid black;
@@ -14,7 +25,7 @@
 }	
 
 #leftSideList{
-	height: 900px;
+	height: 200px;
 }
 
 
@@ -35,3 +46,6 @@
 	border: 1px solid gray;
 }
 
+.res-list-btnArea{
+	font-size: 10px;
+}

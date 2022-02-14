@@ -52,17 +52,20 @@
 				  </div>
 		        </div>
 		    </div>
-			
-			<div class="myResListArea">
-				<table id="myReservationTable" class="mx-auto">
-					<thead>
-
-					</thead>
-					<tbody></tbody>
-				</table>
-
-				<div class="pageBar"></div>
+			<div class="row">
+				<!-- table 영역 -->
+					<div class="myResListArea">
+						<table id="myReservationTable">
+							<thead>
+		
+							</thead>
+							<tbody></tbody>
+						</table>
+		
+						<div class="pageBar"></div>
+					</div>
 			</div>
+			
         </div>
     </div>
 </div>
@@ -162,13 +165,13 @@
 							</td>
 							<td>\${e.reservationStatus}</td>
 							<td>
-								<input type="button" value="공유" class="shareResBtn" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}', '\${e.visitorCount}');"/>
+								<input type="button" value="공유" class="shareResBtn res-list-btnArea" data-rs-no="\${e.reservationNo}" onclick="shareReservationModal('\${e.reservationNo}', '\${e.visitorCount}');"/>
 							</td>
 							<td>
-								<input type="button" value="결제" class="purchaseResBtn" data-rs-no"\${e.reservationNo}" onclick="purchaseModal('\${e.reservationNo}', '\${e.reservationUser}', '\${e.reqDutchpay}')"/>
+								<input type="button" value="결제" class="purchaseResBtn res-list-btnArea" data-rs-no"\${e.reservationNo}" onclick="purchaseModal('\${e.reservationNo}', '\${e.reservationUser}', '\${e.reqDutchpay}')"/>
 							</td>
 							<td>
-								<input type="button" value="취소" class="cancleResBtn" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
+								<input type="button" value="취소" class="cancleResBtn res-list-btnArea" data-rs-no="\${e.reservationNo}" onclick="cancleReservation('\${e.reservationNo}');"/>
 							</td>
 						</tr>
 					`;
@@ -259,7 +262,7 @@
 								<a href="#" onclick="showShareUserModal('\${e.reservationNo}')">\${e.visitorCount}명</a>
 							</td>
 							<td>
-								<input type="button" value="작성" class="reviewBtn" data-rs-no="\${e.reservationNo}" onclick="enrollReview('\${e.reservationNo}')"/>
+								<input type="button" value="작성" class="reviewBtn res-list-btnArea" data-rs-no="\${e.reservationNo}" onclick="enrollReview('\${e.reservationNo}')"/>
 							</td>
 						</tr>
 					`;

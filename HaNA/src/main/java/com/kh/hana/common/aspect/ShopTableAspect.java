@@ -50,8 +50,11 @@ public class ShopTableAspect {
 				}
 			} else {
 				if(callMethod.contains("update")){
+					table.setUpdatable("N");
 					int result = shopService.updateTable(table);
-					throw new Throwable();					
+					if(result > 0) {
+						throw new Throwable();											
+					}
 				}
 				if(callMethod.contains("delete")) {
 					throw new Throwable();														

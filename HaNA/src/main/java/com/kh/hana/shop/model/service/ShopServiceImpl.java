@@ -325,6 +325,23 @@ public class ShopServiceImpl implements ShopService {
 		return returnMap;
 	}
 
+	@Override
+	public Map<String, Object> getPrice(String reservationNo) {
+		Map<String, Object> map = new HashMap<>();
+		List<Map<String, Object>> list = shopDao.selectPriceAndVisitors(reservationNo);
+		
+		log.info("list = {}", list);
+		log.info("list0 = {}", list.get(0));
+		log.info("list0.ogp = {}", String.valueOf(list.get(0).get("ORIGINALPRICE")));
+		int price = Integer.parseInt(String.valueOf(list.get(0).get("ORIGINALPRICE")));
+		int visitors = list.size();
+		
+		map.put("price", price);
+		map.put("visitors", visitors);
+		
+		return map;
+	}
+
 	
 
 

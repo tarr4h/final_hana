@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/shopMember/shopReservationModal.css" />
 
 	<!-- Modal1-->
-	<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -33,7 +33,7 @@
 	</div>
 	
 	<!-- Modal2 : 예약일시 선택 -->
-	<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -81,7 +81,7 @@
 	</div>
 	
 	<!-- Modal3 : 예약테이블 선택 -->
-	<div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -106,7 +106,7 @@
 	</div>
 	
 	<!-- Modal4 : 예약시간 선택 -->
-	<div class="modal fade" id="modal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -131,7 +131,7 @@
 	</div>
 	
 	<!-- Modal5 : 방문자 수, 예약 요청 입력 -->
-	<div class="modal fade" id="modal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade shop-res-modal" id="modal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<!-- header -->
@@ -141,11 +141,22 @@
 				</div>
 				<!-- 내용 -->
 				<div class="modal-body">
-					<label for="visitors">방문 인원 수</label>
-					<input type="number" name="visitors" id="" min="1" max="10" />
-					<br />
-					<label for="req_order">요청사항 입력</label>
-					<textarea name="req_order" id="" cols="30" rows="5" placeholder="예약 시 필요한 내용을 적어주세요."></textarea>
+					<table id="res-info">
+						<tr>
+							<th>방문 인원 수</th>
+							<td>
+								<input type="number" name="visitors" id="" min="1" max="10" />(명)
+							</td>
+						</tr>
+						<tr>
+							<th>
+								요청사항 입력
+							</th>
+							<td>
+								<textarea name="req_order" id="req_order_textarea" cols="30" rows="5" placeholder="예약 시 필요한 내용을 적어주세요."></textarea>
+							</td>
+						</tr>	
+					</table>
 				</div>
 				<!-- footer -->
 				<div class="modal-footer">
@@ -497,10 +508,10 @@
 				} else{
 					const th = `
 						<tr>
-							<th>선택</th>
-							<th>시작시간</th>
-							<th>종료시간</th>
-							<th>상태</th>
+							<th width="10%">선택</th>
+							<th width="20%">시작시간</th>
+							<th width="20%">종료시간</th>
+							<th width="20%">상태</th>
 						</tr>
 					`;
 					$("#time-select thead").append(th);
