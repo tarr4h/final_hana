@@ -520,8 +520,8 @@ $("#input-file").change((e) => {
 	border : none;
 } 
 .boardRow {
-    width: 65%;
-   margin : auto;
+   width: 60%;
+   margin-left : 400px;
 }
 .board-main-image{
 cursor: pointer;
