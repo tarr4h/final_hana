@@ -143,8 +143,8 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public int updateGroupGrade(Map<String, Object> param) {
-		return session.update("group.updateGroupGrade", param);
+	public int updateGroupMemberLevel(Map<String, Object> param) {
+		return session.update("group.updateGroupMemberLevel", param);
 	}
 	
 	@Override
