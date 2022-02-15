@@ -337,6 +337,26 @@ public class ShopServiceImpl implements ShopService {
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> selectShopRank() {
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		// 평점 1위 매장
+		List<Map<String, Object>> avgShop = shopDao.selectRankShopAvg();
+		returnMap.put("avgShop", avgShop.get(0));
+		
+		// 리뷰 수 1위 매장
+		List<Map<String, Object>> revShop = shopDao.selectRankShopReview();
+		returnMap.put("revShop", revShop.get(0));
+		
+		// 예약 수 1위 매장
+		List<Map<String, Object>> resShop = shopDao.selectRankShopRes();
+		returnMap.put("resShop", resShop.get(0));
+		
+		
+		return returnMap;
+	}
+
 	
 
 

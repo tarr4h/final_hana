@@ -6,7 +6,21 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/admin/common/adminHeader.jsp"/>
-항소 내역
+<style>
+	table{
+		border: 1px solid black;
+		border-collapse: collapse;
+		text-align:center;
+		width:500px;
+		margin:auto;
+	}
+	table th{
+		border: 1px solid black;
+	}
+	table td{
+		border: 1px solid black;
+	}
+</style>
 
 <table>
 	<thead>

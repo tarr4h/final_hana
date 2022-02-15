@@ -14,8 +14,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/iconCss.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -24,7 +24,10 @@
 <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
 <style>
 	.section-over-div {min-height : 100vh;}
-	.navbar-expand-lg { height : 10em;}
+	.navbar-expand-lg {
+		height : 9em;
+		background-color:#d9d3d3;
+	}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
 	div#headerAlert{display: none; text-align: center;}
@@ -50,12 +53,12 @@
 	<sec:authentication property="principal" var="loginMember"/>	
 	
 	<header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-dark pr-3">
+		<nav class="navbar navbar-expand-lg navbar-light pr-3">
 			<div class="title-image-box" style="margin-left:20px;">
-			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:130px;height:130px;border-radius:100%;"></a>
+			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:70px;height:70px;border-radius:100%;"></a>
 			</div>
-			<span class="navbar-brand text-white" style="font-size:40px;">DNHBQ</span>
-			<sec:authorize access="hasRole('USER')">				
+			<span class="navbar-brand" style="font-size:20px;">AroundUs</span>
+			<sec:authorize access="hasRole('USER')">
 			<jsp:include page="/WEB-INF/views/common/modal/searchResult.jsp"/>
 			</sec:authorize>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +67,7 @@
 		  <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
 		    <ul class="navbar-nav">
 		    <sec:authorize access="hasRole('USER')">
-		      <li class="nav-item">
+		      <!-- <li class="nav-item">
 					<button id="notifyBtn">noti <span class="badge" id="notiAlarm"></span></button>
 					<div id="notiArea">
 				    	<table id="notiTable">
@@ -77,64 +80,86 @@
 				    		</tbody>
 				    	</table>
 				    </div>
-			  </li>
+			  </li> -->
+			  
+			  <!-- test start  -->
+			  	<div class="wrapper">
+			  		<div class="icon github" id="notifyBtn">
+					  <div class="tooltip">noti</div>
+					  <span><span class="badge" id="notiAlarm"></span></span>
+					</div>
+					<div id="notiArea">
+				    	<table id="notiTable">
+				    		<thead>
+				    			<tr>
+				    				<th>알림목록</th>
+				    			</tr>
+				    		</thead>
+				    		<tbody id="notiTbody">
+				    		</tbody>
+				    	</table>
+				    </div>
+			  	
+					<div class="icon facebook">
+					  <div class="tooltip">HOME</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/"><i class="fa fa-home fa-fw"></i></a></span>
+					</div>
+					<div class="icon twitter">
+					  <div class="tooltip">AroundMe</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath }/shop/shopMain"><i class="fab fa-shopify"></i></a></span>
+					</div>
+					<div class="icon youtube">
+					  <div class="tooltip">Group</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/group/groupList"><i class="fas fa-users"></i></a></span>
+					</div>
+					<div class="icon github">
+					  <div class="tooltip">DM</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/chat/chat.do"><span class="badge" id="dmAlarm"></span></a></span>
+					</div>
+					<div class="icon instagram">
+					  <div class="tooltip">MBTI</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/mbti/mbti.do"><i class="fas fa-chart-bar"></i></a></span>
+					</div>
+					  
+				  	<c:if test="${loginMember.accountType eq 1}">
+			        	<div class="icon youtube">
+					    <div class="tooltip"><sec:authentication property="principal.username"/></div>
+					    <span><a id="linkd" class="nav-link" href="${pageContext.request.contextPath}/member/memberView/${loginMember.id}" ><i class="fa fa-user fa-1x fa-icon-image"></i></a></span>
+					    </div>			    	
+			    	</c:if>
+			    	<c:if test="${loginMember.accountType eq 0}">
+				        <div class="icon facebook">
+					    <div class="tooltip"><sec:authentication property="principal.username"/></div>
+					    <span><a id="linkd" class="nav-link" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" ><i class="fa fa-user fa-1x fa-icon-image"></i></a></span>
+					    </div>				    	
+			    	</c:if>
+			    	
+			    	
+					<!-- 관리자메뉴 -->
+					<sec:authorize access="hasRole('ADMIN')">
+					<div class="icon instagram">
+					  <div class="tooltip">admin</div>
+					  <span><a class="nav-link" href="${pageContext.request.contextPath}/admin/restrictionList"><i class="fa fa-cog fa-fw"></i></a></span>
+					</div>
+					</sec:authorize>
+					
+					<div class="icon twitter logoutIcon">
+					  <div class="tooltip">LogOut</div>
+					  <span>
+					  		<i class="fas fa-plug"></i>
+						    <form:form method="POST" name="logoutFrm" action="${pageContext.request.contextPath }/member/logout">
+							</form:form>
+					  </span>
+					</div>
+				</div>
+			  <!-- test end -->
+		      </sec:authorize>
 		      
-		      <li class="nav-item active">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/">Home</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath }/shop/shopMain">AroundMe</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/mbti/mbti.do">MBTI</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/group/groupList">소모임</a>
-		      </li>
-		      <sec:authorize access="isAuthenticated()">
-		      <li class="nav-item">
-		        <a class="nav-link text-light" href="${pageContext.request.contextPath}/chat/chat.do">DM<span class="badge" id="dmAlarm"></span></a>
-		      </li>
-		      </sec:authorize>
-		      </sec:authorize>
-		      <li class="nav-item">
+<%-- 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
 			        <a class="nav-link text-light" href="${pageContext.request.contextPath }/member/login">Log In</a>		      	
 		      	</sec:authorize>					
-		      </li>
-		      <sec:authorize access="isAuthenticated()">
-				    <li class="nav-item dropdown">
-				    	<c:if test="${loginMember.accountType eq 1}">
-			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/memberView/${loginMember.id}" >
-				          <span><sec:authentication property="principal.username"/></span>
-				        </a>				    	
-				    	</c:if>
-				    	<c:if test="${loginMember.accountType eq 0}">
-			        	<a id="linkd" class="nav-link dropdown-toggle text-light" href="${pageContext.request.contextPath}/member/shopView/${loginMember.id}" >
-				          <span><sec:authentication property="principal.username"/></span>
-				        </a>				    	
-				    	</c:if>
-				   
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				          <a class="dropdown-item" href="#">게시글 작성</a>
-				          <a class="dropdown-item" href="#">예약 목록</a>
-				          <a class="dropdown-item" href="#">계정 설정</a>
-				        </div>
-				    </li>
-						      
-				<!-- 관리자메뉴 -->
-				<sec:authorize access="hasRole('ADMIN')">
-					<li class="nav-item">
-						<a class="nav-link text-light" href="${pageContext.request.contextPath}/admin/restrictionList">관리자</a>
-					</li>
-				</sec:authorize>
-				    
-				<li class="nav-item">
-		      	<form:form method="POST" action="${pageContext.request.contextPath }/member/logout">
-					<input type="submit" value="LogOut" />
-				</form:form>
-				</li>
-			</sec:authorize>
+		      </li> --%>
 		  	</ul>
 		  </div>
 		</nav>
@@ -429,6 +454,12 @@
 		});
 	})
 	
+</script>
+
+<script>
+	$(".logoutIcon").click((e) => {
+		$(document.logoutFrm).submit();
+	});
 </script>
 
 	<div class="section-over-div">

@@ -99,18 +99,4 @@ $(".appendAttachArea").click((e) => {
 	$(".boardAttachArea").append(inputFile);
 });
 
-$(document).ready(function() {
-	//여기 아래 부분
-	$('#summernote').summernote({
-		  height: 200,                 // 에디터 높이
-		  minHeight: 200,             // 최소 높이
-		  maxHeight: 300,             // 최대 높이
-		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
-		  toolbar: [],
-		  disableResizeEditor: true
-	});
-	$(".note-resizebar").css('display', 'none');
-});
 </script>

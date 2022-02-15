@@ -12,6 +12,7 @@
 	background-color:#f3f3f3;
 	min-width:200px;
 	/* min-height:300px; */
+	transform:translateY(60px);
 }
 #notiTable{
 	border: 1px dotted black;
@@ -23,3 +24,8 @@
 #notiTable td{
 	border: 1px dotted black;
 }
+
+.searchArea{
+	transform:translateX(-10px);
+}
+

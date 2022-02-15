@@ -89,12 +89,20 @@
 }
 
 /* 글쓰기, 일정, 채팅 아이콘 */
-.icon{
+
+.iconn-container {
+	width:65%;
+	margin:auto;
+	margin-bottom:100px;
+	border-top:1px solid gray;	
+	border-bottom:1px solid gray;	
+}
+.iconn{
     text-align: center;
     padding: 60px 0px; 
 }
 
-.icon i {
+.iconn i {
     font-size: 50px;
     color: gray;
     padding-left: 35px;
