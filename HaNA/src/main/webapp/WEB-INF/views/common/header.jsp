@@ -23,10 +23,11 @@
 
 <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
 <style>
+
 	.section-over-div {min-height : 100vh;}
 	.navbar-expand-lg {
 		height : 9em;
-		background-color:#d9d3d3;
+		background-color:#c8d7de;
 	}
 	.navbar-brand head { height : 10em;}
 	.img-thumbnail { height : 8em;}
@@ -55,7 +56,7 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light pr-3">
 			<div class="title-image-box" style="margin-left:20px;">
-			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/duck.png" alt="..." class="img-thumbnail" style="width:70px;height:70px;border-radius:100%;"></a>
+			  <a class="navbar-brand head" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath }/resources/images/title.jpeg" alt="..." class="img-thumbnail" style="width:70px;height:70px;border-radius:100%;"></a>
 			</div>
 			<span class="navbar-brand" style="font-size:20px;">AroundUs</span>
 			<sec:authorize access="hasRole('USER')">
@@ -142,7 +143,11 @@
 					  <span><a class="nav-link" href="${pageContext.request.contextPath}/admin/restrictionList"><i class="fa fa-cog fa-fw"></i></a></span>
 					</div>
 					</sec:authorize>
+			 </div>
+			 </sec:authorize>		
 					
+			 <sec:authorize access="isAuthenticated()">
+			 <div class="wrapper">
 					<div class="icon twitter logoutIcon">
 					  <div class="tooltip">LogOut</div>
 					  <span>
@@ -151,9 +156,10 @@
 							</form:form>
 					  </span>
 					</div>
-				</div>
+			 </div>
+		     </sec:authorize>
+			
 			  <!-- test end -->
-		      </sec:authorize>
 		      
 <%-- 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
