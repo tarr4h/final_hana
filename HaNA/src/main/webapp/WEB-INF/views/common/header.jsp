@@ -143,7 +143,11 @@
 					  <span><a class="nav-link" href="${pageContext.request.contextPath}/admin/restrictionList"><i class="fa fa-cog fa-fw"></i></a></span>
 					</div>
 					</sec:authorize>
+			 </div>
+			 </sec:authorize>		
 					
+			 <sec:authorize access="isAuthenticated()">
+			 <div class="wrapper">
 					<div class="icon twitter logoutIcon">
 					  <div class="tooltip">LogOut</div>
 					  <span>
@@ -152,9 +156,10 @@
 							</form:form>
 					  </span>
 					</div>
-				</div>
+			 </div>
+		     </sec:authorize>
+			
 			  <!-- test end -->
-		      </sec:authorize>
 		      
 <%-- 		      <li class="nav-item">
 		      	<sec:authorize access="isAnonymous()">
