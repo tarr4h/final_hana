@@ -178,11 +178,12 @@
 	text-align: center;
 }
 .rankingThColor{
-	color:#ffc107;
+	color:#212529;
 	text-align: center;
 }
 .tagClick{
 	text-align: center;
+	color: #212529;
 }
 
 .table {
@@ -190,22 +191,22 @@
 }
 #thNo{
 	border-left: 1px solid  #adb5bd;
-	background-color: #827088;
+	background-color: #212529;
 	border-bottom: 1px solid #adb5bd;
 
 }
 #thNo2{
-	background-color: #827088;
+	background-color: #212529;
 	border-bottom: 1px solid #adb5bd;
 
 }
 #thNo3{
-	background-color: #827088;
+	background-color: #212529;
 	border-bottom: 1px solid #adb5bd;
 
 }
 #thNo4{
-	background-color: #827088;
+	background-color: #212529;
     border-right: 1px solid #adb5bd;
     border-bottom: 1px solid #adb5bd;
  
