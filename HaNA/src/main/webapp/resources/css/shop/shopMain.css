@@ -11,6 +11,7 @@
 #hashTagRankTitle{
 	font-size: 25px;
 	text-align:center;
+	color: #57585a !important;
 }
 
 .searchArea{
@@ -120,10 +121,11 @@
 .shopRankingNumberImg{
 	width: 30px; 
 	height: 28px; 
-	margin: 3px 5px 0px 0px; 
-	padding: 3px; 
+	margin: 3px 6px 0px 0px; 
+	padding: 0px; 
 	position: relative; 
 	bottom: 5px;
+	right: 13px;
 }
 .radioStyle{
 	position: relative; 
@@ -173,13 +175,89 @@
 }
 #rankingTrColor{
 	color:#ffc107;
+	text-align: center;
 }
 .rankingThColor{
-	color:#ffc107;
+	color:#212529;
+	text-align: center;
+}
+.tagClick{
+	text-align: center;
+	color: #212529;
 }
 
+.table {
+	border: 1px #adb5bd !important;
+}
+#thNo{
+	border-left: 1px solid  #adb5bd;
+	background-color: #212529;
+	border-bottom: 1px solid #adb5bd;
 
+}
+#thNo2{
+	background-color: #212529;
+	border-bottom: 1px solid #adb5bd;
 
+}
+#thNo3{
+	background-color: #212529;
+	border-bottom: 1px solid #adb5bd;
+
+}
+#thNo4{
+	background-color: #212529;
+    border-right: 1px solid #adb5bd;
+    border-bottom: 1px solid #adb5bd;
+ 
+}
+#rankingThColor_1{
+    background-color: #f0f0f0 ;
+    border-left: 1px solid #adb5bd;
+    box-shadow: none !important;
+    border-bottom: none;
+}
+#rankingThColor_2{
+    background-color: #f0f0f0;
+    border-left: 1px solid #adb5bd;
+    border-bottom: none;
+}
+#rankingThColor_3{
+    background-color: #f0f0f0 ;
+    box-shadow: none !important;
+    border-left: 1px solid #adb5bd;
+    border-bottom: none;
+}
+#rankingThColor_4{
+    background-color: #f0f0f0;
+    border-left: 1px solid #adb5bd;
+    border-bottom: 1px solid #adb5bd;
+}
+.tagClick{
+    background-color: #ffffff !important ;
+    color: #898d91;
+    box-shadow: none !important;
+    border-bottom: none;
+}
+#toDayFourthTagRanking{
+	border-bottom: 1px solid #adb5bd ;
+}
+#weekFourthRanking{
+	border-bottom: 1px solid #adb5bd ;
+}
+#monthFourthRanking{
+	border-bottom: 1px solid #adb5bd ;
+	border-right:1px solid #adb5bd ;
+}
+#monthFirstRanking{
+	border-right:1px solid #adb5bd ;
+}
+#monthSecondRanking{
+	border-right:1px solid #adb5bd ;
+}
+#monthThirdRanking{
+	border-right:1px solid #adb5bd ;
+}
 
 
 

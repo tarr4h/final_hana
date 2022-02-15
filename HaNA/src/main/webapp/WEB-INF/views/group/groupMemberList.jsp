@@ -84,7 +84,7 @@ let memberLevelCode2;
 				</div>
 				
 				<div class="modal-body">
-					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupGrade?${_csrf.parameterName}=${_csrf.token}" method="POST" 
+					<form:form name="groupGradeUpdateFrm" action="${pageContext.request.contextPath}/group/updateGroupMemberLevel?${_csrf.parameterName}=${_csrf.token}" method="POST" 
 						class="customRadio customCheckbox m-0 p-0">
 						<div class="row mb-0">
 							<div class="row justify-content-start">
@@ -92,17 +92,17 @@ let memberLevelCode2;
 									<div class="row_">
 										<input type="hidden" name="groupId" value="${groupId}"/>
 										<input type="hidden" name="memberId" />
-										<input type="hidden" name="memberLevelCode" />
+										<input type="hidden" name="currentLevel" />
 										
-										<input type="radio" name="level" id="ld" value="ld" >
+										<input type="radio" name="updateLevel" id="ld" value="ld" >
 										<label for="ld" class="form-check-label">리더</label>
 									</div>
 									<div class="row_">
-										<input type="radio" name="level" id="mg" value="mg"> 
+										<input type="radio" name="updateLevel" id="mg" value="mg"> 
 										<label for="mg" class="form-check-label">매니저</label>
 									</div>
 									<div class="row_">
-										<input type="radio" name="level" id="mb" value="mb">
+										<input type="radio" name="updateLevel" id="mb" value="mb">
 										<label for="mb" class="form-check-label">멤버</label>
 									</div>
 								</div>
@@ -167,7 +167,7 @@ function updateGroupGradeFunc(){
 		console.log("updateGroupGradeFunc = ",memberId2);
 		console.log("updateGroupGradeFunc = ",memberLevelCode2);
 		$("[name=groupGradeUpdateFrm] input[name=memberId]").val(memberId2);
-		$("[name=groupGradeUpdateFrm] input[name=memberLevelCode]").val(memberLevelCode2);
+		$("[name=groupGradeUpdateFrm] input[name=currentLevel]").val(memberLevelCode2);
 		$(document.groupGradeUpdateFrm).submit();
 	}
 }; 

@@ -64,7 +64,7 @@ public interface GroupService {
 
 	int deleteGroupMember(Map<String,Object> param);
 
-	int updateGroupGrade(Map<String, Object> param);
+	int updateGroupMemberLevel(Map<String, Object> param);
 
 	int updateGroup(Group group);
 
