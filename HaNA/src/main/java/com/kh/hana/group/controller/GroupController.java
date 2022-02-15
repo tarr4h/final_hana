@@ -530,20 +530,16 @@ public class GroupController {
 	}
 	
 	// 등급 수정
-		@PostMapping("/updateGroupGrade")
-		public String updateGroupGrade (String groupId, String memberId, String level, String memberLevelCode) {
+		@PostMapping("/updateGroupMemberLevel")
+		public String updateGroupGrade (String groupId, String memberId, String currentLevel, String updateLevel) {
 			
-			log.info("updateGroupGrade groupId = {}", groupId);
-			log.info("updateGroupGrade memberId = {}", memberId);
-			log.info("updateGroupGrade memberLevelCode = {}", memberLevelCode);
-			log.info("updateGroupGrade level = {}", level);
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("groupId", groupId);
 			param.put("memberId", memberId);
-			param.put("memberLevelCode", memberLevelCode); //현재 레벨
-			param.put("level", level);// 바꿀 레벨 
+			param.put("updateLevel", updateLevel); //현재 레벨
+			param.put("currentLevel", currentLevel);// 바꿀 레벨 
 			
-			int result = groupService.updateGroupGrade(param);
+			int result = groupService.updateGroupMemberLevel(param);
 
 			String msg = result > 0 ? "등급 변경 성공" : "등급 변경 실패";
 			log.info("msg ={}", msg);

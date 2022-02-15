@@ -61,7 +61,7 @@ public interface GroupDao {
 
 	public int deleteGroupMember(Map<String,Object> param);
 
-	public int updateGroupGrade(Map<String, Object> param);
+	public int updateGroupMemberLevel(Map<String, Object> param);
 
 	public int updateGroup(Group group);
 

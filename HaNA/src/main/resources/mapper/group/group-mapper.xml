@@ -295,11 +295,11 @@
 		group_id = #{groupId}
 	</delete>
 	
-	<update id="updateGroupGrade">
+	<update id="updateGroupMemberLevel">
 	update 
 	    group_member_list 
 	set 
-	    member_level_code = #{level} 
+	    member_level_code = #{updateLevel} 
 	where 
 	    member_id = #{memberId} 
 	    and 
