@@ -594,3 +594,9 @@
 	}
 	
 </script>
+<style>
+#calendarTable {
+    margin: auto;
+    width: 250px;
+}
+</style>
