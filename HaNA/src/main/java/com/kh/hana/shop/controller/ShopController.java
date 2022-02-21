@@ -54,6 +54,7 @@ public class ShopController {
     
     @GetMapping("/shopList")
     public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY, @RequestParam int maxDistance) {
+    	log.info("github test");
         Map<String, Object> data = new HashMap<>();
         data.put("id", id);
         data.put("locationX", locationX);
