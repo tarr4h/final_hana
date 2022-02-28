@@ -51,7 +51,6 @@ public class CalculateArea2 {
 		double result1 = (xa * 88.9) + (xb * 1.48) + (xc * 0.025);
 		double result2 = (ya * 111.3) + (yb * 1.86) + (yc * 0.031);
 		
-		
 		double finalResult = Math.sqrt((result1 * result1) + (result2 * result2));
 		
 		log.info("finalResult = {}", finalResult);

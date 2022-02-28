@@ -153,7 +153,6 @@
 <script type="text/javascript"src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a77e005ce8027e5f3a8ae1b650cc6e09&libraries=services"></script>
 <script>
-
 /* kakaomap */
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
     mapOption = { 
@@ -163,29 +162,52 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+var positionsDefault = [
+    {
+        title: 'Me!', 
+        latlng: new kakao.maps.LatLng(${loginMember.locationY}, ${loginMember.locationX})
+    },
+];
 
-/* kakao end*/
+appendMarker(positionsDefault);
+/* kakao end*/	
 
 function appendMarker(positions){
-	console.log('마커 스타트');
-	//마커 이미지의 이미지 주소입니다
 	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 	    
-	for (var i = 0; i < positions.length; i ++) {
-	    
-	    // 마커 이미지의 이미지 크기 입니다
-	    var imageSize = new kakao.maps.Size(24, 35); 
-	    
-	    // 마커 이미지를 생성합니다    
-	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-	    
-	    // 마커를 생성합니다
-	    var marker = new kakao.maps.Marker({
-	        map: map, // 마커를 표시할 지도
-	        position: positions[i].latlng, // 마커를 표시할 위치
-	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-	        image : markerImage // 마커 이미지 
-	    });
+	for (var i = 0; i < positions.length; i ++) {	    
+		var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
+	    imageSize = new kakao.maps.Size(32, 34), 
+	    imageOption = {offset: new kakao.maps.Point(13, 45)}; 
+
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+		    markerPosition = positions[i].latlng;
+	
+		var marker = new kakao.maps.Marker({
+		  position: markerPosition,
+		  image: markerImage 
+		});
+	
+		marker.setMap(map);  
+	
+		var content = '<div class="customoverlay">' +
+		    '  <a href="https://map.kakao.com/?q=' +
+		    positions[i].title +
+		    '" target="_blank" style="text-decoration:none;">' +
+		    '    <span class="title" style="font-size:9px;">'+
+		    positions[i].title+
+		    '</span>' +
+		    '  </a>' +
+		    '</div>';
+	
+		var position = positions[i].latlng;  
+	
+		var customOverlay = new kakao.maps.CustomOverlay({
+		    map: map,
+		    position: position,
+		    content: content,
+		    yAnchor: 1 
+		});
 	}
 }
 
@@ -201,7 +223,6 @@ function createCircle(radiusValue){
 	    fillOpacity: 0.7   
 	}); 
 
-	// 지도에 원을 표시합니다 
 	circle.setMap(map); 	
 }
 
@@ -257,8 +278,8 @@ function scrollPage(){
 					//마커를 표시할 위치와 title 객체 배열입니다 
 					var positions = [
 					    {
-					        title: 'Me!', 
-					        latlng: new kakao.maps.LatLng(${loginMember.locationY}, ${loginMember.locationX})
+					        /* title: 'Me!', 
+					        latlng: new kakao.maps.LatLng(${loginMember.locationY}, ${loginMember.locationX}) */
 					    },
 					];
 					
@@ -358,7 +379,13 @@ function scrollPage(){
 								$('#shopList').append(htmlOut); 
 								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
+								positions.push({title: list[i].shopName, latlng: new kakao.maps.LatLng(list[i].locationY, list[i].locationX)});
+							    
+								// list[i].ID가 마지막이라면 return
 								if(i == max -1){
+									appendMarker(positions);
+									createCircle($("[name=maxDistance]:checked").val()*1000);
+									console.log(positions);
 									return;
 								}
 							}  
@@ -394,9 +421,6 @@ function scrollPage(){
 					}
 						
 					page++;
-					/* endNum -= 1; //  6-1 = 5 
-					startNum = (endNum +1) ;  // 6 12
-					endNum += 7; //12 18 */
 	
 					loading = false;
 					if(list.length === 0){	
