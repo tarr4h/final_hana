@@ -92,7 +92,6 @@ function getPrice(reservationNo, type){
 			reservationNo
 		},
 		success(res){
-			console.log(res);
 			if(type == 'all'){
 				$("#purchaseAmount").text(res.price);
 			} else {
@@ -115,8 +114,6 @@ function requestDutchpay(){
 			status: 'Y'
 		},
 		success(res){
-			console.log(res);
-			
 			//공유된 회원 불러오기
  				$.ajax({
 				url: '${pageContext.request.contextPath}/shop/selectAcceptedFriends',
@@ -124,7 +121,6 @@ function requestDutchpay(){
 					reservationNo: resNo
 				},
 				success(resp){
-					console.log(resp);
 					//공유된 회원 불러와서 나를 제외한 회원에게 더치페이 메세지 보내기
 					//이것도 여기2초 더치페이 메세지 보내기 함수에서 1초 총 3초에 한번씩 보냄
 					let delay = 0;
@@ -134,7 +130,6 @@ function requestDutchpay(){
 						if(b.id !==`${loginMember.id}`){
 						Dutchtest22(b.id,resNo);
 						}
-
 						    }, delay);
 					});
 					alert("더치페이 전송 완료!");
@@ -148,11 +143,6 @@ function requestDutchpay(){
 				error:console.log
 					
 				}); 
-			
-			
-/*  			if(res == 1){
-				alert("요청이 전송되었습니다.");			
-			};  */
 		},
 		error: console.log
 	});
@@ -167,7 +157,6 @@ function resDutchpay(){
 			reservationNo : $("[name=req-pay-rs-no]").val()
 		},
 		success(res){
-			console.log(res);
 			let myPrice;
  			let name;
 			let id;
@@ -207,7 +196,6 @@ function resAll(){
 			id : '${loginMember.id}'
 		},
 		success(res){
-			console.log(res);
 			let myPrice = res.ORIGINALPRICE;
  			let name = res.NAME;
 			let id = res.ID;
@@ -273,8 +261,7 @@ function requestPay(price, name, id, address, reservationNo, purchaseType) {
         		error : console.log
         	});
         } else {
-            alert("결제 실패")
-            // 결제 실패 시 로직, 
+            alert("결제 실패");
         }
     });
   }

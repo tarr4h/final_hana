@@ -68,21 +68,6 @@
 		  <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
 		    <ul class="navbar-nav">
 		    <sec:authorize access="hasRole('USER')">
-		      <!-- <li class="nav-item">
-					<button id="notifyBtn">noti <span class="badge" id="notiAlarm"></span></button>
-					<div id="notiArea">
-				    	<table id="notiTable">
-				    		<thead>
-				    			<tr>
-				    				<th>알림목록</th>
-				    			</tr>
-				    		</thead>
-				    		<tbody id="notiTbody">
-				    		</tbody>
-				    	</table>
-				    </div>
-			  </li> -->
-			  
 			  <!-- test start  -->
 			  	<div class="wrapper">
 			  		<div class="icon github" id="notifyBtn">

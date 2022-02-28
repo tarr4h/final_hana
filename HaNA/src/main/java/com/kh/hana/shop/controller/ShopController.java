@@ -53,22 +53,28 @@ public class ShopController {
     }
     
     @GetMapping("/shopList")
-    public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr , @RequestParam String id, @RequestParam String locationX, @RequestParam String locationY, @RequestParam int maxDistance) {
-    	log.info("github testd");
+    public ResponseEntity<?> selectShopList(@RequestParam(value="selectDataArr[]",required=false) List<String> selectDataArr,
+    		@RequestParam String id, @RequestParam String locationX, @RequestParam String locationY, @RequestParam int maxDistance) {
         Map<String, Object> data = new HashMap<>();
         data.put("id", id);
         data.put("locationX", locationX);
         data.put("locationY", locationY);
         
-//      8.23km내 -> 11km 범위 내로 추려오기
+//      8.23km내 -> 9km 범위 내로 추려오기
         double maxX = Double.parseDouble(locationX) + 0.0927;
         double maxY = Double.parseDouble(locationY) + 0.074;
+        double maxXa = Double.parseDouble(locationX) - 0.0927;
+        double maxYa = Double.parseDouble(locationY) - 0.074;
         
         String maxLocationX = Double.toString(maxX);
         String maxLocationY = Double.toString(maxY);
+        String maxLocationXa = Double.toString(maxXa);
+        String maxLocationYa = Double.toString(maxYa);
         
         data.put("maxLocationX", maxLocationX);
         data.put("maxLocationY", maxLocationY);
+        data.put("maxLocationXa", maxLocationXa);
+        data.put("maxLocationYa", maxLocationYa);
         
         log.info("data = {}", data);
    
@@ -179,8 +185,6 @@ public class ShopController {
     @PutMapping(value="/updateShopTable", produces="application/text;charset=utf8")
     @ResponseBody
     public ResponseEntity<?> updateShopTable(@RequestBody Table table){
-    	log.info("updateTable = {}", table);
-    	
     	int result = shopService.updateTable(table);
     	log.info("updateResult = {}", result);
     	 
@@ -217,6 +221,7 @@ public class ShopController {
 				cal.setTime(psStartTime);
 				cal.add(Calendar.MINUTE, timeDiv);
 				psStartTime = cal.getTime();
+				// 더한 시간이 예약 종료시간 이후라면, 더한 시간을 빼주고 반복문을 종료시킨다.
 				if(psStartTime.after(psEndTime)) {
 					cal.add(Calendar.MINUTE, -timeDiv);
 					psStartTime = cal.getTime();
@@ -239,16 +244,12 @@ public class ShopController {
     	
     	log.info("timeList = {}", timeMapList);
     	
-    	
     	return ResponseEntity.ok(timeMapList);
     }
     
     @PostMapping(value="/reservation/insert", produces="application/text;charset=utf8")
     @ResponseBody
     public ResponseEntity<?> insertReservation(@RequestBody Reservation reservation){
-    	
-    	log.info("insertReservation REs = {}", reservation);
-    	
     	int result = shopService.insertReservation(reservation);
     	
     	String msg = result > 0 ? "등록되었습니다." : "예약 실패, 다시 시도해주세요";
@@ -292,7 +293,6 @@ public class ShopController {
     	map.put("id", member.getId());
     	map.put("limit", limit);
     	map.put("offset", offset);
-    	
     	 
     	Map<String, Object> myList = shopService.selectMyReservationList(map);
     	int totalBoardCount = (int) myList.get("totalBoard");
@@ -316,9 +316,6 @@ public class ShopController {
     
     @PutMapping(value="/cancleReservation")
     public ResponseEntity<?> cancleReservation(@RequestBody String reservationNo) {
-    	
-    	log.info("resNo = {}", reservationNo);
-    	
     	int result = shopService.cancleReservation(reservationNo);
     	
     	return ResponseEntity.ok(result);
@@ -344,8 +341,6 @@ public class ShopController {
     
     @PostMapping("/insertReservationShare")
     public ResponseEntity<?> insertReservationShare(Reservation reservation){
-    	log.info("reservation = {}", reservation);
-    	
     	int result = shopService.insertReservationShare(reservation);
     	
     	return ResponseEntity.ok(result);
@@ -360,8 +355,6 @@ public class ShopController {
     
     @GetMapping("/selectTablePrice")
     public ResponseEntity<?> selectTablePrice(@RequestParam String memberId){
-    	log.info("id = {}", memberId);
-    	
     	List<Table> list = shopService.selectTablePrice(memberId);
     	log.info("list = {}", list);
     	
@@ -382,8 +375,7 @@ public class ShopController {
     	map.put("status", status);
     	
     	int result = shopService.updateReqDutchpay(map);
-    	log.info("updateResult = {}", result);
-    	
+
     	return ResponseEntity.ok(result);
     }
     
@@ -408,8 +400,6 @@ public class ShopController {
     
     @PostMapping("/insertPurchaseHistory")
     public ResponseEntity<?> insertPurchaseHistory(@RequestBody Map<String, Object> reqMap){
-    	log.info("reqMap = {}", reqMap);
-    	
     	int result = shopService.insertPurchaseHistory(reqMap);
     	
     	return ResponseEntity.ok(result);
@@ -417,7 +407,6 @@ public class ShopController {
     
     @PostMapping("/purchaseAsDutchpay")
     public ResponseEntity<?> purchaseAsDutchpay(@RequestBody Map<String, Object> reqMap){
-    	
     	int result = shopService.purchaseAsDutchpay(reqMap);
     	
     	return ResponseEntity.ok(result);
@@ -425,7 +414,6 @@ public class ShopController {
     
     @PostMapping("/purchaseAll")
     public ResponseEntity<?> purchaseAll(@RequestBody Map<String, Object> reqMap){
-    	
     	int result = shopService.purchaseAll(reqMap);
     	
     	return ResponseEntity.ok(result);
@@ -460,7 +448,6 @@ public class ShopController {
 
     @GetMapping("/selectHashTagClickShopList")
     public ResponseEntity<?> selectHashTagClickShopList(@RequestParam String tagName){
-    	log.info("tagName = {}", tagName);
     	List<String> HashTagClickShopList = new ArrayList<>();
     	 HashTagClickShopList  = shopService.selectHashTagClickShopList(tagName);
     	log.info("tagName = {}", HashTagClickShopList);
@@ -470,8 +457,6 @@ public class ShopController {
     
     @GetMapping("/getShopGrade")
     public ResponseEntity<?> selectShopGrade(@RequestParam String shopId){
-    	log.info("shopId = {}", shopId);
-    	
     	List<Map<String, Object>> reviewList = shopService.selectShopGrade(shopId);
     	log.info("reviewList = {}", reviewList);
     	
@@ -491,7 +476,6 @@ public class ShopController {
     	returnMap.put("reviewCount", reviewCount);
     	returnMap.put("average", average);
     	
-    	
     	return ResponseEntity.ok(returnMap);
     }
     
@@ -501,8 +485,7 @@ public class ShopController {
     	Map<String, Object> map = shopService.reservationStatistics(member);
     	
     	// 연령대별 예약인원 수    	
-    	Map<String, Object> ageGroup =  ageGroupStatistics((List) map.get("userList"));
-    	log.info("ageGroup = {}", ageGroup);
+    	Map<String, Object> ageGroup = ageGroupStatistics((List) map.get("userList"));
     	model.addAttribute("ageGroup", ageGroup);
     	
     	// 전체 예약인원 수
@@ -640,17 +623,12 @@ public class ShopController {
     	returnMap.put("groupSixMale", groupSixMale);
     	returnMap.put("groupSixFemale", groupSixFemale);
     	
-    	log.info("oneMale = {}", groupOneMale);
-    	log.info("oneFeMale = {}", groupOneFemale);
-    	
     	return returnMap;
     }
     
     @GetMapping("/getPrice")
     public ResponseEntity<?> getPrice(@RequestParam String reservationNo){
-    	
     	Map<String, Object> ogPrice = shopService.getPrice(reservationNo);
-    	log.info("ogPrice = {}", ogPrice);
     	
     	return ResponseEntity.ok(ogPrice);
     }

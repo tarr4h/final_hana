@@ -73,15 +73,12 @@ public class AdminController {
 	
 	@GetMapping("/reportedHistory")
 	public ResponseEntity<?> reportedHistory(@RequestParam String id) {
-		log.info("id = {}", id);
 		List<Map<String, Object>> historyList = adminService.selectReportedHistory(id);
-		log.info("historyList = {}", historyList);
 		return ResponseEntity.ok(historyList);
 	}
 	
 	@GetMapping("/acceptAppeal")
 	public ResponseEntity<?> acceptAppeal(@RequestParam String id) {
-		log.info("id = {}", id);
 		int result = adminService.acceptAppeal(id);
 		
 		return ResponseEntity.ok(result);

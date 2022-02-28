@@ -32,7 +32,7 @@ public class ShopServiceImpl implements ShopService {
 		// 해시태그가 없을때 
 		if(selectDataArr == null) {
 			 shopList = shopDao.selectShopList(data);			
-			log.info("해시태그가 없는 = {}", shopList);
+			log.info("shop no hashtag = {}", shopList);
 		}else {
 			// 해시태그가 있을때 
 			List<String> tags = new ArrayList<>();
@@ -41,18 +41,19 @@ public class ShopServiceImpl implements ShopService {
 				data.put("tags", tags);				
 			}
 			 shopList = shopDao.selectHashTagShopList(data);			
-			 log.info("해시태그가 있 = {}", shopList);
+			 log.info("shop contains hashtag = {}", shopList);
 		}
 		String locationX = (String)data.get("locationX");
 		String locationY = (String)data.get("locationY");
 		
+		// 최대범위 내 매장들을 가져온 뒤 설정거리 내에 있는지 검사(사각형 > 원)
 		List<Map<String, Object>> lastShopList = new ArrayList<>();
 		for(Map<String, Object> shop : shopList) {
 			String x = (String) shop.get("locationX");
 			String y = (String) shop.get("locationY");
-			log.info("serv shop = {}", shop);
+			log.info("checking shop = {}", shop);
 			boolean bool = CalculateArea.calculateArea(locationX, locationY, x, y, limit);
-			log.info("calTest = {}", bool);
+			log.info("result bool = {}", bool);
 			
 			if(bool == true) {
 				lastShopList.add(shop);
@@ -92,8 +93,6 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Override
 	public int insertRankingData(Map<String, Object> rankingMap) {
-	//	int count = 1;
-	//	rankingMap.put("count", count);
 		int selectData = shopDao.selectRankingData(rankingMap);
 		log.info("selectData = {}" ,selectData );
 		return selectData;
@@ -324,10 +323,7 @@ public class ShopServiceImpl implements ShopService {
 	public Map<String, Object> getPrice(String reservationNo) {
 		Map<String, Object> map = new HashMap<>();
 		List<Map<String, Object>> list = shopDao.selectPriceAndVisitors(reservationNo);
-		
-		log.info("list = {}", list);
-		log.info("list0 = {}", list.get(0));
-		log.info("list0.ogp = {}", String.valueOf(list.get(0).get("ORIGINALPRICE")));
+
 		int price = Integer.parseInt(String.valueOf(list.get(0).get("ORIGINALPRICE")));
 		int visitors = list.size();
 		
@@ -352,7 +348,6 @@ public class ShopServiceImpl implements ShopService {
 		// 예약 수 1위 매장
 		List<Map<String, Object>> resShop = shopDao.selectRankShopRes();
 		returnMap.put("resShop", resShop.get(0));
-		
 		
 		return returnMap;
 	}

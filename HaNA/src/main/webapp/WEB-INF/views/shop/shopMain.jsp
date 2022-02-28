@@ -40,31 +40,34 @@
 				<tbody>
 					 <tr>
 						<th scope="row" class="rankingThColor" id ="rankingThColor_1">1</th>
-						<td id="toDayFirstRanking" class="tagClick" onClick="hashTagClick()">Mark ★</td>
-						<td id="weekFirstRanking" class="tagClick" onClick="hashTagClick()" >@mdo ★</td>
-						<td id="monthFirstRanking" class="tagClick" onClick="hashTagClick()">Otto ★</td>
+						<td id="toDayFirstRanking" class="tagClick" onClick="hashTagClick()">-</td>
+						<td id="weekFirstRanking" class="tagClick" onClick="hashTagClick()" >-</td>
+						<td id="monthFirstRanking" class="tagClick" onClick="hashTagClick()">-</td>
 					</tr> 
 					 <tr>
 						<th scope="row" class="rankingThColor" id ="rankingThColor_2">2</th>
-						<td id="toDaySecondRanking" class="tagClick" onClick="hashTagClick()">Jacob</td>
-						<td id="weekSecondRanking" class="tagClick" onClick="hashTagClick()">@fat</td>
-						<td id="monthSecondRanking" class="tagClick" onClick="hashTagClick()">Thornton</td>
+						<td id="toDaySecondRanking" class="tagClick" onClick="hashTagClick()">-</td>
+						<td id="weekSecondRanking" class="tagClick" onClick="hashTagClick()">-</td>
+						<td id="monthSecondRanking" class="tagClick" onClick="hashTagClick()">-</td>
 					</tr> 
 					<tr>
 						<th scope="row" class="rankingThColor" id ="rankingThColor_3">3</th>
-						 <td id="toDayThirdTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
-						<td id="weekThirdRanking" class="tagClick" onClick="hashTagClick()">@test!!</td>
-						<td id="monthThirdRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
+						 <td id="toDayThirdTagRanking" class="tagClick" onClick="hashTagClick()">-</td>
+						<td id="weekThirdRanking" class="tagClick" onClick="hashTagClick()">-</td>
+						<td id="monthThirdRanking" class="tagClick" onClick="hashTagClick()">-</td>
 					</tr>
 					<tr>
 						<th scope="row" class="rankingThColor" id ="rankingThColor_4">4</th>
-						<td id="toDayFourthTagRanking" class="tagClick" onClick="hashTagClick()">Larry</td>
-						<td id="weekFourthRanking" class="tagClick" onClick="hashTagClick()">@twitter</td>
-						<td id="monthFourthRanking" class="tagClick" onClick="hashTagClick()">the Bird</td>
+						<td id="toDayFourthTagRanking" class="tagClick" onClick="hashTagClick()">-</td>
+						<td id="weekFourthRanking" class="tagClick" onClick="hashTagClick()">-</td>
+						<td id="monthFourthRanking" class="tagClick" onClick="hashTagClick()">-</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		
+		<!-- 지도 표시 -->
+		<div id="map" style="width:100%;height:350px;"></div>
 		
 		<!-- 거리 설정 영역 -->
 		<div class="row searchArea my-0">		
@@ -141,15 +144,6 @@
 			</div>
 		</div>
 		<div class="row shopList bg-secondary text-white" id="shopList" style="background-color: #e9ecef !important;">
-			<!-- 
-       <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-        	<div class="shopProfile d-flex">
-	             프로필 사진 영역   	
-	        	<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/images/duck.png" alt=""/>
-       		</div>
-       		<span class = "shopScroll">매장ID</span>
-        </div>
-       -->
 		</div>
 
 		<!-- pageBar -->
@@ -157,10 +151,59 @@
 	</div>
 
 <script type="text/javascript"src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ik4yiy9sdi&submodules=geocoder"></script>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a77e005ce8027e5f3a8ae1b650cc6e09&libraries=services"></script>
 <script>
 
+/* kakaomap */
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(${loginMember.locationY}, ${loginMember.locationX}), // 지도의 중심좌표
+        level: 8 // 지도의 확대 레벨
+    };
 
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+
+/* kakao end*/
+
+function appendMarker(positions){
+	console.log('마커 스타트');
+	//마커 이미지의 이미지 주소입니다
+	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+	    
+	for (var i = 0; i < positions.length; i ++) {
+	    
+	    // 마커 이미지의 이미지 크기 입니다
+	    var imageSize = new kakao.maps.Size(24, 35); 
+	    
+	    // 마커 이미지를 생성합니다    
+	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+	    
+	    // 마커를 생성합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map, // 마커를 표시할 지도
+	        position: positions[i].latlng, // 마커를 표시할 위치
+	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+	        image : markerImage // 마커 이미지 
+	    });
+	}
+}
+
+function createCircle(radiusValue){
+	var circle = new kakao.maps.Circle({
+	    center : new kakao.maps.LatLng(${loginMember.locationY}, ${loginMember.locationX}), 
+	    radius: radiusValue,  
+	    strokeWeight: 5, 
+	    strokeColor: '#75B8FA',
+	    strokeOpacity: 1,
+	    strokeStyle: 'dashed',
+	    fillColor: '#CFE7FF',
+	    fillOpacity: 0.7   
+	}); 
+
+	// 지도에 원을 표시합니다 
+	circle.setMap(map); 	
+}
 
 var loading = false;
 var page = 1;
@@ -170,8 +213,7 @@ var selectDataArr = []; //hashTag 담을 배열
 var hashTagData = ""; // 검색 데이터 잠시 담을 변수 
 
 
-function scrollPage(){	
-	
+function scrollPage(){
 		//  페이지 들어 왔을때 (태그 선택 후 검색 버튼을 클릭 하지 않았을 경우) 스크롤을 하면 거리기반 매장만 뜨게 
 		if(chkClick == false) {
 			 selectDataArr.length = 0; // 태그 데이터 삭제 
@@ -212,19 +254,27 @@ function scrollPage(){
 						selectDataArr : selectDataArr
 				},
 				success(res){	
-					var  list = res;
+					//마커를 표시할 위치와 title 객체 배열입니다 
+					var positions = [
+					    {
+					        title: 'Me!', 
+					        latlng: new kakao.maps.LatLng(${loginMember.locationY}, ${loginMember.locationX})
+					    },
+					];
+					
+					var list = res;
 					const max = list.length;
-					console.log("list" , list);	
+					console.log("maxSize : ", max);
+					
 					// list.TAG_NAME 값 비교가 안되서 어차피 tag_name은 있거나 없거나 이니까 변수로 옮겨서 null 체크 
 				 	var  tagName = 0;				 	
 					for(var i =0; i<list.length; i++){
 						 tagName = list[i].hashTags.length;
 					}
 					 
-					
-				if(tagName == 0){ // 해시태그 없을때
-					if(startNum == 0 ){
-							  for(var i=0; i<endNum; i++){
+					if(tagName == 0){ // 해시태그 없을때
+						if(startNum == 0 ){
+							for(var i=0; i<max; i++){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
@@ -232,7 +282,8 @@ function scrollPage(){
 							    htmlOut += '</div>';
 								htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
 								htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
-							    for(var j = 0; j < list[i].hashTags.length; j++){
+							    
+								for(var j = 0; j < list[i].hashTags.length; j++){
 							    	if(j == 0){
 							    		 htmlOut += '<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
 							    	} else if(j == list[i].hashTags.length - 1){
@@ -241,43 +292,52 @@ function scrollPage(){
 							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
 							    	}
 							    };
+							    
 								$('#shopList').append(htmlOut);
+								
+								positions.push({title: list[i].shopName, latlng: new kakao.maps.LatLng(list[i].locationY, list[i].locationX)});
+							    
+								// list[i].ID가 마지막이라면 return
+								if(i == max -1){
+									appendMarker(positions);
+									createCircle($("[name=maxDistance]:checked").val()*1000);
+									console.log(positions);
+									return;
+								}
+								
+							}  
+						} else { 
+							for(var i=startNum; i<max; i++){  
+								var htmlOut='';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
+								htmlOut += '<div class="shopProfile d-flex">';
+								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
+							    htmlOut += '</div>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
+									    
+							    for(var j = 0; j < list[i].hashTags.length; j++){
+							    	if(j == 0){
+							    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
+							    	} else if(j == list[i].hashTags.length - 1){
+							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j] + '</span>';
+							    	} else {
+							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
+							    	}
+							    };
+									    
+								$('#shopList').append(htmlOut);
+								
 								// list[i].ID가 마지막이라면 return
 								if(i == max -1){
 									return;
-							}
-							
-						}  
-					}else{ 
-						 	for(var i=startNum; i<endNum; i++){  
-									var htmlOut='';
-									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
-									htmlOut += '<div class="shopProfile d-flex">';
-									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
-								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
-								    for(var j = 0; j < list[i].hashTags.length; j++){
-								    	if(j == 0){
-								    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
-								    	} else if(j == list[i].hashTags.length - 1){
-								    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j] + '</span>';
-								    	} else {
-								    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
-								    	}
-								    };
-									$('#shopList').append(htmlOut);
-									// list[i].ID가 마지막이라면 return
-									if(i == max -1){
-										return;
 								}
-								
-						 	}
+							}
 						}
-				}else if (tagName != 0){ // 해시태그 있을때	
-					/* $("#shopList").empty(); */ //검색과 스크롤 동시에 작동 될때 연속으로 나와서 요소 삭제 해줌 
-					if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서 
-							  for(var i=0; i<list.length; i++){
+					} else if (tagName != 0) { 
+						// 해시태그 있을때	
+						if(startNum == 0 || startNum == 12 ){ // 리스트 스크롤 후 해시태그 검색시 startNum이 12 이여서
+							for(var i=0; i<list.length; i++){
 								var htmlOut='';
 								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
 								htmlOut += '<div class="shopProfile d-flex">';
@@ -294,7 +354,7 @@ function scrollPage(){
 							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
 							    	}
 							    };	
-
+							
 								$('#shopList').append(htmlOut); 
 								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제 
 								// list[i].ID가 마지막이라면 return 이부분은 데이터가 많아지면 지워도 되는 부분
@@ -302,46 +362,54 @@ function scrollPage(){
 									return;
 								}
 							}  
-					}else{ 
-						 	for(var i=startNum; i<list.length; i++){  
-									var htmlOut='';
-									htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
-									htmlOut += '<div class="shopProfile d-flex">';	
-									htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
-								    htmlOut += '</div>';
-								    htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
-								    htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
-								    for(var j = 0; j < list[i].hashTags.length; j++){
-								    	if(j == 0){
-								    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
-								    	} else if(j == list[i].hashTags.length - 1){
-								    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" />'+ list[i].hashTags[j] + '</span>';
-								    	} else {
-								    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
-								    	}
-								    };	
-									$('#shopList').append(htmlOut);
-									$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
-									// list[i].ID가 마지막이라면 return
-									if(i == max -1){ 
-										return;
+						} else { 
+						 	for(var i=startNum; i<max; i++){  
+								var htmlOut='';
+								htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';
+								htmlOut += '<div class="shopProfile d-flex">';	
+								htmlOut += '<img class="shopProfileImg" src="${pageContext.request.contextPath }/resources/upload/member/profile/'+ list[i].picture +'"/>';
+							    htmlOut += '</div>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopNameImg" src="${pageContext.request.contextPath }/resources/images/icons/home.png"/>'+ list[i].shopName + '</span>';
+							    htmlOut += '<span class = "shopScroll">'+'<img class="shopAddresseImg" src="${pageContext.request.contextPath }/resources/images/icons/free-icon-pin-6832990.png"/>'+ list[i].address + '</span>';
+							    
+							    for(var j = 0; j < list[i].hashTags.length; j++){
+							    	if(j == 0){
+							    		 htmlOut +='<span class = "shopScroll">'+'<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];	
+							    	} else if(j == list[i].hashTags.length - 1){
+							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png" />'+ list[i].hashTags[j] + '</span>';
+							    	} else {
+							    		htmlOut +='<img class="shopHashTagImg" src="${pageContext.request.contextPath }/resources/images/icons/hastag1.png"/>'+ list[i].hashTags[j];
+							    	}
+							    };
+							    
+								$('#shopList').append(htmlOut);
+								$("#hashTagResult").empty(); // 해시 태그 클릭 후 검색 안하고 스크롤 시 해시태그 버튼 내역 삭제
+								
+								// list[i].ID가 마지막이라면 return
+								if(i == max -1){ 
+									return;
 								}
 						 	}
 						}
 					}
-				page++;
-				endNum -= 1; //  6-1 = 5 
-				startNum = (endNum +1) ;  // 6 12
-				endNum += 7; //12 18
-
-				loading = false;
-				if(list.length === 0){	
-					loading = true;
-				}
+						
+					page++;
+					/* endNum -= 1; //  6-1 = 5 
+					startNum = (endNum +1) ;  // 6 12
+					endNum += 7; //12 18 */
+	
+					loading = false;
+					if(list.length === 0){	
+						loading = true;
+					}
+					
 				},
 				error:console.log			
 			});
 	    });
+		
+		
+
 };
 	// scroll 위치지정 및 ajax실행
 	$(window).scroll(function(){
@@ -406,15 +474,12 @@ function scrollPage(){
         	// input에 있는 text  사라지게
         	$("#searchInput").val('');
         	selectDataArr.push(hashTagData);
-        	
-        	
         }
         
     }).autocomplete('instance')._renderItem = function(ul, item) {
 		return $('<li>')
         .append('<div>' + item.label + '</div>') 
-        .appendTo(ul);   
-		
+        .appendTo(ul);
     };
     
     
@@ -441,7 +506,6 @@ function clickList(){
 
 $("[name=maxDistance]").change((e) => {
 	kmChange = true;
-	console.log($("[name=maxDistance]:checked").val());
 	scrollPage();
 });
 	
@@ -462,7 +526,6 @@ $("[name=maxDistance]").change((e) => {
 			tagDate : tagDate
 		},
 		success(data) {
-			console.log(data)
 		},
 		error: console.log
 		
@@ -478,11 +541,8 @@ $(()=>{
       $.ajax({
  		url : "${pageContext.request.contextPath}/shop/selectTodayRankingdatas",
  		success(data) {
-
- 			console.log(data)	
 			var toDay = []; 
  			toDay = data; 
- 			console.log(toDay)
  			
  			 $('#toDayFirstRanking').text('# '+toDay[0].TAG_NAME);
  			 $('#toDaySecondRanking').text('# '+toDay[1].TAG_NAME);
@@ -496,11 +556,9 @@ $(()=>{
      // 이번주 데이터 구하기 
      $.ajax({
  		url : "${pageContext.request.contextPath}/shop/selectThisWeekRankingdatas",
- 		success(data) {
- 			console.log(data)	
+ 		success(data) {	
  	 		var week = [];
  			week = data; 
- 			console.log(week)
  		
  			 $('#weekFirstRanking').text('# '+week[0].TAG_NAME);
 			 $('#weekSecondRanking').text('# '+week[1].TAG_NAME);
@@ -516,10 +574,8 @@ $(()=>{
  		url : "${pageContext.request.contextPath}/shop/selectThisMonthRankingdatas",
  		success(data) {
  			
- 			console.log(data)
  			var month = [];// 이번달
  			month = data; 
- 			console.log(month)
  			
  			 $('#monthFirstRanking').text('# '+month[0].TAG_NAME);
 			 $('#monthSecondRanking').text('# '+month[1].TAG_NAME);
@@ -537,15 +593,12 @@ $(".tagClick").click(function(){
 
 	$("#shopList").empty();
 	
-	
 	// td 안에 값 가져와서 #는 잘라줌  
 	var tr = $(this);
 	var td = tr.children();
 	var name = tr.text();
-
-	console.log("클릭한 Row의 모든 데이터 : "+name);
+	
 	tagName = name.substring(2);
-	console.log("문자열자르기  : "+ tagName);
 
 	  $.ajax({
 	 		url : "${pageContext.request.contextPath}/shop/selectHashTagClickShopList",
@@ -553,9 +606,7 @@ $(".tagClick").click(function(){
 	 			tagName : tagName
 			},
 	 		success(data) {
-	 			console.log(data)
 	 			var  list = data;
-	 			console.log(list)
 	 			   for(var i=0; i<list.length; i++){
 						var htmlOut='';
 						htmlOut += '<div class="col-md-4 d-flex justify-content-center align-items-center flex-column" id ="divCheck" onclick="location.href=\'http://localhost:9090/hana/member/shopView/'+ list[i].id +'\'">';

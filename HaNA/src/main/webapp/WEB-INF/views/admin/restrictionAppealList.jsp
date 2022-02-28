@@ -11,7 +11,7 @@
 		border: 1px solid black;
 		border-collapse: collapse;
 		text-align:center;
-		width:500px;
+		width:400px;
 		margin:auto;
 	}
 	table th{
@@ -102,7 +102,7 @@
 				$.each(res, (i, e) => {
 					let tr = `
 						<tr>
-							<td>\${i}</td>
+							<td>\${i+1}</td>
 							<td>\${e.REPORT_USER}</td>
 							<td>\${e.CONTENT}</td>
 						</tr>

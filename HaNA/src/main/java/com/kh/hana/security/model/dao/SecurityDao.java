@@ -18,4 +18,5 @@ public interface SecurityDao {
 
 	int updateReportHistoryS2Y(String username);
 
+
 }

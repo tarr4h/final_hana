@@ -19,7 +19,11 @@
         where
             s.location_x <![CDATA[<]]> ${maxLocationX}
             and
+            s.location_X > ${maxLocationXa}
+            and
             s.location_y <![CDATA[<]]> ${maxLocationY}
+            and
+            s.location_y > ${maxLocationYa}
             and
             s.id != #{id}
             and
@@ -41,7 +45,11 @@
         <where>
          	s.location_x <![CDATA[<]]> ${maxLocationX}
             and
+            s.location_X > ${maxLocationXa}
+            and
             s.location_y <![CDATA[<]]> ${maxLocationY}
+            and
+            s.location_y > ${maxLocationYa}
             and
             s.id != #{id}
             and
@@ -437,6 +445,13 @@
 		values(#{reservationNo}, #{originalPrice}, #{originalPrice})
 	</insert>
 	
+	<update id="updateRestPrice" parameterType="map">
+		update reservation_req_price
+		set restprice = restprice - #{amount}
+		where
+			reservation_no = #{reservationNo}
+	</update>
+	
 	<update id="updateReqDutchpay" parameterType="map">
 		update shop_table_reservation_share
 			set req_dutchpay = #{status}
@@ -489,17 +504,7 @@
 		insert into purchase_history
 		values(#{id}, #{uid}, #{merchantUid}, #{amount}, default, default)
 	</insert>
-	
-	<update id="updateRestPrice" parameterType="map">
-		update reservation_req_price
-		set restprice = restprice - #{amount}
-		where
-			reservation_no = #{reservationNo}
-	</update>
 
-
-
-	
 	<insert id="insertBoardReview" parameterType="map">
 		insert into board_review
 		values(#{boardNo}, #{reservationNo}, #{checkedVal})

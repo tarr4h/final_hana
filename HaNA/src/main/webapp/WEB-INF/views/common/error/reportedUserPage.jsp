@@ -9,10 +9,15 @@
  	<jsp:param value="제제사유" name="title"/>
 </jsp:include>
 <sec:authentication property="principal" var="loginMember"/>
-<div style="text-align:center; margin-top:300px; font-size:3em; font-weight:650; color:blue;">신고 유저 제제 페이지</div>
-<div class="restrictionDate"></div>
-<input type="button" value="항의하기" onclick="appealMyDistriction('${loginMember.id}')"/>
 
+
+<div style="text-align:center; margin-top:300px; font-size:3em; font-weight:650; color:blue;">신고 유저 제제 페이지</div>
+<br /><br />
+<div class="restrictContainer" style="margin:auto;text-align:center;">
+	<div class="restrictionDate"></div>
+	<br />
+	<input type="button" value="항의하기" onclick="appealMyDistriction('${loginMember.id}')"/>
+</div>
 
 <script>
 	$(() => {

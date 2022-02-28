@@ -13,6 +13,8 @@
 	<jsp:include page="/WEB-INF/views/common/exmain.jsp"></jsp:include>
 </sec:authorize>
 
+
+
 <!-- chatcontroller 맨 밑에서 requestmapping -->
 <sec:authorize access="hasRole('USER')">
 	<jsp:forward page="/common/main.do"/>
