@@ -66,6 +66,9 @@
 			</table>
 		</div>
 		
+		<!-- marker 제어 -->
+		<input type="button" value="마커삭제" id="controllDefaultMarker"/>
+		
 		<!-- 지도 표시 -->
 		<div id="map" style="width:100%;height:350px;"></div>
 		
@@ -166,13 +169,19 @@ var positionsDefault = [
     {
         title: 'Me!', 
         latlng: new kakao.maps.LatLng(${loginMember.locationY}, ${loginMember.locationX})
-    },
+    }
 ];
 
-appendMarker(positionsDefault);
+appendMarker(positionsDefault, map);
 /* kakao end*/	
 
-function appendMarker(positions){
+$("#controllDefaultMarker").click((e) => {
+	console.log("delete");
+	console.log(positionsDefault[0]);
+	positionsDefault[0].setMap(null);
+});
+
+function appendMarker(positions, map){
 	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 	    
 	for (var i = 0; i < positions.length; i ++) {	    
@@ -278,8 +287,6 @@ function scrollPage(){
 					//마커를 표시할 위치와 title 객체 배열입니다 
 					var positions = [
 					    {
-					        /* title: 'Me!', 
-					        latlng: new kakao.maps.LatLng(${loginMember.locationY}, ${loginMember.locationX}) */
 					    },
 					];
 					

@@ -150,12 +150,9 @@ function execDaumPostcode() {
 
             var callback = function(result, status) {
                 if (status === kakao.maps.services.Status.OK) {
-                    console.log(result[0].x);
-                    console.log(result[0].y);
                     $('[name=locationX]').val(result[0].x);
                     $('[name=locationY]').val(result[0].y);
                 } else{
-                	console.log('실패');
                 	$("[name=addressAll]").val('');
                 	$("#roadAddress").val('');
                 	$("#postcode").val('');
